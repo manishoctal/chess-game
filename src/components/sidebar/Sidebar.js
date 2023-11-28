@@ -1,36 +1,36 @@
-import React, { useContext, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
-import AuthContext from "../../context/AuthContext";
-import Documents from "../reusable/icons/Documents";
-import { GiPlatform, GiCartwheel } from "react-icons/gi";
-import Dashboard from "../../assets/images/sidebar_icon1.svg";
-import SubAdmin from "../../assets/images/subadmin_manager.svg";
-import Support from "../../assets/images/support_manager.svg";
-import Logout from "../../assets/images/logout.svg";
-import { useTranslation } from "react-i18next";
-import logoImage from "../../assets/images/logo-color.svg";
-import { HiOutlineUser } from "react-icons/hi";
-import { MdOutlineSubscriptions } from "react-icons/md";
-import { AiFillSetting, AiOutlineMail } from "react-icons/ai";
-import { PiArticleFill } from "react-icons/pi";
+import React, { useContext, useState } from 'react'
+import { Link, NavLink } from 'react-router-dom'
+import AuthContext from '../../context/AuthContext'
+import Documents from '../reusable/icons/Documents'
+import { GiPlatform, GiCartwheel } from 'react-icons/gi'
+import Dashboard from '../../assets/images/sidebar_icon1.svg'
+import SubAdmin from '../../assets/images/subadmin_manager.svg'
+import Support from '../../assets/images/support_manager.svg'
+import Logout from '../../assets/images/logout.svg'
+import { useTranslation } from 'react-i18next'
+import logoImage from '../../assets/images/Vector.png'
+import { HiOutlineUser } from 'react-icons/hi'
+import { MdOutlineSubscriptions } from 'react-icons/md'
+import { AiFillSetting, AiOutlineMail } from 'react-icons/ai'
+import { PiArticleFill } from 'react-icons/pi'
 
-const classNames = require("classnames");
-
+const classNames = require('classnames')
 
 const Sidebar = () => {
-  const { t } = useTranslation();
-  const { logoutUser, user, sidebarStatus, updatePageName } = useContext(AuthContext);
+  const { t } = useTranslation()
+  const { logoutUser, user, sidebarStatus, updatePageName } =
+    useContext(AuthContext)
 
   const generateNavLink = (to, label, icon) => (
     <NavLink
       to={to}
       className={({ isActive }) =>
         classNames(
-          "flex items-center px-4 lg:px-7 py-4 hover:bg-sideBarNavActiveColor hover:text-gradientTo",
+          'flex items-center px-4 lg:px-7 py-4 hover:bg-sideBarNavActiveColor hover:text-gradientTo',
           {
-            "bg-white": isActive,
-            "text-black": isActive,
-            active: isActive,
+            'bg-white': isActive,
+            'text-black': isActive,
+            active: isActive
           }
         )
       }
@@ -39,159 +39,143 @@ const Sidebar = () => {
       {icon && <span className='mr-2'>{icon}</span>}
       {t(label)}
     </NavLink>
-  );
+  )
 
   const handleLogout = () => {
-    if (window.confirm("Are you sure to logout?")) {
-      logoutUser();
+    if (window.confirm('Are you sure to logout?')) {
+      logoutUser()
     }
-  };
+  }
 
-  const checkSidebarPermission = (arg) => {
+  const checkSidebarPermission = arg => {
     if (!user) {
-      return false;
+      return false
     }
-    const localPermissions = [...user?.permission];
+    const localPermissions = [...user?.permission]
 
     if (user?.permission?.length === 0) {
-      return true;
+      return true
     }
-    const perIndex = localPermissions?.findIndex(
-      (item) => item?.manager === arg
-    );
+    const perIndex = localPermissions?.findIndex(item => item?.manager === arg)
     if (perIndex < 0) {
-      return false;
+      return false
     }
     if (localPermissions?.[perIndex]?.view) {
-      return true;
+      return true
     }
 
-    return false;
-  };
+    return false
+  }
 
   if (!user) {
-    <></>;
+    ;<></>
   }
 
   return (
     <>
-      {" "}
+      {' '}
       <div
         className={`sidebar lg:block z-10  ${
-          sidebarStatus === "open" ? "block" : "sidebarHide"
+          sidebarStatus === 'open' ? 'block' : 'sidebarHide'
         } bg-gradient-to-t from-gradpurple to-gradientFrom w-[220px] xl:w-[280px] fixed h-full overflow-y-auto`}
         // onClick={handleSidebar}
       >
-        <div className="text-sideBarNavColor">
+        <div className='text-sideBarNavColor'>
           <Link
-            to="/dashboard"
-            onClick={() => updatePageName("Dashboard")}
-            className="px-2 py-6 w-full text-center flex justify-center"
+            to='/dashboard'
+            onClick={() => updatePageName('Dashboard')}
+            className='px-2 py-6 w-full text-center flex justify-center'
           >
-            <img src={logoImage} className="inline" alt="" />
+            <img src={logoImage} className='inline max-w-[187px]' alt='' />
           </Link>
-          <div className="profile text-center">
-            <small className="block text-sm">Welcome</small>
-            <strong className="block text-lg overflow-hidden text-ellipsis px-2 whitespace-nowrap ">
-              {user?.firstName + " " + user?.lastName}
+          <div className='profile text-center'>
+            <small className='block text-sm'>Welcome</small>
+            <strong className='block text-lg overflow-hidden text-ellipsis px-2 whitespace-nowrap '>
+              {user?.firstName + ' ' + user?.lastName}
             </strong>
           </div>
 
-          <nav className="pt-4 pb-5 flex flex-col justify-center font-normal text-xs overflow-y-auto">
+          <nav className='pt-4 pb-5 flex flex-col justify-center font-normal text-xs overflow-y-auto'>
             {/* {checkSidebarPermission("dashboard") && ( */}
-            {generateNavLink('/dashboard','NAV_DASHBOARD', <img src={Dashboard} className="max-w-[18px]" alt="" />)}
-
-            {checkSidebarPermission("users_managers") && (
-              generateNavLink('/users','USER_MANAGER', <img src={SubAdmin} className="max-w-[18px]" alt="" />)
+            {generateNavLink(
+              '/dashboard',
+              'NAV_DASHBOARD',
+              <img src={Dashboard} className='max-w-[18px]' alt='' />
             )}
 
-            {checkSidebarPermission("subAdmin_manager") && (
-              generateNavLink('/sub-admin-manager','SUB_ADMIN_MANAGERS', <img src={SubAdmin} className="max-w-[18px]" alt="" />)
-            )}
+            {checkSidebarPermission('users_managers') &&
+              generateNavLink(
+                '/users',
+                'USER_MANAGER',
+                <img src={SubAdmin} className='max-w-[18px]' alt='' />
+              )}
 
-            {checkSidebarPermission("interests_manager") && (
-              generateNavLink('/interests_manager','INTERESTS_MANAGER', <HiOutlineUser style={{ fontSize: "20px" }} />)
-            )}
+            {checkSidebarPermission('subAdmin_manager') &&
+              generateNavLink(
+                '/sub-admin-manager',
+                'SUB_ADMIN_MANAGERS',
+                <img src={SubAdmin} className='max-w-[18px]' alt='' />
+              )}
 
-            {checkSidebarPermission("coins_pack_manager") && (
-              generateNavLink('/coins_pack_manager','COIN_PACK_MANAGER',  <PiArticleFill style={{ fontSize: "20px" }} />)
-            )}
-            
-            {checkSidebarPermission("sound") && (
-              generateNavLink('/sound','SOUND',  <PiArticleFill style={{ fontSize: "20px" }} />)
-            )}
+            {checkSidebarPermission('stickers') &&
+              generateNavLink(
+                '/stickers',
+                'STICKERS',
+                <PiArticleFill style={{ fontSize: '20px' }} />
+              )}
 
-            {checkSidebarPermission("stickers") && (
-              generateNavLink('/stickers','STICKERS',  <PiArticleFill style={{ fontSize: "20px" }} />)
-            )}
-            {checkSidebarPermission("effects") && (
-              generateNavLink('/effects','EFFECTS',  <PiArticleFill style={{ fontSize: "20px" }} />)
-            )}
-            {checkSidebarPermission("filters") && (
-              generateNavLink('/filters','FILTERS',  <PiArticleFill style={{ fontSize: "20px" }} />)
-            )}
-            {checkSidebarPermission("coin_purchase_listing") && (
-              generateNavLink('/coin-purchase-listing','COIN_PURCHASE_LISTING',  <PiArticleFill style={{ fontSize: "20px" }} />)
-            )}
-            {checkSidebarPermission("subscription_manager") && (
-              generateNavLink('/subscription-manager','SUBSCRIPTION_MANAGERS', <MdOutlineSubscriptions style={{ fontSize: "20px" }} />)
-            )}
-            {checkSidebarPermission("post_manager") && (
-              generateNavLink('/post_manager','POST_MANAGER',  <GiCartwheel style={{ fontSize: "20px" }} />)
-            )}
-            {checkSidebarPermission("video_manager") && (
-              generateNavLink('/video_manager','VIDEO_MANAGER',  <GiCartwheel style={{ fontSize: "20px" }} />)
-            )}
-            {checkSidebarPermission("report_abuse_manager") && (
-              generateNavLink('/report_abuse_manager','REPORT_ABUSE_MANAGER',  <GiCartwheel style={{ fontSize: "20px" }} />)
-            )}
-            {checkSidebarPermission("daily_rewards") && (
-              generateNavLink('/daily-reward-manager','DAILY_REWARD',  <img src={Support} className="max-w-[18px]" alt="" />)
-            )}
-            {checkSidebarPermission("country_manager") && (
-              generateNavLink('/country_manager','COUNTRY_MANAGER',  <GiPlatform style={{ fontSize: "20px" }} />)
-            )}
+            {checkSidebarPermission('report_abuse_manager') &&
+              generateNavLink(
+                '/report_abuse_manager',
+                'REPORT_ABUSE_MANAGER',
+                <GiCartwheel style={{ fontSize: '20px' }} />
+              )}
 
-            {checkSidebarPermission("gift_manager") && (
-              generateNavLink('/gift-manager','GIFT_MANAGER',  <GiPlatform style={{ fontSize: "20px" }} />)
-            )}
-            {checkSidebarPermission("earning_manager") && (
-              generateNavLink('/earning-manager','NAV_EARNING_MANAGER',  <GiPlatform style={{ fontSize: "20px" }} />)
-            )}
+            {checkSidebarPermission('gift_manager') &&
+              generateNavLink(
+                '/gift-manager',
+                'GIFT_MANAGER',
+                <GiPlatform style={{ fontSize: '20px' }} />
+              )}
 
-            {checkSidebarPermission("global_setting") && (
-              generateNavLink('/setting','GLOBAL_SETTINGS', <AiFillSetting style={{ fontSize: "20px" }} />)
-            )}
+            {checkSidebarPermission('global_setting') &&
+              generateNavLink(
+                '/setting',
+                'GLOBAL_SETTINGS',
+                <AiFillSetting style={{ fontSize: '20px' }} />
+              )}
 
-            {checkSidebarPermission("static_page_management") && (
-              generateNavLink('/StaticContent','NAV_STATIC_CONTENTS',<Documents />)
-            )}
+            {checkSidebarPermission('static_page_management') &&
+              generateNavLink(
+                '/StaticContent',
+                'NAV_STATIC_CONTENTS',
+                <Documents />
+              )}
 
-            {checkSidebarPermission("faq_manager") && (
-              generateNavLink('/faqs','NAV_FAQS',<Documents />)
-            )}
+            {checkSidebarPermission('faq_manager') &&
+              generateNavLink('/faqs', 'NAV_FAQS', <Documents />)}
 
-            {checkSidebarPermission("email_manager") && (
-              generateNavLink('/email-manager','EMAIL_TEMPLATE_MANAGER',<AiOutlineMail style={{ fontSize: "20px" }} />)
-            )}
+            {checkSidebarPermission('email_manager') &&
+              generateNavLink(
+                '/email-manager',
+                'EMAIL_TEMPLATE_MANAGER',
+                <AiOutlineMail style={{ fontSize: '20px' }} />
+              )}
 
             <Link
               onClick={handleLogout}
-              className="flex items-center px-4 lg:px-7 py-4 hover:bg-sideBarNavActiveColor hover:text-gradientTo"
+              className='flex items-center px-4 lg:px-7 py-4 hover:bg-sideBarNavActiveColor hover:text-gradientTo'
             >
-              <span className="mr-2">
-                <img src={Logout} className="max-w-[18px]" alt="logout" />
+              <span className='mr-2'>
+                <img src={Logout} className='max-w-[18px]' alt='logout' />
               </span>
-              {t("NAV_LOGOUT")}
+              {t('NAV_LOGOUT')}
             </Link>
           </nav>
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default Sidebar;
-
-
-
+export default Sidebar
