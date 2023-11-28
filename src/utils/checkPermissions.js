@@ -1,0 +1,16 @@
+export const permissionsMap = {
+  dashboard: "/dashboard",
+  users_managers: "/users",
+  subAdmin_manager: "/sub-admin-manager",
+  interests_manager: "/interests_manager",
+  coins_pack_manager: "/coins_pack_manager",
+  subscription_manager: "/subscription-manager",
+  post_manager: "/post_manager",
+  daily_rewards: "/daily-reward-manager",
+  country_manager: "/country_manager",
+  global_setting: "/setting",
+  static_page_management: "/StaticContent",
+  email_manager: "/email-manager",
+  faq_manager: "/faqs",
+  gift_manager: "/gift-manager",
+};

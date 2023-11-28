@@ -1,0 +1,233 @@
+@import url("https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800&display=swap");
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  font-family: "Rubik", sans-serif;
+}
+
+/* body {
+  background-color: #0F172A;
+} */
+
+.login-page {
+  background: url("/login_bg.jpg") no-repeat center;
+  background-size: cover;
+}
+
+
+
+/* header a:hover img {
+  background: url("../images/google-play-hover.svg") no-repeat;
+} */
+
+.sidebar::-webkit-scrollbar-track,
+.sidebar nav::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+.sidebar::-webkit-scrollbar,
+.sidebar nav::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-thumb,
+.sidebar nav::-webkit-scrollbar-thumb {
+  background-color: #63c3eb;
+}
+
+/* .sidebar nav a.active {
+  background-color: #fff;
+  color: #009de0;
+} */
+.sidebar nav a.active span {
+  filter: brightness(0);
+}
+.sidebar nav a.active img,
+.sidebar nav a:hover img,
+.sidebar nav button:hover img {
+  /* filter: brightness(0) saturate(100%) invert(26%) sepia(62%) saturate(6496%) hue-rotate(248deg) brightness(98%) contrast(110%); */
+  filter:invert(34%) sepia(9%) saturate(4869%) hue-rotate(195deg) brightness(64%) contrast(95%);
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  -webkit-text-fill-color: #000;
+  -webkit-box-shadow: 0 0 0px 1000px #fff inset;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+
+.not-found {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+}
+
+
+.react-date-picker {
+  padding: 0;
+}
+
+.react-date-picker .react-date-picker__wrapper {
+  border-color: #c7bfbf;
+  padding: 5px 8px;
+  /* border-r dark:border-[#ffffff38]adius: 7px; */
+  color: #c7bfbf;
+}
+
+.react-date-picker__inputGroup__input:invalid {
+  background: transparent !important;
+}
+
+.react-date-picker__button svg {
+  opacity: .3;
+}
+
+
+@keyframes spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.loading-spinner {
+  width: 20px;
+  height: 20px;
+  border: 8px solid #09fd4a;
+  border-top: 10px solid #383636;
+  /* border-r dark:border-[#ffffff38]adius: 50%; */
+  animation: spinner 1.5s linear infinite;
+  margin: 0 auto;
+}
+button:disabled {
+  background-color: rgb(59 130 246 / 0.5);
+}
+
+button:hover{
+  opacity: 0.8;
+}
+/* .password_view {
+  position: absolute;
+  top: 40%;
+  right: 20px;
+  transform: translateY(-50%);
+  font-size: 20px;
+} */
+
+/* .flatpickr {
+  padding-right: 30px;
+  background: url(../images/calender.png) no-repeat center right;
+  background-color: transparent;
+}
+
+.flatpickr::after {
+  content: "";
+  display: block;
+  position: absolute;
+  background-color: transparent;
+  top: 50%;
+  right: 10px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 6px 4px 0 4px;
+  border-color: #333333 transparent transparent transparent;
+  transform: translateY(-50%);
+} */
+
+
+.react-quill.custom-editor-height {
+  height: 300px; /* Adjust the height as per your requirement */
+}
+
+.outer-boarder{
+  /* border-r dark:border-[#ffffff38]adius: 7px; */
+  border: 1px solid #a7a7a7;
+  margin: 30px;
+}
+.headerForm{
+  width: 100%;
+  height: 50px;
+  /* background: #2f2f31; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color:#ffffff;
+  /* border-r dark:border-[#ffffff38]adius: 7px 7px 0 0; */
+}
+
+.viewDetailLabel{
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: #222222;
+}
+
+span.flatpickr-weekday {
+  background-color: #7992b5 !important;
+  color: #ffffff !important;
+}
+
+.flatpickr-current-month .flatpickr-monthDropdown-months {
+  background-color: #7992b5 !important;
+}
+.flatpickr-months .flatpickr-month {
+  background-color: #7992b5 !important;
+}
+.flatpickr-weekdays {
+  background-color: #7992b5 !important;
+}
+
+div:where(.swal2-container) button:where(.swal2-styled).swal2-confirm {
+  background-color: #6e85a5 !important;
+}
+
+.pagination-active{
+  background-color: #9ebfed !important;
+}
+
+.sidebarHide{
+  display: none;
+}
+
+.quill{
+  background-color: #fff;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 2px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #fff;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #fff;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #fff;
+}
+
+.rti--input{
+  width: 100%!important;
+}

@@ -1,0 +1,27 @@
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+
+.flatpickr-months .flatpickr-month {background-color: #8A36FF !important }
+.flatpickr-current-month .flatpickr-monthDropdown-months{background-color: #8A36FF !important}
+span.flatpickr-weekday {background-color: #8A36FF !important;color:#ffffff!important}
+.flatpickr-weekdays{background-color: #8A36FF !important;}
+.flatpickr-day.selected{
+  background-color: #8A36FF !important;
+  border:#8A36FF
+}
+
+.myCustomPhoneInput {
+  height: 56px !important;
+  border-color: #e5e5e5 !important;
+  /* Adjust the height value as per your requirement */
+}
