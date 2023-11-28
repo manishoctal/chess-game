@@ -83,7 +83,7 @@ const Sidebar = () => {
             onClick={() => updatePageName('Dashboard')}
             className='px-2 py-6 w-full text-center flex justify-center'
           >
-            <img src={logoImage} className='inline max-w-[187px]' alt='' />
+            <img src={logoImage} className='inline max-w-[187px]' alt='' style={{filter:'brightness(0) invert(1)'}} />
           </Link>
           <div className='profile text-center'>
             <small className='block text-sm'>Welcome</small>
