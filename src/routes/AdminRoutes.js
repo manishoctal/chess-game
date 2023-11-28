@@ -104,7 +104,7 @@ const AdminRoutes = {
       element: <ReportAbuse />,
       name: (
         <>
-          <UseChange data='REPORT_ABUSE_MANAGER' />
+          <UseChange data='REPORTS_MANAGER' />
         </>
       )
     },

@@ -30,7 +30,7 @@ const Permission = [
  
  
   {
-    manager: "global_setting",
+    manager: "settings",
     add: false,
     edit: false,
     view: false,

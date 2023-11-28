@@ -124,10 +124,10 @@ const Sidebar = () => {
                 <PiArticleFill style={{ fontSize: '20px' }} />
               )}
 
-            {checkSidebarPermission('report_abuse_manager') &&
+            {checkSidebarPermission('reports_manager') &&
               generateNavLink(
                 '/report_abuse_manager',
-                'REPORT_ABUSE_MANAGER',
+                'REPORTS_MANAGER',
                 <GiCartwheel style={{ fontSize: '20px' }} />
               )}
 
@@ -138,10 +138,10 @@ const Sidebar = () => {
                 <GiPlatform style={{ fontSize: '20px' }} />
               )}
 
-            {checkSidebarPermission('global_setting') &&
+            {checkSidebarPermission('settings') &&
               generateNavLink(
                 '/setting',
-                'GLOBAL_SETTINGS',
+                'SETTINGS',
                 <AiFillSetting style={{ fontSize: '20px' }} />
               )}
 
