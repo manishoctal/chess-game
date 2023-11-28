@@ -12,7 +12,6 @@ import { BsArrowLeftCircle } from "react-icons/bs";
 import ViewReportAbuse from "./ViewReportAbuse";
 import ImageTable from "./ImageTable";
 import VideoTable from "./VideoTable";
-import ViewSlide from "pages/post_manager/ViewSlide";
 import UserViewDetail from "./UserViewDetail";
 import copy from "copy-to-clipboard";
 
@@ -365,7 +364,6 @@ function ReportAbuse() {
 
             {toggle && <ViewReportAbuse onHide={handleToggle} viewData={viewData} reportTypes={reportTypes} page={page} />}
 
-            {openSlide && <ViewSlide onHide={handleView} viewImages={viewImages} />}
 
             {viewShowModal && <UserViewDetail onHide={handleUserView} item={item}/>}
 

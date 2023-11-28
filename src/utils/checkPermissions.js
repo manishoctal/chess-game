@@ -8,7 +8,7 @@ export const permissionsMap = {
   post_manager: "/post_manager",
   daily_rewards: "/daily-reward-manager",
   country_manager: "/country_manager",
-  global_setting: "/setting",
+  settings: "/setting",
   static_page_management: "/StaticContent",
   email_manager: "/email-manager",
   faq_manager: "/faqs",

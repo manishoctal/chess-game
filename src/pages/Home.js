@@ -3,19 +3,15 @@ import "chartjs-adapter-date-fns";
 import { RiAdminFill } from "react-icons/ri";
 import { FaWpforms, FaUserTie } from "react-icons/fa";
 import { GiSolarTime } from "react-icons/gi";
-import { GrMoney } from "react-icons/gr";
 import { MdOutlineCollectionsBookmark } from "react-icons/md";
 import { apiGet } from "utils/apiFetch";
 import pathObj from "utils/apiPath";
-import pendingComplaints from "assets/images/pendingComplaints.png";
-import complaints from "assets/images/complaints.png";
 import earning from "assets/images/earning.jpg";
 import dayjs from "dayjs";
 import { useTranslation } from "react-i18next";
 import AuthContext from "context/AuthContext";
 import ODateRangePicker from "components/shared/datePicker/ODateRangePicker";
 import OCountUp from "components/OCountUp";
-import { useNavigate } from "react-router-dom";
 
 function Home() {
   const { t } = useTranslation();
