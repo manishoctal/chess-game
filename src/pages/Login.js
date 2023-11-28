@@ -8,7 +8,7 @@ import AuthContext from "../context/AuthContext";
 import Loader from "../layout/Loader";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { useTranslation } from "react-i18next";
-import logoImage from "../assets/images/logo-colofful.svg";
+import logoImage from "../assets/images/Vector.png";
 import formValidation from "utils/formValidation";
 function Login() {
   const { t } = useTranslation();
@@ -76,7 +76,7 @@ function Login() {
             onSubmit={handleSubmit(onSubmit)}
             method="post"
           >
-            <img src={logoImage} alt="logoImage" className="m-auto py-2" />
+            <img src={logoImage} alt="logoImage" className="m-auto py-2 max-w-[267px]" />
             <h1 className="text-center text-[40px] font-bold dark:text-white">
               {t("LOGIN_LETS_START")}!
             </h1>

@@ -12,9 +12,9 @@ module.exports = {
     extend: {
       colors: {
         DarkBlue: "#F86F03", // Buttons Hover
-        gradientTo: "#5D26B7", //  Buttons
+        gradientTo: "#000", //  Buttons
         gradpurple: "#000000", // Sidebar Gradiant
-        gradientFrom: "#8343E8", // Sidebar Gradiant
+        gradientFrom: "#000", // Sidebar Gradiant
         sideBarNavColor: "#ffffff",
         sideBarNavActiveColor: "#ffffff",
       },
