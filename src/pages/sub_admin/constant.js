@@ -27,6 +27,16 @@ const Permission = [
     shownAdd: true,
     shownAll: true,
   },
+  {
+    manager: "reports_manager",
+    add: false,
+    edit: false,
+    view: false,
+    shownView: true,
+    shownDelete: true,
+    shownAdd: true,
+    shownAll: true,
+  },
  
  
   {
