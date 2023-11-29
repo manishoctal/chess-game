@@ -88,7 +88,7 @@ function Faq() {
     setEditView(type);
   };
   useEffect(() => {
-    getAllFAQ();
+    // getAllFAQ();
   }, [page, sort, pageSize]);
 
   return (

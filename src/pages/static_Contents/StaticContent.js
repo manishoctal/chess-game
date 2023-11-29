@@ -102,7 +102,7 @@ const StaticContent = () => {
   };
 
   useEffect(() => {
-    getStaticContent();
+    // getStaticContent();
   }, [page, filterData, sort]);
 
   const handleReset = () => {

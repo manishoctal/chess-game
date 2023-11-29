@@ -12,6 +12,7 @@ import AuthContext from "context/AuthContext";
 import PhoneInput from "react-phone-input-2";
 import ErrorMessage from "components/ErrorMessage";
 import DynamicLabel from "utils/DynamicLabel";
+import OTextArea from "components/reusable/OTextArea";
 const { startCase, capitalize } = require("lodash");
 
 const SubAdd = ({ props }) => {
@@ -262,6 +263,19 @@ const SubAdd = ({ props }) => {
                   )}
                 />
                 <ErrorMessage message={errors?.mobile?.message} />
+              </div>
+              
+              <div className="px-2">
+                <OInputField
+                  wrapperClassName="relative z-0 mb-6 w-full group"
+                  name="address"
+                  inputLabel={t("ADDRESS")}
+                  labelType={true}
+                  type="textarea"
+                  register={register("address", formValidation.address)}
+                  errors={errors}
+                  disable={item?.type === "view"}
+                />
               </div>
             </div>
           </div>

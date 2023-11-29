@@ -114,12 +114,7 @@ const Sidebar = () => {
                 <img src={SubAdmin} className='max-w-[18px]' alt='' />
               )}
 
-            {checkSidebarPermission('stickers') &&
-              generateNavLink(
-                '/stickers',
-                'STICKERS',
-                <PiArticleFill style={{ fontSize: '20px' }} />
-              )}
+           
 
             {checkSidebarPermission('reports_manager') &&
               generateNavLink(
@@ -127,14 +122,20 @@ const Sidebar = () => {
                 'REPORTS_MANAGER',
                 <GiCartwheel style={{ fontSize: '20px' }} />
               )}
-
-            {checkSidebarPermission('gift_manager') &&
+            {checkSidebarPermission('notification_manager') &&
               generateNavLink(
-                '/gift-manager',
-                'GIFT_MANAGER',
-                <GiPlatform style={{ fontSize: '20px' }} />
+                '/notification_manager',
+                'NOTIFICATION_MANAGER',
+                <GiCartwheel style={{ fontSize: '20px' }} />
               )}
+            {/* {checkSidebarPermission('thai_local_deposit_manager') &&
+              generateNavLink(
+                '/thai-local-deposit-manager',
+                'THAI_LOCAL_DEPOSIT_MANAGER',
+                <GiCartwheel style={{ fontSize: '20px' }} />
+              )} */}
 
+         
             {checkSidebarPermission('settings') &&
               generateNavLink(
                 '/setting',

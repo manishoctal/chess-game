@@ -82,7 +82,7 @@ function FAQ () {
     setEditShowModal(true)
   }
   useEffect(() => {
-    getAllFAQ()
+    // getAllFAQ()
   }, [page, sort, pageSize])
 
   const pageSizeCall = (value) => {

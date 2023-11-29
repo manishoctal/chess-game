@@ -105,7 +105,7 @@ function EmailTemplate() {
   };
 
   useEffect(() => {
-    allEmailTemplate();
+    // allEmailTemplate();
   }, [filterData, page, sort]);
 
   const handleReset = () => {

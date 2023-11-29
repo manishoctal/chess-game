@@ -82,6 +82,9 @@ const SubTable = ({
               <th scope="col" className="py-3 px-6">
                 {t("O_MOBILE")}
               </th>
+              <th scope="col" className="py-3 px-6">
+                {t("ADDRESS")}
+              </th>
 
               <th
                 scope="col"
@@ -223,7 +226,7 @@ const SubTable = ({
             ))}
             {isEmpty(subAdmin) ? (
               <tr className="bg-white border-b w-full text-center dark:bg-gray-800 dark:border-gray-700">
-                <td className="py-4 px-6" colSpan={8}>
+                <td className="py-4 px-6" colSpan={9  }>
                   {t("O_NO_RECORD_FOUND")}
                 </td>
               </tr>
