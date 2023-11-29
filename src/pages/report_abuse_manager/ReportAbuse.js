@@ -133,7 +133,7 @@ function ReportAbuse() {
 
 
   useEffect(() => {
-    reportAbuseListing();
+    // reportAbuseListing();
   }, [filterData, page, sort, pageSize]);
 
   const handleReset = () => {

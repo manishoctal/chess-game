@@ -142,7 +142,7 @@ function User() {
   };
 
   useEffect(() => {
-    getAllUser();
+    // getAllUser();
   }, [page, filterData, sort, pageSize]);
 
   useEffect(() => {
@@ -270,8 +270,8 @@ function User() {
                       </option>
                       <option value="verified">{t("VERIFIED")}</option>
                       <option value="notVerified">{t("NOT_VERIFIED")}</option>
-                      <option value="pending">{t("PENDING")}</option>
-                      <option value="rejected">{t("REJECT")}</option>
+                      {/* <option value="pending">{t("PENDING")}</option>
+                      <option value="rejected">{t("REJECT")}</option> */}
                     </select>
                   </div>
 
