@@ -3,8 +3,6 @@ import { apiPut } from "../../utils/apiFetch";
 import apiPath from "../../utils/apiPath";
 import { useForm } from "react-hook-form";
 import useToastContext from "hooks/useToastContext";
-import ErrorMessage from "components/ErrorMessage";
-import { validationRules } from "utils/constants";
 import { useTranslation } from "react-i18next";
 import OInputField from "components/reusable/OInputField";
 import { preventMaxInput } from "utils/validations";
@@ -24,11 +22,13 @@ const UserEdit = ({ setEditShowModal, getAllUser, item }) => {
     mode: "onChange",
     shouldFocusError: true,
     defaultValues: {
-      first_name: item?.first_name,
-      last_name: item?.last_name,
+      firstName: item?.firstName,
+      lastName: item?.lastName,
       mobile: item?.mobile,
       email: item?.email,
-      country_code: item?.country_code,
+      countryCode: item?.countryCode,
+      language: item?.language,
+      role: item?.role
     },
   });
 
@@ -58,7 +58,7 @@ const UserEdit = ({ setEditShowModal, getAllUser, item }) => {
           <div className="md:py-4 sm:px-2 sm:py-8 px-7">
             <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none lg:min-w-[762px]">
               <div className="flex items-center justify-between p-5 border-b border-solid border-slate-200 rounded-t">
-                <h3 className="text-xl font-semibold">{t("O_EDIT_USER")}</h3>
+                <h3 className="text-xl font-semibold">{t("EDIT_USER")}</h3>
                 <button
                   className=" ml-auto flex items-center justify-center  text-black border-2 rounded-full  h-8 w-8 float-right text-3xl leading-none font-extralight outline-none focus:outline-none"
                   onClick={() => setEditShowModal(false)}
@@ -73,7 +73,7 @@ const UserEdit = ({ setEditShowModal, getAllUser, item }) => {
                   <div className="md:py-4 sm:px-2 sm:py-3 md:px-7 px-2">
                     <OInputField
                       wrapperClassName="relative z-0  w-full group"
-                      name="first_name"
+                      name="firstName"
                       inputLabel={
                         <>
                           {t("MERCHANT_FIRST_NAME")}
@@ -85,8 +85,8 @@ const UserEdit = ({ setEditShowModal, getAllUser, item }) => {
                       maxLength={15}
                       onInput={(e) => preventMaxInput(e, 15)}
                       register={register(
-                        "first_name",
-                        formValidation["first_name"]
+                        "firstName",
+                        formValidation["firstName"]
                       )}
                       errors={errors}
                     />
@@ -94,7 +94,7 @@ const UserEdit = ({ setEditShowModal, getAllUser, item }) => {
                   <div className="md:py-4 sm:px-2 sm:py-3 md:px-7 px-2">
                     <OInputField
                       wrapperClassName="relative z-0   w-full group"
-                      name="last_name"
+                      name="lastName"
                       inputLabel={
                         <>
                           {t("MERCHANT_LAST_NAME")}
@@ -105,8 +105,8 @@ const UserEdit = ({ setEditShowModal, getAllUser, item }) => {
                       maxLength={15}
                       onInput={(e) => preventMaxInput(e, 15)}
                       register={register(
-                        "last_name",
-                        formValidation["last_name"]
+                        "lastName",
+                        formValidation["lastName"]
                       )}
                       errors={errors}
                     />
@@ -114,21 +114,27 @@ const UserEdit = ({ setEditShowModal, getAllUser, item }) => {
                   <div className="md:py-4 sm:px-2 sm:py-3 md:px-7 px-2">
                     <OInputField
                       wrapperClassName="relative z-0   w-full group"
-                      name="country_code"
-                      inputLabel={<>{t("O_COUNTRY_CODE")}</>}
+                      name="countryCode"
+                      inputLabel={<>{t("O_COUNTRY_CODE")} <span className="text-red-500">*</span></>}
                       errors={errors}
-                      type="select"
-                      register={register("country_code", {
+                      type="number"
+                      register={register("countryCode", {
                         // required: 'Please select country code.'
                       })}
-                      selectOptions={[
-                        <option value="" key="select_code">
-                          {t("O_SELECT_CODE")}
-                        </option>,
-                        <option value="234" key="234">
-                          +234
-                        </option>,
-                      ]}
+                     
+                    />
+                  </div>
+                  <div className="md:py-4 sm:px-2 sm:py-3 md:px-7 px-2">
+                    <OInputField
+                      wrapperClassName="relative z-0   w-full group"
+                      name="country_code"
+                      inputLabel={<>{t("LANGUAGE")} <span className="text-red-500">*</span></>}
+                      errors={errors}
+                      type="text"
+                      register={register("language", {
+                        // required: 'Please select country code.'
+                      })}
+                     
                     />
                   </div>
                   <div className="md:py-4 sm:px-2 sm:py-3 md:px-7 px-2">
@@ -149,7 +155,7 @@ const UserEdit = ({ setEditShowModal, getAllUser, item }) => {
                           e.preventDefault();
                         }
                       }}
-                      onInput={(e) => preventMaxInput(e, 9)}
+                      onInput={(e) => preventMaxInput(e, 10)}
                       register={register("mobile", formValidation["mobile"])}
                       errors={errors}
                     />
@@ -174,63 +180,27 @@ const UserEdit = ({ setEditShowModal, getAllUser, item }) => {
                       errors={errors}
                     />
                   </div>
-                  {/* <div className='relative z-0   w-full group'>
-                        <div className='block py-3 h-14 px-3 w-full text-sm text-gray-900 bg-transparent border-2 rounded-lg border-[#DFDFDF] appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0  peer'>
-                            <input
-                                type='file'
-                                name='identity_card'
-                                placeholder='Identity Card '
-                                className='form-control'
-                                accept='image/*'
-
-                                {...register('identity_card', {
-                                    required: true,
-                                })}
-                            />
-                        </div>
-                        <label
-                            for='floating_file'
-                            className='peer-focus:font-normal absolute text-sm text-[#A5A5A5] dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 left-3 bg-white p-2 z-10 origin-[2] peer-focus:left-0 peer-focus:text-[#A5A5A5] peer-focus:text-lg peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-8'
-                        >
-                            Identity Card
-                        </label>
-                    </div> */}
-                  {/* <div className='relative z-0   w-full group'>
-                        <div className='block py-3 h-14 px-3 w-full text-sm text-gray-900 bg-transparent border-2 rounded-lg border-[#DFDFDF] appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0  peer'>
-                            <input
-                                type='file'
-                                name='passport'
-                                placeholder='passport'
-                                className='form-control'
-                                accept='image/*'
-                                // onChange={(e) => setPassport(e.target.files[0])}
-                                {...register('passport', {
-                                    required: true,
-                                })}
-                            />
-                            <img src={item?.passport} />
-                            <svg
-                                xmlns='http://www.w3.org/2000/svg'
-                                fill='none'
-                                viewBox='0 0 24 24'
-                                strokeWidth={1.5}
-                                stroke='currentColor'
-                                className='w-6 h-6 ml-auto absolute right-3 top-1 transform translate-y-1/2 text-[#A5A5A5]'
-                            >
-                                <path
-                                    strokeLinecap='round'
-                                    strokeLinejoin='round'
-                                    d='M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3'
-                                />
-                            </svg>
-                        </div>
-                        <label
-                            for='floating_file'
-                            className='peer-focus:font-normal absolute text-sm text-[#A5A5A5] dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 left-3 bg-white p-2 z-10 origin-[2] peer-focus:left-0 peer-focus:text-[#A5A5A5] peer-focus:text-lg peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-8'
-                        >
-                            Passport
-                        </label>
-                    </div> */}
+                  <div className="md:py-4 sm:px-2 sm:py-3 md:px-7 px-2">
+                    <OInputField
+                      wrapperClassName="relative z-0   w-full group"
+                      type="text"
+                      name="role"
+                      id="role"
+                      inputLabel={
+                        <>
+                          {t("USER_TYPE")}
+                          <span className="text-red-500">*</span>
+                        </>
+                      }
+                      disable
+                      maxLength={50}
+                      autoComplete="off"
+                      register={register("role")}
+                      
+                    />
+                  </div>
+                 
+                  
                 </div>
               </div>
               <div className="flex items-center justify-center p-6 border-t border-solid border-slate-200 rounded-b">
@@ -248,7 +218,7 @@ const UserEdit = ({ setEditShowModal, getAllUser, item }) => {
                   </div>
                 ) : (
                   <button
-                    className="bg-LightBlue text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150"
+                    className="bg-gradientTo text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150"
                     type="submit"
                     onClick={handleSubmit(onSubmit)}
                   >

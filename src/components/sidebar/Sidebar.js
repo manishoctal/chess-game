@@ -106,6 +106,12 @@ const Sidebar = () => {
                 'USER_MANAGER',
                 <img src={SubAdmin} className='max-w-[18px]' alt='' />
               )}
+            {checkSidebarPermission('transaction_manager') &&
+              generateNavLink(
+                '/transactions',
+                'NAV_TRANSACTION_MANAGER',
+                <img src={SubAdmin} className='max-w-[18px]' alt='' />
+              )}
 
             {checkSidebarPermission('subAdmin_manager') &&
               generateNavLink(
@@ -128,12 +134,12 @@ const Sidebar = () => {
                 'NOTIFICATION_MANAGER',
                 <GiCartwheel style={{ fontSize: '20px' }} />
               )}
-            {/* {checkSidebarPermission('thai_local_deposit_manager') &&
+            {checkSidebarPermission('thai_local_deposit_manager') &&
               generateNavLink(
                 '/thai-local-deposit-manager',
                 'THAI_LOCAL_DEPOSIT_MANAGER',
                 <GiCartwheel style={{ fontSize: '20px' }} />
-              )} */}
+              )}
 
          
             {checkSidebarPermission('settings') &&
