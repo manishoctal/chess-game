@@ -10,6 +10,15 @@ const Permission = [
     shownAdd: true,
   },
   {
+    manager: "transaction_manager",
+    add: false,
+    edit: false,
+    view: false,
+    shownView: true,
+    shownDelete: false,
+    shownAdd: true,
+  },
+  {
     manager: "subAdmin_manager",
     add: false,
     edit: false,

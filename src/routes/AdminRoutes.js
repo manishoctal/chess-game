@@ -21,6 +21,8 @@ import User from 'pages/users/User'
 import UserView from 'pages/users/UserView'
 import ReportAbuse from 'pages/report_abuse_manager/ReportAbuse'
 import NotificationAdd from 'pages/notification_manager/NotificationAdd'
+import ThaiLocalDepositManager from 'pages/thai_local_deposit_manager/ThaiLocalDepositManager'
+import Transaction from 'pages/transection_manager/Transaction'
 
 const UseChange = ({ data }) => {
   const { t } = useTranslation()
@@ -73,7 +75,24 @@ const AdminRoutes = {
         </>
       )
     },
-
+    {
+      path: '/transactions',
+      element: <Transaction />,
+      name: (
+        <>
+          <UseChange data='NAV_TRANSACTION_MANAGER' />
+        </>
+      )
+    },
+    {
+      path: '/thai-local-deposit-manager',
+      element: <ThaiLocalDepositManager />,
+      name: (
+        <>
+          <UseChange data='THAI_LOCAL_DEPOSIT_MANAGER' />
+        </>
+      )
+    },
     {
       path: '/sub-admin-manager/add',
       element: <SubAdd />,
