@@ -86,7 +86,7 @@ const Settings = () => {
   }
 
   useEffect(() => {
-    // getSettings()
+    getSettings()
   }, [])
   const preventMax = e => {
     if (e.target.value.length > 10) {

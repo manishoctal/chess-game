@@ -255,6 +255,25 @@ const formValidation = {
         value.trim() ? true : "White spaces not allowed.",
     },
   },
+  natinalityId: {
+    required: "Please enter nationality Id.",
+    pattern: {
+      value: /^[^\s].*/,
+      message: "Cannot start with a space.",
+    },
+    minLength: {
+      value: 2,
+      message: "Minimum length must be 2.",
+    },
+    maxLength: {
+      value: 20,
+      message: "Maximum length should be 20 characters",
+    },
+    validate: {
+      whiteSpace: (value) =>
+        value.trim() ? true : "White spaces not allowed.",
+    },
+  },
   email: {
     required: "Please enter email ID.",
     pattern: {

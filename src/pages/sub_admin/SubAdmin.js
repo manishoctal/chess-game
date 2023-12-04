@@ -84,7 +84,7 @@ function SubAdmin() {
   };
 
   useEffect(() => {
-    // allSubAdmin();
+    allSubAdmin();
   }, [filterData, page, sort, pageSize]);
 
   const handelStatusChange = async (item) => {
