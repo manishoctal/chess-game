@@ -24,6 +24,7 @@ function User () {
 
   const [viewShowModal, setViewShowModal] = useState(false)
   const [users, setAllUser] = useState([])
+  const [userType, setUserType] = useState('tourist')
   const [page, setPage] = useState(1)
   const [pageSize, setPageSize] = useState(10)
   const [item, setItem] = useState('')
@@ -64,7 +65,6 @@ function User () {
   })
 
   const getAllUser = async data => {
-    
     try {
       const {
         category,
@@ -78,6 +78,7 @@ function User () {
       const payload = {
         page,
         pageSize: pageSize,
+        userType,
         status: category,
         startDate: startDate ? dayjs(startDate).format('YYYY-MM-DD') : null,
         endDate: endDate ? dayjs(endDate).format('YYYY-MM-DD') : null,
@@ -134,7 +135,7 @@ function User () {
 
   useEffect(() => {
     getAllUser()
-  }, [page, filterData, sort, pageSize])
+  }, [page, filterData, sort, pageSize, userType])
 
   useEffect(() => {
     updatePageName(t('O_USERS'))
@@ -218,6 +219,22 @@ function User () {
     <div>
       <div className='bg-[#F9F9F9] dark:bg-slate-900'>
         <div className='px-3 py-4'>
+          <div className='flex justify-center items-center grid grid-cols-2'>
+            <button
+              type='button'
+              className={` pr-6 bg-gradientTo text-sm px-8 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2 ${userType==='local'&& 'bg-DarkBlue'}`}
+              onClick={() => setUserType('local')}
+            >
+              {t('THAI_LOCAL')}
+            </button>
+            <button
+              type='button'
+              className={`pr-6 bg-gradientTo text-sm px-8 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2 ${userType==='tourist'&& 'bg-DarkBlue'}`}
+              onClick={() => setUserType('tourist')}
+            >
+              {t('FOREIGN_TOURIST')}
+            </button>
+          </div>
           <div className='bg-white border border-[#E9EDF9] rounded-lg dark:bg-slate-800 dark:border-[#ffffff38]'>
             <form className='border-b border-b-[#E3E3E3]  px-4 py-3 pt-5 flex flex-wrap justify-between'>
               <div className='flex flex-wrap items-center'>
@@ -259,8 +276,8 @@ function User () {
                       <option defaultValue value=''>
                         {t('ALL_USERS')}
                       </option>
-                      <option value='verified'>{t('VERIFIED')}</option>
-                      <option value='notVerified'>{t('NOT_VERIFIED')}</option>
+                      <option value='completed'>{t('COMPLETED')}</option>
+                      <option value='pending'>{t('PENDING')}</option>
                     </select>
                   </div>
 
@@ -327,6 +344,7 @@ function User () {
               setSort={setSort}
               sort={sort}
               setPage={setPage}
+              userType={userType}
               manager={manager}
             />
 

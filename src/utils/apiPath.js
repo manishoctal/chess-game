@@ -11,7 +11,7 @@ const pathObj = {
   getUsers: "/v1/admin/user",
   createUser: "/v1/admin/user",
   userProfile: "/v1/user/profile",
-  updateUser: "/v1/admin/user",
+  updateUser: "/v1/admin/user/edit",
   getSubAdmin: "v1/admin/subadmin",
   editSubAdmin: "v1/admin/subadmin",
   forgetPassword: "/v1/admin/forgot-password",

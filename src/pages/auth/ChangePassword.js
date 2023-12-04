@@ -188,9 +188,10 @@ const ChangePassword = () => {
                         value: validationRules.password,
                         message: validationRules.confirmPasswordMessage,
                       },
-                      validate: (value, { getValues }) => {
-                        const { newPassword } = getValues();
-                        return newPassword === value || "New password and confirm password do not match.";
+                      validate: (val) => {
+                        if (watch("newPassword") !== val) {
+                          return "Confirm Password field is not matching with new password field.";
+                        }
                       },
                     })}
                   />

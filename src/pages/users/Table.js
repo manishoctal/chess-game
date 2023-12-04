@@ -20,6 +20,7 @@ const Table = ({
   page,
   sort,
   setSort,
+  userType
 }) => {
   const { t } = useTranslation();
   const notification = useToastContext();
@@ -76,7 +77,7 @@ setEditShowModal(!editShowModal)
                 {t("S.NO")}
               </th>
               <th scope="col" className="py-3 px-6">
-                {t("NAME")}
+              {userType==='local'?t("NAME"):t("FIRST_NAME")}
               </th>
               <th
                 scope="col"
@@ -107,15 +108,18 @@ setEditShowModal(!editShowModal)
                   </span>
                 </div>
               </th>
-              <th scope="col" className="py-3 px-6 text-left">
-                {t("COUNTRY_CODE")}
-              </th>
               <th scope="col" className="py-3 px-6">
                 <div className="text-left">{t("O_MOBILE_NUMBER")}</div>
               </th>
-              <th scope="col" className="py-3 px-6 text-left">
+              {userType==='local'&&<th scope="col" className="py-3 px-6 text-left">
+                {t("AVAILABLE_BALANCE")}
+              </th>}
+              {userType==='tourist'&&<th scope="col" className="py-3 px-6 text-left">
+                {t("UPC_CODE")}
+              </th>}
+              {userType==='tourist'&&<th scope="col" className="py-3 px-6 text-left">
                 {t("REFERRAL_CODE")}
-              </th>
+              </th>}
               
               <th
                 scope="col"
@@ -185,16 +189,20 @@ setEditShowModal(!editShowModal)
                   <td className="py-2 px-4 border-r dark:border-[#ffffff38] dark:border-[#ffffff38]">
                     {item?.email || "N/A"}
                   </td>
-                  <td className="py-2 px-4 border-r dark:border-[#ffffff38] dark:border-[#ffffff38] ">
-                    {item?.countryCode || "N/A"}
-                  </td>
                   <td className="py-2 px-4 border-r dark:border-[#ffffff38] dark:border-[#ffffff38] text-left">
                     {item?.mobile || "N/A"}
                   </td>
-                 
-                  <td className="py-4 px-3 border-r dark:border-[#ffffff38] dark:border-[#ffffff38] ">
-                    {startCase(item?.referralCode) || "N/A"}
+                 {userType==='local'&&
+                  <td className="py-2 px-4 border-r dark:border-[#ffffff38] dark:border-[#ffffff38] text-left">
+                    {item?.availableBalance || "N/A"}
                   </td>
+}
+                 { userType==='tourist'&&<td className="py-4 px-3 border-r dark:border-[#ffffff38] dark:border-[#ffffff38] ">
+                    {startCase(item?.upcCode) || "N/A"}
+                  </td>}
+                 { userType==='tourist'&&<td className="py-4 px-3 border-r dark:border-[#ffffff38] dark:border-[#ffffff38] ">
+                    {startCase(item?.referralCode) || "N/A"}
+                  </td>}
                  
                   <td className="py-4 px-3 border-r dark:border-[#ffffff38] dark:border-[#ffffff38] text-center">
                     {dayjs(item?.createdAt).format("DD-MM-YYYY hh:mm A") ||
