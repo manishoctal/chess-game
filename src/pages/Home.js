@@ -327,7 +327,7 @@ function Home() {
             // }
           >
             <h3 className="text-center mb-0 text-slate-900 font-bold md:text-2xl sm:text-lg text-lg dark:text-white">
-              <OCountUp value={dashboardDetails?.totalCollectorCount || 0} />
+              <OCountUp value={dashboardDetails?.totalInActiveUsersCount || 0} />
               <span className="text-base text-neutral-400 font-normal block pt-3 ">
                 {t("NO_OF_INACTIVE_USERS")}
               </span>

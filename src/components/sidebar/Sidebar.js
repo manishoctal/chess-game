@@ -122,12 +122,12 @@ const Sidebar = () => {
 
            
 
-            {checkSidebarPermission('reports_manager') &&
+            {/* {checkSidebarPermission('reports_manager') &&
               generateNavLink(
                 '/report_abuse_manager',
                 'REPORTS_MANAGER',
                 <GiCartwheel style={{ fontSize: '20px' }} />
-              )}
+              )} */}
             {checkSidebarPermission('notification_manager') &&
               generateNavLink(
                 '/notification_manager',

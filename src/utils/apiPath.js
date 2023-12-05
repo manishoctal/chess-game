@@ -62,6 +62,8 @@ const pathObj = {
   changeStatus: "/v1/admin/change-status",
   effectListSuggestion: "/v1/admin/effects/suggestion/effectList",
   verficationDetail: "v1/admin/user/verification-details",
+  notifications: "v1/admin/notification",
+  allNotificationUser: "/v1/admin/user/all-users",
 };
 
 export default pathObj;

@@ -109,7 +109,7 @@ function NotificationManager() {
     setCategoryAdd(!categoryAdd);
   };
   useEffect(() => {
-    // getAllNotifications();
+    getAllNotifications();
   }, [page, filterData, sort,pageSize]);
 
   const handleReset = () => {
