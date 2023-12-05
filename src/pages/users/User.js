@@ -222,14 +222,14 @@ function User () {
           <div className='flex justify-center items-center grid grid-cols-2'>
             <button
               type='button'
-              className={` pr-6 bg-gradientTo text-sm px-8 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2 ${userType==='local'&& 'bg-DarkBlue'}`}
+              className={` pr-6 bg-slate-400 text-sm px-8 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-black  sm:w-auto w-1/2 ${userType==='local'&& 'bg-gradientTo text-white'}`}
               onClick={() => setUserType('local')}
             >
               {t('THAI_LOCAL')}
             </button>
             <button
               type='button'
-              className={`pr-6 bg-gradientTo text-sm px-8 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2 ${userType==='tourist'&& 'bg-DarkBlue'}`}
+              className={`pr-6 bg-slate-400 text-sm px-8 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-black  sm:w-auto w-1/2 ${userType==='tourist'&& 'bg-gradientTo text-white'}`}
               onClick={() => setUserType('tourist')}
             >
               {t('FOREIGN_TOURIST')}
@@ -238,7 +238,7 @@ function User () {
           <div className='bg-white border border-[#E9EDF9] rounded-lg dark:bg-slate-800 dark:border-[#ffffff38]'>
             <form className='border-b border-b-[#E3E3E3]  px-4 py-3 pt-5 flex flex-wrap justify-between'>
               <div className='flex flex-wrap items-center'>
-                <div className='flex items-center lg:pt-0 pt-3 justify-center'>
+                <div className='flex items-center lg:pt-0 pt-3 justify-center'> 
                   <ODateRangePicker
                     handleDateChange={handleDateChange}
                     isReset={filterData?.isReset}
