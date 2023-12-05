@@ -164,7 +164,7 @@ function Home() {
   };
 
   useEffect(() => {
-    //  getDashboardDetails();
+     getDashboardDetails();
   }, [startDate, endDate]);
 
 
@@ -294,7 +294,7 @@ function Home() {
             // onClick={() => navigate("/sub-admin-manager")}
           >
             <h3 className="text-center mb-0 text-slate-900 font-bold md:text-3xl sm:text-lg dark:text-white">
-              <OCountUp value={dashboardDetails?.totalUserCount} />
+              <OCountUp value={dashboardDetails?.totalUsersCount} />
               <span className="text-base text-neutral-400 font-normal block pt-3 ">
                 {t("VIEW_NO_OF_USERS")}
               </span>
@@ -309,7 +309,7 @@ function Home() {
             // onClick={() => navigate("/customer-manager")}
           >
             <h3 className="text-center mb-0 text-slate-900 font-bold md:text-3xl sm:text-lg dark:text-white">
-              <OCountUp value={dashboardDetails?.totalVerifiedBadgeUserCount} />
+              <OCountUp value={dashboardDetails?.totalActiveUsersCount} />
 
               <span className="text-base text-neutral-400 font-normal block pt-3 ">
                 {t("NO_OF_ACTIVE_USERS")}
@@ -339,7 +339,7 @@ function Home() {
 
           <div className="text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border">
             <h3 className="text-center mb-0 text-slate-900 font-bold md:text-3xl sm:text-lg dark:text-white">
-              <OCountUp value={dashboardDetails?.totalEarningCount || 0} />
+              <OCountUp value={dashboardDetails?.totalTransactionCount || 0} />
               <span className="text-base text-neutral-400 font-normal block pt-3 ">
                 {t("NO_OF_TOTAL_TRANSACTION")}
               </span>
@@ -354,7 +354,7 @@ function Home() {
             // onClick={() => navigate("/artwork-manager")}
           >
             <h3 className="text-center mb-0 text-slate-900 font-bold md:text-3xl sm:text-lg dark:text-white">
-              <OCountUp value={dashboardDetails?.totalPostCount || 0} />
+              <OCountUp value={dashboardDetails?.totalWalletToBankTransactionCount || 0} />
               <span className="text-base text-neutral-400 font-normal block pt-3 ">
                 {t("NO_OF_WALLET_TO_BANK_TRANSACTION")}
               </span>
@@ -370,7 +370,7 @@ function Home() {
 
           <div className="text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border">
             <h3 className="text-center mb-0 text-slate-900 font-bold md:text-3xl sm:text-lg dark:text-white">
-              <OCountUp value={dashboardDetails?.totalVideoCount || 0} />
+              <OCountUp value={dashboardDetails?.totalBankToWalletTransactionCount || 0} />
               <span className="text-base text-neutral-400 font-normal block pt-3 ">
                 {t("NO_OF_BANK_TO_WALLET_TRANSACTION")}
               </span>
@@ -382,7 +382,7 @@ function Home() {
 
           <div className="text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border">
             <h3 className="text-center mb-0 text-slate-900 font-bold md:text-3xl sm:text-lg dark:text-white">
-              <OCountUp value={dashboardDetails?.totalTagCount || 0} />
+              <OCountUp value={dashboardDetails?.totalAmountAdded || 0} />
               <span className="text-base text-neutral-400 font-normal block pt-3 ">
                 {t("TOTAL_AMOUNT_ADDED")}
               </span>
@@ -393,7 +393,7 @@ function Home() {
           </div>
           <div className="text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border">
             <h3 className="text-center mb-0 text-slate-900 font-bold md:text-3xl sm:text-lg dark:text-white">
-              <OCountUp value={dashboardDetails?.totalTagCount || 0} />
+              <OCountUp value={dashboardDetails?.totalAmountGiven || 0} />
               <span className="text-base text-neutral-400 font-normal block pt-3 ">
                 {t("TOTAL_AMOUNT_GIVEN")}
               </span>
