@@ -71,7 +71,7 @@ const Table = ({
                 {t("TIME_OF_CREATION")}
               </th>
               <th scope="col" className="py-3 px-6">
-                {t("STATUS")}
+                {t("O_STATUS")}
               </th>
               <th scope="col" className="py-3 px-6 text-center">
                 {t("O_ACTION")}
@@ -119,7 +119,7 @@ const Table = ({
                           helper.alertFunction(
                             `Are you sure you want to ${
                               e.target.checked ? "active" : "inactive"
-                            } '${item.name}'?`,
+                            } '${item.title}'?`,
                             item,
                             handelStatusChange
                           )
