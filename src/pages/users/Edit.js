@@ -39,7 +39,7 @@ const UserEdit = ({ setEditShowModal, getAllUser, item }) => {
     try {
       setIsLoading(true)
       const path = apiPath.updateUser + '/' + item._id
-      const result = await apiPut(path, data)
+      const result = await apiPut(path, {...data,dob:date})
       if (result.data.success) {
         getAllUser()
         setEditShowModal(false)

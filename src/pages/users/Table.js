@@ -259,7 +259,7 @@ setEditShowModal(!editShowModal)
                           </NavLink>
                         )}
 
-                        {(manager?.add || user?.role === "admin") &&
+                        {(manager?.add || user?.role === "admin") && userType==='local'&&
                           
                             <div onClick={() => handelEdit(item)}>
                               <AiFillEdit

@@ -65,10 +65,6 @@ const UserView = () => {
               </li>
 
               <li className='mb-3'>
-                <strong>{t('O_MOBILE_NUMBER')} : </strong> {'+'}{' '}
-                {item?.countryCode} {item?.mobile || 'N/A'}
-              </li>
-              <li className='mb-3'>
                 <strong>{t('REGISTERED_DATE')}: </strong>{' '}
                 {dayjs(item?.createdAt).format('DD-MM-YYYY hh:mm A') || 'N/A'}{' '}
               </li>
@@ -89,14 +85,7 @@ const UserView = () => {
                 <strong>{t('GENDER')}: </strong>
                 {startCase(item?.gender) || 'N/A'}
               </li>
-              <li className='mb-3'>
-                <strong>{t('USER_DOB')}: </strong>
-                {item?.dob ? (
-                  <>{dayjs(item?.dob).format('DD MMMM YYYY') || 'N/A'}</>
-                ) : (
-                  'N/A'
-                )}
-              </li>
+
               <li className='mb-3 mr-2'>
                 <strong>{t('Nationality')}: </strong>
                 {item?.tags?.map(element => element?.name)?.join(', ') || 'N/A'}
@@ -134,9 +123,24 @@ const UserView = () => {
               </li>
             </ul>
           </div>
+          <div>
+            <ul>
+              <li className='mb-3'>
+                <strong>{t('O_MOBILE_NUMBER')} : </strong> {'+'}{' '}
+                {item?.countryCode} {item?.mobile || 'N/A'}
+              </li>
+              <li className='mb-3'>
+                <strong>{t('USER_DOB')}: </strong>
+                {item?.dob ? (
+                  <>{dayjs(item?.dob).format('DD MMMM YYYY') || 'N/A'}</>
+                ) : (
+                  'N/A'
+                )}
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
-      {/* <div className="opacity-25 fixed inset-0 z-40 bg-black" /> */}
     </>
   )
 }
