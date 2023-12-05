@@ -91,8 +91,9 @@ function SubAdmin() {
     try {
       const payload = {
         status: item?.status === "inactive" ? "active" : "inactive",
+        type:'subAdmin'
       };
-      const path = `${apiPath.changeSubAdminStatus}/${item?._id}`;
+      const path = `${apiPath.changeStatus}/${item?._id}`;
       const result = await apiPut(path, payload);
       if (result?.status === 200) {
         notification.success(result.data.message);

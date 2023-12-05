@@ -219,17 +219,17 @@ function User () {
     <div>
       <div className='bg-[#F9F9F9] dark:bg-slate-900'>
         <div className='px-3 py-4'>
-          <div className='flex justify-center items-center grid grid-cols-2'>
+          <div className='flex justify-center items-center grid grid-cols-2 w-[500px]'>
             <button
               type='button'
-              className={` pr-6 bg-slate-400 text-sm px-8 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-black  sm:w-auto w-1/2 ${userType==='local'&& 'bg-gradientTo text-white'}`}
+              className={` pr-6 bg-white border border-1 border-[#000] text-sm px-8 ml-3 mb-3 py-2 rounded-lg items-center  text-black  sm:w-auto w-1/2 ${userType==='local'&& 'bg-[#000!important] text-white'}`}
               onClick={() => setUserType('local')}
             >
               {t('THAI_LOCAL')}
             </button>
             <button
               type='button'
-              className={`pr-6 bg-slate-400 text-sm px-8 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-black  sm:w-auto w-1/2 ${userType==='tourist'&& 'bg-gradientTo text-white'}`}
+              className={`pr-6 bg-white border border-1 border-[#000] text-sm px-8 ml-3 mb-3 py-2 rounded-lg items-center  text-black  sm:w-auto w-1/2 ${userType==='tourist' && 'bg-[#000!important] text-white'}`}
               onClick={() => setUserType('tourist')}
             >
               {t('FOREIGN_TOURIST')}

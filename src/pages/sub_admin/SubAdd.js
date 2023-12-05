@@ -105,6 +105,7 @@ const SubAdd = ({ props }) => {
           permission,
           name: data?.firstName + data?.lastName,
         };
+      
         path = apiPath.editSubAdmin + "/" + item?.item?._id;
         result = await apiPut(path, editSendData);
       } else {

@@ -32,8 +32,9 @@ const Table = ({
     try {
       const payload = {
         status: item?.status === "inactive" ? "active" : "inactive",
+        type:'user'
       };
-      const path = `${apiPath.changeUserStatus}/${item?._id}`;
+      const path = `${apiPath.changeStatus}/${item?._id}`;
       const result = await apiPut(path, payload);
       if (result?.status === 200) {
         notification.success(result.data.message);
@@ -120,7 +121,9 @@ setEditShowModal(!editShowModal)
               {userType==='tourist'&&<th scope="col" className="py-3 px-6 text-left">
                 {t("REFERRAL_CODE")}
               </th>}
-              
+              <th scope="col" className="py-3 px-6 text-left">
+                  {t("KYC_STATUS")}
+                </th>
               <th
                 scope="col"
                 className="py-3 px-6 cursor-pointer"
@@ -160,9 +163,7 @@ setEditShowModal(!editShowModal)
                 <th scope="col" className="py-3 px-6 text-left">
                   {t("O_STATUS")}
                 </th>
-                <th scope="col" className="py-3 px-6 text-left">
-                  {t("KYC")}
-                </th>
+              
                 </>
               )}
               <th scope="col" className="py-3 px-6 text-left">
@@ -179,39 +180,44 @@ setEditShowModal(!editShowModal)
                 >
                   <th
                     scope="row"
-                    className="py-4 px-3 border-r dark:border-[#ffffff38] font-medium text-gray-900  dark:text-white dark:border-[#ffffff38]"
+                    className="py-4 px-3 border-r  font-medium text-gray-900  dark:text-white dark:border-[#ffffff38]"
                   >
                     {i + 1 + 10 * (page - 1)}
                   </th>
-                  <td className="py-4 px-4 border-r dark:border-[#ffffff38] dark:border-[#ffffff38]">
+                  <td className="py-4 px-4 border-r  dark:border-[#ffffff38]">
                     {item?.firstName || "N/A"}
                   </td>
-                  <td className="py-2 px-4 border-r dark:border-[#ffffff38] dark:border-[#ffffff38]">
+                  <td className="py-2 px-4 border-r  dark:border-[#ffffff38]">
                     {item?.email || "N/A"}
                   </td>
-                  <td className="py-2 px-4 border-r dark:border-[#ffffff38] dark:border-[#ffffff38] text-left">
+                  <td className="py-2 px-4 border-r  dark:border-[#ffffff38] text-left">
                     {item?.mobile || "N/A"}
                   </td>
                  {userType==='local'&&
-                  <td className="py-2 px-4 border-r dark:border-[#ffffff38] dark:border-[#ffffff38] text-left">
+                  <td className="py-2 px-4 border-r  dark:border-[#ffffff38] text-left">
                     {item?.availableBalance || "N/A"}
                   </td>
 }
-                 { userType==='tourist'&&<td className="py-4 px-3 border-r dark:border-[#ffffff38] dark:border-[#ffffff38] ">
+                 { userType==='tourist'&&<td className="py-4 px-3 border-r  dark:border-[#ffffff38] ">
                     {startCase(item?.upcCode) || "N/A"}
                   </td>}
-                 { userType==='tourist'&&<td className="py-4 px-3 border-r dark:border-[#ffffff38] dark:border-[#ffffff38] ">
+                 { userType==='tourist'&&<td className="py-4 px-3 border-r  dark:border-[#ffffff38] ">
                     {startCase(item?.referralCode) || "N/A"}
                   </td>}
                  
-                  <td className="py-4 px-3 border-r dark:border-[#ffffff38] dark:border-[#ffffff38] text-center">
+                 
+                  <td className="py-4 px-3 border-r  dark:border-[#ffffff38] text-center">
+                    {startCase(item?.isKycApproved) ||
+                      "N/A"}
+                  </td>
+                  <td className="py-4 px-3 border-r  dark:border-[#ffffff38] text-center">
                     {dayjs(item?.createdAt).format("DD-MM-YYYY hh:mm A") ||
-                      "N/A"}{" "}
+                      "N/A"}
                   </td>
                   {(user?.permission?.[1]?.add ||
                     user?.permission?.length === 0) && (
                       <>
-                    <td className="py-2 px-4 border-r dark:border-[#ffffff38] dark:border-[#ffffff38] text-center">
+                    <td className="py-2 px-4 border-r  dark:border-[#ffffff38] text-center">
                       <label
                         className="inline-flex relative items-center cursor-pointer"
                         title={`${
@@ -235,31 +241,7 @@ setEditShowModal(!editShowModal)
                         <div className="w-10 h-5 bg-gray-200 rounded-full peer peer-focus:ring-0 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-gradientTo" />
                       </label>
                     </td>
-                    <td className="py-2 px-4 border-r dark:border-[#ffffff38] dark:border-[#ffffff38] text-center">
-                      <label
-                        className="inline-flex relative items-center cursor-pointer"
-                        title={`${
-                          item?.isKYCVerified === 1 ? "Active" : "Inactive"
-                        }`}
-                      >
-                        <input
-                          type="checkbox"
-                          className="sr-only peer"
-                          checked={item?.isKYCVerified === 1}
-                          disabled
-                          onChange={(e) =>
-                            helper.alertFunction(
-                              `Are you sure you want to ${
-                                e.target.checked ? "active" : "inactive"
-                              } user ?`,
-                              item,
-                              handelKYCStatus
-                            )
-                          }
-                        />
-                        <div className="w-10 h-5 bg-gray-200 rounded-full peer peer-focus:ring-0 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-gradientTo" />
-                      </label>
-                    </td>
+                    
                     </>
                   )}
                   <td className="py-2 px-4 border-l">

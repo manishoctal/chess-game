@@ -255,7 +255,7 @@ const formValidation = {
         value.trim() ? true : "White spaces not allowed.",
     },
   },
-  natinalityId: {
+  nationalityId: {
     required: "Please enter nationality Id.",
     pattern: {
       value: /^[^\s].*/,

@@ -33,7 +33,7 @@ const pathObj = {
   emailStatus: "/v1/admin/email-template/change-status",
   notificationToggle: "/v1/admin/notification-toggle",
   changeContentStatus: "/v1/admin/static-content/change-status",
-  getFAQs: "/v1/admin/faqs",
+  getFAQs: "/v1/admin/faq",
   changeFAQStatus: "/v1/admin/faqs/status",
   categoryListing: "/v1/admin/category",
   giftListing: "/v1/admin/gift",
@@ -59,6 +59,7 @@ const pathObj = {
   effectStatus: "/v1/admin/effects/status",
   filter: "/v1/admin/filter",
   filterStatus: "/v1/admin/filter/status",
+  changeStatus: "/v1/admin/change-status",
   effectListSuggestion: "/v1/admin/effects/suggestion/effectList",
   verficationDetail: "v1/admin/user/verification-details",
 };

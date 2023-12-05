@@ -14,7 +14,7 @@ const UserEdit = ({ setEditShowModal, getAllUser, item }) => {
   const { t } = useTranslation()
   const notification = useToastContext()
   const [isLoading, setIsLoading] = useState(false)
-  const [date, setDate] = useState('')
+  const [date, setDate] = useState(item?.dob)
   const [isValidityError, setIsValidityError] = useState(false)
   const today = new Date()
   const {
@@ -29,6 +29,8 @@ const UserEdit = ({ setEditShowModal, getAllUser, item }) => {
       firstName: item?.firstName,
       lastName: item?.lastName,
       mobile: item?.mobile,
+      address: item?.address,
+      nationalityId: item?.nationalityId,
       email: item?.email
     }
   })
@@ -118,7 +120,7 @@ const UserEdit = ({ setEditShowModal, getAllUser, item }) => {
                   <div className='md:py-4 sm:px-2 sm:py-3 md:px-7 px-2'>
                     <OInputField
                       wrapperClassName='relative z-0   w-full group'
-                      name='natinalityId'
+                      name='nationalityId'
                       inputLabel={
                         <>
                           {t('NATIONALITY_ID')}
@@ -129,8 +131,8 @@ const UserEdit = ({ setEditShowModal, getAllUser, item }) => {
                       maxLength={15}
                       onInput={e => preventMaxInput(e, 15)}
                       register={register(
-                        'natinalityId',
-                        formValidation['natinalityId']
+                        'nationalityId',
+                        formValidation['nationalityId']
                       )}
                       errors={errors}
                     />
