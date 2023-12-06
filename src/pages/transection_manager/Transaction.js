@@ -112,11 +112,7 @@ function Transaction () {
       isFilter: true
     })
   }
-  const onTableChange = e => {
-    setPage(1)
-    setFilterData({ ...filterData, category: e.target.value, isFilter: true })
-  }
-
+ 
  
 
   return (
@@ -148,23 +144,7 @@ function Transaction () {
                     isReset={filterData?.isReset}
                     setIsReset={setFilterData}
                   />
-                  <div className='flex items-center  ml-3 mb-3'>
-                    <select
-                      id=''
-                      type='text '
-                      name='category'
-                      className='block p-2 w-full text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0  peer'
-                      placeholder=' '
-                      onChange={e => onTableChange(e)}
-                      defaultValue='foreignTourist'
-                      value={filterData?.category}
-                    >
-                      <option value='foreignTourist' selected>
-                        {t('FOREIGN_TOURIST')}
-                      </option>
-                      <option value='thaiLocal'>{t('THAI_LOCAL')}</option>
-                    </select>
-                  </div>
+                  
                   <button
                     type='button'
                     onClick={handleReset}

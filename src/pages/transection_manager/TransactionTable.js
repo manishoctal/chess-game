@@ -3,7 +3,7 @@ import dayjs from 'dayjs'
 import { useTranslation } from 'react-i18next'
 import { isEmpty } from 'lodash'
 
-const Table = ({ artistVerification, page,userType }) => {
+const Table = ({ artistVerification, page, userType }) => {
   const { t } = useTranslation()
 
   return (
@@ -16,7 +16,7 @@ const Table = ({ artistVerification, page,userType }) => {
                 #
               </th>
               <th scope='col' className='py-3 px-6'>
-              {t('FIRST_NAME')}
+                {t('FIRST_NAME')}
               </th>
               <th scope='col' className='py-3 px-6'>
                 {t('USER_ID')}
@@ -24,14 +24,23 @@ const Table = ({ artistVerification, page,userType }) => {
               <th scope='col' className='py-3 px-6'>
                 {t('TRANSACTION_ID')}
               </th>
-             {userType==='tourist' &&<th scope='col' className='py-3 px-6'>
-                {t('TRANSACTION_AMOUNT')}
-              </th>}
-             {userType==='tourist' &&<th scope='col' className='py-3 px-6'>
-                {t('AMOUNT_DEPOSIT')}
-              </th>}
+              {userType === 'tourist' && (
+                <th scope='col' className='py-3 px-6'>
+                  {t('TRANSACTION_AMOUNT')}
+                </th>
+              )}
+              {userType === 'local' && (
+                <>
+                  <th scope='col' className='py-3 px-6'>
+                    {t('AMOUNT_DEPOSIT')}
+                  </th>
+                  <th scope='col' className='py-3 px-6'>
+                    {t('MODE_OF_PAYMENT')}
+                  </th>
+                </>
+              )}
               <th scope='col' className='py-3 px-6 text-center'>
-              {t('O_CREATED_AT')}
+                {t('O_CREATED_AT')}
               </th>
             </tr>
           </thead>
@@ -56,12 +65,21 @@ const Table = ({ artistVerification, page,userType }) => {
                 <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
                   {item?.transactionId || 'N/A'}
                 </td>
-                {userType==='tourist' &&<td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
-                  {item?.transactionId || 'N/A'}
-                </td>}
-                {userType==='local' &&<td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
-                  {item?.transactionId || 'N/A'}
-                </td>}
+                {userType === 'tourist' && (
+                  <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
+                    {item?.transactionId || 'N/A'}
+                  </td>
+                )}
+                {userType === 'local' && (
+                  <>
+                    <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
+                      {item?.transactionId || 'N/A'}
+                    </td>
+                    <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
+                      {item?.transactionId || 'N/A'}
+                    </td>
+                  </>
+                )}
                 <td className='py-2 px-4 border-r dark:border-[#ffffff38] text-center'>
                   {dayjs(item?.createdAt).format('DD-MM-YYYY hh:mm A')}
                 </td>
