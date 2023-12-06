@@ -80,7 +80,7 @@ const Permission = [
     shownAdd: true,
   },
   {
-    manager: "faq_manager",
+    manager: "FAQ",
     add: false,
     edit: false,
     view: false,

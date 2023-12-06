@@ -156,13 +156,13 @@ const Sidebar = () => {
                 <Documents />
               )}
 
-            {checkSidebarPermission('faq_manager') &&
+            {checkSidebarPermission('FAQ') &&
               generateNavLink('/faqs', 'NAV_FAQS', <Documents />)}
 
             {checkSidebarPermission('email_manager') &&
               generateNavLink(
                 '/email-manager',
-                'EMAIL_TEMPLATE_MANAGER',
+                'EMAIL_MANAGER',
                 <AiOutlineMail style={{ fontSize: '20px' }} />
               )}
 

@@ -204,6 +204,15 @@ const obj = {
   requiredField: async () => {
     return <span className="text-red-500">*</span>;
   },
+
+  getSeconds:(dateStr1,dateStr2)=>{
+    const date1 = dayjs(dateStr1);
+const date2 = dayjs(dateStr2);
+
+// Get the difference in seconds
+const diffInSeconds = date2.diff(date1, 'second');
+    return diffInSeconds
+  }
 };
 
 export default obj;
