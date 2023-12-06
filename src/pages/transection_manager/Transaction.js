@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { apiGet } from '../../utils/apiFetch'
 import apiPath from '../../utils/apiPath'
-import ForeignTouristTable from './ForeignTouristTable'
+import TransactionTable from './TransactionTable'
 import Pagination from '../Pagination'
 import dayjs from 'dayjs'
 import ODateRangePicker from 'components/shared/datePicker/ODateRangePicker'
@@ -18,6 +18,8 @@ function Transaction () {
   const [page, setPage] = useState(1)
   const [pageSize] = useState(10)
   const [isDelete, setIsDelete] = useState(false)
+  const [userType, setUserType] = useState('tourist')
+
   const [paginationObj, setPaginationObj] = useState({
     page: 1,
     pageCount: 1,
@@ -121,6 +123,22 @@ function Transaction () {
     <div>
       <div className='bg-[#F9F9F9]'>
         <div className='px-3 py-4'>
+        <div className='flex justify-center items-center grid grid-cols-2 w-[500px]'>
+            <button
+              type='button'
+              className={`pr-6 bg-white border border-1 border-[#000] text-sm px-8 ml-3 mb-3 py-2 rounded-lg items-center  text-black  sm:w-auto w-1/2 ${userType==='tourist' && 'bg-[#000!important] text-white'}`}
+              onClick={() => setUserType('tourist')}
+            >
+              {t('FOREIGN_TOURIST')}
+            </button>
+            <button
+              type='button'
+              className={` pr-6 bg-white border border-1 border-[#000] text-sm px-8 ml-3 mb-3 py-2 rounded-lg items-center  text-black  sm:w-auto w-1/2 ${userType==='local'&& 'bg-[#000!important] text-white'}`}
+              onClick={() => setUserType('local')}
+            >
+              {t('THAI_LOCAL')}
+            </button>
+          </div>
           <div className='bg-white border border-[#E9EDF9] rounded-lg'>
             <form className='border-b border-b-[#E3E3E3] 2xl:flex gap-2 px-4 py-3'>
               <div className='col-span-2 flex flex-wrap  items-center'>
@@ -157,14 +175,15 @@ function Transaction () {
                 </div>
               </div>
             </form>
-            {filterData.category==='foreignTourist'&&<ForeignTouristTable
+            <TransactionTable
               artistVerification={artistVerification}
               allTransection={allTransaction}
               page={page}
               setSort={setSort}
               sort={sort}
               manager={manager}
-            />}
+              userType={userType}
+            />
             {paginationObj?.totalItems ? (
               <Pagination
                 handlePageClick={handlePageClick}
@@ -173,14 +192,7 @@ function Transaction () {
                 page={page}
               />
             ) : null}
-            {filterData.category==='thaiLocal'&&<ThaiLocalTable
-              artistVerification={artistVerification}
-              allTransection={allTransaction}
-              page={page}
-              setSort={setSort}
-              sort={sort}
-              manager={manager}
-            />}
+            
             {paginationObj?.totalItems ? (
               <Pagination
                 handlePageClick={handlePageClick}
