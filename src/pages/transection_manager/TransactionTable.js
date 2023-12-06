@@ -3,7 +3,7 @@ import dayjs from 'dayjs'
 import { useTranslation } from 'react-i18next'
 import { isEmpty } from 'lodash'
 
-const Table = ({ artistVerification, page }) => {
+const Table = ({ artistVerification, page,userType }) => {
   const { t } = useTranslation()
 
   return (
@@ -22,11 +22,14 @@ const Table = ({ artistVerification, page }) => {
                 {t('USER_ID')}
               </th>
               <th scope='col' className='py-3 px-6'>
-                {t('TRANSACTION_AMOUNT')}
-              </th>
-              <th scope='col' className='py-3 px-6'>
                 {t('TRANSACTION_ID')}
               </th>
+             {userType==='tourist' &&<th scope='col' className='py-3 px-6'>
+                {t('TRANSACTION_AMOUNT')}
+              </th>}
+             {userType==='tourist' &&<th scope='col' className='py-3 px-6'>
+                {t('AMOUNT_DEPOSIT')}
+              </th>}
               <th scope='col' className='py-3 px-6 text-center'>
               {t('O_CREATED_AT')}
               </th>
@@ -53,9 +56,12 @@ const Table = ({ artistVerification, page }) => {
                 <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
                   {item?.transactionId || 'N/A'}
                 </td>
-                <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
+                {userType==='tourist' &&<td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
                   {item?.transactionId || 'N/A'}
-                </td>
+                </td>}
+                {userType==='local' &&<td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
+                  {item?.transactionId || 'N/A'}
+                </td>}
                 <td className='py-2 px-4 border-r dark:border-[#ffffff38] text-center'>
                   {dayjs(item?.createdAt).format('DD-MM-YYYY hh:mm A')}
                 </td>

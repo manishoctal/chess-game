@@ -222,17 +222,17 @@ function User () {
           <div className='flex justify-center items-center grid grid-cols-2 w-[500px]'>
             <button
               type='button'
-              className={` pr-6 bg-white border border-1 border-[#000] text-sm px-8 ml-3 mb-3 py-2 rounded-lg items-center  text-black  sm:w-auto w-1/2 ${userType==='local'&& 'bg-[#000!important] text-white'}`}
-              onClick={() => setUserType('local')}
-            >
-              {t('THAI_LOCAL')}
-            </button>
-            <button
-              type='button'
               className={`pr-6 bg-white border border-1 border-[#000] text-sm px-8 ml-3 mb-3 py-2 rounded-lg items-center  text-black  sm:w-auto w-1/2 ${userType==='tourist' && 'bg-[#000!important] text-white'}`}
               onClick={() => setUserType('tourist')}
             >
               {t('FOREIGN_TOURIST')}
+            </button>
+            <button
+              type='button'
+              className={` pr-6 bg-white border border-1 border-[#000] text-sm px-8 ml-3 mb-3 py-2 rounded-lg items-center  text-black  sm:w-auto w-1/2 ${userType==='local'&& 'bg-[#000!important] text-white'}`}
+              onClick={() => setUserType('local')}
+            >
+              {t('THAI_LOCAL')}
             </button>
           </div>
           <div className='bg-white border border-[#E9EDF9] rounded-lg dark:bg-slate-800 dark:border-[#ffffff38]'>

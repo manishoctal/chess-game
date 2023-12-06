@@ -87,7 +87,7 @@ const UserView = () => {
               </li>
 
               <li className='mb-3 mr-2'>
-                <strong>{t('Nationality')}: </strong>
+                <strong>{t('NATIONALITY')}: </strong>
                 {item?.tags?.map(element => element?.name)?.join(', ') || 'N/A'}
               </li>
               <li className='mb-3 mr-2'>
