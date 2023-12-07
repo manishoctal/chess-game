@@ -59,7 +59,7 @@ const AddScratchCard = ({ setShowModal, allScratchCard }) => {
           <div className='md:py-4 sm:px-2 sm:py-8 px-7'>
             <div className='border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none lg:min-w-[762px]'>
               <div className='flex items-center justify-between p-5 border-b border-solid border-slate-200 rounded-t'>
-                <h3 className='text-xl font-semibold'>{t('EDIT_USER')}</h3>
+                <h3 className='text-xl font-semibold'>{t('ADD_NEW_COUPON')}</h3>
                 <button
                   className=' ml-auto flex items-center justify-center  text-black border-2 rounded-full  h-8 w-8 float-right text-3xl leading-none font-extralight outline-none focus:outline-none'
                   onClick={() => setShowModal(false)}
@@ -203,7 +203,7 @@ const AddScratchCard = ({ setShowModal, allScratchCard }) => {
                     type='submit'
                     onClick={handleSubmit(handleSubmitForm)}
                   >
-                    {t('O_EDIT')}
+                    {t('O_ADD')}
                   </button>
                 )}
               </div>

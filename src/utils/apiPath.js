@@ -27,8 +27,9 @@ const pathObj = {
   getDashboardDetails: "/v1/admin/dashboard",
   addMoneyToUserWallet: "/v1/admin/user/addMoneyToUserWallet",
   transactionList: "/v1/admin/transaction/transactionList",
-  scratchCardHistory: "/v1/admin/scratchCardHistory",
+  scratchCardHistory: "/v1/admin/scratchCard/history",
   addScratchCard: "/v1/admin/scratchCard",
+  listAddMoneyToUserWallet: "/v1/admin/user/listAddMoneyToUserWallet",
   allNotificationUser: "/v1/admin/user/all-users",
 };
 

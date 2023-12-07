@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom'
 import useToastContext from 'hooks/useToastContext'
 import ScratchCardTable from './ScratchCardTable'
 import AddScratchCard from './AddScratchCard'
+import ScratchCardUsersTable from './ScratchCardUsersTable'
 
 function ScratchCardManager () {
   const { t } = useTranslation()
@@ -44,7 +45,6 @@ function ScratchCardManager () {
     sortType: 'desc'
   })
 
-  const [ScratchCardUsersTable, setScratchCardUsersTable] = useState(false)
 
   const allScratchCard = async (data, pageNO) => {
     try {
@@ -230,7 +230,9 @@ function ScratchCardManager () {
                 )}
               </div>
             </form>
-           <ScratchCardTable subAdmin={subAdmin?.docs} page={page} ScratchCardUsersTable={ScratchCardUsersTable} setScratchCardUsersTable={setScratchCardUsersTable}/>
+          <ScratchCardTable subAdmin={subAdmin?.docs} page={page} />
+
+          
           
 
             <div className='flex justify-between'>

@@ -24,7 +24,8 @@ import NotificationAdd from 'pages/notification_manager/NotificationAdd'
 import Transaction from 'pages/transection_manager/Transaction'
 import UserWalletHistory from 'pages/users/UserWalletHistory'
 import TransactionDetails from 'pages/users/TransactionDetails'
-import ScratchCardManager from 'pages/scratch_card_,manager/ScratchCardManager'
+import ScratchCardManager from 'pages/scratch_card_manager/ScratchCardManager'
+import ScratchCardUsersTable from 'pages/scratch_card_manager/ScratchCardUsersTable'
 
 const UseChange = ({ data }) => {
   const { t } = useTranslation()
@@ -110,7 +111,16 @@ const AdminRoutes = {
       element: <ScratchCardManager />,
       name: (
         <>
-          <UseChange data='THAI_LOCAL_DEPOSIT_MANAGER' />
+          <UseChange data='SCRATCH_CARD_MANAGER' />
+        </>
+      )
+    },
+    {
+      path: '/scratch-card-manager/view',
+      element: <ScratchCardUsersTable />,
+      name: (
+        <>
+          <UseChange data='SCRATCH_CARD_MANAGER' />
         </>
       )
     },
