@@ -23,6 +23,10 @@ const pathObj = {
   verficationDetail: "v1/admin/user/verification-details",
   notifications: "v1/admin/notification",
   getSettings: "/v1/admin/setting",
+  getUserTransaction: "/v1/admin/transaction/getUserTransaction",
+  getDashboardDetails: "/v1/admin/dashboard",
+  addMoneyToUserWallet: "/v1/admin/user/addMoneyToUserWallet",
+  transactionList: "/v1/admin/transaction/transactionList",
   allNotificationUser: "/v1/admin/user/all-users",
 };
 

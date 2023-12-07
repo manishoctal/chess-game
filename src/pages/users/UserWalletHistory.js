@@ -3,13 +3,15 @@ import { apiGet, apiPost } from '../../utils/apiFetch'
 import apiPath from '../../utils/apiPath'
 import Table from './Table'
 import Pagination from '../Pagination'
+import UserView from './UserView'
 import AuthContext from 'context/AuthContext'
 import dayjs from 'dayjs'
 import ODateRangePicker from 'components/shared/datePicker/ODateRangePicker'
 import { useTranslation } from 'react-i18next'
 import useToastContext from 'hooks/useToastContext'
+import UserWalletHistoryTable from './UserWalletHistoryTable'
 
-function User () {
+function UserWalletHistory () {
   const { t } = useTranslation()
   const notification = useToastContext()
   const { logoutUser, user, updatePageName } = useContext(AuthContext)
@@ -20,9 +22,7 @@ function User () {
   })
   const [, setEditShowModal] = useState(false)
 
-  const [viewShowModal, setViewShowModal] = useState(false)
   const [users, setAllUser] = useState([])
-  const [userType, setUserType] = useState('tourist')
   const [page, setPage] = useState(1)
   const [pageSize, setPageSize] = useState(10)
   const [item, setItem] = useState('')
@@ -30,36 +30,15 @@ function User () {
   const [searchTerm, setSearchTerm] = useState('')
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('')
   const [isInitialized, setIsInitialized] = useState(false)
-  const [toggle, setToggle] = useState(false)
-
-  const toggleModalAddEdit = async data => {
-    setToggle(!toggle)
-    try {
-      let path
-      path = apiPath.verficationDetail
-      const result = await apiGet(path, { userId: data?._id })
-      const response = result?.data?.results
-      if (result.data.success) {
-        setItem(response)
-      }
-    } catch (error) {
-      console.log('error in get all users list==>>>>', error)
-      notification.error(error.message)
-    }
-  }
 
   const [filterData, setFilterData] = useState({
-    isKYCVerified: '',
+    verificationStatus: '',
     category: '',
     searchkey: '',
     startDate: '',
     endDate: '',
     isReset: false,
     isFilter: false
-  })
-  const [sort, setSort] = useState({
-    sort_key: 'createdAt',
-    sort_type: 'desc'
   })
 
   const getAllUser = async data => {
@@ -70,25 +49,33 @@ function User () {
         endDate,
         searchkey,
         isFilter,
-        isKYCVerified
+        verificationStatus
       } = filterData
-
+      if (
+        (data?.deletePage && !(users?.length > 1)) ||
+        (isFilter && category && data?.statusChange && !(users?.length > 1))
+      ) {
+        if (!(users?.length > 1)) {
+          setPage(page - 1)
+          setIsDelete(true)
+          setPaginationObj({ ...paginationObj, page: page - 1 })
+        }
+      } else {
+        setIsDelete(false)
+      }
       const payload = {
         page,
         pageSize: pageSize,
-        userType,
         status: category,
         startDate: startDate ? dayjs(startDate).format('YYYY-MM-DD') : null,
         endDate: endDate ? dayjs(endDate).format('YYYY-MM-DD') : null,
         keyword: searchkey?.trim(),
-        sortKey: sort?.sort_key,
-        sortType: sort?.sort_type,
-        isKYCVerified
+
+        verificationStatus: verificationStatus
       }
 
       const path = apiPath.getUsers
       const result = await apiGet(path, payload)
-
       if (result?.status === 200) {
         const response = result?.data?.results
         const resultStatus = result?.data?.success
@@ -125,18 +112,14 @@ function User () {
     setEditShowModal(true)
   }
 
-  const handleUserView = userItem => {
-    setItem(userItem)
-    setViewShowModal(true)
-    updatePageName(` ${t('VIEW') + ' ' + t('USER_MANAGER')}`)
-  }
+ 
 
   useEffect(() => {
-    getAllUser()
-  }, [page, filterData, sort, pageSize, userType])
+    // getAllUser();
+  }, [page, filterData, pageSize])
 
   useEffect(() => {
-    updatePageName(t('O_USERS'))
+    updatePageName(t('USER_WALLET_HISTORY_ADMIN_AMOUNT'))
   }, [])
 
   const handleReset = () => {
@@ -148,7 +131,7 @@ function User () {
       endDate: '',
       isReset: true,
       isFilter: false,
-      isKYCVerified: ''
+      verificationStatus: ''
     })
     setPage(1)
     setIsDelete(true)
@@ -167,26 +150,7 @@ function User () {
     setIsDelete(true)
   }
 
-  const statusPage = e => {
-    setFilterData({
-      ...filterData,
-      category: e.target.value,
-      isFilter: true,
-      isReset: false
-    })
-    setPage(1)
-    setIsDelete(true)
-  }
-  const handleVerify = e => {
-    setFilterData({
-      ...filterData,
-      isKYCVerified: e?.target?.value,
-      isFilter: true,
-      isReset: false
-    })
-    setPage(1)
-    setIsDelete(true)
-  }
+ 
 
   useEffect(() => {
     if (!isInitialized) {
@@ -217,67 +181,15 @@ function User () {
     <div>
       <div className='bg-[#F9F9F9] dark:bg-slate-900'>
         <div className='px-3 py-4'>
-          <div className='flex justify-center items-center grid grid-cols-2 w-[500px]'>
-            <button
-              type='button'
-              className={`pr-6 bg-white border border-1 border-[#000] text-sm px-8 ml-3 mb-3 py-2 rounded-lg items-center  text-black  sm:w-auto w-1/2 ${userType==='tourist' && 'bg-[#000!important] text-white'}`}
-              onClick={() => setUserType('tourist')}
-            >
-              {t('FOREIGN_TOURIST')}
-            </button>
-            <button
-              type='button'
-              className={` pr-6 bg-white border border-1 border-[#000] text-sm px-8 ml-3 mb-3 py-2 rounded-lg items-center  text-black  sm:w-auto w-1/2 ${userType==='local'&& 'bg-[#000!important] text-white'}`}
-              onClick={() => setUserType('local')}
-            >
-              {t('THAI_LOCAL')}
-            </button>
-          </div>
           <div className='bg-white border border-[#E9EDF9] rounded-lg dark:bg-slate-800 dark:border-[#ffffff38]'>
             <form className='border-b border-b-[#E3E3E3]  px-4 py-3 pt-5 flex flex-wrap justify-between'>
               <div className='flex flex-wrap items-center'>
-                <div className='flex items-center lg:pt-0 pt-3 justify-center'> 
+                <div className='flex items-center lg:pt-0 pt-3 justify-center'>
                   <ODateRangePicker
                     handleDateChange={handleDateChange}
                     isReset={filterData?.isReset}
                     setIsReset={setFilterData}
                   />
-
-                  <div className='flex items-center mb-3 ml-3'>
-                    <select
-                      id='countries'
-                      type='password'
-                      name='floating_password'
-                      className='block p-2 w-full text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer'
-                      placeholder=' '
-                      // value={filterData?.category}
-                      onChange={statusPage}
-                    >
-                      <option defaultValue value=''>
-                        {t('O_ALL')}
-                      </option>
-                      <option value='active'>{t('O_ACTIVE')}</option>
-                      <option value='inactive'>{t('O_INACTIVE')}</option>
-                    </select>
-                  </div>
-
-                  <div className='flex items-center mb-3 ml-3'>
-                    <select
-                      id='countries'
-                      type=' password'
-                      name='floating_password'
-                      className='block p-2 w-full text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF] focus:outline-none focus:ring-0  peer'
-                      placeholder=' '
-                      value={filterData?.isKYCVerified}
-                      onChange={e => handleVerify(e)}
-                    >
-                      <option defaultValue value=''>
-                        {t('ALL_USERS')}
-                      </option>
-                      <option value='completed'>{t('COMPLETED')}</option>
-                      <option value='pending'>{t('PENDING')}</option>
-                    </select>
-                  </div>
 
                   <button
                     type='button'
@@ -332,19 +244,8 @@ function User () {
                 </div>
               </div>
             </form>
-            <Table
-              users={users}
-              user={user}
-              getAllUser={getAllUser}
-              handelEdit={handelEdit}
-              handleUserView={handleUserView}
-              page={page}
-              setSort={setSort}
-              sort={sort}
-              setPage={setPage}
-              userType={userType}
-              manager={manager}
-            />
+            <UserWalletHistoryTable users={users} page={page} />
+
 
             <div className='flex justify-between'>
               <div className='flex items-center mb-3 ml-3'>
@@ -379,15 +280,7 @@ function User () {
           </div>
         </div>
       </div>
-
-      {/* {toggle && (
-        <VerifyPopup
-          onHide={toggleModalAddEdit}
-          item={item}
-          getAllUser={getAllUser}
-        />
-      )} */}
     </div>
   )
 }
-export default User
+export default UserWalletHistory

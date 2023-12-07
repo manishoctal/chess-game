@@ -77,9 +77,9 @@ const Settings = () => {
       if (dirtyFields.signupBonus) {
         formData.append("signupBonus", data.signupBonus);
       }
-      // if (dirtyFields.timeLogForActiveUsers) {
-      //   formData.append("timeLogForActiveUsers", data.timeLogForActiveUsers);
-      // }
+      if (dirtyFields.timeLogForActiveUsers) {
+        formData.append("timeLogForActiveUsers", data.timeLogForActiveUsers);
+      }
       if (dirtyFields.upcCodeReferralAmount) {
         formData.append("upcCodeReferralAmount", data.upcCodeReferralAmount);
       }

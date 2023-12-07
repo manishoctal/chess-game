@@ -23,6 +23,8 @@ import ReportAbuse from 'pages/report_abuse_manager/ReportAbuse'
 import NotificationAdd from 'pages/notification_manager/NotificationAdd'
 import ThaiLocalDepositManager from 'pages/thai_local_deposit_manager/ThaiLocalDepositManager'
 import Transaction from 'pages/transection_manager/Transaction'
+import UserWalletHistory from 'pages/users/UserWalletHistory'
+import TransactionDetails from 'pages/users/TransactionDetails'
 
 const UseChange = ({ data }) => {
   const { t } = useTranslation()
@@ -76,6 +78,24 @@ const AdminRoutes = {
       )
     },
     {
+      path: '/usersWalletHistory',
+      element: <UserWalletHistory />,
+      name: (
+        <>
+          <UseChange data='USER_MANAGER' />
+        </>
+      )
+    },
+    {
+      path: '/transactionDetails',
+      element: <TransactionDetails />,
+      name: (
+        <>
+          <UseChange data='USER_MANAGER' />
+        </>
+      )
+    },
+    {
       path: '/transactions',
       element: <Transaction />,
       name: (
@@ -118,7 +138,7 @@ const AdminRoutes = {
       element: <EmailTemplate />,
       name: (
         <>
-          <UseChange data='EMAIL_TEMPLATE_MANAGER' />
+          <UseChange data='EMAIL_MANAGER' />
         </>
       )
     },
@@ -127,7 +147,7 @@ const AdminRoutes = {
       element: <AddEditEmail />,
       name: (
         <>
-          <UseChange data='EMAIL_TEMPLATE_MANAGER' />
+          <UseChange data='EMAIL_MANAGER' />
         </>
       )
     },
@@ -136,7 +156,7 @@ const AdminRoutes = {
       element: <AddEditEmail />,
       name: (
         <>
-          <UseChange data='EMAIL_TEMPLATE_MANAGER' />
+          <UseChange data='EMAIL_MANAGER' />
         </>
       )
     },
