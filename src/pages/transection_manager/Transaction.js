@@ -46,13 +46,13 @@ function Transaction () {
       const payload = {
         page,
         pageSize,
-        status: category,
+        // status: category,
         startDate: startDate ? dayjs(startDate).format('YYYY-MM-DD') : null,
         endDate: endDate ? dayjs(endDate).format('YYYY-MM-DD') : null,
 
         sortBy: sort.sortBy,
         sortType: sort.sortType,
-        userType
+        transactionType :userType
       }
 
       const path = apiPath.transactionList
