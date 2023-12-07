@@ -100,7 +100,7 @@ function Faq() {
               {/* <div className="col-span-2 flex flex-wrap  items-center">
                 <div
                   className="mr-3 mt--10"
-                  onClick={() => navigator("/StaticContent")}
+                  onClick={() => navigator("/static-content")}
                 >
                   <BsArrowLeftSquare
                     className="dark:text-white"

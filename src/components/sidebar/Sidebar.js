@@ -134,10 +134,12 @@ const Sidebar = () => {
                 'NOTIFICATION_MANAGER',
                 <GiCartwheel style={{ fontSize: '20px' }} />
               )}
-            {checkSidebarPermission('thai_local_deposit_manager') &&
+            
+         
+            {checkSidebarPermission('scratch_card_manager') &&
               generateNavLink(
-                '/thai-local-deposit-manager',
-                'THAI_LOCAL_DEPOSIT_MANAGER',
+                '/scratch-card-manager',
+                'SCRATCH_CARD_MANAGER',
                 <GiCartwheel style={{ fontSize: '20px' }} />
               )}
 
@@ -151,7 +153,7 @@ const Sidebar = () => {
 
             {checkSidebarPermission('static_page_management') &&
               generateNavLink(
-                '/StaticContent',
+                '/static-content',
                 'NAV_STATIC_CONTENTS',
                 <Documents />
               )}

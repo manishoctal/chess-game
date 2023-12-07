@@ -1,7 +1,7 @@
 import React from 'react'
 import dayjs from 'dayjs'
 import { useTranslation } from 'react-i18next'
-import { isEmpty } from 'lodash'
+import { isEmpty, startCase } from 'lodash'
 
 const Table = ({ artistVerification, page, userType }) => {
   const { t } = useTranslation()
@@ -57,26 +57,26 @@ const Table = ({ artistVerification, page, userType }) => {
                   {i + 1 + 10 * (page - 1)}
                 </th>
                 <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
-                  {item?.transactionId || 'N/A'}
+                  {startCase(item?.user?.firstName) || 'N/A'}
                 </td>
                 <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
-                  {item?.transactionId || 'N/A'}
+                  {item?.user?._id || 'N/A'}
                 </td>
                 <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
                   {item?.transactionId || 'N/A'}
                 </td>
                 {userType === 'tourist' && (
                   <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
-                    {item?.transactionId || 'N/A'}
+                    {item?.transactionAmount || 'N/A'}
                   </td>
                 )}
                 {userType === 'local' && (
                   <>
                     <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
-                      {item?.transactionId || 'N/A'}
+                      {item?.transactionAmount || 'N/A'}
                     </td>
                     <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
-                      {item?.transactionId || 'N/A'}
+                      {startCase(item?.transactionType) || 'N/A'}
                     </td>
                   </>
                 )}

@@ -3,10 +3,12 @@ import { isEmpty, startCase } from 'lodash'
 import { useTranslation } from 'react-i18next'
 import dayjs from 'dayjs'
 import obj from 'utils/helpers'
+import QRCodeGenerator from 'components/QRCodeGenerator'
 
-const TransactionDetailsTable = ({ transactions, page ,userType}) => {
+const TransactionDetailsTable = ({ transactions, page, userType }) => {
   const { t } = useTranslation()
-console.log('transactions', transactions)
+  console.log('transactions', transactions)
+
   return (
     <div className='p-3'>
       <div className='overflow-x-auto relative rounded-lg border'>
@@ -23,27 +25,29 @@ console.log('transactions', transactions)
                 {t('Account Balance')}
               </th>
 
-             {userType==='tourist'&& <>
-             <th scope='col' className='py-3 px-6 text-left'>
-                {t('Reference no.')}
-              </th>
-              <th scope='col' className='py-3 px-3'>
-                {t('Total payment')}
-              </th>
-              <th scope='col' className='py-3 px-3'>
-                {t('Transaction fees')}
-              </th>
-             </>
-              }
-             {userType==='local'&& <>
-             <th scope='col' className='py-3 px-6 text-left'>
-                {t('Amount paid')}
-              </th>
-              <th scope='col' className='py-3 px-3'>
-                {t('Thai local reword')}
-              </th>
-             </>
-              }
+              {userType === 'tourist' && (
+                <>
+                  <th scope='col' className='py-3 px-6 text-left'>
+                    {t('Reference no.')}
+                  </th>
+                  <th scope='col' className='py-3 px-3'>
+                    {t('Total payment')}
+                  </th>
+                  <th scope='col' className='py-3 px-3'>
+                    {t('Transaction fees')}
+                  </th>
+                </>
+              )}
+              {userType === 'local' && (
+                <>
+                  <th scope='col' className='py-3 px-6 text-left'>
+                    {t('Amount paid')}
+                  </th>
+                  <th scope='col' className='py-3 px-3'>
+                    {t('Thai local reword')}
+                  </th>
+                </>
+              )}
               <th scope='col' className='py-3 px-6 text-left'>
                 {t('Name of the foreign tourist')}
               </th>
@@ -93,51 +97,61 @@ console.log('transactions', transactions)
                   <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
                     {item?.country || 'N/A'}
                   </td>
-                  {userType==='tourist'&&<>
+                  {userType === 'tourist' && (
+                    <>
+                      <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
+                        {item?.refNumber ?? 'N/A'}
+                      </td>
+                      <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
+                        {item?.country || 'N/A'}
+                      </td>
+                      <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
+                        {item?.transactionFee ?? 'N/A'}
+                      </td>
+                    </>
+                  )}
+                  {userType === 'local' && (
+                    <>
+                      <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
+                        {item?.country || 'N/A'}
+                      </td>
+                      <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
+                        {item?.country || 'N/A'}
+                      </td>
+                    </>
+                  )}
                   <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
-                    {item?.refNumber ?? 'N/A'}
+                    {item?.country || 'N/A'}
                   </td>
                   <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
                     {item?.country || 'N/A'}
                   </td>
                   <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
-                    {item?.transactionFee ?? 'N/A'}
-
-                  </td>
-                  </>}
-                  {userType==='local'&&<>
-                  <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
-                    {item?.country || 'N/A'}
-                  </td>
-                  <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
-                    {item?.country || 'N/A'}
-                  </td>
-                  </>}
-                  <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
-                    {item?.country || 'N/A'}
-                  </td>
-                  <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
-                    {item?.country || 'N/A'}
-                  </td>
-                  <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
-                  {dayjs(item?.qrSendTime).format('hh:mm A') || 'N/A'}
+                    {dayjs(item?.qrSendTime).format('hh:mm A') || 'N/A'}
                   </td>
                   <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
                     {dayjs(item?.paymentReceiptTime).format('hh:mm A') || 'N/A'}
                   </td>
                   <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
-                    {obj.getSeconds(item?.qrSendTime,item?.paymentReceiptTime) ?? 'N/A'}
+                    {obj.getSeconds(
+                      item?.qrSendTime,
+                      item?.paymentReceiptTime
+                    ) ?? 'N/A'}
                   </td>
                   <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
-                    {item?.country || 'N/A'}
+                    <QRCodeGenerator qrCodeValue={item.qrCode} />
                   </td>
-                  <td className="py-4 px-6 border-r flex justify-center">
-                  {item?.paymentReceiptImage ? (
-                    <img src={item?.paymentReceiptImage} alt="image" width="80" />
-                  ) : (
-                    "NA"
-                  )}
-                </td>
+                  <td className='py-4 px-6 border-r flex justify-center'>
+                    {item?.paymentReceiptImage ? (
+                      <img
+                        src={item?.paymentReceiptImage}
+                        alt='image'
+                        width='80'
+                      />
+                    ) : (
+                      'NA'
+                    )}
+                  </td>
                   <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
                     {item?.country || 'N/A'}
                   </td>

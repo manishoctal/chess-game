@@ -289,9 +289,9 @@ function Home() {
       </div>
       <div className="py-4 px-4 md:px-8 dark:bg-slate-900">
         <div className="sale_report grid pt-10 3xl:grid-cols-4 gap-y-10 gap-4 gap-x-10 2xl:grid-cols-4 sm:grid-cols-2 mb-7 ">
-          <div
+          {/* <div
             className="text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border"
-            // onClick={() => navigate("/sub-admin-manager")}
+           
           >
             <h3 className="text-center mb-0 text-slate-900 font-bold md:text-3xl sm:text-lg dark:text-white">
               <OCountUp value={dashboardDetails?.totalUsersCount} />
@@ -306,7 +306,7 @@ function Home() {
 
           <div
             className="text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border"
-            // onClick={() => navigate("/customer-manager")}
+            
           >
             <h3 className="text-center mb-0 text-slate-900 font-bold md:text-3xl sm:text-lg dark:text-white">
               <OCountUp value={dashboardDetails?.totalActiveUsersCount} />
@@ -322,9 +322,7 @@ function Home() {
 
           <div
             className="text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border"
-            // onClick={() =>
-            //   navigate("/customer-manager", { state: "collector" })
-            // }
+            
           >
             <h3 className="text-center mb-0 text-slate-900 font-bold md:text-2xl sm:text-lg text-lg dark:text-white">
               <OCountUp value={dashboardDetails?.totalInActiveUsersCount || 0} />
@@ -335,7 +333,7 @@ function Home() {
             <span className="text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-10px] p-3 border z-10 bg-white">
               <MdOutlineCollectionsBookmark className="h-8 w-8" />
             </span>
-          </div>
+          </div> */}
 
           <div className="text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border">
             <h3 className="text-center mb-0 text-slate-900 font-bold md:text-3xl sm:text-lg dark:text-white">
@@ -351,7 +349,7 @@ function Home() {
 
           <div
             className="text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border"
-            // onClick={() => navigate("/artwork-manager")}
+            
           >
             <h3 className="text-center mb-0 text-slate-900 font-bold md:text-3xl sm:text-lg dark:text-white">
               <OCountUp value={dashboardDetails?.totalWalletToBankTransactionCount || 0} />
@@ -402,7 +400,7 @@ function Home() {
               <GiSolarTime className="h-8 w-8" />
             </span>
           </div>
-          <div className="text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border">
+          {/* <div className="text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border">
             <h3 className="text-center mb-0 text-slate-900 font-bold md:text-3xl sm:text-lg dark:text-white">
               <OCountUp value={dashboardDetails?.totalTagCount || 0} />
               <span className="text-base text-neutral-400 font-normal block pt-3 ">
@@ -412,7 +410,7 @@ function Home() {
             <span className="text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-10px] p-3 border z-10 bg-white">
               <GiSolarTime className="h-8 w-8" />
             </span>
-          </div>
+          </div> */}
           <div className="text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border">
             <h3 className="text-center mb-0 text-slate-900 font-bold md:text-3xl sm:text-lg dark:text-white">
               <OCountUp value={dashboardDetails?.totalTagCount || 0} />

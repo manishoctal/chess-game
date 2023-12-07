@@ -212,12 +212,12 @@ const Table = ({
                     )}
                     {userType === 'tourist' && (
                       <td className='py-4 px-3 border-r  dark:border-[#ffffff38] '>
-                        {startCase(item?.upcCode) || 'N/A'}
+                        {item?.upcCode|| 'N/A'}
                       </td>
                     )}
                     {userType === 'tourist' && (
                       <td className='py-4 px-3 border-r  dark:border-[#ffffff38] '>
-                        {startCase(item?.referralCode) || 'N/A'}
+                        {item?.referralCode || 'N/A'}
                       </td>
                     )}
 
@@ -264,7 +264,7 @@ const Table = ({
                             <NavLink
                               onClick={() => handleUserView(item)}
                               to='/users/view'
-                              state={item}
+                              state={{...item,userType}}
                               title={t('O_VIEW')}
                               className='px-2 py-2'
                             >

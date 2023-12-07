@@ -34,8 +34,8 @@ const Settings = () => {
     reset,
     getValues,
     watch,
-   
-    formState: { isDirty, errors ,dirtyFields}
+
+    formState: { isDirty, errors, dirtyFields }
   } = useForm({
     mode: 'onBlur',
     shouldFocusError: true,
@@ -52,38 +52,8 @@ const Settings = () => {
   const handleSubmitForm = async data => {
     try {
       setSettingChangeLoading(true)
-      const formData = new FormData();
-      if (dirtyFields.email) {
-        formData.append("email", data.email);
-      }
-      if (dirtyFields.maxAmountForKeepTourist) {
-        formData.append("maxAmountForKeepTourist", data.maxAmountForKeepTourist);
-      }
-      if (dirtyFields.mimThresholdAmountForEarningRewardRequest) {
-        formData.append("mimThresholdAmountForEarningRewardRequest", data.mimThresholdAmountForEarningRewardRequest);
-      }
-      if (dirtyFields.minWithdrawAmountToBank) {
-        formData.append("minWithdrawAmountToBank", data.minWithdrawAmountToBank);
-      }
-      if (dirtyFields.negativeAmountMaxLimit) {
-        formData.append("negativeAmountMaxLimit", data.negativeAmountMaxLimit);
-      }
-      if (dirtyFields.referralBonusLocals) {
-        formData.append("referralBonusLocals", data.referralBonusLocals);
-      }
-      if (dirtyFields.referralBonusTourist) {
-        formData.append("referralBonusTourist", data.referralBonusTourist);
-      }
-      if (dirtyFields.signupBonus) {
-        formData.append("signupBonus", data.signupBonus);
-      }
-      if (dirtyFields.timeLogForActiveUsers) {
-        formData.append("timeLogForActiveUsers", data.timeLogForActiveUsers);
-      }
-      if (dirtyFields.upcCodeReferralAmount) {
-        formData.append("upcCodeReferralAmount", data.upcCodeReferralAmount);
-      }
-      const res = await apiPut(pathObj.getSettings, formData)
+
+      const res = await apiPut(pathObj.getSettings, data)
       if (res.data.success === true) {
         getSettings()
         notification.success(res?.data?.message)
@@ -117,7 +87,7 @@ const Settings = () => {
   useEffect(() => {
     getSettings()
   }, [])
-  
+
   useEffect(() => {
     updatePageName(t('SETTINGS'))
   }, [])
@@ -360,7 +330,7 @@ const Settings = () => {
                 id='payment'
                 inputLabel={<>{t('TRANSFER_MONEY_LIMIT_MAXIMUM')}</>}
                 maxLength={40}
-                register={register('maxAmountForKeepTourist', {
+                register={register('maxTransferMoneyLimit', {
                   required: {
                     value: true,
                     message: 'Please enter maximum transfer money limit.'
@@ -376,7 +346,7 @@ const Settings = () => {
                 })}
                 placeholder=' '
               />
-              <ErrorMessage message={errors?.maxAmountForKeepTourist?.message} />
+              <ErrorMessage message={errors?.maxTransferMoneyLimit?.message} />
             </div>
             <div className='w-full'>
               <OInputField
@@ -409,41 +379,48 @@ const Settings = () => {
                 type='number'
                 id='payment'
                 inputLabel={
-                  <>{t('MINIMUM_THRESHOLD_AMOUNT_FOR_EARNING_REWARD_REQUEST')}</>
+                  <>
+                    {t('MINIMUM_THRESHOLD_AMOUNT_FOR_EARNING_REWARD_REQUEST')}
+                  </>
                 }
                 maxLength={40}
-                register={register('mimThresholdAmountForEarningRewardRequest', {
-                  required: {
-                    value: true,
-                    message: 'Please enter minimum threshold amount.'
-                  },
-                  maxLength: {
-                    value: 40,
-                    message: 'Max limit is 40 characters.'
-                  },
-                  min: {
-                    value: 1,
-                    message: 'Minimum value must is 1.'
+                register={register(
+                  'mimThresholdAmountForEarningRewardRequest',
+                  {
+                    required: {
+                      value: true,
+                      message: 'Please enter minimum threshold amount.'
+                    },
+                    maxLength: {
+                      value: 40,
+                      message: 'Max limit is 40 characters.'
+                    },
+                    min: {
+                      value: 1,
+                      message: 'Minimum value must is 1.'
+                    }
                   }
-                })}
+                )}
                 placeholder=' '
               />
-              <ErrorMessage message={errors?.mimThresholdAmountForEarningRewardRequest?.message} />
+              <ErrorMessage
+                message={
+                  errors?.mimThresholdAmountForEarningRewardRequest?.message
+                }
+              />
             </div>
             <div className='w-full'>
               <OInputField
                 wrapperClassName='relative z-0  w-full group'
                 type='number'
                 id='payment'
-                inputLabel={
-                  <>{t('TIME_TO_LOG_ACTIVE_USERS_ON_THE_APP')}
-                  </>
-                }
+                inputLabel={<>{t('TIME_TO_LOG_ACTIVE_USERS_ON_THE_APP')}</>}
                 maxLength={40}
                 register={register('timeLogForActiveUsers', {
                   required: {
                     value: true,
-                    message: 'Please enter time to log active users  on the app.'
+                    message:
+                      'Please enter time to log active users  on the app.'
                   },
                   maxLength: {
                     value: 40,

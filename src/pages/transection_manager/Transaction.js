@@ -7,7 +7,6 @@ import dayjs from 'dayjs'
 import ODateRangePicker from 'components/shared/datePicker/ODateRangePicker'
 import { useTranslation } from 'react-i18next'
 import AuthContext from 'context/AuthContext'
-import ThaiLocalTable from './ThaiLocalTable'
 
 function Transaction () {
   const { t } = useTranslation()
@@ -78,7 +77,7 @@ function Transaction () {
 
   useEffect(() => {
     allTransaction()
-  }, [filterData, page, sort])
+  }, [filterData, page, sort,userType])
 
   const handleReset = () => {
     setFilterData({
