@@ -41,19 +41,7 @@ function Transaction () {
   const allTransaction = async data => {
     try {
       const { category, startDate, endDate, isFilter } = filterData
-      if (
-        (data?.deletePage && !(artistVerification?.length > 1)) ||
-        (isFilter &&
-          category &&
-          data?.statusChange &&
-          !(artistVerification?.length > 1))
-      ) {
-        setPage(page - 1)
-        setIsDelete(true)
-        setPaginationObj({ ...paginationObj, page: page - 1 })
-      } else {
-        setIsDelete(false)
-      }
+      
 
       const payload = {
         page,
@@ -63,10 +51,11 @@ function Transaction () {
         endDate: endDate ? dayjs(endDate).format('YYYY-MM-DD') : null,
 
         sortBy: sort.sortBy,
-        sortType: sort.sortType
+        sortType: sort.sortType,
+        userType
       }
 
-      const path = apiPath.transaction
+      const path = apiPath.transactionList
       const result = await apiGet(path, payload)
       const response = result?.data?.results?.docs
       const resultStatus = result?.data?.success
@@ -88,7 +77,7 @@ function Transaction () {
   }
 
   useEffect(() => {
-    // allTransaction()
+    allTransaction()
   }, [filterData, page, sort])
 
   const handleReset = () => {

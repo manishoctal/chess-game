@@ -120,16 +120,16 @@ console.log('transactions', transactions)
                     {item?.country || 'N/A'}
                   </td>
                   <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
-                    {item?.country || 'N/A'}
-                  </td>
-                  <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
                   {dayjs(item?.qrSendTime).format('hh:mm A') || 'N/A'}
                   </td>
                   <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
                     {dayjs(item?.paymentReceiptTime).format('hh:mm A') || 'N/A'}
                   </td>
                   <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
-                    {obj.getSeconds(item?.qrSendTime,item?.paymentReceiptTime) || 'N/A'}
+                    {obj.getSeconds(item?.qrSendTime,item?.paymentReceiptTime) ?? 'N/A'}
+                  </td>
+                  <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
+                    {item?.country || 'N/A'}
                   </td>
                   <td className="py-4 px-6 border-r flex justify-center">
                   {item?.paymentReceiptImage ? (
