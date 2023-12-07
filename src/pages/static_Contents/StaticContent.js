@@ -46,15 +46,15 @@ const StaticContent = () => {
   const handleEdit = (item) => {
     setCurrentItem(item);
     setCountryEdit(!countryEdit);
-    navigate("/StaticContent/edit", { state: item });
+    navigate("/static-content/edit", { state: item });
   };
   const handleView = (item) => {
     setCurrentItem(item);
     setCountryView(!countryView);
     if (item?.slug === "faqs") {
-      navigate("/StaticContent/faqs");
+      navigate("/static-content/faqs");
     } else {
-      navigate("/StaticContent/view", { state: item });
+      navigate("/static-content/view", { state: item });
     }
   };
 

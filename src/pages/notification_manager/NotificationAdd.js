@@ -93,7 +93,7 @@ const NotificationAdd = ({ getAllNotifications, handleCategory }) => {
   };
 
   useEffect(() => {
-    getAllUser();
+    // getAllUser();
   }, []);
   return (
     <div>
@@ -161,7 +161,7 @@ const NotificationAdd = ({ getAllNotifications, handleCategory }) => {
                             type="radio"
                             checked={availableFor === "all"}
                             name="default-radio"
-                            onChange={(e) => handleSelectAllUsers(e)}
+                            onChange={() => setAvailableFor('tourist')}
                             className="w-4 cursor-pointer h-4 text-blue-600 bg-gray-100 border-gray-300 rounded  dark:bg-gray-700 dark:border-gray-600"
                           />
                           <label
@@ -169,7 +169,7 @@ const NotificationAdd = ({ getAllNotifications, handleCategory }) => {
                             for="default-checkbox"
                             className="ml-2 text-sm font-medium cursor-pointer text-gray-900 dark:text-gray-300"
                           >
-                            {t("ALL_USERS")}
+                            {t("ALL_TOURIST_USERS")}
                           </label>
                         </div>
 
@@ -177,9 +177,9 @@ const NotificationAdd = ({ getAllNotifications, handleCategory }) => {
                           <input
                             id="default-checkbox1"
                             type="radio"
-                            checked={availableFor === "particularUser"}
+                            checked={availableFor === "local"}
                             name="default-radio"
-                            onChange={(e) => handleParticularUser(e)}
+                            onChange={() => setAvailableFor('local')}
                             className="w-4 cursor-pointer h-4 text-blue-600 bg-gray-100 border-gray-300 rounded dark:bg-gray-700 dark:border-gray-600"
                           />
                           <label
@@ -187,13 +187,13 @@ const NotificationAdd = ({ getAllNotifications, handleCategory }) => {
                             for="default-checkbox1"
                             className="ml-2 text-sm font-medium cursor-pointer text-gray-900 dark:text-gray-300"
                           >
-                            {t("PARTICULAR_USER")}
+                            {t("ALL_THAI_USERS")}
                           </label>
                         </div>
                       </div>
                     </div>
 
-{
+{/* {
   availableFor === "particularUser" &&  <div className="px-2">
   <p className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
     {t("SELECT_USERS")}
@@ -216,7 +216,7 @@ const NotificationAdd = ({ getAllNotifications, handleCategory }) => {
     <ErrorMessage message="Please select user." />
   )}
 </div>
-}
+} */}
 
 
                   </div>

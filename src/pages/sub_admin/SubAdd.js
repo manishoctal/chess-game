@@ -294,9 +294,9 @@ const SubAdd = ({ props }) => {
                     <th scope="col" className="py-3 px-6 ">
                       {t("SUB_ADMIN_ADD_EDIT")}
                     </th>
-                    <th scope="col" className="py-3 px-6 ">
+                    {/* <th scope="col" className="py-3 px-6 ">
                       {t("O_DELETE")}
-                    </th>
+                    </th> */}
                     <th scope="col" className="py-3 px-6 ">
                       {t("O_ALL")}
                     </th>
@@ -335,7 +335,7 @@ const SubAdd = ({ props }) => {
                           />
                         )}
                       </td>
-                      <td className="py-2 px-4 border-r dark:border-[#ffffff38] ">
+                      {/* <td className="py-2 px-4 border-r dark:border-[#ffffff38] ">
                         {data?.shownDelete && (
                           <input
                             type="checkbox"
@@ -346,7 +346,7 @@ const SubAdd = ({ props }) => {
                             disabled={item?.type === "view"}
                           />
                         )}
-                      </td>
+                      </td> */}
 
                       <td className="py-2 px-4 border-r dark:border-[#ffffff38] ">
                         {data?.shownAll && (
