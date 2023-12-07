@@ -82,6 +82,9 @@ const SubTable = ({
               <th scope="col" className="py-3 px-6">
                 {t("O_MOBILE")}
               </th>
+              <th scope="col" className="py-3 px-6">
+                {t("ADDRESS")}
+              </th>
 
               <th
                 scope="col"
@@ -150,6 +153,9 @@ const SubTable = ({
                 <td className="py-2 px-4 border-r dark:border-[#ffffff38]">
                   {item?.mobile || "N/A"}
                 </td>
+                <td className="py-2 px-4 border-r dark:border-[#ffffff38]">
+                  {startCase(item?.address) || "N/A"}
+                </td>
 
                 <td className="py-2 px-4 border-r dark:border-[#ffffff38]">
                   {dayjs(item?.createdAt).format("DD-MM-YYYY hh:mm A")}
@@ -198,7 +204,7 @@ const SubTable = ({
                           </a>
                         </li>
                       )}
-                      {(manager?.delete || user?.role === "admin") && (
+                      {/* {(manager?.delete || user?.role === "admin") && (
                         <li
                           onClick={(e) =>
                             helper.alertFunction(
@@ -215,7 +221,7 @@ const SubTable = ({
                             <AiFillDelete className="w-5 h-5 text-red-600" />{" "}
                           </button>
                         </li>
-                      )}
+                      )} */}
                     </ul>
                   </div>
                 </td>
@@ -223,7 +229,7 @@ const SubTable = ({
             ))}
             {isEmpty(subAdmin) ? (
               <tr className="bg-white border-b w-full text-center dark:bg-gray-800 dark:border-gray-700">
-                <td className="py-4 px-6" colSpan={8}>
+                <td className="py-4 px-6" colSpan={9  }>
                   {t("O_NO_RECORD_FOUND")}
                 </td>
               </tr>

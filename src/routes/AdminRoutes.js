@@ -8,24 +8,23 @@ import AddStaticContent from 'pages/static_Contents/AddStaticContent'
 import EditStaticContent from 'pages/static_Contents/EditStaticContent'
 import StaticContentView from 'pages/static_Contents/StaticContentView'
 import NotificationManager from 'pages/notification_manager/NotificationManager'
-import AddNotification from 'pages/notification_manager/AddNotification'
 import Profile from 'pages/profile/Profile'
 import ChangePassword from 'pages/auth/ChangePassword'
 import Sidebar from 'components/sidebar/Sidebar'
 import BellNotifications from 'pages/notification_manager/BellNotifications'
 import Faq from 'pages/faqs/FAQ'
-import Category from 'pages/gift_manager/GiftCategory'
 import EmailTemplate from 'pages/email_template_manager/EmailTemplate'
 import AddEditEmail from 'pages/email_template_manager/AddEditEmail'
 import Settings from 'pages/settings/Settings'
 import Login from 'pages/Login'
 import User from 'pages/users/User'
 import UserView from 'pages/users/UserView'
-import GiftCategory from 'pages/gift_manager/GiftCategory'
-import AddEditGifts from 'pages/gift_manager/AddEditGifts'
 import ReportAbuse from 'pages/report_abuse_manager/ReportAbuse'
-import GiftView from 'pages/gift_manager/GiftView'
-import Stickers from 'pages/stickers/Stickers'
+import NotificationAdd from 'pages/notification_manager/NotificationAdd'
+import ThaiLocalDepositManager from 'pages/thai_local_deposit_manager/ThaiLocalDepositManager'
+import Transaction from 'pages/transection_manager/Transaction'
+import UserWalletHistory from 'pages/users/UserWalletHistory'
+import TransactionDetails from 'pages/users/TransactionDetails'
 
 const UseChange = ({ data }) => {
   const { t } = useTranslation()
@@ -78,23 +77,48 @@ const AdminRoutes = {
         </>
       )
     },
-
+    {
+      path: '/usersWalletHistory',
+      element: <UserWalletHistory />,
+      name: (
+        <>
+          <UseChange data='USER_MANAGER' />
+        </>
+      )
+    },
+    {
+      path: '/transactionDetails',
+      element: <TransactionDetails />,
+      name: (
+        <>
+          <UseChange data='USER_MANAGER' />
+        </>
+      )
+    },
+    {
+      path: '/transactions',
+      element: <Transaction />,
+      name: (
+        <>
+          <UseChange data='NAV_TRANSACTION_MANAGER' />
+        </>
+      )
+    },
+    {
+      path: '/thai-local-deposit-manager',
+      element: <ThaiLocalDepositManager />,
+      name: (
+        <>
+          <UseChange data='THAI_LOCAL_DEPOSIT_MANAGER' />
+        </>
+      )
+    },
     {
       path: '/sub-admin-manager/add',
       element: <SubAdd />,
       name: (
         <>
           <UseChange data='SUB_ADMIN_MANAGERS' />
-        </>
-      )
-    },
-
-    {
-      path: '/stickers',
-      element: <Stickers />,
-      name: (
-        <>
-          <UseChange data='STICKERS' />
         </>
       )
     },
@@ -110,59 +134,11 @@ const AdminRoutes = {
     },
 
     {
-      path: '/gift-manager',
-      element: <GiftCategory />,
-      name: (
-        <>
-          <UseChange data='NAV_CATEGORY_MANAGER' />
-        </>
-      )
-    },
-
-    {
-      path: '/gift-manager/add',
-      element: <AddEditGifts />,
-      name: (
-        <>
-          <UseChange data='NAV_CATEGORY_MANAGER' />
-        </>
-      )
-    },
-    {
-      path: '/gift-manager/edit',
-      element: <AddEditGifts />,
-      name: (
-        <>
-          <UseChange data='NAV_CATEGORY_MANAGER' />
-        </>
-      )
-    },
-
-    {
-      path: '/gift-manager/view',
-      element: <GiftView />,
-      name: (
-        <>
-          <UseChange data='USER_MANAGER' />
-        </>
-      )
-    },
-
-    {
-      path: '/category',
-      element: <Category />,
-      name: (
-        <>
-          <UseChange data='NAV_CATEGORY_MANAGER' />
-        </>
-      )
-    },
-    {
       path: '/email-manager',
       element: <EmailTemplate />,
       name: (
         <>
-          <UseChange data='EMAIL_TEMPLATE_MANAGER' />
+          <UseChange data='EMAIL_MANAGER' />
         </>
       )
     },
@@ -171,7 +147,7 @@ const AdminRoutes = {
       element: <AddEditEmail />,
       name: (
         <>
-          <UseChange data='EMAIL_TEMPLATE_MANAGER' />
+          <UseChange data='EMAIL_MANAGER' />
         </>
       )
     },
@@ -180,7 +156,7 @@ const AdminRoutes = {
       element: <AddEditEmail />,
       name: (
         <>
-          <UseChange data='EMAIL_TEMPLATE_MANAGER' />
+          <UseChange data='EMAIL_MANAGER' />
         </>
       )
     },
@@ -234,7 +210,7 @@ const AdminRoutes = {
 
     {
       path: '/notification_manager/add',
-      element: <AddNotification />,
+      element: <NotificationAdd />,
       name: (
         <>
           <UseChange data='NOTIFICATION_MANAGER' />
@@ -255,7 +231,7 @@ const AdminRoutes = {
       element: <Settings />,
       name: (
         <>
-          <UseChange data='NAV_SETTINGS' />
+          <UseChange data='SETTINGS' />
         </>
       )
     },

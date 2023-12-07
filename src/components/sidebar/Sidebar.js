@@ -83,7 +83,7 @@ const Sidebar = () => {
             onClick={() => updatePageName('Dashboard')}
             className='px-2 py-6 w-full text-center flex justify-center'
           >
-            <img src={logoImage} className='inline max-w-[187px]' alt='' />
+            <img src={logoImage} className='inline max-w-[187px]' alt='' style={{filter:'brightness(0) invert(1)'}} />
           </Link>
           <div className='profile text-center'>
             <small className='block text-sm'>Welcome</small>
@@ -106,6 +106,12 @@ const Sidebar = () => {
                 'USER_MANAGER',
                 <img src={SubAdmin} className='max-w-[18px]' alt='' />
               )}
+            {checkSidebarPermission('transaction_manager') &&
+              generateNavLink(
+                '/transactions',
+                'NAV_TRANSACTION_MANAGER',
+                <img src={SubAdmin} className='max-w-[18px]' alt='' />
+              )}
 
             {checkSidebarPermission('subAdmin_manager') &&
               generateNavLink(
@@ -114,27 +120,28 @@ const Sidebar = () => {
                 <img src={SubAdmin} className='max-w-[18px]' alt='' />
               )}
 
-            {checkSidebarPermission('stickers') &&
-              generateNavLink(
-                '/stickers',
-                'STICKERS',
-                <PiArticleFill style={{ fontSize: '20px' }} />
-              )}
+           
 
-            {checkSidebarPermission('reports_manager') &&
+            {/* {checkSidebarPermission('reports_manager') &&
               generateNavLink(
                 '/report_abuse_manager',
                 'REPORTS_MANAGER',
                 <GiCartwheel style={{ fontSize: '20px' }} />
-              )}
-
-            {checkSidebarPermission('gift_manager') &&
+              )} */}
+            {checkSidebarPermission('notification_manager') &&
               generateNavLink(
-                '/gift-manager',
-                'GIFT_MANAGER',
-                <GiPlatform style={{ fontSize: '20px' }} />
+                '/notification_manager',
+                'NOTIFICATION_MANAGER',
+                <GiCartwheel style={{ fontSize: '20px' }} />
+              )}
+            {checkSidebarPermission('thai_local_deposit_manager') &&
+              generateNavLink(
+                '/thai-local-deposit-manager',
+                'THAI_LOCAL_DEPOSIT_MANAGER',
+                <GiCartwheel style={{ fontSize: '20px' }} />
               )}
 
+         
             {checkSidebarPermission('settings') &&
               generateNavLink(
                 '/setting',
@@ -149,13 +156,13 @@ const Sidebar = () => {
                 <Documents />
               )}
 
-            {checkSidebarPermission('faq_manager') &&
+            {checkSidebarPermission('FAQ') &&
               generateNavLink('/faqs', 'NAV_FAQS', <Documents />)}
 
             {checkSidebarPermission('email_manager') &&
               generateNavLink(
                 '/email-manager',
-                'EMAIL_TEMPLATE_MANAGER',
+                'EMAIL_MANAGER',
                 <AiOutlineMail style={{ fontSize: '20px' }} />
               )}
 

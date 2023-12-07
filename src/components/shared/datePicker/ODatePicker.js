@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Flatpickr from "react-flatpickr";
 import "flatpickr/dist/themes/material_blue.css";
-function ODatePicker({ handleDateChange, value }) {
+function ODatePicker({ handleDateChange, value,minDate,maxDate }) {
   const [dates, setDate] = useState(value || "");
 
   const onChange = ([date]) => {
@@ -15,8 +15,10 @@ function ODatePicker({ handleDateChange, value }) {
       name="date"
       placeholder=" "
       options={{
-        minDate: "today",
+        // minDate: "today",
+        minDate,
         dateFormat: "d-m-Y",
+        maxDate,
         defaultDate: dates,
       }}
       onChange={onChange}

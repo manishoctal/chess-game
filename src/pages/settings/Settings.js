@@ -1,1170 +1,483 @@
-import ErrorMessage from "../../components/ErrorMessage";
-import React, { useContext, useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { apiGet, apiPut } from "../../utils/apiFetch";
-import pathObj from "../../utils/apiPath";
-import useToastContext from "hooks/useToastContext";
-import { useTranslation } from "react-i18next";
-import AuthContext from "context/AuthContext";
-import DynamicLabel from "utils/DynamicLabel";
+import ErrorMessage from '../../components/ErrorMessage'
+import React, { useContext, useState, useEffect } from 'react'
+import { useForm } from 'react-hook-form'
+import { apiGet, apiPut } from '../../utils/apiFetch'
+import pathObj from '../../utils/apiPath'
+import useToastContext from 'hooks/useToastContext'
+import OButton from 'components/reusable/OButton'
+import { useTranslation } from 'react-i18next'
+import AuthContext from 'context/AuthContext'
+import OInputField from 'components/reusable/OInputField'
+import helper from '../../utils/helpers'
+import imageDefault from '../../assets/images/No-image-found.jpg'
+
+import apiPath from '../../utils/apiPath'
+import {
+  CashbackLabel,
+  LoyaltyPointLabel,
+  TransactionFeesField,
+  TransactionFeesLabel
+} from './Constant'
+import OImage from 'components/reusable/OImage'
+import { Link } from 'react-router-dom'
+import Credential from './Credential'
+import formValidation from 'utils/formValidation'
+import { preventMaxInput } from 'utils/validations'
 
 const Settings = () => {
-  const { logoutUser, user } = useContext(AuthContext);
-  const { t } = useTranslation();
+  const { logoutUser, user, updatePageName } = useContext(AuthContext)
+  const manager = user?.permission?.find(e => e.manager === 'setting') ?? {}
+  const { t } = useTranslation()
   const {
     register,
     handleSubmit,
     reset,
-    formState: { errors },
+    getValues,
+    watch,
+   
+    formState: { isDirty, errors ,dirtyFields}
   } = useForm({
-    mode: "onChange",
+    mode: 'onBlur',
     shouldFocusError: true,
-    defaultValues: {},
-  });
-  const [settingChangeLoading, setSettingChangeLoading] = useState(false);
-  const notification = useToastContext();
-  const manager =
-    user?.permission?.find((e) => e.manager === "setting_manager") ?? {};
+    defaultValues: {}
+  })
+  const [settingChangeLoading, setSettingChangeLoading] = useState(false)
+  const [activeNav, setActiveNav] = useState(0)
+  const [pic] = useState(user?.profilePic ?? imageDefault)
+  const [viewShowModal, setViewShowModal] = useState(false)
 
-  const handleSubmitForm = async (data) => {
+  const [profile, setProfile] = useState()
+  const notification = useToastContext()
+
+  const handleSubmitForm = async data => {
     try {
-      setSettingChangeLoading(true);
-      const res = await apiPut(pathObj.updateSettings, data);
+      setSettingChangeLoading(true)
+      const formData = new FormData();
+      if (dirtyFields.email) {
+        formData.append("email", data.email);
+      }
+      if (dirtyFields.maxAmountForKeepTourist) {
+        formData.append("maxAmountForKeepTourist", data.maxAmountForKeepTourist);
+      }
+      if (dirtyFields.mimThresholdAmountForEarningRewardRequest) {
+        formData.append("mimThresholdAmountForEarningRewardRequest", data.mimThresholdAmountForEarningRewardRequest);
+      }
+      if (dirtyFields.minWithdrawAmountToBank) {
+        formData.append("minWithdrawAmountToBank", data.minWithdrawAmountToBank);
+      }
+      if (dirtyFields.negativeAmountMaxLimit) {
+        formData.append("negativeAmountMaxLimit", data.negativeAmountMaxLimit);
+      }
+      if (dirtyFields.referralBonusLocals) {
+        formData.append("referralBonusLocals", data.referralBonusLocals);
+      }
+      if (dirtyFields.referralBonusTourist) {
+        formData.append("referralBonusTourist", data.referralBonusTourist);
+      }
+      if (dirtyFields.signupBonus) {
+        formData.append("signupBonus", data.signupBonus);
+      }
+      if (dirtyFields.timeLogForActiveUsers) {
+        formData.append("timeLogForActiveUsers", data.timeLogForActiveUsers);
+      }
+      if (dirtyFields.upcCodeReferralAmount) {
+        formData.append("upcCodeReferralAmount", data.upcCodeReferralAmount);
+      }
+      const res = await apiPut(pathObj.getSettings, formData)
       if (res.data.success === true) {
-        notification.success(res?.data?.message);
+        getSettings()
+        notification.success(res?.data?.message)
       } else {
-        notification.error(res?.data?.message);
+        notification.error(res?.data?.message)
       }
     } catch (err) {
-      console.log("err:", err);
+      console.error('err:', err)
     } finally {
-      setSettingChangeLoading(false);
+      setSettingChangeLoading(false)
     }
-  };
-
-  const updateSettings = async () => {
+  }
+  const handleUserView = () => {
+    setViewShowModal(true)
+  }
+  const getSettings = async () => {
     try {
-      const res = await apiGet(pathObj.updateSettings);
+      const res = await apiGet(pathObj.getSettings)
       if (res) {
-        reset(res?.data?.results);
+        reset(res?.data?.results)
       }
     } catch (error) {
-      console.log("error:", error);
+      console.error('error:', error)
+
       if (error.response.status === 401 || error.response.status === 409) {
-        logoutUser();
+        logoutUser()
       }
     }
-  };
+  }
 
   useEffect(() => {
-    updateSettings();
-  }, []);
+    getSettings()
+  }, [])
+  
+  useEffect(() => {
+    updatePageName(t('SETTINGS'))
+  }, [])
+
+  const navigateTab = index => [setActiveNav(index)]
+
+  const handelStatusChange = async item => {
+    try {
+      const payload = {
+        isActive: !item?.isActive
+      }
+      const path = `${apiPath.changeEmailStatus}/${item?._id}`
+      const result = await apiPut(path, payload)
+      if (result?.status === 200) {
+        notification.success(result.data.message)
+        // getEmailTemplate()
+      }
+      // }
+    } catch (error) {
+      console.error('error in get all users list==>>>>', error.message)
+    }
+  }
+  const codeValue = watch('email') ? watch('email') : ''
 
   return (
-    <section className="">
-      <form onSubmit={handleSubmit(handleSubmitForm)} method="post">
-        <section className="sm:px-8 px-4 py-4 dark:bg-slate-900">
-          <div className="border xl:w-full round dark:border-[#ffffff38]">
-            <div className="bg-white py-6 px-4  rounded-b-md dark:bg-slate-800 ">
-              {/* <main className='justify-center flex flex-wrap xl:[&>*]:mr-14 sm:[&>*]:mr-7 2xl:[&>*]:mr-14  sm:px-0 px-4 xl:[&>*]:w-3/12 sm:[&>*]:w-3/5 '> */}
-              <main className="">
-                <div className="grid grid-cols-2 gap-4 gap-x-6">
-                  <div className="mb-4 w-full">
-                    <label className="block text-gray-700 text-xl font-medium mb-4 dark:text-white">
-                      {t("BLOCK_USER")}
-                    </label>
-
-                    <div className="grid grid-cols-3 gap-x-5 border p-4 dark:border-[#ffffff38]">
-                      <div className="">
-                        <DynamicLabel name={t("O_PROFILE")} type={true} />
-
-                        <div className="flex border rounded">
-                          <input
-                            name="reportUser"
-                            className="border-white dark:border-[#ffffff38] dark:bg-gray-800 dark:text-white shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            type="number"
-                            // onInput={(e) => preventMax(e)}
-                            onKeyDown={(event) => {
-                              if (
-                                !["Backspace", "Delete", "Tab"].includes(
-                                  event.key
-                                ) &&
-                                !/[0-9]/.test(event.key)
-                              ) {
-                                event.preventDefault();
-                              }
-                            }}
-                            id="reportUser"
-                            {...register("reportUser", {
-                              required: {
-                                value: true,
-                                message: "Please enter report of profile",
-                              },
-                              pattern: {
-                                value: /^\d+$/,
-                                message: "Decimals not allowed.",
-                              },
-                              min: {
-                                value: 1,
-                                message: "Minimum value must is 1.",
-                              },
-                              // max: {
-                              //   value: 100,
-                              //   message: "Maximum value must is 100.",
-                              // },
-                            })}
-                            placeholder=" "
-                          />
-                        </div>
-                        <ErrorMessage message={errors?.reportUser?.message} />
-                      </div>
-                      <div>
-                        <DynamicLabel name={t("O_POSTS")} type={true} />
-
-                        <div className="flex border rounded">
-                          <input
-                            name="reportPost"
-                            className="border-white dark:border-[#ffffff38] dark:bg-gray-800 dark:text-white shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            type="number"
-                            // onInput={(e) => preventMax(e)}
-                            onKeyDown={(event) => {
-                              if (
-                                !["Backspace", "Delete", "Tab"].includes(
-                                  event.key
-                                ) &&
-                                !/[0-9]/.test(event.key)
-                              ) {
-                                event.preventDefault();
-                              }
-                            }}
-                            id="reportPost"
-                            {...register("reportPost", {
-                              required: {
-                                value: true,
-                                message: "Please enter posts",
-                              },
-                              pattern: {
-                                value: /^\d+$/,
-                                message: "Decimals not allowed.",
-                              },
-                              min: {
-                                value: 1,
-                                message: "Minimum value must is 1.",
-                              },
-                              // max: {
-                              //   value: 100,
-                              //   message: "Maximum value must is 100.",
-                              // },
-                            })}
-                            placeholder=" "
-                          />
-                        </div>
-                        <ErrorMessage message={errors?.reportPost?.message} />
-                      </div>
-                      <div>
-                        <DynamicLabel name={t("O_VIDEO")} type={true} />
-
-                        <div className="flex border rounded">
-                          <input
-                            name="reportVideo"
-                            className="border-white dark:border-[#ffffff38] dark:bg-gray-800 dark:text-white shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            type="number"
-                            // onInput={(e) => preventMax(e)}
-                            onKeyDown={(event) => {
-                              if (
-                                !["Backspace", "Delete", "Tab"].includes(
-                                  event.key
-                                ) &&
-                                !/[0-9]/.test(event.key)
-                              ) {
-                                event.preventDefault();
-                              }
-                            }}
-                            id="reportVideo"
-                            {...register("reportVideo", {
-                              required: {
-                                value: true,
-                                message: "Please enter report of video",
-                              },
-                              pattern: {
-                                value: /^\d+$/,
-                                message: "Decimals not allowed.",
-                              },
-                              min: {
-                                value: 1,
-                                message: "Minimum value must is 1.",
-                              },
-                              // max: {
-                              //   value: 100,
-                              //   message: "Maximum value must is 100.",
-                              // },
-                            })}
-                            placeholder=" "
-                          />
-                        </div>
-                        <ErrorMessage message={errors?.reportVideo?.message} />
-                      </div>
-                    </div>
+    <section className=''>
+      <form>
+        <section className='sm:px-8 px-4 py-4 '>
+          <div className='border xl:w-full round'>
+            <header className='border-b  py-2 px-4 bg-gray-100 rounded-t-md '>
+              <div className='font-semibold'>{t('SETTING')}</div>
+            </header>
+            <div className='bg-white py-6 px-4  rounded-b-md'>
+              <div className='mb-4  w-full' style={{ marginLeft: '15px' }}>
+                <div className='justify-center flex items-center'>
+                  <div className='relative w-24 h-24 '>
+                    <OImage
+                      src={pic}
+                      fallbackUrl='/images/user.png'
+                      className='w-24 h-24 border'
+                      alt=''
+                      style={{ borderRadius: '50%' }}
+                    />
                   </div>
-
-                  <div className="mb-4 w-full">
-                    <label className="block text-gray-700 text-xl font-medium mb-4 dark:text-white">
-                      {t("VIDEO_UPLOAD_TIME")}
-                    </label>
-
-                    <div className="grid grid-cols-3 gap-x-5 border p-4 dark:border-[#ffffff38]">
-                      <div className="">
-                        <DynamicLabel name={t("MIN_SEC")} type={true} />
-
-                        <div className="flex border rounded">
-                          <input
-                            className="border-white dark:border-[#ffffff38] dark:bg-gray-800 dark:text-white shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            type="number"
-                            // onInput={(e) => preventMax(e)}
-                            onKeyDown={(event) => {
-                              if (
-                                !["Backspace", "Delete", "Tab"].includes(
-                                  event.key
-                                ) &&
-                                !/[0-9]/.test(event.key)
-                              ) {
-                                event.preventDefault();
-                              }
-                            }}
-                            id="videoUploadMinTime"
-                            {...register("videoUploadMinTime", {
-                              required: {
-                                value: true,
-                                message: "Please enter minimum time",
-                              },
-                              pattern: {
-                                value: /^\d+$/,
-                                message: "Decimals not allowed.",
-                              },
-                              min: {
-                                value: 1,
-                                message: "Minimum value must is 1.",
-                              },
-                              // max: {
-                              //   value: 100,
-                              //   message: "Maximum value must is 100.",
-                              // },
-                            })}
-                            placeholder=" "
+                  <div className='pl-6  w-full flex align-center'>
+                    <div>
+                      {(manager?.add || user?.role === 'admin') && (
+                        <Link to='/change-password'>
+                          {' '}
+                          <OButton
+                            label={<>{t('CHANGE_PASSWORD')}</>}
+                            type='button'
+                            loading={settingChangeLoading}
                           />
-                        </div>
-                        <ErrorMessage
-                          message={errors?.videoUploadMinTime?.message}
-                        />
-                      </div>
-                      <div>
-                        <DynamicLabel name={t("MAX_SEC")} type={true} />
-
-                        <div className="flex border rounded">
-                          <input
-                            className="border-white dark:border-[#ffffff38] dark:bg-gray-800 dark:text-white shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            type="number"
-                            // onInput={(e) => preventMax(e)}
-                            onKeyDown={(event) => {
-                              if (
-                                !["Backspace", "Delete", "Tab"].includes(
-                                  event.key
-                                ) &&
-                                !/[0-9]/.test(event.key)
-                              ) {
-                                event.preventDefault();
-                              }
-                            }}
-                            id="videoUploadMaxTime"
-                            {...register("videoUploadMaxTime", {
-                              required: {
-                                value: true,
-                                message: "Please enter maximum time",
-                              },
-                              pattern: {
-                                value: /^\d+$/,
-                                message: "Decimals not allowed.",
-                              },
-                              min: {
-                                value: 1,
-                                message: "Minimum value must is 1.",
-                              },
-                              // max: {
-                              //   value: 100,
-                              //   message: "Maximum value must is 100.",
-                              // },
-                            })}
-                            placeholder=" "
-                          />
-                        </div>
-                        <ErrorMessage
-                          message={errors?.videoUploadMaxTime?.message}
-                        />
-                      </div>
+                        </Link>
+                      )}
                     </div>
-                  </div>
 
-                  {/* additional-integration  */}
-
-                  <div className="mb-4 w-full">
-                    <label className="block text-gray-700 text-xl font-medium mb-4 dark:text-white">
-                      {t("VIDEO_CALL")}
-                    </label>
-
-                    <div className="grid grid-cols-3 gap-x-5 border p-4 dark:border-[#ffffff38]">
-                      <div className="">
-                        <DynamicLabel name={t("ENTER_NO_SECOND")} type={true} />
-
-                        <div className="flex border rounded">
-                          <input
-                            className="border-white dark:border-[#ffffff38] dark:bg-gray-800 dark:text-white shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            type="number"
-                            // onInput={(e) => preventMax(e)}
-                            onKeyDown={(event) => {
-                              if (
-                                !["Backspace", "Delete", "Tab"].includes(
-                                  event.key
-                                ) &&
-                                !/[0-9]/.test(event.key)
-                              ) {
-                                event.preventDefault();
-                              }
-                            }}
-                            id="videoUploadMinTime"
-                            {...register("videoUploadMinTime", {
-                              required: {
-                                value: true,
-                                message: "Please enter minimum time",
-                              },
-                              pattern: {
-                                value: /^\d+$/,
-                                message: "Decimals not allowed.",
-                              },
-                              min: {
-                                value: 1,
-                                message: "Minimum value must is 1.",
-                              },
-                              // max: {
-                              //   value: 100,
-                              //   message: "Maximum value must is 100.",
-                              // },
-                            })}
-                            placeholder=" "
-                          />
-                        </div>
-                        <ErrorMessage
-                          message={errors?.videoUploadMinTime?.message}
+                    <div className='  '>
+                      {(manager?.add || user?.role === 'admin') && (
+                        <OButton
+                          label={<>{t('VIEW_LOGIN_CREDENTIALS')}</>}
+                          type='button'
+                          // disabled
+                          onClick={() => handleUserView()}
+                          loading={settingChangeLoading}
                         />
-                      </div>
-                      <div>
-                        <DynamicLabel name={t("ENTER_NO_COIN")} type={true} />
-
-                        <div className="flex border rounded">
-                          <input
-                            className="border-white dark:border-[#ffffff38] dark:bg-gray-800 dark:text-white shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            type="number"
-                            // onInput={(e) => preventMax(e)}
-                            onKeyDown={(event) => {
-                              if (
-                                !["Backspace", "Delete", "Tab"].includes(
-                                  event.key
-                                ) &&
-                                !/[0-9]/.test(event.key)
-                              ) {
-                                event.preventDefault();
-                              }
-                            }}
-                            id="videoUploadMaxTime"
-                            {...register("videoUploadMaxTime", {
-                              required: {
-                                value: true,
-                                message: "Please enter maximum time",
-                              },
-                              pattern: {
-                                value: /^\d+$/,
-                                message: "Decimals not allowed.",
-                              },
-                              min: {
-                                value: 1,
-                                message: "Minimum value must is 1.",
-                              },
-                              // max: {
-                              //   value: 100,
-                              //   message: "Maximum value must is 100.",
-                              // },
-                            })}
-                            placeholder=" "
-                          />
-                        </div>
-                        <ErrorMessage
-                          message={errors?.videoUploadMaxTime?.message}
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="mb-4 w-full">
-                    <label className="block text-gray-700 text-xl font-medium mb-4 dark:text-white">
-                      {t("VOICE_NOTE")}
-                    </label>
-
-                    <div className="grid grid-cols-3 gap-x-5 border p-4 dark:border-[#ffffff38]">
-                      <div className="">
-                        <DynamicLabel name={t("ENTER_NO_SECOND")} type={true} />
-
-                        <div className="flex border rounded">
-                          <input
-                            className="border-white dark:border-[#ffffff38] dark:bg-gray-800 dark:text-white shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            type="number"
-                            // onInput={(e) => preventMax(e)}
-                            onKeyDown={(event) => {
-                              if (
-                                !["Backspace", "Delete", "Tab"].includes(
-                                  event.key
-                                ) &&
-                                !/[0-9]/.test(event.key)
-                              ) {
-                                event.preventDefault();
-                              }
-                            }}
-                            id="voiceNoteSecond"
-                            {...register("voiceNoteSecond", {
-                              required: {
-                                value: true,
-                                message: "Please enter voice note second",
-                              },
-                              pattern: {
-                                value: /^\d+$/,
-                                message: "Decimals not allowed.",
-                              },
-                              min: {
-                                value: 1,
-                                message: "Minimum value must is 1.",
-                              },
-                              // max: {
-                              //   value: 100,
-                              //   message: "Maximum value must is 100.",
-                              // },
-                            })}
-                            placeholder=" "
-                          />
-                        </div>
-                        <ErrorMessage
-                          message={errors?.voiceNoteSecond?.message}
-                        />
-                      </div>
-                      <div>
-                        <DynamicLabel name={t("ENTER_NO_COIN")} type={true} />
-
-                        <div className="flex border rounded">
-                          <input
-                            className="border-white dark:border-[#ffffff38] dark:bg-gray-800 dark:text-white shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            type="number"
-                            // onInput={(e) => preventMax(e)}
-                            onKeyDown={(event) => {
-                              if (
-                                !["Backspace", "Delete", "Tab"].includes(
-                                  event.key
-                                ) &&
-                                !/[0-9]/.test(event.key)
-                              ) {
-                                event.preventDefault();
-                              }
-                            }}
-                            id="voiceNoteCoins"
-                            {...register("voiceNoteCoins", {
-                              required: {
-                                value: true,
-                                message: "Please enter voice note coins",
-                              },
-                              pattern: {
-                                value: /^\d+$/,
-                                message: "Decimals not allowed.",
-                              },
-                              min: {
-                                value: 1,
-                                message: "Minimum value must is 1.",
-                              },
-                              // max: {
-                              //   value: 100,
-                              //   message: "Maximum value must is 100.",
-                              // },
-                            })}
-                            placeholder=" "
-                          />
-                        </div>
-                        <ErrorMessage
-                          message={errors?.voiceNoteCoins?.message}
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="mb-4 w-full">
-                    <label className="block text-gray-700 text-xl font-medium mb-4 dark:text-white">
-                      {t("VOICE_CALL")}
-                    </label>
-
-                    <div className="grid grid-cols-3 gap-x-5 border p-4 dark:border-[#ffffff38]">
-                      <div className="">
-                        <DynamicLabel name={t("ENTER_NO_SECOND")} type={true} />
-
-                        <div className="flex border rounded">
-                          <input
-                            className="border-white dark:border-[#ffffff38] dark:bg-gray-800 dark:text-white shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            type="number"
-                            // onInput={(e) => preventMax(e)}
-                            onKeyDown={(event) => {
-                              if (
-                                !["Backspace", "Delete", "Tab"].includes(
-                                  event.key
-                                ) &&
-                                !/[0-9]/.test(event.key)
-                              ) {
-                                event.preventDefault();
-                              }
-                            }}
-                            id="voiceCallSecond"
-                            {...register("voiceCallSecond", {
-                              required: {
-                                value: true,
-                                message: "Please enter voice call second",
-                              },
-                              pattern: {
-                                value: /^\d+$/,
-                                message: "Decimals not allowed.",
-                              },
-                              min: {
-                                value: 1,
-                                message: "Minimum value must is 1.",
-                              },
-                              // max: {
-                              //   value: 100,
-                              //   message: "Maximum value must is 100.",
-                              // },
-                            })}
-                            placeholder=" "
-                          />
-                        </div>
-                        <ErrorMessage
-                          message={errors?.voiceCallSecond?.message}
-                        />
-                      </div>
-                      <div>
-                        <DynamicLabel name={t("ENTER_NO_COIN")} type={true} />
-
-                        <div className="flex border rounded">
-                          <input
-                            className="border-white dark:border-[#ffffff38] dark:bg-gray-800 dark:text-white shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            type="number"
-                            // onInput={(e) => preventMax(e)}
-                            onKeyDown={(event) => {
-                              if (
-                                !["Backspace", "Delete", "Tab"].includes(
-                                  event.key
-                                ) &&
-                                !/[0-9]/.test(event.key)
-                              ) {
-                                event.preventDefault();
-                              }
-                            }}
-                            id="voiceCallCoins"
-                            {...register("voiceCallCoins", {
-                              required: {
-                                value: true,
-                                message: "Please enter voice call coins no.",
-                              },
-                              pattern: {
-                                value: /^\d+$/,
-                                message: "Decimals not allowed.",
-                              },
-                              min: {
-                                value: 1,
-                                message: "Minimum value must is 1.",
-                              },
-                              // max: {
-                              //   value: 100,
-                              //   message: "Maximum value must is 100.",
-                              // },
-                            })}
-                            placeholder=" "
-                          />
-                        </div>
-                        <ErrorMessage
-                          message={errors?.voiceCallCoins?.message}
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="mb-4 w-full">
-                    <label className="block text-gray-700 text-xl font-medium mb-4 dark:text-white">
-                      {t("LIVE_STREAMING")}
-                    </label>
-
-                    <div className="grid grid-cols-3 gap-x-5 border p-4 dark:border-[#ffffff38]">
-                      <div className="">
-                        <DynamicLabel name={t("ENTER_NO_SECOND")} type={true} />
-
-                        <div className="flex border rounded">
-                          <input
-                            className="border-white dark:border-[#ffffff38] dark:bg-gray-800 dark:text-white shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            type="number"
-                            // onInput={(e) => preventMax(e)}
-                            onKeyDown={(event) => {
-                              if (
-                                !["Backspace", "Delete", "Tab"].includes(
-                                  event.key
-                                ) &&
-                                !/[0-9]/.test(event.key)
-                              ) {
-                                event.preventDefault();
-                              }
-                            }}
-                            id="liveStreamSecond"
-                            {...register("liveStreamSecond", {
-                              required: {
-                                value: true,
-                                message:
-                                  "Please enter live stream no of second",
-                              },
-                              pattern: {
-                                value: /^\d+$/,
-                                message: "Decimals not allowed.",
-                              },
-                              min: {
-                                value: 1,
-                                message: "Minimum value must is 1.",
-                              },
-                              // max: {
-                              //   value: 100,
-                              //   message: "Maximum value must is 100.",
-                              // },
-                            })}
-                            placeholder=" "
-                          />
-                        </div>
-                        <ErrorMessage
-                          message={errors?.liveStreamSecond?.message}
-                        />
-                      </div>
-                      <div>
-                        <DynamicLabel name={t("ENTER_NO_COIN")} type={true} />
-
-                        <div className="flex border rounded">
-                          <input
-                            className="border-white dark:border-[#ffffff38] dark:bg-gray-800 dark:text-white shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            type="number"
-                            // onInput={(e) => preventMax(e)}
-                            onKeyDown={(event) => {
-                              if (
-                                !["Backspace", "Delete", "Tab"].includes(
-                                  event.key
-                                ) &&
-                                !/[0-9]/.test(event.key)
-                              ) {
-                                event.preventDefault();
-                              }
-                            }}
-                            id="liveStreamCoins"
-                            {...register("liveStreamCoins", {
-                              required: {
-                                value: true,
-                                message: "Please enter live stream coins",
-                              },
-                              pattern: {
-                                value: /^\d+$/,
-                                message: "Decimals not allowed.",
-                              },
-                              min: {
-                                value: 1,
-                                message: "Minimum value must is 1.",
-                              },
-                              // max: {
-                              //   value: 100,
-                              //   message: "Maximum value must is 100.",
-                              // },
-                            })}
-                            placeholder=" "
-                          />
-                        </div>
-                        <ErrorMessage
-                          message={errors?.liveStreamCoins?.message}
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="mb-4 w-full">
-                    <label className="block text-gray-700 text-xl font-medium mb-4 dark:text-white">
-                      {t("IMAGE_CHAT")}
-                    </label>
-
-                    <div className="grid grid-cols-3 gap-x-5 border p-4 dark:border-[#ffffff38]">
-                      <div className="">
-                        <DynamicLabel name={t("ENTER_NO_IMAGE")} type={true} />
-
-                        <div className="flex border rounded">
-                          <input
-                            className="border-white dark:border-[#ffffff38] dark:bg-gray-800 dark:text-white shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            type="number"
-                            // onInput={(e) => preventMax(e)}
-                            onKeyDown={(event) => {
-                              if (
-                                !["Backspace", "Delete", "Tab"].includes(
-                                  event.key
-                                ) &&
-                                !/[0-9]/.test(event.key)
-                              ) {
-                                event.preventDefault();
-                              }
-                            }}
-                            id="chatImage"
-                            {...register("chatImage", {
-                              required: {
-                                value: true,
-                                message: "Please enter chat image no.",
-                              },
-                              pattern: {
-                                value: /^\d+$/,
-                                message: "Decimals not allowed.",
-                              },
-                              min: {
-                                value: 1,
-                                message: "Minimum value must is 1.",
-                              },
-                              // max: {
-                              //   value: 100,
-                              //   message: "Maximum value must is 100.",
-                              // },
-                            })}
-                            placeholder=" "
-                          />
-                        </div>
-                        <ErrorMessage message={errors?.chatImage?.message} />
-                      </div>
-                      <div>
-                        <DynamicLabel name={t("ENTER_NO_COIN")} type={true} />
-                        <div className="flex border rounded">
-                          <input
-                            className="border-white dark:border-[#ffffff38] dark:bg-gray-800 dark:text-white shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            type="number"
-                            // onInput={(e) => preventMax(e)}
-                            onKeyDown={(event) => {
-                              if (
-                                !["Backspace", "Delete", "Tab"].includes(
-                                  event.key
-                                ) &&
-                                !/[0-9]/.test(event.key)
-                              ) {
-                                event.preventDefault();
-                              }
-                            }}
-                            id="chatImageCoins"
-                            {...register("chatImageCoins", {
-                              required: {
-                                value: true,
-                                message: "Please enter chat coins",
-                              },
-                              pattern: {
-                                value: /^\d+$/,
-                                message: "Decimals not allowed.",
-                              },
-                              min: {
-                                value: 1,
-                                message: "Minimum value must is 1.",
-                              },
-                              // max: {
-                              //   value: 100,
-                              //   message: "Maximum value must is 100.",
-                              // },
-                            })}
-                            placeholder=" "
-                          />
-                        </div>
-                        <ErrorMessage
-                          message={errors?.chatImageCoins?.message}
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="mb-4 w-full">
-                    <label className="block text-gray-700 text-xl font-medium mb-4 dark:text-white">
-                      {t("CHAT")}
-                    </label>
-
-                    <div className="grid grid-cols-3 gap-x-5 border p-4 dark:border-[#ffffff38]">
-                      <div className="">
-                        <DynamicLabel name={t("CHAT_NO")} type={true} />
-
-                        <div className="flex border rounded">
-                          <input
-                            className="border-white dark:border-[#ffffff38] dark:bg-gray-800 dark:text-white shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            type="number"
-                            // onInput={(e) => preventMax(e)}
-                            onKeyDown={(event) => {
-                              if (
-                                !["Backspace", "Delete", "Tab"].includes(
-                                  event.key
-                                ) &&
-                                !/[0-9]/.test(event.key)
-                              ) {
-                                event.preventDefault();
-                              }
-                            }}
-                            id="chatCharacter"
-                            {...register("chatCharacter", {
-                              required: {
-                                value: true,
-                                message: "Please enter number of chat.",
-                              },
-                              pattern: {
-                                value: /^\d+$/,
-                                message: "Decimals not allowed.",
-                              },
-                              min: {
-                                value: 1,
-                                message: "Minimum value must is 1.",
-                              },
-                              // max: {
-                              //   value: 100,
-                              //   message: "Maximum value must is 100.",
-                              // },
-                            })}
-                            placeholder=" "
-                          />
-                        </div>
-                        <ErrorMessage
-                          message={errors?.chatCharacter?.message}
-                        />
-                      </div>
-                      <div>
-                        <DynamicLabel name={t("ENTER_NO_COIN")} type={true} />
-                        <div className="flex border rounded">
-                          <input
-                            className="border-white dark:border-[#ffffff38] dark:bg-gray-800 dark:text-white shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            type="number"
-                            // onInput={(e) => preventMax(e)}
-                            onKeyDown={(event) => {
-                              if (
-                                !["Backspace", "Delete", "Tab"].includes(
-                                  event.key
-                                ) &&
-                                !/[0-9]/.test(event.key)
-                              ) {
-                                event.preventDefault();
-                              }
-                            }}
-                            id="chatCoins"
-                            {...register("chatCoins", {
-                              required: {
-                                value: true,
-                                message: "Please enter chat coins",
-                              },
-                              pattern: {
-                                value: /^\d+$/,
-                                message: "Decimals not allowed.",
-                              },
-                              min: {
-                                value: 1,
-                                message: "Minimum value must is 1.",
-                              },
-                              // max: {
-                              //   value: 100,
-                              //   message: "Maximum value must is 100.",
-                              // },
-                            })}
-                            placeholder=" "
-                          />
-                        </div>
-                        <ErrorMessage message={errors?.chatCoins?.message} />
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="mb-4 w-full">
-                    <label className="block text-gray-700 text-xl font-medium mb-4 dark:text-white">
-                      {t("VIDEO_CHAT")}
-                    </label>
-
-                    <div className="grid grid-cols-3 gap-x-5 border p-4 dark:border-[#ffffff38]">
-                      <div className="">
-                        <DynamicLabel name={t("ENTER_NO_VIDEO")} type={true} />
-
-                        <div className="flex border rounded">
-                          <input
-                            className="border-white dark:border-[#ffffff38] dark:bg-gray-800 dark:text-white shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            type="number"
-                            // onInput={(e) => preventMax(e)}
-                            onKeyDown={(event) => {
-                              if (
-                                !["Backspace", "Delete", "Tab"].includes(
-                                  event.key
-                                ) &&
-                                !/[0-9]/.test(event.key)
-                              ) {
-                                event.preventDefault();
-                              }
-                            }}
-                            id="chatVideo"
-                            {...register("chatVideo", {
-                              required: {
-                                value: true,
-                                message: "Please enter video no.",
-                              },
-                              pattern: {
-                                value: /^\d+$/,
-                                message: "Decimals not allowed.",
-                              },
-                              min: {
-                                value: 1,
-                                message: "Minimum value must is 1.",
-                              },
-                              // max: {
-                              //   value: 100,
-                              //   message: "Maximum value must is 100.",
-                              // },
-                            })}
-                            placeholder=" "
-                          />
-                        </div>
-                        <ErrorMessage message={errors?.chatVideo?.message} />
-                      </div>
-                      <div>
-                        <DynamicLabel name={t("ENTER_NO_COIN")} type={true} />
-
-                        <div className="flex border rounded">
-                          <input
-                            className="border-white dark:border-[#ffffff38] dark:bg-gray-800 dark:text-white shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            type="number"
-                            // onInput={(e) => preventMax(e)}
-                            onKeyDown={(event) => {
-                              if (
-                                !["Backspace", "Delete", "Tab"].includes(
-                                  event.key
-                                ) &&
-                                !/[0-9]/.test(event.key)
-                              ) {
-                                event.preventDefault();
-                              }
-                            }}
-                            id="chatVideoCoins"
-                            {...register("chatVideoCoins", {
-                              required: {
-                                value: true,
-                                message: "Please enter chat video coins",
-                              },
-                              pattern: {
-                                value: /^\d+$/,
-                                message: "Decimals not allowed.",
-                              },
-                              min: {
-                                value: 1,
-                                message: "Minimum value must is 1.",
-                              },
-                              // max: {
-                              //   value: 100,
-                              //   message: "Maximum value must is 100.",
-                              // },
-                            })}
-                            placeholder=" "
-                          />
-                        </div>
-                        <ErrorMessage
-                          message={errors?.chatVideoCoins?.message}
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="mb-4 w-full">
-                    <label className="block text-gray-700 text-xl font-medium mb-4 dark:text-white">
-                      {t("FREE_STREAMING_TIME")}
-                    </label>
-
-                    <div className="grid grid-cols-2 gap-x-5 border p-4 dark:border-[#ffffff38]">
-                      <div className="">
-                        <DynamicLabel name={t("ENTER_TIME")} type={true} />
-
-                        <div className="flex border rounded">
-                          <input
-                            className="border-white dark:border-[#ffffff38] dark:bg-gray-800 dark:text-white shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            type="number"
-                            // onInput={(e) => preventMax(e)}
-                            onKeyDown={(event) => {
-                              if (
-                                !["Backspace", "Delete", "Tab"].includes(
-                                  event.key
-                                ) &&
-                                !/[0-9]/.test(event.key)
-                              ) {
-                                event.preventDefault();
-                              }
-                            }}
-                            id="freeStream"
-                            {...register("freeStream", {
-                              required: {
-                                value: true,
-                                message: "Please enter free stream time.",
-                              },
-                              pattern: {
-                                value: /^\d+$/,
-                                message: "Decimals not allowed.",
-                              },
-                              min: {
-                                value: 1,
-                                message: "Minimum value must is 1.",
-                              },
-                              // max: {
-                              //   value: 100,
-                              //   message: "Maximum value must is 100.",
-                              // },
-                            })}
-                            placeholder=" "
-                          />
-                        </div>
-                        <ErrorMessage message={errors?.freeStream?.message} />
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* additional-integration  */}
-
-                  <div className="mb-4 w-full">
-                    <label className="block text-gray-700 text-xl font-medium mb-4 dark:text-white">
-                      {t("SIGN_UP_COIN")}
-                    </label>
-
-                    <div className="grid grid-cols-2 gap-x-5 border p-4 dark:border-[#ffffff38]">
-                      <div className="">
-                        <DynamicLabel name={t("FREE_COIN")} type={true} />
-
-                        <div className="flex border rounded">
-                          <input
-                            className="border-white dark:border-[#ffffff38] dark:bg-gray-800 dark:text-white shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            type="number"
-                            // onInput={(e) => preventMax(e)}
-                            onKeyDown={(event) => {
-                              if (
-                                !["Backspace", "Delete", "Tab"].includes(
-                                  event.key
-                                ) &&
-                                !/[0-9]/.test(event.key)
-                              ) {
-                                event.preventDefault();
-                              }
-                            }}
-                            id="signUpCoins"
-                            {...register("signUpCoins", {
-                              required: {
-                                value: true,
-                                message: "Please enter signup coins",
-                              },
-                              pattern: {
-                                value: /^\d+$/,
-                                message: "Decimals not allowed.",
-                              },
-                              min: {
-                                value: 1,
-                                message: "Minimum value must is 1.",
-                              },
-                              // max: {
-                              //   value: 100,
-                              //   message: "Maximum value must is 100.",
-                              // },
-                            })}
-                            placeholder=" "
-                          />
-                        </div>
-                        <ErrorMessage message={errors?.signUpCoins?.message} />
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="mb-4 w-full">
-                    <label className="block text-gray-700 text-xl font-medium mb-4 dark:text-white">
-                      {t("REFER_FRIEND")}
-                    </label>
-
-                    <div className="grid grid-cols-2 gap-x-5 border p-4 dark:border-[#ffffff38]">
-                      <div className="">
-                        <DynamicLabel name={t("NO_OF_COIN")} type={true} />
-
-                        <div className="flex border rounded">
-                          <input
-                            className="border-white dark:border-[#ffffff38] dark:bg-gray-800 dark:text-white shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            type="number"
-                            // onInput={(e) => preventMax(e)}
-                            onKeyDown={(event) => {
-                              if (
-                                !["Backspace", "Delete", "Tab"].includes(
-                                  event.key
-                                ) &&
-                                !/[0-9]/.test(event.key)
-                              ) {
-                                event.preventDefault();
-                              }
-                            }}
-                            id="referralCoins"
-                            {...register("referralCoins", {
-                              required: {
-                                value: true,
-                                message: "Please enter referral coins",
-                              },
-                              pattern: {
-                                value: /^\d+$/,
-                                message: "Decimals not allowed.",
-                              },
-                              min: {
-                                value: 1,
-                                message: "Minimum value must is 1.",
-                              },
-                              // max: {
-                              //   value: 100,
-                              //   message: "Maximum value must is 100.",
-                              // },
-                            })}
-                            placeholder=" "
-                          />
-                        </div>
-                        <ErrorMessage
-                          message={errors?.referralCoins?.message}
-                        />
-                      </div>
+                      )}
                     </div>
                   </div>
                 </div>
-              </main>
+              </div>
+
+              <main className='justify-center aline-center flex flex-wrap grid  lg:grid-cols-6 md:grid-cols-3 sm:grid-cols-2 grid-cols-1  gap-4' />
             </div>
           </div>
         </section>
-
-        {(manager?.add || user?.role === "admin") && (
-          <div className="mt-4 text-center">
-            {settingChangeLoading &&
-            (user?.permission?.[17]?.add || user.permission?.length === 0) ? (
-              <div
-                className="max-w-[100px] block spinner-container bg-gradientTo text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150"
-                style={{ margin: "0 auto" }}
-              >
-                <div className="loading-spinner" />
-              </div>
-            ) : (
-              <div>
-              <button
-                className="bg-gradientTo text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150"
-                type="submit"
-              >
-                {t("O_UPDATE")}
-              </button>
-              </div>
-            )}
-          </div>
-        )}
       </form>
-    </section>
-  );
-};
 
-export default Settings;
+      <div className='border xl:w-full round'>
+        <header className='border-b  py-2 px-4 bg-gray-100 rounded-t-md '>
+          <div className='font-semibold'>{t('SETTINGS')}</div>
+        </header>
+        <div className='bg-white py-6 px-4  rounded-b-md'>
+          {/* <main className='justify-center flex flex-wrap xl:[&>*]:mr-14 sm:[&>*]:mr-7 2xl:[&>*]:mr-14  sm:px-0 px-4 xl:[&>*]:w-3/12 sm:[&>*]:w-3/5 '> */}
+          <main className='justify-center flex flex-wrap grid  lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1  gap-4'>
+            <div className='relative z-0 mb-6 w-full group'>
+              <OInputField
+                wrapperClassName='relative z-0  w-full group'
+                type='text'
+                inputLabel={<>{t('ADMIN_EMAIL_ADDRESS')}</>}
+                id='email'
+                value={codeValue.toLowerCase()}
+                maxLength={50}
+                autoComplete='off'
+                onInput={e => preventMaxInput(e, 50)}
+                register={register('email', formValidation['email'])}
+                placeholder=' '
+              />
+              <ErrorMessage message={errors?.email?.message} />
+            </div>
+            <div className='relative z-0 mb-6 w-full group'>
+              <OInputField
+                wrapperClassName='relative z-0  w-full group'
+                type='number'
+                maxLength={40}
+                inputLabel={<>{t('MIN_WITHDRAWAL_AMOUNT_TO_BANK')}</>}
+                id='minWithdrawAmountToBank'
+                register={register('minWithdrawAmountToBank', {
+                  required: {
+                    value: true,
+                    message: 'Please enter minimum withdrawal amount to bank.'
+                  },
+                  maxLength: {
+                    value: 40,
+                    message: 'Max limit is 40 characters.'
+                  },
+                  min: {
+                    value: 1,
+                    message: 'Minimum value must is 1.'
+                  }
+                })}
+                placeholder=' '
+              />
+              <ErrorMessage
+                message={errors?.minWithdrawAmountToBank?.message}
+              />
+            </div>
+
+            <div className='relative z-0 mb-6 w-full group'>
+              <OInputField
+                wrapperClassName='relative z-0  w-full group'
+                type='number'
+                inputLabel={<>{t('REFERRAL_BONUS_FOR_TOURIST')}</>}
+                maxLength={40}
+                id='referralBonusTourist'
+                register={register('referralBonusTourist', {
+                  required: {
+                    value: true,
+                    message: 'Please enter referral bonus.'
+                  },
+                  maxLength: {
+                    value: 40,
+                    message: 'Max limit is 40 characters.'
+                  },
+                  min: {
+                    value: 1,
+                    message: 'Minimum value must is 1.'
+                  }
+                })}
+                placeholder=' '
+              />
+              <ErrorMessage message={errors?.referralBonusTourist?.message} />
+            </div>
+            <div className='relative z-0 mb-6 w-full group'>
+              <OInputField
+                wrapperClassName='relative z-0  w-full group'
+                type='number'
+                inputLabel={<>{t('REFERRAL_BONUS_FOR_LOCALS')}</>}
+                maxLength={40}
+                id='referralBonusLocals'
+                register={register('referralBonusLocals', {
+                  required: {
+                    value: true,
+                    message: 'Please enter referral bonus.'
+                  },
+                  maxLength: {
+                    value: 40,
+                    message: 'Max limit is 40 characters.'
+                  },
+                  min: {
+                    value: 1,
+                    message: 'Minimum value must is 1.'
+                  }
+                })}
+                placeholder=' '
+              />
+              <ErrorMessage message={errors?.referralBonusLocals?.message} />
+            </div>
+            <div className='w-full'>
+              <OInputField
+                wrapperClassName='relative z-0  w-full group'
+                type='number'
+                maxLength={40}
+                inputLabel={<>{t('UPC_CODE_REFERRAL_AMOUNT')}</>}
+                name='upcCodeReferralAmount'
+                register={register('upcCodeReferralAmount', {
+                  required: {
+                    value: true,
+                    message: 'Please enter upc code referral amount.'
+                  },
+                  pattern: {
+                    value: /^\d+$/,
+                    message: 'Only digits are allowed.'
+                  },
+                  maxLength: {
+                    value: 40,
+                    message: 'Max limit is 40 characters.'
+                  },
+                  min: {
+                    value: 1,
+                    message: 'Minimum value must is 1.'
+                  }
+                })}
+                placeholder=''
+              />
+
+              <ErrorMessage message={errors?.upcCodeReferralAmount?.message} />
+            </div>
+            <div className='mb-4  w-full'>
+              <OInputField
+                wrapperClassName='relative z-0  w-full group'
+                type='number'
+                maxLength={40}
+                id='signupBonus'
+                inputLabel={<>{t('SIGN_UP_BONUS')}</>}
+                register={register('signupBonus', {
+                  required: {
+                    value: true,
+                    message: 'Please enter sign up bonus.'
+                  },
+                  maxLength: {
+                    value: 40,
+                    message: 'Max limit is 40 characters.'
+                  },
+                  min: {
+                    value: 1,
+                    message: 'Minimum value must is 1.'
+                  }
+                })}
+                placeholder=' '
+              />
+              <ErrorMessage message={errors?.signupBonus?.message} />
+            </div>
+
+            <div className='w-full'>
+              <OInputField
+                wrapperClassName='relative z-0  w-full group'
+                type='number'
+                id='payment'
+                inputLabel={<>{t('TRANSFER_MONEY_LIMIT_MAXIMUM')}</>}
+                maxLength={40}
+                register={register('maxAmountForKeepTourist', {
+                  required: {
+                    value: true,
+                    message: 'Please enter maximum transfer money limit.'
+                  },
+                  maxLength: {
+                    value: 40,
+                    message: 'Max limit is 40 characters.'
+                  },
+                  min: {
+                    value: 1,
+                    message: 'Minimum value must is 1.'
+                  }
+                })}
+                placeholder=' '
+              />
+              <ErrorMessage message={errors?.maxAmountForKeepTourist?.message} />
+            </div>
+            <div className='w-full'>
+              <OInputField
+                wrapperClassName='relative z-0  w-full group'
+                type='number'
+                id='payment'
+                inputLabel={<>{t('NEGATIVE_AMOUNT_MAXIMUM_LIMIT')}</>}
+                maxLength={40}
+                register={register('negativeAmountMaxLimit', {
+                  required: {
+                    value: true,
+                    message: 'Please enter negative amount maximum limit.'
+                  },
+                  maxLength: {
+                    value: 40,
+                    message: 'Max limit is 40 characters.'
+                  },
+                  min: {
+                    value: 1,
+                    message: 'Minimum value must is 1.'
+                  }
+                })}
+                placeholder=' '
+              />
+              <ErrorMessage message={errors?.negativeAmountMaxLimit?.message} />
+            </div>
+            <div className='w-full'>
+              <OInputField
+                wrapperClassName='relative z-0  w-full group'
+                type='number'
+                id='payment'
+                inputLabel={
+                  <>{t('MINIMUM_THRESHOLD_AMOUNT_FOR_EARNING_REWARD_REQUEST')}</>
+                }
+                maxLength={40}
+                register={register('mimThresholdAmountForEarningRewardRequest', {
+                  required: {
+                    value: true,
+                    message: 'Please enter minimum threshold amount.'
+                  },
+                  maxLength: {
+                    value: 40,
+                    message: 'Max limit is 40 characters.'
+                  },
+                  min: {
+                    value: 1,
+                    message: 'Minimum value must is 1.'
+                  }
+                })}
+                placeholder=' '
+              />
+              <ErrorMessage message={errors?.mimThresholdAmountForEarningRewardRequest?.message} />
+            </div>
+            <div className='w-full'>
+              <OInputField
+                wrapperClassName='relative z-0  w-full group'
+                type='number'
+                id='payment'
+                inputLabel={
+                  <>{t('TIME_TO_LOG_ACTIVE_USERS_ON_THE_APP')}
+                  </>
+                }
+                maxLength={40}
+                register={register('timeLogForActiveUsers', {
+                  required: {
+                    value: true,
+                    message: 'Please enter time to log active users  on the app.'
+                  },
+                  maxLength: {
+                    value: 40,
+                    message: 'Max limit is 40 characters.'
+                  },
+                  min: {
+                    value: 1,
+                    message: 'Minimum value must is 1.'
+                  }
+                })}
+                placeholder=' '
+              />
+              <ErrorMessage message={errors?.timeLogForActiveUsers?.message} />
+            </div>
+          </main>
+        </div>
+      </div>
+      {(manager?.add || user?.role === 'admin') && (
+        <div className='text-center mt-4'>
+          <OButton
+            disabled={!isDirty && true}
+            label={<>{t('O_UPDATE')}</>}
+            type='submit'
+            onClick={handleSubmit(handleSubmitForm)}
+            loading={settingChangeLoading}
+          />
+        </div>
+      )}
+
+      {viewShowModal ? (
+        <Credential setViewShowModal={setViewShowModal} email={user?.email} />
+      ) : null}
+    </section>
+  )
+}
+
+export default Settings

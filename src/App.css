@@ -11,13 +11,13 @@ input[type=number] {
 }
 
 
-.flatpickr-months .flatpickr-month {background-color: #8A36FF !important }
-.flatpickr-current-month .flatpickr-monthDropdown-months{background-color: #8A36FF !important}
-span.flatpickr-weekday {background-color: #8A36FF !important;color:#ffffff!important}
-.flatpickr-weekdays{background-color: #8A36FF !important;}
+.flatpickr-months .flatpickr-month {background-color: #000000 !important }
+.flatpickr-current-month .flatpickr-monthDropdown-months{background-color: #000000 !important}
+span.flatpickr-weekday {background-color: #000000 !important;color:#ffffff!important}
+.flatpickr-weekdays{background-color: #000000 !important;}
 .flatpickr-day.selected{
-  background-color: #8A36FF !important;
-  border:#8A36FF
+  background-color: #000000 !important;
+  border:#000000
 }
 
 .myCustomPhoneInput {

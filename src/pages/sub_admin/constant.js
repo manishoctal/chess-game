@@ -1,13 +1,5 @@
 const Permission = [
-  {
-    manager: "dashboard",
-    add: false,
-    edit: false,
-    view: false,
-    shownView: true,
-    shownDelete: false,
-    shownAdd: true,
-  },
+ 
   {
     manager: "users_managers",
     add: false,
@@ -18,7 +10,47 @@ const Permission = [
     shownAdd: true,
   },
   {
+    manager: "transaction_manager",
+    add: false,
+    edit: false,
+    view: false,
+    shownView: true,
+    shownDelete: false,
+    shownAdd: true,
+  },
+  {
     manager: "subAdmin_manager",
+    add: false,
+    edit: false,
+    view: false,
+    shownView: true,
+    shownDelete: true,
+    shownAdd: true,
+    shownAll: true,
+  },
+  {
+    manager: "reports_manager",
+    add: false,
+    edit: false,
+    view: false,
+    shownView: true,
+    shownDelete: true,
+    shownAdd: true,
+    shownAll: true,
+  },
+ 
+  {
+    manager: "notification_manager",
+    add: false,
+    edit: false,
+    view: false,
+    shownView: true,
+    shownDelete: true,
+    shownAdd: true,
+    shownAll: true,
+  },
+  {
+    manager: "thai_local_deposit_manager",
     add: false,
     edit: false,
     view: false,
@@ -48,7 +80,7 @@ const Permission = [
     shownAdd: true,
   },
   {
-    manager: "faq_manager",
+    manager: "FAQ",
     add: false,
     edit: false,
     view: false,

@@ -3,13 +3,14 @@ import { apiGet, apiPost } from '../../utils/apiFetch'
 import apiPath from '../../utils/apiPath'
 import Table from './Table'
 import Pagination from '../Pagination'
+import UserView from './UserView'
 import AuthContext from 'context/AuthContext'
 import dayjs from 'dayjs'
 import ODateRangePicker from 'components/shared/datePicker/ODateRangePicker'
 import { useTranslation } from 'react-i18next'
 import useToastContext from 'hooks/useToastContext'
 
-function User () {
+function ThaiLocalDepositManager () {
   const { t } = useTranslation()
   const notification = useToastContext()
   const { logoutUser, user, updatePageName } = useContext(AuthContext)
@@ -22,7 +23,6 @@ function User () {
 
   const [viewShowModal, setViewShowModal] = useState(false)
   const [users, setAllUser] = useState([])
-  const [userType, setUserType] = useState('tourist')
   const [page, setPage] = useState(1)
   const [pageSize, setPageSize] = useState(10)
   const [item, setItem] = useState('')
@@ -49,7 +49,7 @@ function User () {
   }
 
   const [filterData, setFilterData] = useState({
-    isKYCVerified: '',
+    verificationStatus: '',
     category: '',
     searchkey: '',
     startDate: '',
@@ -70,25 +70,34 @@ function User () {
         endDate,
         searchkey,
         isFilter,
-        isKYCVerified
+        verificationStatus
       } = filterData
-
+      if (
+        (data?.deletePage && !(users?.length > 1)) ||
+        (isFilter && category && data?.statusChange && !(users?.length > 1))
+      ) {
+        if (!(users?.length > 1)) {
+          setPage(page - 1)
+          setIsDelete(true)
+          setPaginationObj({ ...paginationObj, page: page - 1 })
+        }
+      } else {
+        setIsDelete(false)
+      }
       const payload = {
         page,
         pageSize: pageSize,
-        userType,
         status: category,
         startDate: startDate ? dayjs(startDate).format('YYYY-MM-DD') : null,
         endDate: endDate ? dayjs(endDate).format('YYYY-MM-DD') : null,
         keyword: searchkey?.trim(),
-        sortKey: sort?.sort_key,
-        sortType: sort?.sort_type,
-        isKYCVerified
+        sortKey: sort.sort_key,
+        sortType: sort.sort_type,
+        verificationStatus: verificationStatus
       }
 
       const path = apiPath.getUsers
       const result = await apiGet(path, payload)
-
       if (result?.status === 200) {
         const response = result?.data?.results
         const resultStatus = result?.data?.success
@@ -132,8 +141,8 @@ function User () {
   }
 
   useEffect(() => {
-    getAllUser()
-  }, [page, filterData, sort, pageSize, userType])
+    // getAllUser();
+  }, [page, filterData, sort, pageSize])
 
   useEffect(() => {
     updatePageName(t('O_USERS'))
@@ -148,7 +157,7 @@ function User () {
       endDate: '',
       isReset: true,
       isFilter: false,
-      isKYCVerified: ''
+      verificationStatus: ''
     })
     setPage(1)
     setIsDelete(true)
@@ -180,7 +189,7 @@ function User () {
   const handleVerify = e => {
     setFilterData({
       ...filterData,
-      isKYCVerified: e?.target?.value,
+      verificationStatus: e.target.value,
       isFilter: true,
       isReset: false
     })
@@ -217,67 +226,15 @@ function User () {
     <div>
       <div className='bg-[#F9F9F9] dark:bg-slate-900'>
         <div className='px-3 py-4'>
-          <div className='flex justify-center items-center grid grid-cols-2 w-[500px]'>
-            <button
-              type='button'
-              className={`pr-6 bg-white border border-1 border-[#000] text-sm px-8 ml-3 mb-3 py-2 rounded-lg items-center  text-black  sm:w-auto w-1/2 ${userType==='tourist' && 'bg-[#000!important] text-white'}`}
-              onClick={() => setUserType('tourist')}
-            >
-              {t('FOREIGN_TOURIST')}
-            </button>
-            <button
-              type='button'
-              className={` pr-6 bg-white border border-1 border-[#000] text-sm px-8 ml-3 mb-3 py-2 rounded-lg items-center  text-black  sm:w-auto w-1/2 ${userType==='local'&& 'bg-[#000!important] text-white'}`}
-              onClick={() => setUserType('local')}
-            >
-              {t('THAI_LOCAL')}
-            </button>
-          </div>
           <div className='bg-white border border-[#E9EDF9] rounded-lg dark:bg-slate-800 dark:border-[#ffffff38]'>
             <form className='border-b border-b-[#E3E3E3]  px-4 py-3 pt-5 flex flex-wrap justify-between'>
               <div className='flex flex-wrap items-center'>
-                <div className='flex items-center lg:pt-0 pt-3 justify-center'> 
+                <div className='flex items-center lg:pt-0 pt-3 justify-center'>
                   <ODateRangePicker
                     handleDateChange={handleDateChange}
                     isReset={filterData?.isReset}
                     setIsReset={setFilterData}
                   />
-
-                  <div className='flex items-center mb-3 ml-3'>
-                    <select
-                      id='countries'
-                      type='password'
-                      name='floating_password'
-                      className='block p-2 w-full text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer'
-                      placeholder=' '
-                      // value={filterData?.category}
-                      onChange={statusPage}
-                    >
-                      <option defaultValue value=''>
-                        {t('O_ALL')}
-                      </option>
-                      <option value='active'>{t('O_ACTIVE')}</option>
-                      <option value='inactive'>{t('O_INACTIVE')}</option>
-                    </select>
-                  </div>
-
-                  <div className='flex items-center mb-3 ml-3'>
-                    <select
-                      id='countries'
-                      type=' password'
-                      name='floating_password'
-                      className='block p-2 w-full text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF] focus:outline-none focus:ring-0  peer'
-                      placeholder=' '
-                      value={filterData?.isKYCVerified}
-                      onChange={e => handleVerify(e)}
-                    >
-                      <option defaultValue value=''>
-                        {t('ALL_USERS')}
-                      </option>
-                      <option value='completed'>{t('COMPLETED')}</option>
-                      <option value='pending'>{t('PENDING')}</option>
-                    </select>
-                  </div>
 
                   <button
                     type='button'
@@ -342,8 +299,8 @@ function User () {
               setSort={setSort}
               sort={sort}
               setPage={setPage}
-              userType={userType}
               manager={manager}
+              toggleModalAddEdit={toggleModalAddEdit}
             />
 
             <div className='flex justify-between'>
@@ -379,15 +336,17 @@ function User () {
           </div>
         </div>
       </div>
-
-      {/* {toggle && (
-        <VerifyPopup
-          onHide={toggleModalAddEdit}
-          item={item}
-          getAllUser={getAllUser}
-        />
-      )} */}
+      <>
+        {viewShowModal ? (
+          <UserView
+            handleUserView={handleUserView}
+            setViewShowModal={setViewShowModal}
+            getAllUser={getAllUser}
+            item={item}
+          />
+        ) : null}
+      </>
     </div>
   )
 }
-export default User
+export default ThaiLocalDepositManager
