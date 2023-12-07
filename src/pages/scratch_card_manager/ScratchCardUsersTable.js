@@ -1,23 +1,33 @@
-import React, { useContext, useState, useEffect } from 'react'
-import { apiPut } from '../../utils/apiFetch'
-import apiPath from '../../utils/apiPath'
-import dayjs from 'dayjs'
-import useToastContext from 'hooks/useToastContext'
-import { AiFillEdit, AiFillDelete, AiFillEye } from 'react-icons/ai'
-import { useTranslation } from 'react-i18next'
-import { BsArrowUpShort } from 'react-icons/bs'
+
 import AuthContext from 'context/AuthContext'
+import dayjs from 'dayjs'
 import { isEmpty, startCase } from 'lodash'
-import helper from '../../utils/helpers'
+import { useContext, useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { apiGet } from 'utils/apiFetch'
+import pathObj from 'utils/apiPath'
+import helper from 'utils/helpers'
 
-import { useNavigate } from 'react-router-dom'
-
-const ScratchCardUsersTable = ({ subAdmin, page }) => {
+const ScratchCardUsersTable = ({  page }) => {
   const { t } = useTranslation()
-  const navigate = useNavigate()
+  const location = useLocation()
   const { user, updatePageName } = useContext(AuthContext)
-  const [scratchCardUser,setScratchCardUser]=useState('')
-
+  const [scratchCardUser,setScratchCardUser]=useState([])
+  const [filterData, setFilterData] = useState({
+    category: '',
+    searchkey: '',
+    startDate: '',
+    endDate: '',
+    isReset: false,
+    isFilter: false
+  })
+  const [paginationObj, setPaginationObj] = useState({
+    page: 1,
+    pageCount: 1,
+    pageRangeDisplayed: 10
+  })
+  const [scratchCardId]= useState(location?.state)
   const scratchCardHistory = async (data, pageNO) => {
     try {
       const { startDate, endDate, searchkey } = filterData
@@ -28,11 +38,11 @@ const ScratchCardUsersTable = ({ subAdmin, page }) => {
 
       }
 
-      const path = apiPath.scratchCardHistory
+      const path = pathObj.scratchCardHistory+'/'+scratchCardId?.id
       const result = await apiGet(path, payload)
       const response = result?.data?.results
       const resultStatus = result?.data?.success
-      (response.docs)
+      setScratchCardUser(response?.docs)
       setPaginationObj({
         ...paginationObj,
         page: resultStatus ? response.page : null,
@@ -63,9 +73,7 @@ const ScratchCardUsersTable = ({ subAdmin, page }) => {
                 {t('FOREIGN_TOURIST_NAME')}
               </th>
 
-              <th scope='col' className='py-3 px-6'>
-                {t('COUPON_AMOUNT')}
-              </th>
+             
               <th scope='col' className='py-3 px-6'>
                 {t('TRANSACTION_AMOUNT')}
               </th>
@@ -73,7 +81,7 @@ const ScratchCardUsersTable = ({ subAdmin, page }) => {
                 {t('COUPON_CODE')}
               </th>
               <th scope='col' className='py-3 px-6'>
-                {t('DATE_AND_TIME')} & 
+                {t('DATE_AND_TIME')} 
               </th>
 
              
@@ -93,16 +101,18 @@ const ScratchCardUsersTable = ({ subAdmin, page }) => {
                 </th>
 
                 <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
-                  {startCase(item?.firstName + ' ' + item?.lastName)}
+                  {startCase(item?.user?.firstName  + item?.user?.lastName)}
+
                 </td>
                 <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
-                  {item?.email || 'N/A'}
+                  {item?.scratchCardRecord?.couponAmount || 'N/A'}
                 </td>
                 <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
-                  {item?.countryCode || 'N/A'}
+                  {item?.scratchCardRecord?.couponCode || 'N/A'}
                 </td>
                 <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
-                  {item?.mobile || 'N/A'}
+                {helper.getDateAndTime(item?.createdAt)}
+
                 </td>
               </tr>
             ))}

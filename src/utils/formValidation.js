@@ -122,8 +122,8 @@ const formValidation = {
   couponCode: {
     required: 'Please enter coupon code.',
     pattern: {
-      value: /^[^\s].*/,
-      message: 'Cannot start with a space.'
+      value: /^[^\s][A-Z]+$/,
+      message: 'Cannot start with a space and use only capital letters.'
     }
   },
   couponAmount: {

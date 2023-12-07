@@ -48,8 +48,7 @@ function UserWalletHistory () {
         startDate,
         endDate,
         searchkey,
-        isFilter,
-        verificationStatus
+        isFilter
       } = filterData
       if (
         (data?.deletePage && !(users?.length > 1)) ||
@@ -70,11 +69,9 @@ function UserWalletHistory () {
         startDate: startDate ? dayjs(startDate).format('YYYY-MM-DD') : null,
         endDate: endDate ? dayjs(endDate).format('YYYY-MM-DD') : null,
         keyword: searchkey?.trim(),
-
-        verificationStatus: verificationStatus
       }
 
-      const path = apiPath.getUsers
+      const path = apiPath.listAddMoneyToUserWallet
       const result = await apiGet(path, payload)
       if (result?.status === 200) {
         const response = result?.data?.results
@@ -115,7 +112,7 @@ function UserWalletHistory () {
  
 
   useEffect(() => {
-    // getAllUser();
+    getAllUser();
   }, [page, filterData, pageSize])
 
   useEffect(() => {

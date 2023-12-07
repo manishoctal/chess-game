@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { isEmpty, startCase } from 'lodash'
 import { useTranslation } from 'react-i18next'
+import helper from 'utils/helpers'
 
 const UserWalletHistoryTable = ({ users, page }) => {
   const { t } = useTranslation()
@@ -42,13 +43,13 @@ const UserWalletHistoryTable = ({ users, page }) => {
                   </th>
 
                   <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
-                    {item?.mobile || 'N/A'}
+                    {`${item?.senderRecord?.firstName} ${item?.senderRecord?.lastName}`}
                   </td>
                   <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
-                    {item?.country || 'N/A'}
+                    {item?.transactionAmount || 'N/A'}
                   </td>
                   <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
-                    {item?.country || 'N/A'}
+                    {helper.getDateAndTime(item?.createdAt) || 'N/A'}
                   </td>
                 </tr>
               ))}
