@@ -10,6 +10,7 @@ import ODateRangePicker from 'components/shared/datePicker/ODateRangePicker'
 import { useTranslation } from 'react-i18next'
 import useToastContext from 'hooks/useToastContext'
 import UserWalletHistoryTable from './UserWalletHistoryTable'
+import { useLocation } from 'react-router-dom'
 
 function UserWalletHistory () {
   const { t } = useTranslation()
@@ -30,7 +31,8 @@ function UserWalletHistory () {
   const [searchTerm, setSearchTerm] = useState('')
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('')
   const [isInitialized, setIsInitialized] = useState(false)
-
+  const location = useLocation()
+  const [userId]=useState(location?.state?.userId)
   const [filterData, setFilterData] = useState({
     verificationStatus: '',
     category: '',
@@ -50,18 +52,7 @@ function UserWalletHistory () {
         searchkey,
         isFilter
       } = filterData
-      if (
-        (data?.deletePage && !(users?.length > 1)) ||
-        (isFilter && category && data?.statusChange && !(users?.length > 1))
-      ) {
-        if (!(users?.length > 1)) {
-          setPage(page - 1)
-          setIsDelete(true)
-          setPaginationObj({ ...paginationObj, page: page - 1 })
-        }
-      } else {
-        setIsDelete(false)
-      }
+     
       const payload = {
         page,
         pageSize: pageSize,
@@ -69,6 +60,7 @@ function UserWalletHistory () {
         startDate: startDate ? dayjs(startDate).format('YYYY-MM-DD') : null,
         endDate: endDate ? dayjs(endDate).format('YYYY-MM-DD') : null,
         keyword: searchkey?.trim(),
+        userId,
       }
 
       const path = apiPath.listAddMoneyToUserWallet

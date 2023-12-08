@@ -18,6 +18,7 @@ const AddAmount = ({ setIsAmountModal, getAllUser ,addAmountUser,userType}) => {
   const notification = useToastContext()
   const handleSubmitForm = async data => {
     try {
+      
       const path = apiPath.addMoneyToUserWallet
       const result = await apiPost(path, {...data,userId:addAmountUser?._id,transactionType:'adminToLocalWallet',userType})
       if (result?.data?.success === true) {
@@ -45,6 +46,7 @@ const AddAmount = ({ setIsAmountModal, getAllUser ,addAmountUser,userType}) => {
                   <div className='flex justify-center mr-8'>
                     <NavLink
                       to='/usersWalletHistory'
+                      state={{userId:addAmountUser?._id}}
                       className='bg-gradientTo text-sm px-8 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue'
                     >
                       {t('VIEW_HISTORY')}
