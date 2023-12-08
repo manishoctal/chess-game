@@ -1,9 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { apiGet, apiPost } from '../../utils/apiFetch'
+import { apiGet } from '../../utils/apiFetch'
 import apiPath from '../../utils/apiPath'
-import Table from './Table'
 import Pagination from '../Pagination'
-import UserView from './UserView'
 import AuthContext from 'context/AuthContext'
 import dayjs from 'dayjs'
 import ODateRangePicker from 'components/shared/datePicker/ODateRangePicker'
@@ -32,7 +30,7 @@ function UserWalletHistory () {
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('')
   const [isInitialized, setIsInitialized] = useState(false)
   const location = useLocation()
-  const [userId]=useState(location?.state?.userId)
+  const [userId] = useState(location?.state?.userId)
   const [filterData, setFilterData] = useState({
     verificationStatus: '',
     category: '',
@@ -45,14 +43,8 @@ function UserWalletHistory () {
 
   const getAllUser = async data => {
     try {
-      const {
-        category,
-        startDate,
-        endDate,
-        searchkey,
-        isFilter
-      } = filterData
-     
+      const { category, startDate, endDate, searchkey, isFilter } = filterData
+
       const payload = {
         page,
         pageSize: pageSize,
@@ -60,7 +52,7 @@ function UserWalletHistory () {
         startDate: startDate ? dayjs(startDate).format('YYYY-MM-DD') : null,
         endDate: endDate ? dayjs(endDate).format('YYYY-MM-DD') : null,
         keyword: searchkey?.trim(),
-        userId,
+        receiverId: userId
       }
 
       const path = apiPath.listAddMoneyToUserWallet
@@ -101,10 +93,8 @@ function UserWalletHistory () {
     setEditShowModal(true)
   }
 
- 
-
   useEffect(() => {
-    getAllUser();
+    getAllUser()
   }, [page, filterData, pageSize])
 
   useEffect(() => {
@@ -138,8 +128,6 @@ function UserWalletHistory () {
     })
     setIsDelete(true)
   }
-
- 
 
   useEffect(() => {
     if (!isInitialized) {
@@ -234,7 +222,6 @@ function UserWalletHistory () {
               </div>
             </form>
             <UserWalletHistoryTable users={users} page={page} />
-
 
             <div className='flex justify-between'>
               <div className='flex items-center mb-3 ml-3'>

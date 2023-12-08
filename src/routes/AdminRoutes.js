@@ -26,6 +26,7 @@ import UserWalletHistory from 'pages/users/UserWalletHistory'
 import TransactionDetails from 'pages/users/TransactionDetails'
 import ScratchCardManager from 'pages/scratch_card_manager/ScratchCardManager'
 import ScratchCardUsersTable from 'pages/scratch_card_manager/ScratchCardUsersTable'
+import SupportManager from 'pages/support_manager/SupportManager'
 
 const UseChange = ({ data }) => {
   const { t } = useTranslation()
@@ -102,6 +103,15 @@ const AdminRoutes = {
       name: (
         <>
           <UseChange data='NAV_TRANSACTION_MANAGER' />
+        </>
+      )
+    },
+    {
+      path: '/support-manager',
+      element: <SupportManager />,
+      name: (
+        <>
+          <UseChange data='SUPPORT_MANAGER' />
         </>
       )
     },

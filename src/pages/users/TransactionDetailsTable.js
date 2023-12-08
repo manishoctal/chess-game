@@ -137,8 +137,8 @@ const TransactionDetailsTable = ({ transactions, page, userType }) => {
                       item?.paymentReceiptTime
                     ) ?? 'N/A'}
                   </td>
-                  <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
-                    <QRCodeGenerator qrCodeValue={item.qrCode} />
+                  <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center h-28 w-28 '>
+                    <QRCodeGenerator qrCodeValue={item.qrCode}  />
                   </td>
                   <td className='py-4 px-6 border-r flex justify-center'>
                     {item?.paymentReceiptImage ? (

@@ -9,6 +9,7 @@ import { preventMaxInput } from 'utils/validations'
 import formValidation from '../../utils/formValidation'
 import ODatePicker from 'components/shared/datePicker/ODatePicker'
 import ErrorMessage from 'components/ErrorMessage'
+import helper from 'utils/helpers'
 
 const UserEdit = ({ setEditShowModal, getAllUser, item }) => {
   const { t } = useTranslation()
@@ -151,11 +152,7 @@ const UserEdit = ({ setEditShowModal, getAllUser, item }) => {
                         </>
                       }
                       min={0}
-                      onKeyDown={e => {
-                        if (['-', '+', 'e'].includes(e.key)) {
-                          e.preventDefault()
-                        }
-                      }}
+                      onKeyDown={helper.preventForNumberInput}
                       onInput={e => preventMaxInput(e, 10)}
                       register={register('mobile', formValidation['mobile'])}
                       errors={errors}

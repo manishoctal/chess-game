@@ -6,6 +6,7 @@ import useToastContext from 'hooks/useToastContext'
 import { useTranslation } from 'react-i18next'
 import DynamicLabel from 'utils/DynamicLabel'
 import { NavLink } from 'react-router-dom'
+import helper from 'utils/helpers'
 
 const AddAmount = ({ setIsAmountModal, getAllUser ,addAmountUser,userType}) => {
   const { t } = useTranslation()
@@ -83,6 +84,7 @@ const AddAmount = ({ setIsAmountModal, getAllUser ,addAmountUser,userType}) => {
                           autoFocus
                           className='py-4 px-3 w-full text-sm text-gray-900 bg-transparent border-2 rounded-lg border-[#DFDFDF] appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0  peer'
                           placeholder=' '
+                          onKeyDown={helper.preventForNumberInput}
                           maxLength={100}
                           {...register('amount', {
                             required: 'Please enter amount.',

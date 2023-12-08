@@ -197,7 +197,7 @@ const Table = ({
                       {i + 1 + 10 * (page - 1)}
                     </th>
                     <td className='py-4 px-4 border-r  dark:border-[#ffffff38]'>
-                      {item?.firstName || 'N/A'}
+                      {userType === 'local' ?`${item?.firstName} ${item?.lastName}`: item?.firstName || 'N/A'}
                     </td>
                     <td className='py-2 px-4 border-r  dark:border-[#ffffff38]'>
                       {item?.email || 'N/A'}

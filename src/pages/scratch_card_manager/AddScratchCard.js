@@ -10,6 +10,7 @@ import { useState } from 'react'
 import OInputField from 'components/reusable/OInputField'
 import formValidation from 'utils/formValidation'
 import dayjs from 'dayjs'
+import helper from 'utils/helpers'
 
 const AddScratchCard = ({ setShowModal, allScratchCard }) => {
   const { t } = useTranslation()
@@ -122,11 +123,7 @@ const AddScratchCard = ({ setShowModal, allScratchCard }) => {
                       }
                       type='number'
                       maxLength={15}
-                      onKeyDown={e => {
-                        if (['-', '+', 'e'].includes(e.key)) {
-                          e.preventDefault()
-                        }
-                      }}
+                      onKeyDown={helper.preventForNumberInput}
                       register={register(
                         'rewardAmount',
                         formValidation['rewardAmount']
@@ -147,11 +144,7 @@ const AddScratchCard = ({ setShowModal, allScratchCard }) => {
                           <span className='text-red-500'>*</span>
                         </>
                       }
-                      onKeyDown={e => {
-                        if (['-', '+', 'e'].includes(e.key)) {
-                          e.preventDefault()
-                        }
-                      }}
+                      onKeyDown={helper.preventForNumberInput}
                       register={register(
                         'numberOfUserCoupon',
                         formValidation['numberOfUserCoupon']

@@ -167,6 +167,12 @@ const Sidebar = () => {
                 'EMAIL_MANAGER',
                 <AiOutlineMail style={{ fontSize: '20px' }} />
               )}
+            {checkSidebarPermission('support_manager') &&
+              generateNavLink(
+                '/support-manager',
+                'SUPPORT_MANAGER',
+                <AiOutlineMail style={{ fontSize: '20px' }} />
+              )}
 
             <Link
               onClick={handleLogout}

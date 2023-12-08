@@ -85,7 +85,16 @@ const Permission = [
     view: false,
     shownView: true,
     shownAdd: true
-  }
+  },
+  {
+    manager: 'support_manager',
+    add: false,
+    edit: false,
+    view: false,
+    shownView: true,
+    shownAdd: true
+  },
+
 ]
 
 export default Permission
