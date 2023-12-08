@@ -207,7 +207,7 @@ const Table = ({
                     </td>
                     {userType === 'local' && (
                       <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-left'>
-                        {item?.availableBalance || 'N/A'}
+                        {item?.wallet_amount || 'N/A'}
                       </td>
                     )}
                     {userType === 'tourist' && (
