@@ -156,7 +156,7 @@ function Home() {
       const result = await apiGet(path, payload);
       setDashboardDetails({ ...dashboardDetails, ...result.data.results });
     } catch (error) {
-      console.log("error:", error);
+      console.error("error:", error);
       if (error.response.status === 401 || error.response.status === 409) {
         logoutUser();
       }

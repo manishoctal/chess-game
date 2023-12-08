@@ -65,7 +65,7 @@ function FAQ () {
         })
       }
     } catch (error) {
-      console.log('error in get all FAQs list==>>>>', error.message)
+      console.error('error in get all FAQs list==>>>>', error.message)
       if (error.response.status === 401 || error.response.status === 409) {
         logoutUser()
       }

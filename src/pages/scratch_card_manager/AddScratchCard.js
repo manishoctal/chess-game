@@ -43,7 +43,7 @@ const AddScratchCard = ({ setShowModal, allScratchCard }) => {
         notification.error(result?.data?.message)
       }
     } catch (error) {
-      console.log('error:', error.message)
+      console.error('error:', error.message)
     }
   }
 

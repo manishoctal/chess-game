@@ -52,15 +52,6 @@ const Permission = [
     shownAdd: true,
     shownAll: true
   },
-  {
-    manager: 'thai_local_deposit_manager',
-    add: false,
-    edit: false,
-    view: false,
-    shownView: true,
-    shownAdd: true,
-    shownAll: true
-  },
 
   {
     manager: 'settings',

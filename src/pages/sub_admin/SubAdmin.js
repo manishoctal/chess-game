@@ -70,7 +70,7 @@ function SubAdmin() {
         totalItems: resultStatus ? response.totalDocs : null,
       });
     } catch (error) {
-      console.log("error in get all sub admin list==>>>>", error.message);
+      console.error("error in get all sub admin list==>>>>", error.message);
     }
   };
   const handlePageClick = (event) => {
@@ -101,7 +101,7 @@ function SubAdmin() {
       }
       // }
     } catch (error) {
-      console.log("error in get all users list==>>>>", error.message);
+      console.error("error in get all users list==>>>>", error.message);
     }
   };
 
@@ -114,7 +114,7 @@ function SubAdmin() {
         allSubAdmin({ deletePage: 1 });
       }
     } catch (error) {
-      console.log("error in get all FAQs list==>>>>", error.message);
+      console.error("error in get all FAQs list==>>>>", error.message);
     }
   };
 

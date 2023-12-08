@@ -74,7 +74,7 @@ function ScratchCardManager () {
         totalItems: resultStatus ? response.totalDocs : null
       })
     } catch (error) {
-      console.log('error in get all sub admin list==>>>>', error.message)
+      console.error('error in get all sub admin list==>>>>', error.message)
     }
   }
   const handlePageClick = event => {
@@ -105,7 +105,7 @@ function ScratchCardManager () {
       }
       // }
     } catch (error) {
-      console.log('error in get all users list==>>>>', error.message)
+      console.error('error in get all users list==>>>>', error.message)
     }
   }
 

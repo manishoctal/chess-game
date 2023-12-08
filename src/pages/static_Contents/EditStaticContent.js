@@ -51,7 +51,7 @@ const EditStaticContent = (getStaticContent, currentItem, handleEdit) => {
         notification.error("Please enter description");
       }
     } catch (error) {
-      console.log("error in get all users list==>>>>", error);
+      console.error("error in get all users list==>>>>", error);
       notification.error(error.message);
     }
   };

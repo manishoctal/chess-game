@@ -62,7 +62,7 @@ const ScratchCardUsersTable = () => {
         totalItems: resultStatus ? response.totalDocs : null
       })
     } catch (error) {
-      console.log('error in get all sub admin list==>>>>', error.message)
+      console.error('error in get all sub admin list==>>>>', error.message)
     }
   }
   useEffect(() => {

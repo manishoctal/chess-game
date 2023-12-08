@@ -67,7 +67,7 @@ function Transaction () {
         totalItems: resultStatus ? result?.data?.results.totalDocs : null
       })
     } catch (error) {
-      console.log('error in get all sub admin list==>>>>', error.message)
+      console.error('error in get all sub admin list==>>>>', error.message)
     }
   }
   const handlePageClick = event => {
