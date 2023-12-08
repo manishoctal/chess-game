@@ -48,7 +48,7 @@ const AddStaticContent = () => {
         notification.error("Please enter description");
       }
     } catch (err) {
-      console.log("err:", err);
+      console.error("err:", err);
     }
   };
 

@@ -7,7 +7,6 @@ import QRCodeGenerator from 'components/QRCodeGenerator'
 
 const TransactionDetailsTable = ({ transactions, page, userType }) => {
   const { t } = useTranslation()
-  console.log('transactions', transactions)
 
   return (
     <div className='p-3'>

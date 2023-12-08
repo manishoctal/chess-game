@@ -29,7 +29,7 @@ const VideoTable = ({
                 reportAbuseListing({ statusChange: 1 });
             }
         } catch (error) {
-            console.log("error in get all users list==>>>>", error.message);
+            console.error("error in get all users list==>>>>", error.message);
         }
     };
 

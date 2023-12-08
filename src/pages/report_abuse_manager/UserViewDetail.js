@@ -3,7 +3,6 @@ import dayjs from "dayjs";
 import { startCase } from "lodash";
 import { useTranslation } from "react-i18next";
 const UserViewDetail = ({ onHide, item }) => {
-    console.log("item", item);
     const { t } = useTranslation();
     return (
         <div>

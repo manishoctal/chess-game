@@ -51,7 +51,7 @@ const ChangePassword = () => {
         notification.error(res?.data?.message);
       }
     } catch (err) {
-      console.log("err:", err);
+      console.error("err:", err);
     } finally {
       setChangePasswordLoading(false);
     }

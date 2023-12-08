@@ -80,7 +80,7 @@ export const AuthProvider = ({ children }) => {
         notification.success(message);
       }
     } catch (err) {
-      console.log("err:", err);
+      console.error("err:", err);
     }
   };
 

@@ -3,7 +3,6 @@ import { useTranslation } from "react-i18next";
 import { startCase } from "lodash";
 import dayjs from "dayjs";
 const ViewReportAbuse = ({ onHide, viewData, reportTypes, page }) => {
-  console.log("setReportType", viewData)
   const { t } = useTranslation();
   return (
     <div>

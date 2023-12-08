@@ -48,7 +48,7 @@ const UserEdit = ({ setEditShowModal, getAllUser, item }) => {
         notification.error(result?.data.message)
       }
     } catch (error) {
-      console.log('error in get all users list==>>>>', error)
+      console.error('error in get all users list==>>>>', error)
       notification.error(error.message)
     }
     setIsLoading(false)

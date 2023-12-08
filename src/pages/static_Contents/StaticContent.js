@@ -97,7 +97,7 @@ const StaticContent = () => {
         totalItems: resultStatus ? response.totalDocs : null,
       });
     } catch (error) {
-      console.log("error in get all country list==>>>>", error.message);
+      console.error("error in get all country list==>>>>", error.message);
     }
   };
 

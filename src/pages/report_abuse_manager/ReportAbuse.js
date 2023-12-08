@@ -42,7 +42,6 @@ function ReportAbuse() {
   };
 
   const handleView = (item) => {
-    console.log("sliderrrrr", item, openSlide);
     setOpenSlide(!openSlide);
     setImages(item)
   }
@@ -78,7 +77,6 @@ function ReportAbuse() {
   const [copyText, setCopyText] = useState('');
 
   const handleCopy = (copyItem) => {
-    console.log("heyaaaaa",copyItem?.link)
     setCopyText(copyItem?.link);
     copy(copyText);
     alert(`Video link copied`)
@@ -114,7 +112,7 @@ function ReportAbuse() {
         totalItems: resultStatus ? response.totalDocs : null,
       });
     } catch (error) {
-      console.log("error in get all sub admin list==>>>>", error.message);
+      console.error("error in get all sub admin list==>>>>", error.message);
     }
   };
 
