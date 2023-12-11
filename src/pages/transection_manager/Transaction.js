@@ -161,14 +161,7 @@ function Transaction () {
               />
             ) : null}
             
-            {paginationObj?.totalItems ? (
-              <Pagination
-                handlePageClick={handlePageClick}
-                options={paginationObj}
-                isDelete={isDelete}
-                page={page}
-              />
-            ) : null}
+           
           </div>
         </div>
       </div>

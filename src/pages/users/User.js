@@ -342,6 +342,7 @@ function User () {
               setSort={setSort}
               sort={sort}
               setPage={setPage}
+              pageSize={pageSize}
               userType={userType}
               manager={manager}
             />
