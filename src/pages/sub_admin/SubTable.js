@@ -1,17 +1,17 @@
-import React, { useContext, useState, useEffect } from "react";
-import { apiPut } from "../../utils/apiFetch";
-import apiPath from "../../utils/apiPath";
-import dayjs from "dayjs";
-import useToastContext from "hooks/useToastContext";
-import { AiFillEdit, AiFillDelete } from "react-icons/ai";
-import { useTranslation } from "react-i18next";
-import { BsArrowUpShort } from "react-icons/bs";
-import AuthContext from "context/AuthContext";
-import { isEmpty, startCase } from "lodash";
-import helper from "../../utils/helpers";
+import React, { useContext, useState, useEffect } from 'react'
+import { apiPut } from '../../utils/apiFetch'
+import apiPath from '../../utils/apiPath'
+import dayjs from 'dayjs'
+import useToastContext from 'hooks/useToastContext'
+import { AiFillEdit, AiFillDelete, AiFillEye } from 'react-icons/ai'
+import { useTranslation } from 'react-i18next'
+import { BsArrowUpShort } from 'react-icons/bs'
+import AuthContext from 'context/AuthContext'
+import { isEmpty, startCase } from 'lodash'
+import helper from '../../utils/helpers'
 
-import { useNavigate } from "react-router-dom";
-import TableModal from "./TableModal";
+import { useNavigate } from 'react-router-dom'
+import TableModal from './TableModal'
 
 const SubTable = ({
   subAdmin,
@@ -20,109 +20,109 @@ const SubTable = ({
   sort,
   setSort,
   manager,
-  handelStatusChange,
+  handelStatusChange
 }) => {
-  const { t } = useTranslation();
-  const navigate = useNavigate();
-  const { user, updatePageName } = useContext(AuthContext);
-  const [modalTable, setModalTable] = useState(false);
+  const { t } = useTranslation()
+  const navigate = useNavigate()
+  const { user, updatePageName } = useContext(AuthContext)
+  const [modalTable, setModalTable] = useState(false)
 
   useEffect(() => {
-    updatePageName(t("SUB_ADMIN_MANAGERS"));
-  }, []);
+    updatePageName(t('SUB_ADMIN_MANAGERS'))
+  }, [])
 
   return (
-    <div className="p-3">
-      <div className="overflow-x-auto relative rounded-lg border">
-        <table className="w-full text-xs text-left text-[#A5A5A5] dark:text-gray-400 ">
-          <thead className="text-xs text-gray-900 border border-[#E1E6EE] bg-[#E1E6EE] dark:bg-gray-700 dark:text-gray-400 dark:border-[#ffffff38]">
+    <div className='p-3'>
+      <div className='overflow-x-auto relative rounded-lg border'>
+        <table className='w-full text-xs text-left text-[#A5A5A5] dark:text-gray-400 '>
+          <thead className='text-xs text-gray-900 border border-[#E1E6EE] bg-[#E1E6EE] dark:bg-gray-700 dark:text-gray-400 dark:border-[#ffffff38]'>
             <tr>
-              <th scope="col" className="py-3 px-6">
-                {t("S.NO")}
+              <th scope='col' className='py-3 px-6'>
+                {t('S.NO')}
               </th>
               {/* <th scope="col" className="py-3 px-6">
                 {t("SUB_ADMIN_ID")}
               </th> */}
-              <th scope="col" className="py-3 px-6">
-                {t("O_NAME")}
+              <th scope='col' className='py-3 px-6'>
+                {t('O_NAME')}
               </th>
 
               <th
-                scope="col"
-                className="py-3 px-6 cursor-pointer"
+                scope='col'
+                className='py-3 px-6 cursor-pointer'
                 onClick={() => {
-                  if (sort.sortBy === "email" && sort.sortType === "asc") {
+                  if (sort.sortBy === 'email' && sort.sortType === 'asc') {
                     setSort({
-                      sortBy: "email",
-                      sortType: "desc",
-                    });
+                      sortBy: 'email',
+                      sortType: 'desc'
+                    })
                   } else {
                     setSort({
-                      sortBy: "email",
-                      sortType: "asc",
-                    });
+                      sortBy: 'email',
+                      sortType: 'asc'
+                    })
                   }
                 }}
               >
-                <div className="flex">
-                  <span>{t("O_EMAIL_ID")} </span>
+                <div className='flex'>
+                  <span>{t('O_EMAIL_ID')} </span>
                   <span>
-                    {sort.sortBy === "email" && sort.sortType === "asc" && (
-                      <BsArrowUpShort className="w-4 h-4" />
+                    {sort.sortBy === 'email' && sort.sortType === 'asc' && (
+                      <BsArrowUpShort className='w-4 h-4' />
                     )}
-                    {sort.sortBy === "email" && sort.sortType === "desc" && (
-                      <BsArrowUpShort className="w-4 h-4 rotate-180" />
+                    {sort.sortBy === 'email' && sort.sortType === 'desc' && (
+                      <BsArrowUpShort className='w-4 h-4 rotate-180' />
                     )}
                   </span>
                 </div>
               </th>
-              <th scope="col" className="py-3 px-6">
-                {t("O_COUNTRY_CODE")}
+              <th scope='col' className='py-3 px-6'>
+                {t('O_COUNTRY_CODE')}
               </th>
-              <th scope="col" className="py-3 px-6">
-                {t("O_MOBILE")}
+              <th scope='col' className='py-3 px-6'>
+                {t('O_MOBILE')}
               </th>
-              <th scope="col" className="py-3 px-6">
-                {t("ADDRESS")}
+              <th scope='col' className='py-3 px-6'>
+                {t('ADDRESS')}
               </th>
 
               <th
-                scope="col"
-                className="py-3 px-6 cursor-pointer text-right"
+                scope='col'
+                className='py-3 px-6 cursor-pointer text-right'
                 onClick={() => {
-                  if (sort.sortBy === "createdAt" && sort.sortType === "asc") {
+                  if (sort.sortBy === 'createdAt' && sort.sortType === 'asc') {
                     setSort({
-                      sortBy: "createdAt",
-                      sortType: "desc",
-                    });
+                      sortBy: 'createdAt',
+                      sortType: 'desc'
+                    })
                   } else {
                     setSort({
-                      sortBy: "createdAt",
-                      sortType: "asc",
-                    });
+                      sortBy: 'createdAt',
+                      sortType: 'asc'
+                    })
                   }
                 }}
               >
-                <div className="flex justify-start">
-                  <span>{t("O_CREATED_AT")} </span>
+                <div className='flex justify-start'>
+                  <span>{t('O_CREATED_AT')} </span>
                   <span>
-                    {sort.sortBy === "createdAt" && sort.sortType === "asc" && (
-                      <BsArrowUpShort className="w-4 h-4" />
+                    {sort.sortBy === 'createdAt' && sort.sortType === 'asc' && (
+                      <BsArrowUpShort className='w-4 h-4' />
                     )}
-                    {sort.sortBy === "createdAt" &&
-                      sort.sortType === "desc" && (
-                        <BsArrowUpShort className="w-4 h-4 rotate-180" />
+                    {sort.sortBy === 'createdAt' &&
+                      sort.sortType === 'desc' && (
+                        <BsArrowUpShort className='w-4 h-4 rotate-180' />
                       )}
                   </span>
                 </div>
               </th>
-              {(manager?.add || manager?.edit || user?.role === "admin") && (
-                <th scope="col" className="py-3 px-6 text-center">
-                  {t("O_STATUS")}
+              {(manager?.add || manager?.edit || user?.role === 'admin') && (
+                <th scope='col' className='py-3 px-6 text-center'>
+                  {t('O_STATUS')}
                 </th>
               )}
-              <th scope="col" className="py-3 px-6 text-center">
-                {t("O_ACTION")}
+              <th scope='col' className='py-3 px-6 text-center'>
+                {t('O_ACTION')}
               </th>
             </tr>
           </thead>
@@ -130,52 +130,52 @@ const SubTable = ({
             {subAdmin?.map((item, i) => (
               <tr
                 key={i}
-                className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+                className='bg-white border-b dark:bg-gray-800 dark:border-gray-700'
               >
                 <th
-                  scope="row"
-                  className="py-2 px-4 border-r dark:border-[#ffffff38] font-medium text-gray-900  dark:text-white"
+                  scope='row'
+                  className='py-2 px-4 border-r dark:border-[#ffffff38] font-medium text-gray-900  dark:text-white'
                 >
                   {i + 1 + 10 * (page - 1)}
                 </th>
                 {/* <td className="py-2 px-4 border-r dark:border-[#ffffff38]">
                   {item?._id}
                 </td> */}
-                <td className="py-2 px-4 border-r dark:border-[#ffffff38]">
-                  {startCase(item?.firstName + " " + item?.lastName)}
+                <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
+                  {startCase(item?.firstName + ' ' + item?.lastName)}
                 </td>
-                <td className="py-2 px-4 border-r dark:border-[#ffffff38]">
-                  {item?.email || "N/A"}
+                <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
+                  {item?.email || 'N/A'}
                 </td>
-                <td className="py-2 px-4 border-r dark:border-[#ffffff38]">
-                  {item?.countryCode || "N/A"}
+                <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
+                  {item?.countryCode || 'N/A'}
                 </td>
-                <td className="py-2 px-4 border-r dark:border-[#ffffff38]">
-                  {item?.mobile || "N/A"}
+                <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
+                  {item?.mobile || 'N/A'}
                 </td>
-                <td className="py-2 px-4 border-r dark:border-[#ffffff38]">
-                  {startCase(item?.address) || "N/A"}
+                <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
+                  {startCase(item?.address) || 'N/A'}
                 </td>
 
-                <td className="py-2 px-4 border-r dark:border-[#ffffff38]">
-                  {dayjs(item?.createdAt).format("DD-MM-YYYY hh:mm A")}
+                <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
+                  {dayjs(item?.createdAt).format('DD-MM-YYYY hh:mm A')}
                 </td>
-                {(manager?.add || manager?.edit || user?.role === "admin") && (
-                  <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-center">
+                {(manager?.add || manager?.edit || user?.role === 'admin') && (
+                  <td className='py-2 px-4 border-r dark:border-[#ffffff38] text-center'>
                     <label
-                      className="inline-flex relative items-center cursor-pointer"
+                      className='inline-flex relative items-center cursor-pointer'
                       title={`${
-                        item?.status === "active" ? "Active" : "Inactive"
+                        item?.status === 'active' ? 'Active' : 'Inactive'
                       }`}
                     >
                       <input
-                        type="checkbox"
-                        className="sr-only peer"
-                        checked={item?.status === "active"}
-                        onChange={(e) =>
+                        type='checkbox'
+                        className='sr-only peer'
+                        checked={item?.status === 'active'}
+                        onChange={e =>
                           helper.alertFunction(
                             `Are you sure you want to ${
-                              e.target.checked ? "active" : "inactive"
+                              e.target.checked ? 'active' : 'inactive'
                             } '${item.name}'?`,
                             item,
                             handelStatusChange
@@ -186,21 +186,34 @@ const SubTable = ({
                     </label>
                   </td>
                 )}
-                <td className="py-2 px-4 border-l">
-                  <div className="">
-                    <ul className="flex justify-center">
-                      {(manager?.add || user?.role === "admin") && (
+                <td className='py-2 px-4 border-l'>
+                  <div className=''>
+                    <ul className='flex justify-center'>
+                      <li
+                        onClick={() =>
+                          navigate('/sub-admin-manager/add', {
+                            state: { item, type: 'view' }
+                          })
+                        }
+                        className='px-2 py-2 hover:text-gradientTo'
+                      >
+                        <a title={t('O_VIEW')}>
+                          {' '}
+                          <AiFillEye className='cursor-pointer w-5 h-5 text-slate-600' />
+                        </a>
+                      </li>
+                      {(manager?.add || user?.role === 'admin') && (
                         <li
                           onClick={() =>
-                            navigate("/sub-admin-manager/add", {
-                              state: { item, type: "edit" },
+                            navigate('/sub-admin-manager/add', {
+                              state: { item, type: 'edit' }
                             })
                           }
-                          className="px-2 py-2 hover:text-gradientTo"
+                          className='px-2 py-2 hover:text-gradientTo'
                         >
-                          <a title={t("O_EDIT")}>
-                            {" "}
-                            <AiFillEdit className="cursor-pointer w-5 h-5 text-slate-600" />
+                          <a title={t('O_EDIT')}>
+                            {' '}
+                            <AiFillEdit className='cursor-pointer w-5 h-5 text-slate-600' />
                           </a>
                         </li>
                       )}
@@ -228,9 +241,9 @@ const SubTable = ({
               </tr>
             ))}
             {isEmpty(subAdmin) ? (
-              <tr className="bg-white border-b w-full text-center dark:bg-gray-800 dark:border-gray-700">
-                <td className="py-4 px-6" colSpan={9  }>
-                  {t("O_NO_RECORD_FOUND")}
+              <tr className='bg-white border-b w-full text-center dark:bg-gray-800 dark:border-gray-700'>
+                <td className='py-4 px-6' colSpan={9}>
+                  {t('O_NO_RECORD_FOUND')}
                 </td>
               </tr>
             ) : null}
@@ -241,7 +254,7 @@ const SubTable = ({
         <TableModal setModalTable={setModalTable} modalTable={modalTable} />
       ) : null}
     </div>
-  );
-};
+  )
+}
 
-export default SubTable;
+export default SubTable

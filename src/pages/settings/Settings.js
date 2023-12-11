@@ -26,7 +26,7 @@ import { preventMaxInput } from 'utils/validations'
 
 const Settings = () => {
   const { logoutUser, user, updatePageName } = useContext(AuthContext)
-  const manager = user?.permission?.find(e => e.manager === 'setting') ?? {}
+  const manager = user?.permission?.find(e => e.manager === 'settings') ?? {}
   const { t } = useTranslation()
   const {
     register,

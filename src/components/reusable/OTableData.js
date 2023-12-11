@@ -1,6 +1,5 @@
 import { startCase } from "lodash";
 import React from "react";
-import helper from "utils/helpers";
 import dayjs from "dayjs";
 
 export default function OTableData({ className, data, type = "text" }) {
@@ -28,7 +27,6 @@ export default function OTableData({ className, data, type = "text" }) {
         <>
           <td className={className}>
             {dayjs(data).format("DD-MM-YYYY hh:mm A")}
-            {/* {helper.dateTimeFormat(data) || 'N/A'} */}
           </td>
         </>
       );

@@ -10,7 +10,7 @@ export default function CombineRoutes () {
 
   const checkRoles = {
     admin: AdminRoutes,
-    subadmin: AdminRoutes
+    subAdmin: AdminRoutes
     // "company": CompanyRoutes
   }
   return useRoutes([user ? checkRoles[user?.role] : MainRoutes], process.env.BASENAME)

@@ -14,7 +14,7 @@ function NotificationManager () {
   const { t } = useTranslation()
   const { logoutUser, notification, user } = useContext(AuthContext)
   const manager =
-    user?.permission?.find(e => e.manager === 'notification_managers') ?? {}
+    user?.permission?.find(e => e.manager === 'notification_manager') ?? {}
   const [paginationObj, setPaginationObj] = useState({
     page: 1,
     pageCount: 1,

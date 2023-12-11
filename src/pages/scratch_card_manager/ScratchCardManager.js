@@ -18,7 +18,7 @@ function ScratchCardManager () {
   const notification = useToastContext()
   const { user, updatePageName } = useContext(AuthContext)
   const manager =
-    user?.permission?.find(e => e.manager === 'subAdmin_manager') ?? {}
+    user?.permission?.find(e => e.manager === 'scratch_card_manager') ?? {}
   const [subAdmin, setSubAdmin] = useState()
   const [page, setPage] = useState(1)
   const [pageSize, setPageSize] = useState(10)
