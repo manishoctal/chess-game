@@ -1,11 +1,12 @@
 const Permission = [
   {
-    manager: 'users_managers',
+    manager: 'user_manager',
     add: false,
     edit: false,
     view: false,
     shownView: true,
-    shownAdd: true
+    shownAdd: true,
+    shownAll: true
   },
   {
     manager: 'transaction_manager',
@@ -13,7 +14,7 @@ const Permission = [
     edit: false,
     view: false,
     shownView: true,
-    shownAdd: true
+    shownAdd: false
   },
   {
     manager: 'subAdmin_manager',
@@ -24,15 +25,15 @@ const Permission = [
     shownAdd: true,
     shownAll: true
   },
-  {
-    manager: 'reports_manager',
-    add: false,
-    edit: false,
-    view: false,
-    shownView: true,
-    shownAdd: true,
-    shownAll: true
-  },
+  // {
+  //   manager: 'reports_manager',
+  //   add: false,
+  //   edit: false,
+  //   view: false,
+  //   shownView: true,
+  //   shownAdd: true,
+  //   shownAll: true
+  // },
   {
     manager: 'scratch_card_manager',
     add: false,
@@ -59,7 +60,8 @@ const Permission = [
     edit: false,
     view: false,
     shownView: true,
-    shownAdd: true
+    shownAdd: true,
+    shownAll: true
   },
   {
     manager: 'static_page_management',
@@ -67,7 +69,8 @@ const Permission = [
     edit: false,
     view: false,
     shownView: true,
-    shownAdd: true
+    shownAdd: true,
+    shownAll: true
   },
   {
     manager: 'FAQ',
@@ -75,7 +78,8 @@ const Permission = [
     edit: false,
     view: false,
     shownView: true,
-    shownAdd: true
+    shownAdd: true,
+    shownAll: true
   },
 
   {
@@ -84,7 +88,8 @@ const Permission = [
     edit: false,
     view: false,
     shownView: true,
-    shownAdd: true
+    shownAdd: true,
+    shownAll: true
   },
   {
     manager: 'support_manager',
@@ -92,7 +97,8 @@ const Permission = [
     edit: false,
     view: false,
     shownView: true,
-    shownAdd: true
+    shownAdd: true,
+    shownAll: true
   },
 
 ]

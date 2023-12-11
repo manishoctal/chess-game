@@ -12,7 +12,7 @@ function Transaction () {
   const { t } = useTranslation()
   const { user } = useContext(AuthContext)
   const manager =
-    user?.permission?.find(e => e.manager === 'subscription_manager') ?? {}
+    user?.permission?.find(e => e.manager === 'transaction_manager') ?? {}
   const [artistVerification, setArtistVerification] = useState([])
   const [page, setPage] = useState(1)
   const [pageSize] = useState(10)

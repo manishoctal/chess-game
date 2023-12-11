@@ -1,6 +1,6 @@
 export const permissionsMap = {
   dashboard: "/dashboard",
-  users_managers: "/users",
+  user_manager: "/users",
   subAdmin_manager: "/sub-admin-manager",
   interests_manager: "/interests_manager",
   coins_pack_manager: "/coins_pack_manager",

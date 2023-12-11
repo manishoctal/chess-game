@@ -10,6 +10,10 @@ import Pagination from "../Pagination";
 import AuthContext from "context/AuthContext";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import { async } from "q";
+
+import {Buffer} from 'buffer';
+Buffer.from('anything','base64','ascii');
 
 const StaticContent = () => {
   const { user, updatePageName } = useContext(AuthContext);
@@ -43,10 +47,13 @@ const StaticContent = () => {
     sortType: "desc",
   });
 
-  const handleEdit = (item) => {
+  const handleEdit = async(item) => {
     setCurrentItem(item);
     setCountryEdit(!countryEdit);
-    navigate("/static-content/edit", { state: item });
+   const  newContent = await Buffer.from(item.content, 'base64').toString('ascii')
+
+   const newData = {...item,content:newContent}
+    navigate("/static-content/edit", { state: newData });
   };
   const handleView = (item) => {
     setCurrentItem(item);
@@ -88,6 +95,7 @@ const StaticContent = () => {
       const result = await apiGet(path, payload);
       const response = result?.data?.results;
       const resultStatus = result?.data?.success;
+
       setCountryList(response?.docs);
       setPaginationObj({
         ...paginationObj,
