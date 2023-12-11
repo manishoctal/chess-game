@@ -215,6 +215,11 @@ const helper = {
   },
   getDateAndTime:(date)=>{
     return dayjs(date).format("DD-MM-YYYY hh:mm A")
+  },
+  preventForNumberInput:e => {
+    if (['-', '+', 'e'].includes(e.key)) {
+      e.preventDefault()
+    }
   }
   
 }

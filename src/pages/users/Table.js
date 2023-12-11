@@ -23,7 +23,8 @@ const Table = ({
   page,
   sort,
   setSort,
-  userType
+  userType,
+  pageSize
 }) => {
   const { t } = useTranslation()
   const notification = useToastContext()
@@ -194,10 +195,10 @@ const Table = ({
                       scope='row'
                       className='py-4 px-3 border-r  font-medium text-gray-900  dark:text-white dark:border-[#ffffff38]'
                     >
-                      {i + 1 + 10 * (page - 1)}
+                      {i + 1 + pageSize * (page - 1)}
                     </th>
                     <td className='py-4 px-4 border-r  dark:border-[#ffffff38]'>
-                      {item?.firstName || 'N/A'}
+                      {userType === 'local' ?`${item?.firstName} ${item?.lastName}`: item?.firstName || 'N/A'}
                     </td>
                     <td className='py-2 px-4 border-r  dark:border-[#ffffff38]'>
                       {item?.email || 'N/A'}
@@ -207,7 +208,7 @@ const Table = ({
                     </td>
                     {userType === 'local' && (
                       <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-left'>
-                        {item?.availableBalance || 'N/A'}
+                        {item?.wallet_amount || 'N/A'}
                       </td>
                     )}
                     {userType === 'tourist' && (

@@ -126,7 +126,7 @@ const UserView = () => {
               <li className='mb-3'>
                 {' '}
                 <strong>{t('Name')}: </strong>
-                {item?.firstName || 'N/A'}
+                {`${item?.firstName} ${item?.lastName}` || 'N/A'}
               </li>
               <li className='mb-3'>
                 <strong>{t('Nationality Id ')}: </strong>
@@ -140,10 +140,7 @@ const UserView = () => {
                 <strong>{t('Address')}: </strong>
                 {item?.address || 'N/A'}
               </li>
-              <li className='mb-3'>
-                <strong>{t('Available balance')}: </strong>
-                {item?.availableBalance || 'N/A'}
-              </li>
+              
             </ul>
           </div>}
           <div>
@@ -159,6 +156,10 @@ const UserView = () => {
                 ) : (
                   'N/A'
                 )}
+              </li>
+              <li className='mb-3'>
+                <strong>{t('Available balance')}: </strong>
+                {item?.wallet_amount || 'N/A'}
               </li>
             </ul>
           </div>

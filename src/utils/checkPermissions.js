@@ -11,6 +11,7 @@ export const permissionsMap = {
   settings: "/setting",
   static_page_management: "/static-content",
   email_manager: "/email-manager",
+  support_manager: "/support-manager",
   scratch_card_manager: "/scratch-card-manager",
   FAQ: "/faqs",
   gift_manager: "/gift-manager",

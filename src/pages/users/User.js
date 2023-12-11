@@ -272,7 +272,7 @@ function User () {
                       onChange={e => handleVerify(e)}
                     >
                       <option defaultValue value=''>
-                        {t('ALL_USERS')}
+                        {t('KYC_STATUS')}
                       </option>
                       <option value='completed'>{t('KYC_COMPLETED')}</option>
                       <option value='pending'>{t('KYC_PENDING')}</option>
@@ -342,6 +342,7 @@ function User () {
               setSort={setSort}
               sort={sort}
               setPage={setPage}
+              pageSize={pageSize}
               userType={userType}
               manager={manager}
             />
