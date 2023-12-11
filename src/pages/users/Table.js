@@ -171,7 +171,7 @@ const Table = ({
                     </span>
                   </div>
                 </th>
-                {(user?.permission?.[1]?.add ||
+                {(manager?.add ||
                   user?.permission?.length === 0) && (
                   <>
                     <th scope='col' className='py-3 px-6 text-left'>
@@ -229,7 +229,7 @@ const Table = ({
                       {dayjs(item?.createdAt).format('DD-MM-YYYY hh:mm A') ||
                         'N/A'}
                     </td>
-                    {(user?.permission?.[1]?.add ||
+                    {(manager?.add ||
                       user?.permission?.length === 0) && (
                       <>
                         <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
@@ -261,7 +261,7 @@ const Table = ({
                     <td className='py-2 px-4 border-l'>
                       <div className=''>
                         <div className='flex justify-center items-center'>
-                          {(manager?.add || user?.role === 'admin') && (
+                        
                             <NavLink
                               onClick={() => handleUserView(item)}
                               to='/users/view'
@@ -271,7 +271,7 @@ const Table = ({
                             >
                               <AiFillEye className='cursor-pointer w-5 h-5 text-slate-600 dark:hover:text-white hover:text-blue-700' />{' '}
                             </NavLink>
-                          )}
+                        
 
                           {(manager?.add || user?.role === 'admin') &&
                             userType === 'local' && (
@@ -282,12 +282,12 @@ const Table = ({
                                 />
                               </div>
                             )}
-                          <div onClick={()=>{setIsAmountModal(true);setAddAmountUser(item)}}>
+                           {(manager?.add || user?.role === 'admin') && ( <div onClick={()=>{setIsAmountModal(true);setAddAmountUser(item)}}>
                             <GiTakeMyMoney
                               className='text-green text-lg cursor-pointer  text-slate-600'
                               title='Add amount'
                             />
-                          </div>
+                          </div>)}
                           <div>
                             <NavLink to='/transactionDetails' state={{userType,userId:item?._id}}>
                               <MdHistory

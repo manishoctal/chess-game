@@ -1,6 +1,5 @@
 import React from 'react'
 import errorIcon from 'assets/icons/error.svg'
-import classNames from 'classnames'
 const OImage = ({ src, fallbackUrl, ...rest }) => {
   return (
     <>

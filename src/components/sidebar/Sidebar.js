@@ -100,7 +100,7 @@ const Sidebar = () => {
               <img src={Dashboard} className='max-w-[18px]' alt='' />
             )}
 
-            {checkSidebarPermission('users_managers') &&
+            {checkSidebarPermission('user_manager') &&
               generateNavLink(
                 '/users',
                 'USER_MANAGER',

@@ -311,7 +311,7 @@ const SubAdd = ({ props }) => {
                       className='bg-white border-b  dark:bg-gray-800 dark:border-gray-700'
                     >
                       <td className='py-2 px-4 border-r dark:border-[#ffffff38] '>
-                        {capitalize(startCase(data.manager))}
+                        {data.manager==='FAQ'?'FAQ':capitalize(startCase(data.manager))}
                       </td>
                       <td className='py-2 px-4 border-r dark:border-[#ffffff38] '>
                         {data?.shownView && (

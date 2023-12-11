@@ -13,7 +13,7 @@ function SupportManager () {
   const { logoutUser, notification, user, updatePageName } =
     useContext(AuthContext)
   const manager =
-    user?.permission?.find(e => e.manager === 'notification_managers') ?? {}
+    user?.permission?.find(e => e.manager === 'support_manager') ?? {}
   const [paginationObj, setPaginationObj] = useState({
     page: 1,
     pageCount: 1,

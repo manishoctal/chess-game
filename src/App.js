@@ -1,14 +1,14 @@
-import "./App.css";
-import "./assets/css/style.css";
-import "react-quill/dist/quill.snow.css";
-import { BrowserRouter } from "react-router-dom";
+import './App.css'
+import './assets/css/style.css'
+import 'react-quill/dist/quill.snow.css'
+import { BrowserRouter } from 'react-router-dom'
 
-import { AuthProvider } from "./context/AuthContext";
-import { ToastContextProvider } from "./context/ToastContext";
-import CombineRoutes from "routes/CombineRoutes";
-import "react-phone-input-2/lib/style.css";
+import { AuthProvider } from './context/AuthContext'
+import { ToastContextProvider } from './context/ToastContext'
+import CombineRoutes from 'routes/CombineRoutes'
+import 'react-phone-input-2/lib/style.css'
 
-function App() {
+function App () {
   return (
     <BrowserRouter>
       <ToastContextProvider>
@@ -17,7 +17,7 @@ function App() {
         </AuthProvider>
       </ToastContextProvider>
     </BrowserRouter>
-  );
+  )
 }
 
-export default App;
+export default App

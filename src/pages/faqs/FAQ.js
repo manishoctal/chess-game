@@ -20,7 +20,7 @@ function Faq() {
   });
   const { logoutUser, user } = useContext(AuthContext);
   const manager =
-    user?.permission?.find((e) => e.manager === "faq_manager") ?? {};
+    user?.permission?.find((e) => e.manager === "FAQ") ?? {};
   const [editShowModal, setEditShowModal] = useState(false);
   const [editView, setEditView] = useState();
   const [FAQs, setFAQS] = useState([]);

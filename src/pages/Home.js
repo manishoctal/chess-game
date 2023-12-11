@@ -1,14 +1,12 @@
-import React, { useContext, useEffect, useState } from "react";
-import "chartjs-adapter-date-fns";
-import { RiAdminFill } from "react-icons/ri";
-import { FaWpforms, FaUserTie } from "react-icons/fa";
-import { GiSolarTime } from "react-icons/gi";
-import { MdOutlineCollectionsBookmark } from "react-icons/md";
-import { apiGet } from "utils/apiFetch";
-import pathObj from "utils/apiPath";
-import earning from "assets/images/earning.jpg";
-import dayjs from "dayjs";
-import { useTranslation } from "react-i18next";
+import React, { useContext, useEffect, useState } from 'react'
+import 'chartjs-adapter-date-fns'
+import { FaUserTie } from 'react-icons/fa'
+import { GiSolarTime } from 'react-icons/gi'
+import { apiGet } from 'utils/apiFetch'
+import pathObj from 'utils/apiPath'
+import earning from 'assets/images/earning.jpg'
+import dayjs from 'dayjs'
+import { useTranslation } from 'react-i18next'
 
 import { Line } from 'react-chartjs-2'
 import {
@@ -22,9 +20,9 @@ import {
   Legend,
   TimeScale
 } from 'chart.js'
-import AuthContext from "context/AuthContext";
-import ODateRangePicker from "components/shared/datePicker/ODateRangePicker";
-import OCountUp from "components/OCountUp";
+import AuthContext from 'context/AuthContext'
+import ODateRangePicker from 'components/shared/datePicker/ODateRangePicker'
+import OCountUp from 'components/OCountUp'
 
 ChartJS.register(
   CategoryScale,
@@ -107,13 +105,13 @@ export const lineGraphData2 = {
     }
   ]
 }
-function Home() {
-  const { t } = useTranslation();
-  const { logoutUser } = useContext(AuthContext);
+function Home () {
+  const { t } = useTranslation()
+  const { logoutUser } = useContext(AuthContext)
 
-  const [dashboardDetails, setDashboardDetails] = useState({});
-  const [startDate, setStartDate] = useState();
-  const [endDate, setEndDate] = useState("");
+  const [dashboardDetails, setDashboardDetails] = useState({})
+  const [startDate, setStartDate] = useState()
+  const [endDate, setEndDate] = useState('')
   const [reRender, setReRender] = useState(false)
   const [usersGraphYears, setUsersGraphYears] = useState([])
   const [orderGraphYears, setOrderGraphYears] = useState([])
@@ -122,7 +120,7 @@ function Home() {
     graphYear: '-1',
     graphMonth: '-1'
   })
-  const [isReset, setIsReset] = useState(false);
+  const [isReset, setIsReset] = useState(false)
   const handleYearSelect = e => {
     setGraphPayload({
       ...graphPayload,
@@ -142,31 +140,30 @@ function Home() {
     })
   }
   const handleDateChange = (start, end) => {
-    setStartDate(start);
-    setEndDate(end);
-  };
+    setStartDate(start)
+    setEndDate(end)
+  }
 
   const getDashboardDetails = async () => {
     try {
       const payload = {
-        startDate: startDate ? dayjs(startDate).format("YYYY-MM-DD") : null,
-        endDate: endDate ? dayjs(endDate).format("YYYY-MM-DD") : null,
-      };
-      const path = pathObj.getDashboardDetails;
-      const result = await apiGet(path, payload);
-      setDashboardDetails({ ...dashboardDetails, ...result.data.results });
+        startDate: startDate ? dayjs(startDate).format('YYYY-MM-DD') : null,
+        endDate: endDate ? dayjs(endDate).format('YYYY-MM-DD') : null
+      }
+      const path = pathObj.getDashboardDetails
+      const result = await apiGet(path, payload)
+      setDashboardDetails({ ...dashboardDetails, ...result.data.results })
     } catch (error) {
-      console.error("error:", error);
+      console.error('error:', error)
       if (error.response.status === 401 || error.response.status === 409) {
-        logoutUser();
+        logoutUser()
       }
     }
-  };
+  }
 
   useEffect(() => {
-     getDashboardDetails();
-  }, [startDate, endDate]);
-
+    getDashboardDetails()
+  }, [startDate, endDate])
 
   useEffect(() => {
     if (graphPayload?.graphMonth !== '-1') {
@@ -265,30 +262,30 @@ function Home() {
   }, [dashboardDetails])
 
   const handleReset = () => {
-    setEndDate("");
-    setStartDate("");
-    setIsReset(!isReset);
-  };
+    setEndDate('')
+    setStartDate('')
+    setIsReset(!isReset)
+  }
 
   return (
     <>
-      <div className="sm:flex items-center text-center sm:text-left px-3 md:px-4 xl:px-7 lg:px-5  py-4 md:py-8 border dark:bg-slate-900">
+      <div className='sm:flex items-center text-center sm:text-left px-3 md:px-4 xl:px-7 lg:px-5  py-4 md:py-8 border dark:bg-slate-900'>
         <ODateRangePicker
           handleDateChange={handleDateChange}
           isReset={isReset}
           setIsReset={setIsReset}
-          place="dashboard"
+          place='dashboard'
         />
         <button
-          type="button"
+          type='button'
           onClick={handleReset}
-          className="bg-gradientTo text-sm px-8 mb-3 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2"
+          className='bg-gradientTo text-sm px-8 mb-3 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2'
         >
-          {t("O_RESET")}
+          {t('O_RESET')}
         </button>
       </div>
-      <div className="py-4 px-4 md:px-8 dark:bg-slate-900">
-        <div className="sale_report grid pt-10 3xl:grid-cols-4 gap-y-10 gap-4 gap-x-10 2xl:grid-cols-4 sm:grid-cols-2 mb-7 ">
+      <div className='py-4 px-4 md:px-8 dark:bg-slate-900'>
+        <div className='sale_report grid pt-10 3xl:grid-cols-4 gap-y-10 gap-4 gap-x-10 2xl:grid-cols-4 sm:grid-cols-2 mb-7 '>
           {/* <div
             className="text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border"
            
@@ -335,69 +332,70 @@ function Home() {
             </span>
           </div> */}
 
-          <div className="text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border">
-            <h3 className="text-center mb-0 text-slate-900 font-bold md:text-3xl sm:text-lg dark:text-white">
+          <div className='text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border'>
+            <h3 className='text-center mb-0 text-slate-900 font-bold md:text-3xl sm:text-lg dark:text-white'>
               <OCountUp value={dashboardDetails?.totalTransactionCount || 0} />
-              <span className="text-base text-neutral-400 font-normal block pt-3 ">
-                {t("NO_OF_TOTAL_TRANSACTION")}
+              <span className='text-base text-neutral-400 font-normal block pt-3 '>
+                {t('NO_OF_TOTAL_TRANSACTION')}
               </span>
             </h3>
-            <span className="text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-10px] p-3 border z-10 bg-white">
-              <FaUserTie className="h-8 w-8" />
+            <span className='text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-10px] p-3 border z-10 bg-white'>
+              <FaUserTie className='h-8 w-8' />
             </span>
           </div>
 
-          <div
-            className="text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border"
-            
-          >
-            <h3 className="text-center mb-0 text-slate-900 font-bold md:text-3xl sm:text-lg dark:text-white">
-              <OCountUp value={dashboardDetails?.totalWalletToBankTransactionCount || 0} />
-              <span className="text-base text-neutral-400 font-normal block pt-3 ">
-                {t("NO_OF_WALLET_TO_BANK_TRANSACTION")}
+          <div className='text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border'>
+            <h3 className='text-center mb-0 text-slate-900 font-bold md:text-3xl sm:text-lg dark:text-white'>
+              <OCountUp
+                value={dashboardDetails?.totalWalletToBankTransactionCount || 0}
+              />
+              <span className='text-base text-neutral-400 font-normal block pt-3 '>
+                {t('NO_OF_WALLET_TO_BANK_TRANSACTION')}
               </span>
             </h3>
-            <span className="text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-10px] p-3 border z-10 bg-white">
+            <span className='text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-10px] p-3 border z-10 bg-white'>
               <img
                 src={earning}
-                className="h-8 w-8 bg-black"
-                alt="earningImg"
+                className='h-8 w-8 bg-black'
+                alt='earningImg'
               />
             </span>
           </div>
 
-          <div className="text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border">
-            <h3 className="text-center mb-0 text-slate-900 font-bold md:text-3xl sm:text-lg dark:text-white">
-              <OCountUp value={dashboardDetails?.totalBankToWalletTransactionCount || 0} />
-              <span className="text-base text-neutral-400 font-normal block pt-3 ">
-                {t("NO_OF_BANK_TO_WALLET_TRANSACTION")}
+          <div className='text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border'>
+            <h3 className='text-center mb-0 text-slate-900 font-bold md:text-3xl sm:text-lg dark:text-white'>
+              <OCountUp
+                value={dashboardDetails?.totalBankToWalletTransactionCount || 0}
+              />
+              <span className='text-base text-neutral-400 font-normal block pt-3 '>
+                {t('NO_OF_BANK_TO_WALLET_TRANSACTION')}
               </span>
             </h3>
-            <span className="text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-10px] p-3 border z-10 bg-white">
-              <GiSolarTime className="h-8 w-8" />
+            <span className='text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-10px] p-3 border z-10 bg-white'>
+              <GiSolarTime className='h-8 w-8' />
             </span>
           </div>
 
-          <div className="text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border">
-            <h3 className="text-center mb-0 text-slate-900 font-bold md:text-3xl sm:text-lg dark:text-white">
+          <div className='text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border'>
+            <h3 className='text-center mb-0 text-slate-900 font-bold md:text-3xl sm:text-lg dark:text-white'>
               <OCountUp value={dashboardDetails?.totalAmountAdded || 0} />
-              <span className="text-base text-neutral-400 font-normal block pt-3 ">
-                {t("TOTAL_AMOUNT_ADDED")}
+              <span className='text-base text-neutral-400 font-normal block pt-3 '>
+                {t('TOTAL_AMOUNT_ADDED')}
               </span>
             </h3>
-            <span className="text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-10px] p-3 border z-10 bg-white">
-              <GiSolarTime className="h-8 w-8" />
+            <span className='text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-10px] p-3 border z-10 bg-white'>
+              <GiSolarTime className='h-8 w-8' />
             </span>
           </div>
-          <div className="text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border">
-            <h3 className="text-center mb-0 text-slate-900 font-bold md:text-3xl sm:text-lg dark:text-white">
+          <div className='text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border'>
+            <h3 className='text-center mb-0 text-slate-900 font-bold md:text-3xl sm:text-lg dark:text-white'>
               <OCountUp value={dashboardDetails?.totalAmountGiven || 0} />
-              <span className="text-base text-neutral-400 font-normal block pt-3 ">
-                {t("TOTAL_AMOUNT_GIVEN")}
+              <span className='text-base text-neutral-400 font-normal block pt-3 '>
+                {t('TOTAL_AMOUNT_GIVEN')}
               </span>
             </h3>
-            <span className="text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-10px] p-3 border z-10 bg-white">
-              <GiSolarTime className="h-8 w-8" />
+            <span className='text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-10px] p-3 border z-10 bg-white'>
+              <GiSolarTime className='h-8 w-8' />
             </span>
           </div>
           {/* <div className="text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border">
@@ -411,26 +409,26 @@ function Home() {
               <GiSolarTime className="h-8 w-8" />
             </span>
           </div> */}
-          <div className="text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border">
-            <h3 className="text-center mb-0 text-slate-900 font-bold md:text-3xl sm:text-lg dark:text-white">
+          <div className='text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border'>
+            <h3 className='text-center mb-0 text-slate-900 font-bold md:text-3xl sm:text-lg dark:text-white'>
               <OCountUp value={dashboardDetails?.totalTagCount || 0} />
-              <span className="text-base text-neutral-400 font-normal block pt-3 ">
-                {t("USERS_BETWEEN_10_BAHT_TO_300_BAHT")}
+              <span className='text-base text-neutral-400 font-normal block pt-3 '>
+                {t('USERS_BETWEEN_10_BAHT_TO_300_BAHT')}
               </span>
             </h3>
-            <span className="text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-10px] p-3 border z-10 bg-white">
-              <GiSolarTime className="h-8 w-8" />
+            <span className='text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-10px] p-3 border z-10 bg-white'>
+              <GiSolarTime className='h-8 w-8' />
             </span>
           </div>
-          <div className="text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border">
-            <h3 className="text-center mb-0 text-slate-900 font-bold md:text-3xl sm:text-lg dark:text-white">
+          <div className='text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border'>
+            <h3 className='text-center mb-0 text-slate-900 font-bold md:text-3xl sm:text-lg dark:text-white'>
               <OCountUp value={dashboardDetails?.totalTagCount || 0} />
-              <span className="text-base text-neutral-400 font-normal block pt-3 ">
-                {t("USERS_BETWEEN_200_BAHT_TO_1000_BAHT")}
+              <span className='text-base text-neutral-400 font-normal block pt-3 '>
+                {t('USERS_BETWEEN_200_BAHT_TO_1000_BAHT')}
               </span>
             </h3>
-            <span className="text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-10px] p-3 border z-10 bg-white">
-              <GiSolarTime className="h-8 w-8" />
+            <span className='text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-10px] p-3 border z-10 bg-white'>
+              <GiSolarTime className='h-8 w-8' />
             </span>
           </div>
         </div>
@@ -487,19 +485,23 @@ function Home() {
         <div className='sale_report grid grid-cols-2 gap-5 mb-7'>
           <div className='bg-white p-8 rounded-lg'>
             <div className='flex justify-between'>
-              <h4 className='font-medium text-lg'>{t('EXPENDITURE_BY_TOURIST')}</h4>
+              <h4 className='font-medium text-lg'>
+                {t('EXPENDITURE_BY_TOURIST')}
+              </h4>
             </div>
             <Line options={lineGraphOptions} data={lineGraphData} />
           </div>
 
           <div className='bg-white p-8 rounded-lg'>
-            <h4 className='font-medium text-lg'>{t('PAYMENTS_MADE_BY_LOCALS')}</h4>
+            <h4 className='font-medium text-lg'>
+              {t('PAYMENTS_MADE_BY_LOCALS')}
+            </h4>
             <Line options={lineGraphOptions} data={lineGraphData2} />
           </div>
         </div>
       </div>
     </>
-  );
+  )
 }
 
-export default Home;
+export default Home
