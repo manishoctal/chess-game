@@ -68,7 +68,7 @@ function EmailTemplate() {
         totalItems: resultStatus ? response.totalDocs : null,
       });
     } catch (error) {
-      console.log("error in get all sub admin list==>>>>", error.message);
+      console.error("error in get all sub admin list==>>>>", error.message);
     }
   };
   const handlePageClick = (event) => {
@@ -91,7 +91,7 @@ function EmailTemplate() {
         notification.success(result.data.message);
       }
     } catch (error) {
-      console.log("error in get all sub admin list==>>>>", error.message);
+      console.error("error in get all sub admin list==>>>>", error.message);
     } finally {
       if (
         emailTemplate?.nextPage === null &&

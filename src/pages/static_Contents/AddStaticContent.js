@@ -39,7 +39,7 @@ const AddStaticContent = () => {
         formData.append("StaticContentImage", photo);
         const res = await apiPost(apiPath.getStaticContent, formData);
         if (res?.data?.success === true) {
-          navigate("/StaticContent");
+          navigate("/static-content");
           notification.success(res.data?.message);
         } else {
           notification.error(res?.data?.message);
@@ -48,7 +48,7 @@ const AddStaticContent = () => {
         notification.error("Please enter description");
       }
     } catch (err) {
-      console.log("err:", err);
+      console.error("err:", err);
     }
   };
 
@@ -122,7 +122,7 @@ const AddStaticContent = () => {
         <button
           className="text-black bg-[#E1E1E1] font-normal px-12 py-2.5 text-sm outline-none focus:outline-none rounded mr-6  ease-linear transition-all duration-150"
           type="button"
-          onClick={() => navigate("/StaticContent")}
+          onClick={() => navigate("/static-content")}
         >
           {t("O_BACK")}
         </button>

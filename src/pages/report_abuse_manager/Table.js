@@ -40,11 +40,10 @@ const Table = ({
             }
             // }
         } catch (error) {
-            console.log("error in get all users list==>>>>", error.message);
+            console.error("error in get all users list==>>>>", error.message);
         }
     };
 
-    console.log("postData", postData);
 
     return (
         <div className="p-3">

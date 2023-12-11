@@ -42,7 +42,7 @@ const EditStaticContent = (getStaticContent, currentItem, handleEdit) => {
         const path = apiPath.getStaticContent + "/" + location?.state?._id;
         const result = await apiPut(path, formData);
         if (result.data.success) {
-          navigate("/StaticContent");
+          navigate("/static-content");
           notification.success(result?.data.message);
         } else {
           notification.error(result?.data.message);
@@ -51,7 +51,7 @@ const EditStaticContent = (getStaticContent, currentItem, handleEdit) => {
         notification.error("Please enter description");
       }
     } catch (error) {
-      console.log("error in get all users list==>>>>", error);
+      console.error("error in get all users list==>>>>", error);
       notification.error(error.message);
     }
   };
@@ -183,7 +183,7 @@ const EditStaticContent = (getStaticContent, currentItem, handleEdit) => {
         <button
           className="text-black bg-[#E1E1E1] font-normal px-12 py-2.5 text-sm outline-none focus:outline-none rounded mr-6  ease-linear transition-all duration-150"
           type="button"
-          onClick={() => navigate("/StaticContent")}
+          onClick={() => navigate("/static-content")}
         >
           {t("O_BACK")}
         </button>

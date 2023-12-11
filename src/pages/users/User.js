@@ -43,7 +43,7 @@ function User () {
         setItem(response)
       }
     } catch (error) {
-      console.log('error in get all users list==>>>>', error)
+      console.error('error in get all users list==>>>>', error)
       notification.error(error.message)
     }
   }
@@ -102,7 +102,7 @@ function User () {
         })
       }
     } catch (error) {
-      console.log('error ', error)
+      console.error('error ', error)
       setPaginationObj({})
       if (error.response.status === 401 || error.response.status === 409) {
         logoutUser()
@@ -211,7 +211,7 @@ function User () {
     }
   }, [searchTerm])
 
-  const manager = user?.permission?.find(e => e.manager === 'users_managers')
+  const manager = user?.permission?.find(e => e.manager === 'user_manager')
 
   return (
     <div>
@@ -221,14 +221,14 @@ function User () {
             <button
               type='button'
               className={`pr-6 bg-white border border-1 border-[#000] text-sm px-8 ml-3 mb-3 py-2 rounded-lg items-center  text-black  sm:w-auto w-1/2 ${userType==='tourist' && 'bg-[#000!important] text-white'}`}
-              onClick={() => setUserType('tourist')}
+              onClick={() => {setUserType('tourist');handleReset()}}
             >
               {t('FOREIGN_TOURIST')}
             </button>
             <button
               type='button'
               className={` pr-6 bg-white border border-1 border-[#000] text-sm px-8 ml-3 mb-3 py-2 rounded-lg items-center  text-black  sm:w-auto w-1/2 ${userType==='local'&& 'bg-[#000!important] text-white'}`}
-              onClick={() => setUserType('local')}
+              onClick={() => {setUserType('local');handleReset()}}
             >
               {t('THAI_LOCAL')}
             </button>
@@ -272,10 +272,10 @@ function User () {
                       onChange={e => handleVerify(e)}
                     >
                       <option defaultValue value=''>
-                        {t('ALL_USERS')}
+                        {t('KYC_STATUS')}
                       </option>
-                      <option value='completed'>{t('COMPLETED')}</option>
-                      <option value='pending'>{t('PENDING')}</option>
+                      <option value='completed'>{t('KYC_COMPLETED')}</option>
+                      <option value='pending'>{t('KYC_PENDING')}</option>
                     </select>
                   </div>
 
@@ -342,6 +342,7 @@ function User () {
               setSort={setSort}
               sort={sort}
               setPage={setPage}
+              pageSize={pageSize}
               userType={userType}
               manager={manager}
             />

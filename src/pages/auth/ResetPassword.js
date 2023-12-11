@@ -42,7 +42,7 @@ function ResetPassword() {
         notification.error(res?.data?.message);
       }
     } catch (err) {
-      console.log("err:", err);
+      console.error("err:", err);
     } finally {
       setResetPasswordLoading(false);
     }

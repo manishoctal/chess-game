@@ -1,103 +1,106 @@
 const Permission = [
- 
   {
-    manager: "users_managers",
+    manager: 'user_manager',
     add: false,
     edit: false,
     view: false,
     shownView: true,
-    shownDelete: false,
     shownAdd: true,
+    shownAll: true
   },
   {
-    manager: "transaction_manager",
+    manager: 'transaction_manager',
     add: false,
     edit: false,
     view: false,
     shownView: true,
-    shownDelete: false,
-    shownAdd: true,
+    shownAdd: false
   },
   {
-    manager: "subAdmin_manager",
+    manager: 'subAdmin_manager',
     add: false,
     edit: false,
     view: false,
     shownView: true,
-    shownDelete: true,
     shownAdd: true,
-    shownAll: true,
+    shownAll: true
   },
+  // {
+  //   manager: 'reports_manager',
+  //   add: false,
+  //   edit: false,
+  //   view: false,
+  //   shownView: true,
+  //   shownAdd: true,
+  //   shownAll: true
+  // },
   {
-    manager: "reports_manager",
+    manager: 'scratch_card_manager',
     add: false,
     edit: false,
     view: false,
     shownView: true,
-    shownDelete: true,
     shownAdd: true,
-    shownAll: true,
-  },
- 
-  {
-    manager: "notification_manager",
-    add: false,
-    edit: false,
-    view: false,
-    shownView: true,
-    shownDelete: true,
-    shownAdd: true,
-    shownAll: true,
-  },
-  {
-    manager: "thai_local_deposit_manager",
-    add: false,
-    edit: false,
-    view: false,
-    shownView: true,
-    shownDelete: true,
-    shownAdd: true,
-    shownAll: true,
-  },
- 
- 
-  {
-    manager: "settings",
-    add: false,
-    edit: false,
-    view: false,
-    shownView: true,
-    shownDelete: false,
-    shownAdd: true,
-  },
-  {
-    manager: "static_page_management",
-    add: false,
-    edit: false,
-    view: false,
-    shownView: true,
-    shownDelete: false,
-    shownAdd: true,
-  },
-  {
-    manager: "FAQ",
-    add: false,
-    edit: false,
-    view: false,
-    shownView: true,
-    shownDelete: false,
-    shownAdd: true,
+    shownAll: true
   },
 
   {
-    manager: "email_manager",
+    manager: 'notification_manager',
     add: false,
     edit: false,
     view: false,
     shownView: true,
-    shownDelete: false,
     shownAdd: true,
+    shownAll: true
   },
-];
 
-export default Permission;
+  {
+    manager: 'settings',
+    add: false,
+    edit: false,
+    view: false,
+    shownView: true,
+    shownAdd: true,
+    shownAll: true
+  },
+  {
+    manager: 'static_page_management',
+    add: false,
+    edit: false,
+    view: false,
+    shownView: true,
+    shownAdd: true,
+    shownAll: true
+  },
+  {
+    manager: 'FAQ',
+    add: false,
+    edit: false,
+    view: false,
+    shownView: true,
+    shownAdd: true,
+    shownAll: true
+  },
+
+  {
+    manager: 'email_manager',
+    add: false,
+    edit: false,
+    view: false,
+    shownView: true,
+    shownAdd: true,
+    shownAll: true
+  },
+  {
+    manager: 'support_manager',
+    add: false,
+    edit: false,
+    view: false,
+    shownView: true,
+    shownAdd: true,
+    shownAll: true
+  },
+
+]
+
+export default Permission

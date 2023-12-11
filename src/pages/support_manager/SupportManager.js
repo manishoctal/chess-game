@@ -1,20 +1,19 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { apiGet } from '../../utils/apiFetch'
 import apiPath from '../../utils/apiPath'
-import NotificationTable from './NotificationTable'
+import SupportManagerTable from './SupportManagerTable'
 import Pagination from '../Pagination'
 import AuthContext from 'context/AuthContext'
 import dayjs from 'dayjs'
 import ODateRangePicker from 'components/shared/datePicker/ODateRangePicker'
 import { useTranslation } from 'react-i18next'
-import NotificationAdd from './NotificationAdd'
-import ViewNotifications from './ViewNotifications'
 
-function NotificationManager () {
+function SupportManager () {
   const { t } = useTranslation()
-  const { logoutUser, notification, user } = useContext(AuthContext)
+  const { logoutUser, notification, user, updatePageName } =
+    useContext(AuthContext)
   const manager =
-    user?.permission?.find(e => e.manager === 'notification_manager') ?? {}
+    user?.permission?.find(e => e.manager === 'support_manager') ?? {}
   const [paginationObj, setPaginationObj] = useState({
     page: 1,
     pageCount: 1,
@@ -23,6 +22,7 @@ function NotificationManager () {
   const [categoryAdd, setCategoryAdd] = useState(false)
   const [viewShowModal, setViewShowModal] = useState(false)
   const [notifications, setAllNotifications] = useState([])
+
   const [page, setPage] = useState(1)
   const [pageSize, setPageSize] = useState(10)
   const [item, setItem] = useState('')
@@ -40,25 +40,10 @@ function NotificationManager () {
     sortType: 'desc'
   })
 
-  // get all notification function-
-  const getAllNotifications = async data => {
+  const getSupportRequest = async data => {
     try {
       const { category, startDate, endDate, searchkey, isFilter } = filterData
-      if (
-        (data?.deletePage && !(notifications?.length > 1)) ||
-        (isFilter &&
-          category &&
-          data?.statusChange &&
-          !(notifications?.length > 1))
-      ) {
-        if (!(notifications?.length > 1)) {
-          setPage(page - 1)
-          // setIsDelete(true)
-          setPaginationObj({ ...paginationObj, page: page - 1 })
-        }
-      } else {
-        // setIsDelete(false)
-      }
+
       const payload = {
         page,
         pageSize,
@@ -69,7 +54,7 @@ function NotificationManager () {
         sortType: sort.sortType
       }
 
-      const path = apiPath.notifications
+      const path = apiPath.supportRequest
       const result = await apiGet(path, payload)
       if (result?.status === 200) {
         const response = result?.data?.results
@@ -109,7 +94,7 @@ function NotificationManager () {
     setCategoryAdd(!categoryAdd)
   }
   useEffect(() => {
-    getAllNotifications()
+    getSupportRequest()
   }, [page, filterData, sort, pageSize])
 
   const handleReset = () => {
@@ -141,6 +126,9 @@ function NotificationManager () {
     setPageSize(e.target.value)
   }
 
+  useEffect(() => {
+    updatePageName(t('SUPPORT_MANAGER'))
+  }, [])
   return (
     <div>
       <div className='bg-[#F9F9F9]'>
@@ -171,40 +159,18 @@ function NotificationManager () {
                 >
                   {t('O_SEARCH')}
                 </label>
-                <div className='flex'>
-                  {(manager?.add || user?.role === 'admin') && (
-                    <button
-                      title={t('ADD_NOTIFICATION')}
-                      type='button'
-                      className='bg-gradientTo flex text-sm px-8 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue whitespace-nowrap'
-                      onClick={() => handleCategory()}
-                    >
-                      + {t('ADD_NOTIFICATION')}
-                    </button>
-                  )}
-                </div>
               </div>
             </form>
-            <NotificationTable
+            <SupportManagerTable
               notifications={notifications}
               notification={notification}
-              getAllNotifications={getAllNotifications}
-              handelEdit={handelEdit}
-              handleUserView={handleUserView}
               page={page}
               setSort={setSort}
               sort={sort}
               manager={manager}
               paginationObj={paginationObj}
+              getSupportRequest={getSupportRequest}
             />
-
-            {categoryAdd && (
-              <NotificationAdd
-                categoryAdd={categoryAdd}
-                getAllNotifications={getAllNotifications}
-                handleCategory={handleCategory}
-              />
-            )}
 
             <div className='flex justify-between'>
               <div className='flex items-center mb-3 ml-3'>
@@ -235,17 +201,10 @@ function NotificationManager () {
                 />
               )}
             </div>
-
-            {viewShowModal && (
-              <ViewNotifications
-                setViewShowModal={setViewShowModal}
-                item={item}
-              />
-            )}
           </div>
         </div>
       </div>
     </div>
   )
 }
-export default NotificationManager
+export default SupportManager

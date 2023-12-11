@@ -17,7 +17,7 @@ function shuffleArray (array) {
   }
   return array
 }
-const obj = {
+const helper = {
   currencyFormat: (number = '') => {
     return new Intl.NumberFormat('en-IN', {}).format(number)
   },
@@ -212,7 +212,16 @@ const obj = {
     // Get the difference in seconds
     const diffInSeconds = date2.diff(date1, 'second')
     return diffInSeconds
+  },
+  getDateAndTime:(date)=>{
+    return dayjs(date).format("DD-MM-YYYY hh:mm A")
+  },
+  preventForNumberInput:e => {
+    if (['-', '+', 'e'].includes(e.key)) {
+      e.preventDefault()
+    }
   }
+  
 }
 
-export default obj
+export default helper

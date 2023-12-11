@@ -33,7 +33,6 @@ const ODateRangePicker = (props) => {
     setStartDate(date);
     props?.handleDateChange(date, endDate);
   };
-  // console.log(props)
   const onChangeEndDate = ([date]) => {
     setEndDate(date);
     props.handleDateChange(startDate, date);

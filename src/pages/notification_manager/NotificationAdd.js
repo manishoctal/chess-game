@@ -1,15 +1,13 @@
-import ErrorMessage from "components/ErrorMessage";
 import OButton from "components/reusable/OButton";
 import useToastContext from "hooks/useToastContext";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { apiGet, apiPost } from "../../utils/apiFetch";
+import { apiPost } from "../../utils/apiFetch";
 import apiPath from "../../utils/apiPath";
 import { useTranslation } from "react-i18next";
 import OInputField from "components/reusable/OInputField";
 import formValidation from "utils/formValidation";
 import OTextArea from "components/reusable/OTextArea";
-import OMultiSelect from "components/reusable/OMultiSelect";
 const NotificationAdd = ({ getAllNotifications, handleCategory }) => {
   const { t } = useTranslation();
   const {
@@ -20,64 +18,17 @@ const NotificationAdd = ({ getAllNotifications, handleCategory }) => {
     mode: "onChange",
     shouldFocusError: true,
   });
+  
   const notification = useToastContext();
-  const [searchTerm, setSearchTerm] = useState("");
   const [availableFor, setAvailableFor] = useState("all");
-  const [userSuggestion, setUserSuggestion] = useState([]);
-  const [userList, setUserList] = useState([]);
-
-  const getAllUser = async () => {
-    try {
-      const path = apiPath.allNotificationUser;
-      const payload = {
-        keyword: searchTerm,
-        limit: 5,
-      };
-      const result = await apiGet(path, payload);
-      if (result?.status === 200) {
-        const response = result?.data?.results;
-        const latest = response.map((element) => {
-          return { label: element.nickName, value: element._id };
-        });
-        setUserSuggestion(latest);
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const handleSelectAllUsers = (event) => {
-    if (event.target.checked) {
-      setAvailableFor("all");
-    }
-  };
-
-  const [notificationUserError, setNotificationUserError] = useState(false);
-
-  const handleParticularUser = (event) => {
-    if (event.target.checked) {
-      setAvailableFor("particularUser");
-    }
-  };
-
-  const checkUserSelection = () => {
-    const isValid = userList?.length !== 0
-    console.log("isvalid", !isValid)
-    setNotificationUserError(!isValid)
-    return isValid
-  }
-
+  
   const onSubmit = async (data) => {
     try {
-      const isValid = checkUserSelection()
-      if (!isValid) return
+      
       const obj = {
         ...data,
         sendTo: availableFor,
-      };
-      if (userList.length > 0) {
-        obj.user = userList?.map((item) => item?.value);
-      }
+      }; 
 
       const res = await apiPost(apiPath.notifications, { ...obj });
       if (res.data.success) {
@@ -93,7 +44,7 @@ const NotificationAdd = ({ getAllNotifications, handleCategory }) => {
   };
 
   useEffect(() => {
-    getAllUser();
+    getAllNotifications();
   }, []);
   return (
     <div>
@@ -155,13 +106,13 @@ const NotificationAdd = ({ getAllNotifications, handleCategory }) => {
 
                     <div className="px-2">
                       <div className="relative z-0 mb-6 w-full group flex">
-                        <div className="flex items-center w-[200px]">
+                      <div className="flex items-center w-[200px]">
                           <input
                             id="default-checkbox"
                             type="radio"
                             checked={availableFor === "all"}
                             name="default-radio"
-                            onChange={(e) => handleSelectAllUsers(e)}
+                            onChange={() => setAvailableFor('all')}
                             className="w-4 cursor-pointer h-4 text-blue-600 bg-gray-100 border-gray-300 rounded  dark:bg-gray-700 dark:border-gray-600"
                           />
                           <label
@@ -172,14 +123,31 @@ const NotificationAdd = ({ getAllNotifications, handleCategory }) => {
                             {t("ALL_USERS")}
                           </label>
                         </div>
+                        <div className="flex items-center w-[200px]">
+                          <input
+                            id="default-checkbox"
+                            type="radio"
+                            checked={availableFor === "tourist"}
+                            name="default-radio"
+                            onChange={() => setAvailableFor('tourist')}
+                            className="w-4 cursor-pointer h-4 text-blue-600 bg-gray-100 border-gray-300 rounded  dark:bg-gray-700 dark:border-gray-600"
+                          />
+                          <label
+
+                            for="default-checkbox"
+                            className="ml-2 text-sm font-medium cursor-pointer text-gray-900 dark:text-gray-300"
+                          >
+                            {t("ALL_TOURIST_USERS")}
+                          </label>
+                        </div>
 
                         <div className="flex items-center w-[200px]">
                           <input
                             id="default-checkbox1"
                             type="radio"
-                            checked={availableFor === "particularUser"}
+                            checked={availableFor === "local"}
                             name="default-radio"
-                            onChange={(e) => handleParticularUser(e)}
+                            onChange={() => setAvailableFor('local')}
                             className="w-4 cursor-pointer h-4 text-blue-600 bg-gray-100 border-gray-300 rounded dark:bg-gray-700 dark:border-gray-600"
                           />
                           <label
@@ -187,38 +155,11 @@ const NotificationAdd = ({ getAllNotifications, handleCategory }) => {
                             for="default-checkbox1"
                             className="ml-2 text-sm font-medium cursor-pointer text-gray-900 dark:text-gray-300"
                           >
-                            {t("PARTICULAR_USER")}
+                            {t("ALL_THAI_USERS")}
                           </label>
                         </div>
                       </div>
                     </div>
-
-{
-  availableFor === "particularUser" &&  <div className="px-2">
-  <p className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-    {t("SELECT_USERS")}
-  </p>
-  <OMultiSelect
-    wrapperClassName="relative z-0 mb-2 w-full group"
-    name="language"
-    placeholder={
-      <>
-        {t("SELECT_USERS")}
-        <span className="text-red-500">*</span>
-      </>
-    }
-    options={userSuggestion}
-    defaultValue={t("SELECT_USERS")}
-    onChange={(e)=>{setUserList(e);setNotificationUserError(false)}}
-    value={userList}
-  />
-  {notificationUserError && (
-    <ErrorMessage message="Please select user." />
-  )}
-</div>
-}
-
-
                   </div>
                 </div>
                 <div className="flex items-center justify-center p-6 border-t border-solid border-slate-200 rounded-b">
@@ -232,9 +173,7 @@ const NotificationAdd = ({ getAllNotifications, handleCategory }) => {
                   <OButton
                     label={<>{t("O_ADD")}</>}
                     type="submit"
-                    onClick={handleSubmit(onSubmit, () => {
-                      checkUserSelection()
-                    })}
+                    onClick={handleSubmit(onSubmit)}
                   />
                 </div>
               </div>

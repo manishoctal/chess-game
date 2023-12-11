@@ -121,7 +121,7 @@ const Profile = () => {
 
       updateProfile(formData);
     } catch (err) {
-      console.log("err:", err);
+      console.error("err:", err);
     } finally {
       setUpdateProfileLoading(false);
     }
@@ -141,16 +141,16 @@ const Profile = () => {
       const payload = {
         status: toggleNotification === "false" ? "true" : "false",
       };
-      console.log("payload", payload);
+     
 
       const path = `${apiPath.notificationToggle}`;
       const result = await apiPost(path, payload);
       if (result?.status === 200) {
-        console.log("result", result);
+        
         notification.success(result.data.message);
       }
     } catch (error) {
-      console.log("error in get all users list==>>>>", error.message);
+      console.error("error in get all users list==>>>>", error.message);
     }
   };
 

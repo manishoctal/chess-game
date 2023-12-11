@@ -52,18 +52,18 @@ const UserView = () => {
         </div>
 
         <div className='grid grid-cols-3 dark:text-white'>
+          {item?.userType==='tourist'&&<>
           <div>
             <ul>
               <li className='mb-3'>
                 {' '}
                 <strong>{t('FIRST_NAME')}: </strong>
-                {item?.firstName || 'N/A'}
+                {startCase(item?.firstName) || 'N/A'}
               </li>
               <li className='mb-3'>
                 <strong>{t('EMAIL_ADDRESS')}: </strong>
                 {item?.email || 'N/A'}
               </li>
-
               <li className='mb-3'>
                 <strong>{t('REGISTERED_DATE')}: </strong>{' '}
                 {dayjs(item?.createdAt).format('DD-MM-YYYY hh:mm A') || 'N/A'}{' '}
@@ -79,7 +79,7 @@ const UserView = () => {
             <ul>
               <li className='mb-3'>
                 <strong> {t('UPC code')}: </strong>
-                {item?.country || 'N/A'}
+                {item?.upcCode || 'N/A'}
               </li>
               <li className='mb-3'>
                 <strong>{t('GENDER')}: </strong>
@@ -88,23 +88,20 @@ const UserView = () => {
 
               <li className='mb-3 mr-2'>
                 <strong>{t('NATIONALITY')}: </strong>
-                {item?.tags?.map(element => element?.name)?.join(', ') || 'N/A'}
+                {item?.nationality || 'N/A'}
               </li>
               <li className='mb-3 mr-2'>
                 <strong>
-                  {t('Top up amounts details with date and time')}:{' '}
+                  {t('Country of living')}:{' '}
                 </strong>
-                {item?.tags?.map(element => element?.name)?.join(', ') || 'N/A'}
+                {startCase(item?.countryOfLiving) || 'N/A'}
               </li>
             </ul>
           </div>
 
           <div>
             <ul>
-              <li className='mb-3'>
-                <strong>{t('Country')}: </strong>
-                {startCase(item?.country) || 'N/A'}
-              </li>
+             
               <li className='mb-3'>
                 <strong> {t('KYC Document')}: </strong>
                 {startCase(item?.subscription) || 'N/A'}
@@ -122,7 +119,30 @@ const UserView = () => {
                 {startCase(item?.registrationType) || 'N/A'}
               </li>
             </ul>
-          </div>
+          </div></>}
+
+          {item?.userType==='local'&&<div>
+            <ul>
+              <li className='mb-3'>
+                {' '}
+                <strong>{t('Name')}: </strong>
+                {`${item?.firstName} ${item?.lastName}` || 'N/A'}
+              </li>
+              <li className='mb-3'>
+                <strong>{t('Nationality Id ')}: </strong>
+                {item?.nationalityId || 'N/A'}
+              </li>
+              <li className='mb-3'>
+                <strong>{t('KYC Document')}: </strong>{' '}
+                { 'N/A'}{' '}
+              </li>
+              <li className='mb-3'>
+                <strong>{t('Address')}: </strong>
+                {item?.address || 'N/A'}
+              </li>
+              
+            </ul>
+          </div>}
           <div>
             <ul>
               <li className='mb-3'>
@@ -136,6 +156,10 @@ const UserView = () => {
                 ) : (
                   'N/A'
                 )}
+              </li>
+              <li className='mb-3'>
+                <strong>{t('Available balance')}: </strong>
+                {item?.wallet_amount || 'N/A'}
               </li>
             </ul>
           </div>

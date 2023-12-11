@@ -21,10 +21,12 @@ import User from 'pages/users/User'
 import UserView from 'pages/users/UserView'
 import ReportAbuse from 'pages/report_abuse_manager/ReportAbuse'
 import NotificationAdd from 'pages/notification_manager/NotificationAdd'
-import ThaiLocalDepositManager from 'pages/thai_local_deposit_manager/ThaiLocalDepositManager'
 import Transaction from 'pages/transection_manager/Transaction'
 import UserWalletHistory from 'pages/users/UserWalletHistory'
 import TransactionDetails from 'pages/users/TransactionDetails'
+import ScratchCardManager from 'pages/scratch_card_manager/ScratchCardManager'
+import ScratchCardUsersTable from 'pages/scratch_card_manager/ScratchCardUsersTable'
+import SupportManager from 'pages/support_manager/SupportManager'
 
 const UseChange = ({ data }) => {
   const { t } = useTranslation()
@@ -105,11 +107,30 @@ const AdminRoutes = {
       )
     },
     {
-      path: '/thai-local-deposit-manager',
-      element: <ThaiLocalDepositManager />,
+      path: '/support-manager',
+      element: <SupportManager />,
       name: (
         <>
-          <UseChange data='THAI_LOCAL_DEPOSIT_MANAGER' />
+          <UseChange data='SUPPORT_MANAGER' />
+        </>
+      )
+    },
+   
+    {
+      path: '/scratch-card-manager',
+      element: <ScratchCardManager />,
+      name: (
+        <>
+          <UseChange data='SCRATCH_CARD_MANAGER' />
+        </>
+      )
+    },
+    {
+      path: '/scratch-card-manager/view',
+      element: <ScratchCardUsersTable />,
+      name: (
+        <>
+          <UseChange data='SCRATCH_CARD_MANAGER' />
         </>
       )
     },
@@ -162,7 +183,7 @@ const AdminRoutes = {
     },
 
     {
-      path: '/StaticContent',
+      path: '/static-content',
       element: <StaticContent />,
       name: (
         <>
@@ -171,7 +192,7 @@ const AdminRoutes = {
       )
     },
     {
-      path: '/StaticContent/add',
+      path: '/static-content/add',
       element: <AddStaticContent />,
       name: (
         <>
@@ -180,7 +201,7 @@ const AdminRoutes = {
       )
     },
     {
-      path: '/StaticContent/edit',
+      path: '/static-content/edit',
       element: <EditStaticContent />,
       name: (
         <>
@@ -189,7 +210,7 @@ const AdminRoutes = {
       )
     },
     {
-      path: '/StaticContent/view',
+      path: '/static-content/view',
       element: <StaticContentView />,
       name: (
         <>

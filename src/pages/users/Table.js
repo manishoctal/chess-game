@@ -23,7 +23,8 @@ const Table = ({
   page,
   sort,
   setSort,
-  userType
+  userType,
+  pageSize
 }) => {
   const { t } = useTranslation()
   const notification = useToastContext()
@@ -47,7 +48,7 @@ const Table = ({
       }
       // }
     } catch (error) {
-      console.log('error in get all users list==>>>>', error.message)
+      console.error('error in get all users list==>>>>', error.message)
     }
   }
   const handelKYCStatus = async item => {
@@ -63,7 +64,7 @@ const Table = ({
       }
       // }
     } catch (error) {
-      console.log('error in get all users list==>>>>', error.message)
+      console.error('error in get all users list==>>>>', error.message)
     }
   }
 
@@ -170,7 +171,7 @@ const Table = ({
                     </span>
                   </div>
                 </th>
-                {(user?.permission?.[1]?.add ||
+                {(manager?.add ||
                   user?.permission?.length === 0) && (
                   <>
                     <th scope='col' className='py-3 px-6 text-left'>
@@ -194,10 +195,10 @@ const Table = ({
                       scope='row'
                       className='py-4 px-3 border-r  font-medium text-gray-900  dark:text-white dark:border-[#ffffff38]'
                     >
-                      {i + 1 + 10 * (page - 1)}
+                      {i + 1 + pageSize * (page - 1)}
                     </th>
                     <td className='py-4 px-4 border-r  dark:border-[#ffffff38]'>
-                      {item?.firstName || 'N/A'}
+                      {userType === 'local' ?`${item?.firstName} ${item?.lastName}`: item?.firstName || 'N/A'}
                     </td>
                     <td className='py-2 px-4 border-r  dark:border-[#ffffff38]'>
                       {item?.email || 'N/A'}
@@ -207,17 +208,17 @@ const Table = ({
                     </td>
                     {userType === 'local' && (
                       <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-left'>
-                        {item?.availableBalance || 'N/A'}
+                        {item?.wallet_amount || 'N/A'}
                       </td>
                     )}
                     {userType === 'tourist' && (
                       <td className='py-4 px-3 border-r  dark:border-[#ffffff38] '>
-                        {startCase(item?.upcCode) || 'N/A'}
+                        {item?.upcCode|| 'N/A'}
                       </td>
                     )}
                     {userType === 'tourist' && (
                       <td className='py-4 px-3 border-r  dark:border-[#ffffff38] '>
-                        {startCase(item?.referralCode) || 'N/A'}
+                        {item?.referralCode || 'N/A'}
                       </td>
                     )}
 
@@ -228,7 +229,7 @@ const Table = ({
                       {dayjs(item?.createdAt).format('DD-MM-YYYY hh:mm A') ||
                         'N/A'}
                     </td>
-                    {(user?.permission?.[1]?.add ||
+                    {(manager?.add ||
                       user?.permission?.length === 0) && (
                       <>
                         <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
@@ -260,17 +261,17 @@ const Table = ({
                     <td className='py-2 px-4 border-l'>
                       <div className=''>
                         <div className='flex justify-center items-center'>
-                          {(manager?.add || user?.role === 'admin') && (
+                        
                             <NavLink
                               onClick={() => handleUserView(item)}
                               to='/users/view'
-                              state={item}
+                              state={{...item,userType}}
                               title={t('O_VIEW')}
                               className='px-2 py-2'
                             >
                               <AiFillEye className='cursor-pointer w-5 h-5 text-slate-600 dark:hover:text-white hover:text-blue-700' />{' '}
                             </NavLink>
-                          )}
+                        
 
                           {(manager?.add || user?.role === 'admin') &&
                             userType === 'local' && (
@@ -281,12 +282,12 @@ const Table = ({
                                 />
                               </div>
                             )}
-                          <div onClick={()=>{setIsAmountModal(true);setAddAmountUser(item)}}>
+                           {(manager?.add || user?.role === 'admin') && ( <div onClick={()=>{setIsAmountModal(true);setAddAmountUser(item)}}>
                             <GiTakeMyMoney
                               className='text-green text-lg cursor-pointer  text-slate-600'
                               title='Add amount'
                             />
-                          </div>
+                          </div>)}
                           <div>
                             <NavLink to='/transactionDetails' state={{userType,userId:item?._id}}>
                               <MdHistory

@@ -36,7 +36,7 @@ const Table = ({
         getAllFAQ();
       }
     } catch (error) {
-      console.log("error in get all faqs list==>>>>", error.message);
+      console.error("error in get all faqs list==>>>>", error.message);
     }
   };
 
@@ -49,7 +49,7 @@ const Table = ({
         getAllFAQ({ deletePage: 1 });
       }
     } catch (error) {
-      console.log("error in get all FAQs list==>>>>", error.message);
+      console.error("error in get all FAQs list==>>>>", error.message);
     }
   };
 

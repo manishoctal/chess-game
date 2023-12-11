@@ -71,7 +71,7 @@ function TransactionDetails () {
         // })
       }
     } catch (error) {
-      console.log('error ', error)
+      console.error('error ', error)
       setPaginationObj({})
       if (error.response.status === 401 || error.response.status === 409) {
         logoutUser()

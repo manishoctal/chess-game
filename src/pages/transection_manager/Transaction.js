@@ -7,13 +7,12 @@ import dayjs from 'dayjs'
 import ODateRangePicker from 'components/shared/datePicker/ODateRangePicker'
 import { useTranslation } from 'react-i18next'
 import AuthContext from 'context/AuthContext'
-import ThaiLocalTable from './ThaiLocalTable'
 
 function Transaction () {
   const { t } = useTranslation()
   const { user } = useContext(AuthContext)
   const manager =
-    user?.permission?.find(e => e.manager === 'subscription_manager') ?? {}
+    user?.permission?.find(e => e.manager === 'transaction_manager') ?? {}
   const [artistVerification, setArtistVerification] = useState([])
   const [page, setPage] = useState(1)
   const [pageSize] = useState(10)
@@ -68,7 +67,7 @@ function Transaction () {
         totalItems: resultStatus ? result?.data?.results.totalDocs : null
       })
     } catch (error) {
-      console.log('error in get all sub admin list==>>>>', error.message)
+      console.error('error in get all sub admin list==>>>>', error.message)
     }
   }
   const handlePageClick = event => {
@@ -78,7 +77,7 @@ function Transaction () {
 
   useEffect(() => {
     allTransaction()
-  }, [filterData, page, sort])
+  }, [filterData, page, sort,userType])
 
   const handleReset = () => {
     setFilterData({
@@ -162,14 +161,7 @@ function Transaction () {
               />
             ) : null}
             
-            {paginationObj?.totalItems ? (
-              <Pagination
-                handlePageClick={handlePageClick}
-                options={paginationObj}
-                isDelete={isDelete}
-                page={page}
-              />
-            ) : null}
+           
           </div>
         </div>
       </div>
