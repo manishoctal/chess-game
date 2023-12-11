@@ -94,7 +94,7 @@ const TransactionDetailsTable = ({ transactions, page, userType }) => {
                     {item?.mobile || 'N/A'}
                   </td>
                   <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
-                    {item?.country || 'N/A'}
+                    {item?.country || 0}
                   </td>
                   {userType === 'tourist' && (
                     <>
@@ -102,7 +102,7 @@ const TransactionDetailsTable = ({ transactions, page, userType }) => {
                         {item?.refNumber ?? 'N/A'}
                       </td>
                       <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
-                        {item?.country || 'N/A'}
+                        {item?.country || 0}
                       </td>
                       <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
                         {item?.transactionFee ?? 'N/A'}

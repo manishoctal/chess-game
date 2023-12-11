@@ -1,15 +1,14 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import AuthContext from '../../context/AuthContext'
 import Documents from '../reusable/icons/Documents'
-import { GiPlatform, GiCartwheel } from 'react-icons/gi'
+import { GiCartwheel } from 'react-icons/gi'
 import Dashboard from '../../assets/images/sidebar_icon1.svg'
 import SubAdmin from '../../assets/images/subadmin_manager.svg'
 import Logout from '../../assets/images/logout.svg'
 import { useTranslation } from 'react-i18next'
 import logoImage from '../../assets/images/Vector.png'
 import { AiFillSetting, AiOutlineMail } from 'react-icons/ai'
-import { PiArticleFill } from 'react-icons/pi'
 
 const classNames = require('classnames')
 
@@ -65,12 +64,11 @@ const Sidebar = () => {
   }
 
   if (!user) {
-    ;<></>
+    <></>
   }
 
   return (
     <>
-      {' '}
       <div
         className={`sidebar lg:block z-10  ${
           sidebarStatus === 'open' ? 'block' : 'sidebarHide'
@@ -83,7 +81,12 @@ const Sidebar = () => {
             onClick={() => updatePageName('Dashboard')}
             className='px-2 py-6 w-full text-center flex justify-center'
           >
-            <img src={logoImage} className='inline max-w-[187px]' alt='' style={{filter:'brightness(0) invert(1)'}} />
+            <img
+              src={logoImage}
+              className='inline max-w-[187px]'
+              alt=''
+              style={{ filter: 'brightness(0) invert(1)' }}
+            />
           </Link>
           <div className='profile text-center'>
             <small className='block text-sm'>Welcome</small>
@@ -121,21 +124,13 @@ const Sidebar = () => {
               )}
 
            
-
-            {/* {checkSidebarPermission('reports_manager') &&
-              generateNavLink(
-                '/report_abuse_manager',
-                'REPORTS_MANAGER',
-                <GiCartwheel style={{ fontSize: '20px' }} />
-              )} */}
             {checkSidebarPermission('notification_manager') &&
               generateNavLink(
                 '/notification_manager',
                 'NOTIFICATION_MANAGER',
                 <GiCartwheel style={{ fontSize: '20px' }} />
               )}
-            
-         
+
             {checkSidebarPermission('scratch_card_manager') &&
               generateNavLink(
                 '/scratch-card-manager',
@@ -143,7 +138,6 @@ const Sidebar = () => {
                 <GiCartwheel style={{ fontSize: '20px' }} />
               )}
 
-         
             {checkSidebarPermission('settings') &&
               generateNavLink(
                 '/setting',

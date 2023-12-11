@@ -2,7 +2,7 @@ import useToastContext from "hooks/useToastContext";
 import { isEmpty, startCase } from "lodash";
 import { useTranslation } from "react-i18next";
 import { AiFillEye, AiOutlineCopy } from "react-icons/ai";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { apiPut } from "utils/apiFetch";
 import apiPath from "../../utils/apiPath";
 import helper from "../../utils/helpers";

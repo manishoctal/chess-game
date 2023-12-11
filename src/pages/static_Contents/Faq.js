@@ -29,27 +29,15 @@ function FAQ () {
     sort_type: 'desc'
   })
 
-  const getAllFAQ = async (payload) => {
+  const getAllFAQ = async payload => {
     try {
-      if (payload?.deletePage) {
-        payload = {
-          page,
-          limit: pageSize
-        }
-        if (!(FAQs?.length > 1)) {
-          setPage(page - 1)
-          setIsDelete(true)
-          setPaginationObj({ ...paginationObj, page: page - 1 })
-        }
-      } else {
-        payload = {
-          page,
-          pageSize,
-          sort_key: sort.sort_key,
-          sort_type: sort.sort_type
-        }
-        setIsDelete(false)
+      payload = {
+        page,
+        pageSize,
+        sort_key: sort.sort_key,
+        sort_type: sort.sort_type
       }
+      setIsDelete(false)
 
       const path = apiPath.getFAQs
       const result = await apiGet(path, payload)
@@ -72,12 +60,12 @@ function FAQ () {
     }
   }
 
-  const handlePageClick = (event) => {
+  const handlePageClick = event => {
     const newPage = event.selected + 1
     setPage(newPage)
   }
 
-  const handelEdit = (items) => {
+  const handelEdit = items => {
     setItem(items)
     setEditShowModal(true)
   }
@@ -85,7 +73,7 @@ function FAQ () {
     // getAllFAQ()
   }, [page, sort, pageSize])
 
-  const pageSizeCall = (value) => {
+  const pageSizeCall = value => {
     setPageSize(value)
   }
 
@@ -95,18 +83,19 @@ function FAQ () {
         <div className='px-3 py-4'>
           <div className='bg-white border border-[#E9EDF9] rounded-lg'>
             <div className=' border-b-[#E3E3E3] grid 2xl:grid-cols-3 xl:grid-cols-2 lg:grid lg:grid-cols-1 gap-2 px-4 '>
-              <div className='col-span-2 flex flex-wrap  items-center'>fdsafas</div>
+              <div className='col-span-2 flex flex-wrap  items-center'>
+                fdsafas
+              </div>
               <div className='2xl:ml-auto xl:ml-0 lg:pt-0 pt-2'>
                 <div className='flex mt-2'>
-                  {(manager?.add ||
-                    user?.role === 'admin') && (
-                      <button
-                        title={t('FAQS_ADD_FAQS')}
-                        className='bg-LightBlue flex text-sm px-8 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue whitespace-nowrap'
-                        onClick={() => setShowModal(true)}
-                      >
-                        + {t('FAQS_ADD_FAQS')}
-                      </button>
+                  {(manager?.add || user?.role === 'admin') && (
+                    <button
+                      title={t('FAQS_ADD_FAQS')}
+                      className='bg-LightBlue flex text-sm px-8 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue whitespace-nowrap'
+                      onClick={() => setShowModal(true)}
+                    >
+                      + {t('FAQS_ADD_FAQS')}
+                    </button>
                   )}
                 </div>
               </div>
@@ -120,36 +109,30 @@ function FAQ () {
               sort={sort}
               manager={manager}
             />
-            {paginationObj?.totalItems
-              ? (<Pagination
-                  handlePageClick={handlePageClick}
-                  options={paginationObj}
-                  isDelete={isDelete}
-                  page={page}
-                  setPageSize={pageSizeCall}
-                  pageSize={pageSize}
-                 />)
-              : null}
+            {paginationObj?.totalItems ? (
+              <Pagination
+                handlePageClick={handlePageClick}
+                options={paginationObj}
+                isDelete={isDelete}
+                page={page}
+                setPageSize={pageSizeCall}
+                pageSize={pageSize}
+              />
+            ) : null}
           </div>
         </div>
       </div>
       <>
-        {
-          showModal
-            ? (
-              <AddFaq setShowModal={setShowModal} getAllFAQ={getAllFAQ} />)
-            : null
-        }
-        {
-          editshowModal
-            ? (
-              <EditFAQ
-                setEditShowModal={setEditShowModal}
-                getAllFAQ={getAllFAQ}
-                item={item}
-              />)
-            : null
-        }
+        {showModal ? (
+          <AddFaq setShowModal={setShowModal} getAllFAQ={getAllFAQ} />
+        ) : null}
+        {editshowModal ? (
+          <EditFAQ
+            setEditShowModal={setEditShowModal}
+            getAllFAQ={getAllFAQ}
+            item={item}
+          />
+        ) : null}
       </>
     </div>
   )

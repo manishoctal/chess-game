@@ -10,7 +10,6 @@ import Pagination from "../Pagination";
 import AuthContext from "context/AuthContext";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { async } from "q";
 
 import {Buffer} from 'buffer';
 Buffer.from('anything','base64','ascii');
@@ -72,14 +71,8 @@ const StaticContent = () => {
 
   const getStaticContent = async (data) => {
     try {
-      const { status, startDate, endDate, searchkey, isFilter } = filterData;
-      if (
-        (data?.deletePage && !(countryList?.length > 1)) ||
-        (isFilter && status && data?.statusChange && !(countryList?.length > 1))
-      ) {
-        setPage(page - 1);
-        setPaginationObj({ ...paginationObj, page: page - 1 });
-      }
+      const { status, startDate, endDate, searchkey } = filterData;
+     
 
       const payload = {
         page,

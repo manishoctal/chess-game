@@ -84,7 +84,8 @@ const AddAmount = ({ setIsAmountModal, getAllUser ,addAmountUser,userType}) => {
                           autoFocus
                           className='py-4 px-3 w-full text-sm text-gray-900 bg-transparent border-2 rounded-lg border-[#DFDFDF] appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0  peer'
                           placeholder=' '
-                          onKeyDown={helper.preventForNumberInput}
+                          step='any'
+                          onKeyPress={helper.preventForNumberInput}
                           maxLength={100}
                           {...register('amount', {
                             required: 'Please enter amount.',
@@ -127,7 +128,7 @@ const AddAmount = ({ setIsAmountModal, getAllUser ,addAmountUser,userType}) => {
                   className='bg-gradientTo text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150'
                   type='submit'
                 >
-                  {t('O_SAVE')}
+                  {t('O_ADD')}
                 </button>
               </div>
             </div>

@@ -4,13 +4,13 @@ import { apiPost } from '../../utils/apiFetch'
 import apiPath from '../../utils/apiPath'
 import useToastContext from 'hooks/useToastContext'
 import { useTranslation } from 'react-i18next'
-import DynamicLabel from 'utils/DynamicLabel'
 import ODatePicker from 'components/shared/datePicker/ODatePicker'
 import { useState } from 'react'
 import OInputField from 'components/reusable/OInputField'
 import formValidation from 'utils/formValidation'
 import dayjs from 'dayjs'
 import helper from 'utils/helpers'
+import { toNumber } from 'lodash'
 
 const AddScratchCard = ({ setShowModal, allScratchCard }) => {
   const { t } = useTranslation()
@@ -20,7 +20,7 @@ const AddScratchCard = ({ setShowModal, allScratchCard }) => {
     formState: { errors }
   } = useForm({ mode: 'onChange', shouldFocusError: true, defaultValues: {} })
 
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading ] = useState(false)
 
   const notification = useToastContext()
   const [date, setDate] = useState()
@@ -32,7 +32,11 @@ const AddScratchCard = ({ setShowModal, allScratchCard }) => {
       const payload = {
         ...data,
         expiryDate:  date ? dayjs(date).format('YYYY-MM-DD') : null,
-        couponCode: data?.couponCode?.toUpperCase()
+        couponCode: data?.couponCode?.toUpperCase(),
+        couponAmount: toNumber(data?.couponAmount),
+        rewardAmount: toNumber(data?.rewardAmount),
+        numberOfUserCoupon: toNumber(data?.numberOfUserCoupon),
+
       }
 
       const result = await apiPost(path, payload)

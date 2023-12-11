@@ -1,6 +1,5 @@
 import { isEmpty, startCase } from "lodash";
 import dayjs from "dayjs";
-import { AiFillEye } from "react-icons/ai";
 import { useTranslation } from "react-i18next";
 import { BsArrowUpShort } from "react-icons/bs";
 

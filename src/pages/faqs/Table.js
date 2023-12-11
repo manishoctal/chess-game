@@ -131,11 +131,11 @@ const Table = ({
                   <th scope="col" className="py-3 px-6 text-center">
                     {t("O_STATUS")}
                   </th>
+                </>
+              )}
                   <th scope="col" className="py-3 px-6 text-center">
                     {t("O_ACTION")}
                   </th>
-                </>
-              )}
             </tr>
           </thead>
           <tbody>

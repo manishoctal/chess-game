@@ -48,9 +48,9 @@ const SupportManagerTable = ({
                 <th scope='col' className='py-3 px-6'>
                   {t('O_STATUS')}
                 </th>
-                <th scope='col' className='py-3 px-6'>
-                  {t('O_ACTION')}
-                </th>
+                {(manager?.add || user?.role === 'admin') && ( <th scope='col' className='py-3 px-6'>
+                  {t('O_ACTION')} 
+                </th> )}
               </tr>
             </thead>
             <tbody>
@@ -84,10 +84,11 @@ const SupportManagerTable = ({
                     <td className='py-4 px-6 border-r '>
                       {item?.replied?'Replied' :'Not replied'}
                     </td>
+                    {(manager?.add || user?.role === 'admin') && (
                     <td className='py-4 px-6 border-l'>
                       <div className=''>
                         <ul className='flex justify-center'>
-                          {(manager?.add || user?.role === 'admin') && (
+                          
                             <>
                               <li
                                 disabled={
@@ -108,10 +109,11 @@ const SupportManagerTable = ({
                                  ) : null} 
                               </li>
                             </>
-                          )}
+                         
                         </ul>
                       </div>
                     </td>
+                     )}
                   </tr>
                 ))}
               {isEmpty(notifications) && (

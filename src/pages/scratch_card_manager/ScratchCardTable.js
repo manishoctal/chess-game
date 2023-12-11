@@ -1,21 +1,15 @@
-import React, { useContext, useState, useEffect } from 'react'
-import { apiPut } from '../../utils/apiFetch'
-import apiPath from '../../utils/apiPath'
-import dayjs from 'dayjs'
-import useToastContext from 'hooks/useToastContext'
-import { AiFillEdit, AiFillDelete, AiFillEye } from 'react-icons/ai'
-import { useTranslation } from 'react-i18next'
-import { BsArrowUpShort } from 'react-icons/bs'
+import React, { useContext, useEffect } from 'react' 
+import dayjs from 'dayjs' 
+import {   AiFillEye } from 'react-icons/ai'
+import { useTranslation } from 'react-i18next' 
 import AuthContext from 'context/AuthContext'
-import { isEmpty, startCase } from 'lodash'
-import helper from '../../utils/helpers'
+import { isEmpty } from 'lodash' 
 
-import { NavLink, useNavigate } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
 const ScratchCardTable = ({ subAdmin, page }) => {
   const { t } = useTranslation()
-  const navigate = useNavigate()
-  const { user, updatePageName } = useContext(AuthContext)
+  const { updatePageName } = useContext(AuthContext)
 
   useEffect(() => {
     updatePageName(t('SCRATCH_CARD_MANAGER'))
