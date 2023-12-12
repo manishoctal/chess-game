@@ -4,6 +4,7 @@ import { useContext, useState } from 'react'
 import ReplyModal from './ReplyModal'
 import AuthContext from 'context/AuthContext'
 import { FaReply } from 'react-icons/fa'
+import SupportView from './SupportView'
 
 const SupportManagerTable = ({
   notifications,
@@ -18,8 +19,15 @@ const SupportManagerTable = ({
   const [isReply, setIsReply] = useState(false)
   const [replyUser, setReplyUser] = useState('')
   const { user } = useContext(AuthContext)
-  const handleReply = item => {
-    setReplyUser(item)
+  const [item, setItem] = useState('')
+  const [viewShowModal, setViewShowModal] = useState(false)
+  const handleUserView = element => {
+    setItem(element)
+    setViewShowModal(true)
+  }
+
+  const handleReply = element => {
+    setReplyUser(element)
     setIsReply(true)
   }
   return (
@@ -46,9 +54,11 @@ const SupportManagerTable = ({
                 <th scope='col' className='py-3 px-6'>
                   {t('O_STATUS')}
                 </th>
-                {(manager?.add || user?.role === 'admin') && ( <th scope='col' className='py-3 px-6'>
-                  {t('O_ACTION')} 
-                </th> )}
+                {(manager?.add || user?.role === 'admin') && (
+                  <th scope='col' className='py-3 px-6'>
+                    {t('O_ACTION')}
+                  </th>
+                )}
               </tr>
             </thead>
             <tbody>
@@ -65,10 +75,10 @@ const SupportManagerTable = ({
                       {i + 1 + pageSize * (paginationObj?.page - 1)}
                     </th>
                     <td className='py-4 px-6 border-r'>
-                      {`${item?.user?.firstName} ${item?.user?.lastName}`|| 'N/A'}
-                      <br/>
-                      {item?.user?.email || 'N/A'}{' '}
-                      <br/>
+                      {`${item?.user?.firstName} ${item?.user?.lastName}` ||
+                        'N/A'}
+                      <br />
+                      {item?.user?.email || 'N/A'} <br />
                       {startCase(item?.user?.userType) || 'N/A'}{' '}
                     </td>
 
@@ -76,42 +86,48 @@ const SupportManagerTable = ({
                       {item?.user?.email || 'N/A'}{' '}
                     </td> */}
 
-                    <td className='py-4 px-6 border-r'>
-                      {startCase(item?.feedback) || 'N/A'}
+                    <td className='py-4 px-6 border-r w-[500px]'>
+                      <div className='line-clamp-2'>
+                        {startCase(item?.feedback) || 'N/A'}
+                      </div>
+
+                      {item?.feedback.length > 223 && (
+                        <button
+                          type='button'
+                          onClick={() => handleUserView(item)}
+                          className='bg-black inline-block mt-2 rounded-md text-white p-2 py-1'
+                        >
+                          Read More
+                        </button>
+                      )}
                     </td>
                     <td className='py-4 px-6 border-r '>
-                      {item?.replied?'Replied' :'Not replied'}
+                      {item?.replied ? 'Replied' : 'Not replied'}
                     </td>
                     {(manager?.add || user?.role === 'admin') && (
-                    <td className='py-4 px-6 border-l'>
-                      <div className=''>
-                        <ul className='flex justify-center'>
-                          
-                            <>
-                              <li
-                                disabled={
-                                  item?.replied === false ? false : true
-                                }
-                                className={
-                                  item?.replied === false
-                                    ? 'px-2 py-2 hover:bg-white hover:text-LightBlue'
-                                    : ''
-                                }
-                                onClick={() => handleReply(item)}
-                              >
-                                {item?.replied === false ? (
-                                  <button title={t('reply')}>
-                                    {' '}
-                                    <FaReply className='cursor-pointer w-5 h-5 text-slate-600' />{' '}
-                                  </button>
-                                 ) : null} 
-                              </li>
-                            </>
-                         
-                        </ul>
-                      </div>
-                    </td>
-                     )}
+                      <td className='py-4 px-6 border-l'>
+                        <div className=''>
+                          <ul className='flex justify-center'>
+                            <li
+                              disabled={item?.replied === false ? false : true}
+                              className={
+                                item?.replied === false
+                                  ? 'px-2 py-2 hover:bg-white hover:text-LightBlue'
+                                  : ''
+                              }
+                              onClick={() => handleReply(item)}
+                            >
+                              {item?.replied === false ? (
+                                <button title={t('reply')}>
+                                  {' '}
+                                  <FaReply className='cursor-pointer w-5 h-5 text-slate-600' />{' '}
+                                </button>
+                              ) : null}
+                            </li>
+                          </ul>
+                        </div>
+                      </td>
+                    )}
                   </tr>
                 ))}
               {isEmpty(notifications) && (
@@ -126,7 +142,17 @@ const SupportManagerTable = ({
         </div>
       </div>
 
-      {isReply ? <ReplyModal setIsReply={setIsReply} item={replyUser} getSupportRequest={getSupportRequest} /> : null}
+      {isReply ? (
+        <ReplyModal
+          setIsReply={setIsReply}
+          item={replyUser}
+          getSupportRequest={getSupportRequest}
+        />
+      ) : null}
+
+      {viewShowModal && (
+        <SupportView setViewShowModal={setViewShowModal} item={item} />
+      )}
     </>
   )
 }

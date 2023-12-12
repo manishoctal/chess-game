@@ -11,7 +11,6 @@ import OButton from 'components/reusable/OButton'
 import { Link } from 'react-router-dom'
 import ReactQuill from 'react-quill'
 import { useLocation, useNavigate } from 'react-router'
-import ErrorMessage from 'components/ErrorMessage'
 
 export default function AddEditEmail () {
   const { t } = useTranslation()

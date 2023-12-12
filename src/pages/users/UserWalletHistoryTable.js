@@ -18,11 +18,11 @@ const UserWalletHistoryTable = ({ users, page }) => {
                 {t('SUBADMIN_NAME')}
               </th>
 
-              <th scope='col' className='py-3 px-6 text-left'>
+              <th scope='col' className='py-3 px-6 '>
                 {t('AMOUNT_ADDED')}
               </th>
 
-              <th scope='col' className='py-3 px-6 text-left'>
+              <th scope='col' className='py-3 px-6 '>
                 {t('DATE')} & {t('TIME')}
               </th>
             </tr>
@@ -41,13 +41,13 @@ const UserWalletHistoryTable = ({ users, page }) => {
                     {i + 1 + 10 * (page - 1)}
                   </th>
 
-                  <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
+                  <td className='py-2 px-4 border-r  dark:border-[#ffffff38] '>
                     {`${item?.senderRecord?.firstName} ${item?.senderRecord?.lastName}`}
                   </td>
-                  <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
+                  <td className='py-2 px-4 border-r  dark:border-[#ffffff38] '>
                     {item?.transactionAmount || 'N/A'}
                   </td>
-                  <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
+                  <td className='py-2 px-4 border-r  dark:border-[#ffffff38] '>
                     {helper.getDateAndTime(item?.createdAt) || 'N/A'}
                   </td>
                 </tr>
