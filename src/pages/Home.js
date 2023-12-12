@@ -112,9 +112,7 @@ function Home () {
   const [dashboardDetails, setDashboardDetails] = useState({})
   const [startDate, setStartDate] = useState()
   const [endDate, setEndDate] = useState('')
-  // const [reRender, setReRender] = useState(false)
   const [usersGraphYears, setUsersGraphYears] = useState([])
-  // const [orderGraphYears, setOrderGraphYears] = useState([])
 
   const [graphPayload, setGraphPayload] = useState({
     graphYear: '-1',
