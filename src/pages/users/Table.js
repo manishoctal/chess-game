@@ -9,7 +9,7 @@ import { useTranslation } from 'react-i18next'
 import { BsArrowUpShort } from 'react-icons/bs'
 import helper from '../../utils/helpers'
 import { NavLink } from 'react-router-dom'
-import UserEdit from './Edit'
+import UserEdit from './UserEdit'
 import { GiTakeMyMoney } from 'react-icons/gi'
 import { MdHistory } from 'react-icons/md'
 import AddAmount from './AddAmount'
@@ -51,22 +51,7 @@ const Table = ({
       console.error('error in get all users list==>>>>', error.message)
     }
   }
-  const handelKYCStatus = async item => {
-    try {
-      const payload = {
-        status: item?.isKYCVerified === 0 ? 'active' : 'inactive'
-      }
-      const path = `${apiPath.changeUserStatus}/${item?._id}`
-      const result = await apiPut(path, payload)
-      if (result?.status === 200) {
-        notification.success(result.data.message)
-        getAllUser({ statusChange: 1 })
-      }
-      // }
-    } catch (error) {
-      console.error('error in get all users list==>>>>', error.message)
-    }
-  }
+  
 
   const handelEdit = item => {
     setEditItem(item)

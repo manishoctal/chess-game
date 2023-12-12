@@ -1,11 +1,10 @@
-import React, { useState } from 'react'
-import { isEmpty, startCase } from 'lodash'
+import { isEmpty } from 'lodash'
 import { useTranslation } from 'react-i18next'
 import dayjs from 'dayjs'
 import obj from 'utils/helpers'
 import QRCodeGenerator from 'components/QRCodeGenerator'
 
-const TransactionDetailsTable = ({ transactions, page, userType }) => {
+const TransactionDetailsTable = ({ transactions, page, userType ,pageSize}) => {
   const { t } = useTranslation()
 
   return (
@@ -87,7 +86,7 @@ const TransactionDetailsTable = ({ transactions, page, userType }) => {
                     scope='row'
                     className='py-4 px-3 border-r font-medium text-gray-900  dark:text-white dark:border-[#ffffff38]'
                   >
-                    {i + 1 + 10 * (page - 1)}
+                    {i + 1 + pageSize * (page - 1)}
                   </th>
 
                   <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>

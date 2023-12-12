@@ -29,9 +29,9 @@ function Faq () {
     sortType: 'desc'
   })
 
-  const getAllFAQ = async payload => {
+  const getAllFAQ = async () => {
     try {
-      payload = {
+      const payload = {
         page,
         pageSize: pageSize,
         sortKey: sort.sortBy,

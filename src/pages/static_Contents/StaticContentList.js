@@ -61,7 +61,7 @@ const StaticContentList = ({
                   }}
                 >
                   <div className='flex justify-start'>
-                    <span>{t('O_CREATED_AT')}</span>
+                    <span>{t('O_UPDATED_AT')}</span>
                     <span>
                       {sort.sortBy === 'createdAt' &&
                         sort.sortType === 'asc' && (
@@ -101,7 +101,7 @@ const StaticContentList = ({
                       {item?.slug || 'N/A'}
                     </td>
                     <td className='py-2 px-4 border-r dark:border-[#ffffff38] text-left'>
-                      {dayjs(item?.createdAt).format('DD-MM-YYYY h:mm A')}{' '}
+                      {dayjs(item?.updatedAt).format('DD-MM-YYYY h:mm A')}{' '}
                     </td>
                     {(manager?.add || user?.role === 'admin') && (
                       <td className='py-2 px-4 border-l '>

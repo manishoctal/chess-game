@@ -15,8 +15,7 @@ function Transaction () {
     user?.permission?.find(e => e.manager === 'transaction_manager') ?? {}
   const [artistVerification, setArtistVerification] = useState([])
   const [page, setPage] = useState(1)
-  const [pageSize,setPageSize] = useState(10)
-  const [isDelete, setIsDelete] = useState(false)
+  const [pageSize, setPageSize] = useState(10)
   const [userType, setUserType] = useState('tourist')
 
   const [paginationObj, setPaginationObj] = useState({
@@ -43,8 +42,7 @@ function Transaction () {
   }
   const allTransaction = async data => {
     try {
-      const { category, startDate, endDate, isFilter } = filterData
-      
+      const { startDate, endDate } = filterData
 
       const payload = {
         page,
@@ -55,7 +53,7 @@ function Transaction () {
 
         sortBy: sort.sortBy,
         sortType: sort.sortType,
-        transactionType :userType
+        transactionType: userType
       }
 
       const path = apiPath.transactionList
@@ -81,7 +79,7 @@ function Transaction () {
 
   useEffect(() => {
     allTransaction()
-  }, [filterData, page, sort,userType])
+  }, [filterData, page, sort, userType])
 
   const handleReset = () => {
     setFilterData({
@@ -105,24 +103,26 @@ function Transaction () {
       isFilter: true
     })
   }
- 
- 
 
   return (
     <div>
       <div className='bg-[#F9F9F9]'>
         <div className='px-3 py-4'>
-        <div className='flex justify-center items-center grid grid-cols-2 w-[500px]'>
+          <div className='flex justify-center items-center grid grid-cols-2 w-[500px]'>
             <button
               type='button'
-              className={`pr-6 bg-white border border-1 border-[#000] text-sm px-8 ml-3 mb-3 py-2 rounded-lg items-center  text-black  sm:w-auto w-1/2 ${userType==='tourist' && 'bg-[#000!important] text-white'}`}
+              className={`pr-6 bg-white border border-1 border-[#000] text-sm px-8 ml-3 mb-3 py-2 rounded-lg items-center  text-black  sm:w-auto w-1/2 ${
+                userType === 'tourist' && 'bg-[#000!important] text-white'
+              }`}
               onClick={() => setUserType('tourist')}
             >
               {t('FOREIGN_TOURIST')}
             </button>
             <button
               type='button'
-              className={` pr-6 bg-white border border-1 border-[#000] text-sm px-8 ml-3 mb-3 py-2 rounded-lg items-center  text-black  sm:w-auto w-1/2 ${userType==='local'&& 'bg-[#000!important] text-white'}`}
+              className={` pr-6 bg-white border border-1 border-[#000] text-sm px-8 ml-3 mb-3 py-2 rounded-lg items-center  text-black  sm:w-auto w-1/2 ${
+                userType === 'local' && 'bg-[#000!important] text-white'
+              }`}
               onClick={() => setUserType('local')}
             >
               {t('THAI_LOCAL')}
@@ -137,7 +137,7 @@ function Transaction () {
                     isReset={filterData?.isReset}
                     setIsReset={setFilterData}
                   />
-                  
+
                   <button
                     type='button'
                     onClick={handleReset}
@@ -158,7 +158,7 @@ function Transaction () {
               pageSize={pageSize}
               userType={userType}
             />
-          <div className='flex justify-between'>
+            <div className='flex justify-between'>
               <div className='flex items-center mb-3 ml-3'>
                 <p className='w-[160px] -space-x-px pt-5 md:pb-5 pr-5 text-gray-500'>
                   Page Size
@@ -187,8 +187,6 @@ function Transaction () {
                 />
               )}
             </div>
-            
-           
           </div>
         </div>
       </div>

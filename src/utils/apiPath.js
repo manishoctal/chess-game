@@ -1,4 +1,4 @@
-const pathObj = {
+const apiPath = {
   loginUser: "/v1/admin/login",
   getUsers: "/v1/admin/user",
   userProfile: "/v1/user/profile",
@@ -35,4 +35,4 @@ const pathObj = {
   allNotificationUser: "/v1/admin/user/all-users",
 };
 
-export default pathObj;
+export default apiPath;

@@ -419,7 +419,7 @@ const Settings = () => {
       {(manager?.add || user?.role === 'admin') && (
         <div className='text-center mt-4'>
           <OButton
-            disabled={!isDirty && true}
+            disabled={!isDirty}
             label={<>{t('O_UPDATE')}</>}
             type='submit'
             onClick={handleSubmit(handleSubmitForm)}
