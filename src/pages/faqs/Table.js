@@ -7,7 +7,6 @@ import AuthContext from 'context/AuthContext'
 import { useTranslation } from 'react-i18next'
 import useToastContext from 'hooks/useToastContext'
 import helper from '../../utils/helpers'
-import { BsArrowUpShort } from 'react-icons/bs'
 import dayjs from 'dayjs'
 
 const Table = ({
