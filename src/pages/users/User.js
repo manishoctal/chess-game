@@ -355,13 +355,7 @@ function User () {
         </div>
       </div>
 
-      {/* {toggle && (
-        <VerifyPopup
-          onHide={toggleModalAddEdit}
-          item={item}
-          getAllUser={getAllUser}
-        />
-      )} */}
+     
     </div>
   )
 }

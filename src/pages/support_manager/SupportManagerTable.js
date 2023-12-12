@@ -19,10 +19,10 @@ const SupportManagerTable = ({
   const [isReply, setIsReply] = useState(false)
   const [replyUser, setReplyUser] = useState('')
   const { user } = useContext(AuthContext)
-  const [item, setItem] = useState('')
+  const [supportView, setSupportView] = useState('')
   const [viewShowModal, setViewShowModal] = useState(false)
   const handleUserView = element => {
-    setItem(element)
+    setSupportView(element)
     setViewShowModal(true)
   }
 
@@ -151,7 +151,7 @@ const SupportManagerTable = ({
       ) : null}
 
       {viewShowModal && (
-        <SupportView setViewShowModal={setViewShowModal} item={item} />
+        <SupportView setViewShowModal={setViewShowModal} item={supportView} />
       )}
     </>
   )
