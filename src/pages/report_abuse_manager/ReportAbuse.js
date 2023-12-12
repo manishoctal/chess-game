@@ -128,8 +128,6 @@ function ReportAbuse() {
   }
 
 
-  useEffect(() => {
-  }, [filterData, page, sort, pageSize]);
 
   const handleReset = () => {
     setFilterData({
