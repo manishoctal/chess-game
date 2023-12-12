@@ -25,10 +25,11 @@ function AuthorizationRoute (props) {
     return false
   }
 
+  let route = checkPermission() ? (<>{props?.children}</>) : (<Navigate to='/' />)
   return (
     <>
       {
-        !isEmpty(user) ? (<> {checkPermission() ? (<>{props?.children}</>) : (<Navigate to='/' />)}</>) : (<Navigate to='/login' />)
+        !isEmpty(user) ? (<> {route}</>) : (<Navigate to='/login' />)
       }
     </>
   )

@@ -20,8 +20,8 @@ export const validateFile = (file, type = 'image') => {
   let fileErrorMsg = '';
 
   const validateImage = () => {
-    const supportedImageTypes = ['image/jpeg', 'image/jpg', 'image/png'];
-    if (isFileTypeSupported(file, supportedImageTypes)) {
+    const supportedImageTypes1 = ['image/jpeg', 'image/jpg', 'image/png'];
+    if (isFileTypeSupported(file, supportedImageTypes1)) {
       fileErrorMsg = 'Only jpeg, jpg, and png are supported.';
     } else if (validateFileSize(file, 1000 * 1000 * 5)) {
       fileErrorMsg = 'Please, upload file size less than 5mb.';

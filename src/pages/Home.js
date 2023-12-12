@@ -174,8 +174,8 @@ function Home () {
           refData.pop()
         }
         const daysEarnReport = dashboardDetails?.userGraph?.daysEarnReport
-        for (let i = 0; i < daysEarnReport.length; i++) {
-          refData.push(daysEarnReport[i])
+        for (const element of daysEarnReport) {
+          refData.push(element)
         }
         lineGraphData.datasets[0].data = refData
 
@@ -189,8 +189,8 @@ function Home () {
           refData.pop()
         }
         const monthlyEarnReport = dashboardDetails?.userGraph?.monthlyEarnReport
-        for (let i = 0; i < monthlyEarnReport.length; i++) {
-          refData.push(monthlyEarnReport[i])
+        for (const element of monthlyEarnReport) {
+          refData.push(element)
         }
         lineGraphData.labels = [...monthsLabels]
         // setReRender(prev => !prev)
@@ -238,8 +238,8 @@ function Home () {
         }
         const monthlyEarnDataOrder =
           dashboardDetails?.orderGraph?.monthlyEarnDataOrder
-        for (let i = 0; i < monthlyEarnDataOrder.length; i++) {
-          refData.push(monthlyEarnDataOrder[i])
+        for (const element of monthlyEarnDataOrder) {
+          refData.push(element)
         }
         lineGraphData2.labels = [...monthsLabels]
         // setReRender(prev => !prev)

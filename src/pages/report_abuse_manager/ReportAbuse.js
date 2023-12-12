@@ -26,7 +26,6 @@ function ReportAbuse() {
   const [viewData, setViewData] = useState();
 
   const [openSlide, setOpenSlide] = useState(false);
-  const [viewImages, setImages] = useState([]);
 
   const [viewShowModal, setViewShowModal] = useState(false);
   const [item, setItem] = useState("");
@@ -41,9 +40,8 @@ function ReportAbuse() {
     setViewShowModal(!viewShowModal);
   };
 
-  const handleView = (item) => {
+  const handleView = () => {
     setOpenSlide(!openSlide);
-    setImages(item)
   }
 
   const manager = user?.permission?.find((e) => e.manager === "artwork_manager") ?? {};
@@ -130,9 +128,6 @@ function ReportAbuse() {
   }
 
 
-  useEffect(() => {
-    // reportAbuseListing();
-  }, [filterData, page, sort, pageSize]);
 
   const handleReset = () => {
     setFilterData({

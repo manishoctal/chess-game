@@ -1,6 +1,5 @@
 import dayjs from 'dayjs'
 import Swal from 'sweetalert2'
-import { isEmpty } from 'lodash'
 import withReactContent from 'sweetalert2-react-content'
 
 const calendar = require('dayjs/plugin/calendar')
@@ -17,7 +16,7 @@ function shuffleArray (array) {
   }
   return array
 }
-const helper = {
+const helpers = {
   currencyFormat: (number = '') => {
     return new Intl.NumberFormat('en-IN', {}).format(number)
   },
@@ -47,7 +46,7 @@ const helper = {
     })
   },
   marketStatus: s => {
-    let status = ''
+    let status 
     switch (s) {
       case 1:
         status = 'Open'
@@ -70,7 +69,7 @@ const helper = {
     return status
   },
   getSportType: t => {
-    let type = ''
+    let type 
     switch (t) {
       case 1:
         type = 'soccer'
@@ -136,17 +135,17 @@ const helper = {
   //   xhr.send();
   // },
 
-  downloadFile: url => {
-    if (!url) {
+  downloadFile: link => {
+    if (!link) {
       window?.alert('Invalid URL')
       return
     }
 
-    const parts = url.split('/')
+    const parts = link.split('/')
     const filename = parts[parts.length - 1]
 
     const xhr = new XMLHttpRequest()
-    xhr.open('GET', url, true)
+    xhr.open('GET', link, true)
     xhr.responseType = 'blob'
 
     xhr.onload = () => {
@@ -193,12 +192,11 @@ const helper = {
     randPasswordArray[2] = lowerChars
     randPasswordArray[3] = specialChars
     randPasswordArray = randPasswordArray.fill(allChars, 4)
-    const newPass = shuffleArray(
+    return shuffleArray(
       randPasswordArray.map(function (x) {
         return x[Math.floor(Math.random() * x.length)]
       })
     ).join('')
-    return newPass
   },
 
   requiredField: async () => {
@@ -210,8 +208,7 @@ const helper = {
     const date2 = dayjs(dateStr2)
 
     // Get the difference in seconds
-    const diffInSeconds = date2.diff(date1, 'second')
-    return diffInSeconds
+    return date2.diff(date1, 'second')
   },
   getDateAndTime:(date)=>{
     return dayjs(date).format("DD-MM-YYYY hh:mm A")
@@ -220,7 +217,6 @@ const helper = {
     if (['-', '+', 'e'].includes(e.key)) {
       e.preventDefault()
     }
-    // debugger
     if(['.'].includes(e?.target?.value)){
       const afterDecimal = e?.target?.value?.split('.')
       console.log('afterDecimal',afterDecimal)
@@ -232,4 +228,4 @@ const helper = {
   
 }
 
-export default helper
+export default helpers
