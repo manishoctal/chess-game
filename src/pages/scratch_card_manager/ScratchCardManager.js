@@ -13,6 +13,10 @@ function ScratchCardManager () {
   const { user, updatePageName } = useContext(AuthContext)
   const manager =
     user?.permission?.find(e => e.manager === 'scratch_card_manager') ?? {}
+
+    const ternaryCondition = (condition, first, second) => {
+      return condition ? first : second
+    }
   const [subAdmin, setSubAdmin] = useState()
   const [page, setPage] = useState(1)
   const [pageSize, setPageSize] = useState(10)
@@ -47,8 +51,8 @@ function ScratchCardManager () {
         page,
         pageSize: pageSize,
 
-        startDate: startDate ? dayjs(startDate).format('YYYY-MM-DD') : null,
-        endDate: endDate ? dayjs(endDate).format('YYYY-MM-DD') : null,
+        startDate: ternaryCondition(startDate , dayjs(startDate).format('YYYY-MM-DD') , null),
+        endDate: ternaryCondition(endDate , dayjs(endDate).format('YYYY-MM-DD') , null),
         keyword: searchkey,
         sortBy: sort.sortBy,
         sortType: sort.sortType
@@ -61,10 +65,10 @@ function ScratchCardManager () {
       setSubAdmin(response)
       setPaginationObj({
         ...paginationObj,
-        page: resultStatus ? response.page : null,
-        pageCount: resultStatus ? response.totalPages : null,
-        perPageItem: resultStatus ? response?.docs.length : null,
-        totalItems: resultStatus ? response.totalDocs : null
+        page: ternaryCondition(resultStatus , response.page , null),
+        pageCount: ternaryCondition(resultStatus , response.totalPages , null),
+        perPageItem: ternaryCondition(resultStatus , response?.docs.length , null),
+        totalItems: ternaryCondition(resultStatus , response.totalDocs , null)
       })
     } catch (error) {
       console.error('error in get all sub admin list==>>>>', error.message)
@@ -123,7 +127,7 @@ function ScratchCardManager () {
                   <div className='flex items-center lg:pt-0 pt-3 flex-wrap justify-center mb-2 2xl:mb-0'>
                     <div className='relative flex items-center mb-3'>
                       <div className='absolute inset-y-0 right-0 flex items-center pl-3 mr-3 pointer-events-none'>
-                        {!searchTerm ? (
+                        {ternaryCondition(!searchTerm , (
                           <svg
                             aria-hidden='true'
                             className='w-4 h-4 text-[#A5A5A5] dark:text-gray-40'
@@ -139,9 +143,9 @@ function ScratchCardManager () {
                               d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'
                             />
                           </svg>
-                        ) : (
+                        ) , (
                           ''
-                        )}
+                        ))}
                       </div>
                       <input
                         type='search'
@@ -194,14 +198,14 @@ function ScratchCardManager () {
                     <option value='100'>100</option>
                   </select>
                 </div>
-                {paginationObj?.totalItems ? (
+                {ternaryCondition(paginationObj?.totalItems , (
                   <Pagination
                     handlePageClick={handlePageClick}
                     options={paginationObj}
                     isDelete={isDelete}
                     page={page}
                   />
-                ) : null}
+                ) , null)}
               </div>
             </div>
           </div>
