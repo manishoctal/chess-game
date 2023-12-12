@@ -1,5 +1,4 @@
-import React, { useState } from 'react'
-import { isEmpty, startCase } from 'lodash'
+import { isEmpty } from 'lodash'
 import { useTranslation } from 'react-i18next'
 import helper from 'utils/helpers'
 

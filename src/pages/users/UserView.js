@@ -1,10 +1,9 @@
 import OImage from 'components/reusable/OImage'
 import dayjs from 'dayjs'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLocation, Link } from 'react-router-dom'
 import defaultImage from '../../assets/images/No-image-found.jpg'
-import { HiBadgeCheck } from 'react-icons/hi'
 import checkIcon from '../../assets/images/check.png'
 import { startCase } from 'lodash'
 import { IoArrowBackSharp } from 'react-icons/io5'
@@ -13,18 +12,6 @@ const UserView = () => {
   const { t } = useTranslation()
   const location = useLocation()
   const [item] = useState(location?.state)
-  const [age, setAge] = useState(null)
-
-  const calculateAge = () => {
-    const dobDate = new Date(item?.dob)
-    const today = new Date()
-    let ageDiff = today.getFullYear() - dobDate.getFullYear()
-    setAge(item?.dob ? ageDiff : '')
-  }
-
-  useEffect(() => {
-    // calculateAge();
-  }, [])
 
   return (
     <>
@@ -52,97 +39,98 @@ const UserView = () => {
         </div>
 
         <div className='grid grid-cols-3 dark:text-white'>
-          {item?.userType==='tourist'&&<>
-          <div>
-            <ul>
-              <li className='mb-3'>
-                {' '}
-                <strong>{t('FIRST_NAME')}: </strong>
-                {startCase(item?.firstName) || 'N/A'}
-              </li>
-              <li className='mb-3'>
-                <strong>{t('EMAIL_ADDRESS')}: </strong>
-                {item?.email || 'N/A'}
-              </li>
-              <li className='mb-3'>
-                <strong>{t('REGISTERED_DATE')}: </strong>{' '}
-                {dayjs(item?.createdAt).format('DD-MM-YYYY hh:mm A') || 'N/A'}{' '}
-              </li>
-              <li className='mb-3'>
-                <strong>{t('Referral code')}: </strong>
-                {item?.referralCode || 'N/A'}
-              </li>
-            </ul>
-          </div>
+          {item?.userType === 'tourist' && (
+            <>
+              <div>
+                <ul>
+                  <li className='mb-3'>
+                    {' '}
+                    <strong>{t('FIRST_NAME')}: </strong>
+                    {startCase(item?.firstName) || 'N/A'}
+                  </li>
+                  <li className='mb-3'>
+                    <strong>{t('EMAIL_ADDRESS')}: </strong>
+                    {item?.email || 'N/A'}
+                  </li>
+                  <li className='mb-3'>
+                    <strong>{t('REGISTERED_DATE')}: </strong>{' '}
+                    {dayjs(item?.createdAt).format('DD-MM-YYYY hh:mm A') ||
+                      'N/A'}{' '}
+                  </li>
+                  <li className='mb-3'>
+                    <strong>{t('Referral code')}: </strong>
+                    {item?.referralCode || 'N/A'}
+                  </li>
+                </ul>
+              </div>
 
-          <div>
-            <ul>
-              <li className='mb-3'>
-                <strong> {t('UPC code')}: </strong>
-                {item?.upcCode || 'N/A'}
-              </li>
-              <li className='mb-3'>
-                <strong>{t('GENDER')}: </strong>
-                {startCase(item?.gender) || 'N/A'}
-              </li>
+              <div>
+                <ul>
+                  <li className='mb-3'>
+                    <strong> {t('UPC code')}: </strong>
+                    {item?.upcCode || 'N/A'}
+                  </li>
+                  <li className='mb-3'>
+                    <strong>{t('GENDER')}: </strong>
+                    {startCase(item?.gender) || 'N/A'}
+                  </li>
 
-              <li className='mb-3 mr-2'>
-                <strong>{t('NATIONALITY')}: </strong>
-                {item?.nationality || 'N/A'}
-              </li>
-              <li className='mb-3 mr-2'>
-                <strong>
-                  {t('Country of living')}:{' '}
-                </strong>
-                {startCase(item?.countryOfLiving) || 'N/A'}
-              </li>
-            </ul>
-          </div>
+                  <li className='mb-3 mr-2'>
+                    <strong>{t('NATIONALITY')}: </strong>
+                    {item?.nationality || 'N/A'}
+                  </li>
+                  <li className='mb-3 mr-2'>
+                    <strong>{t('Country of living')}: </strong>
+                    {startCase(item?.countryOfLiving) || 'N/A'}
+                  </li>
+                </ul>
+              </div>
 
-          <div>
-            <ul>
-             
-              <li className='mb-3'>
-                <strong> {t('KYC Document')}: </strong>
-                {startCase(item?.subscription) || 'N/A'}
-              </li>
-              <li className='mb-3'>
-                <strong> {t('Cities visited in Thailand')}: </strong>
-                {startCase(item?.verificationStatus) || 'N/A'}
-              </li>
-              <li className='mb-3'>
-                <strong>{t('Cities going to visit in Thailand')}: </strong>
-                {startCase(item?.registrationType) || 'N/A'}
-              </li>
-              <li className='mb-3'>
-                <strong>{t('Bonus Amount')}: </strong>
-                {startCase(item?.registrationType) || 'N/A'}
-              </li>
-            </ul>
-          </div></>}
+              <div>
+                <ul>
+                  <li className='mb-3'>
+                    <strong> {t('KYC Document')}: </strong>
+                    {startCase(item?.subscription) || 'N/A'}
+                  </li>
+                  <li className='mb-3'>
+                    <strong> {t('Cities visited in Thailand')}: </strong>
+                    {startCase(item?.verificationStatus) || 'N/A'}
+                  </li>
+                  <li className='mb-3'>
+                    <strong>{t('Cities going to visit in Thailand')}: </strong>
+                    {startCase(item?.registrationType) || 'N/A'}
+                  </li>
+                  <li className='mb-3'>
+                    <strong>{t('Bonus Amount')}: </strong>
+                    {startCase(item?.registrationType) || 'N/A'}
+                  </li>
+                </ul>
+              </div>
+            </>
+          )}
 
-          {item?.userType==='local'&&<div>
-            <ul>
-              <li className='mb-3'>
-                {' '}
-                <strong>{t('Name')}: </strong>
-                {`${item?.firstName} ${item?.lastName}` || 'N/A'}
-              </li>
-              <li className='mb-3'>
-                <strong>{t('Nationality Id ')}: </strong>
-                {item?.nationalityId || 'N/A'}
-              </li>
-              <li className='mb-3'>
-                <strong>{t('KYC Document')}: </strong>{' '}
-                { 'N/A'}{' '}
-              </li>
-              <li className='mb-3'>
-                <strong>{t('Address')}: </strong>
-                {item?.address || 'N/A'}
-              </li>
-              
-            </ul>
-          </div>}
+          {item?.userType === 'local' && (
+            <div>
+              <ul>
+                <li className='mb-3'>
+                  {' '}
+                  <strong>{t('Name')}: </strong>
+                  {`${item?.firstName} ${item?.lastName}` || 'N/A'}
+                </li>
+                <li className='mb-3'>
+                  <strong>{t('Nationality Id ')}: </strong>
+                  {item?.nationalityId || 'N/A'}
+                </li>
+                <li className='mb-3'>
+                  <strong>{t('KYC Document')}: </strong> {'N/A'}{' '}
+                </li>
+                <li className='mb-3'>
+                  <strong>{t('Address')}: </strong>
+                  {item?.address || 'N/A'}
+                </li>
+              </ul>
+            </div>
+          )}
           <div>
             <ul>
               <li className='mb-3'>

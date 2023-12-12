@@ -21,7 +21,6 @@ const UserEdit = ({ setEditShowModal, getAllUser, item }) => {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors }
   } = useForm({
     mode: 'onChange',

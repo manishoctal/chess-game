@@ -11,18 +11,16 @@ import { useLocation } from 'react-router-dom'
 
 function TransactionDetails () {
   const { t } = useTranslation()
-  const { logoutUser, user, updatePageName } = useContext(AuthContext)
+  const { logoutUser, updatePageName } = useContext(AuthContext)
   const [paginationObj, setPaginationObj] = useState({
     page: 1,
     pageCount: 1,
     pageRangeDisplayed: 10
   })
-  const [, setEditShowModal] = useState(false)
 
   const [transactions, setTransactions] = useState([])
   const [page, setPage] = useState(1)
   const [pageSize, setPageSize] = useState(10)
-  const [item, setItem] = useState('')
   const [isDelete, setIsDelete] = useState(false)
   const [searchTerm, setSearchTerm] = useState('')
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('')
@@ -43,15 +41,15 @@ function TransactionDetails () {
   const getTransactionDetails = async data => {
     try {
       const { category, startDate, endDate, searchkey } = filterData
-      
+
       const payload = {
         page,
         pageSize: pageSize,
         status: category,
         startDate: startDate ? dayjs(startDate).format('YYYY-MM-DD') : null,
         endDate: endDate ? dayjs(endDate).format('YYYY-MM-DD') : null,
-        keyword: searchkey?.trim()
-        ,userId,
+        keyword: searchkey?.trim(),
+        userId,
         userType
       }
 
@@ -89,17 +87,15 @@ function TransactionDetails () {
     setPage(newPage)
   }
 
-  const handelEdit = items => {
-    setItem(items)
-    setEditShowModal(true)
-  }
-
   useEffect(() => {
-    getTransactionDetails();
+    getTransactionDetails()
   }, [page, filterData, pageSize])
 
   useEffect(() => {
-    const pageName =userType==='local' ? t('TRANSACTION_DETAILS_LOCAL'):t('TRANSACTION_DETAILS_TOURIST')
+    const pageName =
+      userType === 'local'
+        ? t('TRANSACTION_DETAILS_LOCAL')
+        : t('TRANSACTION_DETAILS_TOURIST')
     updatePageName(pageName)
   }, [])
 
@@ -152,8 +148,6 @@ function TransactionDetails () {
       clearTimeout(timeoutId)
     }
   }, [searchTerm])
-
-  const manager = user?.permission?.find(e => e.manager === 'transactions_managers')
 
   return (
     <div>
@@ -226,6 +220,7 @@ function TransactionDetails () {
               transactions={transactions}
               page={page}
               userType={userType}
+              pageSize={pageSize}
             />
 
             <div className='flex justify-between'>

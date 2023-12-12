@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { apiGet, apiPost } from '../../utils/apiFetch'
+import { apiGet  } from '../../utils/apiFetch'
 import apiPath from '../../utils/apiPath'
 import Table from './Table'
 import Pagination from '../Pagination'
@@ -7,46 +7,26 @@ import AuthContext from 'context/AuthContext'
 import dayjs from 'dayjs'
 import ODateRangePicker from 'components/shared/datePicker/ODateRangePicker'
 import { useTranslation } from 'react-i18next'
-import useToastContext from 'hooks/useToastContext'
 
 function User () {
   const { t } = useTranslation()
-  const notification = useToastContext()
   const { logoutUser, user, updatePageName } = useContext(AuthContext)
   const [paginationObj, setPaginationObj] = useState({
     page: 1,
     pageCount: 1,
     pageRangeDisplayed: 10
   })
-  const [, setEditShowModal] = useState(false)
 
-  const [viewShowModal, setViewShowModal] = useState(false)
   const [users, setAllUser] = useState([])
   const [userType, setUserType] = useState('tourist')
   const [page, setPage] = useState(1)
   const [pageSize, setPageSize] = useState(10)
-  const [item, setItem] = useState('')
   const [isDelete, setIsDelete] = useState(false)
   const [searchTerm, setSearchTerm] = useState('')
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('')
   const [isInitialized, setIsInitialized] = useState(false)
-  const [toggle, setToggle] = useState(false)
 
-  const toggleModalAddEdit = async data => {
-    setToggle(!toggle)
-    try {
-      let path
-      path = apiPath.verficationDetail
-      const result = await apiGet(path, { userId: data?._id })
-      const response = result?.data?.results
-      if (result.data.success) {
-        setItem(response)
-      }
-    } catch (error) {
-      console.error('error in get all users list==>>>>', error)
-      notification.error(error.message)
-    }
-  }
+ 
 
   const [filterData, setFilterData] = useState({
     isKYCVerified: '',
@@ -69,7 +49,6 @@ function User () {
         startDate,
         endDate,
         searchkey,
-        isFilter,
         isKYCVerified
       } = filterData
 
@@ -120,14 +99,9 @@ function User () {
     setPage(newPage)
   }
 
-  const handelEdit = items => {
-    setItem(items)
-    setEditShowModal(true)
-  }
+  
 
-  const handleUserView = userItem => {
-    setItem(userItem)
-    setViewShowModal(true)
+  const handleUserView = () => {
     updatePageName(` ${t('VIEW') + ' ' + t('USER_MANAGER')}`)
   }
 
@@ -336,7 +310,7 @@ function User () {
               users={users}
               user={user}
               getAllUser={getAllUser}
-              handelEdit={handelEdit}
+              
               handleUserView={handleUserView}
               page={page}
               setSort={setSort}

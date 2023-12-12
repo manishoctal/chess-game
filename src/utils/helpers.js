@@ -1,6 +1,5 @@
 import dayjs from 'dayjs'
 import Swal from 'sweetalert2'
-import { isEmpty } from 'lodash'
 import withReactContent from 'sweetalert2-react-content'
 
 const calendar = require('dayjs/plugin/calendar')
@@ -17,7 +16,7 @@ function shuffleArray (array) {
   }
   return array
 }
-const helper = {
+const helpers = {
   currencyFormat: (number = '') => {
     return new Intl.NumberFormat('en-IN', {}).format(number)
   },
@@ -193,12 +192,11 @@ const helper = {
     randPasswordArray[2] = lowerChars
     randPasswordArray[3] = specialChars
     randPasswordArray = randPasswordArray.fill(allChars, 4)
-    const newPass = shuffleArray(
+    return shuffleArray(
       randPasswordArray.map(function (x) {
         return x[Math.floor(Math.random() * x.length)]
       })
     ).join('')
-    return newPass
   },
 
   requiredField: async () => {
@@ -210,8 +208,7 @@ const helper = {
     const date2 = dayjs(dateStr2)
 
     // Get the difference in seconds
-    const diffInSeconds = date2.diff(date1, 'second')
-    return diffInSeconds
+    return date2.diff(date1, 'second')
   },
   getDateAndTime:(date)=>{
     return dayjs(date).format("DD-MM-YYYY hh:mm A")
@@ -232,4 +229,4 @@ const helper = {
   
 }
 
-export default helper
+export default helpers

@@ -6,25 +6,21 @@ import AuthContext from 'context/AuthContext'
 import dayjs from 'dayjs'
 import ODateRangePicker from 'components/shared/datePicker/ODateRangePicker'
 import { useTranslation } from 'react-i18next'
-import useToastContext from 'hooks/useToastContext'
 import UserWalletHistoryTable from './UserWalletHistoryTable'
 import { useLocation } from 'react-router-dom'
 
 function UserWalletHistory () {
   const { t } = useTranslation()
-  const notification = useToastContext()
   const { logoutUser, user, updatePageName } = useContext(AuthContext)
   const [paginationObj, setPaginationObj] = useState({
     page: 1,
     pageCount: 1,
     pageRangeDisplayed: 10
   })
-  const [, setEditShowModal] = useState(false)
 
   const [users, setAllUser] = useState([])
   const [page, setPage] = useState(1)
   const [pageSize, setPageSize] = useState(10)
-  const [item, setItem] = useState('')
   const [isDelete, setIsDelete] = useState(false)
   const [searchTerm, setSearchTerm] = useState('')
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('')
@@ -41,9 +37,9 @@ function UserWalletHistory () {
     isFilter: false
   })
 
-  const getAllUser = async data => {
+  const getAllUser = async () => {
     try {
-      const { category, startDate, endDate, searchkey, isFilter } = filterData
+      const { category, startDate, endDate, searchkey } = filterData
 
       const payload = {
         page,
@@ -88,10 +84,7 @@ function UserWalletHistory () {
     setPage(newPage)
   }
 
-  const handelEdit = items => {
-    setItem(items)
-    setEditShowModal(true)
-  }
+ 
 
   useEffect(() => {
     getAllUser()
