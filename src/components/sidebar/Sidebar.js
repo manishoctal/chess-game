@@ -63,124 +63,129 @@ const Sidebar = () => {
     return false
   }
 
+  const andOperator = (condition, text) => {
+    return condition && text
+  }
+
   if (!user) {
-    <></>
+    ;<></>
   }
 
   return (
-    <>
-      <div
-        className={`sidebar lg:block z-10  ${
-          sidebarStatus === 'open' ? 'block' : 'sidebarHide'
-        } bg-gradient-to-t from-gradpurple to-gradientFrom w-[220px] xl:w-[280px] fixed h-full overflow-y-auto`}
-        // onClick={handleSidebar}
-      >
-        <div className='text-sideBarNavColor'>
-          <Link
-            to='/dashboard'
-            onClick={() => updatePageName('Dashboard')}
-            className='px-2 py-6 w-full text-center flex justify-center'
-          >
-            <img
-              src={logoImage}
-              className='inline max-w-[187px]'
-              alt=''
-              style={{ filter: 'brightness(0) invert(1)' }}
-            />
-          </Link>
-          <div className='profile text-center'>
-            <small className='block text-sm'>Welcome</small>
-            <strong className='block text-lg overflow-hidden text-ellipsis px-2 whitespace-nowrap '>
-              {user?.firstName + ' ' + user?.lastName}
-            </strong>
-          </div>
-
-          <nav className='pt-4 pb-5 flex flex-col justify-center font-normal text-xs overflow-y-auto'>
-            {/* {checkSidebarPermission("dashboard") && ( */}
-            {generateNavLink(
-              '/dashboard',
-              'NAV_DASHBOARD',
-              <img src={Dashboard} className='max-w-[18px]' alt='' />
-            )}
-
-            {checkSidebarPermission('user_manager') &&
-              generateNavLink(
-                '/users',
-                'USER_MANAGER',
-                <img src={SubAdmin} className='max-w-[18px]' alt='' />
-              )}
-            {checkSidebarPermission('transaction_manager') &&
-              generateNavLink(
-                '/transactions',
-                'NAV_TRANSACTION_MANAGER',
-                <img src={SubAdmin} className='max-w-[18px]' alt='' />
-              )}
-
-            {checkSidebarPermission('subAdmin_manager') &&
-              generateNavLink(
-                '/sub-admin-manager',
-                'SUB_ADMIN_MANAGERS',
-                <img src={SubAdmin} className='max-w-[18px]' alt='' />
-              )}
-
-           
-            {checkSidebarPermission('notification_manager') &&
-              generateNavLink(
-                '/notification_manager',
-                'NOTIFICATION_MANAGER',
-                <GiCartwheel style={{ fontSize: '20px' }} />
-              )}
-
-            {checkSidebarPermission('scratch_card_manager') &&
-              generateNavLink(
-                '/scratch-card-manager',
-                'SCRATCH_CARD_MANAGER',
-                <GiCartwheel style={{ fontSize: '20px' }} />
-              )}
-
-            {checkSidebarPermission('settings') &&
-              generateNavLink(
-                '/setting',
-                'SETTINGS',
-                <AiFillSetting style={{ fontSize: '20px' }} />
-              )}
-
-            {checkSidebarPermission('static_page_management') &&
-              generateNavLink(
-                '/static-content',
-                'NAV_STATIC_CONTENTS',
-                <Documents />
-              )}
-
-            {checkSidebarPermission('FAQ') &&
-              generateNavLink('/faqs', 'NAV_FAQS', <Documents />)}
-
-            {checkSidebarPermission('email_manager') &&
-              generateNavLink(
-                '/email-manager',
-                'EMAIL_MANAGER',
-                <AiOutlineMail style={{ fontSize: '20px' }} />
-              )}
-            {checkSidebarPermission('support_manager') &&
-              generateNavLink(
-                '/support-manager',
-                'SUPPORT_MANAGER',
-                <AiOutlineMail style={{ fontSize: '20px' }} />
-              )}
-
-            <Link
-              onClick={handleLogout}
-              className='flex items-center px-4 lg:px-7 py-4 hover:bg-sideBarNavActiveColor hover:text-gradientTo'
-            >
-              <span className='mr-2'>
-                <img src={Logout} className='max-w-[18px]' alt='logout' />
-              </span>
-              {t('NAV_LOGOUT')}
-            </Link>
-          </nav>
+    <div
+      className={`sidebar lg:block z-10  ${
+        sidebarStatus === 'open' ? 'block' : 'sidebarHide'
+      } bg-gradient-to-t from-gradpurple to-gradientFrom w-[220px] xl:w-[280px] fixed h-full overflow-y-auto`}
+      // onClick={handleSidebar}
+    >
+      <div className='text-sideBarNavColor'>
+        <Link
+          to='/dashboard'
+          onClick={() => updatePageName('Dashboard')}
+          className='px-2 py-6 w-full text-center flex justify-center'
+        >
+          <img
+            src={logoImage}
+            className='inline max-w-[187px]'
+            alt=''
+            style={{ filter: 'brightness(0) invert(1)' }}
+          />
+        </Link>
+        <div className='profile text-center'>
+          <small className='block text-sm'>Welcome</small>
+          <strong className='block text-lg overflow-hidden text-ellipsis px-2 whitespace-nowrap '>
+            {user?.firstName + ' ' + user?.lastName}
+          </strong>
         </div>
+
+        <nav className='pt-4 pb-5 flex flex-col justify-center font-normal text-xs overflow-y-auto'>
+          {/* {checkSidebarPermission("dashboard") && ( */}
+          {generateNavLink(
+            '/dashboard',
+            'NAV_DASHBOARD',
+            <img src={Dashboard} className='max-w-[18px]' alt='' />
+          )}
+          {andOperator(
+            checkSidebarPermission('user_manager'),
+            generateNavLink(
+              '/users',
+              'USER_MANAGER',
+              <img src={SubAdmin} className='max-w-[18px]' alt='' />
+            )
+          )}
+
+          {andOperator(
+            checkSidebarPermission('transaction_manager'),
+            generateNavLink(
+              '/transactions',
+              'NAV_TRANSACTION_MANAGER',
+              <img src={SubAdmin} className='max-w-[18px]' alt='' />
+            )
+          )}
+
+          {andOperator(checkSidebarPermission('subAdmin_manager') ,
+            generateNavLink(
+              '/sub-admin-manager',
+              'SUB_ADMIN_MANAGERS',
+              <img src={SubAdmin} className='max-w-[18px]' alt='' />
+            ))}
+
+          {andOperator(checkSidebarPermission('notification_manager'),
+            generateNavLink(
+              '/notification_manager',
+              'NOTIFICATION_MANAGER',
+              <GiCartwheel style={{ fontSize: '20px' }} />
+            ))}
+
+          {andOperator(checkSidebarPermission('scratch_card_manager') ,
+            generateNavLink(
+              '/scratch-card-manager',
+              'SCRATCH_CARD_MANAGER',
+              <GiCartwheel style={{ fontSize: '20px' }} />
+            ))}
+
+          {andOperator(checkSidebarPermission('settings'),
+            generateNavLink(
+              '/setting',
+              'SETTINGS',
+              <AiFillSetting style={{ fontSize: '20px' }} />
+            ))}
+
+          {andOperator(checkSidebarPermission('static_page_management') ,
+            generateNavLink(
+              '/static-content',
+              'NAV_STATIC_CONTENTS',
+              <Documents />
+            ))}
+
+          {checkSidebarPermission('FAQ') &&
+            generateNavLink('/faqs', 'NAV_FAQS', <Documents />)}
+
+          {andOperator(checkSidebarPermission('email_manager') ,
+            generateNavLink(
+              '/email-manager',
+              'EMAIL_MANAGER',
+              <AiOutlineMail style={{ fontSize: '20px' }} />
+            ))}
+          {andOperator(checkSidebarPermission('support_manager') ,
+            generateNavLink(
+              '/support-manager',
+              'SUPPORT_MANAGER',
+              <AiOutlineMail style={{ fontSize: '20px' }} />
+            ))}
+
+          <Link
+            onClick={handleLogout}
+            className='flex items-center px-4 lg:px-7 py-4 hover:bg-sideBarNavActiveColor hover:text-gradientTo'
+          >
+            <span className='mr-2'>
+              <img src={Logout} className='max-w-[18px]' alt='logout' />
+            </span>
+            {t('NAV_LOGOUT')}
+          </Link>
+        </nav>
       </div>
-    </>
+    </div>
   )
 }
 
