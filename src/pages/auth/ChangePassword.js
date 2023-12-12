@@ -20,7 +20,6 @@ const ChangePassword = () => {
     reset,
     watch,
     trigger,
-    getValues,
     formState: { errors, isDirty },
   } = useForm({ mode: "onChange", shouldFocusError: true, defaultValues: {} });
 

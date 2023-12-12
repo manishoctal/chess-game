@@ -8,16 +8,8 @@ import OButton from 'components/reusable/OButton'
 import { useTranslation } from 'react-i18next'
 import AuthContext from 'context/AuthContext'
 import OInputField from 'components/reusable/OInputField'
-import helper from '../../utils/helpers'
 import imageDefault from '../../assets/images/No-image-found.jpg'
 
-import apiPath from '../../utils/apiPath'
-import {
-  CashbackLabel,
-  LoyaltyPointLabel,
-  TransactionFeesField,
-  TransactionFeesLabel
-} from './Constant'
 import OImage from 'components/reusable/OImage'
 import { Link } from 'react-router-dom'
 import Credential from './Credential'
@@ -32,21 +24,18 @@ const Settings = () => {
     register,
     handleSubmit,
     reset,
-    getValues,
     watch,
 
-    formState: { isDirty, errors, dirtyFields }
+    formState: { isDirty, errors }
   } = useForm({
     mode: 'onBlur',
     shouldFocusError: true,
     defaultValues: {}
   })
   const [settingChangeLoading, setSettingChangeLoading] = useState(false)
-  const [activeNav, setActiveNav] = useState(0)
   const [pic] = useState(user?.profilePic ?? imageDefault)
   const [viewShowModal, setViewShowModal] = useState(false)
 
-  const [profile, setProfile] = useState()
   const notification = useToastContext()
 
   const handleSubmitForm = async data => {
@@ -92,24 +81,6 @@ const Settings = () => {
     updatePageName(t('SETTINGS'))
   }, [])
 
-  const navigateTab = index => [setActiveNav(index)]
-
-  const handelStatusChange = async item => {
-    try {
-      const payload = {
-        isActive: !item?.isActive
-      }
-      const path = `${apiPath.changeEmailStatus}/${item?._id}`
-      const result = await apiPut(path, payload)
-      if (result?.status === 200) {
-        notification.success(result.data.message)
-        // getEmailTemplate()
-      }
-      // }
-    } catch (error) {
-      console.error('error in get all users list==>>>>', error.message)
-    }
-  }
   const codeValue = watch('email') ? watch('email') : ''
 
   return (
@@ -147,21 +118,19 @@ const Settings = () => {
                     </div>
 
                     <div className='  '>
-                      {(manager?.add || user?.role === 'admin') && (
-                        <OButton
-                          label={<>{t('VIEW_LOGIN_CREDENTIALS')}</>}
-                          type='button'
-                          // disabled
-                          onClick={() => handleUserView()}
-                          loading={settingChangeLoading}
-                        />
-                      )}
+                      <OButton
+                        label={<>{t('VIEW_LOGIN_CREDENTIALS')}</>}
+                        type='button'
+                        // disabled
+                        onClick={() => handleUserView()}
+                        loading={settingChangeLoading}
+                      />
                     </div>
                   </div>
                 </div>
               </div>
 
-              <main className='justify-center aline-center flex flex-wrap grid  lg:grid-cols-6 md:grid-cols-3 sm:grid-cols-2 grid-cols-1  gap-4' />
+              <main className='justify-center aline-center  flex-wrap grid  lg:grid-cols-6 md:grid-cols-3 sm:grid-cols-2 grid-cols-1  gap-4' />
             </div>
           </div>
         </section>
@@ -172,8 +141,7 @@ const Settings = () => {
           <div className='font-semibold'>{t('SETTINGS')}</div>
         </header>
         <div className='bg-white py-6 px-4  rounded-b-md'>
-          {/* <main className='justify-center flex flex-wrap xl:[&>*]:mr-14 sm:[&>*]:mr-7 2xl:[&>*]:mr-14  sm:px-0 px-4 xl:[&>*]:w-3/12 sm:[&>*]:w-3/5 '> */}
-          <main className='justify-center flex flex-wrap grid  lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1  gap-4'>
+          <main className='justify-center  flex-wrap grid  lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1  gap-4'>
             <div className='relative z-0 mb-6 w-full group'>
               <OInputField
                 wrapperClassName='relative z-0  w-full group'
@@ -186,6 +154,7 @@ const Settings = () => {
                 onInput={e => preventMaxInput(e, 50)}
                 register={register('email', formValidation['email'])}
                 placeholder=' '
+                disable={manager?.add === false}
               />
               <ErrorMessage message={errors?.email?.message} />
             </div>
@@ -194,6 +163,7 @@ const Settings = () => {
                 wrapperClassName='relative z-0  w-full group'
                 type='number'
                 maxLength={40}
+                disable={manager?.add === false}
                 inputLabel={<>{t('MIN_WITHDRAWAL_AMOUNT_TO_BANK')}</>}
                 id='minWithdrawAmountToBank'
                 register={register('minWithdrawAmountToBank', {
@@ -221,6 +191,7 @@ const Settings = () => {
               <OInputField
                 wrapperClassName='relative z-0  w-full group'
                 type='number'
+                disable={manager?.add === false}
                 inputLabel={<>{t('REFERRAL_BONUS_FOR_TOURIST')}</>}
                 maxLength={40}
                 id='referralBonusTourist'
@@ -246,6 +217,7 @@ const Settings = () => {
               <OInputField
                 wrapperClassName='relative z-0  w-full group'
                 type='number'
+                disable={manager?.add === false}
                 inputLabel={<>{t('REFERRAL_BONUS_FOR_LOCALS')}</>}
                 maxLength={40}
                 id='referralBonusLocals'
@@ -274,6 +246,7 @@ const Settings = () => {
                 maxLength={40}
                 inputLabel={<>{t('UPC_CODE_REFERRAL_AMOUNT')}</>}
                 name='upcCodeReferralAmount'
+                disable={manager?.add === false}
                 register={register('upcCodeReferralAmount', {
                   required: {
                     value: true,
@@ -303,6 +276,7 @@ const Settings = () => {
                 type='number'
                 maxLength={40}
                 id='signupBonus'
+                disable={manager?.add === false}
                 inputLabel={<>{t('SIGN_UP_BONUS')}</>}
                 register={register('signupBonus', {
                   required: {
@@ -328,6 +302,7 @@ const Settings = () => {
                 wrapperClassName='relative z-0  w-full group'
                 type='number'
                 id='payment'
+                disable={manager?.add === false}
                 inputLabel={<>{t('TRANSFER_MONEY_LIMIT_MAXIMUM')}</>}
                 maxLength={40}
                 register={register('maxTransferMoneyLimit', {
@@ -353,6 +328,7 @@ const Settings = () => {
                 wrapperClassName='relative z-0  w-full group'
                 type='number'
                 id='payment'
+                disable={manager?.add === false}
                 inputLabel={<>{t('NEGATIVE_AMOUNT_MAXIMUM_LIMIT')}</>}
                 maxLength={40}
                 register={register('negativeAmountMaxLimit', {
@@ -378,6 +354,7 @@ const Settings = () => {
                 wrapperClassName='relative z-0  w-full group'
                 type='number'
                 id='payment'
+                disable={manager?.add === false}
                 inputLabel={
                   <>
                     {t('MINIMUM_THRESHOLD_AMOUNT_FOR_EARNING_REWARD_REQUEST')}
@@ -416,6 +393,7 @@ const Settings = () => {
                 id='payment'
                 inputLabel={<>{t('TIME_TO_LOG_ACTIVE_USERS_ON_THE_APP')}</>}
                 maxLength={40}
+                disable={manager?.add === false}
                 register={register('timeLogForActiveUsers', {
                   required: {
                     value: true,

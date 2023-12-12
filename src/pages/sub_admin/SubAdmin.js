@@ -267,6 +267,7 @@ function SubAdmin () {
               sort={sort}
               manager={manager}
               handelStatusChange={handelStatusChange}
+              pageSize={pageSize}
             />
 
             <div className='flex justify-between'>
