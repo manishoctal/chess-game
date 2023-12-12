@@ -75,9 +75,7 @@ function EmailTemplate() {
     const newPage = event.selected + 1;
     setPage(newPage);
   };
-  const handelEdit = (item) => {};
 
-  const handleUserView = (item) => {};
 
   const handelStatusChange = async (item) => {
     try {
@@ -242,9 +240,7 @@ function EmailTemplate() {
             </form>
             <Table
               emailTemplate={emailTemplate?.docs}
-              handelEdit={handelEdit}
               allEmailTemplate={allEmailTemplate}
-              handleUserView={handleUserView}
               page={page}
               setSort={setSort}
               sort={sort}

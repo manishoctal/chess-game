@@ -11,7 +11,7 @@ export const ToastContextProvider = ({ children }) => {
     let timer
     if (hasToast.length > 0) {
       timer = setTimeout(() => {
-        setToasts(hasToast => hasToast.slice(1))
+        setToasts(hasToastTemp => hasToastTemp.slice(1))
       }, 5000)
 
       return () => clearTimeout(timer)

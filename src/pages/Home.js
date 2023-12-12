@@ -112,9 +112,9 @@ function Home () {
   const [dashboardDetails, setDashboardDetails] = useState({})
   const [startDate, setStartDate] = useState()
   const [endDate, setEndDate] = useState('')
-  const [reRender, setReRender] = useState(false)
+  // const [reRender, setReRender] = useState(false)
   const [usersGraphYears, setUsersGraphYears] = useState([])
-  const [orderGraphYears, setOrderGraphYears] = useState([])
+  // const [orderGraphYears, setOrderGraphYears] = useState([])
 
   const [graphPayload, setGraphPayload] = useState({
     graphYear: '-1',
@@ -181,7 +181,7 @@ function Home () {
         }
         lineGraphData.datasets[0].data = refData
 
-        setReRender(prev => !prev)
+        // setReRender(prev => !prev)
       }
     } else {
       if (dashboardDetails?.userGraph?.monthlyEarnReport) {
@@ -195,7 +195,7 @@ function Home () {
           refData.push(monthlyEarnReport[i])
         }
         lineGraphData.labels = [...monthsLabels]
-        setReRender(prev => !prev)
+        // setReRender(prev => !prev)
       }
     }
     if (dashboardDetails?.userGraph?.graphDate) {
@@ -229,7 +229,7 @@ function Home () {
         }
         lineGraphData2.datasets[0].data = refData
 
-        setReRender(prev => !prev)
+        // setReRender(prev => !prev)
       }
     } else {
       if (dashboardDetails?.orderGraph?.monthlyEarnDataOrder) {
@@ -244,7 +244,7 @@ function Home () {
           refData.push(monthlyEarnDataOrder[i])
         }
         lineGraphData2.labels = [...monthsLabels]
-        setReRender(prev => !prev)
+        // setReRender(prev => !prev)
       }
     }
     if (dashboardDetails?.orderGraph?.graphDate) {
@@ -257,7 +257,7 @@ function Home () {
       ) {
         yearArray.push(i)
       }
-      setOrderGraphYears([...yearArray])
+      // setOrderGraphYears([...yearArray])
     }
   }, [dashboardDetails])
 

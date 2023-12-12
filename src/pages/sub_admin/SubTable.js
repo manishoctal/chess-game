@@ -1,9 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react'
-import { apiPut } from '../../utils/apiFetch'
-import apiPath from '../../utils/apiPath'
 import dayjs from 'dayjs'
-import useToastContext from 'hooks/useToastContext'
-import { AiFillEdit, AiFillDelete, AiFillEye } from 'react-icons/ai'
+import { AiFillEdit,  AiFillEye } from 'react-icons/ai'
 import { useTranslation } from 'react-i18next'
 import { BsArrowUpShort } from 'react-icons/bs'
 import AuthContext from 'context/AuthContext'
@@ -20,7 +17,8 @@ const SubTable = ({
   sort,
   setSort,
   manager,
-  handelStatusChange
+  handelStatusChange,
+  pageSize
 }) => {
   const { t } = useTranslation()
   const navigate = useNavigate()
@@ -136,7 +134,7 @@ const SubTable = ({
                   scope='row'
                   className='py-2 px-4 border-r dark:border-[#ffffff38] font-medium text-gray-900  dark:text-white'
                 >
-                  {i + 1 + 10 * (page - 1)}
+                  {i + 1 + pageSize * (page - 1)}
                 </th>
                 {/* <td className="py-2 px-4 border-r dark:border-[#ffffff38]">
                   {item?._id}
@@ -217,24 +215,7 @@ const SubTable = ({
                           </a>
                         </li>
                       )}
-                      {/* {(manager?.delete || user?.role === "admin") && (
-                        <li
-                          onClick={(e) =>
-                            helper.alertFunction(
-                              `Are you sure want to delete '${item.firstName} ${item?.lastName}'?`,
-                              item,
-                              handelDelete,
-                              true
-                            )
-                          }
-                          className="px-2 py-2 hover:text-gradientTo"
-                        >
-                          <button title={t("O_DELETE")}>
-                            {" "}
-                            <AiFillDelete className="w-5 h-5 text-red-600" />{" "}
-                          </button>
-                        </li>
-                      )} */}
+                      
                     </ul>
                   </div>
                 </td>

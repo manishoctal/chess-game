@@ -8,9 +8,7 @@ import { useTranslation } from "react-i18next";
 import OInputField from "components/reusable/OInputField";
 import formValidation from "utils/formValidation";
 import AuthContext from "context/AuthContext";
-import ReactQuill from "react-quill";
-import OImage from "components/reusable/OImage";
-import noImageFound from "../../assets/images/No-image-found.jpg";
+import ReactQuill from "react-quill"; 
 
 const EditStaticContent = (getStaticContent, currentItem, handleEdit) => {
   const { t } = useTranslation();

@@ -4,7 +4,6 @@ import { apiPost } from "../../utils/apiFetch";
 import apiPath from "../../utils/apiPath";
 import useToastContext from "hooks/useToastContext";
 import { useTranslation } from "react-i18next";
-import DynamicLabel from "utils/DynamicLabel";
 
 const AddFAQ = ({ setShowModal, getAllFAQ }) => {
   const { t } = useTranslation();

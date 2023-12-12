@@ -3,7 +3,7 @@ import dayjs from 'dayjs'
 import { useTranslation } from 'react-i18next'
 import { isEmpty, startCase } from 'lodash'
 
-const Table = ({ artistVerification, page, userType }) => {
+const Table = ({ artistVerification, page, userType,pageSize }) => {
   const { t } = useTranslation()
 
   return (
@@ -54,7 +54,7 @@ const Table = ({ artistVerification, page, userType }) => {
                   scope='row'
                   className='py-2 px-4 border-r dark:border-[#ffffff38] font-medium text-gray-900  dark:text-white'
                 >
-                  {i + 1 + 10 * (page - 1)}
+                  {i + 1 +pageSize * (page - 1)}
                 </th>
                 <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
                   {startCase(item?.user?.firstName) || 'N/A'}

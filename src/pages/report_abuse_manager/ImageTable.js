@@ -1,18 +1,13 @@
 import React from 'react'
-import dayjs from 'dayjs'
 import { AiFillEye } from 'react-icons/ai'
 import { useTranslation } from 'react-i18next'
 import { isEmpty, startCase } from 'lodash'
 
-import { Link, useNavigate } from 'react-router-dom'
 
 import apiPath from '../../utils/apiPath'
 import { apiPut } from 'utils/apiFetch'
 import useToastContext from 'hooks/useToastContext'
 import helper from '../../utils/helpers'
-import OImage from 'components/reusable/OImage'
-import defaultImage from '../../assets/images/No-image-found.jpg'
-import { BsArrowUpShort } from 'react-icons/bs'
 
 const ImageTable = ({
   page,
@@ -24,12 +19,12 @@ const ImageTable = ({
   const { t } = useTranslation()
   const notification = useToastContext()
 
-  const handelStatusChange = async item => {
+  const handelStatusChange = async element => {
     try {
       const payload = {
-        status: item?.status === 'inactive' ? 'active' : 'inactive'
+        status: element?.status === 'inactive' ? 'active' : 'inactive'
       }
-      const path = `${apiPath.changePostStatus}/${item?._id}`
+      const path = `${apiPath.changePostStatus}/${element?._id}`
       const result = await apiPut(path, payload)
       if (result?.status === 200) {
         notification.success(result.data.message)
