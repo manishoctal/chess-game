@@ -46,7 +46,7 @@ const helpers = {
     })
   },
   marketStatus: s => {
-    let status = ''
+    let status 
     switch (s) {
       case 1:
         status = 'Open'
@@ -69,7 +69,7 @@ const helpers = {
     return status
   },
   getSportType: t => {
-    let type = ''
+    let type 
     switch (t) {
       case 1:
         type = 'soccer'
@@ -135,17 +135,17 @@ const helpers = {
   //   xhr.send();
   // },
 
-  downloadFile: url => {
-    if (!url) {
+  downloadFile: link => {
+    if (!link) {
       window?.alert('Invalid URL')
       return
     }
 
-    const parts = url.split('/')
+    const parts = link.split('/')
     const filename = parts[parts.length - 1]
 
     const xhr = new XMLHttpRequest()
-    xhr.open('GET', url, true)
+    xhr.open('GET', link, true)
     xhr.responseType = 'blob'
 
     xhr.onload = () => {
@@ -217,7 +217,6 @@ const helpers = {
     if (['-', '+', 'e'].includes(e.key)) {
       e.preventDefault()
     }
-    // debugger
     if(['.'].includes(e?.target?.value)){
       const afterDecimal = e?.target?.value?.split('.')
       console.log('afterDecimal',afterDecimal)

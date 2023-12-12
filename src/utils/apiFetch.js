@@ -10,7 +10,7 @@ const instance = axios.create({
   headers: getHeaders()
 })
 
-instance.interceptors.request.use((config) => {
+instance.interceptors.request.use(config => {
   const token = localStorage.getItem('token')
   if (!token) {
     return config
@@ -31,17 +31,7 @@ instance.interceptors.response.use(
   },
   function (error) {
     const { status } = error.response
-    if (status === 401) {
-      localStorage.removeItem('token')
-      localStorage.removeItem('refresh_token')
-      localStorage.removeItem('uniqueId')
-      window.location = '/login'
-    } else if (status === 403) {
-      localStorage.removeItem('token')
-      localStorage.removeItem('refresh_token')
-      localStorage.removeItem('uniqueId')
-      window.location = '/login'
-    } else if (status === 409) {
+    if (status === 401 || status === 403 || status === 409) {
       localStorage.removeItem('token')
       localStorage.removeItem('refresh_token')
       localStorage.removeItem('uniqueId')
