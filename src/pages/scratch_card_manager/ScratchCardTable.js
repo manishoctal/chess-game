@@ -7,7 +7,7 @@ import { isEmpty } from 'lodash'
 
 import { NavLink } from 'react-router-dom'
 
-const ScratchCardTable = ({ subAdmin, page }) => {
+const ScratchCardTable = ({ subAdmin, page,pageSize }) => {
   const { t } = useTranslation()
   const { updatePageName } = useContext(AuthContext)
 
@@ -58,7 +58,7 @@ const ScratchCardTable = ({ subAdmin, page }) => {
                     scope='row'
                     className='py-2 px-4 border-r dark:border-[#ffffff38] font-medium text-gray-900  dark:text-white'
                   >
-                    {i + 1 + 10 * (page - 1)}
+                    {i + 1 + pageSize * (page - 1)}
                   </th>
 
                   <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>

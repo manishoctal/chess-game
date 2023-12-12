@@ -11,6 +11,7 @@ const NotificationTable = ({
   sort,
   setSort,
   manager,
+  pageSize,
 }) => {
   const { t } = useTranslation();
 
@@ -80,7 +81,7 @@ const NotificationTable = ({
                     scope="row"
                     className="py-4 px-6 border-r font-medium text-gray-900  dark:text-white"
                   >
-                    {i + 1 + 10 * (paginationObj?.page - 1)}
+                    {i + 1 + pageSize * (paginationObj?.page - 1)}
                   </th>
                   <td className="py-4 px-6 border-r">
                     {startCase(item?.title) || "N/A"}

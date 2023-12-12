@@ -118,6 +118,7 @@ function Faq () {
               sort={sort}
               manager={manager}
               paginationObj={paginationObj}
+              pageSize={pageSize}
             />
 
             <div className='flex justify-between'>

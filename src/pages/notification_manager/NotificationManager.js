@@ -180,6 +180,7 @@ function NotificationManager () {
               page={page}
               setSort={setSort}
               sort={sort}
+              pageSize={pageSize}
               manager={manager}
               paginationObj={paginationObj}
             />

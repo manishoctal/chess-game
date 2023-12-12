@@ -17,7 +17,8 @@ const Table = ({
   paginationObj,
   sort,
   setSort,
-  manager,
+  manager,pageSize
+
 }) => {
   const { t } = useTranslation();
   const { user } = useContext(AuthContext);
@@ -148,7 +149,7 @@ const Table = ({
                   scope="row"
                   className="py-2 px-4 border-r dark:border-[#ffffff38] font-medium text-gray-900  dark:text-white"
                 >
-                  {i + 1 + 10 * (paginationObj?.page - 1)}
+                  {i + 1 + pageSize * (paginationObj?.page - 1)}
                 </th>
                 <td className="py-2 px-4 border-r dark:border-[#ffffff38]">
                   {startCase(item?.title) || "N/A"}

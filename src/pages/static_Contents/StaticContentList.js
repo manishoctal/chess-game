@@ -1,12 +1,8 @@
-import useToastContext from 'hooks/useToastContext'
-import { AiFillEdit, AiFillEye } from 'react-icons/ai'
-import { apiPut } from '../../utils/apiFetch'
+import { AiFillEdit  } from 'react-icons/ai'
 import { useTranslation } from 'react-i18next'
 import dayjs from 'dayjs'
-import apiPath from '../../utils/apiPath'
 import { useContext, useEffect } from 'react'
 import { isEmpty } from 'lodash'
-import helper from '../../utils/helpers'
 import AuthContext from 'context/AuthContext'
 import { BsArrowUpShort } from 'react-icons/bs'
 
@@ -20,7 +16,6 @@ const StaticContentList = ({
   handleView,
   manager
 }) => {
-  const notification = useToastContext()
   const { t } = useTranslation()
   const { user } = useContext(AuthContext)
   const { updatePageName } = useContext(AuthContext)

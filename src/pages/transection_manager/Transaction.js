@@ -15,7 +15,7 @@ function Transaction () {
     user?.permission?.find(e => e.manager === 'transaction_manager') ?? {}
   const [artistVerification, setArtistVerification] = useState([])
   const [page, setPage] = useState(1)
-  const [pageSize] = useState(10)
+  const [pageSize,setPageSize] = useState(10)
   const [isDelete, setIsDelete] = useState(false)
   const [userType, setUserType] = useState('tourist')
 
@@ -37,6 +37,10 @@ function Transaction () {
     sortType: 'desc'
   })
 
+  const dynamicPage = e => {
+    setPage(1)
+    setPageSize(e.target.value)
+  }
   const allTransaction = async data => {
     try {
       const { category, startDate, endDate, isFilter } = filterData
@@ -89,6 +93,7 @@ function Transaction () {
       isFilter: false
     })
     setPage(1)
+    setPageSize(10)
   }
 
   const handleDateChange = (start, end) => {
@@ -150,16 +155,38 @@ function Transaction () {
               setSort={setSort}
               sort={sort}
               manager={manager}
+              pageSize={pageSize}
               userType={userType}
             />
-            {paginationObj?.totalItems ? (
-              <Pagination
-                handlePageClick={handlePageClick}
-                options={paginationObj}
-                isDelete={isDelete}
-                page={page}
-              />
-            ) : null}
+          <div className='flex justify-between'>
+              <div className='flex items-center mb-3 ml-3'>
+                <p className='w-[160px] -space-x-px pt-5 md:pb-5 pr-5 text-gray-500'>
+                  Page Size
+                </p>
+
+                <select
+                  id='countries'
+                  type=' password'
+                  name='floating_password'
+                  className=' w-[100px] block p-2 px-2 w-full text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer'
+                  placeholder=''
+                  value={pageSize}
+                  onChange={e => dynamicPage(e)}
+                >
+                  <option value='10'>10</option>
+                  <option value='20'>20</option>
+                  <option value='50'>50</option>
+                  <option value='100'>100</option>
+                </select>
+              </div>
+              {paginationObj?.totalItems !== 0 && (
+                <Pagination
+                  handlePageClick={handlePageClick}
+                  options={paginationObj}
+                  page={page}
+                />
+              )}
+            </div>
             
            
           </div>
