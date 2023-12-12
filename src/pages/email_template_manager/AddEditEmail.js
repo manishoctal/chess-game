@@ -65,7 +65,7 @@ export default function AddEditEmail () {
 
   const QuillEditor = ({
     name,
-    control,
+    controlField,
     defaultValue,
     placeholder,
     readOnly
@@ -74,7 +74,7 @@ export default function AddEditEmail () {
       <div className='md:py-4 sm:px-2 sm:py-3 md:px-7 px-2'>
         <Controller
           name={name}
-          control={control}
+          control={controlField}
           defaultValue={defaultValue}
           render={({ field }) => (
             <>
@@ -111,7 +111,7 @@ export default function AddEditEmail () {
       </div>
     )
   }
-
+let labelName=location?.pathname === '/email-manager/edit' ? 'Edit' : 'Add'
   return (
     <form onSubmit={handleSubmit(handleSubmitForm)} method='post'>
       <div className='outer-boarder'>
@@ -159,14 +159,14 @@ export default function AddEditEmail () {
         </div>
         <QuillEditor
           name='description'
-          control={control}
+          controlField={control}
           defaultValue={editItem?.description}
           placeholder='Write something...'
           readOnly={type === 'view'}
         />
         <QuillEditor
           name='keyword'
-          control={control}
+          controlField={control}
           defaultValue={editItem?.keyword}
           placeholder='Write something...'
           readOnly={type === 'view'}
@@ -258,7 +258,7 @@ export default function AddEditEmail () {
           ) : (
             <OButton
               label={
-                location?.pathname === '/email-manager/edit' ? 'Edit' : 'Add'
+                labelName
               }
               type='submit'
               loading={isLoading}
