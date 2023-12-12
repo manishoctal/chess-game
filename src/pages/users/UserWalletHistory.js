@@ -145,7 +145,6 @@ function UserWalletHistory () {
     }
   }, [searchTerm])
 
-  const manager = user?.permission?.find(e => e.manager === 'user_manager')
 
   return (
     <div>
