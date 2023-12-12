@@ -11,7 +11,7 @@ import { useLocation } from 'react-router-dom'
 
 function UserWalletHistory () {
   const { t } = useTranslation()
-  const { logoutUser, user, updatePageName } = useContext(AuthContext)
+  const { logoutUser, updatePageName } = useContext(AuthContext)
   const [paginationObj, setPaginationObj] = useState({
     page: 1,
     pageCount: 1,
@@ -84,8 +84,6 @@ function UserWalletHistory () {
     setPage(newPage)
   }
 
- 
-
   useEffect(() => {
     getAllUser()
   }, [page, filterData, pageSize])
@@ -144,7 +142,6 @@ function UserWalletHistory () {
       clearTimeout(timeoutId)
     }
   }, [searchTerm])
-
 
   return (
     <div>
