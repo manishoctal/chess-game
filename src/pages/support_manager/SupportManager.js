@@ -42,7 +42,7 @@ function SupportManager () {
 
   const getSupportRequest = async data => {
     try {
-      const { category, startDate, endDate, searchkey, isFilter } = filterData
+      const { startDate, endDate, searchkey } = filterData
 
       const payload = {
         page,
