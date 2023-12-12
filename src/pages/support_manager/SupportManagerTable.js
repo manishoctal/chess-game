@@ -1,7 +1,5 @@
 import { isEmpty, startCase } from 'lodash'
-import { AiFillEye } from 'react-icons/ai'
 import { useTranslation } from 'react-i18next'
-import { BsArrowUpShort } from 'react-icons/bs'
 import { useContext, useState } from 'react'
 import ReplyModal from './ReplyModal'
 import AuthContext from 'context/AuthContext'

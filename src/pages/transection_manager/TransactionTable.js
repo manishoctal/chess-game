@@ -3,7 +3,7 @@ import dayjs from 'dayjs'
 import { useTranslation } from 'react-i18next'
 import { isEmpty, startCase } from 'lodash'
 
-const Table = ({ artistVerification, page, userType,pageSize }) => {
+const TransactionTable = ({ artistVerification, page, userType,pageSize }) => {
   const { t } = useTranslation()
 
   return (
@@ -99,4 +99,4 @@ const Table = ({ artistVerification, page, userType,pageSize }) => {
   )
 }
 
-export default Table
+export default TransactionTable

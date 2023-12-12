@@ -19,13 +19,10 @@ function SupportManager () {
     pageCount: 1,
     pageRangeDisplayed: 10
   })
-  const [categoryAdd, setCategoryAdd] = useState(false)
-  const [viewShowModal, setViewShowModal] = useState(false)
   const [notifications, setAllNotifications] = useState([])
 
   const [page, setPage] = useState(1)
   const [pageSize, setPageSize] = useState(10)
-  const [item, setItem] = useState('')
 
   const [filterData, setFilterData] = useState({
     category: '',
@@ -82,17 +79,7 @@ function SupportManager () {
     setPage(newPage)
   }
 
-  const handelEdit = newItem => {
-    setItem(newItem)
-  }
-
-  const handleUserView = newItem => {
-    setItem(newItem)
-    setViewShowModal(true)
-  }
-  const handleCategory = () => {
-    setCategoryAdd(!categoryAdd)
-  }
+ 
   useEffect(() => {
     getSupportRequest()
   }, [page, filterData, sort, pageSize])

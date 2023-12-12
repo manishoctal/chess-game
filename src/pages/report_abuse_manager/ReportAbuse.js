@@ -40,7 +40,7 @@ function ReportAbuse() {
     setViewShowModal(!viewShowModal);
   };
 
-  const handleView = (item) => {
+  const handleView = () => {
     setOpenSlide(!openSlide);
   }
 
@@ -129,7 +129,6 @@ function ReportAbuse() {
 
 
   useEffect(() => {
-    // reportAbuseListing();
   }, [filterData, page, sort, pageSize]);
 
   const handleReset = () => {

@@ -73,9 +73,9 @@ const ReplyModal = ({ setIsReply, item, getSupportRequest }) => {
                           required: 'Please enter message.',
 
                           validate: value => {
-                            return value.trim()
-                              ? true
-                              : 'White spaces not allowed.'
+                            return !value.trim()
+                              &&
+                              'White spaces not allowed.'
                           }
                         })}
                       />
