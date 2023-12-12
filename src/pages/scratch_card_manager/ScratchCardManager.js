@@ -1,21 +1,16 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { apiDelete, apiGet, apiPut } from '../../utils/apiFetch'
+import {  apiGet  } from '../../utils/apiFetch'
 import apiPath from '../../utils/apiPath'
 import Pagination from '../Pagination'
 import dayjs from 'dayjs'
 import ODateRangePicker from 'components/shared/datePicker/ODateRangePicker'
 import { useTranslation } from 'react-i18next'
 import AuthContext from 'context/AuthContext'
-import { useNavigate } from 'react-router-dom'
-import useToastContext from 'hooks/useToastContext'
 import ScratchCardTable from './ScratchCardTable'
 import AddScratchCard from './AddScratchCard'
-import ScratchCardUsersTable from './ScratchCardUsersTable'
 
 function ScratchCardManager () {
   const { t } = useTranslation()
-  const navigate = useNavigate()
-  const notification = useToastContext()
   const { user, updatePageName } = useContext(AuthContext)
   const manager =
     user?.permission?.find(e => e.manager === 'scratch_card_manager') ?? {}
@@ -40,7 +35,7 @@ function ScratchCardManager () {
     isReset: false,
     isFilter: false
   })
-  const [sort, setSort] = useState({
+  const [sort ] = useState({
     sortBy: 'createdAt',
     sortType: 'desc'
   })
@@ -91,24 +86,7 @@ function ScratchCardManager () {
     allScratchCard()
   }, [filterData, page, sort, pageSize])
 
-  const handelStatusChange = async item => {
-    try {
-      const payload = {
-        status: item?.status === 'inactive' ? 'active' : 'inactive',
-        type: 'subAdmin'
-      }
-      const path = `${apiPath.changeStatus}/${item?._id}`
-      const result = await apiPut(path, payload)
-      if (result?.status === 200) {
-        notification.success(result.data.message)
-        allScratchCard({ statusChange: 1 })
-      }
-      // }
-    } catch (error) {
-      console.error('error in get all users list==>>>>', error.message)
-    }
-  }
-
+  
  
 
   const handleReset = () => {
@@ -230,7 +208,7 @@ function ScratchCardManager () {
                 )}
               </div>
             </form>
-          <ScratchCardTable subAdmin={subAdmin?.docs} page={page} />
+          <ScratchCardTable subAdmin={subAdmin?.docs} page={page} pageSize={pageSize} />
             <div className='flex justify-between'>
               <div className='flex items-center mb-3 ml-3'>
                 <p className='w-[160px] -space-x-px pt-5 md:pb-5 pr-5 text-gray-500'>

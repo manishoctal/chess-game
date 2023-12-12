@@ -1,21 +1,15 @@
-import React, { useContext, useState, useEffect } from 'react'
-import { apiPut } from '../../utils/apiFetch'
-import apiPath from '../../utils/apiPath'
-import dayjs from 'dayjs'
-import useToastContext from 'hooks/useToastContext'
-import { AiFillEdit, AiFillDelete, AiFillEye } from 'react-icons/ai'
-import { useTranslation } from 'react-i18next'
-import { BsArrowUpShort } from 'react-icons/bs'
+import React, { useContext, useEffect } from 'react' 
+import dayjs from 'dayjs' 
+import {   AiFillEye } from 'react-icons/ai'
+import { useTranslation } from 'react-i18next' 
 import AuthContext from 'context/AuthContext'
-import { isEmpty, startCase } from 'lodash'
-import helper from '../../utils/helpers'
+import { isEmpty } from 'lodash' 
 
-import { NavLink, useNavigate } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
-const ScratchCardTable = ({ subAdmin, page }) => {
+const ScratchCardTable = ({ subAdmin, page,pageSize }) => {
   const { t } = useTranslation()
-  const navigate = useNavigate()
-  const { user, updatePageName } = useContext(AuthContext)
+  const { updatePageName } = useContext(AuthContext)
 
   useEffect(() => {
     updatePageName(t('SCRATCH_CARD_MANAGER'))
@@ -64,7 +58,7 @@ const ScratchCardTable = ({ subAdmin, page }) => {
                     scope='row'
                     className='py-2 px-4 border-r dark:border-[#ffffff38] font-medium text-gray-900  dark:text-white'
                   >
-                    {i + 1 + 10 * (page - 1)}
+                    {i + 1 + pageSize * (page - 1)}
                   </th>
 
                   <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>

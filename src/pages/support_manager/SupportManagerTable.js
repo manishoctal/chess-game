@@ -14,7 +14,8 @@ const SupportManagerTable = ({
   sort,
   setSort,
   manager,
-  getSupportRequest
+  getSupportRequest,
+  pageSize
 }) => {
   const { t } = useTranslation()
   const [isReply, setIsReply] = useState(false)
@@ -48,9 +49,9 @@ const SupportManagerTable = ({
                 <th scope='col' className='py-3 px-6'>
                   {t('O_STATUS')}
                 </th>
-                <th scope='col' className='py-3 px-6'>
-                  {t('O_ACTION')}
-                </th>
+                {(manager?.add || user?.role === 'admin') && ( <th scope='col' className='py-3 px-6'>
+                  {t('O_ACTION')} 
+                </th> )}
               </tr>
             </thead>
             <tbody>
@@ -64,7 +65,7 @@ const SupportManagerTable = ({
                       scope='row'
                       className='py-4 px-6 border-r font-medium text-gray-900  dark:text-white'
                     >
-                      {i + 1 + 10 * (paginationObj?.page - 1)}
+                      {i + 1 + pageSize * (paginationObj?.page - 1)}
                     </th>
                     <td className='py-4 px-6 border-r'>
                       {`${item?.user?.firstName} ${item?.user?.lastName}`|| 'N/A'}
@@ -84,10 +85,11 @@ const SupportManagerTable = ({
                     <td className='py-4 px-6 border-r '>
                       {item?.replied?'Replied' :'Not replied'}
                     </td>
+                    {(manager?.add || user?.role === 'admin') && (
                     <td className='py-4 px-6 border-l'>
                       <div className=''>
                         <ul className='flex justify-center'>
-                          {(manager?.add || user?.role === 'admin') && (
+                          
                             <>
                               <li
                                 disabled={
@@ -108,10 +110,11 @@ const SupportManagerTable = ({
                                  ) : null} 
                               </li>
                             </>
-                          )}
+                         
                         </ul>
                       </div>
                     </td>
+                     )}
                   </tr>
                 ))}
               {isEmpty(notifications) && (

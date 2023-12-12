@@ -12,7 +12,6 @@ import AuthContext from 'context/AuthContext'
 import PhoneInput from 'react-phone-input-2'
 import ErrorMessage from 'components/ErrorMessage'
 import DynamicLabel from 'utils/DynamicLabel'
-import OTextArea from 'components/reusable/OTextArea'
 const { startCase, capitalize } = require('lodash')
 
 const SubAdd = ({ props }) => {
@@ -148,6 +147,8 @@ const SubAdd = ({ props }) => {
       permissionData.shift()
       setPermission(permissionData)
     }
+   
+
   }, [])
 
   const checkAll = event => {
@@ -165,7 +166,7 @@ const SubAdd = ({ props }) => {
       })
     )
   }
-
+  let itemType = item?.type === 'edit' ? t('O_EDIT') : t('O_ADD');
   return (
     <>
       <div className='relative p-6 flex-auto'>
@@ -239,9 +240,7 @@ const SubAdd = ({ props }) => {
                         return 'Mobile no. must be 8 digit'
                       } else if (inputValue?.length > 12) {
                         return 'Mobile no. should be not exceed 12 digits'
-                      } else {
-                        return true
-                      }
+                      } 
                     }
                   }}
                   render={({ field: { ref, ...field } }) => (
@@ -383,7 +382,7 @@ const SubAdd = ({ props }) => {
             type='submit'
             onClick={handleSubmit(onSubmit)}
           >
-            {item?.type === 'edit' ? t('O_EDIT') : t('O_ADD')}
+            {itemType}
           </button>
         ) : null}
       </div>

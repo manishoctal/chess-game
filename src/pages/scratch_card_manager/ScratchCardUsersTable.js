@@ -1,10 +1,8 @@
-import AuthContext from 'context/AuthContext'
-import dayjs from 'dayjs'
 import { isEmpty, startCase } from 'lodash'
 import Pagination from 'pages/Pagination'
-import { useContext, useEffect, useState } from 'react'
+import {  useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useLocation  } from 'react-router-dom'
 import { apiGet } from 'utils/apiFetch'
 import pathObj from 'utils/apiPath'
 import helper from 'utils/helpers'
@@ -12,19 +10,11 @@ import helper from 'utils/helpers'
 const ScratchCardUsersTable = () => {
   const { t } = useTranslation()
   const location = useLocation()
-  const { user, updatePageName } = useContext(AuthContext)
   const [scratchCardUser, setScratchCardUser] = useState([])
   const [page, setPage] = useState(1)
   const [pageSize, setPageSize] = useState(10)
 
-  const [filterData, setFilterData] = useState({
-    category: '',
-    searchkey: '',
-    startDate: '',
-    endDate: '',
-    isReset: false,
-    isFilter: false
-  })
+ 
   const [paginationObj, setPaginationObj] = useState({
     page: 1,
     pageCount: 1,
@@ -42,7 +32,6 @@ const ScratchCardUsersTable = () => {
 
   const scratchCardHistory = async (data, pageNO) => {
     try {
-      const { startDate, endDate, searchkey } = filterData
 
       const payload = {
         // page,

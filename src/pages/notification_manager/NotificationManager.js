@@ -44,21 +44,7 @@ function NotificationManager () {
   const getAllNotifications = async data => {
     try {
       const { category, startDate, endDate, searchkey, isFilter } = filterData
-      if (
-        (data?.deletePage && !(notifications?.length > 1)) ||
-        (isFilter &&
-          category &&
-          data?.statusChange &&
-          !(notifications?.length > 1))
-      ) {
-        if (!(notifications?.length > 1)) {
-          setPage(page - 1)
-          // setIsDelete(true)
-          setPaginationObj({ ...paginationObj, page: page - 1 })
-        }
-      } else {
-        // setIsDelete(false)
-      }
+      
       const payload = {
         page,
         pageSize,
@@ -194,6 +180,7 @@ function NotificationManager () {
               page={page}
               setSort={setSort}
               sort={sort}
+              pageSize={pageSize}
               manager={manager}
               paginationObj={paginationObj}
             />

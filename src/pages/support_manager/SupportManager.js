@@ -170,6 +170,7 @@ function SupportManager () {
               manager={manager}
               paginationObj={paginationObj}
               getSupportRequest={getSupportRequest}
+              pageSize={pageSize}
             />
 
             <div className='flex justify-between'>
