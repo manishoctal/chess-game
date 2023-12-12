@@ -1,14 +1,14 @@
-import React, { useContext } from "react";
-import { apiPut, apiDelete } from "../../utils/apiFetch";
-import apiPath from "../../utils/apiPath";
-import { isEmpty, startCase } from "lodash";
-import { AiFillEdit, AiFillDelete, AiFillEye } from "react-icons/ai";
-import AuthContext from "context/AuthContext";
-import { useTranslation } from "react-i18next";
-import useToastContext from "hooks/useToastContext";
-import helper from "../../utils/helpers";
-import { BsArrowUpShort } from "react-icons/bs";
-import dayjs from "dayjs";
+import React, { useContext } from 'react'
+import { apiPut, apiDelete } from '../../utils/apiFetch'
+import apiPath from '../../utils/apiPath'
+import { isEmpty, startCase } from 'lodash'
+import { AiFillEdit, AiFillDelete, AiFillEye } from 'react-icons/ai'
+import AuthContext from 'context/AuthContext'
+import { useTranslation } from 'react-i18next'
+import useToastContext from 'hooks/useToastContext'
+import helper from '../../utils/helpers'
+import { BsArrowUpShort } from 'react-icons/bs'
+import dayjs from 'dayjs'
 
 const Table = ({
   FAQs,
@@ -17,165 +17,109 @@ const Table = ({
   paginationObj,
   sort,
   setSort,
-  manager,pageSize
-
+  manager,
+  pageSize
 }) => {
-  const { t } = useTranslation();
-  const { user } = useContext(AuthContext);
-  const notification = useToastContext();
+  const { t } = useTranslation()
+  const { user } = useContext(AuthContext)
+  const notification = useToastContext()
 
-  const handelStatusChange = async (item) => {
+  const handelStatusChange = async item => {
     try {
       const payload = {
-        status: item?.status === "inactive" ? "active" : "inactive",
-        type:'faq'
-      };
-      const path = `${apiPath.changeStatus}/${item?._id}`;
-      const result = await apiPut(path, payload);
+        status: item?.status === 'inactive' ? 'active' : 'inactive',
+        type: 'faq'
+      }
+      const path = `${apiPath.changeStatus}/${item?._id}`
+      const result = await apiPut(path, payload)
       if (result?.status === 200) {
-        notification.success(result?.data?.message);
-        getAllFAQ();
+        notification.success(result?.data?.message)
+        getAllFAQ()
       }
     } catch (error) {
-      console.error("error in get all faqs list==>>>>", error.message);
+      console.error('error in get all faqs list==>>>>', error.message)
     }
-  };
+  }
 
-  const handelDelete = async (item) => {
+  const handelDelete = async item => {
     try {
-      const path = apiPath.getFAQs + "/" + item?._id;
-      const result = await apiDelete(path);
+      const path = apiPath.getFAQs + '/' + item?._id
+      const result = await apiDelete(path)
       if (result?.status === 200) {
-        notification.success(result?.data.message);
-        getAllFAQ({ deletePage: 1 });
+        notification.success(result?.data.message)
+        getAllFAQ({ deletePage: 1 })
       }
     } catch (error) {
-      console.error("error in get all FAQs list==>>>>", error.message);
+      console.error('error in get all FAQs list==>>>>', error.message)
     }
-  };
+  }
 
   return (
-    <div className="p-3">
-      <div className="overflow-x-auto relative rounded-lg border">
-        <table className="w-full text-xs text-left text-[#A5A5A5] dark:text-gray-400 ">
-          <thead className="text-xs text-gray-900 border border-[#E1E6EE]  bg-[#E1E6EE] dark:bg-gray-700 dark:text-gray-400">
+    <div className='p-3'>
+      <div className='overflow-x-auto relative rounded-lg border'>
+        <table className='w-full text-xs text-left text-[#A5A5A5] dark:text-gray-400 '>
+          <thead className='text-xs text-gray-900 border border-[#E1E6EE]  bg-[#E1E6EE] dark:bg-gray-700 dark:text-gray-400'>
             <tr>
-              <th scope="col" className="py-3 px-6">
-                {t("S.NO")}
+              <th scope='col' className='py-3 px-6'>
+                {t('S.NO')}
               </th>
-              <th scope="col" className="py-3 px-6">
-                {t("FAQS_TITLE")}
-              </th>
-              <th
-                scope="col"
-                className="py-3 px-6 cursor-pointer"
-                onClick={() => {
-                  if (sort.sortBy === "createdAt" && sort.sortType === "asc") {
-                    setSort({
-                      sortBy: "createdAt",
-                      sortType: "desc",
-                    });
-                  } else {
-                    setSort({
-                      sortBy: "createdAt",
-                      sortType: "asc",
-                    });
-                  }
-                }}
-              >
-                <div className="flex">
-                  <span>{t("CREATED_DATE")}</span>
-                  <span>
-                    {sort.sortBy === "createdAt" && sort.sortType === "asc" && (
-                      <BsArrowUpShort className="w-4 h-4" />
-                    )}
-                    {sort.sortBy === "createdAt" &&
-                      sort.sortType === "desc" && (
-                        <BsArrowUpShort className="w-4 h-4 rotate-180" />
-                      )}
-                  </span>
-                </div>
+              <th scope='col' className='py-3 px-6'>
+                {t('FAQS_TITLE')}
               </th>
 
-              <th
-                scope="col"
-                className="py-3 px-6 cursor-pointer"
-                onClick={() => {
-                  if (sort.sortBy === "updatedAt" && sort.sortType === "asc") {
-                    setSort({
-                      sortBy: "updatedAt",
-                      sortType: "desc",
-                    });
-                  } else {
-                    setSort({
-                      sortBy: "updatedAt",
-                      sortType: "asc",
-                    });
-                  }
-                }}
-              >
-                <div className="flex justify-start">
-                  <span>{t("O_UPDATED_AT")}</span>
-                  <span>
-                    {sort.sortBy === "updatedAt" && sort.sortType === "asc" && (
-                      <BsArrowUpShort className="w-4 h-4" />
-                    )}
-                    {sort.sortBy === "updatedAt" &&
-                      sort.sortType === "desc" && (
-                        <BsArrowUpShort className="w-4 h-4 rotate-180" />
-                      )}
-                  </span>
-                </div>
+              <th scope='col' className='py-3 px-6 text-center'>
+                {t('CREATED_DATE')}
               </th>
-              {(manager?.add || user?.role === "admin") && (
-                <>
-                  <th scope="col" className="py-3 px-6 text-center">
-                    {t("O_STATUS")}
-                  </th>
-                </>
+              <th scope='col' className='py-3 px-6 text-center'>
+                {t('O_UPDATED_AT')}
+              </th>
+              {(manager?.add || user?.role === 'admin') && (
+                <th scope='col' className='py-3 px-6 text-center'>
+                  {t('O_STATUS')}
+                </th>
               )}
-                  <th scope="col" className="py-3 px-6 text-center">
-                    {t("O_ACTION")}
-                  </th>
+              <th scope='col' className='py-3 px-6 text-center'>
+                {t('O_ACTION')}
+              </th>
             </tr>
           </thead>
           <tbody>
             {FAQs?.map((item, i) => (
               <tr
                 key={i}
-                className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+                className='bg-white border-b dark:bg-gray-800 dark:border-gray-700'
               >
                 <th
-                  scope="row"
-                  className="py-2 px-4 border-r dark:border-[#ffffff38] font-medium text-gray-900  dark:text-white"
+                  scope='row'
+                  className='py-2 px-4 border-r dark:border-[#ffffff38] font-medium text-gray-900  dark:text-white'
                 >
                   {i + 1 + pageSize * (paginationObj?.page - 1)}
                 </th>
-                <td className="py-2 px-4 border-r dark:border-[#ffffff38]">
-                  {startCase(item?.title) || "N/A"}
+                <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
+                  {startCase(item?.title) || 'N/A'}
                 </td>
-                <td className="py-2 px-4 border-r dark:border-[#ffffff38]">
-                  {dayjs(item?.createdAt).format("DD-MM-YYYY hh:mm A")}{" "}
+                <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
+                  {dayjs(item?.createdAt).format('DD-MM-YYYY hh:mm A')}
                 </td>
-                <td className="py-2 px-4 border-r dark:border-[#ffffff38]">
-                  {dayjs(item?.updatedAt).format("DD-MM-YYYY hh:mm A")}{" "}
+                <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
+                  {dayjs(item?.updatedAt).format('DD-MM-YYYY hh:mm A')}
                 </td>
-                {(manager?.add || user?.role === "admin") && (
-                  <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-center">
+                {(manager?.add || user?.role === 'admin') && (
+                  <td className='py-2 px-4 border-r dark:border-[#ffffff38] text-center'>
                     <label
-                      className="inline-flex relative items-center cursor-pointer"
+                      className='inline-flex relative items-center cursor-pointer'
                       title={`${
-                        item?.status === "active" ? "Active" : "Inactive"
+                        item?.status === 'active' ? 'Active' : 'Inactive'
                       }`}
                     >
                       <input
-                        type="checkbox"
-                        className="sr-only peer"
-                        checked={item?.status === "active"}
-                        onChange={(e) =>
+                        type='checkbox'
+                        className='sr-only peer'
+                        checked={item?.status === 'active'}
+                        onChange={e =>
                           helper.alertFunction(
                             `Are you sure want to ${
-                              e.target.checked ? "active" : "inactive"
+                              e.target.checked ? 'active' : 'inactive'
                             } '${item.title}'?`,
                             item,
                             handelStatusChange
@@ -186,35 +130,35 @@ const Table = ({
                     </label>
                   </td>
                 )}
-                <td className="py-2 px-4 border-l">
-                  <div className="">
-                    <ul className="flex justify-center">
-                      {(manager?.view || user?.role === "admin") && (
+                <td className='py-2 px-4 border-l'>
+                  <div className=''>
+                    <ul className='flex justify-center'>
+                      {(manager?.view || user?.role === 'admin') && (
                         <li
-                          onClick={() => handelEdit(item, "view")}
-                          className="px-2 py-2 hover:bg-white hover:text-gradientTo"
+                          onClick={() => handelEdit(item, 'view')}
+                          className='px-2 py-2 hover:bg-white hover:text-gradientTo'
                         >
-                          <button title={t("FAQS_EDIT_FAQS")}>
-                            {" "}
-                            <AiFillEye className="w-5 h-5 text-slate-600" />
+                          <button title={t('FAQS_EDIT_FAQS')}>
+                            {' '}
+                            <AiFillEye className='w-5 h-5 text-slate-600' />
                           </button>
                         </li>
                       )}
-                      {(manager?.add || user?.role === "admin") && (
+                      {(manager?.add || user?.role === 'admin') && (
                         <li
-                          onClick={() => handelEdit(item, "edit")}
-                          className="px-2 py-2 hover:bg-white hover:text-gradientTo"
+                          onClick={() => handelEdit(item, 'edit')}
+                          className='px-2 py-2 hover:bg-white hover:text-gradientTo'
                         >
-                          <button title={t("FAQS_EDIT_FAQS")}>
-                            {" "}
-                            <AiFillEdit className="w-5 h-5 text-slate-600" />
+                          <button title={t('FAQS_EDIT_FAQS')}>
+                            {' '}
+                            <AiFillEdit className='w-5 h-5 text-slate-600' />
                           </button>
                         </li>
                       )}
 
-                      {(manager?.delete || user?.role === "admin") && (
+                      {(manager?.delete || user?.role === 'admin') && (
                         <li
-                          onClick={(e) =>
+                          onClick={e =>
                             helper.alertFunction(
                               `Are you sure want to delete '${item.title}'?`,
                               item,
@@ -222,11 +166,11 @@ const Table = ({
                               true
                             )
                           }
-                          className="px-2 py-2 hover:bg-white hover:text-gradientTo"
+                          className='px-2 py-2 hover:bg-white hover:text-gradientTo'
                         >
-                          <button title={t("DELETE_FAQS")}>
-                            {" "}
-                            <AiFillDelete className="w-5 h-5 text-red-600" />{" "}
+                          <button title={t('DELETE_FAQS')}>
+                            {' '}
+                            <AiFillDelete className='w-5 h-5 text-red-600' />{' '}
                           </button>
                         </li>
                       )}
@@ -236,12 +180,12 @@ const Table = ({
               </tr>
             ))}
             {isEmpty(FAQs) && (
-              <tr className="bg-white text-center border-b dark:bg-gray-800 dark:border-gray-700">
+              <tr className='bg-white text-center border-b dark:bg-gray-800 dark:border-gray-700'>
                 <td
-                  className="py-2 px-4 border-r dark:border-[#ffffff38]"
+                  className='py-2 px-4 border-r dark:border-[#ffffff38]'
                   colSpan={6}
                 >
-                  {t("O_NO_RECORD_FOUND")}
+                  {t('O_NO_RECORD_FOUND')}
                 </td>
               </tr>
             )}
@@ -249,7 +193,7 @@ const Table = ({
         </table>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Table;
+export default Table
