@@ -17,8 +17,8 @@ Buffer.from('anything', 'base64', 'ascii')
 const StaticContent = () => {
   const { user, updatePageName } = useContext(AuthContext)
   const navigate = useNavigate()
-  const ternaryCondition = (condition, first,second) => {
-    return condition ? first:second
+  const ternaryCondition = (condition, first, second) => {
+    return condition ? first : second
   }
   const manager =
     user?.permission?.find(e => e.manager === 'static_page_management') ?? {}
@@ -74,7 +74,7 @@ const StaticContent = () => {
     setPage(newPage)
   }
 
-  const getStaticContent = async data => {
+  const getStaticContent = async () => {
     try {
       const { status, startDate, endDate, searchkey } = filterData
 
@@ -82,8 +82,16 @@ const StaticContent = () => {
         page,
         pageSize: 10,
         status,
-        startDate: startDate ? dayjs(startDate).format('YYYY-MM-DD') : null,
-        endDate: endDate ? dayjs(endDate).format('YYYY-MM-DD') : null,
+        startDate: ternaryCondition(
+          startDate,
+          dayjs(startDate).format('YYYY-MM-DD'),
+          null
+        ),
+        endDate: ternaryCondition(
+          endDate,
+          dayjs(endDate).format('YYYY-MM-DD'),
+          null
+        ),
         keyword: searchkey?.trim(),
         sortBy: sort.sortBy,
         sortType: sort.sortType
@@ -96,10 +104,14 @@ const StaticContent = () => {
       setCountryList(response?.docs)
       setPaginationObj({
         ...paginationObj,
-        page: resultStatus ? response.page : null,
-        pageCount: resultStatus ? response.totalPages : null,
-        perPageItem: resultStatus ? response?.docs.length : null,
-        totalItems: resultStatus ? response.totalDocs : null
+        page: ternaryCondition(resultStatus, response.page, null),
+        pageCount: ternaryCondition(resultStatus, response.totalPages, null),
+        perPageItem: ternaryCondition(
+          resultStatus,
+          response?.docs.length,
+          null
+        ),
+        totalItems: ternaryCondition(resultStatus, response.totalDocs, null)
       })
     } catch (error) {
       console.error('error in get all country list==>>>>', error.message)
@@ -272,28 +284,31 @@ const StaticContent = () => {
               sort={sort}
               manager={manager}
             />
-            {andOperator(countryView , (
+            {andOperator(
+              countryView,
               <StaticContentView
                 countryView={countryView}
                 currentItem={currentItem}
                 handleView={handleView}
-              />)
+              />
             )}
 
-            {andOperator(countryEdit ,(
+            {andOperator(
+              countryEdit,
               <staticContentEdit
                 handleEdit={handleEdit}
                 currentItem={currentItem}
                 getStaticContent={getStaticContent}
               />
-            ))}
-            {andOperator(paginationObj?.totalItems , (
+            )}
+            {andOperator(
+              paginationObj?.totalItems,
               <Pagination
                 handlePageClick={handlePageClick}
                 options={paginationObj}
                 page={page}
               />
-            ))}
+            )}
           </div>
         </div>
       </div>
