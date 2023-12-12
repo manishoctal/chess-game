@@ -43,7 +43,7 @@ function NotificationManager () {
   // get all notification function-
   const getAllNotifications = async data => {
     try {
-      const { category, startDate, endDate, searchkey, isFilter } = filterData
+      const {  startDate, endDate, searchkey } = filterData
       
       const payload = {
         page,
