@@ -72,11 +72,7 @@ const ReplyModal = ({ setIsReply, item, getSupportRequest }) => {
                         {...register('replyMessage', {
                           required: 'Please enter message.',
 
-                          validate: value => {
-                            return !value.trim()
-                              &&
-                              'White spaces not allowed.'
-                          }
+                          
                         })}
                       />
                       <label

@@ -13,7 +13,7 @@ function SupportManager () {
   const { logoutUser, notification, user, updatePageName } =
     useContext(AuthContext)
   const manager =
-    user?.permission?.find(e => e.manager === 'support_manager') ?? {}
+    user?.permission?.find(e => e.manager === 'feedback_manager') ?? {}
   const [paginationObj, setPaginationObj] = useState({
     page: 1,
     pageCount: 1,
@@ -114,7 +114,7 @@ function SupportManager () {
   }
 
   useEffect(() => {
-    updatePageName(t('SUPPORT_MANAGER'))
+    updatePageName(t('FEEDBACK_MANAGER'))
   }, [])
   return (
     <div>

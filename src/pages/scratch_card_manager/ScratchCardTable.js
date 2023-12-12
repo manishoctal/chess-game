@@ -16,7 +16,7 @@ const ScratchCardTable = ({ subAdmin, page,pageSize }) => {
   }, [])
 
   return (
-    <>
+   
       <div className='p-3'>
         <div className='overflow-x-auto relative rounded-lg border'>
           <table className='w-full text-xs text-left text-[#A5A5A5] dark:text-gray-400 '>
@@ -82,7 +82,7 @@ const ScratchCardTable = ({ subAdmin, page,pageSize }) => {
                       <ul className='flex justify-center'>
                         <li className='px-2 py-2 hover:text-gradientTo'>
                           <NavLink to='/scratch-card-manager/view' state={{id:item?._id}}>
-                            <a title={t('VIEW')}>
+                            <a title={t('VIEW_SCRATCH_CARD_HISTORY')}>
                               {' '}
                               <AiFillEye className='cursor-pointer w-5 h-5 text-slate-600' />
                             </a>
@@ -104,7 +104,7 @@ const ScratchCardTable = ({ subAdmin, page,pageSize }) => {
           </table>
         </div>
       </div>
-    </>
+    
   )
 }
 
