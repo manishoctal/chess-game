@@ -17,6 +17,9 @@ Buffer.from('anything', 'base64', 'ascii')
 const StaticContent = () => {
   const { user, updatePageName } = useContext(AuthContext)
   const navigate = useNavigate()
+  const ternaryCondition = (condition, first,second) => {
+    return condition ? first:second
+  }
   const manager =
     user?.permission?.find(e => e.manager === 'static_page_management') ?? {}
   const { t } = useTranslation()
