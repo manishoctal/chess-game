@@ -112,6 +112,19 @@ export default function AddEditEmail () {
     )
   }
 let labelName=location?.pathname === '/email-manager/edit' ? 'Edit' : 'Add'
+let submitButton =type === 'view' ? null : isLoading ? (
+  <div className='spinner-container bg-LightBlue text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150'>
+    <div className='loading-spinner' />
+  </div>
+) : (
+  <OButton
+    label={
+      labelName
+    }
+    type='submit'
+    loading={isLoading}
+  />
+)
   return (
     <form onSubmit={handleSubmit(handleSubmitForm)} method='post'>
       <div className='outer-boarder'>
@@ -251,19 +264,7 @@ let labelName=location?.pathname === '/email-manager/edit' ? 'Edit' : 'Add'
             </button>
           </Link>
 
-          {type === 'view' ? null : isLoading ? (
-            <div className='spinner-container bg-LightBlue text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150'>
-              <div className='loading-spinner' />
-            </div>
-          ) : (
-            <OButton
-              label={
-                labelName
-              }
-              type='submit'
-              loading={isLoading}
-            />
-          )}
+          {submitButton}
         </div>
       </div>
     </form>
