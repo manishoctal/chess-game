@@ -125,10 +125,10 @@ const Table = ({
                         ? `${item?.firstName} ${item?.lastName}`
                         : item?.firstName || 'N/A'}
                     </td>
-                    <td className='py-2 px-4 border-r  dark:border-[#ffffff38]'>
+                    <td className='py-2 px-4 border-r  dark:border-[#ffffff38] font-bold text-slate-900'>
                       {item?.email || 'N/A'}
                     </td>
-                    <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-left'>
+                    <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-left font-bold text-slate-900'>
                       {item?.mobile || 'N/A'}
                     </td>
                     {userType === 'local' && (

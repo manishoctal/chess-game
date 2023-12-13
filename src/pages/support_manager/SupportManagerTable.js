@@ -76,15 +76,11 @@ const SupportManagerTable = ({
                     >
                       {i + 1 + pageSize * (paginationObj?.page - 1)}
                     </th>
-                    <td className='py-4 px-6 border-r'>
-                      {helpers.ternaryCondition(
-                        item?.user?.firstName,
-                        `${item?.user?.firstName} ${item?.user?.lastName}`,
-                        'N/A'
-                      )}
-                      <br />
-                      {helpers.ternaryCondition(item?.user?.email,item?.user?.email , 'N/A')} <br />
-                      {helpers.ternaryCondition(item?.user?.userType,startCase(item?.user?.userType) , 'N/A')}
+                    <td className='py-4 px-6 border-r'>  
+                      <div>
+                        <p className="text-sm font-bold text-slate-950 leading-none">{helpers.getFullName(item?.user?.firstName, item?.user?.lastName) } ({startCase(item?.user?.userType) ?? ""})</p>
+                        <p className="text-sm text-muted-foreground">{item?.user?.email ?? ""}</p>
+                      </div>
                     </td>
 
                    
@@ -108,7 +104,7 @@ const SupportManagerTable = ({
                       {helpers.ternaryCondition(item?.replied ,'Replied' , 'Not replied')}
                     </td>
                     {(manager?.add || user?.role === 'admin') && (
-                      <td className='py-4 px-6 border-l'>
+                      <td className='py-2 px-2 border-l'>
                         <div className=''>
                           <ul className='flex justify-center'>
                             <li
@@ -123,7 +119,7 @@ const SupportManagerTable = ({
                               {helpers.ternaryCondition(item?.replied === false , (
                                 <button title={t('reply')}>
                                   {' '}
-                                  <FaReply className='cursor-pointer w-5 h-5 text-slate-600' />{' '}
+                                  <FaReply className='cursor-pointer w-5 h-3 text-slate-600' />{' '}
                                 </button>
                               ) , null)}
                             </li>

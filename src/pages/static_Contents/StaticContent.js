@@ -10,9 +10,7 @@ import Pagination from '../Pagination'
 import AuthContext from 'context/AuthContext'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
-
 import { Buffer } from 'buffer'
-Buffer.from('anything', 'base64', 'ascii')
 
 const StaticContent = () => {
   const { user, updatePageName } = useContext(AuthContext)

@@ -61,7 +61,7 @@ const ScratchCardTable = ({ subAdmin, page,pageSize }) => {
                     {i + 1 + pageSize * (page - 1)}
                   </th>
 
-                  <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
+                  <td className='py-2 px-4 border-r dark:border-[#ffffff38] text-slate-900 font-bold'>
                     {item?.couponCode}
                   </td>
                   <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
