@@ -5,6 +5,7 @@ import ReplyModal from './ReplyModal'
 import AuthContext from 'context/AuthContext'
 import { FaReply } from 'react-icons/fa'
 import SupportView from './SupportView'
+import helpers from 'utils/helpers'
 
 const SupportManagerTable = ({
   notifications,
@@ -30,6 +31,7 @@ const SupportManagerTable = ({
     setReplyUser(element)
     setIsReply(true)
   }
+
   return (
     <>
       <div className='p-3'>
@@ -75,20 +77,21 @@ const SupportManagerTable = ({
                       {i + 1 + pageSize * (paginationObj?.page - 1)}
                     </th>
                     <td className='py-4 px-6 border-r'>
-                      {`${item?.user?.firstName} ${item?.user?.lastName}` ||
-                        'N/A'}
+                      {helpers.ternaryCondition(
+                        item?.user?.firstName,
+                        `${item?.user?.firstName} ${item?.user?.lastName}`,
+                        'N/A'
+                      )}
                       <br />
-                      {item?.user?.email || 'N/A'} <br />
-                      {startCase(item?.user?.userType) || 'N/A'}{' '}
+                      {helpers.ternaryCondition(item?.user?.email,item?.user?.email , 'N/A')} <br />
+                      {helpers.ternaryCondition(item?.user?.userType,startCase(item?.user?.userType) , 'N/A')}
                     </td>
 
-                    {/* <td className='py-4 px-6 border-r'>
-                      {item?.user?.email || 'N/A'}{' '}
-                    </td> */}
+                   
 
                     <td className='py-4 px-6 border-r w-[500px]'>
                       <div className='line-clamp-2'>
-                        {startCase(item?.feedback) || 'N/A'}
+                        {helpers.ternaryCondition(item?.feedback,startCase(item?.feedback) ,'N/A')}
                       </div>
 
                       {item?.feedback.length > 223 && (
@@ -102,14 +105,14 @@ const SupportManagerTable = ({
                       )}
                     </td>
                     <td className='py-4 px-6 border-r '>
-                      {item?.replied ? 'Replied' : 'Not replied'}
+                      {helpers.ternaryCondition(item?.replied ,'Replied' , 'Not replied')}
                     </td>
                     {(manager?.add || user?.role === 'admin') && (
                       <td className='py-4 px-6 border-l'>
                         <div className=''>
                           <ul className='flex justify-center'>
                             <li
-                              disabled={item?.replied === false ? false : true}
+                              disabled={helpers.ternaryCondition(item?.replied === false , false , true)}
                               className={
                                 item?.replied === false
                                   ? 'px-2 py-2 hover:bg-white hover:text-LightBlue'
@@ -117,12 +120,12 @@ const SupportManagerTable = ({
                               }
                               onClick={() => handleReply(item)}
                             >
-                              {item?.replied === false ? (
+                              {helpers.ternaryCondition(item?.replied === false , (
                                 <button title={t('reply')}>
                                   {' '}
                                   <FaReply className='cursor-pointer w-5 h-5 text-slate-600' />{' '}
                                 </button>
-                              ) : null}
+                              ) , null)}
                             </li>
                           </ul>
                         </div>

@@ -107,11 +107,11 @@ const AdminRoutes = {
       )
     },
     {
-      path: '/support-manager',
+      path: '/feedback-manager',
       element: <SupportManager />,
       name: (
         <>
-          <UseChange data='SUPPORT_MANAGER' />
+          <UseChange data='FEEDBACK_MANAGER' />
         </>
       )
     },

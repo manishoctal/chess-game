@@ -92,7 +92,7 @@ const Permission = [
     shownAll: true
   },
   {
-    manager: 'support_manager',
+    manager: 'feedback_manager',
     add: false,
     edit: false,
     view: false,

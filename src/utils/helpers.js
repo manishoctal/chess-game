@@ -224,6 +224,9 @@ const helpers = {
         e.preventDefault()
       }
     }
+  },
+   ternaryCondition : (condition, first, second) => {
+    return condition ? first : second
   }
   
 }

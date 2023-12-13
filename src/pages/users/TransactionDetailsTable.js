@@ -1,10 +1,15 @@
 import { isEmpty } from 'lodash'
 import { useTranslation } from 'react-i18next'
 import dayjs from 'dayjs'
-import obj from 'utils/helpers'
+import helpers from 'utils/helpers'
 import QRCodeGenerator from 'components/QRCodeGenerator'
 
-const TransactionDetailsTable = ({ transactions, page, userType ,pageSize}) => {
+const TransactionDetailsTable = ({
+  transactions,
+  page,
+  userType,
+  pageSize
+}) => {
   const { t } = useTranslation()
 
   return (
@@ -90,21 +95,25 @@ const TransactionDetailsTable = ({ transactions, page, userType ,pageSize}) => {
                   </th>
 
                   <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
-                    {item?.mobile || 'N/A'}
+                    {helpers.ternaryCondition(item?.mobile,item?.mobile , 'N/A')}
                   </td>
                   <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
-                    {item?.country || 0}
+                    {helpers.ternaryCondition(item?.country,item?.country , 0)}
                   </td>
                   {userType === 'tourist' && (
                     <>
                       <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
-                        {item?.refNumber ?? 'N/A'}
+                        {helpers.ternaryCondition(
+                          item?.refNumber,
+                          item?.refNumber,
+                          'N/A'
+                        )}
                       </td>
                       <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
-                        {item?.country || 0}
+                        {helpers.ternaryCondition(item?.country,item?.country , 0)}
                       </td>
                       <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
-                        {item?.transactionFee ?? 'N/A'}
+                        {helpers.ternaryCondition(item?.transactionFee,item?.transactionFee , 0)}
                       </td>
                     </>
                   )}
@@ -119,19 +128,19 @@ const TransactionDetailsTable = ({ transactions, page, userType ,pageSize}) => {
                     </>
                   )}
                   <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
-                    {item?.country || 'N/A'}
+                    {helpers.ternaryCondition(item?.country,item?.country , 'N/A')}
                   </td>
                   <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
-                    {item?.country || 'N/A'}
+                    {helpers.ternaryCondition(item?.country,item?.country , 'N/A')}
                   </td>
                   <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
-                    {dayjs(item?.qrSendTime).format('hh:mm A') || 'N/A'}
+                    {helpers.ternaryCondition(item?.qrSendTime,dayjs(item?.qrSendTime).format('hh:mm A') , 'N/A')}
                   </td>
                   <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
-                    {dayjs(item?.paymentReceiptTime).format('hh:mm A') || 'N/A'}
+                    {helpers.ternaryCondition(item?.paymentReceiptTime,dayjs(item?.paymentReceiptTime).format('hh:mm A') , 'N/A')}
                   </td>
                   <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
-                    {obj.getSeconds(
+                    {helpers.getSeconds(
                       item?.qrSendTime,
                       item?.paymentReceiptTime
                     ) ?? 'N/A'}
@@ -151,10 +160,10 @@ const TransactionDetailsTable = ({ transactions, page, userType ,pageSize}) => {
                     )}
                   </td>
                   <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
-                    {item?.country || 'N/A'}
+                    {helpers.ternaryCondition(item?.country ,item?.country , 'N/A')}
                   </td>
                   <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
-                    {item?.country || 'N/A'}
+                    {helpers.ternaryCondition(item?.country ,item?.country , 'N/A')}
                   </td>
                 </tr>
               ))}

@@ -167,10 +167,10 @@ const Sidebar = () => {
               'EMAIL_MANAGER',
               <AiOutlineMail style={{ fontSize: '20px' }} />
             ))}
-          {andOperator(checkSidebarPermission('support_manager') ,
+          {andOperator(checkSidebarPermission('feedback_manager') ,
             generateNavLink(
-              '/support-manager',
-              'SUPPORT_MANAGER',
+              '/feedback-manager',
+              'FEEDBACK_MANAGER',
               <AiOutlineMail style={{ fontSize: '20px' }} />
             ))}
 
