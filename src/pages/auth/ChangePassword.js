@@ -25,7 +25,7 @@ const ChangePassword = () => {
 
   const [changePasswordLoading, setChangePasswordLoading] = useState(false);
   const notification = useToastContext();
-  const { logoutUser } = useContext(AuthContext);
+  const { logoutUser,updatePageName } = useContext(AuthContext);
   const [icon, setIcon] = useState(true);
   const [icon2, setIcon2] = useState(true);
   const [icon3, setIcon3] = useState(true);
@@ -72,6 +72,10 @@ const ChangePassword = () => {
       trigger("confirm_password");
     }
   }, [newPassword, trigger]);
+
+  useEffect(()=>{
+    updatePageName("Change password")
+  },[])
 
   return (
     <div className="bg-[#F9F9F9] dark:bg-slate-900">
