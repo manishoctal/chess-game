@@ -25,11 +25,11 @@ const SupportView = ({ setViewShowModal, item }) => {
                 <div className=' border-2 rounded-md p-5'>
                   <div className='grid grid-cols-1 max-h-[400px] overflow-y-auto'>
                     <div className='mb-3'>
-                      <div className=''>
+                      {/* <div className=''>
                         <strong>{t('FEEDBACK')}:</strong>
-                      </div>
+                      </div> */}
                       <div>
-                        {startCase(item?.feedback) }
+                        {startCase(item) }
                       </div>
                     </div>
                     

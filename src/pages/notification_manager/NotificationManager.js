@@ -43,8 +43,8 @@ function NotificationManager () {
   // get all notification function-
   const getAllNotifications = async data => {
     try {
-      const {  startDate, endDate, searchkey } = filterData
-      
+      const { startDate, endDate, searchkey } = filterData
+
       const payload = {
         page,
         pageSize,
@@ -143,6 +143,7 @@ function NotificationManager () {
                   <button
                     type='button'
                     onClick={handleReset}
+                    title={t('O_RESET')}
                     className='bg-gradientTo text-sm px-8 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2'
                   >
                     {t('O_RESET')}
