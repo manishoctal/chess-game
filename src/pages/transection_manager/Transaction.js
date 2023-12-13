@@ -53,7 +53,7 @@ function Transaction () {
 
         sortBy: sort.sortBy,
         sortType: sort.sortType,
-        transactionType: userType
+        userType
       }
 
       const path = apiPath.transactionList
