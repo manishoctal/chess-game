@@ -3,7 +3,7 @@ import dayjs from 'dayjs'
 import { useTranslation } from 'react-i18next'
 import { isEmpty, startCase } from 'lodash'
 
-const TransactionTable = ({ artistVerification, page, userType,pageSize }) => {
+const TransactionTable = ({ artistVerification, page, userType, pageSize }) => {
   const { t } = useTranslation()
 
   return (
@@ -25,9 +25,14 @@ const TransactionTable = ({ artistVerification, page, userType,pageSize }) => {
                 {t('TRANSACTION_ID')}
               </th>
               {userType === 'tourist' && (
-                <th scope='col' className='py-3 px-6'>
-                  {t('TRANSACTION_AMOUNT')}
-                </th>
+                <>
+                  <th scope='col' className='py-3 px-6'>
+                    {t('TRANSACTION_AMOUNT')}
+                  </th>
+                  <th scope='col' className='py-3 px-6'>
+                    {t('REWARD_AMOUNT')}
+                  </th>
+                </>
               )}
               {userType === 'local' && (
                 <>
@@ -54,7 +59,7 @@ const TransactionTable = ({ artistVerification, page, userType,pageSize }) => {
                   scope='row'
                   className='py-2 px-4 border-r dark:border-[#ffffff38] font-medium text-gray-900  dark:text-white'
                 >
-                  {i + 1 +pageSize * (page - 1)}
+                  {i + 1 + pageSize * (page - 1)}
                 </th>
                 <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
                   {startCase(item?.user?.firstName) || 'N/A'}
@@ -66,9 +71,14 @@ const TransactionTable = ({ artistVerification, page, userType,pageSize }) => {
                   {item?.transactionId || 'N/A'}
                 </td>
                 {userType === 'tourist' && (
-                  <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
-                    {item?.transactionAmount || 'N/A'}
-                  </td>
+                  <>
+                    <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
+                      {item?.transactionAmount || 'N/A'}
+                    </td>
+                    <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
+                      {item?.rewardAmount || 0}
+                    </td>
+                  </>
                 )}
                 {userType === 'local' && (
                   <>

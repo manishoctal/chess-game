@@ -248,7 +248,7 @@ function User () {
                       <option defaultValue value=''>
                         {t('KYC_STATUS')}
                       </option>
-                      <option value='completed'>{t('KYC_COMPLETED')}</option>
+                      <option value='approved'>{t('KYC_COMPLETED')}</option>
                       <option value='pending'>{t('KYC_PENDING')}</option>
                     </select>
                   </div>

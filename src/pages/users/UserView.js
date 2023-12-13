@@ -90,7 +90,7 @@ const UserView = () => {
                 <ul>
                   <li className='mb-3'>
                     <strong> {t('KYC Document')}: </strong>
-                    {startCase(item?.subscription) || 'N/A'}
+                    {startCase(item?.passport) || 'N/A'}
                   </li>
                   <li className='mb-3'>
                     <strong> {t('Cities visited in Thailand')}: </strong>
@@ -147,7 +147,7 @@ const UserView = () => {
               </li>
               <li className='mb-3'>
                 <strong>{t('Available balance')}: </strong>
-                {item?.wallet_amount || 'N/A'}
+                {item?.walletAmount || 'N/A'}
               </li>
             </ul>
           </div>
