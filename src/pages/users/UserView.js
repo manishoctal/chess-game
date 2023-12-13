@@ -7,6 +7,7 @@ import defaultImage from '../../assets/images/No-image-found.jpg'
 import checkIcon from '../../assets/images/check.png'
 import { startCase } from 'lodash'
 import { IoArrowBackSharp } from 'react-icons/io5'
+import helpers from 'utils/helpers'
 
 const UserView = () => {
   const { t } = useTranslation()
@@ -44,48 +45,44 @@ const UserView = () => {
               <li className='mb-3'>
                 {' '}
                 <strong>{t('FIRST_NAME')}: </strong>
-                {startCase(item?.firstName) || 'N/A'}
+                {  helpers.ternaryCondition(item?.firstName,startCase(item?.firstName), 'N/A')}
               </li>
               <li className='mb-3'>
                 <strong>{t('EMAIL_ADDRESS')}: </strong>
-                {item?.email || 'N/A'}
+                { helpers.ternaryCondition(item?.email,item?.email , 'N/A')}
               </li>
               <li className='mb-3'>
                 <strong>{t('REGISTERED_DATE')}: </strong>{' '}
-                {dayjs(item?.createdAt).format('DD-MM-YYYY hh:mm A') || 'N/A'}{' '}
-              </li>
+                {  helpers.ternaryCondition(item?.createdAt,dayjs(item?.createdAt).format('DD-MM-YYYY hh:mm A') , 'N/A')}              </li>
               <li className='mb-3'>
                 <strong>{t('Referral code')}: </strong>
-                {item?.referralCode || 'N/A'}
+                { helpers.ternaryCondition(item?.referralCode,item?.referralCode , 'N/A')}
               </li>
 
               <li className='mb-3'>
                 <strong> {t('UPC code')}: </strong>
-                {item?.upcCode || 'N/A'}
+                { helpers.ternaryCondition(item?.upcCode,item?.upcCode , 'N/A')}
               </li>
               <li className='mb-3'>
                 <strong>{t('GENDER')}: </strong>
-                {startCase(item?.gender) || 'N/A'}
+                { helpers.ternaryCondition(item?.gender,startCase(item?.gender) || 'N/A')}
               </li>
 
               <li className='mb-3 mr-2'>
                 <strong>{t('NATIONALITY')}: </strong>
-                {item?.nationality || 'N/A'}
+                { helpers.ternaryCondition(item?.nationality ,item?.nationality , 'N/A')}
               </li>
               <li className='mb-3 mr-2'>
                 <strong>{t('Country of living')}: </strong>
-                {startCase(item?.countryOfLiving) || 'N/A'}
+                { helpers.ternaryCondition(item?.countryOfLiving,startCase(item?.countryOfLiving) , 'N/A')}
               </li>
 
-              <li className='mb-3'>
-                <strong> {t('KYC Document')}: </strong>
-                {startCase(item?.passport) || 'N/A'}
-              </li>
+             
               <li className='mb-3'>
                 <strong> {t('Cities visited in Thailand')}: </strong>
-                {item?.cityVisited?.length > 0
-                  ? item?.cityVisited?.join(', ')
-                  : 'N/A'}
+                { helpers.ternaryCondition(item?.cityVisited?.length > 0
+                  , item?.cityVisited?.join(', ')
+                  ,'N/A')}
               </li>
               <li className='mb-3'>
                 <strong>{t('Cities going to visit in Thailand')}: </strong>
@@ -109,12 +106,12 @@ const UserView = () => {
               </li>
               <li className='mb-3'>
                 <strong>{t('Nationality Id ')}: </strong>
-                {item?.nationalityId || 'N/A'}
+                { helpers.ternaryCondition(item?.nationalityId,item?.nationalityId , 'N/A')}
               </li>
 
               <li className='mb-3'>
                 <strong>{t('Address')}: </strong>
-                {item?.address || 'N/A'}
+                { helpers.ternaryCondition(item?.address,item?.address ,'N/A')}
               </li>
             </>
           )}
@@ -133,7 +130,7 @@ const UserView = () => {
           </li>
           <li className='mb-3'>
             <strong>{t('Available balance')}: </strong>
-            {item?.walletAmount || 0}
+            { helpers.ternaryCondition(item?.walletAmount,item?.walletAmount , 0)}
           </li>
           <li className='mb-3 flex column'>
             <strong className='mr-3'>{t('KYC Document')}: </strong>
