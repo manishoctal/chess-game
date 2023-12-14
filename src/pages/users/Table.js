@@ -138,7 +138,7 @@ const Table = ({
                     </th>
                     <td className='py-4 px-4 border-r  dark:border-[#ffffff38]'>
                       {userType === 'local'
-                        ? `${item?.firstName} ${item?.lastName}`
+                        ? `${item?.firstName} ${item?.lastName ?? ''}`
                         : item?.firstName || 'N/A'}
                     </td>
                     <td className='py-2 px-4 border-r  dark:border-[#ffffff38] font-bold text-slate-900'>
