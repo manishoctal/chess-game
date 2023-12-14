@@ -39,9 +39,7 @@ const ScratchCardTable = ({ subAdmin, page,pageSize }) => {
                 <th scope='col' className='py-3 px-6'>
                   {t('EXPIRE_DATE')}
                 </th>
-                <th scope='col' className='py-3 px-6'>
-                  {t('NUMBER_OF_USER_CAN_USE_COUPON')}
-                </th>
+               
 
                 <th scope='col' className='py-3 px-6 text-center'>
                   {t('O_ACTION')}
@@ -73,9 +71,7 @@ const ScratchCardTable = ({ subAdmin, page,pageSize }) => {
                   <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
                     {dayjs(item?.expiryDate).format('DD MMM YYYY ')}
                   </td>
-                  <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
-                    {item?.numberOfUserCoupon || 'N/A'}
-                  </td>
+                 
 
                   <td className='py-2 px-4 border-l'>
                     <div className=''>

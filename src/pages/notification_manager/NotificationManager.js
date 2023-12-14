@@ -41,7 +41,7 @@ function NotificationManager () {
   })
 
   // get all notification function-
-  const getAllNotifications = async data => {
+  const getAllNotifications = async () => {
     try {
       const { startDate, endDate, searchkey } = filterData
 
