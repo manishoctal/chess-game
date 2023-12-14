@@ -19,15 +19,6 @@ const validateFileSize = (file, maxSize) => file?.size > maxSize;
 export const validateFile = (file, type = 'image') => {
   let fileErrorMsg = '';
 
-  const validateImage = () => {
-    const supportedImageTypes1 = ['image/jpeg', 'image/jpg', 'image/png'];
-    if (isFileTypeSupported(file, supportedImageTypes1)) {
-      fileErrorMsg = 'Only jpeg, jpg, and png are supported.';
-    } else if (validateFileSize(file, 1000 * 1000 * 5)) {
-      fileErrorMsg = 'Please, upload file size less than 5mb.';
-    }
-  };
-
   const validateAudio = () => {
     if (!file.type.toLowerCase().includes('audio')) {
       fileErrorMsg = 'Only audio files are supported.';
@@ -61,9 +52,6 @@ export const validateFile = (file, type = 'image') => {
   };
 
   switch (type) {
-    case 'image':
-      validateImage();
-      break;
     case 'audio':
       validateAudio();
       break;
