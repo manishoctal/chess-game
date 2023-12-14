@@ -6,7 +6,7 @@ import dayjs from 'dayjs'
 import useToastContext from 'hooks/useToastContext'
 import { AiFillEdit, AiFillEye } from 'react-icons/ai'
 import { useTranslation } from 'react-i18next'
-import helper from '../../utils/helpers'
+
 import { NavLink } from 'react-router-dom'
 import UserEdit from './UserEdit'
 import { GiTakeMyMoney } from 'react-icons/gi'
@@ -205,7 +205,7 @@ const Table = ({
                             className='sr-only peer'
                             checked={item?.status === 'active'}
                             onChange={e =>
-                              helper.alertFunction(
+                              helpers.alertFunction(
                                 `Are you sure you want to ${helpers.ternaryCondition(
                                   e.target.checked,
                                   'active',
