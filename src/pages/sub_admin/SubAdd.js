@@ -13,6 +13,7 @@ import PhoneInput from 'react-phone-input-2'
 import ErrorMessage from 'components/ErrorMessage'
 import DynamicLabel from 'utils/DynamicLabel'
 import helpers from 'utils/helpers'
+import { preventMaxInput } from 'utils/validations'
 const { startCase, capitalize } = require('lodash')
 
 const SubAdd = ({ props }) => {
@@ -46,7 +47,7 @@ const SubAdd = ({ props }) => {
   })
   const notification = useToastContext()
   const [permissionJons, setPermission] = useState(
-    item?.type ? getValues('permission') : Permission
+    helpers.ternaryCondition(item?.type , getValues('permission') , Permission)
   )
   const { updatePageName } = useContext(AuthContext)
   const [countryCode] = useState('in')
@@ -55,14 +56,7 @@ const SubAdd = ({ props }) => {
     setPermission(current =>
       current.map(obj => {
         if (obj.manager === event.target.name) {
-          if (event.target.id === 'add' || event.target.id === 'delete') {
-            return {
-              ...obj,
-              [event.target.id]: event.target.checked,
-              view: event.target.checked
-            }
-          }
-          if (event.target.id === 'edit') {
+          if (event.target.id === 'add' || event.target.id === 'edit') {
             return {
               ...obj,
               [event.target.id]: event.target.checked,
@@ -73,8 +67,7 @@ const SubAdd = ({ props }) => {
               ...obj,
               add: false,
               edit: false,
-              view: false,
-              all: false
+              view: false
             }
           }
           return { ...obj, [event.target.id]: event.target.checked }
@@ -172,6 +165,26 @@ const SubAdd = ({ props }) => {
     t('O_EDIT'),
     t('O_ADD')
   )
+
+  const renderInputField = (autoFocus,name, label, maxLength, validation,disable) => (
+    <OInputField
+      wrapperClassName='relative z-0 mb-6 w-full group'
+      name={name}
+      inputLabel={
+        <>
+          {label}
+          <span className='text-red-500'>*</span>
+        </>
+      }
+      type='text'
+      autoFocus={autoFocus}
+      maxLength={maxLength}
+      onInput={e => preventMaxInput(e, maxLength)}
+      register={register(name, validation)}
+      errors={errors}
+      disable={disable}
+    />
+  )
   return (
     <>
       <div className='relative p-6 flex-auto'>
@@ -179,45 +192,32 @@ const SubAdd = ({ props }) => {
           <div className=''>
             <div className='grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'>
               <div className='px-2'>
-                <OInputField
-                  wrapperClassName='relative z-0 mb-6 w-full group'
-                  name='firstName'
-                  inputLabel={t('O_FIRST_NAME')}
-                  labelType={true}
-                  type='text'
-                  autoFocus
-                  register={register('firstName', formValidation.subAdminName)}
-                  disable={item?.type === 'view'}
-                  errors={errors}
-                />
+              {renderInputField(true,
+              'firstName',
+              t('O_FIRST_NAME'),
+              15,
+              formValidation['subAdminName'],item?.type === 'view'
+            )}
               </div>
               <div className='px-2'>
-                <OInputField
-                  wrapperClassName='relative z-0 mb-6 w-full group'
-                  name='lastName'
-                  inputLabel={t('O_LAST_NAME')}
-                  labelType={true}
-                  type='text'
-                  register={register(
-                    'lastName',
-                    formValidation.subAdminLastName
-                  )}
-                  errors={errors}
-                  disable={item?.type === 'view'}
-                />
+              {renderInputField(false,
+              'lastName',
+              t('O_LAST_NAME'),
+              15,
+              formValidation['subAdminLastName'],item?.type === 'view'
+            )}
+               
               </div>
 
               <div className='px-2'>
-                <OInputField
-                  wrapperClassName='relative z-0 mb-6 w-full group'
-                  name='email'
-                  inputLabel={t('O_EMAIL_ID')}
-                  labelType={true}
-                  type='email'
-                  register={register('email', formValidation.email)}
-                  errors={errors}
-                  disable={item?.type === 'view'}
-                />
+
+              {renderInputField(false,
+              'email',
+              t('O_EMAIL_ID'),
+              50,
+              formValidation['email'],item?.type === 'view'
+            )}
+               
               </div>
 
               <div className='px-2'>
