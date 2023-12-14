@@ -12,6 +12,7 @@ import AuthContext from 'context/AuthContext'
 import PhoneInput from 'react-phone-input-2'
 import ErrorMessage from 'components/ErrorMessage'
 import DynamicLabel from 'utils/DynamicLabel'
+import helpers from 'utils/helpers'
 const { startCase, capitalize } = require('lodash')
 
 const SubAdd = ({ props }) => {
@@ -34,9 +35,11 @@ const SubAdd = ({ props }) => {
       firstName: item?.item?.firstName,
       lastName: item?.item?.lastName,
       email: item?.item?.email,
-      mobile: item?.item?.countryCode
-        ? item?.item?.countryCode + item?.item?.mobile
-        : 'na',
+      mobile: helpers.ternaryCondition(
+        item?.item?.countryCode,
+        item?.item?.countryCode + item?.item?.mobile,
+        'na'
+      ),
       address: item?.item?.address,
       permission: item?.item?.permission
     }
@@ -147,8 +150,6 @@ const SubAdd = ({ props }) => {
       permissionData.shift()
       setPermission(permissionData)
     }
-   
-
   }, [])
 
   const checkAll = event => {
@@ -166,7 +167,11 @@ const SubAdd = ({ props }) => {
       })
     )
   }
-  let itemType = item?.type === 'edit' ? t('O_EDIT') : t('O_ADD');
+  let itemType = helpers.ternaryCondition(
+    item?.type === 'edit',
+    t('O_EDIT'),
+    t('O_ADD')
+  )
   return (
     <>
       <div className='relative p-6 flex-auto'>
@@ -240,7 +245,7 @@ const SubAdd = ({ props }) => {
                         return 'Mobile no. must be 8 digit'
                       } else if (inputValue?.length > 12) {
                         return 'Mobile no. should be not exceed 12 digits'
-                      } 
+                      }
                     }
                   }}
                   render={({ field: { ref, ...field } }) => (
@@ -310,10 +315,15 @@ const SubAdd = ({ props }) => {
                       className='bg-white border-b  dark:bg-gray-800 dark:border-gray-700'
                     >
                       <td className='py-2 px-4 border-r dark:border-[#ffffff38] '>
-                        {data.manager==='FAQ'?'FAQ':capitalize(startCase(data.manager))}
+                        {helpers.ternaryCondition(
+                          data.manager === 'FAQ',
+                          'FAQ',
+                          capitalize(startCase(data.manager))
+                        )}
                       </td>
                       <td className='py-2 px-4 border-r dark:border-[#ffffff38] '>
-                        {data?.shownView && (
+                        {helpers.andOperator(
+                          data?.shownView,
                           <input
                             type='checkbox'
                             name={data?.manager}
@@ -325,7 +335,8 @@ const SubAdd = ({ props }) => {
                         )}
                       </td>
                       <td className='py-2 px-4 border-r dark:border-[#ffffff38] '>
-                        {data?.shownAdd && (
+                        {helpers.andOperator(
+                          data?.shownAdd,
                           <input
                             type='checkbox'
                             name={data?.manager}
@@ -350,7 +361,8 @@ const SubAdd = ({ props }) => {
                       </td> */}
 
                       <td className='py-2 px-4 border-r dark:border-[#ffffff38] '>
-                        {data?.shownAll && (
+                        {helpers.andOperator(
+                          data?.shownAll,
                           <input
                             type='checkbox'
                             id='all'
@@ -376,15 +388,17 @@ const SubAdd = ({ props }) => {
           {t('O_BACK')}
         </button>
 
-        {item?.type !== 'view' ? (
+        {helpers.ternaryCondition(
+          item?.type !== 'view',
           <button
             className='bg-gradientTo text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150'
             type='submit'
             onClick={handleSubmit(onSubmit)}
           >
             {itemType}
-          </button>
-        ) : null}
+          </button>,
+          null
+        )}
       </div>
     </>
   )
