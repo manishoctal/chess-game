@@ -194,6 +194,7 @@ function User () {
           <div className='flex justify-center items-center grid grid-cols-2 w-[500px]'>
             <button
               type='button'
+              title= {t('FOREIGN_TOURIST')}
               className={`pr-6 bg-white border border-1 border-[#000] text-sm px-8 ml-3 mb-3 py-2 rounded-lg items-center  text-black  sm:w-auto w-1/2 ${userType==='tourist' && 'bg-[#000!important] text-white'}`}
               onClick={() => {setUserType('tourist');handleReset()}}
             >
@@ -201,6 +202,7 @@ function User () {
             </button>
             <button
               type='button'
+              title= {t('THAI_LOCAL')}
               className={` pr-6 bg-white border border-1 border-[#000] text-sm px-8 ml-3 mb-3 py-2 rounded-lg items-center  text-black  sm:w-auto w-1/2 ${userType==='local'&& 'bg-[#000!important] text-white'}`}
               onClick={() => {setUserType('local');handleReset()}}
             >
@@ -248,7 +250,7 @@ function User () {
                       <option defaultValue value=''>
                         {t('KYC_STATUS')}
                       </option>
-                      <option value='completed'>{t('KYC_COMPLETED')}</option>
+                      <option value='approved'>{t('KYC_COMPLETED')}</option>
                       <option value='pending'>{t('KYC_PENDING')}</option>
                     </select>
                   </div>
@@ -256,6 +258,7 @@ function User () {
                   <button
                     type='button'
                     onClick={() => handleReset()}
+                    title= {t('O_RESET')}
                     className='bg-gradientTo text-sm px-8 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2'
                   >
                     {t('O_RESET')}

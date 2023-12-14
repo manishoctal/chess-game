@@ -103,14 +103,24 @@ const Sidebar = () => {
           {generateNavLink(
             '/dashboard',
             'NAV_DASHBOARD',
-            <img src={Dashboard} className='max-w-[18px]' alt='' />
+            <img
+              src={Dashboard}
+              title={t('NAV_DASHBOARD')}
+              className='max-w-[18px]'
+              alt=''
+            />
           )}
           {andOperator(
             checkSidebarPermission('user_manager'),
             generateNavLink(
               '/users',
               'USER_MANAGER',
-              <img src={SubAdmin} className='max-w-[18px]' alt='' />
+              <img
+                src={SubAdmin}
+                className='max-w-[18px]'
+                title={t('USER_MANAGER')}
+                alt=''
+              />
             )
           )}
 
@@ -119,67 +129,111 @@ const Sidebar = () => {
             generateNavLink(
               '/transactions',
               'NAV_TRANSACTION_MANAGER',
-              <img src={SubAdmin} className='max-w-[18px]' alt='' />
+              <img
+                src={SubAdmin}
+                className='max-w-[18px]'
+                title={t('NAV_TRANSACTION_MANAGER')}
+                alt=''
+              />
             )
           )}
 
-          {andOperator(checkSidebarPermission('subAdmin_manager') ,
+          {andOperator(
+            checkSidebarPermission('subAdmin_manager'),
             generateNavLink(
               '/sub-admin-manager',
               'SUB_ADMIN_MANAGERS',
-              <img src={SubAdmin} className='max-w-[18px]' alt='' />
-            ))}
+              <img
+                src={SubAdmin}
+                className='max-w-[18px]'
+                title={t('SUB_ADMIN_MANAGERS')}
+                alt=''
+              />
+            )
+          )}
 
-          {andOperator(checkSidebarPermission('notification_manager'),
+          {andOperator(
+            checkSidebarPermission('notification_manager'),
             generateNavLink(
               '/notification_manager',
               'NOTIFICATION_MANAGER',
-              <GiCartwheel style={{ fontSize: '20px' }} />
-            ))}
+              <GiCartwheel
+                style={{ fontSize: '20px' }}
+                title={t('NOTIFICATION_MANAGER')}
+              />
+            )
+          )}
 
-          {andOperator(checkSidebarPermission('scratch_card_manager') ,
+          {andOperator(
+            checkSidebarPermission('scratch_card_manager'),
             generateNavLink(
               '/scratch-card-manager',
               'SCRATCH_CARD_MANAGER',
-              <GiCartwheel style={{ fontSize: '20px' }} />
-            ))}
+              <GiCartwheel
+                style={{ fontSize: '20px' }}
+                title={t('SCRATCH_CARD_MANAGER')}
+              />
+            )
+          )}
 
-          {andOperator(checkSidebarPermission('settings'),
+          {andOperator(
+            checkSidebarPermission('settings'),
             generateNavLink(
               '/setting',
               'SETTINGS',
-              <AiFillSetting style={{ fontSize: '20px' }} />
-            ))}
+              <AiFillSetting
+                style={{ fontSize: '20px' }}
+                title={t('SETTINGS')}
+              />
+            )
+          )}
 
-          {andOperator(checkSidebarPermission('static_page_management') ,
+          {andOperator(
+            checkSidebarPermission('static_page_management'),
             generateNavLink(
               '/static-content',
               'NAV_STATIC_CONTENTS',
               <Documents />
-            ))}
+            )
+          )}
 
           {checkSidebarPermission('FAQ') &&
             generateNavLink('/faqs', 'NAV_FAQS', <Documents />)}
 
-          {andOperator(checkSidebarPermission('email_manager') ,
+          {andOperator(
+            checkSidebarPermission('email_manager'),
             generateNavLink(
               '/email-manager',
               'EMAIL_MANAGER',
-              <AiOutlineMail style={{ fontSize: '20px' }} />
-            ))}
-          {andOperator(checkSidebarPermission('support_manager') ,
+              <AiOutlineMail
+                style={{ fontSize: '20px' }}
+                title={t('EMAIL_MANAGER')}
+              />
+            )
+          )}
+          {andOperator(
+            checkSidebarPermission('feedback_manager'),
             generateNavLink(
-              '/support-manager',
-              'SUPPORT_MANAGER',
-              <AiOutlineMail style={{ fontSize: '20px' }} />
-            ))}
+              '/feedback-manager',
+              'FEEDBACK_MANAGER',
+              <AiOutlineMail
+                style={{ fontSize: '20px' }}
+                title={t('FEEDBACK_MANAGER')}
+              />
+            )
+          )}
 
           <Link
             onClick={handleLogout}
             className='flex items-center px-4 lg:px-7 py-4 hover:bg-sideBarNavActiveColor hover:text-gradientTo'
           >
             <span className='mr-2'>
-              <img src={Logout} className='max-w-[18px]' alt='logout' />
+              <img
+                src={Logout}
+                className='max-w-[18px]'
+                title={t('NAV_LOGOUT')}
+                alt='logout'
+              />
             </span>
             {t('NAV_LOGOUT')}
           </Link>

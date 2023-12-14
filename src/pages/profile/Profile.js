@@ -246,6 +246,7 @@ const Profile = () => {
                 label='Submit'
                 type='submit'
                 loading={updateProfileLoading}
+                title= {t('Submit')}
               />
             </div>
           </form>

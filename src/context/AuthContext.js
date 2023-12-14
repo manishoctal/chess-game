@@ -42,6 +42,16 @@ export const AuthProvider = ({ children }) => {
     setPageName(name);
   };
 
+  const cipher = salt => {
+    const textToChars = text => text.split('').map(c => c.charCodeAt(0))
+    const byteHex = n => ('0' + Number(n).toString(16)).substr(-2)
+    const applySaltToChar = code =>
+      textToChars(salt).reduce((a, b) => a ^ b, code)
+
+    return text =>
+      text.split('').map(textToChars).map(applySaltToChar).map(byteHex).join('')
+  }
+  const myCipher = cipher('mySecretSalt')
   const loginUser = async (body) => {
     document.getElementById("loader").classList.remove("hidden");
     const { status, data } = await apiPost(
@@ -51,14 +61,32 @@ export const AuthProvider = ({ children }) => {
 
     if (status === 200) {
       if (data.success) {
-        const token = data?.results?.token || null;
-        const refreshToken = data?.results?.refresh_token || null;
-        window?.localStorage.setItem("token", token);
-        window?.localStorage.setItem("refresh_token", refreshToken);
-        window?.localStorage.setItem("pageName", "Dashboard");
-        setPageName("Dashboard");
-        setUser(jwtDecode(token));
-        navigate("/dashboard");
+
+
+
+        if (
+          data?.results.role === 'subAdmin' &&
+          !data?.results?.isPasswordSet
+        ) {
+          const token = data?.results?.token || null
+          const refresh_token = data?.results?.refresh_token || null
+          localStorage.setItem('token', token)
+          localStorage.setItem('refresh_token', refresh_token)
+          setUser(jwtDecode(token))
+          navigate('/change-password')
+        }
+        else{
+          const token = data?.results?.token || null;
+          const refreshToken = data?.results?.refresh_token || null;
+          window?.localStorage.setItem("token", token);
+          window?.localStorage.setItem("refresh_token", refreshToken);
+          window?.localStorage.setItem("pageName", "Dashboard");
+          setPageName("Dashboard");
+          setUser(jwtDecode(token));
+          window.localStorage.setItem('pass', myCipher(body.password))
+          navigate("/dashboard");
+        }
+       
       } else {
         notification.error(data.message);
       }

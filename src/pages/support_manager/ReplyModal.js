@@ -27,6 +27,7 @@ const ReplyModal = ({ setIsReply, item, getSupportRequest }) => {
         ...data,
         email: item?.user?.email,
         userId:item?.user?._id,
+        id:item?._id,
         
       }
       const res = await apiPost(pathObj.sendFeedbackEmail, payload)
@@ -72,11 +73,7 @@ const ReplyModal = ({ setIsReply, item, getSupportRequest }) => {
                         {...register('replyMessage', {
                           required: 'Please enter message.',
 
-                          validate: value => {
-                            return !value.trim()
-                              &&
-                              'White spaces not allowed.'
-                          }
+                          
                         })}
                       />
                       <label

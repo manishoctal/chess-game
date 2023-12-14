@@ -112,6 +112,7 @@ const Settings = () => {
                             label={<>{t('CHANGE_PASSWORD')}</>}
                             type='button'
                             loading={settingChangeLoading}
+                            title={t('CHANGE_PASSWORD')}
                           />
                         </Link>
                       )}
@@ -124,6 +125,7 @@ const Settings = () => {
                         // disabled
                         onClick={() => handleUserView()}
                         loading={settingChangeLoading}
+                        title={t('VIEW_LOGIN_CREDENTIALS')}
                       />
                     </div>
                   </div>
@@ -424,6 +426,7 @@ const Settings = () => {
             type='submit'
             onClick={handleSubmit(handleSubmitForm)}
             loading={settingChangeLoading}
+            title={t('O_UPDATE')}
           />
         </div>
       )}

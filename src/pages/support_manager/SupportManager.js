@@ -13,7 +13,7 @@ function SupportManager () {
   const { logoutUser, notification, user, updatePageName } =
     useContext(AuthContext)
   const manager =
-    user?.permission?.find(e => e.manager === 'support_manager') ?? {}
+    user?.permission?.find(e => e.manager === 'feedback_manager') ?? {}
   const [paginationObj, setPaginationObj] = useState({
     page: 1,
     pageCount: 1,
@@ -37,9 +37,13 @@ function SupportManager () {
     sortType: 'desc'
   })
 
+  const statusPage = e => {
+    setPage(1)
+    setFilterData({ ...filterData, category: e.target.value, isFilter: true })
+  }
   const getSupportRequest = async data => {
     try {
-      const { startDate, endDate, searchkey } = filterData
+      const { startDate, endDate, searchkey ,category} = filterData
 
       const payload = {
         page,
@@ -48,7 +52,8 @@ function SupportManager () {
         endDate: endDate ? dayjs(endDate).format('YYYY-MM-DD') : null,
         keyword: searchkey,
         sortBy: sort.sortKey,
-        sortType: sort.sortType
+        sortType: sort.sortType,
+        isReplied:category 
       }
 
       const path = apiPath.supportRequest
@@ -114,7 +119,7 @@ function SupportManager () {
   }
 
   useEffect(() => {
-    updatePageName(t('SUPPORT_MANAGER'))
+    updatePageName(t('FEEDBACK_MANAGER'))
   }, [])
   return (
     <div>
@@ -129,9 +134,27 @@ function SupportManager () {
                     isReset={filterData?.isReset}
                     setIsReset={setFilterData}
                   />
+                  <div className='flex items-center mb-3 ml-3'>
+                    <select
+                      id='countries'
+                      type=' password'
+                      name='floating_password'
+                      className='block p-2 w-full text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer'
+                      placeholder=' '
+                      value={filterData?.category}
+                      onChange={e => statusPage(e)}
+                    >
+                      <option defaultValue value=''>
+                        {t('O_ALL')}
+                      </option>
+                      <option value={true}>{t('Replied')}</option>
+                      <option value={false}>{t('Not replied')}</option>
+                    </select>
+                  </div>
                   <button
                     type='button'
                     onClick={handleReset}
+                    title= {t('O_RESET')}
                     className='bg-gradientTo text-sm px-8 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2'
                   >
                     {t('O_RESET')}

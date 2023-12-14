@@ -5,6 +5,8 @@ import ReplyModal from './ReplyModal'
 import AuthContext from 'context/AuthContext'
 import { FaReply } from 'react-icons/fa'
 import SupportView from './SupportView'
+import helpers from 'utils/helpers'
+import { AiFillEye } from 'react-icons/ai'
 
 const SupportManagerTable = ({
   notifications,
@@ -30,6 +32,7 @@ const SupportManagerTable = ({
     setReplyUser(element)
     setIsReply(true)
   }
+
   return (
     <>
       <div className='p-3'>
@@ -54,6 +57,9 @@ const SupportManagerTable = ({
                 <th scope='col' className='py-3 px-6'>
                   {t('O_STATUS')}
                 </th>
+                <th scope='col' className='py-3 px-6'>
+                  {t('O_CREATED_AT')}
+                </th>
                 {(manager?.add || user?.role === 'admin') && (
                   <th scope='col' className='py-3 px-6'>
                     {t('O_ACTION')}
@@ -75,26 +81,33 @@ const SupportManagerTable = ({
                       {i + 1 + pageSize * (paginationObj?.page - 1)}
                     </th>
                     <td className='py-4 px-6 border-r'>
-                      {`${item?.user?.firstName} ${item?.user?.lastName}` ||
-                        'N/A'}
-                      <br />
-                      {item?.user?.email || 'N/A'} <br />
-                      {startCase(item?.user?.userType) || 'N/A'}{' '}
+                      <div>
+                        <p className='text-sm font-bold text-slate-950 leading-none'>
+                          {helpers.getFullName(
+                            item?.user?.firstName,
+                            item?.user?.lastName
+                          )}{' '}
+                          ({startCase(item?.user?.userType) ?? ''})
+                        </p>
+                        <p className='text-sm text-muted-foreground'>
+                          {item?.user?.email ?? ''}
+                        </p>
+                      </div>
                     </td>
-
-                    {/* <td className='py-4 px-6 border-r'>
-                      {item?.user?.email || 'N/A'}{' '}
-                    </td> */}
 
                     <td className='py-4 px-6 border-r w-[500px]'>
                       <div className='line-clamp-2'>
-                        {startCase(item?.feedback) || 'N/A'}
+                        {helpers.ternaryCondition(
+                          item?.feedback,
+                          startCase(item?.feedback),
+                          'N/A'
+                        )}
                       </div>
 
                       {item?.feedback.length > 223 && (
                         <button
                           type='button'
-                          onClick={() => handleUserView(item)}
+                          onClick={() => handleUserView(item?.feedback)}
                           className='bg-black inline-block mt-2 rounded-md text-white p-2 py-1'
                         >
                           Read More
@@ -102,27 +115,43 @@ const SupportManagerTable = ({
                       )}
                     </td>
                     <td className='py-4 px-6 border-r '>
-                      {item?.replied ? 'Replied' : 'Not replied'}
+                      {helpers.ternaryCondition(
+                        item?.replied,
+                        'Replied',
+                        'Not replied'
+                      )}
                     </td>
+                    <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
+                    {helpers.getDateAndTime(item?.createdAt)}
+                </td>
                     {(manager?.add || user?.role === 'admin') && (
-                      <td className='py-4 px-6 border-l'>
+                      <td className='py-2 px-2 border-l'>
                         <div className=''>
                           <ul className='flex justify-center'>
-                            <li
-                              disabled={item?.replied === false ? false : true}
-                              className={
-                                item?.replied === false
-                                  ? 'px-2 py-2 hover:bg-white hover:text-LightBlue'
-                                  : ''
-                              }
-                              onClick={() => handleReply(item)}
-                            >
-                              {item?.replied === false ? (
-                                <button title={t('reply')}>
+                            <li className='px-2 py-2 hover:bg-white hover:text-LightBlue'>
+                              {helpers.ternaryCondition(
+                                item?.replied === false,
+                                <button
+                                  title={t('reply')}
+                                  disabled={helpers.ternaryCondition(
+                                    item?.replied === false,
+                                    false,
+                                    true
+                                  )}
+                                  
+                                  onClick={() => handleReply(item)}
+                                >
                                   {' '}
-                                  <FaReply className='cursor-pointer w-5 h-5 text-slate-600' />{' '}
-                                </button>
-                              ) : null}
+                                  <FaReply className='cursor-pointer w-5 h-3 text-slate-600' />{' '}
+                                </button>,
+                                <button
+                                type='button'
+                                onClick={() => handleUserView(item.replyMessage)}
+                                title= {t('O_VIEW')}
+                              >
+                                 <AiFillEye className='cursor-pointer w-5 h-3 text-slate-600' />{' '}
+                              </button>
+                              )}
                             </li>
                           </ul>
                         </div>

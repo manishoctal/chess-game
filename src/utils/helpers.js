@@ -1,4 +1,5 @@
 import dayjs from 'dayjs'
+import { compact } from 'lodash'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 
@@ -224,6 +225,12 @@ const helpers = {
         e.preventDefault()
       }
     }
+  },
+  ternaryCondition : (condition, first, second) => {
+    return condition ? first : second
+  },
+  getFullName : (firstName, lastName) => {
+    return compact([firstName, lastName]).join(" ")
   }
   
 }
