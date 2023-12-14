@@ -163,101 +163,90 @@ function Home () {
     getDashboardDetails()
   }, [startDate, endDate])
 
-  useEffect(() => {
-    if (graphPayload?.graphMonth !== '-1') {
-      if (dashboardDetails?.userGraph?.daysList) {
-        const newDates = dashboardDetails?.userGraph?.daysList
-        lineGraphData.labels = newDates
-        // working on y axis data
-        let refData = lineGraphData.datasets[0].data
-        while (refData.length > 0) {
-          refData.pop()
-        }
-        const daysEarnReport = dashboardDetails?.userGraph?.daysEarnReport
-        for (const element of daysEarnReport) {
-          refData.push(element)
-        }
-        lineGraphData.datasets[0].data = refData
+  // useEffect(() => {
+  //   if (graphPayload?.graphMonth !== '-1') {
+  //     if (dashboardDetails?.userGraph?.daysList) {
+  //       const newDates = dashboardDetails?.userGraph?.daysList
+  //       lineGraphData.labels = newDates
+  //       let refData = lineGraphData.datasets[0].data
+  //       while (refData.length > 0) {
+  //         refData.pop()
+  //       }
+  //       const daysEarnReport = dashboardDetails?.userGraph?.daysEarnReport
+  //       for (const element of daysEarnReport) {
+  //         refData.push(element)
+  //       }
+  //       lineGraphData.datasets[0].data = refData
+  //     }
+  //   } else {
+  //     if (dashboardDetails?.userGraph?.monthlyEarnReport) {
+  //       let refData = lineGraphData.datasets[0].data
+  //       while (refData.length > 0) {
+  //         refData.pop()
+  //       }
+  //       const monthlyEarnReport = dashboardDetails?.userGraph?.monthlyEarnReport
+  //       for (const element of monthlyEarnReport) {
+  //         refData.push(element)
+  //       }
+  //       lineGraphData.labels = [...monthsLabels]
+  //     }
+  //   }
+  //   if (dashboardDetails?.userGraph?.graphDate) {
+  //     let yearArray = []
+  //     yearArray.push(dashboardDetails?.userGraph?.graphDate?.endYear)
+  //     for (
+  //       let i = yearArray[0] - 1;
+  //       i >= dashboardDetails?.userGraph?.graphDate?.startYear;
+  //       i--
+  //     ) {
+  //       yearArray.push(i)
+  //     }
+  //     setUsersGraphYears([...yearArray])
+  //   }
+  // }, [dashboardDetails])
 
-        // setReRender(prev => !prev)
-      }
-    } else {
-      if (dashboardDetails?.userGraph?.monthlyEarnReport) {
-        // working on y axis data
-        let refData = lineGraphData.datasets[0].data
-        while (refData.length > 0) {
-          refData.pop()
-        }
-        const monthlyEarnReport = dashboardDetails?.userGraph?.monthlyEarnReport
-        for (const element of monthlyEarnReport) {
-          refData.push(element)
-        }
-        lineGraphData.labels = [...monthsLabels]
-        // setReRender(prev => !prev)
-      }
-    }
-    if (dashboardDetails?.userGraph?.graphDate) {
-      let yearArray = []
-      yearArray.push(dashboardDetails?.userGraph?.graphDate?.endYear)
-      for (
-        let i = yearArray[0] - 1;
-        i >= dashboardDetails?.userGraph?.graphDate?.startYear;
-        i--
-      ) {
-        yearArray.push(i)
-      }
-      setUsersGraphYears([...yearArray])
-    }
-  }, [dashboardDetails])
-
-  useEffect(() => {
-    if (graphPayload?.graphMonth !== '-1') {
-      if (dashboardDetails?.orderGraph?.daysList) {
-        const newDates = dashboardDetails?.orderGraph?.daysList
-        lineGraphData2.labels = newDates
-        // working on y axis data
-        let refData = lineGraphData2.datasets[0].data
-        while (refData.length > 0) {
-          refData.pop()
-        }
-        const daysEarnReportOrder =
-          dashboardDetails?.orderGraph?.daysEarnReportOrder
-        for (let i = 0; i < daysEarnReportOrder?.length; i++) {
-          refData.push(daysEarnReportOrder[i])
-        }
-        lineGraphData2.datasets[0].data = refData
-
-        // setReRender(prev => !prev)
-      }
-    } else {
-      if (dashboardDetails?.orderGraph?.monthlyEarnDataOrder) {
-        // working on y axis data
-        let refData = lineGraphData2.datasets[0].data
-        while (refData.length > 0) {
-          refData.pop()
-        }
-        const monthlyEarnDataOrder =
-          dashboardDetails?.orderGraph?.monthlyEarnDataOrder
-        for (const element of monthlyEarnDataOrder) {
-          refData.push(element)
-        }
-        lineGraphData2.labels = [...monthsLabels]
-        // setReRender(prev => !prev)
-      }
-    }
-    if (dashboardDetails?.orderGraph?.graphDate) {
-      let yearArray = []
-      yearArray.push(dashboardDetails?.orderGraph?.graphDate?.endYear)
-      for (
-        let i = yearArray[0] - 1;
-        i >= dashboardDetails?.orderGraph?.graphDate?.startYear;
-        i--
-      ) {
-        yearArray.push(i)
-      }
-      // setOrderGraphYears([...yearArray])
-    }
-  }, [dashboardDetails])
+  // useEffect(() => {
+  //   if (graphPayload?.graphMonth !== '-1') {
+  //     if (dashboardDetails?.orderGraph?.daysList) {
+  //       const newDates = dashboardDetails?.orderGraph?.daysList
+  //       lineGraphData2.labels = newDates
+  //       let refData = lineGraphData2.datasets[0].data
+  //       while (refData.length > 0) {
+  //         refData.pop()
+  //       }
+  //       const daysEarnReportOrder =
+  //         dashboardDetails?.orderGraph?.daysEarnReportOrder
+  //       for (let i = 0; i < daysEarnReportOrder?.length; i++) {
+  //         refData.push(daysEarnReportOrder[i])
+  //       }
+  //       lineGraphData2.datasets[0].data = refData
+  //     }
+  //   } else {
+  //     if (dashboardDetails?.orderGraph?.monthlyEarnDataOrder) {
+  //       let refData = lineGraphData2.datasets[0].data
+  //       while (refData.length > 0) {
+  //         refData.pop()
+  //       }
+  //       const monthlyEarnDataOrder =
+  //         dashboardDetails?.orderGraph?.monthlyEarnDataOrder
+  //       for (const element of monthlyEarnDataOrder) {
+  //         refData.push(element)
+  //       }
+  //       lineGraphData2.labels = [...monthsLabels]
+  //     }
+  //   }
+  //   if (dashboardDetails?.orderGraph?.graphDate) {
+  //     let yearArray = []
+  //     yearArray.push(dashboardDetails?.orderGraph?.graphDate?.endYear)
+  //     for (
+  //       let i = yearArray[0] - 1;
+  //       i >= dashboardDetails?.orderGraph?.graphDate?.startYear;
+  //       i--
+  //     ) {
+  //       yearArray.push(i)
+  //     }
+  //   }
+  // }, [dashboardDetails])
 
   const handleReset = () => {
     setEndDate('')

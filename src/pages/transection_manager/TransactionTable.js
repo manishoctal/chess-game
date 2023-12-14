@@ -76,7 +76,7 @@ const TransactionTable = ({ artistVerification, page, userType, pageSize }) => {
                       {item?.transactionAmount || 'N/A'}
                     </td>
                     <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
-                      {item?.rewardAmount || 0}
+                      {item?.user?.scratchCardDetail?.rewardAmount || 0}
                     </td>
                   </>
                 )}
