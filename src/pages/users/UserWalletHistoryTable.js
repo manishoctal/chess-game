@@ -15,7 +15,7 @@ const UserWalletHistoryTable = ({ users, page }) => {
                 {t('S.NO')}
               </th>
               <th scope='col' className='py-3 px-6'>
-                {t('SUBADMIN_NAME')}
+                {t('Admin name')}
               </th>
 
               <th scope='col' className='py-3 px-6 '>
