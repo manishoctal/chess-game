@@ -125,7 +125,7 @@ function User () {
       isKYCVerified: ''
     })
     setPage(1)
-    setIsDelete(true)
+    // setIsDelete(true)
     setSearchTerm('')
     setPageSize(10)
   }
@@ -346,6 +346,7 @@ function User () {
                   <option value='100'>100</option>
                 </select>
               </div>
+              
               {paginationObj?.totalItems ? (
                 <Pagination
                   handlePageClick={handlePageClick}
