@@ -93,7 +93,7 @@ const SupportManagerTable = ({
                           {item?.user?.email ?? ''}
                         </p>
                         <p className='text-sm text-muted-foreground'>
-                          {item?.user?.mobile ?? ''}
+                          {`+${item?.user?.countryCode} ${item?.user?.mobile}`}
                         </p>
                       </div>
                     </td>

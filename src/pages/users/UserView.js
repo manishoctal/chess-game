@@ -61,7 +61,7 @@ const UserView = () => {
                   <figure className='bg-white w-[42px] h-[41px] rounded-full flex items-center justify-center mr-3'>
                     <img src={firstNameIcon} alt='' />
                   </figure>
-                  <figcaption>
+                  <figcaption className='w-[calc(100%_-_41px)]'>
                     <span className='block text-[#5 C5C5C]'>
                       {t('FIRST_NAME')}
                     </span>
@@ -81,7 +81,7 @@ const UserView = () => {
                   <figure className='bg-white w-[42px] h-[41px] rounded-full flex items-center justify-center mr-3'>
                     <img src={emailIcon} alt='' />
                   </figure>
-                  <figcaption>
+                  <figcaption className='w-[calc(100%_-_41px)]'>
                     <span className='block text-[#5 C5C5C]'>
                       {t('EMAIL_ADDRESS')}
                     </span>
@@ -100,7 +100,7 @@ const UserView = () => {
                   <figure className='bg-white w-[42px] h-[41px] rounded-full flex items-center justify-center mr-3'>
                     <img src={mobileIcon} alt='' />
                   </figure>
-                  <figcaption>
+                  <figcaption className='w-[calc(100%_-_41px)]'>
                     <span className='block text-[#5 C5C5C]'>
                       {t('O_MOBILE_NUMBER')}
                     </span>
@@ -139,7 +139,7 @@ const UserView = () => {
                       <figure className='bg-[#F2F2F2] w-[42px] h-[41px] rounded-full flex items-center justify-center mr-3'>
                         <img src={timeIcon} alt='' />
                       </figure>
-                      <figcaption>
+                      <figcaption className='w-[calc(100%_-_41px)]'>
                         <span className='block text-[#5C5C5C]'>
                           {t('REGISTERED_DATE')}
                         </span>
@@ -160,7 +160,7 @@ const UserView = () => {
                       <figure className='bg-[#F2F2F2] w-[42px] h-[41px] rounded-full flex items-center justify-center mr-3'>
                         <img src={refferalCodeIcon} alt='' />
                       </figure>
-                      <figcaption>
+                      <figcaption className='w-[calc(100%_-_41px)]'>
                         <span className='block text-[#5C5C5C]'>
                           {t('Referral code')}
                         </span>
@@ -181,7 +181,7 @@ const UserView = () => {
                       <figure className='bg-[#F2F2F2] w-[42px] h-[41px] rounded-full flex items-center justify-center mr-3'>
                         <img src={genderIcon} alt='' />
                       </figure>
-                      <figcaption>
+                      <figcaption className='w-[calc(100%_-_41px)]'>
                         <span className='block text-[#5C5C5C]'>
                           {t('GENDER')}
                         </span>
@@ -202,7 +202,7 @@ const UserView = () => {
                       <figure className='bg-[#F2F2F2] w-[42px] h-[41px] rounded-full flex items-center justify-center mr-3'>
                         <img src={dobIcon} alt='' />
                       </figure>
-                      <figcaption>
+                      <figcaption className='w-[calc(100%_-_41px)]'>
                         <span className='block text-[#5C5C5C]'>
                           {t('Date of birth')}
                         </span>
@@ -223,7 +223,7 @@ const UserView = () => {
                       <figure className='bg-[#F2F2F2] w-[42px] h-[41px] rounded-full flex items-center justify-center mr-3'>
                         <img src={upcCodeIcon} alt='' />
                       </figure>
-                      <figcaption>
+                      <figcaption className='w-[calc(100%_-_41px)]'>
                         <span className='block text-[#5C5C5C]'>
                           {t('UPC code')}
                         </span>
@@ -248,7 +248,7 @@ const UserView = () => {
                       <figure className='bg-[#F2F2F2] w-[42px] h-[41px] rounded-full flex items-center justify-center mr-3'>
                         <img src={locationIcon} alt='' />
                       </figure>
-                      <figcaption>
+                      <figcaption className='w-[calc(100%_-_41px)]'>
                         <span className='block text-[#5C5C5C]'>
                           {t('NATIONALITY')}
                         </span>
@@ -269,7 +269,7 @@ const UserView = () => {
                       <figure className='bg-[#F2F2F2] w-[42px] h-[41px] rounded-full flex items-center justify-center mr-3'>
                         <img src={cityIcon} alt='' />
                       </figure>
-                      <figcaption>
+                      <figcaption className='w-[calc(100%_-_41px)]'>
                         <span className='block text-[#5C5C5C]'>
                           {t('Country of living')}
                         </span>
@@ -290,7 +290,7 @@ const UserView = () => {
                       <figure className='bg-[#F2F2F2] w-[42px] h-[41px] rounded-full flex items-center justify-center mr-3'>
                         <img src={buildingIcon} alt='' />
                       </figure>
-                      <figcaption>
+                      <figcaption className='w-[calc(100%_-_41px)]'>
                         <span className='block text-[#5C5C5C]'>
                           {t('Cities visited in Thailand')}
                         </span>
@@ -311,7 +311,7 @@ const UserView = () => {
                       <figure className='bg-[#F2F2F2] w-[42px] h-[41px] rounded-full flex items-center justify-center mr-3'>
                         <img src={buildingIcon} alt='' />
                       </figure>
-                      <figcaption>
+                      <figcaption className='w-[calc(100%_-_41px)]'>
                         <span className='block text-[#5C5C5C]'>
                           {t('Cities going to visit in Thailand')}
                         </span>
@@ -330,7 +330,7 @@ const UserView = () => {
                       <figure className='bg-[#F2F2F2] w-[42px] h-[41px] rounded-full flex items-center justify-center mr-3'>
                         <img src={bonusIcon} alt='' />
                       </figure>
-                      <figcaption>
+                      <figcaption className='w-[calc(100%_-_41px)]'>
                         <span className='block text-[#5C5C5C]'>
                           {t('Bonus Amount')}
                         </span>
@@ -377,13 +377,13 @@ const UserView = () => {
               )}
             </div>
 
-            <div className='grid grid-cols-4 bg-[#F2F2F2] rounded-lg p-4 w-[70%] mr-4 px-8'>
+            <div className='grid grid-cols-4 bg-[#F2F2F2] rounded-lg p-4 w-[70%] mr-4 px-8 flex justify-between'>
               <div>
                 <div className='flex items-center'>
                   <figure className='bg-white w-[42px] h-[41px] rounded-full flex items-center justify-center mr-3'>
                     <img src={firstNameIcon} alt='' />
                   </figure>
-                  <figcaption>
+                  <figcaption className='w-[calc(100%_-_41px)]'>
                     <span className='block text-[#5 C5C5C]'>
                       {t('FIRST_NAME')}
                     </span>
@@ -403,7 +403,7 @@ const UserView = () => {
                   <figure className='bg-white w-[42px] h-[41px] rounded-full flex items-center justify-center mr-3'>
                     <img src={emailIcon} alt='' />
                   </figure>
-                  <figcaption>
+                  <figcaption className='w-[calc(100%_-_41px)]'>
                     <span className='block text-[#5 C5C5C]'>
                       {t('LAST_NAME')}
                     </span>
@@ -422,7 +422,7 @@ const UserView = () => {
                   <figure className='bg-white w-[42px] h-[41px] rounded-full flex items-center justify-center mr-3'>
                     <img src={mobileIcon} alt='' />
                   </figure>
-                  <figcaption>
+                  <figcaption className='w-[calc(100%_-_41px)]'>
                     <span className='block text-[#5 C5C5C]'>
                       {t('O_MOBILE_NUMBER')}
                     </span>
@@ -461,7 +461,7 @@ const UserView = () => {
                       <figure className='bg-[#F2F2F2] w-[42px] h-[41px] rounded-full flex items-center justify-center mr-3'>
                         <img src={cityIcon} alt='' />
                       </figure>
-                      <figcaption>
+                      <figcaption className='w-[calc(100%_-_41px)]'>
                         <span className='block text-[#5C5C5C]'>
                           {t('Nationality Id')}
                         </span>
@@ -482,7 +482,7 @@ const UserView = () => {
                       <figure className='bg-[#F2F2F2] w-[42px] h-[41px] rounded-full flex items-center justify-center mr-3'>
                         <img src={locationIcon} alt='' />
                       </figure>
-                      <figcaption>
+                      <figcaption className='w-[calc(100%_-_41px)]'>
                         <span className='block text-[#5C5C5C]'>
                           {t('Address')}
                         </span>
@@ -507,7 +507,7 @@ const UserView = () => {
                       <figure className='bg-[#F2F2F2] w-[42px] h-[41px] rounded-full flex items-center justify-center mr-3'>
                         <img src={dobIcon} alt='' />
                       </figure>
-                      <figcaption>
+                      <figcaption className='w-[calc(100%_-_41px)]'>
                         <span className='block text-[#5C5C5C]'>
                           {t('USER_DOB')}
                         </span>
