@@ -34,8 +34,7 @@ const AddScratchCard = ({ setShowModal, allScratchCard }) => {
         expiryDate:  date ? dayjs(date).format('YYYY-MM-DD') : null,
         couponCode: data?.couponCode?.toUpperCase(),
         couponAmount: toNumber(data?.couponAmount),
-        rewardAmount: toNumber(data?.rewardAmount),
-        numberOfUserCoupon: toNumber(data?.numberOfUserCoupon),
+        rewardAmount: toNumber(data?.rewardAmount)
 
       }
 
@@ -136,26 +135,7 @@ const AddScratchCard = ({ setShowModal, allScratchCard }) => {
                     />
                   </div>
 
-                  <div className='md:py-4 sm:px-2 sm:py-3 md:px-7 px-2'>
-                    <OInputField
-                      wrapperClassName='relative z-0   w-full group'
-                      type='number'
-                      name='numberOfUserCoupon'
-                      id='numberOfUserCoupon'
-                      inputLabel={
-                        <>
-                          {t('Number of user can use the coupon')}
-                          <span className='text-red-500'>*</span>
-                        </>
-                      }
-                      onKeyDown={helper.preventForNumberInput}
-                      register={register(
-                        'numberOfUserCoupon',
-                        formValidation['numberOfUserCoupon']
-                      )}
-                      errors={errors}
-                    />
-                  </div>
+             
                   <div className='md:py-4 sm:px-2 sm:py-3 md:px-7 px-2'>
                     <div className='relative z-0  w-full group'>
                       <label
@@ -172,6 +152,7 @@ const AddScratchCard = ({ setShowModal, allScratchCard }) => {
                         // disable={counponData !== undefined}
                         handleDateChange={handleDateChange}
                         minDate='today'
+                        placeholder={t('Expiry date')}
                       />
 
                       {isValidityError && (

@@ -7,7 +7,8 @@ const OButton = ({
   loading,
   onClick,
   extraClasses,
-  style
+  style,
+  title
 }) => {
   return (
     <button
@@ -21,6 +22,7 @@ const OButton = ({
       type={type}
       disabled={disabled}
       onClick={onClick}
+      title={title}
     >
       {label}
     </button>

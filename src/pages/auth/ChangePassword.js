@@ -228,6 +228,7 @@ const ChangePassword = () => {
                   disabled={!isDirty}
                   label={<>{t("O_SUBMIT")}</>}
                   type="submit"
+                  title= {t('O_SUBMIT')}
                 />
               )}
             </div>

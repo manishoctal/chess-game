@@ -246,6 +246,7 @@ const StaticContent = () => {
                     onClick={handleReset}
                     extraClasses='ml-3 mb-3'
                     style={{ borderRadius: '0.5rem' }}
+                    title={t('O_RESET')}
                   />
                 </div>
               </div>

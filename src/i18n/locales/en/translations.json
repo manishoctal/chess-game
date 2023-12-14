@@ -468,6 +468,6 @@
   "ACTIVE_LOGGED_IN_USER": "Active logged in user",
   "USERS_BETWEEN_10_BAHT_TO_300_BAHT": "Users between 10 baht to 300 baht",
   "USERS_BETWEEN_200_BAHT_TO_1000_BAHT": "Users between 200 baht to 1000 baht",
-  "EMAIL_USERNAME_MOBILE_NUMBER": "Email, Username, Mobile No",
+  "EMAIL_USERNAME_MOBILE_NUMBER": "Email, Name, Mobile No",
   "SEARCH_BY_DISPLAY": "Search by display name"
 }
