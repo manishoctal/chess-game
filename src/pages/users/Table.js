@@ -12,6 +12,7 @@ import UserEdit from './UserEdit'
 import { GiTakeMyMoney } from 'react-icons/gi'
 import { MdHistory } from 'react-icons/md'
 import AddAmount from './AddAmount'
+import helpers from '../../utils/helpers'
 
 const Table = ({
   users,
@@ -36,7 +37,11 @@ const Table = ({
   const handelStatusChange = async item => {
     try {
       const payload = {
-        status: item?.status === 'inactive' ? 'active' : 'inactive',
+        status: helpers.ternaryCondition(
+          item?.status === 'inactive',
+          'active',
+          'inactive'
+        ),
         type: 'user'
       }
       const path = `${apiPath.changeStatus}/${item?._id}`
@@ -66,7 +71,11 @@ const Table = ({
                   {t('S.NO')}
                 </th>
                 <th scope='col' className='py-3 px-6'>
-                  {userType === 'local' ? t('NAME') : t('FIRST_NAME')}
+                  {helpers.ternaryCondition(
+                    userType === 'local',
+                    t('NAME'),
+                    t('FIRST_NAME')
+                  )}
                 </th>
 
                 <th scope='col' className='py-3 px-6'>
@@ -75,21 +84,24 @@ const Table = ({
                 <th scope='col' className='py-3 px-6'>
                   <div className='text-left'>{t('O_MOBILE_NUMBER')}</div>
                 </th>
-                {userType === 'local' && (
+                {helpers.andOperator(
+                  userType === 'local',
                   <th scope='col' className='py-3 px-6 text-left'>
                     {t('AVAILABLE_BALANCE')}
                   </th>
                 )}
-                {userType === 'tourist' && (
-                  <th scope='col' className='py-3 px-6 text-left'>
-                    {t('UPC_CODE')}
-                  </th>
+                {helpers.andOperator(
+                  userType === 'tourist',
+                  <>
+                    <th scope='col' className='py-3 px-6 text-left'>
+                      {t('UPC_CODE')}
+                    </th>
+                    <th scope='col' className='py-3 px-6 text-left'>
+                      {t('REFERRAL_CODE')}
+                    </th>
+                  </>
                 )}
-                {userType === 'tourist' && (
-                  <th scope='col' className='py-3 px-6 text-left'>
-                    {t('REFERRAL_CODE')}
-                  </th>
-                )}
+
                 <th scope='col' className='py-3 px-6 text-left'>
                   {t('KYC_STATUS')}
                 </th>
@@ -97,7 +109,8 @@ const Table = ({
                   {t('O_CREATED_AT')}
                 </th>
 
-                {(manager?.add || user?.permission?.length === 0) && (
+                {helpers.andOperator(
+                  manager?.add || user?.permission?.length === 0,
                   <th scope='col' className='py-3 px-6 text-left'>
                     {t('O_STATUS')}
                   </th>
@@ -126,35 +139,60 @@ const Table = ({
                         : item?.firstName || 'N/A'}
                     </td>
                     <td className='py-2 px-4 border-r  dark:border-[#ffffff38] font-bold text-slate-900'>
-                      {item?.email || 'N/A'}
+                      {helpers.ternaryCondition(
+                        item?.email,
+                        item?.email,
+                        'N/A'
+                      )}
                     </td>
                     <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-left font-bold text-slate-900'>
-                      {item?.mobile || 'N/A'}
+                      {helpers.ternaryCondition(
+                        item?.mobile,
+                        item?.mobile,
+                        'N/A'
+                      )}
                     </td>
                     {userType === 'local' && (
                       <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-left'>
-                        {item?.walletAmount || 0}
+                        {helpers.ternaryCondition(
+                          item?.walletAmount,
+                          item?.walletAmount,
+                          0
+                        )}
                       </td>
                     )}
                     {userType === 'tourist' && (
-                      <td className='py-4 px-3 border-r  dark:border-[#ffffff38] '>
-                        {item?.upcCode || 'N/A'}
-                      </td>
-                    )}
-                    {userType === 'tourist' && (
-                      <td className='py-4 px-3 border-r  dark:border-[#ffffff38] '>
-                        {item?.referralCode || 'N/A'}
-                      </td>
+                      <>
+                        <td className='py-4 px-3 border-r  dark:border-[#ffffff38] '>
+                          {helpers.ternaryCondition(
+                            item?.upcCode,
+                            item?.upcCode,
+                            'N/A'
+                          )}
+                        </td>
+                        <td className='py-4 px-3 border-r  dark:border-[#ffffff38] '>
+                          {helpers.ternaryCondition(
+                            item?.referralCode,
+                            item?.referralCode,
+                            'N/A'
+                          )}
+                        </td>
+                      </>
                     )}
 
                     <td className='py-4 px-3 border-r  dark:border-[#ffffff38] text-center'>
-                      {startCase(item?.isKycApproved) || 'N/A'}
+                      {helpers.ternaryCondition(
+                        item?.isKycApproved,
+                        startCase(item?.isKycApproved),
+                        'N/A'
+                      )}
                     </td>
                     <td className='py-4 px-3 border-r  dark:border-[#ffffff38] text-center'>
                       {dayjs(item?.createdAt).format('DD-MM-YYYY hh:mm A') ||
                         'N/A'}
                     </td>
-                    {(manager?.add || user?.permission?.length === 0) && (
+                    {helpers.andOperator(
+                      manager?.add || user?.permission?.length === 0,
                       <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
                         <label
                           className='inline-flex relative items-center cursor-pointer'
@@ -168,9 +206,11 @@ const Table = ({
                             checked={item?.status === 'active'}
                             onChange={e =>
                               helper.alertFunction(
-                                `Are you sure you want to ${
-                                  e.target.checked ? 'active' : 'inactive'
-                                } user ?`,
+                                `Are you sure you want to ${helpers.ternaryCondition(
+                                  e.target.checked,
+                                  'active',
+                                  'inactive'
+                                )} user ?`,
                                 item,
                                 handelStatusChange
                               )
@@ -231,7 +271,8 @@ const Table = ({
                     </td>
                   </tr>
                 ))}
-              {isEmpty(users) ? (
+              {helpers.ternaryCondition(
+                isEmpty(users),
                 <tr className='bg-white text-center border-b dark:bg-gray-800 dark:border-gray-700'>
                   <td
                     className='py-2 px-4 border-r dark:border-[#ffffff38]'
@@ -239,14 +280,16 @@ const Table = ({
                   >
                     {t('O_NO_RECORD_FOUND')}
                   </td>
-                </tr>
-              ) : null}
+                </tr>,
+                null
+              )}
             </tbody>
           </table>
         </div>
       </div>
 
-      {editShowModal && (
+      {helpers.andOperator(
+        editShowModal,
         <UserEdit
           item={editItem}
           setEditShowModal={setEditShowModal}
@@ -254,7 +297,8 @@ const Table = ({
         />
       )}
 
-      {isAmountModal && (
+      {helpers.andOperator(
+        isAmountModal,
         <AddAmount
           addAmountUser={addAmountUser}
           getAllUser={getAllUser}
