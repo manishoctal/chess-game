@@ -226,7 +226,7 @@ function User () {
                       name='floating_password'
                       className='block p-2 w-full text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer'
                       placeholder=' '
-                      // value={filterData?.category}
+                      value={filterData?.category}
                       onChange={statusPage}
                     >
                       <option defaultValue value=''>
