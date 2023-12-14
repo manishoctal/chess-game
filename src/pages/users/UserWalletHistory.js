@@ -68,15 +68,15 @@ function UserWalletHistory () {
     } catch (error) {
       console.error('error ', error)
       setPaginationObj({})
-      if (error.response.status === 401 || error.response.status === 409) {
+      if (error.response.status === 409 || error.response.status === 401) {
         logoutUser()
       }
     }
   }
 
   const dynamicPage = e => {
-    setPage(1)
     setPageSize(e.target.value)
+    setPage(1)
   }
 
   const handlePageClick = event => {
@@ -84,30 +84,31 @@ function UserWalletHistory () {
     setPage(newPage)
   }
 
-  useEffect(() => {
-    getAllUser()
-  }, [page, filterData, pageSize])
-
-  useEffect(() => {
-    updatePageName(t('USER_WALLET_HISTORY_ADMIN_AMOUNT'))
-  }, [])
-
   const handleReset = () => {
     setFilterData({
+      isReset: true,
+      isFilter: false,
+      verificationStatus: '',
       category: '',
       kycStatus: '',
       searchkey: '',
       startDate: '',
-      endDate: '',
-      isReset: true,
-      isFilter: false,
-      verificationStatus: ''
+      endDate: ''
     })
     setPage(1)
     setIsDelete(true)
     setSearchTerm('')
     setPageSize(10)
   }
+
+  useEffect(() => {
+    getAllUser()
+  }, [filterData, pageSize, page])
+
+  useEffect(() => {
+    updatePageName(t('USER_WALLET_HISTORY_ADMIN_AMOUNT'))
+  }, [])
+
   const handleDateChange = (start, end) => {
     setPage(1)
     setFilterData({
