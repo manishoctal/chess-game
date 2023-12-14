@@ -252,6 +252,7 @@ function User () {
                       </option>
                       <option value='approved'>{t('KYC_COMPLETED')}</option>
                       <option value='pending'>{t('KYC_PENDING')}</option>
+                      <option value='KYCNotUploadedYet'>{t('KYC Document Not Uploaded Yet')}</option>
                     </select>
                   </div>
 

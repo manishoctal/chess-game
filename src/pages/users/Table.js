@@ -82,6 +82,9 @@ const Table = ({
                   <div className='text-left'>{t('O_EMAIL_ID')}</div>
                 </th>
                 <th scope='col' className='py-3 px-6'>
+                  <div className='text-left'>{t('COUNTRY_CODE')}</div>
+                </th>
+                <th scope='col' className='py-3 px-6'>
                   <div className='text-left'>{t('O_MOBILE_NUMBER')}</div>
                 </th>
                 {helpers.andOperator(
@@ -142,6 +145,13 @@ const Table = ({
                       {helpers.ternaryCondition(
                         item?.email,
                         item?.email,
+                        'N/A'
+                      )}
+                    </td>
+                    <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-left font-bold text-slate-900'>
+                      {helpers.ternaryCondition(
+                        item?.countryCode,
+                        item?.countryCode,
                         'N/A'
                       )}
                     </td>
