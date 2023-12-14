@@ -4,13 +4,10 @@ import apiPath from "../../utils/apiPath";
 import Table from "./Table";
 import Pagination from "../Pagination";
 import dayjs from "dayjs";
-import ODateRangePicker from "components/shared/datePicker/ODateRangePicker";
-import { useTranslation } from "react-i18next";
 import AuthContext from "context/AuthContext";
 import useToastContext from "hooks/useToastContext";
 
 function EmailTemplate() {
-  const { t } = useTranslation();
   const notification = useToastContext();
   const { user } = useContext(AuthContext);
   const manager =
@@ -107,28 +104,7 @@ function EmailTemplate() {
     allEmailTemplate();
   }, [filterData, page, sort]);
 
-  const handleReset = () => {
-    setFilterData({
-      category: "",
-      searchkey: "",
-      startDate: "",
-      endDate: "",
-      isReset: true,
-      isFilter: false,
-    });
-    setPage(1);
-    setSearchTerm("");
-  };
-
-  const handleDateChange = (start, end) => {
-    setPage(1);
-    setFilterData({
-      ...filterData,
-      startDate: start,
-      endDate: end,
-      isFilter: true,
-    });
-  };
+  
 
   useEffect(() => {
     if (!isInitialized) {
@@ -187,57 +163,17 @@ function EmailTemplate() {
                       type="search"
                       id="default-search"
                       className="block w-full p-2 outline-none text-sm text-gray-900 2xl:min-w-[250px] xl:min-w-[300px] rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                      placeholder="Title"
+                      placeholder="Email template name"
                       value={searchTerm}
                       title=""
                       required
                       onChange={(e) => setSearchTerm(e.target.value)}
                     />
                   </div>
-                  <ODateRangePicker
-                    handleDateChange={handleDateChange}
-                    isReset={filterData?.isReset}
-                    setIsReset={setFilterData}
-                  />
-                  {/* <div className="flex items-center  ml-3 mb-3">
-                    <select
-                      id=""
-                      type="text "
-                      name="category"
-                      className="block p-2 w-full text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF] focus:outline-none focus:ring-0  peer"
-                      placeholder=" "
-                      onChange={(e) => statusPage(e)}
-                      value={filterData?.category}
-                    >
-                      <option defaultValue value="">
-                        {t("O_ALL")}
-                      </option>
-                      <option value="active">{t("O_ACTIVE")}</option>
-                      <option value="inactive">{t("O_INACTIVE")}</option>
-                    </select>
-                  </div> */}
-                  <button
-                    type="button"
-                    onClick={handleReset}
-                    title= {t('O_RESET')}
-                    className="bg-gradientTo text-sm px-8 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2"
-                  >
-                    {t("O_RESET")}
-                  </button>
+                 
                 </div>
               </div>
-              {/* <div className='flex items-center justify-end px-4 ms-auto mb-3'>
-                {(manager?.add ||
-                  user?.role === 'admin') && (
-                    <button
-                      title={t('ADD_EMAIL_TEMPLATE')}
-                      type='button'
-                      className='bg-gradientTo flex text-sm px-8 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue whitespace-nowrap'
-                      onClick={() => navigate('/email-manager/add')}
-                    >
-                      + {t('ADD_EMAIL_TEMPLATE')}
-                    </button>)}
-              </div> */}
+             
             </form>
             <Table
               emailTemplate={emailTemplate?.docs}

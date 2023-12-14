@@ -1,8 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { apiGet } from '../../utils/apiFetch'
 import apiPath from '../../utils/apiPath'
-import OButton from 'components/reusable/OButton'
-import ODateRangePicker from 'components/shared/datePicker/ODateRangePicker'
 import dayjs from 'dayjs'
 import StaticContentView from './StaticContentView'
 import StaticContentList from './StaticContentList'
@@ -120,30 +118,7 @@ const StaticContent = () => {
     getStaticContent()
   }, [page, filterData, sort])
 
-  const handleReset = () => {
-    setFilterData({
-      status: '',
-      searchkey: '',
-      startDate: '',
-      endDate: '',
-      isReset: true,
-      isFilter: false
-    })
-    setPage(1)
-    setSearchTerm('')
-  }
-
-  const handleDateChange = (start, end) => {
-    // setStartDate(start)
-    setPage(1)
-    // setEndDate(end)
-    setFilterData({
-      ...filterData,
-      startDate: start,
-      endDate: end,
-      isFilter: true
-    })
-  }
+  
   useEffect(() => {
     if (!isInitialized) {
       setIsInitialized(true)
@@ -217,59 +192,10 @@ const StaticContent = () => {
                       onChange={e => setSearchTerm(e.target.value)}
                     />
                   </div>
-                  <ODateRangePicker
-                    handleDateChange={handleDateChange}
-                    isReset={filterData?.isReset}
-                    setIsReset={setFilterData}
-                  />
-                  {/* <div className="flex items-center  ml-3 mb-3">
-                    <select
-                      id=""
-                      type="text "
-                      name="status"
-                      className="block p-2 w-full text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF] focus:outline-none focus:ring-0  peer"
-                      placeholder=" "
-                      onChange={(e) => statusPage(e)}
-                      value={filterData?.status}
-                    >
-                      <option selected value="">
-                        {t("O_ALL")}
-                      </option>
-                      <option value="active">{t("O_ACTIVE")}</option>
-                      <option value="inactive">{t("O_INACTIVE")}</option>
-                    </select>
-                  </div> */}
-
-                  <OButton
-                    label='Reset'
-                    type='button'
-                    onClick={handleReset}
-                    extraClasses='ml-3 mb-3'
-                    style={{ borderRadius: '0.5rem' }}
-                    title={t('O_RESET')}
-                  />
+                 
                 </div>
               </div>
-              {/* <div className="flex items-center justify-end px-4 ms-auto mb-3">
-                {(manager?.add || user?.role === "admin") && (
-                  // <button
-                  //   title='Add Static content'
-                  //   type='button'
-                  //   className='bg-gradientTo flex text-sm px-8 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue whitespace-nowrap'
-                  //   onClick={() => handleCategory()}
-                  // >
-                  //   + {t('ADD_STATIC_CONTENT')}
-                  // </button>
-                  <button
-                    title="Add Static content"
-                    type="button"
-                    className="bg-gradientTo flex text-sm px-8 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue whitespace-nowrap"
-                    onClick={() => navigate("/StaticContent/add")}
-                  >
-                    + {t("ADD_STATIC_CONTENT")}
-                  </button>
-                )}
-              </div> */}
+             
             </form>
             <StaticContentList
               countryList={countryList}
