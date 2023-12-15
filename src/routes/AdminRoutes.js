@@ -19,7 +19,6 @@ import Settings from 'pages/settings/Settings'
 import Login from 'pages/Login'
 import User from 'pages/users/User'
 import UserView from 'pages/users/UserView'
-import ReportAbuse from 'pages/report_abuse_manager/ReportAbuse'
 import NotificationAdd from 'pages/notification_manager/NotificationAdd'
 import Transaction from 'pages/transection_manager/Transaction'
 import UserWalletHistory from 'pages/users/UserWalletHistory'
@@ -144,15 +143,7 @@ const AdminRoutes = {
       )
     },
 
-    {
-      path: '/report_abuse_manager',
-      element: <ReportAbuse />,
-      name: (
-        <>
-          <UseChange data='REPORTS_MANAGER' />
-        </>
-      )
-    },
+    
 
     {
       path: '/email-manager',
