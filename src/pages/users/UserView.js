@@ -35,12 +35,12 @@ const UserView = () => {
 
       {item?.userType === 'tourist' && (
         <div className='mt-10'>
-          <div className='flex items-center'>
-            <div className='flex mr-5'>
-              <figure className='inline-block overflow-hidden rounded-full border border-2 mb-5'>
+          <div className='items-center flex '>
+            <div className='mr-5 flex '>
+              <figure className='overflow-hidden rounded-full inline-block  border border-2 mb-5'>
                 <OImage
-                  src={item?.profilePic || defaultImage}
                   className='w-[100px] h-[100px] inline'
+                  src={item?.profilePic || defaultImage}
                   fallbackUrl={defaultImage}
                   alt=''
                 />
@@ -48,8 +48,8 @@ const UserView = () => {
               {item?.verificationStatus === 'verified' && (
                 <span>
                   <img
-                    src={item?.verificationStatus === 'verified' && checkIcon}
                     alt=''
+                    src={item?.verificationStatus === 'verified' && checkIcon}
                   />
                 </span>
               )}
@@ -62,7 +62,7 @@ const UserView = () => {
                     <img src={firstNameIcon} alt='' />
                   </figure>
                   <figcaption className='w-[calc(100%_-_41px)]'>
-                    <span className='block text-[#5 C5C5C]'>
+                    <span className=' text-[#5 C5C5C] block'>
                       {t('FIRST_NAME')}
                     </span>
                     <strong>
