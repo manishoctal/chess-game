@@ -71,15 +71,15 @@ function User () {
       const result = await apiGet(path, payload)
 
       if (result?.status === 200) {
+        setAllUser(response?.docs)
         const response = result?.data?.results
         const resultStatus = result?.data?.success
-        setAllUser(response?.docs)
         setPaginationObj({
           ...paginationObj,
           page: helpers.ternaryCondition(resultStatus , response.page , null),
-          pageCount: helpers.ternaryCondition(resultStatus , response.totalPages , null),
           perPageItem: helpers.ternaryCondition(resultStatus , response?.docs.length , null),
-          totalItems: helpers.ternaryCondition(resultStatus , response.totalDocs , null)
+          totalItems: helpers.ternaryCondition(resultStatus , response.totalDocs , null),
+          pageCount: helpers.ternaryCondition(resultStatus , response.totalPages , null)
         })
       }
     } catch (error) {
