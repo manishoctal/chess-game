@@ -8,24 +8,24 @@ import pathObj from 'utils/apiPath'
 import helper from 'utils/helpers'
 
 const ScratchCardUsersTable = () => {
-  const { t } = useTranslation()
-  const location = useLocation()
   const [scratchCardUser, setScratchCardUser] = useState([])
+  const location = useLocation()
   const [page, setPage] = useState(1)
   
+  const { t } = useTranslation()
 
   useEffect(() => {
     scratchCardHistory()
   }, [])
   const [paginationObj, setPaginationObj] = useState({
     page: 1,
+    pageRangeDisplayed: 10,
     pageCount: 1,
-    pageRangeDisplayed: 10
   })
   const [scratchCardId] = useState(location?.state)
   const dynamicPage = e => {
-    setPage(1)
     setPageSize(e.target.value)
+    setPage(1)
   }
   const handlePageClick = event => {
     const newPage = event.selected + 1
@@ -42,8 +42,8 @@ const ScratchCardUsersTable = () => {
 
       const path = pathObj.scratchCardHistory + '/' + scratchCardId?.id
       const result = await apiGet(path, payload)
-      const response = result?.data?.results
       const resultStatus = result?.data?.success
+      const response = result?.data?.results
       setScratchCardUser(response?.docs)
       setPaginationObj({
         ...paginationObj,
