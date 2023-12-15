@@ -96,7 +96,7 @@ const ScratchCardUsersTable = () => {
                   </th>
 
                   <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
-                    {startCase(item?.user?.firstName + item?.user?.lastName)}
+                    {item?.user?.firstName +' '+ (item?.user?.lastName ?? '')}
                   </td>
                   <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
                     {item?.scratchCardRecord?.couponAmount || 'N/A'}
