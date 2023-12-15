@@ -9,6 +9,7 @@ import { useTranslation } from 'react-i18next'
 import UserWalletHistoryTable from './UserWalletHistoryTable'
 import { useLocation } from 'react-router-dom'
 import PageSizeList from 'components/PageSizeList'
+import helpers from 'utils/helpers'
 
 function UserWalletHistory () {
   const { t } = useTranslation()
@@ -60,10 +61,10 @@ function UserWalletHistory () {
         setAllUser(response?.docs)
         setPaginationObj({
           ...paginationObj,
-          page: resultStatus ? response.page : null,
-          pageCount: resultStatus ? response.totalPages : null,
-          perPageItem: resultStatus ? response?.docs.length : null,
-          totalItems: resultStatus ? response.totalDocs : null
+          page: helpers.ternaryCondition(resultStatus , response.page , null),
+          pageCount: helpers.ternaryCondition(resultStatus , response.totalPages , null),
+          perPageItem: helpers.ternaryCondition(resultStatus , response?.docs.length , null),
+          totalItems: helpers.ternaryCondition(resultStatus , response.totalDocs , null)
         })
       }
     } catch (error) {
