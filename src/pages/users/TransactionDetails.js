@@ -11,6 +11,19 @@ import { useLocation } from 'react-router-dom'
 import PageSizeList from 'components/PageSizeList'
 
 function TransactionDetails () {
+  useEffect(() => {
+    if (!isInitialized) {
+      setIsInitialized(true)
+    } else if (searchTerm || !filterData?.isReset) {
+      setFilterData({
+        ...filterData,
+        isReset: false,
+        searchkey: debouncedSearchTerm ? debouncedSearchTerm : '',
+        isFilter: debouncedSearchTerm ? true : false
+      })
+      setPage(1)
+    }
+  }, [debouncedSearchTerm])
   const { t } = useTranslation()
   const { logoutUser, updatePageName } = useContext(AuthContext)
   const [paginationObj, setPaginationObj] = useState({
@@ -59,7 +72,6 @@ function TransactionDetails () {
       if (result?.status === 200) {
         const response = result?.data?.results
         setTransactions(response)
-        
       }
     } catch (error) {
       console.error('error ', error)
@@ -100,7 +112,7 @@ function TransactionDetails () {
       searchkey: '',
       startDate: '',
       endDate: '',
-      isReset: true,
+      isReset: true
     })
     setPage(1)
     setIsDelete(true)
@@ -118,20 +130,6 @@ function TransactionDetails () {
     })
     setIsDelete(true)
   }
-
-  useEffect(() => {
-    if (!isInitialized) {
-      setIsInitialized(true)
-    } else if (searchTerm || !filterData?.isReset) {
-      setFilterData({
-        ...filterData,
-        isReset: false,
-        searchkey: debouncedSearchTerm ? debouncedSearchTerm : '',
-        isFilter: debouncedSearchTerm ? true : false
-      })
-      setPage(1)
-    }
-  }, [debouncedSearchTerm])
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -217,7 +215,7 @@ function TransactionDetails () {
             />
 
             <div className='flex justify-between'>
-            <PageSizeList  dynamicPage={dynamicPage} pageSize={pageSize}/>
+              <PageSizeList dynamicPage={dynamicPage} pageSize={pageSize} />
               {paginationObj?.totalItems ? (
                 <Pagination
                   handlePageClick={handlePageClick}
