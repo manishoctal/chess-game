@@ -101,8 +101,8 @@ function NotificationManager () {
 
   const handleReset = () => {
     setFilterData({
-      category: '',
       searchkey: '',
+      category: '',
       startDate: '',
       endDate: '',
       isReset: true,

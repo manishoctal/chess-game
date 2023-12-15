@@ -94,13 +94,13 @@ function TransactionDetails () {
 
   const handleReset = () => {
     setFilterData({
+      isFilter: false,
       category: '',
       kycStatus: '',
       searchkey: '',
       startDate: '',
       endDate: '',
       isReset: true,
-      isFilter: false
     })
     setPage(1)
     setIsDelete(true)

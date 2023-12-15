@@ -85,10 +85,9 @@ function Transaction () {
   const handleReset = () => {
     setFilterData({
       category: '',
-
+      isReset: true,
       startDate: '',
       endDate: '',
-      isReset: true,
       isFilter: false
     })
     setPage(1)

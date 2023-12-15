@@ -116,14 +116,14 @@ function User () {
 
   const handleReset = () => {
     setFilterData({
+      isKYCVerified: '',
       category: '',
       kycStatus: '',
       searchkey: '',
       startDate: '',
       endDate: '',
       isReset: true,
-      isFilter: false,
-      isKYCVerified: ''
+      isFilter: false
     })
     setPage(1)
     // setIsDelete(true)

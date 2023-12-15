@@ -121,8 +121,8 @@ function SubAdmin () {
   const handleReset = () => {
     setFilterData({
       category: '',
-      searchKey: '',
       startDate: '',
+      searchKey: '',
       endDate: '',
       isReset: true,
       isFilter: false

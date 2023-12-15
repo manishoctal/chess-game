@@ -94,8 +94,8 @@ function SupportManager () {
     setFilterData({
       category: '',
       searchkey: '',
-      startDate: '',
       endDate: '',
+      startDate: '',
       isReset: true,
       isFilter: false
     })

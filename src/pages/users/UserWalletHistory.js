@@ -92,9 +92,9 @@ function UserWalletHistory () {
       verificationStatus: '',
       category: '',
       kycStatus: '',
-      searchkey: '',
       startDate: '',
-      endDate: ''
+      endDate: '',
+      searchkey: '',
     })
     setPage(1)
     setIsDelete(true)
