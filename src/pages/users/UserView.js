@@ -385,7 +385,7 @@ const UserView = () => {
                   </figure>
                   <figcaption className='w-[calc(100%_-_41px)]'>
                     <span className='block text-[#5 C5C5C]'>
-                      {t('FIRST_NAME')}
+                      {t('NAME')}
                     </span>
                     <strong>
                       {' '}
@@ -398,25 +398,7 @@ const UserView = () => {
                   </figcaption>
                 </div>
               </div>
-              <div>
-                <div className='flex items-center'>
-                  <figure className='bg-white w-[42px] h-[41px] rounded-full flex items-center justify-center mr-3'>
-                    <img src={emailIcon} alt='' />
-                  </figure>
-                  <figcaption className='w-[calc(100%_-_41px)]'>
-                    <span className='block text-[#5 C5C5C]'>
-                      {t('LAST_NAME')}
-                    </span>
-                    <strong>
-                      {helpers.ternaryCondition(
-                        item?.lastName,
-                        item?.lastName,
-                        'N/A'
-                      )}
-                    </strong>
-                  </figcaption>
-                </div>
-              </div>
+             
               <div>
                 <div className='flex items-center'>
                   <figure className='bg-white w-[42px] h-[41px] rounded-full flex items-center justify-center mr-3'>
