@@ -20,7 +20,7 @@ function UserWalletHistory () {
     pageRangeDisplayed: 10
   })
 
-  const [users, setAllUser] = useState([])
+  const [users, setWalletHistory] = useState([])
   const [page, setPage] = useState(1)
   const [pageSize, setPageSize] = useState(10)
   const [isDelete, setIsDelete] = useState(false)
@@ -39,7 +39,7 @@ function UserWalletHistory () {
     isFilter: false
   })
 
-  const getAllUser = async () => {
+  const getWalletHistory = async () => {
     try {
       const { category, startDate, endDate, searchkey } = filterData
 
@@ -58,7 +58,7 @@ function UserWalletHistory () {
       if (result?.status === 200) {
         const response = result?.data?.results
         const resultStatus = result?.data?.success
-        setAllUser(response?.docs)
+        setWalletHistory(response?.docs)
         setPaginationObj({
           ...paginationObj,
           page: helpers.ternaryCondition(resultStatus , response.page , null),
@@ -104,7 +104,7 @@ function UserWalletHistory () {
   }
 
   useEffect(() => {
-    getAllUser()
+    getWalletHistory()
   }, [filterData, pageSize, page])
 
   useEffect(() => {
@@ -127,13 +127,14 @@ function UserWalletHistory () {
     if (!isInitialized) {
       setIsInitialized(true)
     } else if (searchTerm || !filterData?.isReset) {
+      setPage(1)
       setFilterData({
         ...filterData,
         isReset: false,
         searchkey: debouncedSearchTerm ? debouncedSearchTerm : '',
         isFilter: debouncedSearchTerm ? true : false
       })
-      setPage(1)
+    
     }
   }, [debouncedSearchTerm])
 
