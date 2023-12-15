@@ -61,10 +61,22 @@ function UserWalletHistory () {
         setWalletHistory(response?.docs)
         setPaginationObj({
           ...paginationObj,
-          page: helpers.ternaryCondition(resultStatus , response.page , null),
-          pageCount: helpers.ternaryCondition(resultStatus , response.totalPages , null),
-          perPageItem: helpers.ternaryCondition(resultStatus , response?.docs.length , null),
-          totalItems: helpers.ternaryCondition(resultStatus , response.totalDocs , null)
+          page: helpers.ternaryCondition(resultStatus, response.page, null),
+          pageCount: helpers.ternaryCondition(
+            resultStatus,
+            response.totalPages,
+            null
+          ),
+          perPageItem: helpers.ternaryCondition(
+            resultStatus,
+            response?.docs.length,
+            null
+          ),
+          totalItems: helpers.ternaryCondition(
+            resultStatus,
+            response.totalDocs,
+            null
+          )
         })
       }
     } catch (error) {
@@ -95,7 +107,7 @@ function UserWalletHistory () {
       kycStatus: '',
       startDate: '',
       endDate: '',
-      searchkey: '',
+      searchkey: ''
     })
     setPage(1)
     setIsDelete(true)
@@ -134,7 +146,6 @@ function UserWalletHistory () {
         searchkey: debouncedSearchTerm ? debouncedSearchTerm : '',
         isFilter: debouncedSearchTerm ? true : false
       })
-    
     }
   }, [debouncedSearchTerm])
 
@@ -149,21 +160,21 @@ function UserWalletHistory () {
 
   return (
     <div>
-      <div className='bg-[#F9F9F9] dark:bg-slate-900'>
-        <div className='px-3 py-4'>
-          <div className='bg-white border border-[#E9EDF9] rounded-lg dark:bg-slate-800 dark:border-[#ffffff38]'>
-            <form className='border-b border-b-[#E3E3E3]  px-4 py-3 pt-5 flex flex-wrap justify-between'>
-              <div className='flex flex-wrap items-center'>
-                <div className='flex items-center lg:pt-0 pt-3 justify-center'>
+      <div className='dark:bg-slate-900 bg-[#F9F9F9] '>
+        <div className=' py-4 px-3'>
+          <div className='border bg-white  border-[#E9EDF9] rounded-lg dark:bg-slate-800 dark:border-[#ffffff38]'>
+            <form className=' flex border-b border-b-[#E3E3E3]  px-4 py-3 pt-5  flex-wrap justify-between'>
+              <div className='flex-wrap flex  items-center'>
+                <div className='pt-3 flex items-center lg:pt-0  justify-center'>
                   <ODateRangePicker
-                    handleDateChange={handleDateChange}
-                    isReset={filterData?.isReset}
                     setIsReset={setFilterData}
+                    isReset={filterData?.isReset}
+                    handleDateChange={handleDateChange}
                   />
 
                   <button
-                    type='button'
                     onClick={() => handleReset()}
+                    type='button'
                     className='bg-gradientTo text-sm px-8 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2'
                   >
                     {t('O_RESET')}
@@ -217,7 +228,7 @@ function UserWalletHistory () {
             <UserWalletHistoryTable users={users} page={page} />
 
             <div className='flex justify-between'>
-            <PageSizeList  dynamicPage={dynamicPage} pageSize={pageSize}/>
+              <PageSizeList dynamicPage={dynamicPage} pageSize={pageSize} />
               {paginationObj?.totalItems ? (
                 <Pagination
                   handlePageClick={handlePageClick}
