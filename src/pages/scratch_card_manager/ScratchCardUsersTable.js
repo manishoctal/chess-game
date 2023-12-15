@@ -6,6 +6,7 @@ import Pagination from 'pages/Pagination';
 import { apiGet } from 'utils/apiFetch';
 import pathObj from 'utils/apiPath';
 import helper from 'utils/helpers';
+import helpers from 'utils/helpers';
 
 const ScratchCardUsersTable = () => {
   const [scratchCardUser, setScratchCardUser] = useState([]);
@@ -35,10 +36,10 @@ const ScratchCardUsersTable = () => {
       setScratchCardUser(response?.docs);
       setPaginationObj({
         ...paginationObj,
-        page: resultStatus ? response.page : null,
-        pageCount: resultStatus ? response.totalPages : null,
-        perPageItem: resultStatus ? response?.docs.length : null,
-        totalItems: resultStatus ? response.totalDocs : null,
+        page: helpers.ternaryCondition(resultStatus , response.page ,null),
+        pageCount: helpers.ternaryCondition(resultStatus , response.totalPages ,null),
+        perPageItem: helpers.ternaryCondition(resultStatus , response?.docs.length , null),
+        totalItems: helpers.ternaryCondition(resultStatus , response.totalDocs , null),
       });
     } catch (error) {
       console.error('Error fetching data:', error.message);
