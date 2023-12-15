@@ -1,62 +1,60 @@
-import { isEmpty, startCase } from 'lodash'
-import Pagination from 'pages/Pagination'
-import {  useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { useLocation  } from 'react-router-dom'
-import { apiGet } from 'utils/apiFetch'
-import pathObj from 'utils/apiPath'
-import helper from 'utils/helpers'
+import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useLocation } from 'react-router-dom';
+import { isEmpty, startCase } from 'lodash';
+import Pagination from 'pages/Pagination';
+import { apiGet } from 'utils/apiFetch';
+import pathObj from 'utils/apiPath';
+import helper from 'utils/helpers';
 
 const ScratchCardUsersTable = () => {
-  const [scratchCardUser, setScratchCardUser] = useState([])
-  const location = useLocation()
-  const [page, setPage] = useState(1)
-  
-  const { t } = useTranslation()
-
-  useEffect(() => {
-    scratchCardHistory()
-  }, [])
+  const [scratchCardUser, setScratchCardUser] = useState([]);
+  const [page, setPage] = useState(1);
   const [paginationObj, setPaginationObj] = useState({
     page: 1,
     pageRangeDisplayed: 10,
     pageCount: 1,
-  })
-  const [scratchCardId] = useState(location?.state)
-  const dynamicPage = e => {
-    setPageSize(e.target.value)
-    setPage(1)
-  }
-  const handlePageClick = event => {
-    const newPage = event.selected + 1
-    setPage(newPage)
-  }
-  const [pageSize, setPageSize] = useState(10)
-  const scratchCardHistory = async (data, pageNO) => {
+  });
+  const location = useLocation();
+  const { t } = useTranslation();
+  const [pageSize, setPageSize] = useState(10);
+  const [scratchCardId] = useState(location?.state);
+
+  useEffect(() => {
+    scratchCardHistory();
+  }, []);
+
+  const scratchCardHistory = async () => {
     try {
+      const payload = {};
+      const path = `${pathObj.scratchCardHistory}/${scratchCardId?.id}`;
+      const result = await apiGet(path, payload);
+      const resultStatus = result?.data?.success;
+      const response = result?.data?.results;
 
-      const payload = {
-        // page,
-        // pageSize: pageSize,
-      }
-
-      const path = pathObj.scratchCardHistory + '/' + scratchCardId?.id
-      const result = await apiGet(path, payload)
-      const resultStatus = result?.data?.success
-      const response = result?.data?.results
-      setScratchCardUser(response?.docs)
+      setScratchCardUser(response?.docs);
       setPaginationObj({
         ...paginationObj,
         page: resultStatus ? response.page : null,
         pageCount: resultStatus ? response.totalPages : null,
         perPageItem: resultStatus ? response?.docs.length : null,
-        totalItems: resultStatus ? response.totalDocs : null
-      })
+        totalItems: resultStatus ? response.totalDocs : null,
+      });
     } catch (error) {
-      console.error('error in get all sub admin list==>>>>', error.message)
+      console.error('Error fetching data:', error.message);
     }
-  }
- 
+  };
+
+  const dynamicPage = e => {
+    setPageSize(e.target.value);
+    setPage(1);
+  };
+
+  const handlePageClick = event => {
+    const newPage = event.selected + 1;
+    setPage(newPage);
+  };
+
 
   return (
     <>
