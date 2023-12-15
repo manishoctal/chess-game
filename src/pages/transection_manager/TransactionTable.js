@@ -12,41 +12,25 @@ const TransactionTable = ({ artistVerification, page, userType, pageSize }) => {
         <table className='w-full text-xs text-left text-[#A5A5A5] dark:text-gray-400 '>
           <thead className='text-xs text-gray-900 border border-[#E1E6EE] bg-[#E1E6EE] dark:bg-gray-700 dark:text-gray-400 dark:border-[#ffffff38]'>
             <tr>
-              <th scope='col' className='py-3 px-6'>
+              <th  className='px-5 py-3 ' scope='col'>
                 #
               </th>
-              <th scope='col' className='py-3 px-6'>
-                {t('FIRST_NAME')}
-              </th>
-              <th scope='col' className='py-3 px-6'>
-                {t('USER_ID')}
-              </th>
-              <th scope='col' className='py-3 px-6'>
-                {t('TRANSACTION_ID')}
-              </th>
+              <th  className='px-5 py-3 ' scope='col'>{t('FIRST_NAME')}</th>
+              <th  className='px-5 py-3 ' scope='col'>{t('USER_ID')}</th>
+              <th  className='px-5 py-3 ' scope='col'>{t('TRANSACTION_ID')}</th>
               {userType === 'tourist' && (
                 <>
-                  <th scope='col' className='py-3 px-6'>
-                    {t('TRANSACTION_AMOUNT')}
-                  </th>
-                  <th scope='col' className='py-3 px-6'>
-                    {t('REWARD_AMOUNT')}
-                  </th>
+                  <th  className='px-5 py-3 ' scope='col'>{t('TRANSACTION_AMOUNT')}</th>
+                  <th scope='col' className='px-5 py-3 '>{t('REWARD_AMOUNT')}</th>
                 </>
               )}
               {userType === 'local' && (
                 <>
-                  <th scope='col' className='py-3 px-6'>
-                    {t('AMOUNT_DEPOSIT')}
-                  </th>
-                  <th scope='col' className='py-3 px-6'>
-                    {t('MODE_OF_PAYMENT')}
-                  </th>
+                  <th scope='col' className='px-5 py-3 '> {t('AMOUNT_DEPOSIT')}</th>
+                  <th scope='col' className='px-5 py-3 '>{t('MODE_OF_PAYMENT')}</th>
                 </>
               )}
-              <th scope='col' className='py-3 px-6 text-center'>
-                {t('O_CREATED_AT')}
-              </th>
+              <th scope='col' className='py-3 px-5 text-center'>{t('O_CREATED_AT')}</th>
             </tr>
           </thead>
           <tbody>

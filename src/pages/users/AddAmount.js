@@ -6,6 +6,7 @@ import useToastContext from 'hooks/useToastContext'
 import { useTranslation } from 'react-i18next'
 import { NavLink } from 'react-router-dom'
 import helper from 'utils/helpers'
+import { startCase } from 'lodash'
 
 const AddAmount = ({ setIsAmountModal, getAllUser ,addAmountUser,userType}) => {
   const { t } = useTranslation()
@@ -14,13 +15,13 @@ const AddAmount = ({ setIsAmountModal, getAllUser ,addAmountUser,userType}) => {
     handleSubmit,
     formState: { errors }
   } = useForm({ mode: 'onChange', shouldFocusError: true, defaultValues: {} })
-
+ 
   const notification = useToastContext()
   const handleSubmitForm = async data => {
     try {
       
       const path = apiPath.addMoneyToUserWallet
-      const result = await apiPost(path, {...data,userId:addAmountUser?._id,transactionType:'adminToLocalWallet',userType})
+      const result = await apiPost(path, {...data,userId:addAmountUser?._id,transactionType:`adminTo${startCase(userType)}Wallet`,userType})
       if (result?.data?.success === true) {
         notification.success(result?.data.message)
         getAllUser()
