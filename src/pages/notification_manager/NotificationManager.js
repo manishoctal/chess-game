@@ -9,6 +9,8 @@ import ODateRangePicker from 'components/shared/datePicker/ODateRangePicker'
 import { useTranslation } from 'react-i18next'
 import NotificationAdd from './NotificationAdd'
 import ViewNotifications from './ViewNotifications'
+import PageSizeList from 'components/PageSizeList'
+import helpers from 'utils/helpers'
 
 function NotificationManager () {
   const { t } = useTranslation()
@@ -63,28 +65,28 @@ function NotificationManager () {
         setAllNotifications(response?.docs)
         setPaginationObj({
           ...paginationObj,
-          page: resultStatus ? response.page : null,
-          pageCount: resultStatus ? response.totalPages : null,
-          perPageItem: resultStatus ? response?.docs.length : null,
-          totalItems: resultStatus ? response.totalDocs : null
+          page: helpers.ternaryCondition(resultStatus , response.page , null),
+          pageCount: helpers.ternaryCondition(resultStatus , response.totalPages , null),
+          perPageItem: helpers.ternaryCondition(resultStatus , response?.docs.length , null),
+          totalItems: helpers.ternaryCondition(resultStatus , response.totalDocs , null)
         })
       }
     } catch (error) {
-      console.error('error ', error)
       setPaginationObj({})
+      console.error('error ', error)
       if (error.response.status === 401 || error.response.status === 409) {
         logoutUser()
       }
     }
   }
 
+  
+  const handelEdit = newItem => {
+    setItem(newItem)
+  }
   const handlePageClick = event => {
     const newPage = event.selected + 1
     setPage(newPage)
-  }
-
-  const handelEdit = newItem => {
-    setItem(newItem)
   }
 
   const handleUserView = newItem => {
@@ -100,8 +102,8 @@ function NotificationManager () {
 
   const handleReset = () => {
     setFilterData({
-      category: '',
       searchkey: '',
+      category: '',
       startDate: '',
       endDate: '',
       isReset: true,
@@ -195,26 +197,7 @@ function NotificationManager () {
             )}
 
             <div className='flex justify-between'>
-              <div className='flex items-center mb-3 ml-3'>
-                <p className='w-[160px] -space-x-px pt-5 md:pb-5 pr-5 text-gray-500'>
-                  Page Size
-                </p>
-
-                <select
-                  id='countries'
-                  type=' password'
-                  name='floating_password'
-                  className=' w-[100px] block p-2 px-2 w-full text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer'
-                  placeholder=''
-                  value={pageSize}
-                  onChange={e => dynamicPage(e)}
-                >
-                  <option value='10'>10</option>
-                  <option value='20'>20</option>
-                  <option value='50'>50</option>
-                  <option value='100'>100</option>
-                </select>
-              </div>
+            <PageSizeList  dynamicPage={dynamicPage} pageSize={pageSize}/>
               {paginationObj?.totalItems !== 0 && (
                 <Pagination
                   handlePageClick={handlePageClick}
