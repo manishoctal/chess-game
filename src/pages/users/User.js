@@ -71,8 +71,8 @@ function User () {
       const result = await apiGet(path, payload)
 
       if (result?.status === 200) {
-        setAllUser(response?.docs)
         const response = result?.data?.results
+        setAllUser(response?.docs)
         const resultStatus = result?.data?.success
         setPaginationObj({
           ...paginationObj,
