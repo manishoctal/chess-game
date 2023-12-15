@@ -261,8 +261,8 @@ function User () {
                   <button
                     type='button'
                     onClick={() => handleReset()}
-                    title= {t('O_RESET')}
                     className='bg-gradientTo text-sm px-8 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2'
+                    title= {t('O_RESET')}
                   >
                     {t('O_RESET')}
                   </button>
@@ -270,10 +270,8 @@ function User () {
               </div>
               <div className='flex items-center md:justify-end px-4'>
                 <label
-                  htmlFor='default-search'
-                  className='mb-2 text-sm font-medium text-gray-900 sr-only'
-                >
-                  {t('O_SEARCH')}
+                  htmlFor='default-search' className='mb-2 font-medium text-sm  text-gray-900 sr-only'
+                >  {t('O_SEARCH')}
                 </label>
                 <div className='flex'>
                   <div className='relative'>
