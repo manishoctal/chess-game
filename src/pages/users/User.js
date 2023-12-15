@@ -299,13 +299,13 @@ function User () {
                       )}
                     </div>
                     <input
+                      title=''
+                      required
                       type='search'
                       id='default-search'
                       className='block w-full p-2 outline-none text-sm text-gray-900 2xl:min-w-[250px] xl:min-w-[300px] rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
                       placeholder={t('SEARCH_BY_KEYWORD')}
                       value={searchTerm}
-                      title=''
-                      required
                       onChange={e => setSearchTerm(e.target.value)}
                     />
                   </div>
