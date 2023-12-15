@@ -7,6 +7,7 @@ import AuthContext from 'context/AuthContext'
 import dayjs from 'dayjs'
 import ODateRangePicker from 'components/shared/datePicker/ODateRangePicker'
 import { useTranslation } from 'react-i18next'
+import PageSizeList from 'components/PageSizeList'
 
 function User () {
   const { t } = useTranslation()
@@ -326,26 +327,7 @@ function User () {
             />
 
             <div className='flex justify-between'>
-              <div className='flex items-center mb-3 ml-3'>
-                <p className='w-[160px] -space-x-px pt-5 md:pb-5 pr-5 text-gray-500'>
-                  Page Size
-                </p>
-
-                <select
-                  id='countries'
-                  type=' password'
-                  name='floating_password'
-                  className=' w-[100px] block p-2 px-2 w-full text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer'
-                  placeholder=''
-                  value={pageSize}
-                  onChange={e => dynamicPage(e)}
-                >
-                  <option value='10'>10</option>
-                  <option value='20'>20</option>
-                  <option value='50'>50</option>
-                  <option value='100'>100</option>
-                </select>
-              </div>
+            <PageSizeList  dynamicPage={dynamicPage} pageSize={pageSize}/>
               
               {paginationObj?.totalItems ? (
                 <Pagination
