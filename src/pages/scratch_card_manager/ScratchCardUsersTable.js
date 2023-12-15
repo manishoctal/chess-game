@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
-import { isEmpty, startCase } from 'lodash';
+import { isEmpty  } from 'lodash';
 import Pagination from 'pages/Pagination';
 import { apiGet } from 'utils/apiFetch';
 import pathObj from 'utils/apiPath';
-import helper from 'utils/helpers';
 import helpers from 'utils/helpers';
 
 const ScratchCardUsersTable = () => {
@@ -106,7 +105,7 @@ const ScratchCardUsersTable = () => {
                     {item?.scratchCardRecord?.couponCode || 'N/A'}
                   </td>
                   <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
-                    {helper.getDateAndTime(item?.createdAt)}
+                    {helpers.getDateAndTime(item?.createdAt)}
                   </td>
                 </tr>
               ))}
