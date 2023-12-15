@@ -10,6 +10,7 @@ import { useTranslation } from 'react-i18next'
 import NotificationAdd from './NotificationAdd'
 import ViewNotifications from './ViewNotifications'
 import PageSizeList from 'components/PageSizeList'
+import helpers from 'utils/helpers'
 
 function NotificationManager () {
   const { t } = useTranslation()
@@ -64,28 +65,28 @@ function NotificationManager () {
         setAllNotifications(response?.docs)
         setPaginationObj({
           ...paginationObj,
-          page: resultStatus ? response.page : null,
-          pageCount: resultStatus ? response.totalPages : null,
-          perPageItem: resultStatus ? response?.docs.length : null,
-          totalItems: resultStatus ? response.totalDocs : null
+          page: helpers.ternaryCondition(resultStatus , response.page , null),
+          pageCount: helpers.ternaryCondition(resultStatus , response.totalPages , null),
+          perPageItem: helpers.ternaryCondition(resultStatus , response?.docs.length , null),
+          totalItems: helpers.ternaryCondition(resultStatus , response.totalDocs , null)
         })
       }
     } catch (error) {
-      console.error('error ', error)
       setPaginationObj({})
+      console.error('error ', error)
       if (error.response.status === 401 || error.response.status === 409) {
         logoutUser()
       }
     }
   }
 
+  
+  const handelEdit = newItem => {
+    setItem(newItem)
+  }
   const handlePageClick = event => {
     const newPage = event.selected + 1
     setPage(newPage)
-  }
-
-  const handelEdit = newItem => {
-    setItem(newItem)
   }
 
   const handleUserView = newItem => {
