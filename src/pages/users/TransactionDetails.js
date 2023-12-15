@@ -86,6 +86,14 @@ function TransactionDetails () {
     setPage(1)
     setPageSize(e.target.value)
   }
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      setDebouncedSearchTerm(searchTerm.trim())
+    }, 500)
+    return () => {
+      clearTimeout(timeoutId)
+    }
+  }, [searchTerm])
 
   const handlePageClick = event => {
     const newPage = event.selected + 1
@@ -131,15 +139,7 @@ function TransactionDetails () {
     setIsDelete(true)
   }
 
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      setDebouncedSearchTerm(searchTerm.trim())
-    }, 500)
-    return () => {
-      clearTimeout(timeoutId)
-    }
-  }, [searchTerm])
-
+  
   return (
     <div>
       <div className='bg-[#F9F9F9] dark:bg-slate-900'>
