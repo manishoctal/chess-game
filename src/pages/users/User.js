@@ -140,7 +140,7 @@ function User () {
       isFilter: true,
       isReset: false
     })
-    setIsDelete(true)
+    
   }
 
   const statusPage = e => {
