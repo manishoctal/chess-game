@@ -12,9 +12,11 @@ const ScratchCardUsersTable = () => {
   const location = useLocation()
   const [scratchCardUser, setScratchCardUser] = useState([])
   const [page, setPage] = useState(1)
-  const [pageSize, setPageSize] = useState(10)
+  
 
- 
+  useEffect(() => {
+    scratchCardHistory()
+  }, [])
   const [paginationObj, setPaginationObj] = useState({
     page: 1,
     pageCount: 1,
@@ -29,7 +31,7 @@ const ScratchCardUsersTable = () => {
     const newPage = event.selected + 1
     setPage(newPage)
   }
-
+  const [pageSize, setPageSize] = useState(10)
   const scratchCardHistory = async (data, pageNO) => {
     try {
 
@@ -54,9 +56,7 @@ const ScratchCardUsersTable = () => {
       console.error('error in get all sub admin list==>>>>', error.message)
     }
   }
-  useEffect(() => {
-    scratchCardHistory()
-  }, [])
+ 
 
   return (
     <>
