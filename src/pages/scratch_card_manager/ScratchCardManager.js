@@ -98,12 +98,15 @@ function ScratchCardManager () {
       setFilterData({
         ...filterData,
         isReset: false,
-        searchkey: debouncedSearchTerm || '',
-        isFilter: !!debouncedSearchTerm
+        isFilter: !!debouncedSearchTerm,
+        searchkey: debouncedSearchTerm || ''
       })
       setPage(1)
     }
   }, [debouncedSearchTerm])
+  useEffect(() => {
+    updatePageName(t('SCRATCH_CARD_MANAGER'))
+  }, [])
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -113,9 +116,6 @@ function ScratchCardManager () {
       clearTimeout(timeoutId)
     }
   }, [searchTerm])
-  useEffect(() => {
-    updatePageName(t('SCRATCH_CARD_MANAGER'))
-  }, [])
 
   return (
     <>
