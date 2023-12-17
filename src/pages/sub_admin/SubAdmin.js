@@ -219,7 +219,7 @@ function SubAdmin () {
                     isReset={filterData?.isReset}
                     setIsReset={setFilterData}
                   />
-                  <div className='flex items-center mb-3 ml-3'>
+                  {(manager?.add || manager?.edit || user?.role === 'admin') && <div className='flex items-center mb-3 ml-3'>
                     <select
                       id='countries'
                       type=' password'
@@ -235,7 +235,7 @@ function SubAdmin () {
                       <option value='active'>{t('O_ACTIVE')}</option>
                       <option value='inactive'>{t('O_INACTIVE')}</option>
                     </select>
-                  </div>
+                  </div>}
 
                   <button
                     type='button'

@@ -50,7 +50,7 @@ const SubAdd = ({ props }) => {
     helpers.ternaryCondition(item?.type , getValues('permission') , Permission)
   )
   const { updatePageName } = useContext(AuthContext)
-  const [countryCode] = useState('in')
+  const [countryCode] = useState('th')
 
   const onChange = event => {
     setPermission(current =>
@@ -264,6 +264,7 @@ const SubAdd = ({ props }) => {
                       style={{ borderRadius: '20px' }}
                       country={countryCode}
                       enableSearch
+                      onlyCountries={['th']}
                       countryCodeEditable={false}
                       disabled={item?.type === 'view'}
                     />

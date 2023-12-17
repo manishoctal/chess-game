@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
-import { isEmpty, startCase } from 'lodash';
+import { isEmpty  } from 'lodash';
 import Pagination from 'pages/Pagination';
 import { apiGet } from 'utils/apiFetch';
 import pathObj from 'utils/apiPath';
-import helper from 'utils/helpers';
+import helpers from 'utils/helpers';
 
 const ScratchCardUsersTable = () => {
   const [scratchCardUser, setScratchCardUser] = useState([]);
@@ -35,10 +35,10 @@ const ScratchCardUsersTable = () => {
       setScratchCardUser(response?.docs);
       setPaginationObj({
         ...paginationObj,
-        page: resultStatus ? response.page : null,
-        pageCount: resultStatus ? response.totalPages : null,
-        perPageItem: resultStatus ? response?.docs.length : null,
-        totalItems: resultStatus ? response.totalDocs : null,
+        page: helpers.ternaryCondition(resultStatus , response.page ,null),
+        pageCount: helpers.ternaryCondition(resultStatus , response.totalPages ,null),
+        perPageItem: helpers.ternaryCondition(resultStatus , response?.docs.length , null),
+        totalItems: helpers.ternaryCondition(resultStatus , response.totalDocs , null),
       });
     } catch (error) {
       console.error('Error fetching data:', error.message);
@@ -96,7 +96,7 @@ const ScratchCardUsersTable = () => {
                   </th>
 
                   <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
-                    {startCase(item?.user?.firstName + item?.user?.lastName)}
+                    {item?.user?.firstName +' '+ (item?.user?.lastName ?? '')}
                   </td>
                   <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
                     {item?.scratchCardRecord?.couponAmount || 'N/A'}
@@ -105,7 +105,7 @@ const ScratchCardUsersTable = () => {
                     {item?.scratchCardRecord?.couponCode || 'N/A'}
                   </td>
                   <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
-                    {helper.getDateAndTime(item?.createdAt)}
+                    {helpers.getDateAndTime(item?.createdAt)}
                   </td>
                 </tr>
               ))}
