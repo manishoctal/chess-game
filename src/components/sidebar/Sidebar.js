@@ -205,9 +205,7 @@ const Sidebar = () => {
             generateNavLink(
               '/email-manager',
               'EMAIL_MANAGER',
-              <AiOutlineMail
-                style={{ fontSize: '20px' }}
-                title={t('EMAIL_MANAGER')}
+              <AiOutlineMail style={{ fontSize: '20px' }} title={t('EMAIL_MANAGER')}
               />
             )
           )}
@@ -217,8 +215,7 @@ const Sidebar = () => {
               '/feedback-manager',
               'FEEDBACK_MANAGER',
               <AiOutlineMail
-                style={{ fontSize: '20px' }}
-                title={t('FEEDBACK_MANAGER')}
+                style={{ fontSize: '20px' }}title={t('FEEDBACK_MANAGER')}
               />
             )
           )}
@@ -228,8 +225,8 @@ const Sidebar = () => {
               '/report-manager',
               'REPORT_MANAGER',
               <AiOutlineMail
-                style={{ fontSize: '20px' }}
-                title={t('REPORT_MANAGER')}
+              title={t('REPORT_MANAGER')}
+              style={{ fontSize: '20px' }}
               />
             )
           )}
