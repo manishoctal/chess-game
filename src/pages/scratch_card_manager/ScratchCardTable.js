@@ -22,26 +22,14 @@ const ScratchCardTable = ({ subAdmin, page, pageSize }) => {
           <thead className='text-xs text-gray-900 border border-[#E1E6EE] bg-[#E1E6EE] dark:bg-gray-700 dark:text-gray-400 dark:border-[#ffffff38]'>
             <tr>
               <th scope='col' className='px-6 py-3 '>
-                {t('S.NO')}
-              </th>
+                {t('S.NO')}</th>
 
-              <th scope='col' className='px-6 py-3 '>
-                {t('COUPON_CODE')}
-              </th>
+              <th scope='col' className='px-6 py-3 '>{t('COUPON_CODE')}</th>
 
-              <th scope='col' className='px-6 py-3 '>
-                {t('COUPON_AMOUNT')}
-              </th>
-              <th scope='col' className='px-6 py-3 '>
-                {t('REWARD_AMOUNT')}
-              </th>
-              <th scope='col' className='px-6 py-3 '>
-                {t('EXPIRE_DATE')}
-              </th>
-
-              <th scope='col' className='py-3 px-6 text-center'>
-                {t('O_ACTION')}
-              </th>
+              <th scope='col' className='px-6 py-3 '>{t('COUPON_AMOUNT')} </th>
+              <th scope='col' className='px-6 py-3 '> {t('REWARD_AMOUNT')}</th>
+              <th scope='col' className='px-6 py-3 '>{t('EXPIRE_DATE')}</th>
+              <th scope='col' className='py-3 px-6 text-center'>{t('O_ACTION')}</th>
             </tr>
           </thead>
           <tbody>
@@ -57,12 +45,8 @@ const ScratchCardTable = ({ subAdmin, page, pageSize }) => {
                   {i + 1 + pageSize * (page - 1)}
                 </th>
 
-                <td className='py-2 px-4 border-r dark:border-[#ffffff38] text-slate-900 font-bold'>
-                  {item?.couponCode}
-                </td>
-                <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
-                  {item?.couponAmount || 'N/A'}
-                </td>
+                <td className='py-2 px-4 border-r dark:border-[#ffffff38] text-slate-900 font-bold'>{item?.couponCode}</td>
+                <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>{item?.couponAmount || 'N/A'}</td>
                 <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
                   {item?.rewardAmount || 'N/A'}
                 </td>
