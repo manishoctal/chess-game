@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { apiGet  } from '../../utils/apiFetch'
 import apiPath from '../../utils/apiPath'
-import Table from './Table'
+import ReportsTable from './ReportsTable'
 import Pagination from '../Pagination'
 import AuthContext from 'context/AuthContext'
 import dayjs from 'dayjs'
@@ -11,9 +11,9 @@ import PageSizeList from 'components/PageSizeList'
 import helpers from 'utils/helpers'
 import OSearch from 'components/reusable/OSearch'
 
-function User () {
+function Report () {
   const { t } = useTranslation()
-  const { logoutUser, user, updatePageName } = useContext(AuthContext)
+  const { logoutUser,  updatePageName } = useContext(AuthContext)
   const [paginationObj, setPaginationObj] = useState({
     page: 1,
     pageCount: 1,
@@ -24,7 +24,6 @@ function User () {
   const [userType, setUserType] = useState('tourist')
   const [page, setPage] = useState(1)
   const [pageSize, setPageSize] = useState(10)
-  const [isDelete, setIsDelete] = useState(false)
   const [searchTerm, setSearchTerm] = useState('')
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('')
   const [isInitialized, setIsInitialized] = useState(false)
@@ -32,7 +31,6 @@ function User () {
  
 
   const [filterData, setFilterData] = useState({
-    isKYCVerified: '',
     category: '',
     searchkey: '',
     startDate: '',
@@ -40,35 +38,33 @@ function User () {
     isReset: false,
     isFilter: false
   })
-  const [sort, setSort] = useState({
+  const [sort] = useState({
     sort_key: 'createdAt',
     sort_type: 'desc'
   })
 
-  const getAllUser = async data => {
+  const getAllReports = async () => {
     try {
       const {
         category,
         startDate,
         endDate,
         searchkey,
-        isKYCVerified
       } = filterData
 
       const payload = {
         page,
         pageSize: pageSize,
         userType,
-        status: category,
         startDate: startDate ? dayjs(startDate).format('YYYY-MM-DD') : null,
+        status: category,
         endDate: endDate ? dayjs(endDate).format('YYYY-MM-DD') : null,
         keyword: searchkey?.trim(),
         sortKey: sort?.sort_key,
         sortType: sort?.sort_type,
-        isKYCVerified
       }
 
-      const path = apiPath.getUsers
+      const path = apiPath.getReports
       const result = await apiGet(path, payload)
 
       if (result?.status === 200) {
@@ -104,23 +100,20 @@ function User () {
 
   
 
-  const handleUserView = () => {
-    updatePageName(` ${t('VIEW') + ' ' + t('USER_MANAGER')}`)
-  }
+ 
 
   useEffect(() => {
-    getAllUser()
+    getAllReports()
   }, [page, filterData, sort, pageSize, userType])
 
   useEffect(() => {
-    updatePageName(t('O_USERS'))
+    updatePageName(t('REPORT_MANAGER'))
   }, [])
 
   const handleReset = () => {
     setFilterData({
-      isKYCVerified: '',
       category: '',
-      kycStatus: '',
+    
       searchkey: '',
       startDate: '',
       endDate: '',
@@ -128,7 +121,6 @@ function User () {
       isFilter: false
     })
     setPage(1)
-    // setIsDelete(true)
     setSearchTerm('')
     setPageSize(10)
   }
@@ -144,26 +136,8 @@ function User () {
     
   }
 
-  const statusPage = e => {
-    setFilterData({
-      ...filterData,
-      category: e.target.value,
-      isFilter: true,
-      isReset: false
-    })
-    setPage(1)
-    setIsDelete(true)
-  }
-  const handleVerify = e => {
-    setFilterData({
-      ...filterData,
-      isKYCVerified: e?.target?.value,
-      isFilter: true,
-      isReset: false
-    })
-    setPage(1)
-    setIsDelete(true)
-  }
+  
+  
 
   useEffect(() => {
     if (!isInitialized) {
@@ -188,7 +162,6 @@ function User () {
     }
   }, [searchTerm])
 
-  const manager = user?.permission?.find(e => e.manager === 'user_manager')
 
   return (
     <div>
@@ -222,42 +195,8 @@ function User () {
                     setIsReset={setFilterData}
                   />
 
-                  <div className='flex items-center mb-3 ml-3'>
-                    <select
-                      id='countries'
-                      type='password'
-                      name='floating_password'
-                      className='block p-2 w-full text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer'
-                      placeholder=' '
-                      value={filterData?.category}
-                      onChange={statusPage}
-                    >
-                      <option defaultValue value=''>
-                        {t('O_ALL')}
-                      </option>
-                      <option value='active'>{t('O_ACTIVE')}</option>
-                      <option value='inactive'>{t('O_INACTIVE')}</option>
-                    </select>
-                  </div>
+                 
 
-                  <div className='flex items-center mb-3 ml-3'>
-                    <select
-                      id='countries'
-                      type=' password'
-                      name='floating_password'
-                      className='block p-2 w-full text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF] focus:outline-none focus:ring-0  peer'
-                      placeholder=' '
-                      value={filterData?.isKYCVerified}
-                      onChange={e => handleVerify(e)}
-                    >
-                      <option defaultValue value=''>
-                        {t('KYC_STATUS')}
-                      </option>
-                      <option value='approved'>{t('KYC_COMPLETED')}</option>
-                      <option value='pending'>{t('KYC_PENDING')}</option>
-                      <option value='KYCNotUploadedYet'>{t('KYC Document Not Uploaded Yet')}</option>
-                    </select>
-                  </div>
 
                   <button
                     type='button'
@@ -276,45 +215,31 @@ function User () {
                 </label>
                 <div className='flex'>
                   <div className='relative'>
-                  <OSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm}   placeholder={t('SEARCH_BY_KEYWORD')}/>
-
+                  <OSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm} placeholder={t('SEARCH_BY_KEYWORD')}/>
                   </div>
                 </div>
               </div>
             </form>
-            <Table
+            <ReportsTable
               users={users}
-              user={user}
-              getAllUser={getAllUser}
-              
-              handleUserView={handleUserView}
               page={page}
-              setSort={setSort}
-              sort={sort}
-              setPage={setPage}
               pageSize={pageSize}
               userType={userType}
-              manager={manager}
             />
-
             <div className='flex justify-between'>
-            <PageSizeList  dynamicPage={dynamicPage} pageSize={pageSize}/>
-              
+            <PageSizeList  dynamicPage={dynamicPage} pageSize={pageSize}/>       
               {paginationObj?.totalItems ? (
                 <Pagination
                   handlePageClick={handlePageClick}
                   options={paginationObj}
-                  isDelete={isDelete}
                   page={page}
                 />
               ) : null}
             </div>
           </div>
         </div>
-      </div>
-
-     
+      </div> 
     </div>
   )
 }
-export default User
+export default Report

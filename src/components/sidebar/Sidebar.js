@@ -205,9 +205,7 @@ const Sidebar = () => {
             generateNavLink(
               '/email-manager',
               'EMAIL_MANAGER',
-              <AiOutlineMail
-                style={{ fontSize: '20px' }}
-                title={t('EMAIL_MANAGER')}
+              <AiOutlineMail style={{ fontSize: '20px' }} title={t('EMAIL_MANAGER')}
               />
             )
           )}
@@ -217,8 +215,29 @@ const Sidebar = () => {
               '/feedback-manager',
               'FEEDBACK_MANAGER',
               <AiOutlineMail
+                style={{ fontSize: '20px' }}title={t('FEEDBACK_MANAGER')}
+              />
+            )
+          )}
+          {andOperator(
+            checkSidebarPermission('report_manager'),
+            generateNavLink(
+              '/report-manager',
+              'REPORT_MANAGER',
+              <AiOutlineMail
+              title={t('REPORT_MANAGER')}
+              style={{ fontSize: '20px' }}
+              />
+            )
+          )}
+          {andOperator(
+            checkSidebarPermission('reward_withdrawal_request'),
+            generateNavLink(
+              '/reward-withdrawal-request',
+              'REWARD_WITHDRAWAL_REQUEST',
+              <AiOutlineMail
                 style={{ fontSize: '20px' }}
-                title={t('FEEDBACK_MANAGER')}
+                title={t('REWARD_WITHDRAWAL_REQUEST')}
               />
             )
           )}

@@ -100,6 +100,24 @@ const Permission = [
     shownAdd: true,
     shownAll: true
   },
+  {
+    manager: 'report_manager',
+    add: false,
+    edit: false,
+    view: false,
+    shownView: true,
+    shownAdd: true,
+    shownAll: true
+  },
+  {
+    manager: 'reward_withdrawal_request',
+    add: false,
+    edit: false,
+    view: false,
+    shownView: true,
+    shownAdd: true,
+    shownAll: true
+  },
 
 ]
 

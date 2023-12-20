@@ -191,8 +191,8 @@ const Settings = () => {
 
             <div className='relative z-0 mb-6 w-full group'>
               <OInputField
-                wrapperClassName='relative z-0  w-full group'
                 type='number'
+                wrapperClassName='relative z-0  w-full group'
                 disable={manager?.add === false}
                 inputLabel={<>{t('REFERRAL_BONUS_FOR_TOURIST')}</>}
                 maxLength={40}
@@ -217,9 +217,9 @@ const Settings = () => {
             </div>
             <div className='relative z-0 mb-6 w-full group'>
               <OInputField
-                wrapperClassName='relative z-0  w-full group'
                 type='number'
                 disable={manager?.add === false}
+                wrapperClassName='relative z-0  w-full group'
                 inputLabel={<>{t('REFERRAL_BONUS_FOR_LOCALS')}</>}
                 maxLength={40}
                 id='referralBonusLocals'
@@ -243,10 +243,10 @@ const Settings = () => {
             </div>
             <div className='w-full'>
               <OInputField
-                wrapperClassName='relative z-0  w-full group'
                 type='number'
                 maxLength={40}
                 inputLabel={<>{t('UPC_CODE_REFERRAL_AMOUNT')}</>}
+                wrapperClassName='relative z-0  w-full group'
                 name='upcCodeReferralAmount'
                 disable={manager?.add === false}
                 register={register('upcCodeReferralAmount', {
@@ -274,10 +274,10 @@ const Settings = () => {
             </div>
             <div className='mb-4  w-full'>
               <OInputField
-                wrapperClassName='relative z-0  w-full group'
                 type='number'
-                maxLength={40}
                 id='signupBonus'
+                maxLength={40}
+                wrapperClassName='relative z-0  w-full group'
                 disable={manager?.add === false}
                 inputLabel={<>{t('SIGN_UP_BONUS')}</>}
                 register={register('signupBonus', {
@@ -302,8 +302,8 @@ const Settings = () => {
             <div className='w-full'>
               <OInputField
                 wrapperClassName='relative z-0  w-full group'
-                type='number'
                 id='payment'
+                type='number'
                 disable={manager?.add === false}
                 inputLabel={<>{t('TRANSFER_MONEY_LIMIT_MAXIMUM')}</>}
                 maxLength={40}
@@ -327,11 +327,11 @@ const Settings = () => {
             </div>
             <div className='w-full'>
               <OInputField
+                inputLabel={<>{t('NEGATIVE_AMOUNT_MAXIMUM_LIMIT')}</>}
                 wrapperClassName='relative z-0  w-full group'
                 type='number'
                 id='payment'
                 disable={manager?.add === false}
-                inputLabel={<>{t('NEGATIVE_AMOUNT_MAXIMUM_LIMIT')}</>}
                 maxLength={40}
                 register={register('negativeAmountMaxLimit', {
                   required: {
@@ -354,7 +354,6 @@ const Settings = () => {
             <div className='w-full'>
               <OInputField
                 wrapperClassName='relative z-0  w-full group'
-                type='number'
                 id='payment'
                 disable={manager?.add === false}
                 inputLabel={
@@ -362,6 +361,7 @@ const Settings = () => {
                     {t('MINIMUM_THRESHOLD_AMOUNT_FOR_EARNING_REWARD_REQUEST')}
                   </>
                 }
+                type='number'
                 maxLength={40}
                 register={register(
                   'mimThresholdAmountForEarningRewardRequest',
@@ -392,10 +392,10 @@ const Settings = () => {
               <OInputField
                 wrapperClassName='relative z-0  w-full group'
                 type='number'
-                id='payment'
                 inputLabel={<>{t('TIME_TO_LOG_ACTIVE_USERS_ON_THE_APP')}</>}
                 maxLength={40}
                 disable={manager?.add === false}
+                id='payment'
                 register={register('timeLogForActiveUsers', {
                   required: {
                     value: true,
