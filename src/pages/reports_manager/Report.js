@@ -31,7 +31,6 @@ function Report () {
  
 
   const [filterData, setFilterData] = useState({
-    isKYCVerified: '',
     category: '',
     searchkey: '',
     startDate: '',
@@ -51,20 +50,18 @@ function Report () {
         startDate,
         endDate,
         searchkey,
-        isKYCVerified
       } = filterData
 
       const payload = {
         page,
         pageSize: pageSize,
         userType,
-        status: category,
         startDate: startDate ? dayjs(startDate).format('YYYY-MM-DD') : null,
+        status: category,
         endDate: endDate ? dayjs(endDate).format('YYYY-MM-DD') : null,
         keyword: searchkey?.trim(),
         sortKey: sort?.sort_key,
         sortType: sort?.sort_type,
-        isKYCVerified
       }
 
       const path = apiPath.getReports
@@ -115,9 +112,8 @@ function Report () {
 
   const handleReset = () => {
     setFilterData({
-      isKYCVerified: '',
       category: '',
-      kycStatus: '',
+    
       searchkey: '',
       startDate: '',
       endDate: '',
