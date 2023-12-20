@@ -30,9 +30,9 @@ const RewardWithdrawalRequestTable = ({
   const handelStatusChange = async newItem => {
     try {
       const payload = {
-        isApprovedStatus: newItem?.status
+        status: newItem?.status
       }
-      const path = `${apiPath.approvalAppointmentsStatusChange}/${newItem?._id}`
+      const path = `${apiPath.acceptRejectRewardRequest}/${newItem?._id}`
       const result = await apiPut(path, payload)
       if (result?.status === 200) {
         notification.success(result.data.message)

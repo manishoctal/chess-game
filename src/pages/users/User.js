@@ -9,6 +9,7 @@ import ODateRangePicker from 'components/shared/datePicker/ODateRangePicker'
 import { useTranslation } from 'react-i18next'
 import PageSizeList from 'components/PageSizeList'
 import helpers from 'utils/helpers'
+import OSearch from 'components/reusable/OSearch'
 
 function User () {
   const { t } = useTranslation()
@@ -275,37 +276,8 @@ function User () {
                 </label>
                 <div className='flex'>
                   <div className='relative'>
-                    <div className='absolute inset-y-0 right-0 flex items-center pl-3 mr-3 pointer-events-none'>
-                      {!searchTerm ? (
-                        <svg
-                          aria-hidden='true'
-                          className='w-4 h-4 text-[#A5A5A5] dark:text-gray-40'
-                          fill='none'
-                          stroke='currentColor'
-                          viewBox='0 0 24 24'
-                          xmlns='http://www.w3.org/2000/svg'
-                        >
-                          <path
-                            strokeLinecap='round'
-                            strokeLinejoin='round'
-                            strokeWidth='2'
-                            d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'
-                          />
-                        </svg>
-                      ) : (
-                        ''
-                      )}
-                    </div>
-                    <input
-                      title=''
-                      required
-                      type='search'
-                      id='default-search'
-                      className='block w-full p-2 outline-none text-sm text-gray-900 2xl:min-w-[250px] xl:min-w-[300px] rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
-                      placeholder={t('SEARCH_BY_KEYWORD')}
-                      value={searchTerm}
-                      onChange={e => setSearchTerm(e.target.value)}
-                    />
+                  <OSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm}   placeholder={t('SEARCH_BY_KEYWORD')}/>
+
                   </div>
                 </div>
               </div>

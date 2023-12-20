@@ -100,8 +100,8 @@ const ReportsTable = ({ users, page, userType, pageSize }) => {
                     )}
                   <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-left font-bold text-slate-900'>
                     {helpers.ternaryCondition(
-                      item?.local?.walletAmount,
-                      item?.local?.walletAmount,
+                      item?.rewardAmount,
+                      item?.rewardAmount,
                       0
                     )}
                   </td>
