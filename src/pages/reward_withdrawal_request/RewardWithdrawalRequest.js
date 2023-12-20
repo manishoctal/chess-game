@@ -12,10 +12,9 @@ import PageSizeList from 'components/PageSizeList'
 
 function RewardWithdrawalRequest () {
   const { t } = useTranslation()
-  const notification = useToastContext()
   const { user, updatePageName } = useContext(AuthContext)
   const manager =
-    user?.permission?.find(e => e.manager === 'subAdmin_manager') ?? {}
+  user?.permission?.find(e => e.manager === 'subAdmin_manager') ?? {}
   const [subAdmin, setSubAdmin] = useState()
   const [page, setPage] = useState(1)
   const [pageSize, setPageSize] = useState(10)
@@ -36,6 +35,7 @@ function RewardWithdrawalRequest () {
     isReset: false,
     isFilter: false
   })
+  const notification = useToastContext()
   const [sort, setSort] = useState({
     sortBy: 'createdAt',
     sortType: 'desc'
