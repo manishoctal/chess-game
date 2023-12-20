@@ -91,22 +91,12 @@ const ScratchCardUsersTable = () => {
                   <th
                     scope='row'
                     className='py-2 px-4 border-r dark:border-[#ffffff38] font-medium text-gray-900  dark:text-white'
-                  >
-                    {i + 1 + 10 * (page - 1)}
-                  </th>
+                  > {i + 1 + 10 * (page - 1)}</th>
 
-                  <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
-                    {item?.user?.firstName +' '+ (item?.user?.lastName ?? '')}
-                  </td>
-                  <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
-                    {item?.scratchCardRecord?.couponAmount || 'N/A'}
-                  </td>
-                  <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
-                    {item?.scratchCardRecord?.couponCode || 'N/A'}
-                  </td>
-                  <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
-                    {helpers.getDateAndTime(item?.createdAt)}
-                  </td>
+                  <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>{item?.user?.firstName +' '+ (item?.user?.lastName ?? '')}</td>
+                  <td className='py-2 px-4 border-r dark:border-[#ffffff38]'> {item?.scratchCardRecord?.couponAmount || 'N/A'}</td>
+                  <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>{item?.scratchCardRecord?.couponCode || 'N/A'}</td>
+                  <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>{helpers.getDateAndTime(item?.createdAt)}</td>
                 </tr>
               ))}
               {isEmpty(scratchCardUser) ? (
