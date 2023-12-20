@@ -26,6 +26,8 @@ import TransactionDetails from 'pages/users/TransactionDetails'
 import ScratchCardManager from 'pages/scratch_card_manager/ScratchCardManager'
 import ScratchCardUsersTable from 'pages/scratch_card_manager/ScratchCardUsersTable'
 import SupportManager from 'pages/support_manager/SupportManager'
+import Report from 'pages/reports_manager/Report'
+import RewardWithdrawalRequest from 'pages/reward_withdrawal_request/RewardWithdrawalRequest'
 
 const UseChange = ({ data }) => {
   const { t } = useTranslation()
@@ -244,6 +246,24 @@ const AdminRoutes = {
       name: (
         <>
           <UseChange data='SETTINGS' />
+        </>
+      )
+    },
+    {
+      path: '/report-manager',
+      element: <Report />,
+      name: (
+        <>
+          <UseChange data='REPORT_MANAGER' />
+        </>
+      )
+    },
+    {
+      path: '/reward-withdrawal-request',
+      element: <RewardWithdrawalRequest />,
+      name: (
+        <>
+          <UseChange data='REWARD_WITHDRAWAL_REQUEST' />
         </>
       )
     },

@@ -1,6 +1,8 @@
 const apiPath = {
   loginUser: "/v1/admin/login",
   getUsers: "/v1/admin/user",
+  getReports: "/v1/admin/report",
+  rewardRequest: "/v1/admin/rewardRequest",
   userProfile: "/v1/user/profile",
   updateUser: "/v1/admin/user/edit",
   getSubAdmin: "v1/admin/subadmin",

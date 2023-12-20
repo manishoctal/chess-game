@@ -222,6 +222,28 @@ const Sidebar = () => {
               />
             )
           )}
+          {andOperator(
+            checkSidebarPermission('report_manager'),
+            generateNavLink(
+              '/report-manager',
+              'REPORT_MANAGER',
+              <AiOutlineMail
+                style={{ fontSize: '20px' }}
+                title={t('REPORT_MANAGER')}
+              />
+            )
+          )}
+          {andOperator(
+            checkSidebarPermission('reward_withdrawal_request'),
+            generateNavLink(
+              '/reward-withdrawal-request',
+              'REWARD_WITHDRAWAL_REQUEST',
+              <AiOutlineMail
+                style={{ fontSize: '20px' }}
+                title={t('REWARD_WITHDRAWAL_REQUEST')}
+              />
+            )
+          )}
 
           <Link
             onClick={handleLogout}

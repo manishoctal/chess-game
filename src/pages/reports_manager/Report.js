@@ -1,50 +1,36 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { apiGet } from '../../utils/apiFetch'
+import { apiGet  } from '../../utils/apiFetch'
 import apiPath from '../../utils/apiPath'
+import ReportsTable from './ReportsTable'
 import Pagination from '../Pagination'
 import AuthContext from 'context/AuthContext'
 import dayjs from 'dayjs'
 import ODateRangePicker from 'components/shared/datePicker/ODateRangePicker'
 import { useTranslation } from 'react-i18next'
-import TransactionDetailsTable from './TransactionDetailsTable'
-import { useLocation } from 'react-router-dom'
 import PageSizeList from 'components/PageSizeList'
+import helpers from 'utils/helpers'
 
-function TransactionDetails () {
-  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('')
-
-  useEffect(() => {
-    if (!isInitialized) {
-      setIsInitialized(true)
-    } else if (searchTerm || !filterData?.isReset) {
-      setFilterData({
-        ...filterData,
-        isReset: false,
-        searchkey: debouncedSearchTerm ? debouncedSearchTerm : '',
-        isFilter: debouncedSearchTerm ? true : false
-      })
-      setPage(1)
-    }
-  }, [debouncedSearchTerm])
+function Report () {
   const { t } = useTranslation()
-  const { logoutUser, updatePageName } = useContext(AuthContext)
+  const { logoutUser,  updatePageName } = useContext(AuthContext)
   const [paginationObj, setPaginationObj] = useState({
     page: 1,
     pageCount: 1,
     pageRangeDisplayed: 10
   })
 
-  const [transactions, setTransactions] = useState([])
+  const [users, setAllUser] = useState([])
+  const [userType, setUserType] = useState('tourist')
   const [page, setPage] = useState(1)
   const [pageSize, setPageSize] = useState(10)
-  const [isDelete, setIsDelete] = useState(false)
   const [searchTerm, setSearchTerm] = useState('')
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('')
   const [isInitialized, setIsInitialized] = useState(false)
-  const location = useLocation()
-  const [userType] = useState(location?.state?.userType)
-  const [userId] = useState(location?.state?.userId)
+
+ 
 
   const [filterData, setFilterData] = useState({
+    isKYCVerified: '',
     category: '',
     searchkey: '',
     startDate: '',
@@ -52,27 +38,48 @@ function TransactionDetails () {
     isReset: false,
     isFilter: false
   })
+  const [sort] = useState({
+    sort_key: 'createdAt',
+    sort_type: 'desc'
+  })
 
-  const getTransactionDetails = async data => {
+  const getAllReports = async () => {
     try {
-      const { category, startDate, endDate, searchkey } = filterData
+      const {
+        category,
+        startDate,
+        endDate,
+        searchkey,
+        isKYCVerified
+      } = filterData
 
       const payload = {
         page,
         pageSize: pageSize,
+        userType,
         status: category,
         startDate: startDate ? dayjs(startDate).format('YYYY-MM-DD') : null,
         endDate: endDate ? dayjs(endDate).format('YYYY-MM-DD') : null,
         keyword: searchkey?.trim(),
-        userId,
-        userType
+        sortKey: sort?.sort_key,
+        sortType: sort?.sort_type,
+        isKYCVerified
       }
 
-      const path = apiPath.getUserTransaction
+      const path = apiPath.getReports
       const result = await apiGet(path, payload)
+
       if (result?.status === 200) {
         const response = result?.data?.results
-        setTransactions(response)
+        setAllUser(response?.docs)
+        const resultStatus = result?.data?.success
+        setPaginationObj({
+          ...paginationObj,
+          page: helpers.ternaryCondition(resultStatus , response.page , null),
+          perPageItem: helpers.ternaryCondition(resultStatus , response?.docs.length , null),
+          totalItems: helpers.ternaryCondition(resultStatus , response.totalDocs , null),
+          pageCount: helpers.ternaryCondition(resultStatus , response.totalPages , null)
+        })
       }
     } catch (error) {
       console.error('error ', error)
@@ -87,44 +94,36 @@ function TransactionDetails () {
     setPage(1)
     setPageSize(e.target.value)
   }
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      setDebouncedSearchTerm(searchTerm.trim())
-    }, 500)
-    return () => {
-      clearTimeout(timeoutId)
-    }
-  }, [searchTerm])
 
   const handlePageClick = event => {
     const newPage = event.selected + 1
     setPage(newPage)
   }
 
-  useEffect(() => {
-    getTransactionDetails()
-  }, [page, filterData, pageSize])
+  
+
+ 
 
   useEffect(() => {
-    const pageName =
-      userType === 'local'
-        ? t('TRANSACTION_DETAILS_LOCAL')
-        : t('TRANSACTION_DETAILS_TOURIST')
-    updatePageName(pageName)
+    getAllReports()
+  }, [page, filterData, sort, pageSize, userType])
+
+  useEffect(() => {
+    updatePageName(t('REPORT_MANAGER'))
   }, [])
 
   const handleReset = () => {
     setFilterData({
-      isFilter: false,
+      isKYCVerified: '',
       category: '',
       kycStatus: '',
       searchkey: '',
       startDate: '',
       endDate: '',
-      isReset: true
+      isReset: true,
+      isFilter: false
     })
     setPage(1)
-    setIsDelete(true)
     setSearchTerm('')
     setPageSize(10)
   }
@@ -137,28 +136,76 @@ function TransactionDetails () {
       isFilter: true,
       isReset: false
     })
-    setIsDelete(true)
+    
   }
 
   
+  
+
+  useEffect(() => {
+    if (!isInitialized) {
+      setIsInitialized(true)
+    } else if (searchTerm || !filterData?.isReset) {
+      setFilterData({
+        ...filterData,
+        isReset: false,
+        searchkey: debouncedSearchTerm ? debouncedSearchTerm : '',
+        isFilter: debouncedSearchTerm ? true : false
+      })
+      setPage(1)
+    }
+  }, [debouncedSearchTerm])
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      setDebouncedSearchTerm(searchTerm.trim())
+    }, 500)
+    return () => {
+      clearTimeout(timeoutId)
+    }
+  }, [searchTerm])
+
+
   return (
     <div>
       <div className='bg-[#F9F9F9] dark:bg-slate-900'>
         <div className='px-3 py-4'>
+          <div className='flex justify-center items-center grid grid-cols-2 w-[500px]'>
+            <button
+              type='button'
+              title= {t('FOREIGN_TOURIST')}
+              className={`pr-6 bg-white border border-1 border-[#000] text-sm px-8 ml-3 mb-3 py-2 rounded-lg items-center  text-black  sm:w-auto w-1/2 ${userType==='tourist' && 'bg-[#000!important] text-white'}`}
+              onClick={() => {setUserType('tourist');handleReset()}}
+            >
+              {t('FOREIGN_TOURIST')}
+            </button>
+            <button
+              type='button'
+              title= {t('THAI_LOCAL')}
+              className={` pr-6 bg-white border border-1 border-[#000] text-sm px-8 ml-3 mb-3 py-2 rounded-lg items-center  text-black  sm:w-auto w-1/2 ${userType==='local'&& 'bg-[#000!important] text-white'}`}
+              onClick={() => {setUserType('local');handleReset()}}
+            >
+              {t('THAI_LOCAL')}
+            </button>
+          </div>
           <div className='bg-white border border-[#E9EDF9] rounded-lg dark:bg-slate-800 dark:border-[#ffffff38]'>
             <form className='border-b border-b-[#E3E3E3]  px-4 py-3 pt-5 flex flex-wrap justify-between'>
               <div className='flex flex-wrap items-center'>
-                <div className='flex items-center lg:pt-0 pt-3 justify-center'>
+                <div className='flex items-center lg:pt-0 pt-3 justify-center'> 
                   <ODateRangePicker
                     handleDateChange={handleDateChange}
                     isReset={filterData?.isReset}
                     setIsReset={setFilterData}
                   />
 
+                 
+
+
                   <button
                     type='button'
                     onClick={() => handleReset()}
                     className='bg-gradientTo text-sm px-8 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2'
+                    title= {t('O_RESET')}
                   >
                     {t('O_RESET')}
                   </button>
@@ -166,10 +213,8 @@ function TransactionDetails () {
               </div>
               <div className='flex items-center md:justify-end px-4'>
                 <label
-                  htmlFor='default-search'
-                  className='mb-2 text-sm font-medium text-gray-900 sr-only'
-                >
-                  {t('O_SEARCH')}
+                  htmlFor='default-search' className='mb-2 font-medium text-sm  text-gray-900 sr-only'
+                >  {t('O_SEARCH')}
                 </label>
                 <div className='flex'>
                   <div className='relative'>
@@ -195,41 +240,39 @@ function TransactionDetails () {
                       )}
                     </div>
                     <input
+                      title=''
+                      required
                       type='search'
                       id='default-search'
                       className='block w-full p-2 outline-none text-sm text-gray-900 2xl:min-w-[250px] xl:min-w-[300px] rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
                       placeholder={t('SEARCH_BY_KEYWORD')}
                       value={searchTerm}
-                      title=''
-                      required
                       onChange={e => setSearchTerm(e.target.value)}
                     />
                   </div>
                 </div>
               </div>
             </form>
-            <TransactionDetailsTable
-              transactions={transactions}
+            <ReportsTable
+              users={users}
               page={page}
-              userType={userType}
               pageSize={pageSize}
+              userType={userType}
             />
-
             <div className='flex justify-between'>
-              <PageSizeList dynamicPage={dynamicPage} pageSize={pageSize} />
+            <PageSizeList  dynamicPage={dynamicPage} pageSize={pageSize}/>       
               {paginationObj?.totalItems ? (
                 <Pagination
                   handlePageClick={handlePageClick}
                   options={paginationObj}
-                  isDelete={isDelete}
                   page={page}
                 />
               ) : null}
             </div>
           </div>
         </div>
-      </div>
+      </div> 
     </div>
   )
 }
-export default TransactionDetails
+export default Report
