@@ -40,6 +40,10 @@ function RewardWithdrawalRequest () {
     sortBy: 'createdAt',
     sortType: 'desc'
   })
+  const handlePageClick = event => {
+    const newPage = event.selected + 1
+    setPage(newPage)
+  }
 
   const getAllRewardWithdrawalRequest = async (data, pageNO) => {
     try {
@@ -72,10 +76,7 @@ function RewardWithdrawalRequest () {
       console.error('error in get all sub admin list==>>>>', error.message)
     }
   }
-  const handlePageClick = event => {
-    const newPage = event.selected + 1
-    setPage(newPage)
-  }
+  
 
   const dynamicPage = e => {
     setPage(1)
