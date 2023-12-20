@@ -24,7 +24,6 @@ const RewardWithdrawalRequestTable = ({
   getAllRewardWithdrawalRequest
 }) => {
   const { t } = useTranslation()
-  const [item, setItem] = useState('')
 
   const { user } = useContext(AuthContext)
   const notification = useToastContext()

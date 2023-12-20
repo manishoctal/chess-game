@@ -1,7 +1,5 @@
-import { isEmpty, startCase } from 'lodash'
-import dayjs from 'dayjs'
+import { isEmpty } from 'lodash'
 import { useTranslation } from 'react-i18next'
-
 import helpers from '../../utils/helpers'
 import QRCodeGenerator from 'components/QRCodeGenerator'
 
