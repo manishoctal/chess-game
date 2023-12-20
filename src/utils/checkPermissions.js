@@ -14,5 +14,6 @@ export const permissionsMap = {
   feedback_manager: "/feedback-manager",
   scratch_card_manager: "/scratch-card-manager",
   FAQ: "/faqs",
+  report_manager: "/report-manager",
   gift_manager: "/gift-manager",
 };

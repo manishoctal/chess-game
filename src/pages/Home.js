@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react'
 import 'chartjs-adapter-date-fns'
 import { FaUserTie } from 'react-icons/fa'
-import { GiSolarTime } from 'react-icons/gi'
 import { apiGet } from 'utils/apiFetch'
 import pathObj from 'utils/apiPath'
 import earning from 'assets/images/earning.jpg'
 import dayjs from 'dayjs'
+import { GrTransaction } from "react-icons/gr";
 import { useTranslation } from 'react-i18next'
 
 import { Line } from 'react-chartjs-2'
@@ -231,11 +231,11 @@ function Home () {
               </span>
             </h3>
             <span className='text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-10px] p-3 border z-10 bg-white'>
-              <FaUserTie className='h-8 w-8' />
+              <GrTransaction className='h-8 w-8' />
             </span>
           </div>
 
-          <div className='text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border'>
+          {/* <div className='text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border'>
             <h3 className='text-center mb-0 text-slate-900 font-bold md:text-3xl sm:text-lg dark:text-white'>
               <OCountUp
                 value={dashboardDetails?.totalWalletToBankTransactionCount || 0}
@@ -245,11 +245,8 @@ function Home () {
               </span>
             </h3>
             <span className='text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-10px] p-3 border z-10 bg-white'>
-              <img
-                src={earning}
-                className='h-8 w-8 bg-black'
-                alt='earningImg'
-              />
+              
+               <GrTransaction className='h-8 w-8' />
             </span>
           </div>
 
@@ -263,9 +260,9 @@ function Home () {
               </span>
             </h3>
             <span className='text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-10px] p-3 border z-10 bg-white'>
-              <GiSolarTime className='h-8 w-8' />
+              <GrTransaction className='h-8 w-8' />
             </span>
-          </div>
+          </div> */}
 
           <div className='text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border'>
             <h3 className='text-center mb-0 text-slate-900 font-bold md:text-3xl sm:text-lg dark:text-white'>
@@ -275,7 +272,11 @@ function Home () {
               </span>
             </h3>
             <span className='text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-10px] p-3 border z-10 bg-white'>
-              <GiSolarTime className='h-8 w-8' />
+            <img
+                src={earning}
+                className='h-8 w-8 bg-black'
+                alt='earningImg'
+              />
             </span>
           </div>
           <div className='text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border'>
@@ -286,7 +287,11 @@ function Home () {
               </span>
             </h3>
             <span className='text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-10px] p-3 border z-10 bg-white'>
-              <GiSolarTime className='h-8 w-8' />
+            <img
+                src={earning}
+                className='h-8 w-8 bg-black'
+                alt='earningImg'
+              />
             </span>
           </div>
           {/* <div className="text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border">
@@ -308,7 +313,7 @@ function Home () {
               </span>
             </h3>
             <span className='text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-10px] p-3 border z-10 bg-white'>
-              <GiSolarTime className='h-8 w-8' />
+              <FaUserTie className='h-8 w-8' />
             </span>
           </div>
           <div className='text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border'>
@@ -319,7 +324,7 @@ function Home () {
               </span>
             </h3>
             <span className='text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-10px] p-3 border z-10 bg-white'>
-              <GiSolarTime className='h-8 w-8' />
+              <FaUserTie className='h-8 w-8' />
             </span>
           </div>
         </div>

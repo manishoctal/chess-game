@@ -1,27 +1,24 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { apiDelete, apiGet, apiPut } from '../../utils/apiFetch'
 import apiPath from '../../utils/apiPath'
-import SubTable from './SubTable'
+import RewardWithdrawalRequestTable from './RewardWithdrawalRequestTable'
 import Pagination from '../Pagination'
 import dayjs from 'dayjs'
 import ODateRangePicker from 'components/shared/datePicker/ODateRangePicker'
 import { useTranslation } from 'react-i18next'
 import AuthContext from 'context/AuthContext'
-import { useNavigate } from 'react-router-dom'
 import useToastContext from 'hooks/useToastContext'
 import PageSizeList from 'components/PageSizeList'
 import OSearch from 'components/reusable/OSearch'
 
-function SubAdmin () {
+function RewardWithdrawalRequest () {
   const { t } = useTranslation()
-  const navigate = useNavigate()
-  const notification = useToastContext()
   const { user, updatePageName } = useContext(AuthContext)
+  const [pageSize, setPageSize] = useState(10)
   const manager =
-    user?.permission?.find(e => e.manager === 'subAdmin_manager') ?? {}
+  user?.permission?.find(e => e.manager === 'subAdmin_manager') ?? {}
   const [subAdmin, setSubAdmin] = useState()
   const [page, setPage] = useState(1)
-  const [pageSize, setPageSize] = useState(10)
   const [isDelete] = useState(false)
   const [paginationObj, setPaginationObj] = useState({
     page: 1,
@@ -29,22 +26,27 @@ function SubAdmin () {
     pageRangeDisplayed: 10
   })
   const [searchTerm, setSearchTerm] = useState('')
-  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('')
   const [isInitialized, setIsInitialized] = useState(false)
   const [filterData, setFilterData] = useState({
     category: '',
     searchKey: '',
+    isReset: false,
     startDate: '',
     endDate: '',
-    isReset: false,
     isFilter: false
   })
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('')
+  const notification = useToastContext()
   const [sort, setSort] = useState({
     sortBy: 'createdAt',
     sortType: 'desc'
   })
+  const handlePageClick = event => {
+    const newPage = event.selected + 1
+    setPage(newPage)
+  }
 
-  const allSubAdmin = async (data, pageNO) => {
+  const getAllRewardWithdrawalRequest = async (data, pageNO) => {
     try {
       const { category, startDate, endDate, searchKey } = filterData
 
@@ -59,7 +61,7 @@ function SubAdmin () {
         sortType: sort.sortType
       }
 
-      const path = apiPath.getSubAdmin
+      const path = apiPath.rewardRequest
       const result = await apiGet(path, payload)
       const response = result?.data?.results
       const resultStatus = result?.data?.success
@@ -75,10 +77,7 @@ function SubAdmin () {
       console.error('error in get all sub admin list==>>>>', error.message)
     }
   }
-  const handlePageClick = event => {
-    const newPage = event.selected + 1
-    setPage(newPage)
-  }
+  
 
   const dynamicPage = e => {
     setPage(1)
@@ -86,7 +85,7 @@ function SubAdmin () {
   }
 
   useEffect(() => {
-    allSubAdmin()
+    getAllRewardWithdrawalRequest()
   }, [filterData, page, sort, pageSize])
 
   const handelStatusChange = async item => {
@@ -99,7 +98,7 @@ function SubAdmin () {
       const result = await apiPut(path, payload)
       if (result?.status === 200) {
         notification.success(result.data.message)
-        allSubAdmin({ statusChange: 1 })
+        getAllRewardWithdrawalRequest({ statusChange: 1 })
       }
     } catch (error) {
       console.error('error in get all users list==>>>>', error.message)
@@ -112,7 +111,7 @@ function SubAdmin () {
       const result = await apiDelete(path)
       if (result?.status === 200) {
         notification.success(result?.data.message)
-        allSubAdmin({ deletePage: 1 })
+        getAllRewardWithdrawalRequest({ deletePage: 1 })
       }
     } catch (error) {
       console.error('error in get all FAQs list==>>>>', error.message)
@@ -170,7 +169,7 @@ function SubAdmin () {
     }
   }, [searchTerm])
   useEffect(() => {
-    updatePageName(t('SUB_ADMIN_MANAGERS'))
+    updatePageName(t('REWARD_WITHDRAWAL_REQUEST'))
   }, [])
 
   return (
@@ -182,8 +181,8 @@ function SubAdmin () {
               <div className='col-span-2 flex flex-wrap  items-center'>
                 <div className='flex items-center lg:pt-0 pt-3 flex-wrap justify-center mb-2 2xl:mb-0'>
                   <div className='relative flex items-center mb-3'>
-                  <OSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm} placeholder={t('EMAIL_USERNAME_MOBILE_NUMBER')}/>
-
+                    
+                    <OSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm} placeholder={t('SEARCH_BY_NAME')}/>
                   </div>
 
                   <ODateRangePicker
@@ -204,8 +203,9 @@ function SubAdmin () {
                       <option defaultValue value=''>
                         {t('O_ALL')}
                       </option>
-                      <option value='active'>{t('O_ACTIVE')}</option>
-                      <option value='inactive'>{t('O_INACTIVE')}</option>
+                      <option value='accepted'>{t('Accepted')}</option>
+                      <option value='rejected'>{t('Rejected')}</option>
+                      <option value='pending '>{t('Pending ')}</option>
                     </select>
                   </div>}
 
@@ -219,22 +219,11 @@ function SubAdmin () {
                   </button>
                 </div>
               </div>
-              <div className='flex items-center justify-end px-4 ms-auto mb-3'>
-                {(manager?.add || user?.role === 'admin') && (
-                  <button
-                    title={t('ADD_SUB_ADMIN')}
-                    type='button'
-                    className='bg-gradientTo flex text-sm px-8 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue whitespace-nowrap'
-                    onClick={() => navigate('/sub-admin-manager/add')}
-                  >
-                    + {t('ADD_SUB_ADMIN')}
-                  </button>
-                )}
-              </div>
+              
             </form>
-            <SubTable
+            <RewardWithdrawalRequestTable
               subAdmin={subAdmin?.docs}
-              allSubAdmin={allSubAdmin}
+              getAllRewardWithdrawalRequest={getAllRewardWithdrawalRequest}
               handelDelete={handelDelete}
               page={page}
               setSort={setSort}
@@ -262,4 +251,4 @@ function SubAdmin () {
   )
 }
 
-export default SubAdmin
+export default RewardWithdrawalRequest
