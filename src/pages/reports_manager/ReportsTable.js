@@ -112,15 +112,15 @@ const ReportsTable = ({ users, page, userType, pageSize }) => {
 
                   <td className='py-4 px-3 border-r  dark:border-[#ffffff38] '>
                     {helpers.ternaryCondition(
-                      item?.updatedAt,
-                      helpers.getDateAndTime(item?.updatedAt),
+                      item?.createdAt,
+                      helpers.getDateAndTime(item?.createdAt),
                       'N/A'
                     )}
                   </td>
                   <td className='py-4 px-3 border-r  dark:border-[#ffffff38] '>
                   {helpers.ternaryCondition(
-                      item?.updatedAt,
-                      helpers.getDateAndTime(item?.updatedAt),
+                      item?.createdAt,
+                      helpers.getDateAndTime(item?.createdAt),
                       'N/A'
                     )}
                   </td>
