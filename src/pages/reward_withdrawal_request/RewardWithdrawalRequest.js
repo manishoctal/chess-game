@@ -193,7 +193,7 @@ function RewardWithdrawalRequest () {
                       </option>
                       <option value='accepted'>{t('Accepted')}</option>
                       <option value='rejected'>{t('Rejected')}</option>
-                      <option value='pending '>{t('Pending ')}</option>
+                      <option value='pending'>{t('Pending')}</option>
                     </select>
                   </div>}
                   <button type='button' onClick={handleReset} title={t('O_RESET')} className='bg-gradientTo text-sm px-8 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2'>
