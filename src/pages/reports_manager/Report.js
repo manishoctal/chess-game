@@ -51,7 +51,6 @@ function Report () {
         endDate,
         searchkey,
       } = filterData
-
       const payload = {
         page,
         pageSize: pageSize,
@@ -66,46 +65,34 @@ function Report () {
 
       const path = apiPath.getReports
       const result = await apiGet(path, payload)
-
       if (result?.status === 200) {
         const response = result?.data?.results
         setAllUser(response?.docs)
         const resultStatus = result?.data?.success
         setPaginationObj({
-          ...paginationObj,
-          page: helpers.ternaryCondition(resultStatus , response.page , null),
-          perPageItem: helpers.ternaryCondition(resultStatus , response?.docs.length , null),
-          totalItems: helpers.ternaryCondition(resultStatus , response.totalDocs , null),
-          pageCount: helpers.ternaryCondition(resultStatus , response.totalPages , null)
+          ...paginationObj,page: helpers.ternaryCondition(resultStatus , response.page , null), perPageItem: helpers.ternaryCondition(resultStatus , response?.docs.length , null),
+          totalItems: helpers.ternaryCondition(resultStatus , response.totalDocs , null),pageCount: helpers.ternaryCondition(resultStatus , response.totalPages , null)
         })
       }
     } catch (error) {
       console.error('error ', error)
-      setPaginationObj({})
       if (error.response.status === 401 || error.response.status === 409) {
         logoutUser()
       }
+      setPaginationObj({})
     }
   }
-
-  const dynamicPage = e => {
-    setPage(1)
-    setPageSize(e.target.value)
-  }
-
   const handlePageClick = event => {
     const newPage = event.selected + 1
     setPage(newPage)
   }
-
-  
-
- 
-
+  const dynamicPage = e => {
+    setPage(1)
+    setPageSize(e.target.value)
+  }
   useEffect(() => {
     getAllReports()
   }, [page, filterData, sort, pageSize, userType])
-
   useEffect(() => {
     updatePageName(t('REPORT_MANAGER'))
   }, [])
@@ -113,7 +100,6 @@ function Report () {
   const handleReset = () => {
     setFilterData({
       category: '',
-    
       searchkey: '',
       startDate: '',
       endDate: '',
@@ -133,12 +119,7 @@ function Report () {
       isFilter: true,
       isReset: false
     })
-    
   }
-
-  
-  
-
   useEffect(() => {
     if (!isInitialized) {
       setIsInitialized(true)
@@ -152,7 +133,6 @@ function Report () {
       setPage(1)
     }
   }, [debouncedSearchTerm])
-
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       setDebouncedSearchTerm(searchTerm.trim())
@@ -161,8 +141,6 @@ function Report () {
       clearTimeout(timeoutId)
     }
   }, [searchTerm])
-
-
   return (
     <div>
       <div className='bg-[#F9F9F9] dark:bg-slate-900'>
