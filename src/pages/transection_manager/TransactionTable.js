@@ -2,6 +2,8 @@ import React from 'react'
 import dayjs from 'dayjs'
 import { useTranslation } from 'react-i18next'
 import { isEmpty, startCase } from 'lodash'
+import { currency } from 'utils/constants'
+import helpers from 'utils/helpers'
 
 const TransactionTable = ({ artistVerification, page, userType, pageSize }) => {
   const { t } = useTranslation()
@@ -54,21 +56,17 @@ const TransactionTable = ({ artistVerification, page, userType, pageSize }) => {
                 <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
                   {item?.transactionId || 'N/A'}
                 </td>
+                <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>{`${helpers.ternaryCondition(item?.transactionAmount ,item?.transactionAmount ,0)} ${currency}`}</td>
                 {userType === 'tourist' && (
                   <>
                     <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
-                      {item?.transactionAmount || 'N/A'}
-                    </td>
-                    <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
-                      {item?.user?.scratchCardDetail?.rewardAmount || 0}
+                    {`${helpers.ternaryCondition(item?.user?.scratchCardDetail?.rewardAmount ,item?.user?.scratchCardDetail?.rewardAmount ,0)} ${currency}`}
                     </td>
                   </>
                 )}
                 {userType === 'local' && (
                   <>
-                    <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
-                      {item?.transactionAmount || 'N/A'}
-                    </td>
+                   
                     <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
                       {startCase(item?.transactionType) || 'N/A'}
                     </td>

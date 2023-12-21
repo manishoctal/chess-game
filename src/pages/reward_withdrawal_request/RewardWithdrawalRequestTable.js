@@ -9,10 +9,11 @@ import {
   BsHandThumbsUp
 } from 'react-icons/bs'
 import apiPath from 'utils/apiPath'
-import { apiPut } from 'utils/apiFetch'
+import { apiPost, apiPut } from 'utils/apiFetch'
 import useToastContext from 'hooks/useToastContext'
 import classNames from 'classnames'
 import helpers from 'utils/helpers'
+import { currency } from 'utils/constants'
 
 const RewardWithdrawalRequestTable = ({
   subAdmin,
@@ -30,14 +31,28 @@ const RewardWithdrawalRequestTable = ({
   const handelStatusChange = async newItem => {
     try {
       const payload = {
-        status: newItem?.status
+        status: newItem?.status,
+        rewardRequestId:newItem?._id
       }
-      const path = `${apiPath.acceptRejectRewardRequest}/${newItem?._id}`
-      const result = await apiPut(path, payload)
-      if (result?.status === 200) {
-        notification.success(result.data.message)
-        getAllRewardWithdrawalRequest()
+     
+      let path;
+      if(newItem?.status==='accepted'){
+        path = apiPath.acceptRewardRequest
+        const result = await apiPost(path, payload)
+        if (result?.status === 200) {
+          notification.success(result.data.message)
+          getAllRewardWithdrawalRequest()
+        }
+      } else{
+       
+        path = apiPath.rejectRewardRequest
+        const result = await apiPost(path, payload)
+        if (result?.status === 200) {
+          notification.success(result.data.message)
+          getAllRewardWithdrawalRequest()
+        }
       }
+     
     } catch (error) {
       console.error('error in get all sub admin list==>>>>', error.message)
     }
@@ -108,7 +123,7 @@ const RewardWithdrawalRequestTable = ({
                 </td>
 
                 <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
-                  {item?.amount}
+                  {`${item?.amount} ${currency}`}
                 </td>
 
                 <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>

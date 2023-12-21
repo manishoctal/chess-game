@@ -2237,3 +2237,6 @@ export const formLengthValidation = {
   InterestValidation:
     "please enter name in uppercase, lowercase, and all special characters.",
 };
+
+
+export const currency = '฿';
