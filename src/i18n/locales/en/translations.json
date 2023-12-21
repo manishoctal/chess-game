@@ -458,6 +458,8 @@
   "REWARD_AMOUNT": "Reward amount",
   "FEEDBACK":"Feedback",
   "O_CLOSE":"Close",
+  "O_ACCEPT":"Accept",
+  "O_REJECT":"Reject",
   "VIEW_SCRATCH_CARD_HISTORY":"View scratch card history",
   "EXPIRE_DATE": "Expire date",
   "NUMBER_OF_USER_CAN_USE_COUPON": "Number of user can use coupon",

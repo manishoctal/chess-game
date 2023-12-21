@@ -68,7 +68,6 @@ const RewardWithdrawalRequestTable = ({
               
               <th scope='col' className='py-3 px-6'>{t('Thai local name')}</th>
               <th scope='col' className='py-3 px-6'>{t('Amount')}</th>
-              <th scope='col' className='py-3 px-6 text-center'>{t('O_STATUS')}</th>
               <th scope='col' className='py-3 px-6 cursor-pointer text-right'onClick={() => {
                   if (sort.sortBy === 'createdAt' && sort.sortType === 'asc') {
                     setSort({
@@ -122,17 +121,8 @@ const RewardWithdrawalRequestTable = ({
                   )}
                 </td>
 
-                <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
-                  {`${item?.amount} ${currency}`}
-                </td>
-
-                <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
-                  {startCase(item?.status)}
-                </td>
-
-                <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
-                  {dayjs(item?.createdAt).format('DD-MM-YYYY hh:mm A')}
-                </td>
+                <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>{`${currency} ${item?.amount}`}</td>
+                <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>{dayjs(item?.createdAt).format('DD-MM-YYYY hh:mm A')}</td>
 
                 {(manager?.add || user?.role === 'admin') && (
                   <td className='text-center'>

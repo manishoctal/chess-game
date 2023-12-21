@@ -100,16 +100,16 @@ const ReportsTable = ({ users, page, userType, pageSize }) => {
                      
                     )}
                   <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-left font-bold text-slate-900'>
-                    {`${helpers.ternaryCondition(
+                    {`${currency} ${helpers.ternaryCondition(
                       item?.local?.rewardAmount,
                       item?.local?.rewardAmount,
                       0
-                    )} ${currency}`}
+                    )}`}
                     
                   </td>
 
                   <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-left'>
-                    {`${helpers.ternaryCondition(item?.amount, item?.amount, 0)} ${currency}`}
+                    {`${currency} ${helpers.ternaryCondition(item?.amount, item?.amount, 0)}`}
                   </td>
 
                   <td className='py-4 px-3 border-r  dark:border-[#ffffff38] '>
@@ -129,8 +129,8 @@ const ReportsTable = ({ users, page, userType, pageSize }) => {
 
                   <td className='py-4 px-3 border-r  dark:border-[#ffffff38] text-center'>
                   {helpers.ternaryCondition(
-                      item?.updatedAt,
-                      helpers.getDateAndTime(item?.updatedAt),
+                      item?.acceptedAt,
+                      helpers.getDateAndTime(item?.acceptedAt),
                       'N/A'
                     )}
                   </td>
