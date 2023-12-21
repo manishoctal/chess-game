@@ -183,20 +183,10 @@ function RewardWithdrawalRequest () {
                   <div className='relative flex items-center mb-3'>
                     <OSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm} placeholder={t('SEARCH_BY_NAME')}/>
                   </div>
-                  <ODateRangePicker
-                    handleDateChange={handleDateChange}
-                    isReset={filterData?.isReset}
-                    setIsReset={setFilterData}
+                  <ODateRangePicker handleDateChange={handleDateChange} isReset={filterData?.isReset} setIsReset={setFilterData}
                   />
                   {(manager?.add || manager?.edit || user?.role === 'admin') && <div className='flex items-center mb-3 ml-3'>
-                    <select
-                      id='countries'
-                      type=' password'
-                      name='floating_password'
-                      className='block p-2 w-full text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer'
-                      placeholder=' '
-                      value={filterData?.category}
-                      onChange={e => statusPage(e)}
+                    <select id='countries' type='password' name='floating_password' className='block p-2 w-full text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer' placeholder=' ' value={filterData?.category} onChange={e => statusPage(e)}
                     >
                       <option defaultValue value=''>
                         {t('O_ALL')}
