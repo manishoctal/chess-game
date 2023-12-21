@@ -49,26 +49,12 @@ const RewardWithdrawalRequestTable = ({
         <table className='w-full text-xs text-left text-[#A5A5A5] dark:text-gray-400 '>
           <thead className='text-xs text-gray-900 border border-[#E1E6EE] bg-[#E1E6EE] dark:bg-gray-700 dark:text-gray-400 dark:border-[#ffffff38]'>
             <tr>
-              <th scope='col' className='py-3 px-6'>
-                {t('S.NO')}
-              </th>
-              {/* <th scope="col" className="py-3 px-6">
-                {t("SUB_ADMIN_ID")}
-              </th> */}
-              <th scope='col' className='py-3 px-6'>
-                {t('Thai local name')}
-              </th>
-
-              <th scope='col' className='py-3 px-6'>
-                {t('Amount')}
-              </th>
-              <th scope='col' className='py-3 px-6 text-center'>
-                {t('O_STATUS')}
-              </th>
-              <th
-                scope='col'
-                className='py-3 px-6 cursor-pointer text-right'
-                onClick={() => {
+              <th scope='col' className='py-3 px-6'>  {t('S.NO')} </th>
+              
+              <th scope='col' className='py-3 px-6'>{t('Thai local name')}</th>
+              <th scope='col' className='py-3 px-6'>{t('Amount')}</th>
+              <th scope='col' className='py-3 px-6 text-center'>{t('O_STATUS')}</th>
+              <th scope='col' className='py-3 px-6 cursor-pointer text-right'onClick={() => {
                   if (sort.sortBy === 'createdAt' && sort.sortType === 'asc') {
                     setSort({
                       sortBy: 'createdAt',
@@ -95,12 +81,7 @@ const RewardWithdrawalRequestTable = ({
                   </span>
                 </div>
               </th>
-
-              {(manager?.add || manager?.edit || user?.role === 'admin') && (
-                <th scope='col' className='py-3 px-6 text-center'>
-                  {t('O_ACTION')}
-                </th>
-              )}
+              {(manager?.add || manager?.edit || user?.role === 'admin') && ( <th scope='col' className='py-3 px-6 text-center'> {t('O_ACTION')}</th>)}
             </tr>
           </thead>
           <tbody>
