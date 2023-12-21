@@ -101,9 +101,6 @@ function User () {
     const newPage = event.selected + 1
     setPage(newPage)
   }
-
-  
-
   const handleUserView = () => {
     updatePageName(` ${t('VIEW') + ' ' + t('USER_MANAGER')}`)
   }
@@ -143,7 +140,14 @@ function User () {
     })
     
   }
-
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      setDebouncedSearchTerm(searchTerm.trim())
+    }, 500)
+    return () => {
+      clearTimeout(timeoutId)
+    }
+  }, [searchTerm])
   const statusPage = e => {
     setFilterData({
       ...filterData,
@@ -179,14 +183,7 @@ function User () {
     }
   }, [debouncedSearchTerm])
 
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      setDebouncedSearchTerm(searchTerm.trim())
-    }, 500)
-    return () => {
-      clearTimeout(timeoutId)
-    }
-  }, [searchTerm])
+  
 
   const manager = user?.permission?.find(e => e.manager === 'user_manager')
 
@@ -277,7 +274,6 @@ function User () {
                 <div className='flex'>
                   <div className='relative'>
                   <OSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm}   placeholder={t('SEARCH_BY_KEYWORD')}/>
-
                   </div>
                 </div>
               </div>

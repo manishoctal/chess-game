@@ -2,6 +2,7 @@ import { isEmpty } from 'lodash'
 import { useTranslation } from 'react-i18next'
 import helpers from '../../utils/helpers'
 import QRCodeGenerator from 'components/QRCodeGenerator'
+import { currency } from 'utils/constants'
 
 const ReportsTable = ({ users, page, userType, pageSize }) => {
   const { t } = useTranslation()
@@ -85,8 +86,8 @@ const ReportsTable = ({ users, page, userType, pageSize }) => {
                   </td>
                   <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-left font-bold text-slate-900'>
                     {helpers.getSeconds(
-                      item?.local?.createdAt,
-                      item?.local?.updatedAt
+                      item?.createdAt,
+                      item?.acceptedAt
                       
                     )}
                   </td>
@@ -99,28 +100,29 @@ const ReportsTable = ({ users, page, userType, pageSize }) => {
                      
                     )}
                   <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-left font-bold text-slate-900'>
-                    {helpers.ternaryCondition(
-                      item?.rewardAmount,
-                      item?.rewardAmount,
+                    {`${helpers.ternaryCondition(
+                      item?.local?.rewardAmount,
+                      item?.local?.rewardAmount,
                       0
-                    )}
+                    )} ${currency}`}
+                    
                   </td>
 
                   <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-left'>
-                    {helpers.ternaryCondition(item?.amount, item?.amount, 0)}
+                    {`${helpers.ternaryCondition(item?.amount, item?.amount, 0)} ${currency}`}
                   </td>
 
                   <td className='py-4 px-3 border-r  dark:border-[#ffffff38] '>
                     {helpers.ternaryCondition(
-                      item?.updatedAt,
-                      helpers.getDateAndTime(item?.updatedAt),
+                      item?.createdAt,
+                      helpers.getDateAndTime(item?.createdAt),
                       'N/A'
                     )}
                   </td>
                   <td className='py-4 px-3 border-r  dark:border-[#ffffff38] '>
                   {helpers.ternaryCondition(
-                      item?.updatedAt,
-                      helpers.getDateAndTime(item?.updatedAt),
+                      item?.createdAt,
+                      helpers.getDateAndTime(item?.createdAt),
                       'N/A'
                     )}
                   </td>

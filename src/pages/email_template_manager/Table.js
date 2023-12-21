@@ -25,20 +25,10 @@ const Table = ({
         <table className='w-full text-xs text-left text-[#A5A5A5] dark:text-gray-400 '>
           <thead className='text-xs text-gray-900 border border-[#E1E6EE] bg-[#E1E6EE] dark:bg-gray-700 dark:text-gray-400 dark:border-[#ffffff38]'>
             <tr>
-              <th scope='col' className='py-3 px-6'>
-                {t('S.NO')}
-              </th>
-              <th scope='col' className='py-3 px-6'>
-                {t('EMAIL_TEMPLATE_NAME')}
-              </th>
-              <th scope='col' className='py-3 px-6'>
-                {t('O_SUBJECT')}
-              </th>
-
-              <th
-                scope='col'
-                className='py-3 px-6 cursor-pointer'
-                onClick={() => {
+              <th scope='col' className='py-3 px-6'> {t('S.NO')}</th>
+              <th scope='col' className='py-3 px-6'> {t('EMAIL_TEMPLATE_NAME')}</th>
+              <th scope='col' className='py-3 px-6'> {t('O_SUBJECT')}</th>
+              <th scope='col' className='py-3 px-6 cursor-pointer' onClick={() => {
                   if (sort.sortBy === 'createdAt' && sort.sortType === 'asc') {
                     setSort({
                       sortBy: 'createdAt',
@@ -68,12 +58,8 @@ const Table = ({
 
               {(manager?.add || user?.role === 'admin') && (
                 <>
-                  <th scope='col' className='py-3 px-6'>
-                    {t('O_STATUS')}
-                  </th>
-                  <th scope='col' className='py-3 px-6 text-center'>
-                    {t('O_ACTION')}
-                  </th>
+                  <th scope='col' className='py-3 px-6'>{t('O_STATUS')}</th>
+                  <th scope='col' className='py-3 px-6 text-center'>{t('O_ACTION')}</th>
                 </>
               )}
             </tr>
