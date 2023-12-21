@@ -85,8 +85,8 @@ const ReportsTable = ({ users, page, userType, pageSize }) => {
                   </td>
                   <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-left font-bold text-slate-900'>
                     {helpers.getSeconds(
-                      item?.local?.createdAt,
-                      item?.local?.updatedAt
+                      item?.createdAt,
+                      item?.acceptedAt
                       
                     )}
                   </td>
