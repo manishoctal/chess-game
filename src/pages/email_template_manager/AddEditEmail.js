@@ -128,7 +128,7 @@ let submitButton = isLoading ? (
     <form onSubmit={handleSubmit(handleSubmitForm)} method='post'>
       <div className='outer-boarder'>
         <div className='headerForm  bg-[#2f2f31]'>
-          {type === 'edit' ? 'Edit' : 'View'} an Email Template
+          {type === 'edit' ? 'Edit' : 'View'} {t('AN_EMAIL_TEMPLATE')}
         </div>
         <div className='relative p-6  pb-0 flex-auto'>
           <div className='grid grid-cols-2'>
@@ -138,7 +138,7 @@ let submitButton = isLoading ? (
                 name='title'
                 inputLabel={
                   <>
-                    Template Name<span className='text-red-500'>*</span>
+                    {t('TEMPLATE_NAME')}<span className='text-red-500'>*</span>
                   </>
                 }
                 type='text'
@@ -156,7 +156,7 @@ let submitButton = isLoading ? (
                 name='subject'
                 inputLabel={
                   <>
-                    Subject<span className='text-red-500'>*</span>
+                    {t('O_SUBJECT')}<span className='text-red-500'>*</span>
                   </>
                 }
                 type='text'
@@ -183,76 +183,7 @@ let submitButton = isLoading ? (
           placeholder='Write something...'
           readOnly={type === 'view'}
         />
-        {/* <div className='md:py-4 sm:px-2 sm:py-3 md:px-7 px-2'>
-          <label className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'>
-            Content<span className='text-red-500'>*</span>
-          </label>
-          <Controller
-            name='description'
-            control={control}
-            defaultValue={editItem?.description}
-            disable={type === 'view'}
-            rules={{ required: 'Content is required' }}
-            render={({ field }) => (
-              <ReactQuill
-                modules={{
-                  toolbar: [
-                    [{ header: '1' }, { header: '2' }, { font: [] }],
-                    [{ size: [] }],
-                    ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-                    [
-                      { list: 'ordered' },
-                      { list: 'bullet' },
-                      { indent: '-1' },
-                      { indent: '+1' }
-                    ],
-                    ['link', 'image', 'video'],
-                    ['clean']
-                  ]
-                }}
-                theme='snow'
-                placeholder='Write something...'
-                {...field}
-                readOnly={type === 'view'}
-              />
-            )}
-          />
-
-          <ErrorMessage message={errors?.description?.message} />
-        </div>
-        <div className='md:py-4 sm:px-2 sm:py-3 md:px-7 px-2'>
-          <label className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'>
-            Keyword
-          </label>
-          <Controller
-            name='keyword'
-            control={control}
-            defaultValue={editItem?.keyword}
-            render={({ field }) => (
-              <ReactQuill
-                modules={{
-                  toolbar: [
-                    [{ header: '1' }, { header: '2' }, { font: [] }],
-                    [{ size: [] }],
-                    ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-                    [
-                      { list: 'ordered' },
-                      { list: 'bullet' },
-                      { indent: '-1' },
-                      { indent: '+1' }
-                    ],
-                    ['link', 'image', 'video'],
-                    ['clean']
-                  ]
-                }}
-                theme='snow'
-                placeholder='Write something...'
-                {...field}
-                readOnly={type === 'view'}
-              />
-            )}
-          />
-        </div> */}
+        
         <div className='flex items-center justify-center p-3 mt-3 border bg-[#cbd5e13a]  rounded-b'>
           <Link to='/email-manager'>
             <button

@@ -44,14 +44,14 @@ const AddFAQ = ({ setShowModal, getAllFAQ }) => {
                   className=" ml-auto flex items-center justify-center  text-black border-2 rounded-full  h-8 w-8 float-right text-3xl leading-none font-extralight outline-none focus:outline-none"
                   onClick={() => setShowModal(false)}
                 >
-                  <a
-                    title="Close"
+                  <button type="button"
+                    title={t("CLOSE")}
                     className="hover:text-blue-700 transition duration-150 ease-in-out"
                     data-bs-toggle="tooltip"
                   >
                     {" "}
                     <span className=" text-[#B8BBBF]  text-4xl ">×</span>
-                  </a>
+                  </button>
                 </button>
               </div>
               <div className="relative p-6 flex-auto dark:bg-slate-800">
@@ -83,7 +83,7 @@ const AddFAQ = ({ setShowModal, getAllFAQ }) => {
                           })}
                         />
                         <label
-                          for="title"
+                          htmlFor="title"
                           maxLength={200}
                           className="dark:bg-slate-800 peer-focus:font-normal absolute text-sm text-[#A5A5A5] dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 left-3 bg-white p-2 z-10 origin-[2] peer-focus:left-0 peer-focus:text-[#A5A5A5] peer-focus:text-lg peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-8"
                         >
@@ -108,7 +108,7 @@ const AddFAQ = ({ setShowModal, getAllFAQ }) => {
                           })}
                         />
                         <label
-                          for="content"
+                          htmlFor="content"
                           className="dark:bg-slate-800 peer-focus:font-normal absolute text-sm text-[#A5A5A5] dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 left-3 bg-white p-2 z-10 origin-[2] peer-focus:left-0 peer-focus:text-[#A5A5A5] peer-focus:text-lg peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-8"
                         >
                           {t("FAQS_CONTENT")}

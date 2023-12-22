@@ -135,7 +135,7 @@ function Faq () {
           </div>
         </div>
       </div>
-      <>
+     
         {showModal && (
           <AddFAQ setShowModal={setShowModal} getAllFAQ={getAllFAQ} />
         )}
@@ -147,7 +147,7 @@ function Faq () {
             viewType={editView}
           />
         )}
-      </>
+     
     </div>
   )
 }
