@@ -51,8 +51,12 @@ const SubAdd = ({ props }) => {
   )
   const { updatePageName } = useContext(AuthContext)
   const [countryCode] = useState('th')
+  const [isSelectAll, setIsSelectAll] = useState(false)
 
   const onChange = event => {
+    if(!event.target.checked){
+      setIsSelectAll(false)
+    }
     setPermission(current =>
       current.map(obj => {
         if (obj.manager === event.target.name) {
@@ -162,6 +166,7 @@ const SubAdd = ({ props }) => {
   }
 
   const selectAll = event => {
+    setIsSelectAll(event.target.checked)
     setPermission(current =>
       current.map(obj => {
         return {
@@ -333,6 +338,7 @@ const SubAdd = ({ props }) => {
                         <input
                           type='checkbox'
                           id='all'
+                          checked={isSelectAll}
                           className='h-4 w-4'
                           onChange={selectAll}
                         />

@@ -16,7 +16,7 @@ export const AuthProvider = ({ children }) => {
       : null
   );
   const [sidebarStatus, setSidebarStatus] = useState(
-    window?.localStorage.getItem("sidebar")
+    window?.localStorage.getItem("sidebar")??'open'
   );
   const [pageName, setPageName] = useState(
     window?.localStorage.getItem("pageName")
