@@ -209,7 +209,7 @@ const helpers = {
     const date2 = dayjs(dateStr2)
 
     // Get the difference in seconds
-    return date2.diff(date1, 'second')
+    return compact([date2.diff(date1, 'second')])[0]
   },
   getDateAndTime:(date)=>{
     return dayjs(date).format("DD-MM-YYYY hh:mm A")

@@ -118,20 +118,7 @@ function RewardWithdrawalRequest () {
     }
   }
 
-  const handleReset = () => {
-    setFilterData({
-      category: '',
-      startDate: '',
-      searchKey: '',
-      endDate: '',
-      isReset: true,
-      isFilter: false
-    })
-    setPage(1)
-    setSearchTerm('')
-    setPageSize(10)
-  }
-
+  
   const handleDateChange = (start, end) => {
     setPage(1)
     setFilterData({
@@ -145,7 +132,7 @@ function RewardWithdrawalRequest () {
     setPage(1)
     setFilterData({ ...filterData, category: e.target.value, isFilter: true })
   }
-
+  
   useEffect(() => {
     if (!isInitialized) {
       setIsInitialized(true)
@@ -159,7 +146,7 @@ function RewardWithdrawalRequest () {
       setPage(1)
     }
   }, [debouncedSearchTerm])
-
+  
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       setDebouncedSearchTerm(searchTerm)
@@ -171,7 +158,20 @@ function RewardWithdrawalRequest () {
   useEffect(() => {
     updatePageName(t('REWARD_WITHDRAWAL_REQUEST'))
   }, [])
-
+  
+  const handleReset = () => {
+    setFilterData({
+      category: '',
+      startDate: '',
+      searchKey: '',
+      endDate: '',
+      isReset: true,
+      isFilter: false
+    })
+    setPage(1)
+    setSearchTerm('')
+    setPageSize(10)
+  }
   return (
     <div>
       <div className='bg-[#F9F9F9] dark:bg-slate-900'>
@@ -181,70 +181,43 @@ function RewardWithdrawalRequest () {
               <div className='col-span-2 flex flex-wrap  items-center'>
                 <div className='flex items-center lg:pt-0 pt-3 flex-wrap justify-center mb-2 2xl:mb-0'>
                   <div className='relative flex items-center mb-3'>
-                    
                     <OSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm} placeholder={t('SEARCH_BY_NAME')}/>
                   </div>
-
-                  <ODateRangePicker
-                    handleDateChange={handleDateChange}
-                    isReset={filterData?.isReset}
-                    setIsReset={setFilterData}
+                  <ODateRangePicker handleDateChange={handleDateChange} isReset={filterData?.isReset} setIsReset={setFilterData}
                   />
                   {(manager?.add || manager?.edit || user?.role === 'admin') && <div className='flex items-center mb-3 ml-3'>
-                    <select
-                      id='countries'
-                      type=' password'
-                      name='floating_password'
-                      className='block p-2 w-full text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer'
-                      placeholder=' '
-                      value={filterData?.category}
-                      onChange={e => statusPage(e)}
+                    <select id='countries' type='password' name='floating_password' className='block p-2 w-full text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer' placeholder=' ' value={filterData?.category} onChange={e => statusPage(e)}
                     >
                       <option defaultValue value=''>
                         {t('O_ALL')}
                       </option>
                       <option value='accepted'>{t('Accepted')}</option>
                       <option value='rejected'>{t('Rejected')}</option>
-                      <option value='pending '>{t('Pending ')}</option>
+                      <option value='pending'>{t('Pending')}</option>
                     </select>
                   </div>}
-
-                  <button
-                    type='button'
-                    onClick={handleReset}
-                    title={t('O_RESET')}
-                    className='bg-gradientTo text-sm px-8 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2'
-                  >
+                  <button type='button' onClick={handleReset} title={t('O_RESET')} className='bg-gradientTo text-sm px-8 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2'>
                     {t('O_RESET')}
                   </button>
                 </div>
-              </div>
-              
+              </div>       
             </form>
             <RewardWithdrawalRequestTable
+              pageSize={pageSize}
               subAdmin={subAdmin?.docs}
-              getAllRewardWithdrawalRequest={getAllRewardWithdrawalRequest}
               handelDelete={handelDelete}
               page={page}
               setSort={setSort}
               sort={sort}
+              getAllRewardWithdrawalRequest={getAllRewardWithdrawalRequest}
               manager={manager}
               handelStatusChange={handelStatusChange}
-              pageSize={pageSize}
             />
 
             <div className='flex justify-between'>
             <PageSizeList  dynamicPage={dynamicPage} pageSize={pageSize}/>
-              {paginationObj?.totalItems ? (
-                <Pagination
-                  handlePageClick={handlePageClick}
-                  options={paginationObj}
-                  isDelete={isDelete}
-                  page={page}
-                />
-              ) : null}
-            </div>
-          </div>
+              {paginationObj?.totalItems ? (<Pagination handlePageClick={handlePageClick} options={paginationObj} isDelete={isDelete} page={page}/>) : null}
+            </div></div>
         </div>
       </div>
     </div>

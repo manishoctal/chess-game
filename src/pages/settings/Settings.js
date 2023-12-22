@@ -364,7 +364,7 @@ const Settings = () => {
                 type='number'
                 maxLength={40}
                 register={register(
-                  'mimThresholdAmountForEarningRewardRequest',
+                  'minThresholdAmountForEarningRewardRequest',
                   {
                     required: {
                       value: true,
@@ -384,7 +384,7 @@ const Settings = () => {
               />
               <ErrorMessage
                 message={
-                  errors?.mimThresholdAmountForEarningRewardRequest?.message
+                  errors?.minThresholdAmountForEarningRewardRequest?.message
                 }
               />
             </div>
@@ -414,6 +414,33 @@ const Settings = () => {
                 placeholder=' '
               />
               <ErrorMessage message={errors?.timeLogForActiveUsers?.message} />
+            </div>
+            <div className='w-full'>
+              <OInputField
+                wrapperClassName='relative z-0  w-full group'
+                type='number'
+                inputLabel={<>{t('REWARD_AMOUNT_PERCENTAGE')}</>}
+                maxLength={40}
+                disable={manager?.add === false}
+                id='payment'
+                register={register('rewardAmountPercentage', {
+                  required: {
+                    value: true,
+                    message:
+                      'Please enter reward amount percentage.'
+                  },
+                  maxLength: {
+                    value: 3,
+                    message: 'Max limit is 3 characters.'
+                  },
+                  min: {
+                    value: 1,
+                    message: 'Minimum value must is 1.'
+                  }
+                })}
+                placeholder=' '
+              />
+              <ErrorMessage message={errors?.rewardAmountPercentage?.message} />
             </div>
           </main>
         </div>
