@@ -119,7 +119,7 @@ const UserView = () => {
                   <span className='block'>
                   {helpers.formattedAmount(item?.walletAmount)}  
                   </span>
-                  <span className='text-sm'>Available Balance</span>
+                  <span className='text-sm'>{t('AVAILABLE_BALANCE')}</span>
                 </figcaption>
               </div>
             </div>
@@ -157,7 +157,7 @@ const UserView = () => {
                       </figure>
                       <figcaption className='w-[calc(100%_-_41px)]'>
                         <span className='block text-[#5C5C5C]'>
-                          {t('Referral code')}
+                          {t('USERS_REFERRAL_CODE')}
                         </span>
                         <strong>
                           {helpers.ternaryCondition(
@@ -199,7 +199,7 @@ const UserView = () => {
                       </figure>
                       <figcaption className='w-[calc(100%_-_41px)]'>
                         <span className='block text-[#5C5C5C]'>
-                          {t('Date of birth')}
+                          {t('USER_DOB')}
                         </span>
                         <strong>
                           {helpers.ternaryCondition(
@@ -220,7 +220,7 @@ const UserView = () => {
                       </figure>
                       <figcaption className='w-[calc(100%_-_41px)]'>
                         <span className='block text-[#5C5C5C]'>
-                          {t('UPC code')}
+                          {t('UPC_CODE')}
                         </span>
                         <strong>
                           {helpers.ternaryCondition(
@@ -266,7 +266,7 @@ const UserView = () => {
                       </figure>
                       <figcaption className='w-[calc(100%_-_41px)]'>
                         <span className='block text-[#5C5C5C]'>
-                          {t('Country of living')}
+                          {t('COUNTRY_OF_LIVING')}
                         </span>
                         <strong>
                           {helpers.ternaryCondition(
@@ -287,7 +287,7 @@ const UserView = () => {
                       </figure>
                       <figcaption className='w-[calc(100%_-_41px)]'>
                         <span className='block text-[#5C5C5C]'>
-                          {t('Cities visited in Thailand')}
+                          {t('CITIES_VISITED_IN_THAILAND')}
                         </span>
                         <strong>
                           {helpers.ternaryCondition(
@@ -308,7 +308,7 @@ const UserView = () => {
                       </figure>
                       <figcaption className='w-[calc(100%_-_41px)]'>
                         <span className='block text-[#5C5C5C]'>
-                          {t('Cities going to visit in Thailand')}
+                          {t('CITIES_GOING_TO_VISIT_IN_THAILAND')}
                         </span>
                         <strong>
                           {item?.cityPlanning?.length > 0
@@ -327,7 +327,7 @@ const UserView = () => {
                       </figure>
                       <figcaption className='w-[calc(100%_-_41px)]'>
                         <span className='block text-[#5C5C5C]'>
-                          {t('Bonus Amount')}
+                          {t('BONUS_AMOUNT')}
                         </span>
                         <strong>{item?.bonusAmount || 0}</strong>
                       </figcaption>
@@ -345,7 +345,7 @@ const UserView = () => {
                   fallbackUrl={defaultImage}
                 />
               </figure>
-              <span className='block text-center'>KYC Document</span>
+              <span className='block text-center'>{t('KYC_DOCUMENT')}</span>
             </div>
           </div>
         </div>
@@ -436,7 +436,7 @@ const UserView = () => {
                   <span className='block'>
                   {helpers.formattedAmount(item?.walletAmount)}    
                   </span>
-                  <span className='text-sm'>Available Balance</span>
+                  <span className='text-sm'>{t('AVAILABLE_BALANCE')}</span>
                 </figcaption>
               </div>
             </div>
@@ -453,7 +453,7 @@ const UserView = () => {
                       </figure>
                       <figcaption className='w-[calc(100%_-_41px)]'>
                         <span className='block text-[#5C5C5C]'>
-                          {t('Nationality Id')}
+                          {t('NATIONALITY_ID')}
                         </span>
                         <strong>
                           {helpers.ternaryCondition(
@@ -474,7 +474,7 @@ const UserView = () => {
                       </figure>
                       <figcaption className='w-[calc(100%_-_41px)]'>
                         <span className='block text-[#5C5C5C]'>
-                          {t('Address')}
+                          {t('ADDRESS')}
                         </span>
                         <strong>
                           {helpers.ternaryCondition(
@@ -523,7 +523,7 @@ const UserView = () => {
                   fallbackUrl={defaultImage}
                 />
               </figure>
-              <span className='block text-center'>KYC Document</span>
+              <span className='block text-center'>{t('KYC_DOCUMENT')}</span>
             </div>
           </div>
         </div>
