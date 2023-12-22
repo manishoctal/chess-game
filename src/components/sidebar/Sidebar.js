@@ -163,7 +163,6 @@ const Sidebar = () => {
               />
             )
           )}
-
           {andOperator(
             checkSidebarPermission('scratch_card_manager'),
             generateNavLink(
@@ -172,40 +171,6 @@ const Sidebar = () => {
               <GiCartwheel
                 style={{ fontSize: '20px' }}
                 title={t('SCRATCH_CARD_MANAGER')}
-              />
-            )
-          )}
-
-          {andOperator(
-            checkSidebarPermission('settings'),
-            generateNavLink(
-              '/setting',
-              'SETTINGS',
-              <AiFillSetting
-                style={{ fontSize: '20px' }}
-                title={t('SETTINGS')}
-              />
-            )
-          )}
-
-          {andOperator(
-            checkSidebarPermission('static_page_management'),
-            generateNavLink(
-              '/static-content',
-              'NAV_STATIC_CONTENTS',
-              <Documents />
-            )
-          )}
-
-          {checkSidebarPermission('FAQ') &&
-            generateNavLink('/faqs', 'NAV_FAQS', <Documents />)}
-
-          {andOperator(
-            checkSidebarPermission('email_manager'),
-            generateNavLink(
-              '/email-manager',
-              'EMAIL_MANAGER',
-              <AiOutlineMail style={{ fontSize: '20px' }} title={t('EMAIL_MANAGER')}
               />
             )
           )}
@@ -241,7 +206,38 @@ const Sidebar = () => {
               />
             )
           )}
+          {andOperator(
+            checkSidebarPermission('email_manager'),
+            generateNavLink(
+              '/email-manager',
+              'EMAIL_MANAGER',
+              <AiOutlineMail style={{ fontSize: '20px' }} title={t('EMAIL_MANAGER')}
+              />
+            )
+          )}
+ {andOperator(
+            checkSidebarPermission('settings'),
+            generateNavLink(
+              '/setting',
+              'SETTINGS',
+              <AiFillSetting
+                style={{ fontSize: '20px' }}
+                title={t('SETTINGS')}
+              />
+            )
+          )}
 
+          {andOperator(
+            checkSidebarPermission('static_page_management'),
+            generateNavLink(
+              '/static-content',
+              'NAV_STATIC_CONTENTS',
+              <Documents />
+            )
+          )}
+
+          {checkSidebarPermission('FAQ') &&
+            generateNavLink('/faqs', 'NAV_FAQS', <Documents />)}
           <Link
             onClick={handleLogout}
             className='flex items-center px-4 lg:px-7 py-4 hover:bg-sideBarNavActiveColor hover:text-gradientTo'

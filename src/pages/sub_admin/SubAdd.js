@@ -47,7 +47,7 @@ const SubAdd = ({ props }) => {
   })
   const notification = useToastContext()
   const [permissionJons, setPermission] = useState(
-    helpers.ternaryCondition(item?.type , getValues('permission') , Permission)
+    helpers.ternaryCondition(item?.type, getValues('permission'), Permission)
   )
   const { updatePageName } = useContext(AuthContext)
   const [countryCode] = useState('th')
@@ -160,13 +160,33 @@ const SubAdd = ({ props }) => {
       })
     )
   }
+
+  const selectAll = event => {
+    setPermission(current =>
+      current.map(obj => {
+        return {
+          ...obj,
+          add: event.target.checked,
+          view: event.target.checked,
+          delete: event.target.checked
+        }
+      })
+    )
+  }
   let itemType = helpers.ternaryCondition(
     item?.type === 'edit',
     t('O_EDIT'),
     t('O_ADD')
   )
 
-  const renderInputField = (autoFocus,name, label, maxLength, validation,disable) => (
+  const renderInputField = (
+    autoFocus,
+    name,
+    label,
+    maxLength,
+    validation,
+    disable
+  ) => (
     <OInputField
       wrapperClassName='relative z-0 mb-6 w-full group'
       name={name}
@@ -192,32 +212,35 @@ const SubAdd = ({ props }) => {
           <div className=''>
             <div className='grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'>
               <div className='px-2'>
-              {renderInputField(true,
-              'firstName',
-              t('O_FIRST_NAME'),
-              15,
-              formValidation['subAdminName'],item?.type === 'view'
-            )}
+                {renderInputField(
+                  true,
+                  'firstName',
+                  t('O_FIRST_NAME'),
+                  15,
+                  formValidation['subAdminName'],
+                  item?.type === 'view'
+                )}
               </div>
               <div className='px-2'>
-              {renderInputField(false,
-              'lastName',
-              t('O_LAST_NAME'),
-              15,
-              formValidation['subAdminLastName'],item?.type === 'view'
-            )}
-               
+                {renderInputField(
+                  false,
+                  'lastName',
+                  t('O_LAST_NAME'),
+                  15,
+                  formValidation['subAdminLastName'],
+                  item?.type === 'view'
+                )}
               </div>
 
               <div className='px-2'>
-
-              {renderInputField(false,
-              'email',
-              t('O_EMAIL_ID'),
-              50,
-              formValidation['email'],item?.type === 'view'
-            )}
-               
+                {renderInputField(
+                  false,
+                  'email',
+                  t('O_EMAIL_ID'),
+                  50,
+                  formValidation['email'],
+                  item?.type === 'view'
+                )}
               </div>
 
               <div className='px-2'>
@@ -304,8 +327,16 @@ const SubAdd = ({ props }) => {
                     {/* <th scope="col" className="py-3 px-6 ">
                       {t("O_DELETE")}
                     </th> */}
-                    <th scope='col' className='py-3 px-6 '>
-                      {t('O_ALL')}
+                    <th scope='col' className='py-3 px-6'>
+                      <div className='flex items-center justify-between '>
+                        {t('O_ALL')}
+                        <input
+                          type='checkbox'
+                          id='all'
+                          className='h-4 w-4'
+                          onChange={selectAll}
+                        />
+                      </div>
                     </th>
                   </tr>
                 </thead>

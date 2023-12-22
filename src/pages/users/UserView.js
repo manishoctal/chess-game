@@ -117,12 +117,7 @@ const UserView = () => {
                 </figure>
                 <figcaption className='text-white'>
                   <span className='block'>
-                    $
-                    {helpers.ternaryCondition(
-                      item?.walletAmount,
-                      item?.walletAmount,
-                      0
-                    )}
+                  {helpers.formattedAmount(item?.walletAmount)}  
                   </span>
                   <span className='text-sm'>Available Balance</span>
                 </figcaption>
@@ -439,12 +434,7 @@ const UserView = () => {
                 </figure>
                 <figcaption className='text-white'>
                   <span className='block'>
-                    $
-                    {helpers.ternaryCondition(
-                      item?.walletAmount,
-                      item?.walletAmount,
-                      0
-                    )}
+                  {helpers.formattedAmount(item?.walletAmount)}    
                   </span>
                   <span className='text-sm'>Available Balance</span>
                 </figcaption>
