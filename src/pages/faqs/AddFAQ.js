@@ -72,10 +72,10 @@ const AddFAQ = ({ setShowModal, getAllFAQ }) => {
                           placeholder=" "
                           maxLength={100}
                           {...register("title", {
-                            required: "Please enter title.",
+                            required: t('PLEASE_ENTER_TITLE'),
                             minLength: {
                               value: 2,
-                              message: "Minimum length must be 2.",
+                              message: t('MINIMUM_LENGTH_MUST_BE_2'),
                             },
                             validate: {
                               whiteSpace: (value) => value.trim() ? true : "White spaces not allowed."

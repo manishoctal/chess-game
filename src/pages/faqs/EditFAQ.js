@@ -67,7 +67,7 @@ const EditFAQ = ({ setEditShowModal, getAllFAQ, item, viewType }) => {
                       placeholder=" "
                       maxLength={100}
                       {...register("title", {
-                        required: "Please enter title.",
+                        required: t('PLEASE_ENTER_TITLE'),
                         minLength: {
                           value: 2,
                           message: "Minimum length must be 2.",

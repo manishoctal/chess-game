@@ -80,7 +80,7 @@ const AddFaq = ({ setShowModal, getAllFAQ }) => {
                           placeholder=" "
                           maxLength={500}
                           register={register("title", {
-                            required: "Please enter title.",
+                            required: t('PLEASE_ENTER_TITLE'),
                             minLength: {
                               value: 2,
                               message: "Minimum length must be 2.",
