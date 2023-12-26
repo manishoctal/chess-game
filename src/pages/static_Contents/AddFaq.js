@@ -83,7 +83,7 @@ const AddFaq = ({ setShowModal, getAllFAQ }) => {
                             required: t('PLEASE_ENTER_TITLE'),
                             minLength: {
                               value: 2,
-                              message: "Minimum length must be 2.",
+                              message: t('MINIMUM_LENGTH_MUST_BE_2'),
                             },
                             maxLength: {
                               value: 500,
@@ -105,13 +105,13 @@ const AddFaq = ({ setShowModal, getAllFAQ }) => {
                           className="block py-4 px-3 w-full text-sm text-gray-900 bg-transparent border-2 rounded-lg border-[#DFDFDF] appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0  peer"
                           placeholder=" "
                           {...register("content", {
-                            required: "Please enter content.",
+                            required: t('PLEASE_ENTER_CONTENT'),
                             validate: {
                               whiteSpace: (value) => value.trim() ? true : "White spaces not allowed."
                             },
                             minLength: {
                               value: 2,
-                              message: "Minimum length must be 2.",
+                              message: t('MINIMUM_LENGTH_MUST_BE_2'),
                             },
                             maxLength: {
                               value: 5000,

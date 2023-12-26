@@ -95,7 +95,7 @@ const UserView = () => {
                   </figcaption>
                 </div>
               </div>
-              <div>
+              <div className='col-span-2 ps-20'>
                 <div className='flex items-center'>
                   <figure className='bg-white w-[42px] h-[41px] rounded-full flex items-center justify-center mr-3'>
                     <img src={mobileIcon} alt='' />

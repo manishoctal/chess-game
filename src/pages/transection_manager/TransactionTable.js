@@ -50,7 +50,7 @@ const TransactionTable = ({ artistVerification, page, userType, pageSize }) => {
                   {startCase(item?.user?.firstName) || 'N/A'}
                 </td>
                 <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
-                  {item?.user?._id || 'N/A'}
+                  {item?.user?.userId || 'N/A'}
                 </td>
                 <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
                   {item?.transactionId || 'N/A'}

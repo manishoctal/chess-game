@@ -5,12 +5,9 @@ import { BsArrowUpShort } from "react-icons/bs";
 
 const NotificationTable = ({
   notifications,
-  getAllNotifications,
-  handleUserView,
   paginationObj,
   sort,
   setSort,
-  manager,
   pageSize,
 }) => {
   const { t } = useTranslation();

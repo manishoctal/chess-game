@@ -15,6 +15,8 @@ import { Link } from 'react-router-dom'
 import Credential from './Credential'
 import formValidation from 'utils/formValidation'
 import { preventMaxInput } from 'utils/validations'
+import helpers from 'utils/helpers'
+import DepositAmount from './DepositAmount'
 
 const Settings = () => {
   const { logoutUser, user, updatePageName } = useContext(AuthContext)
@@ -34,7 +36,9 @@ const Settings = () => {
   })
   const [settingChangeLoading, setSettingChangeLoading] = useState(false)
   const [pic] = useState(user?.profilePic ?? imageDefault)
+  const [settingsDetails, setSettingsDetails] = useState('')
   const [viewShowModal, setViewShowModal] = useState(false)
+  const [isAmountModal, setIsAmountModal] = useState(false)
 
   const notification = useToastContext()
 
@@ -63,6 +67,7 @@ const Settings = () => {
       const res = await apiGet(pathObj.getSettings)
       if (res) {
         reset(res?.data?.results)
+        setSettingsDetails(res?.data?.results)
       }
     } catch (error) {
       console.error('error:', error)
@@ -103,6 +108,7 @@ const Settings = () => {
                       style={{ borderRadius: '50%' }}
                     />
                   </div>
+
                   <div className='pl-6  w-full flex align-center'>
                     <div>
                       {(manager?.add || user?.role === 'admin') && (
@@ -128,6 +134,26 @@ const Settings = () => {
                         title={t('VIEW_LOGIN_CREDENTIALS')}
                       />
                     </div>
+                  </div>
+                  <div className='flex justify-between items-center'>
+                    <div className=''>
+                      Total admin amount{' '}
+                      <span>
+                        {' '}
+                        {helpers.formattedAmount(
+                          settingsDetails?.defaultWalletAmount
+                        )}
+                      </span>
+                    </div>
+                    <button
+                      type='button'
+                      className='bg-gradientTo hover:bg-DarkBlue cursor-pointer   text-white  font-normal active:bg-slate-100 text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150
+      undefined '
+                      onClick={() => setIsAmountModal(true)}
+                    >
+                      {' '}
+                      Deposit amount
+                    </button>
                   </div>
                 </div>
               </div>
@@ -426,8 +452,7 @@ const Settings = () => {
                 register={register('rewardAmountPercentage', {
                   required: {
                     value: true,
-                    message:
-                      'Please enter reward amount percentage.'
+                    message: 'Please enter reward amount percentage.'
                   },
                   maxLength: {
                     value: 3,
@@ -461,6 +486,14 @@ const Settings = () => {
       {viewShowModal ? (
         <Credential setViewShowModal={setViewShowModal} email={user?.email} />
       ) : null}
+{console.log('isAmountModal',isAmountModal)}
+      {helpers.andOperator(
+        isAmountModal,
+        <DepositAmount
+          getSettings={getSettings}
+          setIsAmountModal={setIsAmountModal}
+        />
+      )}
     </section>
   )
 }

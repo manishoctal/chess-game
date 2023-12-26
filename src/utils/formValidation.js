@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next'
 import { validationRules } from './constants'
 
 
-const formValidation =()=>{
+const FormValidation =()=>{
   const {t}=  useTranslation()
 return {
   couponCode: {
@@ -34,7 +34,7 @@ return {
     },
     minLength: {
       value: 2,
-      message: 'Minimum length must be 2.'
+      message: t('MINIMUM_LENGTH_MUST_BE_2')
     },
     validate: {
       whiteSpace: value => (value.trim() ? true : 'White spaces not allowed.')
@@ -74,7 +74,7 @@ return {
     },
     minLength: {
       value: 2,
-      message: 'Minimum length must be 2.'
+      message: t('MINIMUM_LENGTH_MUST_BE_2')
     },
     maxLength: {
       value: 20,
@@ -92,7 +92,7 @@ return {
     },
     minLength: {
       value: 2,
-      message: 'Minimum length must be 2.'
+      message: t('MINIMUM_LENGTH_MUST_BE_2')
     },
     maxLength: {
       value: 20,
@@ -186,4 +186,4 @@ return {
 }
 }
 
-export default formValidation
+export default FormValidation

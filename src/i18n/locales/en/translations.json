@@ -397,6 +397,7 @@
   "NAME": "Name",
   "DATE": "Date",
   "TIME": "Time",
+  "PLEASE_ENTER_CONTENT": "Please enter content.",
   "PLEASE_ENTER_TITLE": "Please enter title.",
   "MINIMUM_LENGTH_MUST_BE_2": "Minimum length must be 2.",
   "ARE_YOU_SURE_YOU_WANT_TO": "Are you sure you want to",
