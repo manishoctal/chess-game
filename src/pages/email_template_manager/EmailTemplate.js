@@ -7,6 +7,7 @@ import dayjs from "dayjs";
 import AuthContext from "context/AuthContext";
 import useToastContext from "hooks/useToastContext";
 import OSearch from "components/reusable/OSearch";
+import { useTranslation } from "react-i18next";
 
 function EmailTemplate() {
   const notification = useToastContext();
@@ -22,6 +23,7 @@ function EmailTemplate() {
     pageCount: 1,
     pageRangeDisplayed: 10,
   });
+  const {t} = useTranslation()
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
   const [isInitialized, setIsInitialized] = useState(false);
@@ -139,7 +141,7 @@ function EmailTemplate() {
               <div className="col-span-2 flex flex-wrap  items-center">
                 <div className="flex items-center lg:pt-0 pt-3 flex-wrap justify-center mb-2 2xl:mb-0">
                   <div className="relative flex items-center mb-3">
-                  <OSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm}  placeholder="Email template name"/>
+                  <OSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm}  placeholder={t("EMAIL_TEMPLATE_NAME")}/>
                   </div>
                  
                 </div>

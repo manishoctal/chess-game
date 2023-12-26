@@ -58,13 +58,13 @@ const AddAmount = ({ setIsAmountModal, getAllUser ,addAmountUser,userType}) => {
                   className=' ml-auto flex items-center justify-center  text-black border-2 rounded-full  h-8 w-8 float-right text-3xl leading-none font-extralight outline-none focus:outline-none'
                   onClick={() => setIsAmountModal(false)}
                 >
-                  <a
-                    title='Close'
+                  <button type='button'
+                    title={t('CLOSE')}
                     className='hover:text-blue-700 transition duration-150 ease-in-out'
                     data-bs-toggle='tooltip'
                   >
                     <span className=' text-[#B8BBBF]  text-4xl '>×</span>
-                  </a>
+                  </button>
                 </button>
               </div>
 

@@ -106,8 +106,8 @@ const Permission = [
     edit: false,
     view: false,
     shownView: true,
-    shownAdd: true,
-    shownAll: true
+    shownAdd: false,
+    shownAll: false
   },
   {
     manager: 'reward_withdrawal_request',

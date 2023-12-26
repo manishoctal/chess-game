@@ -2,7 +2,6 @@ import { isEmpty } from 'lodash'
 import { useTranslation } from 'react-i18next'
 import helpers from '../../utils/helpers'
 import QRCodeGenerator from 'components/QRCodeGenerator'
-import { currency } from 'utils/constants'
 
 const ReportsTable = ({ users, page, userType, pageSize }) => {
   const { t } = useTranslation()
@@ -96,22 +95,13 @@ const ReportsTable = ({ users, page, userType, pageSize }) => {
                   <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-left font-bold text-slate-900'>
                     {  0}
                       </td>
-                     
-                     
                     )}
                   <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-left font-bold text-slate-900'>
-                    {`${currency} ${helpers.ternaryCondition(
-                      item?.local?.rewardAmount,
-                      item?.local?.rewardAmount,
-                      0
-                    )}`}
-                    
+                  {helpers.formattedAmount(item?.local?.rewardAmount)}      
                   </td>
-
                   <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-left'>
-                    {`${currency} ${helpers.ternaryCondition(item?.amount, item?.amount, 0)}`}
+                  {helpers.formattedAmount(item?.amount)}
                   </td>
-
                   <td className='py-4 px-3 border-r  dark:border-[#ffffff38] '>
                     {helpers.ternaryCondition(
                       item?.createdAt,
@@ -141,7 +131,7 @@ const ReportsTable = ({ users, page, userType, pageSize }) => {
                   {helpers.ternaryCondition(item?.paymentProof , (
                       <img
                         src={item?.paymentProof}
-                        alt='image'
+                        alt=''
                         width='80'
                       />
                     ) , (

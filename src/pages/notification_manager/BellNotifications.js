@@ -87,7 +87,7 @@ const BellNotifications = () => {
             <thead className='text-xs text-gray-900 border border-[#E1E6EE] uppercase bg-[#E1E6EE] dark:bg-gray-700 dark:text-gray-400'>
               <tr>
                 <th scope='col' className='py-3 px-6'>
-                  S.NO
+                {t('S.NO')}
                 </th>
                 <th scope='col' className='py-3 px-6'>
                   <div className='flex items-center'>{t('O_TITLE')}</div>

@@ -145,14 +145,14 @@ const SupportManagerTable = ({
                                   onClick={() => handleReply(item)}
                                 >
                                   {' '}
-                                  <FaReply className='cursor-pointer w-5 h-3 text-slate-600' />{' '}
+                                  <FaReply className='cursor-pointer w-5 h-5 text-slate-600' />{' '}
                                 </button>,
                                 <button
                                 type='button'
                                 onClick={() => handleUserView(item.replyMessage)}
                                 title= {t('O_VIEW')}
                               >
-                                 <AiFillEye className='cursor-pointer w-5 h-3 text-slate-600' />{' '}
+                                 <AiFillEye className='cursor-pointer w-5 h-5 text-slate-600' />{' '}
                               </button>
                               )}
                             </li>

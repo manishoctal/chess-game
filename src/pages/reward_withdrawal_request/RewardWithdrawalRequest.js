@@ -16,7 +16,7 @@ function RewardWithdrawalRequest () {
   const { user, updatePageName } = useContext(AuthContext)
   const [pageSize, setPageSize] = useState(10)
   const manager =
-  user?.permission?.find(e => e.manager === 'subAdmin_manager') ?? {}
+  user?.permission?.find(e => e.manager === 'reward_withdrawal_request') ?? {}
   const [subAdmin, setSubAdmin] = useState()
   const [page, setPage] = useState(1)
   const [isDelete] = useState(false)
