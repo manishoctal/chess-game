@@ -62,7 +62,7 @@ const TransactionDetailsTable = ({
                     {helpers.ternaryCondition(item?.mobile,item?.mobile , 'N/A')}
                   </td>
                   <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
-                    {helpers.ternaryCondition(item?.country,item?.country , 0)}
+                  {helpers.formattedAmount(item?.transactionFee)}  
                   </td>
                   {userType === 'tourist' && (
                     <>
@@ -77,7 +77,7 @@ const TransactionDetailsTable = ({
                         {helpers.ternaryCondition(item?.country,item?.country , 0)}
                       </td>
                       <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
-                        {helpers.ternaryCondition(item?.transactionFee,item?.transactionFee , 0)}
+                      {helpers.formattedAmount(item?.transactionFee)}  
                       </td>
                     </>
                   )}

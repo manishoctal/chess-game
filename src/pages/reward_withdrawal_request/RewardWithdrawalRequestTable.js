@@ -13,7 +13,6 @@ import { apiPost, apiPut } from 'utils/apiFetch'
 import useToastContext from 'hooks/useToastContext'
 import classNames from 'classnames'
 import helpers from 'utils/helpers'
-import { currency } from 'utils/constants'
 
 const RewardWithdrawalRequestTable = ({
   subAdmin,
@@ -110,9 +109,6 @@ const RewardWithdrawalRequestTable = ({
                 >
                   {i + 1 + pageSize * (page - 1)}
                 </th>
-                {/* <td className="py-2 px-4 border-r dark:border-[#ffffff38]">
-                  {item?._id}
-                </td> */}
                 <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
                   {startCase(
                     item?.userDetail?.firstName +
@@ -120,8 +116,7 @@ const RewardWithdrawalRequestTable = ({
                       item?.userDetail?.lastName
                   )}
                 </td>
-
-                <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>{`${currency} ${item?.amount}`}</td>
+                <td className='py-2 px-4 border-r dark:border-[#ffffff38]'> {helpers.formattedAmount(item?.amount)}</td>
                 <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>{dayjs(item?.createdAt).format('DD-MM-YYYY hh:mm A')}</td>
 
                 {(manager?.add || user?.role === 'admin') && (

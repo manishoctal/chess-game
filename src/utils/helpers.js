@@ -47,7 +47,7 @@ const helpers = {
     })
   },
   marketStatus: s => {
-    let status 
+    let status
     switch (s) {
       case 1:
         status = 'Open'
@@ -70,7 +70,7 @@ const helpers = {
     return status
   },
   getSportType: t => {
-    let type 
+    let type
     switch (t) {
       case 1:
         type = 'soccer'
@@ -211,31 +211,38 @@ const helpers = {
     // Get the difference in seconds
     return compact([date2.diff(date1, 'second')])[0]
   },
-  getDateAndTime:(date)=>{
-    return dayjs(date).format("DD-MM-YYYY hh:mm A")
+  getDateAndTime: date => {
+    return dayjs(date).format('DD-MM-YYYY hh:mm A')
   },
-  preventForNumberInput:e => {
+  preventForNumberInput: e => {
     if (['-', '+', 'e'].includes(e.key)) {
       e.preventDefault()
     }
-    if(['.'].includes(e?.target?.value)){
+    if (['.'].includes(e?.target?.value)) {
       const afterDecimal = e?.target?.value?.split('.')
-      console.log('afterDecimal',afterDecimal)
-      if(afterDecimal[1]?.length>2){
+      console.log('afterDecimal', afterDecimal)
+      if (afterDecimal[1]?.length > 2) {
         e.preventDefault()
       }
     }
   },
-  ternaryCondition : (condition, first, second) => {
+  ternaryCondition: (condition, first, second) => {
     return condition ? first : second
   },
-   andOperator : (condition, text) => {
+  andOperator: (condition, text) => {
     return condition && text
   },
-  getFullName : (firstName, lastName) => {
-    return compact([firstName, lastName]).join(" ")
+  getFullName: (firstName, lastName) => {
+    return compact([firstName, lastName]).join(' ')
+  },
+  formattedAmount: amount => {
+    return  amount?.toLocaleString('th-TH', {
+      style: 'currency',
+      currency: 'THB',
+      currencyDisplay: 'symbol'
+    })
+    
   }
-  
 }
 
 export default helpers

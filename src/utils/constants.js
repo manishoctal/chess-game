@@ -2239,4 +2239,3 @@ export const formLengthValidation = {
 };
 
 
-export const currency = '฿';

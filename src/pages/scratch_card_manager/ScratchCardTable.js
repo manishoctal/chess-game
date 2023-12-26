@@ -7,7 +7,6 @@ import { isEmpty } from 'lodash'
 
 import { NavLink } from 'react-router-dom'
 import helpers from 'utils/helpers'
-import { currency } from 'utils/constants'
 
 const ScratchCardTable = ({ subAdmin, page, pageSize }) => {
   const { t } = useTranslation()
@@ -48,9 +47,9 @@ const ScratchCardTable = ({ subAdmin, page, pageSize }) => {
                 </th>
 
                 <td className='py-2 px-4 border-r dark:border-[#ffffff38] text-slate-900 font-bold'>{item?.couponCode}</td>
-                <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>{`${currency} ${helpers.ternaryCondition(item?.couponAmount ,item?.couponAmount ,0)}`}</td>
+                <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>{helpers.formattedAmount(item?.couponAmount)}</td>
                 <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
-                {`${currency} ${helpers.ternaryCondition(item?.rewardAmount ,item?.rewardAmount ,0)}`}
+                {helpers.formattedAmount(item?.rewardAmount)}
                 </td>
                 <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
                   {dayjs(item?.expiryDate).format('DD MMM YYYY ')}

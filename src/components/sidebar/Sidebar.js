@@ -4,7 +4,18 @@ import AuthContext from '../../context/AuthContext'
 import Documents from '../reusable/icons/Documents'
 import { GiCartwheel } from 'react-icons/gi'
 import Dashboard from '../../assets/images/sidebar_icon1.svg'
-import SubAdmin from '../../assets/images/subadmin_manager.svg'
+import SubAdmin from '../../assets/images/sub-admin-manager.svg'
+import userManager from '../../assets/images/user-manager.svg'
+import transactionManager from '../../assets/images/transaction-manager.svg'
+import scratchcCard from '../../assets/images/scratchc-card.svg'
+import rewardWithdrawalRequest from '../../assets/images/reward-withdrawal-request.svg'
+import reportManager from '../../assets/images/report-manager.svg'
+import notificationManager from '../../assets/images/Notification-manager.svg'
+import manageStaticContents from '../../assets/images/manage-static-contents.svg'
+import globalSettings from '../../assets/images/global-settings.svg'
+import feedbackManager from '../../assets/images/feedback-manager.svg'
+import faqs from '../../assets/images/faqs.svg'
+import emailManager from '../../assets/images/email-manager.svg'
 import Logout from '../../assets/images/logout.svg'
 import { useTranslation } from 'react-i18next'
 import logoImage from '../../assets/images/Vector.png'
@@ -68,7 +79,7 @@ const Sidebar = () => {
   }
 
   if (!user) {
-    <></>
+    ;<></>
   }
 
   return (
@@ -116,7 +127,7 @@ const Sidebar = () => {
               '/users',
               'USER_MANAGER',
               <img
-                src={SubAdmin}
+                src={userManager}
                 className='max-w-[18px]'
                 title={t('USER_MANAGER')}
                 alt=''
@@ -130,7 +141,7 @@ const Sidebar = () => {
               '/transactions',
               'NAV_TRANSACTION_MANAGER',
               <img
-                src={SubAdmin}
+                src={transactionManager}
                 className='max-w-[18px]'
                 title={t('NAV_TRANSACTION_MANAGER')}
                 alt=''
@@ -157,33 +168,89 @@ const Sidebar = () => {
             generateNavLink(
               '/notification_manager',
               'NOTIFICATION_MANAGER',
-              <GiCartwheel
-                style={{ fontSize: '20px' }}
+              <img
+                src={notificationManager}
+                className='max-w-[18px]'
                 title={t('NOTIFICATION_MANAGER')}
+                alt=''
               />
             )
           )}
-
           {andOperator(
             checkSidebarPermission('scratch_card_manager'),
             generateNavLink(
               '/scratch-card-manager',
               'SCRATCH_CARD_MANAGER',
-              <GiCartwheel
-                style={{ fontSize: '20px' }}
+              <img
+                src={scratchcCard}
+                className='max-w-[18px]'
                 title={t('SCRATCH_CARD_MANAGER')}
+                alt=''
               />
             )
           )}
-
+          {andOperator(
+            checkSidebarPermission('feedback_manager'),
+            generateNavLink(
+              '/feedback-manager',
+              'FEEDBACK_MANAGER',
+              <img
+                src={feedbackManager}
+                className='max-w-[18px]'
+                title={t('FEEDBACK_MANAGER')}
+                alt=''
+              />
+            )
+          )}
+          {andOperator(
+            checkSidebarPermission('report_manager'),
+            generateNavLink(
+              '/report-manager',
+              'REPORT_MANAGER',
+              <img
+                src={reportManager}
+                className='max-w-[18px]'
+                title={t('REPORT_MANAGER')}
+                alt=''
+              />
+            )
+          )}
+          {andOperator(
+            checkSidebarPermission('reward_withdrawal_request'),
+            generateNavLink(
+              '/reward-withdrawal-request',
+              'REWARD_WITHDRAWAL_REQUEST',
+              <img
+                src={rewardWithdrawalRequest}
+                className='max-w-[18px]'
+                title={t('REWARD_WITHDRAWAL_REQUEST')}
+                alt=''
+              />
+            )
+          )}
+          {andOperator(
+            checkSidebarPermission('email_manager'),
+            generateNavLink(
+              '/email-manager',
+              'EMAIL_MANAGER',
+              <img
+                src={emailManager}
+                className='max-w-[18px]'
+                title={t('EMAIL_MANAGER')}
+                alt=''
+              />
+            )
+          )}
           {andOperator(
             checkSidebarPermission('settings'),
             generateNavLink(
               '/setting',
               'SETTINGS',
-              <AiFillSetting
-                style={{ fontSize: '20px' }}
+              <img
+                src={globalSettings}
+                className='max-w-[18px]'
                 title={t('SETTINGS')}
+                alt=''
               />
             )
           )}
@@ -193,55 +260,26 @@ const Sidebar = () => {
             generateNavLink(
               '/static-content',
               'NAV_STATIC_CONTENTS',
-              <Documents />
+              <img
+                src={manageStaticContents}
+                className='max-w-[18px]'
+                title={t('NAV_STATIC_CONTENTS')}
+                alt=''
+              />
             )
           )}
 
           {checkSidebarPermission('FAQ') &&
-            generateNavLink('/faqs', 'NAV_FAQS', <Documents />)}
-
-          {andOperator(
-            checkSidebarPermission('email_manager'),
             generateNavLink(
-              '/email-manager',
-              'EMAIL_MANAGER',
-              <AiOutlineMail style={{ fontSize: '20px' }} title={t('EMAIL_MANAGER')}
+              '/faqs',
+              'NAV_FAQS',
+              <img
+                src={faqs}
+                className='max-w-[18px]'
+                title={t('NAV_FAQS')}
+                alt=''
               />
-            )
-          )}
-          {andOperator(
-            checkSidebarPermission('feedback_manager'),
-            generateNavLink(
-              '/feedback-manager',
-              'FEEDBACK_MANAGER',
-              <AiOutlineMail
-                style={{ fontSize: '20px' }}title={t('FEEDBACK_MANAGER')}
-              />
-            )
-          )}
-          {andOperator(
-            checkSidebarPermission('report_manager'),
-            generateNavLink(
-              '/report-manager',
-              'REPORT_MANAGER',
-              <AiOutlineMail
-              title={t('REPORT_MANAGER')}
-              style={{ fontSize: '20px' }}
-              />
-            )
-          )}
-          {andOperator(
-            checkSidebarPermission('reward_withdrawal_request'),
-            generateNavLink(
-              '/reward-withdrawal-request',
-              'REWARD_WITHDRAWAL_REQUEST',
-              <AiOutlineMail
-                style={{ fontSize: '20px' }}
-                title={t('REWARD_WITHDRAWAL_REQUEST')}
-              />
-            )
-          )}
-
+            )}
           <Link
             onClick={handleLogout}
             className='flex items-center px-4 lg:px-7 py-4 hover:bg-sideBarNavActiveColor hover:text-gradientTo'
