@@ -58,13 +58,9 @@ const RewardWithdrawalRequestTable = ({
   }
 
   return (
-    <div className='p-3'>
-      <div className='overflow-x-auto relative rounded-lg border'>
-        <table className='w-full text-xs text-left text-[#A5A5A5] dark:text-gray-400 '>
-          <thead className='text-xs text-gray-900 border border-[#E1E6EE] bg-[#E1E6EE] dark:bg-gray-700 dark:text-gray-400 dark:border-[#ffffff38]'>
-            <tr>
+    <div className='p-3'><div className='overflow-x-auto relative rounded-lg border'><table className='w-full text-xs text-left text-[#A5A5A5] dark:text-gray-400 '>
+          <thead className='text-xs text-gray-900 border border-[#E1E6EE] bg-[#E1E6EE] dark:bg-gray-700 dark:text-gray-400 dark:border-[#ffffff38]'><tr>
               <th scope='col' className='py-3 px-6'>  {t('S.NO')} </th>
-              
               <th scope='col' className='py-3 px-6'>{t('THAI_LOCAL_NAME')}</th>
               <th scope='col' className='py-3 px-6'>{t('AMOUNT')}</th>
               <th scope='col' className='py-3 px-6 cursor-pointer text-right'onClick={() => {
