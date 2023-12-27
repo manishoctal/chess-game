@@ -88,7 +88,7 @@ const AddAmount = ({ setIsAmountModal, getAllUser ,addAmountUser,userType}) => {
                           onKeyPress={helper.preventForNumberInput}
                           maxLength={100}
                           {...register('amount', {
-                            required: 'Please enter amount.',
+                            required: t('PLEASE_ENTER_AMOUNT'),
                             minLength: {
                               value: 2,
                               message: t('MINIMUM_LENGTH_MUST_BE_2')
@@ -97,7 +97,7 @@ const AddAmount = ({ setIsAmountModal, getAllUser ,addAmountUser,userType}) => {
                               whiteSpace: value =>
                                 value.trim()
                                   ? true
-                                  : 'White spaces not allowed.'
+                                  : t('WHITE_SPACES_NOT_ALLOWED')
                             }
                           })}
                         />

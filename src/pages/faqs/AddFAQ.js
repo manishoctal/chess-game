@@ -78,7 +78,7 @@ const AddFAQ = ({ setShowModal, getAllFAQ }) => {
                               message: t('MINIMUM_LENGTH_MUST_BE_2'),
                             },
                             validate: {
-                              whiteSpace: (value) => value.trim() ? true : "White spaces not allowed."
+                              whiteSpace: (value) => value.trim() ? true : t('WHITE_SPACES_NOT_ALLOWED')
                             },
                           })}
                         />
@@ -103,7 +103,7 @@ const AddFAQ = ({ setShowModal, getAllFAQ }) => {
                           {...register("content", {
                             required: t('PLEASE_ENTER_CONTENT'),
                             validate: {
-                              whiteSpace: (value) => value.trim() ? true : "White spaces not allowed."
+                              whiteSpace: (value) => value.trim() ? true : t('WHITE_SPACES_NOT_ALLOWED')
                             },
                           })}
                         />

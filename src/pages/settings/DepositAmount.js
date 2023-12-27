@@ -40,11 +40,7 @@ const DepositAmount = ({ setIsAmountModal, getSettings }) => {
           <div className='relative w-auto my-6 mx-auto max-w-3xl'>
             <div className='overflow-hidden border border-white dark:border-[#ffffff38] rounded-lg shadow-lg relative flex flex-col min-w-[502px] bg-white outline-none focus:outline-none'>
               <div className=' flex items-center justify-between p-5 border-b dark:border-[#ffffff38] border-solid border-slate-200 rounded-t dark:bg-slate-900'>
-                <h3 className='text-xl font-semibold dark:text-white flex items-center'>
-                  {t('Deposit amount in admin wallet')}
-
-                  
-                </h3>
+                <h3 className='text-xl font-semibold dark:text-white flex items-center'>{t('DEPOSIT_AMOUNT_IN_ADMIN_WALLET')}</h3>
                 <button
                   className=' ml-auto flex items-center justify-center  text-black border-2 rounded-full  h-8 w-8 float-right text-3xl leading-none font-extralight outline-none focus:outline-none'
                   onClick={() => setIsAmountModal(false)}
@@ -79,7 +75,7 @@ const DepositAmount = ({ setIsAmountModal, getSettings }) => {
                           onKeyPress={helper.preventForNumberInput}
                           maxLength={100}
                           {...register('amount', {
-                            required: 'Please enter amount.',
+                            required: t('PLEASE_ENTER_AMOUNT'),
                             minLength: {
                               value: 2,
                               message: t('MINIMUM_LENGTH_MUST_BE_2')
@@ -88,7 +84,7 @@ const DepositAmount = ({ setIsAmountModal, getSettings }) => {
                               whiteSpace: value =>
                                 value.trim()
                                   ? true
-                                  : 'White spaces not allowed.'
+                                  : t('WHITE_SPACES_NOT_ALLOWED')
                             }
                           })}
                         />
