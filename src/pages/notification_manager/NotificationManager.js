@@ -8,7 +8,6 @@ import dayjs from 'dayjs'
 import ODateRangePicker from 'components/shared/datePicker/ODateRangePicker'
 import { useTranslation } from 'react-i18next'
 import NotificationAdd from './NotificationAdd'
-import ViewNotifications from './ViewNotifications'
 import PageSizeList from 'components/PageSizeList'
 import helpers from 'utils/helpers'
 
@@ -23,11 +22,9 @@ function NotificationManager () {
     pageRangeDisplayed: 10
   })
   const [categoryAdd, setCategoryAdd] = useState(false)
-  const [viewShowModal, setViewShowModal] = useState(false)
   const [notifications, setAllNotifications] = useState([])
   const [page, setPage] = useState(1)
   const [pageSize, setPageSize] = useState(10)
-  const [item, setItem] = useState('')
 
   const [filterData, setFilterData] = useState({
     category: '',
@@ -81,18 +78,12 @@ function NotificationManager () {
   }
 
   
-  const handelEdit = newItem => {
-    setItem(newItem)
-  }
   const handlePageClick = event => {
     const newPage = event.selected + 1
     setPage(newPage)
   }
 
-  const handleUserView = newItem => {
-    setItem(newItem)
-    setViewShowModal(true)
-  }
+  
   const handleCategory = () => {
     setCategoryAdd(!categoryAdd)
   }
@@ -110,7 +101,6 @@ function NotificationManager () {
       isFilter: false
     })
     setPage(1)
-    // setIsDelete(true)
   }
 
   const handleDateChange = (start, end) => {
@@ -121,7 +111,6 @@ function NotificationManager () {
       endDate: end,
       isFilter: true
     })
-    // setIsDelete(true)
   }
 
   const dynamicPage = e => {
@@ -178,8 +167,6 @@ function NotificationManager () {
               notifications={notifications}
               notification={notification}
               getAllNotifications={getAllNotifications}
-              handelEdit={handelEdit}
-              handleUserView={handleUserView}
               page={page}
               setSort={setSort}
               sort={sort}
@@ -207,12 +194,7 @@ function NotificationManager () {
               )}
             </div>
 
-            {viewShowModal && (
-              <ViewNotifications
-                setViewShowModal={setViewShowModal}
-                item={item}
-              />
-            )}
+            
           </div>
         </div>
       </div>

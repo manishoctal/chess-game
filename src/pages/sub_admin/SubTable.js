@@ -172,7 +172,7 @@ const SubTable = ({
                         checked={item?.status === 'active'}
                         onChange={e =>
                           helper.alertFunction(
-                            `Are you sure you want to ${
+                            `${t('ARE_YOU_SURE_YOU_WANT_TO')} ${
                               e.target.checked ? 'active' : 'inactive'
                             } '${item.name}'?`,
                             item,

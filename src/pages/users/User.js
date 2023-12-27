@@ -10,6 +10,8 @@ import { useTranslation } from 'react-i18next'
 import PageSizeList from 'components/PageSizeList'
 import helpers from 'utils/helpers'
 import OSearch from 'components/reusable/OSearch'
+import { startCase } from 'lodash'
+import { KYCStatusArray } from 'utils/constants'
 
 function User () {
   const { t } = useTranslation()
@@ -250,9 +252,8 @@ function User () {
                       <option defaultValue value=''>
                         {t('KYC_STATUS')}
                       </option>
-                      <option value='approved'>{t('KYC_COMPLETED')}</option>
-                      <option value='pending'>{t('KYC_PENDING')}</option>
-                      <option value='KYCNotUploadedYet'>{t('KYC Document Not Uploaded Yet')}</option>
+                    
+                     {KYCStatusArray.map(({key,value})=> <option key={key} value={value}>{startCase(key)}</option>)}
                     </select>
                   </div>
 

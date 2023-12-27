@@ -72,7 +72,7 @@ function TransactionDetails () {
       const path = apiPath.getUserTransaction
       const result = await apiGet(path, payload)
       if (result?.status === 200) {
-        const response = result?.data?.results
+        const response = result?.data?.results?.docs
         setTransactions(response)
       }
     } catch (error) {

@@ -25,7 +25,6 @@ const TransactionDetailsTable = ({
                 <>
                   <th scope='col' className='py-3 px-6 text-left'> {t('Reference no.')} </th>
                   <th scope='col' className='py-3 px-3'> {t('Total payment')} </th>
-                  <th scope='col' className='py-3 px-3'>  {t('Transaction fees')} </th>
                 </>
               )}
               {userType === 'local' && (
@@ -59,58 +58,56 @@ const TransactionDetailsTable = ({
                     {i + 1 + pageSize * (page - 1)}
                   </th>
                   <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
-                    {helpers.ternaryCondition(item?.mobile,item?.mobile , 'N/A')}
+                    {helpers.ternaryCondition(item?.local?.firstName,item?.local?.firstName , 'N/A')}
                   </td>
                   <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
-                  {helpers.formattedAmount(item?.transactionFee)}  
+                  {helpers.formattedAmount(item?.local?.walletAmount)}  
                   </td>
                   {userType === 'tourist' && (
                     <>
                       <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
                         {helpers.ternaryCondition(
-                          item?.refNumber,
-                          item?.refNumber,
+                          item?.referenceNumber,
+                          item?.referenceNumber,
                           'N/A'
                         )}
                       </td>
                       <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
-                        {helpers.ternaryCondition(item?.country,item?.country , 0)}
+                      {helpers.formattedAmount(item?.amount)}
                       </td>
-                      <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
-                      {helpers.formattedAmount(item?.transactionFee)}  
-                      </td>
+                      
                     </>
                   )}
                   {userType === 'local' && (
                     <>
                       <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
-                        {item?.country || 'N/A'}
+                      {helpers.formattedAmount(item?.amount)}
                       </td>
                       <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
-                        {item?.country || 'N/A'}
+                      {helpers.formattedAmount(item?.local?.rewardAmount)}
                       </td>
                     </>
                   )}
                   <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
-                    {helpers.ternaryCondition(item?.country,item?.country , 'N/A')}
+                    {helpers.ternaryCondition(item?.tourist?.firstName,item?.tourist?.firstName , 'N/A')}
                   </td>
                   <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
-                    {helpers.ternaryCondition(item?.country,item?.country , 'N/A')}
+                    {helpers.ternaryCondition(item?.createdAt,helpers.getDateAndTime(item?.createdAt) , 'N/A')}
                   </td>
                   <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
-                    {helpers.ternaryCondition(item?.qrSendTime,dayjs(item?.qrSendTime).format('hh:mm A') , 'N/A')}
+                  {helpers.ternaryCondition(item?.acceptedAt,helpers.getDateAndTime(item?.acceptedAt) , 'N/A')}
                   </td>
                   <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
                     {helpers.ternaryCondition(item?.paymentReceiptTime,dayjs(item?.paymentReceiptTime).format('hh:mm A') , 'N/A')}
                   </td>
                   <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
                     {helpers.getSeconds(
-                      item?.qrSendTime,
-                      item?.paymentReceiptTime
+                      item?.createdAt,
+                      item?.acceptedAt
                     ) ?? 'N/A'}
                   </td>
                   <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center  '>
-                    <QRCodeGenerator qrCodeValue={item.qrCode} />
+                    <QRCodeGenerator qrCodeValue={item.qrCodeString} />
                   </td>
                   <td className='py-4 px-6 border-r flex justify-center'>
                     {item?.paymentReceiptImage ? (
@@ -124,10 +121,20 @@ const TransactionDetailsTable = ({
                     )}
                   </td>
                   <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
-                    {helpers.ternaryCondition(item?.country ,item?.country , 'N/A')}
+                  {helpers.ternaryCondition(item?.paymentProof , (
+                      <img
+                        src={item?.paymentProof}
+                        alt=''
+                      className='h-[80px] w-[80px] object-cover'
+
+                      />
+                    ) , (
+                      'NA'
+                    ))}
                   </td>
                   <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
-                    {helpers.ternaryCondition(item?.country ,item?.country , 'N/A')}
+                  {helpers.ternaryCondition(item?.createdAt,helpers.getDateAndTime(item?.createdAt) , 'N/A')}
+
                   </td>
                 </tr>
               ))}

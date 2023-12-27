@@ -4,11 +4,10 @@ import { apiPost } from '../../utils/apiFetch'
 import apiPath from '../../utils/apiPath'
 import useToastContext from 'hooks/useToastContext'
 import { useTranslation } from 'react-i18next'
-import { NavLink } from 'react-router-dom'
 import helper from 'utils/helpers'
-import { startCase } from 'lodash'
+import { toNumber } from 'lodash'
 
-const AddAmount = ({ setIsAmountModal, getAllUser ,addAmountUser,userType}) => {
+const DepositAmount = ({ setIsAmountModal, getSettings }) => {
   const { t } = useTranslation()
   const {
     register,
@@ -20,11 +19,11 @@ const AddAmount = ({ setIsAmountModal, getAllUser ,addAmountUser,userType}) => {
   const handleSubmitForm = async data => {
     try {
       
-      const path = apiPath.addMoneyToUserWallet
-      const result = await apiPost(path, {...data,userId:addAmountUser?._id,transactionType:`adminTo${startCase(userType)}Wallet`,userType})
+      const path = apiPath.depositAmount
+      const result = await apiPost(path, {amount : toNumber(data?.amount)})
       if (result?.data?.success === true) {
         notification.success(result?.data.message)
-        getAllUser()
+        getSettings()
         setIsAmountModal(false)
       } else {
         notification.error(result?.data?.message)
@@ -42,17 +41,9 @@ const AddAmount = ({ setIsAmountModal, getAllUser ,addAmountUser,userType}) => {
             <div className='overflow-hidden border border-white dark:border-[#ffffff38] rounded-lg shadow-lg relative flex flex-col min-w-[502px] bg-white outline-none focus:outline-none'>
               <div className=' flex items-center justify-between p-5 border-b dark:border-[#ffffff38] border-solid border-slate-200 rounded-t dark:bg-slate-900'>
                 <h3 className='text-xl font-semibold dark:text-white flex items-center'>
-                  {t('ADD_AMOUNT_IN_WALLET')}
+                  {t('Deposit amount in admin wallet')}
 
-                  <div className='flex justify-center mr-8'>
-                    <NavLink
-                      to='/usersWalletHistory'
-                      state={{userId:addAmountUser?._id}}
-                      className='bg-gradientTo text-sm px-8 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue'
-                    >
-                      {t('VIEW_HISTORY')}
-                    </NavLink>
-                  </div>
+                  
                 </h3>
                 <button
                   className=' ml-auto flex items-center justify-center  text-black border-2 rounded-full  h-8 w-8 float-right text-3xl leading-none font-extralight outline-none focus:outline-none'
@@ -140,4 +131,4 @@ const AddAmount = ({ setIsAmountModal, getAllUser ,addAmountUser,userType}) => {
   )
 }
 
-export default AddAmount
+export default DepositAmount

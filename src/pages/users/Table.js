@@ -216,7 +216,7 @@ const Table = ({
                             checked={item?.status === 'active'}
                             onChange={e =>
                               helpers.alertFunction(
-                                `Are you sure you want to ${helpers.ternaryCondition(
+                                `${t('ARE_YOU_SURE_YOU_WANT_TO')} ${helpers.ternaryCondition(
                                   e.target.checked,
                                   'active',
                                   'inactive'
