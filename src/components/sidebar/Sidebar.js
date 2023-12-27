@@ -76,7 +76,7 @@ const Sidebar = () => {
   }
 
   if (!user) {
-    ;<></>
+    <></>
   }
 
   return (
