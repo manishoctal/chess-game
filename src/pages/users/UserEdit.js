@@ -6,7 +6,7 @@ import useToastContext from 'hooks/useToastContext'
 import { useTranslation } from 'react-i18next'
 import OInputField from 'components/reusable/OInputField'
 import { preventMaxInput } from 'utils/validations'
-import formValidation from '../../utils/formValidation'
+import FormValidation from '../../utils/formValidation'
 import ODatePicker from 'components/shared/datePicker/ODatePicker'
 import ErrorMessage from 'components/ErrorMessage'
 import helper from 'utils/helpers'
@@ -34,6 +34,8 @@ const UserEdit = ({ setEditShowModal, getAllUser, item }) => {
       email: item?.email
     }
   })
+
+  const formValidation= FormValidation()
 
   const onSubmit = async data => {
     try {
@@ -189,7 +191,7 @@ const UserEdit = ({ setEditShowModal, getAllUser, item }) => {
                       />
 
                       {isValidityError && (
-                        <ErrorMessage message='Please select validity.' />
+                        <ErrorMessage message={t('PLEASE_SELECT_VALIDITY')} />
                       )}
                     </div>
                   </div>

@@ -6,7 +6,7 @@ import apiPath from '../../utils/apiPath'
 import Permission from './Permission'
 import { useTranslation } from 'react-i18next'
 import OInputField from 'components/reusable/OInputField'
-import formValidation from 'utils/formValidation'
+import FormValidation from 'utils/formValidation'
 import { useLocation, useNavigate } from 'react-router-dom'
 import AuthContext from 'context/AuthContext'
 import PhoneInput from 'react-phone-input-2'
@@ -49,6 +49,8 @@ const SubAdd = ({ props }) => {
   const [permissionJons, setPermission] = useState(
     helpers.ternaryCondition(item?.type, getValues('permission'), Permission)
   )
+  const formValidation= FormValidation()
+
   const { updatePageName } = useContext(AuthContext)
   const [countryCode] = useState('th')
   const [isSelectAll, setIsSelectAll] = useState(false)

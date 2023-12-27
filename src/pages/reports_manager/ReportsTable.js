@@ -25,34 +25,34 @@ const ReportsTable = ({ users, page, userType, pageSize }) => {
                   </div>
               </th>
               <th scope='col' className='py-3 px-6'>
-                <div className='text-left'>{t('DURATION')}(Seconds)</div>
+                <div className='text-left'>{t('DURATION')}{t('SECONDS')}</div>
               </th>
               {helpers.andOperator( userType==='local',<th scope='col' className='py-3 px-6'>
-                <div className='text-left'>{t('Cost to foreign tourist')}</div>
+                <div className='text-left'>{t('COST_TO_FOREIGN_TOURIST')}</div>
               </th>)}
               <th scope='col' className='py-3 px-6'>
-                <div className='text-left'>{t('Thai local reward')}</div>
+                <div className='text-left'>{t('THAI_LOCAL_REWARD')}</div>
               </th>
 
               <th scope='col' className='py-3 px-6 text-left'>
-                {t('Amount paid')}
+                {t('AMOUNT_PAID')}
               </th>
 
               <th scope='col' className='py-3 px-6 text-left'>
-                {t('Date')}
+                {t('DATE')}
               </th>
               <th scope='col' className='py-3 px-6 text-left'>
-                {t('QR image received')}
+                {t('QR_IMAGE_RECEIVED')}
               </th>
 
               <th scope='col' className='py-3 px-6 text-left'>
-                {t('Payment proof time')}
+                {t('PAYMENT_PROOF_TIME')}
               </th>
               <th scope='col' className='py-3 px-6 text-left'>
-                {t('QR code')}
+                {t('QR_CODE')}
               </th>
               <th scope='col' className='py-3 px-6 text-left'>
-                {t('Payment proof bank')}
+                {t('PAYMENT_PROOF_BANK')}
               </th>
             </tr>
           </thead>

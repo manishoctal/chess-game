@@ -10,7 +10,11 @@ return {
     pattern: {
       value: /^[^\s][A-Za-z0-9]+$/ ,
       message: 'Cannot start with a space and use only capital letters.'
-    }
+    },
+    minLength: {
+      value: 15,
+      message: t('MINIMUM_LENGTH_MUST_BE_15')
+    },
   },
   couponAmount: {
     required: 'Please enter coupon amount.',

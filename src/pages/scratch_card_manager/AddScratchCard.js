@@ -7,10 +7,10 @@ import { useTranslation } from 'react-i18next'
 import ODatePicker from 'components/shared/datePicker/ODatePicker'
 import { useState } from 'react'
 import OInputField from 'components/reusable/OInputField'
-import formValidation from 'utils/formValidation'
+import FormValidation from 'utils/formValidation'
 import dayjs from 'dayjs'
 import helper from 'utils/helpers'
-import { toNumber } from 'lodash'
+import { isEmpty, toNumber } from 'lodash'
 
 const AddScratchCard = ({ setShowModal, allScratchCard }) => {
   const { t } = useTranslation()
@@ -23,11 +23,17 @@ const AddScratchCard = ({ setShowModal, allScratchCard }) => {
   const [isLoading ] = useState(false)
 
   const notification = useToastContext()
-  const [date, setDate] = useState()
+  const formValidation= FormValidation()
+  const [date, setDate] = useState('')
   const [isValidityError, setIsValidityError] = useState(false)
 
   const handleSubmitForm = async data => {
     try {
+      
+      if(date===''){
+        setIsValidityError(true)
+        return
+      }
       const path = apiPath.addScratchCard
       const payload = {
         ...data,
@@ -101,7 +107,7 @@ const AddScratchCard = ({ setShowModal, allScratchCard }) => {
                       name='couponAmount'
                       inputLabel={
                         <>
-                          {t('Coupon amount')}
+                          {t('COUPON_AMOUNT')}
                           <span className='text-red-500'>*</span>
                         </>
                       }
@@ -120,7 +126,7 @@ const AddScratchCard = ({ setShowModal, allScratchCard }) => {
                       name='rewardAmount'
                       inputLabel={
                         <>
-                          {t('Reward amount')}
+                          {t('REWARD_AMOUNT')}
                           <span className='text-red-500'>*</span>
                         </>
                       }
@@ -142,7 +148,7 @@ const AddScratchCard = ({ setShowModal, allScratchCard }) => {
                         htmlFor='validity'
                         className='font-medium text-sm text-[#000] dark:text-gray-400  mb-2 block'
                       >
-                        {t('Expiry date')}
+                        {t('EXPIRY_DATE')}
                         <span className='text-red-500'>*</span>
                       </label>
                       <ODatePicker
@@ -152,11 +158,11 @@ const AddScratchCard = ({ setShowModal, allScratchCard }) => {
                         // disable={counponData !== undefined}
                         handleDateChange={handleDateChange}
                         minDate='today'
-                        placeholder={t('Expiry date')}
+                        placeholder={t('EXPIRY_DATE')}
                       />
 
                       {isValidityError && (
-                        <ErrorMessage message='Please select validity.' />
+                        <ErrorMessage message={t('PLEASE_SELECT_VALIDITY')} />
                       )}
                     </div>
                   </div>
@@ -179,7 +185,11 @@ const AddScratchCard = ({ setShowModal, allScratchCard }) => {
                   <button
                     className='bg-gradientTo text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150'
                     type='submit'
-                    onClick={handleSubmit(handleSubmitForm)}
+                    onClick={handleSubmit(handleSubmitForm,()=>{
+                      if(date===''){
+                        setIsValidityError(true)
+                      }
+                    })}
                   >
                     {t('O_ADD')}
                   </button>

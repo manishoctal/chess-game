@@ -191,9 +191,9 @@ function RewardWithdrawalRequest () {
                       <option defaultValue value=''>
                         {t('O_ALL')}
                       </option>
-                      <option value='accepted'>{t('Accepted')}</option>
-                      <option value='rejected'>{t('Rejected')}</option>
-                      <option value='pending'>{t('Pending')}</option>
+                      <option value='accepted'>{t('ACCEPTED')}</option>
+                      <option value='rejected'>{t('REJECTED')}</option>
+                      <option value='pending'>{t('PENDING')}</option>
                     </select>
                   </div>}
                   <button type='button' onClick={handleReset} title={t('O_RESET')} className='bg-gradientTo text-sm px-8 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2'>

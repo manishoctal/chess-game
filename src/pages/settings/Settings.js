@@ -13,7 +13,7 @@ import imageDefault from '../../assets/images/No-image-found.jpg'
 import OImage from 'components/reusable/OImage'
 import { Link } from 'react-router-dom'
 import Credential from './Credential'
-import formValidation from 'utils/formValidation'
+import FormValidation from 'utils/formValidation'
 import { preventMaxInput } from 'utils/validations'
 import helpers from 'utils/helpers'
 import DepositAmount from './DepositAmount'
@@ -35,6 +35,8 @@ const Settings = () => {
     defaultValues: {}
   })
   const [settingChangeLoading, setSettingChangeLoading] = useState(false)
+  const formValidation= FormValidation()
+
   const [pic] = useState(user?.profilePic ?? imageDefault)
   const [settingsDetails, setSettingsDetails] = useState('')
   const [viewShowModal, setViewShowModal] = useState(false)
@@ -97,19 +99,21 @@ const Settings = () => {
               <div className='font-semibold'>{t('SETTING')}</div>
             </header>
             <div className='bg-white py-6 px-4  rounded-b-md'>
-              <div className='mb-4  w-full' style={{ marginLeft: '15px' }}>
-                <div className='justify-center flex items-center'>
+              <div className='px-2  w-full'>
+                <div className='justify-between flex items-center'>
+                 
+                 <div className='flex items-center'>
                   <div className='relative w-24 h-24 '>
                     <OImage
                       src={pic}
                       fallbackUrl='/images/user.png'
-                      className='w-24 h-24 border'
+                      className='w-full h-full border'
                       alt=''
-                      style={{ borderRadius: '50%' }}
+                      style={{ borderRadius: '100px' }}
                     />
                   </div>
 
-                  <div className='pl-6  w-full flex align-center'>
+                  <div className='pl-6  w-full2 flex align-center'>
                     <div>
                       {(manager?.add || user?.role === 'admin') && (
                         <Link to='/change-password'>
@@ -135,15 +139,18 @@ const Settings = () => {
                       />
                     </div>
                   </div>
+                  </div>
+
+
                   <div className='flex justify-between items-center'>
-                    <div className=''>
-                      Total admin amount{' '}
-                      <span>
+                    <div className='pr-3'>
+                    {t('TOTAL_ADMIN_AMOUNT')}{' '}
+                      <strong className='ps-2 text-blue' style={{color:'#0ea5e9'}}>
                         {' '}
                         {helpers.formattedAmount(
                           settingsDetails?.defaultWalletAmount
                         )}
-                      </span>
+                      </strong>
                     </div>
                     <button
                       type='button'
@@ -152,7 +159,7 @@ const Settings = () => {
                       onClick={() => setIsAmountModal(true)}
                     >
                       {' '}
-                      Deposit amount
+                      {t('DEPOSIT_AMOUNT')}
                     </button>
                   </div>
                 </div>
@@ -164,7 +171,8 @@ const Settings = () => {
         </section>
       </form>
 
-      <div className='border xl:w-full round'>
+     <div className='sm:px-8 px-4 py-4 '>
+      <div className='border  xl:w-full'>
         <header className='border-b  py-2 px-4 bg-gray-100 rounded-t-md '>
           <div className='font-semibold'>{t('SETTINGS')}</div>
         </header>
@@ -469,7 +477,7 @@ const Settings = () => {
             </div>
           </main>
         </div>
-      </div>
+      </div></div>
       {(manager?.add || user?.role === 'admin') && (
         <div className='text-center mt-4'>
           <OButton

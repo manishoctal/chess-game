@@ -23,6 +23,7 @@ import {
 import AuthContext from 'context/AuthContext'
 import ODateRangePicker from 'components/shared/datePicker/ODateRangePicker'
 import OCountUp from 'components/OCountUp'
+import helpers from 'utils/helpers'
 
 ChartJS.register(
   CategoryScale,
@@ -266,7 +267,7 @@ function Home () {
 
           <div className='text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border'>
             <h3 className='text-center mb-0 text-slate-900 font-bold md:text-3xl sm:text-lg dark:text-white'>
-              <OCountUp value={dashboardDetails?.totalAmountAdded || 0} />
+            {helpers.formattedAmount(dashboardDetails?.totalAmountAdded)}
               <span className='text-base text-neutral-400 font-normal block pt-3 '>
                 {t('TOTAL_AMOUNT_ADDED')}
               </span>
@@ -281,7 +282,7 @@ function Home () {
           </div>
           <div className='text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border'>
             <h3 className='text-center mb-0 text-slate-900 font-bold md:text-3xl sm:text-lg dark:text-white'>
-              <OCountUp value={dashboardDetails?.totalAmountGiven || 0} />
+              {helpers.formattedAmount(dashboardDetails?.totalAmountGiven)}
               <span className='text-base text-neutral-400 font-normal block pt-3 '>
                 {t('TOTAL_AMOUNT_GIVEN')}
               </span>
