@@ -9,7 +9,7 @@ import {
   BsHandThumbsUp
 } from 'react-icons/bs'
 import apiPath from 'utils/apiPath'
-import { apiPost, apiPut } from 'utils/apiFetch'
+import { apiPost } from 'utils/apiFetch'
 import useToastContext from 'hooks/useToastContext'
 import classNames from 'classnames'
 import helpers from 'utils/helpers'

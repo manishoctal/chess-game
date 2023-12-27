@@ -5,7 +5,6 @@ import { apiGet } from 'utils/apiFetch'
 import pathObj from 'utils/apiPath'
 import earning from 'assets/images/earning.jpg'
 import dayjs from 'dayjs'
-import { GrTransaction } from "react-icons/gr";
 import { useTranslation } from 'react-i18next'
 
 import { Line } from 'react-chartjs-2'
