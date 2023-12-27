@@ -168,7 +168,7 @@ const BellNotifications = () => {
       <div className='flex justify-between'>
         <div className='flex items-center mb-3 ml-3'>
           <p className='w-[160px] -space-x-px pt-5 md:pb-5 pr-5 text-gray-500'>
-            Page Size
+          {t('PAGE_SIZE')}
           </p>
 
           <select

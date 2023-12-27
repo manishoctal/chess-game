@@ -10,7 +10,11 @@ return {
     pattern: {
       value: /^[^\s][A-Za-z0-9]+$/ ,
       message: 'Cannot start with a space and use only capital letters.'
-    }
+    },
+    minLength: {
+      value: 15,
+      message: t('MINIMUM_LENGTH_MUST_BE_15')
+    },
   },
   couponAmount: {
     required: 'Please enter coupon amount.',
@@ -37,7 +41,7 @@ return {
       message: t('MINIMUM_LENGTH_MUST_BE_2')
     },
     validate: {
-      whiteSpace: value => (value.trim() ? true : 'White spaces not allowed.')
+      whiteSpace: value => (value.trim() ? true : t('WHITE_SPACES_NOT_ALLOWED'))
     }
   },
  
@@ -81,7 +85,7 @@ return {
       message: 'Maximum length should be 20 characters'
     },
     validate: {
-      whiteSpace: value => (value.trim() ? true : 'White spaces not allowed.')
+      whiteSpace: value => (value.trim() ? true : t('WHITE_SPACES_NOT_ALLOWED'))
     }
   },
   nationalityId: {
@@ -99,7 +103,7 @@ return {
       message: 'Maximum length should be 20 characters'
     },
     validate: {
-      whiteSpace: value => (value.trim() ? true : 'White spaces not allowed.')
+      whiteSpace: value => (value.trim() ? true : t('WHITE_SPACES_NOT_ALLOWED'))
     }
   },
   email: {
@@ -109,7 +113,7 @@ return {
       message: 'Please enter valid email ID as: example@domain.com.'
     },
     validate: {
-      whiteSpace: value => (value.trim() ? true : 'White spaces not allowed.')
+      whiteSpace: value => (value.trim() ? true : t('WHITE_SPACES_NOT_ALLOWED'))
     }
   },
   subject: {
@@ -123,7 +127,7 @@ return {
       message: 'Subject should not exceed 500 characters.'
     },
     validate: {
-      whiteSpace: value => (value.trim() ? true : 'White spaces not allowed.')
+      whiteSpace: value => (value.trim() ? true : t('WHITE_SPACES_NOT_ALLOWED'))
     }
   },
   mobile: {
@@ -152,7 +156,7 @@ return {
       message: 'Description should not exceed 300 characters.'
     },
     validate: {
-      whiteSpace: value => (value.trim() ? true : 'White spaces not allowed.')
+      whiteSpace: value => (value.trim() ? true : t('WHITE_SPACES_NOT_ALLOWED'))
     }
   },
   title: {
@@ -166,7 +170,7 @@ return {
       message: 'Title should not exceed 100 characters.'
     },
     validate: {
-      whiteSpace: value => (value.trim() ? true : 'White spaces not allowed.')
+      whiteSpace: value => (value.trim() ? true : t('WHITE_SPACES_NOT_ALLOWED'))
     }
   },
   address: {
@@ -180,7 +184,7 @@ return {
       message: 'Description should not exceed 250 characters.'
     },
     validate: {
-      whiteSpace: value => (value.trim() ? true : 'White spaces not allowed.')
+      whiteSpace: value => (value.trim() ? true : t('WHITE_SPACES_NOT_ALLOWED'))
     }
   },
 }

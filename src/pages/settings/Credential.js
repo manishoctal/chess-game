@@ -1,7 +1,9 @@
 import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
+import { useTranslation } from 'react-i18next'
 
 export default function Credential ({ setViewShowModal, email }) {
+  const {t}= useTranslation()
   const { register, setValue } = useForm({
     mode: 'onBlur',
     shouldFocusError: true,
@@ -37,7 +39,7 @@ export default function Credential ({ setViewShowModal, email }) {
         <div className='relative w-auto my-6 mx-auto max-w-3xl'>
           <div className='border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none min-w-[762px]'>
             <div className='flex items-center justify-between p-5 border-b border-solid border-slate-200 rounded-t'>
-              <h3 className='text-xl font-semibold'>Login Credential</h3>
+              <h3 className='text-xl font-semibold'>{t('LOGIN_CREDENTIAL')}</h3>
               <button
                 className=' ml-auto flex items-center justify-center  text-black border-2 rounded-full  h-8 w-8 float-right text-3xl leading-none font-extralight outline-none focus:outline-none'
                 onClick={() => closeModal()}
@@ -65,7 +67,7 @@ export default function Credential ({ setViewShowModal, email }) {
                         htmlFor='email'
                         className='peer-focus:font-normal absolute text-sm text-[#A5A5A5] dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 left-3 bg-white p-2 z-10 origin-[2] peer-focus:left-0 peer-focus:text-[#A5A5A5] peer-focus:text-lg peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-8'
                       >
-                        Admin email
+                        {t('ADMIN_EMAIL')}
                       </label>
                     </div>
                     <div className='relative z-0   w-full group'>
@@ -85,7 +87,7 @@ export default function Credential ({ setViewShowModal, email }) {
                         htmlFor='password'
                         className='peer-focus:font-normal absolute text-sm text-[#A5A5A5] dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 left-3 bg-white p-2 z-10 origin-[2] peer-focus:left-0 peer-focus:text-[#A5A5A5] peer-focus:text-lg peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-8'
                       >
-                        Password
+                        {t('O_PASSWORD')}
                       </label>
                     </div>
                   </div>
@@ -99,7 +101,7 @@ export default function Credential ({ setViewShowModal, email }) {
                 type='button'
                 onClick={() => setViewShowModal(false)}
               >
-                Back
+                {t('O_BACK')}
               </button>
             </div>
           </div>

@@ -94,7 +94,7 @@ const ScratchCardUsersTable = () => {
                   > {i + 1 + 10 * (page - 1)}</th>
 
                   <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>{item?.user?.firstName +' '+ (item?.user?.lastName ?? '')}</td>
-                  <td className='py-2 px-4 border-r dark:border-[#ffffff38]'> {item?.scratchCardRecord?.couponAmount || 'N/A'}</td>
+                  <td className='py-2 px-4 border-r dark:border-[#ffffff38]'> {helpers.formattedAmount(item?.scratchCardRecord?.couponAmount)}</td>
                   <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>{item?.scratchCardRecord?.couponCode || 'N/A'}</td>
                   <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>{helpers.getDateAndTime(item?.createdAt)}</td>
                 </tr>
@@ -114,7 +114,7 @@ const ScratchCardUsersTable = () => {
         <div className='flex justify-between'>
           <div className='flex items-center mb-3 ml-3'>
             <p className='w-[160px] -space-x-px pt-5 md:pb-5 pr-5 text-gray-500'>
-              Page Size
+            {t('PAGE_SIZE')}
             </p>
             <select
               id='countries'

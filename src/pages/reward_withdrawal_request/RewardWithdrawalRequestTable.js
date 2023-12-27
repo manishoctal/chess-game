@@ -65,8 +65,8 @@ const RewardWithdrawalRequestTable = ({
             <tr>
               <th scope='col' className='py-3 px-6'>  {t('S.NO')} </th>
               
-              <th scope='col' className='py-3 px-6'>{t('Thai local name')}</th>
-              <th scope='col' className='py-3 px-6'>{t('Amount')}</th>
+              <th scope='col' className='py-3 px-6'>{t('THAI_LOCAL_NAME')}</th>
+              <th scope='col' className='py-3 px-6'>{t('AMOUNT')}</th>
               <th scope='col' className='py-3 px-6 cursor-pointer text-right'onClick={() => {
                   if (sort.sortBy === 'createdAt' && sort.sortType === 'asc') {
                     setSort({

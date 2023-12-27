@@ -166,7 +166,7 @@ const Table = ({
                       <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-left'>
                         {helpers.ternaryCondition(
                           item?.walletAmount,
-                          item?.walletAmount,
+                          helpers.formattedAmount(item?.walletAmount),
                           0
                         )}
                       </td>
