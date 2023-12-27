@@ -6,10 +6,10 @@ const FormValidation =()=>{
   const {t}=  useTranslation()
 return {
   couponCode: {
-    required: 'Please enter coupon code.',
+    required: t('PLEASE_ENTER_COUPON_CODE'),
     pattern: {
       value: /^[^\s][A-Za-z0-9]+$/ ,
-      message: 'Cannot start with a space and use only capital letters.'
+      message: t('CANNOT_START_WITH_A_SPACE_AND_USE_ONLY_CAPITAL_LETTERS')
     },
     minLength: {
       value: 15,
@@ -17,24 +17,24 @@ return {
     },
   },
   couponAmount: {
-    required: 'Please enter coupon amount.',
+    required: t('PLEASE_ENTER_COUPON_AMOUNT'),
     pattern: {
       value: /^[^\s].*/,
-      message: 'Cannot start with a space.'
+      message: t('CANNOT_START_WITH_A_SPACE')
     }
   },
   rewardAmount: {
-    required: 'Please enter reward amount.',
+    required: t('PLEASE_ENTER_REWARD_AMOUNT'),
     pattern: {
       value: /^[^\s].*/,
-      message: 'Cannot start with a space.'
+      message: t('CANNOT_START_WITH_A_SPACE')
     }
   },
   firstName: {
-    required: 'Please enter first name.',
+    required: t('PLEASE_ENTER_FIRST_NAME'),
     pattern: {
       value: /^[^\s].*/,
-      message: 'Cannot start with a space.'
+      message: t('CANNOT_START_WITH_A_SPACE')
     },
     minLength: {
       value: 2,
@@ -46,27 +46,27 @@ return {
   },
  
   subAdminName: {
-    required: 'Please enter first name.',
+    required: t('PLEASE_ENTER_FIRST_NAME'),
     validate: {
-      noSpace: value => value.trim() !== '' || 'Cannot start with a space.',
+      noSpace: value => value.trim() !== '' || t('CANNOT_START_WITH_A_SPACE'),
       onlyAlphabets: value =>
-        /^[a-zA-Z_ ]*$/.test(value) || 'Only alphabets are allowed.',
+        /^[a-zA-Z_ ]*$/.test(value) || t('ONLY_ALPHABETS_ARE_ALLOWED'),
       minLength: value =>
-        value.length >= 2 || 'Minimum length must be 2 characters',
+        value.length >= 2 || t('MINIMUM_LENGTH_MUST_BE_2_CHARACTERS'),
       maxLength: value =>
-        value.length <= 20 || 'Maximum length should be 20 characters'
+        value.length <= 20 || t('MAXIMUM_LENGTH_SHOULD_BE_20_CHARACTERS')
     }
   },
   subAdminLastName: {
     required: 'Please enter last name.',
     validate: {
-      noSpace: value => value.trim() !== '' || 'Cannot start with a space.',
+      noSpace: value => value.trim() !== '' || t('CANNOT_START_WITH_A_SPACE'),
       onlyAlphabets: value =>
-        /^[a-zA-Z_ ]*$/.test(value) || 'Only alphabets are allowed.',
+        /^[a-zA-Z_ ]*$/.test(value) || t('ONLY_ALPHABETS_ARE_ALLOWED'),
       minLength: value =>
-        value.length >= 2 || 'Minimum length must be 2 characters',
+        value.length >= 2 || t('MINIMUM_LENGTH_MUST_BE_2_CHARACTERS'),
       maxLength: value =>
-        value.length <= 20 || 'Maximum length should be 20 characters'
+        value.length <= 20 || t('MAXIMUM_LENGTH_SHOULD_BE_20_CHARACTERS')
     }
   },
 
@@ -74,7 +74,7 @@ return {
     required: 'Please enter last name.',
     pattern: {
       value: /^[^\s].*/,
-      message: 'Cannot start with a space.'
+      message: t('CANNOT_START_WITH_A_SPACE')
     },
     minLength: {
       value: 2,
@@ -82,7 +82,7 @@ return {
     },
     maxLength: {
       value: 20,
-      message: 'Maximum length should be 20 characters'
+      message: t('MAXIMUM_LENGTH_SHOULD_BE_20_CHARACTERS')
     },
     validate: {
       whiteSpace: value => (value.trim() ? true : t('WHITE_SPACES_NOT_ALLOWED'))
@@ -92,7 +92,7 @@ return {
     required: 'Please enter nationality Id.',
     pattern: {
       value: /^[^\s].*/,
-      message: 'Cannot start with a space.'
+      message: t('CANNOT_START_WITH_A_SPACE')
     },
     minLength: {
       value: 2,
@@ -100,7 +100,7 @@ return {
     },
     maxLength: {
       value: 20,
-      message: 'Maximum length should be 20 characters'
+      message: t('MAXIMUM_LENGTH_SHOULD_BE_20_CHARACTERS')
     },
     validate: {
       whiteSpace: value => (value.trim() ? true : t('WHITE_SPACES_NOT_ALLOWED'))
