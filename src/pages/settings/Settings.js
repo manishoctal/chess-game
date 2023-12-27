@@ -154,6 +154,7 @@ const Settings = () => {
                     </div>
                     <button
                       type='button'
+                      title={t('DEPOSIT_AMOUNT')}
                       className='bg-gradientTo hover:bg-DarkBlue cursor-pointer   text-white  font-normal active:bg-slate-100 text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150
       undefined '
                       onClick={() => setIsAmountModal(true)}
@@ -234,7 +235,7 @@ const Settings = () => {
                 register={register('referralBonusTourist', {
                   required: {
                     value: true,
-                    message: 'Please enter referral bonus.'
+                    message: t('PLEASE_ENTER_REFERRAL_BONUS')
                   },
                   maxLength: {
                     value: 40,
@@ -260,7 +261,7 @@ const Settings = () => {
                 register={register('referralBonusLocals', {
                   required: {
                     value: true,
-                    message: 'Please enter referral bonus.'
+                    message: t('PLEASE_ENTER_REFERRAL_BONUS')
                   },
                   maxLength: {
                     value: 40,
@@ -286,11 +287,11 @@ const Settings = () => {
                 register={register('upcCodeReferralAmount', {
                   required: {
                     value: true,
-                    message: 'Please enter upc code referral amount.'
+                    message: t('PLEASE_ENTER_UPC_CODE_REFERRAL_AMOUNT')
                   },
                   pattern: {
                     value: /^\d+$/,
-                    message: 'Only digits are allowed.'
+                    message: t('ONLY_DIGITS_ARE_ALLOWED')
                   },
                   maxLength: {
                     value: 40,

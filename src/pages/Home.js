@@ -178,7 +178,7 @@ function Home () {
       </div>
       <div className='py-4 px-4 md:px-8 dark:bg-slate-900'>
         <div className='sale_report grid pt-10 3xl:grid-cols-4 gap-y-10 gap-4 gap-x-10 2xl:grid-cols-4 sm:grid-cols-2 mb-7 '>
-          {/* <div
+          <div
             className="text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border"
            
           >
@@ -189,7 +189,7 @@ function Home () {
               </span>
             </h3>
             <span className="text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-10px] p-3 border z-10 bg-white">
-              <RiAdminFill />
+              <FaUserTie />
             </span>
           </div>
 
@@ -205,34 +205,37 @@ function Home () {
               </span>
             </h3>
             <span className="text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-10px] p-3 border z-10 bg-white">
-              <FaWpforms />
+              <FaUserTie />
             </span>
           </div>
-
-          <div
-            className="text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border"
-            
-          >
-            <h3 className="text-center mb-0 text-slate-900 font-bold md:text-2xl sm:text-lg text-lg dark:text-white">
-              <OCountUp value={dashboardDetails?.totalInActiveUsersCount || 0} />
-              <span className="text-base text-neutral-400 font-normal block pt-3 ">
-                {t("NO_OF_INACTIVE_USERS")}
-              </span>
-            </h3>
-            <span className="text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-10px] p-3 border z-10 bg-white">
-              <MdOutlineCollectionsBookmark className="h-8 w-8" />
-            </span>
-          </div> */}
-
           <div className='text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border'>
             <h3 className='text-center mb-0 text-slate-900 font-bold md:text-3xl sm:text-lg dark:text-white'>
-              <OCountUp value={dashboardDetails?.totalTransactionCount || 0} />
+            {helpers.formattedAmount(dashboardDetails?.AmountAddedByScratchCard)}
               <span className='text-base text-neutral-400 font-normal block pt-3 '>
-                {t('NO_OF_TOTAL_TRANSACTION')}
+                {t('Amount added by scratchcard')}
               </span>
             </h3>
             <span className='text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-10px] p-3 border z-10 bg-white'>
-              <GrTransaction className='h-8 w-8' />
+            <img
+                src={earning}
+                className='h-8 w-8 bg-black'
+                alt='earningImg'
+              />
+            </span>
+          </div>
+          <div className='text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border'>
+            <h3 className='text-center mb-0 text-slate-900 font-bold md:text-3xl sm:text-lg dark:text-white'>
+            {helpers.formattedAmount(dashboardDetails?.totalPaymentByThaiLocal)}
+              <span className='text-base text-neutral-400 font-normal block pt-3 '>
+                {t('Total payment by thai local')}
+              </span>
+            </h3>
+            <span className='text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-10px] p-3 border z-10 bg-white'>
+            <img
+                src={earning}
+                className='h-8 w-8 bg-black'
+                alt='earningImg'
+              />
             </span>
           </div>
 
@@ -267,9 +270,9 @@ function Home () {
 
           <div className='text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border'>
             <h3 className='text-center mb-0 text-slate-900 font-bold md:text-3xl sm:text-lg dark:text-white'>
-            {helpers.formattedAmount(dashboardDetails?.totalAmountAdded)}
+            {helpers.formattedAmount(dashboardDetails?.totalAmountAddedToTourist)}
               <span className='text-base text-neutral-400 font-normal block pt-3 '>
-                {t('TOTAL_AMOUNT_ADDED')}
+                {t('Amount added by admin in tourist wallet')}
               </span>
             </h3>
             <span className='text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-10px] p-3 border z-10 bg-white'>
@@ -282,9 +285,9 @@ function Home () {
           </div>
           <div className='text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border'>
             <h3 className='text-center mb-0 text-slate-900 font-bold md:text-3xl sm:text-lg dark:text-white'>
-              {helpers.formattedAmount(dashboardDetails?.totalAmountGiven)}
+              {helpers.formattedAmount(dashboardDetails?.totalAmountAddedToLocal)}
               <span className='text-base text-neutral-400 font-normal block pt-3 '>
-                {t('TOTAL_AMOUNT_GIVEN')}
+                {t('Amount added by admin in thai local wallet')}
               </span>
             </h3>
             <span className='text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-10px] p-3 border z-10 bg-white'>
@@ -295,17 +298,22 @@ function Home () {
               />
             </span>
           </div>
-          {/* <div className="text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border">
-            <h3 className="text-center mb-0 text-slate-900 font-bold md:text-3xl sm:text-lg dark:text-white">
-              <OCountUp value={dashboardDetails?.totalTagCount || 0} />
-              <span className="text-base text-neutral-400 font-normal block pt-3 ">
-                {t("ACTIVE_LOGGED_IN_USER")}
+          <div className='text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border'>
+            <h3 className='text-center mb-0 text-slate-900 font-bold md:text-3xl sm:text-lg dark:text-white'>
+              {helpers.formattedAmount(dashboardDetails?.totalRewardGainedByUser)}
+              <span className='text-base text-neutral-400 font-normal block pt-3 '>
+                {t('Total reward gain by user')}
               </span>
             </h3>
-            <span className="text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-10px] p-3 border z-10 bg-white">
-              <GiSolarTime className="h-8 w-8" />
+            <span className='text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-10px] p-3 border z-10 bg-white'>
+            <img
+                src={earning}
+                className='h-8 w-8 bg-black'
+                alt='earningImg'
+              />
             </span>
-          </div> */}
+          </div>
+          
           <div className='text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border'>
             <h3 className='text-center mb-0 text-slate-900 font-bold md:text-3xl sm:text-lg dark:text-white'>
               <OCountUp value={dashboardDetails?.totalTagCount || 0} />

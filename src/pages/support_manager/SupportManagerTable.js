@@ -11,8 +11,6 @@ import { AiFillEye } from 'react-icons/ai'
 const SupportManagerTable = ({
   notifications,
   paginationObj,
-  sort,
-  setSort,
   manager,
   getSupportRequest,
   pageSize
@@ -46,11 +44,6 @@ const SupportManagerTable = ({
                 <th scope='col' className='py-3 px-6'>
                   {t('NAME')}
                 </th>
-
-                {/* <th scope='col' className='py-3 px-6'>
-                  {t('O_EMAIL')}
-                </th> */}
-
                 <th scope='col' className='py-3 px-6'>
                   {t('FEEDBACK')}
                 </th>
