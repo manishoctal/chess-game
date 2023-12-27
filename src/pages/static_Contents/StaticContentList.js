@@ -36,10 +36,6 @@ const StaticContentList = ({
                 <th scope='col' className='py-3 px-6'>
                   {t('Title')}
                 </th>
-                <th scope='col' className='py-3 px-6'>
-                  {t('O_SLUG')}
-                </th>
-
                 <th
                   scope='col'
                   className='py-3 px-6 cursor-pointer'
@@ -96,9 +92,6 @@ const StaticContentList = ({
                     </th>
                     <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
                       {item?.title || 'N/A'}
-                    </td>
-                    <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
-                      {item?.slug || 'N/A'}
                     </td>
                     <td className='py-2 px-4 border-r dark:border-[#ffffff38] text-left'>
                       {dayjs(item?.updatedAt).format('DD-MM-YYYY h:mm A')}{' '}

@@ -129,11 +129,14 @@ const ReportsTable = ({ users, page, userType, pageSize }) => {
                   </td>
                   <td className='py-4 px-3 border-r  dark:border-[#ffffff38] text-center'>
                   {helpers.ternaryCondition(item?.paymentProof , (
+                    <a href={item?.paymentProof} download target='_black' >
                       <img
                         src={item?.paymentProof}
                         alt=''
-                        width='80'
+                      className='h-[80px] w-[80px] object-cover'
+
                       />
+                      </a>
                     ) , (
                       'NA'
                     ))}
