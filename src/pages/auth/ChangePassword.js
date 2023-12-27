@@ -104,7 +104,7 @@ const ChangePassword = () => {
                     register={register("oldPassword", {
                       required: "Please enter old password.",
                       validate: {
-                        whiteSpace: (value) => value.trim() ? true : "White spaces not allowed."
+                        whiteSpace: (value) => value.trim() ? true : t('WHITE_SPACES_NOT_ALLOWED')
                       },
                       pattern: {
                         value: validationRules.password,

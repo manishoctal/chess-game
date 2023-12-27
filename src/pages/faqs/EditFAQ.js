@@ -73,7 +73,7 @@ const EditFAQ = ({ setEditShowModal, getAllFAQ, item, viewType }) => {
                           message: t('MINIMUM_LENGTH_MUST_BE_2'),
                         },
                         validate: {
-                          whiteSpace: (value) => value.trim() ? true : "White spaces not allowed."
+                          whiteSpace: (value) => value.trim() ? true : t('WHITE_SPACES_NOT_ALLOWED')
                         },
                       })}
                       disabled={viewType === "view" ? true : null}
@@ -99,7 +99,7 @@ const EditFAQ = ({ setEditShowModal, getAllFAQ, item, viewType }) => {
                       {...register("content", {
                         required: t('PLEASE_ENTER_CONTENT'),
                         validate: {
-                          whiteSpace: (value) => value.trim() ? true : "White spaces not allowed."
+                          whiteSpace: (value) => value.trim() ? true : t('WHITE_SPACES_NOT_ALLOWED')
                         },
                       })}
                       disabled={viewType === "view" ? true : null}

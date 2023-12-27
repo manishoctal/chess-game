@@ -90,7 +90,7 @@ const AddFaq = ({ setShowModal, getAllFAQ }) => {
                               message: "Minimum length must be 500.",
                             },
                             validate: {
-                              whiteSpace: (value) => value.trim() ? true : "White spaces not allowed."
+                              whiteSpace: (value) => value.trim() ? true : t('WHITE_SPACES_NOT_ALLOWED')
                             },
                           })}
                         />
@@ -107,7 +107,7 @@ const AddFaq = ({ setShowModal, getAllFAQ }) => {
                           {...register("content", {
                             required: t('PLEASE_ENTER_CONTENT'),
                             validate: {
-                              whiteSpace: (value) => value.trim() ? true : "White spaces not allowed."
+                              whiteSpace: (value) => value.trim() ? true : t('WHITE_SPACES_NOT_ALLOWED')
                             },
                             minLength: {
                               value: 2,

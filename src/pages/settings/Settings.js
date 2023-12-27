@@ -205,15 +205,15 @@ const Settings = () => {
                 register={register('minWithdrawAmountToBank', {
                   required: {
                     value: true,
-                    message: 'Please enter minimum withdrawal amount to bank.'
+                    message: t('PLEASE_ENTER_MINIMUM_WITHDRAWAL_AMOUNT_TO_BANK')
                   },
                   maxLength: {
                     value: 40,
-                    message: 'Max limit is 40 characters.'
+                    message: t('MAX_LIMIT_IS_40_CHARACTERS')
                   },
                   min: {
                     value: 1,
-                    message: 'Minimum value must is 1.'
+                    message: t(t('MINIMUM_VALUE_MUST_IS_1'))
                   }
                 })}
                 placeholder=' '
@@ -238,11 +238,11 @@ const Settings = () => {
                   },
                   maxLength: {
                     value: 40,
-                    message: 'Max limit is 40 characters.'
+                    message: t('MAX_LIMIT_IS_40_CHARACTERS')
                   },
                   min: {
                     value: 1,
-                    message: 'Minimum value must is 1.'
+                    message: t('MINIMUM_VALUE_MUST_IS_1')
                   }
                 })}
                 placeholder=' '
@@ -264,11 +264,11 @@ const Settings = () => {
                   },
                   maxLength: {
                     value: 40,
-                    message: 'Max limit is 40 characters.'
+                    message: t('MAX_LIMIT_IS_40_CHARACTERS')
                   },
                   min: {
                     value: 1,
-                    message: 'Minimum value must is 1.'
+                    message: t('MINIMUM_VALUE_MUST_IS_1')
                   }
                 })}
                 placeholder=' '
@@ -294,11 +294,11 @@ const Settings = () => {
                   },
                   maxLength: {
                     value: 40,
-                    message: 'Max limit is 40 characters.'
+                    message: t('MAX_LIMIT_IS_40_CHARACTERS')
                   },
                   min: {
                     value: 1,
-                    message: 'Minimum value must is 1.'
+                    message: t('MINIMUM_VALUE_MUST_IS_1')
                   }
                 })}
                 placeholder=''
@@ -321,11 +321,11 @@ const Settings = () => {
                   },
                   maxLength: {
                     value: 40,
-                    message: 'Max limit is 40 characters.'
+                    message: t('MAX_LIMIT_IS_40_CHARACTERS')
                   },
                   min: {
                     value: 1,
-                    message: 'Minimum value must is 1.'
+                    message: t('MINIMUM_VALUE_MUST_IS_1')
                   }
                 })}
                 placeholder=' '
@@ -348,11 +348,11 @@ const Settings = () => {
                   },
                   maxLength: {
                     value: 40,
-                    message: 'Max limit is 40 characters.'
+                    message: t('MAX_LIMIT_IS_40_CHARACTERS')
                   },
                   min: {
                     value: 1,
-                    message: 'Minimum value must is 1.'
+                    message: t('MINIMUM_VALUE_MUST_IS_1')
                   }
                 })}
                 placeholder=' '
@@ -374,11 +374,11 @@ const Settings = () => {
                   },
                   maxLength: {
                     value: 40,
-                    message: 'Max limit is 40 characters.'
+                    message: t('MAX_LIMIT_IS_40_CHARACTERS')
                   },
                   min: {
                     value: 1,
-                    message: 'Minimum value must is 1.'
+                    message: t('MINIMUM_VALUE_MUST_IS_1')
                   }
                 })}
                 placeholder=' '
@@ -406,11 +406,11 @@ const Settings = () => {
                     },
                     maxLength: {
                       value: 40,
-                      message: 'Max limit is 40 characters.'
+                      message: t('MAX_LIMIT_IS_40_CHARACTERS')
                     },
                     min: {
                       value: 1,
-                      message: 'Minimum value must is 1.'
+                      message: t('MINIMUM_VALUE_MUST_IS_1')
                     }
                   }
                 )}
@@ -438,11 +438,11 @@ const Settings = () => {
                   },
                   maxLength: {
                     value: 40,
-                    message: 'Max limit is 40 characters.'
+                    message: t('MAX_LIMIT_IS_40_CHARACTERS')
                   },
                   min: {
                     value: 1,
-                    message: 'Minimum value must is 1.'
+                    message: t('MINIMUM_VALUE_MUST_IS_1')
                   }
                 })}
                 placeholder=' '
@@ -468,7 +468,7 @@ const Settings = () => {
                   },
                   min: {
                     value: 1,
-                    message: 'Minimum value must is 1.'
+                    message: t('MINIMUM_VALUE_MUST_IS_1')
                   }
                 })}
                 placeholder=' '

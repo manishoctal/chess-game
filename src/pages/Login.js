@@ -115,7 +115,7 @@ function Login() {
                 {...register("password", {
                   required: "Please enter password.",
                   validate: {
-                    whiteSpace: (value) => value.trim() ? true : "White spaces not allowed."
+                    whiteSpace: (value) => value.trim() ? true : t('WHITE_SPACES_NOT_ALLOWED')
                   },
                   pattern: {
                     value: validationRules.password,
