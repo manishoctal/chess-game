@@ -97,10 +97,10 @@ const Table = ({
                 <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
                   {startCase(item?.title) || 'N/A'}
                 </td>
-                <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
+                <td className='py-2 px-4 border-r dark:border-[#ffffff38] text-center'>
                   {dayjs(item?.createdAt).format('DD-MM-YYYY hh:mm A')}
                 </td>
-                <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
+                <td className='py-2 px-4 border-r dark:border-[#ffffff38] text-center'>
                   {dayjs(item?.updatedAt).format('DD-MM-YYYY hh:mm A')}
                 </td>
                 {(manager?.add || user?.role === 'admin') && (

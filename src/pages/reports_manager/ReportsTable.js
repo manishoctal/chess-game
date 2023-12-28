@@ -93,7 +93,7 @@ const ReportsTable = ({ users, page, userType, pageSize }) => {
                       item?.tourist?.firstName,
                     )}
                   </td>
-                  <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-left font-bold text-slate-900'>
+                  <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center font-bold text-slate-900'>
                     {helpers.getSeconds(
                       item?.createdAt,
                       item?.acceptedAt
@@ -102,14 +102,14 @@ const ReportsTable = ({ users, page, userType, pageSize }) => {
                   </td>
                     {helpers.andOperator(
                       userType==='local',
-                  <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-left font-bold text-slate-900'>
+                  <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center font-bold text-slate-900'>
                     {  0}
                       </td>
                     )}
-                  <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-left font-bold text-slate-900'>
+                  <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center font-bold text-slate-900'>
                   {helpers.formattedAmount(item?.local?.rewardAmount)}      
                   </td>
-                  <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-left'>
+                  <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
                   {helpers.formattedAmount(item?.amount)}
                   </td>
                   <td className='py-4 px-3 border-r  dark:border-[#ffffff38] '>
@@ -146,7 +146,7 @@ const ReportsTable = ({ users, page, userType, pageSize }) => {
                       <img
                         src={item?.paymentProof}
                         alt=''
-                      className='h-[80px] w-[80px] object-cover'
+                      className='h-[70px] w-[70px] object-cover'
 
                       />
                       </button>

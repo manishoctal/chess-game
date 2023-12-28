@@ -148,14 +148,14 @@ const Table = ({
                         'N/A'
                       )}
                     </td>
-                    <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-left font-bold text-slate-900'>
+                    <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center font-bold text-slate-900'>
                       {helpers.ternaryCondition(
                         item?.countryCode,
                         item?.countryCode,
                         'N/A'
                       )}
                     </td>
-                    <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-left font-bold text-slate-900'>
+                    <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center font-bold text-slate-900'>
                       {helpers.ternaryCondition(
                         item?.mobile,
                         item?.mobile,
@@ -163,7 +163,7 @@ const Table = ({
                       )}
                     </td>
                     {userType === 'local' && (
-                      <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-left'>
+                      <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
                         {helpers.ternaryCondition(
                           item?.walletAmount,
                           helpers.formattedAmount(item?.walletAmount),
@@ -173,14 +173,14 @@ const Table = ({
                     )}
                     {userType === 'tourist' && (
                       <>
-                        <td className='py-4 px-3 border-r  dark:border-[#ffffff38] '>
+                        <td className='py-4 px-3 border-r  dark:border-[#ffffff38] text-center '>
                           {helpers.ternaryCondition(
                             item?.upcCode,
                             item?.upcCode,
                             'N/A'
                           )}
                         </td>
-                        <td className='py-4 px-3 border-r  dark:border-[#ffffff38] '>
+                        <td className='py-4 px-3 border-r text-center dark:border-[#ffffff38] '>
                           {helpers.ternaryCondition(
                             item?.referralCode,
                             item?.referralCode,

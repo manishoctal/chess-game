@@ -55,17 +55,14 @@ const TransactionTable = ({ artistVerification, page, userType, pageSize }) => {
                 <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
                   {item?.transactionId || 'N/A'}
                 </td>
-                <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>{helpers.formattedAmount(item?.transactionAmount)}</td>
+                <td className='py-2 px-4 border-r dark:border-[#ffffff38] '>{helpers.formattedAmount(item?.transactionAmount)}</td>
                 {userType === 'tourist' && (
-                    <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>{helpers.formattedAmount(item?.user?.scratchCardDetail?.rewardAmount)}</td>
+                    <td className='py-2 px-4 border-r dark:border-[#ffffff38] '>{helpers.formattedAmount(item?.user?.scratchCardDetail?.rewardAmount)}</td>
                 )}
                 {userType === 'local' && (
-                  <>
-                   
-                    <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
+                    <td className='py-2 px-4 border-r dark:border-[#ffffff38] '>
                       {startCase(item?.transactionType) || 'N/A'}
                     </td>
-                  </>
                 )}
                 <td className='py-2 px-4 border-r dark:border-[#ffffff38] text-center'>
                   {dayjs(item?.createdAt).format('DD-MM-YYYY hh:mm A')}
