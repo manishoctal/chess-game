@@ -12,8 +12,12 @@ import PageSizeList from 'components/PageSizeList'
 import OSearch from 'components/reusable/OSearch'
 
 function RewardWithdrawalRequest () {
+  
   const { t } = useTranslation()
   const { user, updatePageName } = useContext(AuthContext)
+  useEffect(() => {
+    updatePageName(t('REWARD_WITHDRAWAL_REQUEST'))
+  }, [])
   const [pageSize, setPageSize] = useState(10)
   const manager =
   user?.permission?.find(e => e.manager === 'reward_withdrawal_request') ?? {}
@@ -117,8 +121,6 @@ function RewardWithdrawalRequest () {
       console.error('error in get all FAQs list==>>>>', error.message)
     }
   }
-
-  
   const handleDateChange = (start, end) => {
     setPage(1)
     setFilterData({
@@ -127,10 +129,6 @@ function RewardWithdrawalRequest () {
       endDate: end,
       isFilter: true
     })
-  }
-  const statusPage = e => {
-    setPage(1)
-    setFilterData({ ...filterData, category: e.target.value, isFilter: true })
   }
   
   useEffect(() => {
@@ -147,6 +145,10 @@ function RewardWithdrawalRequest () {
     }
   }, [debouncedSearchTerm])
   
+  const statusPage = e => {
+    setFilterData({ ...filterData, category: e.target.value, isFilter: true })
+    setPage(1)
+  }
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       setDebouncedSearchTerm(searchTerm)
@@ -155,9 +157,7 @@ function RewardWithdrawalRequest () {
       clearTimeout(timeoutId)
     }
   }, [searchTerm])
-  useEffect(() => {
-    updatePageName(t('REWARD_WITHDRAWAL_REQUEST'))
-  }, [])
+  
   
   const handleReset = () => {
     setFilterData({

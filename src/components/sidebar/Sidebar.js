@@ -1,8 +1,6 @@
 import React, { useContext } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import AuthContext from '../../context/AuthContext'
-import Documents from '../reusable/icons/Documents'
-import { GiCartwheel } from 'react-icons/gi'
 import Dashboard from '../../assets/images/sidebar_icon1.svg'
 import SubAdmin from '../../assets/images/sub-admin-manager.svg'
 import userManager from '../../assets/images/user-manager.svg'
@@ -19,7 +17,6 @@ import emailManager from '../../assets/images/email-manager.svg'
 import Logout from '../../assets/images/logout.svg'
 import { useTranslation } from 'react-i18next'
 import logoImage from '../../assets/images/Vector.png'
-import { AiFillSetting, AiOutlineMail } from 'react-icons/ai'
 
 const classNames = require('classnames')
 
@@ -79,7 +76,7 @@ const Sidebar = () => {
   }
 
   if (!user) {
-    ;<></>
+    <></>
   }
 
   return (

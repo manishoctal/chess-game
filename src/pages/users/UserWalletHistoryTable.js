@@ -1,7 +1,6 @@
 import { isEmpty } from 'lodash'
 import { useTranslation } from 'react-i18next'
 import helpers from 'utils/helpers'
-import helper from 'utils/helpers'
 
 const UserWalletHistoryTable = ({ users, page }) => {
   const { t } = useTranslation()
@@ -49,7 +48,7 @@ const UserWalletHistoryTable = ({ users, page }) => {
                   {helpers.formattedAmount(item?.transactionAmount)}
                   </td>
                   <td className='py-2 px-4 border-r  dark:border-[#ffffff38] '>
-                    {helper.getDateAndTime(item?.createdAt) || 'N/A'}
+                    {helpers.getDateAndTime(item?.createdAt) || 'N/A'}
                   </td>
                 </tr>
               ))}

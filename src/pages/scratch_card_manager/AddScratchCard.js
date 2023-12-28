@@ -10,7 +10,7 @@ import OInputField from 'components/reusable/OInputField'
 import FormValidation from 'utils/formValidation'
 import dayjs from 'dayjs'
 import helper from 'utils/helpers'
-import { isEmpty, toNumber } from 'lodash'
+import {  toNumber } from 'lodash'
 
 const AddScratchCard = ({ setShowModal, allScratchCard }) => {
   const { t } = useTranslation()

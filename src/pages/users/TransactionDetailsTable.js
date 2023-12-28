@@ -1,8 +1,9 @@
 import { isEmpty } from 'lodash'
 import { useTranslation } from 'react-i18next'
-import dayjs from 'dayjs'
 import helpers from 'utils/helpers'
 import QRCodeGenerator from 'components/QRCodeGenerator'
+import ViewImage from 'pages/reports_manager/ViewImage'
+import { useState } from 'react'
 
 const TransactionDetailsTable = ({
   transactions,
@@ -11,7 +12,14 @@ const TransactionDetailsTable = ({
   pageSize
 }) => {
   const { t } = useTranslation()
+  const [viewShowModal, setViewShowModal] = useState(false)
+  const [imageView, setImageView] = useState('')
 
+
+  const handleUserView = (element,type) => {
+    setImageView({image:element,type})
+    setViewShowModal(true)
+  }
   return (
     <div className='p-3'>
       <div className='overflow-x-auto relative rounded-lg border'>
@@ -106,17 +114,23 @@ const TransactionDetailsTable = ({
                     ) ?? 'N/A'}
                   </td>
                   <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center  '>
+                    <button type='button' onClick={()=>handleUserView(item?.qrCodeString,'QR')}>
+
                     <QRCodeGenerator qrCodeValue={item.qrCodeString} />
+                    </button>
                   </td>
                  
                   <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
                   {helpers.ternaryCondition(item?.paymentProof , (
+                    <button type='button' onClick={()=>handleUserView(item?.paymentProof,'image')}>
+
                       <img
                         src={item?.paymentProof}
                         alt=''
-                      className='h-[80px] w-[80px] object-cover'
-
-                      />
+                        className='h-[80px] w-[80px] object-cover'
+                        
+                        />
+                        </button>
                     ) , (
                       'NA'
                     ))}
@@ -137,6 +151,9 @@ const TransactionDetailsTable = ({
           </tbody>
         </table>
       </div>
+      {viewShowModal && (
+        <ViewImage setViewShowModal={setViewShowModal} item={imageView} />
+      )}
     </div>
   )
 }
