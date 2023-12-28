@@ -39,7 +39,7 @@ const ReplyModal = ({ setIsReply, item, getSupportRequest }) => {
         notification.error(res?.data?.message)
       }
     } catch (err) {
-      console.log('err:', err)
+      console.error('err:', err)
     } finally {
       setAddMerchantLoading(false)
     }

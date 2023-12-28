@@ -154,6 +154,7 @@ const Settings = () => {
                     </div>
                     <button
                       type='button'
+                      title={t('DEPOSIT_AMOUNT')}
                       className='bg-gradientTo hover:bg-DarkBlue cursor-pointer   text-white  font-normal active:bg-slate-100 text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150
       undefined '
                       onClick={() => setIsAmountModal(true)}
@@ -234,7 +235,7 @@ const Settings = () => {
                 register={register('referralBonusTourist', {
                   required: {
                     value: true,
-                    message: 'Please enter referral bonus.'
+                    message: t('PLEASE_ENTER_REFERRAL_BONUS')
                   },
                   maxLength: {
                     value: 40,
@@ -260,7 +261,7 @@ const Settings = () => {
                 register={register('referralBonusLocals', {
                   required: {
                     value: true,
-                    message: 'Please enter referral bonus.'
+                    message: t('PLEASE_ENTER_REFERRAL_BONUS')
                   },
                   maxLength: {
                     value: 40,
@@ -286,11 +287,11 @@ const Settings = () => {
                 register={register('upcCodeReferralAmount', {
                   required: {
                     value: true,
-                    message: 'Please enter upc code referral amount.'
+                    message: t('PLEASE_ENTER_UPC_CODE_REFERRAL_AMOUNT')
                   },
                   pattern: {
                     value: /^\d+$/,
-                    message: 'Only digits are allowed.'
+                    message: t('ONLY_DIGITS_ARE_ALLOWED')
                   },
                   maxLength: {
                     value: 40,
@@ -317,7 +318,7 @@ const Settings = () => {
                 register={register('signupBonus', {
                   required: {
                     value: true,
-                    message: 'Please enter sign up bonus.'
+                    message: t('PLEASE_ENTER_SIGN_UP_BONUS')
                   },
                   maxLength: {
                     value: 40,
@@ -344,7 +345,7 @@ const Settings = () => {
                 register={register('maxTransferMoneyLimit', {
                   required: {
                     value: true,
-                    message: 'Please enter maximum transfer money limit.'
+                    message: t('PLEASE_ENTER_MAXIMUM_TRANSFER_MONEY_LIMIT')
                   },
                   maxLength: {
                     value: 40,
@@ -370,7 +371,7 @@ const Settings = () => {
                 register={register('negativeAmountMaxLimit', {
                   required: {
                     value: true,
-                    message: 'Please enter negative amount maximum limit.'
+                    message: t('PLEASE_ENTER_NEGATIVE_AMOUNT_MAXIMUM_LIMIT')
                   },
                   maxLength: {
                     value: 40,
@@ -402,7 +403,7 @@ const Settings = () => {
                   {
                     required: {
                       value: true,
-                      message: 'Please enter minimum threshold amount.'
+                      message: t('PLEASE_ENTER_MINIMUM_THRESHOLD_AMOUNT')
                     },
                     maxLength: {
                       value: 40,
@@ -434,7 +435,7 @@ const Settings = () => {
                   required: {
                     value: true,
                     message:
-                      'Please enter time to log active users  on the app.'
+                      t('PLEASE_ENTER_TIME_TO_LOG_ACTIVE_USERS_ON_THE_APP')
                   },
                   maxLength: {
                     value: 40,
@@ -460,11 +461,11 @@ const Settings = () => {
                 register={register('rewardAmountPercentage', {
                   required: {
                     value: true,
-                    message: 'Please enter reward amount percentage.'
+                    message: t('PLEASE_ENTER_REWARD_AMOUNT_PERCENTAGE')
                   },
                   maxLength: {
                     value: 3,
-                    message: 'Max limit is 3 characters.'
+                    message: t('MAX_LIMIT_IS_3_CHARACTERS')
                   },
                   min: {
                     value: 1,
@@ -494,7 +495,6 @@ const Settings = () => {
       {viewShowModal ? (
         <Credential setViewShowModal={setViewShowModal} email={user?.email} />
       ) : null}
-{console.log('isAmountModal',isAmountModal)}
       {helpers.andOperator(
         isAmountModal,
         <DepositAmount

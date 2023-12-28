@@ -2,9 +2,19 @@ import { isEmpty } from 'lodash'
 import { useTranslation } from 'react-i18next'
 import helpers from '../../utils/helpers'
 import QRCodeGenerator from 'components/QRCodeGenerator'
+import { useState } from 'react'
+import ViewImage from './ViewImage'
 
 const ReportsTable = ({ users, page, userType, pageSize }) => {
   const { t } = useTranslation()
+  const [viewShowModal, setViewShowModal] = useState(false)
+  const [imageView, setImageView] = useState('')
+
+
+  const handleUserView = (element,type) => {
+    setImageView({image:element,type})
+    setViewShowModal(true)
+  }
 
   return (
     <div className='p-3'>
@@ -125,18 +135,21 @@ const ReportsTable = ({ users, page, userType, pageSize }) => {
                     )}
                   </td>
                   <td className='py-4 px-3 border-r  dark:border-[#ffffff38] text-center'>
+                  <button type='button' onClick={()=>handleUserView(item?.qrCodeString,'QR')}>
+                    
                   <QRCodeGenerator qrCodeValue={item?.qrCodeString} />
+                  </button>
                   </td>
                   <td className='py-4 px-3 border-r  dark:border-[#ffffff38] text-center'>
                   {helpers.ternaryCondition(item?.paymentProof , (
-                    <a href={item?.paymentProof} download target='_black' >
+                    <button type='button' onClick={()=>handleUserView(item?.paymentProof,'image')}>
                       <img
                         src={item?.paymentProof}
                         alt=''
                       className='h-[80px] w-[80px] object-cover'
 
                       />
-                      </a>
+                      </button>
                     ) , (
                       'NA'
                     ))}
@@ -158,6 +171,9 @@ const ReportsTable = ({ users, page, userType, pageSize }) => {
           </tbody>
         </table>
       </div>
+      {viewShowModal && (
+        <ViewImage setViewShowModal={setViewShowModal} item={imageView} />
+      )}
     </div>
   )
 }

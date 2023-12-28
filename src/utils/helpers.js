@@ -220,7 +220,6 @@ const helpers = {
     }
     if (['.'].includes(e?.target?.value)) {
       const afterDecimal = e?.target?.value?.split('.')
-      console.log('afterDecimal', afterDecimal)
       if (afterDecimal[1]?.length > 2) {
         e.preventDefault()
       }
