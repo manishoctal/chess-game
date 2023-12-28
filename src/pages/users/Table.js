@@ -102,6 +102,9 @@ const Table = ({
                     <th scope='col' className='py-3 px-6 text-left'>
                       {t('REFERRAL_CODE')}
                     </th>
+                    <th scope='col' className='py-3 px-6 text-left'>
+                      {t('FAMILY_NAME')}
+                    </th>
                   </>
                 )}
 
@@ -184,6 +187,13 @@ const Table = ({
                           {helpers.ternaryCondition(
                             item?.referralCode,
                             item?.referralCode,
+                            'N/A'
+                          )}
+                        </td>
+                        <td className='py-4 px-3 border-r text-center dark:border-[#ffffff38] '>
+                          {helpers.ternaryCondition(
+                            item?.familyName,
+                            item?.familyName,
                             'N/A'
                           )}
                         </td>

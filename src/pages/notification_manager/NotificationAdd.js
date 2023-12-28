@@ -6,9 +6,10 @@ import { apiPost } from "../../utils/apiFetch";
 import apiPath from "../../utils/apiPath";
 import { useTranslation } from "react-i18next";
 import OInputField from "components/reusable/OInputField";
-import formValidation from "utils/formValidation";
+import FormValidation from "utils/formValidation";
 import OTextArea from "components/reusable/OTextArea";
 const NotificationAdd = ({ getAllNotifications, handleCategory }) => {
+  const formValidation=FormValidation()
   const { t } = useTranslation();
   const {
     register,
@@ -54,7 +55,7 @@ const NotificationAdd = ({ getAllNotifications, handleCategory }) => {
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                 <div className="flex items-center justify-between p-5 border-b border-solid border-slate-200 rounded-t">
                   <h3 className="text-xl font-semibold">
-                    {t("ADD_NOTIFICATION")}
+                    {t("SEND_NOTIFICATION")}
                   </h3>
                   <button
                     className=" ml-auto flex items-center justify-center  text-black border-2 rounded-full  h-8 w-8 float-right text-3xl leading-none font-extralight outline-none focus:outline-none"

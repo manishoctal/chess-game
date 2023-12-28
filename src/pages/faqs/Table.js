@@ -14,8 +14,6 @@ const Table = ({
   getAllFAQ,
   handelEdit,
   paginationObj,
-  sort,
-  setSort,
   manager,
   pageSize
 }) => {
@@ -65,7 +63,6 @@ const Table = ({
               <th scope='col' className='py-3 px-6'>
                 {t('FAQS_TITLE')}
               </th>
-
               <th scope='col' className='py-3 px-6 text-center'>
                 {t('CREATED_DATE')}
               </th>
