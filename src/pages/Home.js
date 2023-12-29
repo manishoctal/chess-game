@@ -8,7 +8,6 @@ import dayjs from 'dayjs'
 import { useTranslation } from 'react-i18next'
 import Chart from 'react-apexcharts'
 
-import { Line } from 'react-chartjs-2'
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -100,7 +99,7 @@ function Home () {
   const [dashboardDetails, setDashboardDetails] = useState({})
   const [startDate, setStartDate] = useState()
   const [endDate, setEndDate] = useState('')
-  const [chartData, setChartData] = useState({
+  const [chartData] = useState({
     options: {
       chart: {
         id: 'basic-bar'
@@ -130,31 +129,13 @@ function Home () {
       }
     ]
   })
-  const [usersGraphYears] = useState([])
 
   const [graphPayload, setGraphPayload] = useState({
     graphYear: '-1',
     graphMonth: '-1'
   })
   const [isReset, setIsReset] = useState(false)
-  const handleYearSelect = e => {
-    setGraphPayload({
-      ...graphPayload,
-      graphYear: e.target.value
-    })
-  }
-  const handleMonthSelect = e => {
-    setGraphPayload({
-      ...graphPayload,
-      graphMonth: e.target.value
-    })
-  }
-  const handleResetGraph = () => {
-    setGraphPayload({
-      graphYear: '-1',
-      graphMonth: '-1'
-    })
-  }
+ 
   const handleDateChange = (start, end) => {
     setStartDate(start)
     setEndDate(end)
