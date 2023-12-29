@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import dayjs from 'dayjs'
 import { AiFillEye } from 'react-icons/ai'
 import { useTranslation } from 'react-i18next'
@@ -7,11 +7,19 @@ import { isEmpty } from 'lodash'
 
 import { NavLink } from 'react-router-dom'
 import helpers from 'utils/helpers'
+import ScratchCardUserView from './ScratchCardUserView'
 
 const ScratchCardTable = ({ subAdmin, page, pageSize }) => {
   const { t } = useTranslation()
   const { updatePageName } = useContext(AuthContext)
+  const [item, setItem] = useState('')
 
+  const [viewShowModal, setViewShowModal] = useState(false)
+
+  const handleUserView = item => {
+    setItem(item)
+    setViewShowModal(true)
+  }
   useEffect(() => {
     updatePageName(t('SCRATCH_CARD_MANAGER'))
   }, [])
@@ -59,15 +67,12 @@ const ScratchCardTable = ({ subAdmin, page, pageSize }) => {
                   <div className=''>
                     <ul className='flex justify-center'>
                       <li className='px-2 py-2 hover:text-gradientTo'>
-                        <NavLink
-                          to='/scratch-card-manager/view'
-                          state={{ id: item?._id }}
-                        >
-                          <a title={t('VIEW_SCRATCH_CARD_HISTORY')}>
+                        
+                        {  helpers.ternaryCondition(item.isUsed,<button type='button' onClick={() => handleUserView(item)} title={t('VIEW_SCRATCH_CARD_HISTORY')}>
                             {' '}
                             <AiFillEye className='cursor-pointer w-5 h-5 text-slate-600' />
-                          </a>
-                        </NavLink>
+                          </button>,<span className='text-green-500'>{t('UNUSED')}</span>)}
+                       
                       </li>
                     </ul>
                   </div>
@@ -84,6 +89,9 @@ const ScratchCardTable = ({ subAdmin, page, pageSize }) => {
           </tbody>
         </table>
       </div>
+      {viewShowModal && (
+        <ScratchCardUserView setViewShowModal={setViewShowModal} item={item} />
+      )}
     </div>
   )
 }

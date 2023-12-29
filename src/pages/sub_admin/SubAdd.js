@@ -54,7 +54,7 @@ const SubAdd = ({ props }) => {
   const { updatePageName } = useContext(AuthContext)
   const [countryCode] = useState('th')
   const [isSelectAll, setIsSelectAll] = useState(false)
-
+  const [isCheckAll, setIsCheckAll] = useState(false)
   const onChange = event => {
     if(!event.target.checked){
       setIsSelectAll(false)
@@ -169,6 +169,7 @@ const SubAdd = ({ props }) => {
 
   const selectAll = event => {
     setIsSelectAll(event.target.checked)
+    setIsCheckAll(event.target.checked)
     setPermission(current =>
       current.map(obj => {
         return {
@@ -343,6 +344,7 @@ const SubAdd = ({ props }) => {
                           checked={isSelectAll}
                           className='h-4 w-4'
                           onChange={selectAll}
+                          disabled={item?.type === 'view'}
                         />
                       </div>
                     </th>
@@ -387,19 +389,6 @@ const SubAdd = ({ props }) => {
                           />
                         )}
                       </td>
-                      {/* <td className="py-2 px-4 border-r dark:border-[#ffffff38] ">
-                        {data?.shownDelete && (
-                          <input
-                            type="checkbox"
-                            id="delete"
-                            name={data?.manager}
-                            checked={data.delete}
-                            onChange={onChange}
-                            disabled={item?.type === "view"}
-                          />
-                        )}
-                      </td> */}
-
                       <td className='py-2 px-4 border-r dark:border-[#ffffff38] '>
                         {helpers.andOperator(
                           data?.shownAll,
@@ -408,6 +397,8 @@ const SubAdd = ({ props }) => {
                             id='all'
                             name={data?.manager}
                             onChange={checkAll}
+                            checked={isCheckAll}
+                            disabled={item?.type === 'view'}
                           />
                         )}
                       </td>

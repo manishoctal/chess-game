@@ -24,7 +24,7 @@ function UserWalletHistory () {
   const [users, setWalletHistory] = useState([])
   const [page, setPage] = useState(1)
   const [pageSize, setPageSize] = useState(10)
-  const [isDelete, setIsDelete] = useState(false)
+  const [isDelete] = useState(false)
   const [searchTerm, setSearchTerm] = useState('')
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('')
   const [isInitialized, setIsInitialized] = useState(false)
@@ -111,7 +111,6 @@ function UserWalletHistory () {
       searchkey: ''
     })
     setPage(1)
-    setIsDelete(true)
     setSearchTerm('')
     setPageSize(10)
   }
@@ -133,7 +132,6 @@ function UserWalletHistory () {
       isFilter: true,
       isReset: false
     })
-    setIsDelete(true)
   }
 
   useEffect(() => {

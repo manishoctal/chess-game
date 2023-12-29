@@ -100,7 +100,6 @@ function SupportManager () {
       isFilter: false
     })
     setPage(1)
-    // setIsDelete(true)
   }
 
   const handleDateChange = (start, end) => {
@@ -111,7 +110,6 @@ function SupportManager () {
       endDate: end,
       isFilter: true
     })
-    // setIsDelete(true)
   }
 
   const dynamicPage = e => {
