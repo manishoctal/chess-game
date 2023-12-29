@@ -127,7 +127,7 @@ const RewardWithdrawalRequestTable = ({
                               'Are you sure you want to accept the request?',
                               {
                                 _id: item?._id,
-                                status: 'accepted'
+                                status: 'paid'
                               },
                               handelStatusChange
                             )
@@ -159,7 +159,7 @@ const RewardWithdrawalRequestTable = ({
                     {item?.status !== 'pending' && (
                       <span
                         className={classNames('', {
-                          'text-green-600': item?.status === 'accepted',
+                          'text-green-600': item?.status === 'paid',
                           'text-red-600': item?.status === 'rejected'
                         })}
                       >

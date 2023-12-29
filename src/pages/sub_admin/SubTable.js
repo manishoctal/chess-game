@@ -145,7 +145,7 @@ const SubTable = ({
                 <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
                   {item?.email || 'N/A'}
                 </td>
-                <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
+                <td className='py-2 px-4 border-r dark:border-[#ffffff38] text-center'>
                   {item?.countryCode || 'N/A'}
                 </td>
                 <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>

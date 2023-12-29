@@ -191,7 +191,7 @@ function RewardWithdrawalRequest () {
                       <option defaultValue value=''>
                         {t('O_ALL')}
                       </option>
-                      <option value='accepted'>{t('ACCEPTED')}</option>
+                      <option value='paid'>{t('PAID')}</option>
                       <option value='rejected'>{t('REJECTED')}</option>
                       <option value='pending'>{t('PENDING')}</option>
                     </select>

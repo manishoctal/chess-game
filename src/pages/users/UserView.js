@@ -337,15 +337,21 @@ const UserView = () => {
               </ul>
             </div>
             <div className='border border-1 border-[#E1DEDE] rounded-md p-12'>
-              <figure className='inline-block overflow-hidden border mb-5 w-full h-[200px]'>
+            <span className='block text-center pb-3'>{t('KYC_DOCUMENT')}</span>
+             <div className='relative'>
+             
+             <figure className='inline-block overflow-hidden border mb-3 w-full h-[200px]'>
                 <OImage
-                  src={item?.profilePic || defaultImage}
-                  className='w-full h-full object-contain inline'
+                  src={item?.kycRecord?.docImage || defaultImage}
+                  className='w-full h-full object-contain inline '
                   alt=''
                   fallbackUrl={defaultImage}
                 />
+                
               </figure>
-              <span className='block text-center'>{t('KYC_DOCUMENT')}</span>
+             {helpers.andOperator( item?.kycRecord?.isApproved==='approved',<img src={checkIcon} alt='' className='absolute right-[-10px] top-[-10px]'/>)}
+              </div>
+              <span>{t('DOCUMENT_NUMBER')}:{helpers.ternaryCondition(item?.kycRecord?.docNumber,item?.kycRecord?.docNumber,'N/A')}</span>
             </div>
           </div>
         </div>
@@ -515,15 +521,24 @@ const UserView = () => {
               </ul>
             </div>
             <div className='border border-1 border-[#E1DEDE] rounded-md p-12'>
-              <figure className='inline-block overflow-hidden border mb-5 w-full h-[200px]'>
+            <span className='block text-center pb-3'>{t('KYC_DOCUMENT')}</span>
+             <div className='relative'>
+             
+             <figure className='inline-block overflow-hidden border mb-3 w-full h-[200px]'>
                 <OImage
-                  src={item?.profilePic || defaultImage}
-                  className='w-full h-full object-contain inline'
+                  src={item?.kycRecord?.docImage || defaultImage}
+                  className='w-full h-full object-contain inline '
                   alt=''
                   fallbackUrl={defaultImage}
                 />
+                
               </figure>
-              <span className='block text-center'>{t('KYC_DOCUMENT')}</span>
+             {helpers.andOperator( item?.kycRecord?.isApproved==='approved',<img src={checkIcon} alt='' className='absolute right-[-10px] top-[-10px]'/>)}
+              </div>
+
+              <span>{t('DOCUMENT_NUMBER')}:{item?.kycRecord?.docNumber}</span>
+              
+                            
             </div>
           </div>
         </div>
