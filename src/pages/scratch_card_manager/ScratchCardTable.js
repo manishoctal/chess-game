@@ -10,12 +10,12 @@ import ScratchCardUserView from './ScratchCardUserView'
 const ScratchCardTable = ({ subAdmin, page, pageSize }) => {
   const { t } = useTranslation()
   const { updatePageName } = useContext(AuthContext)
-  const [item, setItem] = useState('')
+  const [cardUser, setCardUser] = useState('')
 
   const [viewShowModal, setViewShowModal] = useState(false)
 
   const handleUserView = element => {
-    setItem(element)
+    setCardUser(element)
     setViewShowModal(true)
   }
   useEffect(() => {
@@ -88,7 +88,7 @@ const ScratchCardTable = ({ subAdmin, page, pageSize }) => {
         </table>
       </div>
       {viewShowModal && (
-        <ScratchCardUserView setViewShowModal={setViewShowModal} item={item} />
+        <ScratchCardUserView setViewShowModal={setViewShowModal} item={cardUser} />
       )}
     </div>
   )
