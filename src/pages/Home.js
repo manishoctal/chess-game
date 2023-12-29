@@ -6,6 +6,7 @@ import pathObj from 'utils/apiPath'
 import earning from 'assets/images/earning.jpg'
 import dayjs from 'dayjs'
 import { useTranslation } from 'react-i18next'
+import Chart from 'react-apexcharts'
 
 import { Line } from 'react-chartjs-2'
 import {
@@ -99,6 +100,36 @@ function Home () {
   const [dashboardDetails, setDashboardDetails] = useState({})
   const [startDate, setStartDate] = useState()
   const [endDate, setEndDate] = useState('')
+  const [chartData, setChartData] = useState({
+    options: {
+      chart: {
+        id: 'basic-bar'
+      },
+      xaxis: {
+        // categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999]
+        categories: [
+          'January',
+          'Febrauray',
+          'March',
+          'April',
+          'May',
+          'June',
+          'July',
+          'August',
+          'September',
+          'October',
+          'November',
+          'December'
+        ]
+      }
+    },
+    series: [
+      {
+        name: 'series-1',
+        data: [30, 40, 45, 50, 49, 60, 70, 91, 49, 60, 70, 91]
+      }
+    ]
+  })
   const [usersGraphYears] = useState([])
 
   const [graphPayload, setGraphPayload] = useState({
@@ -150,8 +181,6 @@ function Home () {
     getDashboardDetails()
   }, [startDate, endDate])
 
- 
-
   const handleReset = () => {
     setEndDate('')
     setStartDate('')
@@ -177,45 +206,41 @@ function Home () {
       </div>
       <div className='py-4 px-4 md:px-8 dark:bg-slate-900'>
         <div className='sale_report grid pt-10 3xl:grid-cols-4 gap-y-10 gap-4 gap-x-10 2xl:grid-cols-4 sm:grid-cols-2 mb-7 '>
-          <div
-            className="text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border"
-           
-          >
-            <h3 className="text-center mb-0 text-slate-900 font-bold md:text-3xl sm:text-lg dark:text-white">
+          <div className='text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border'>
+            <h3 className='text-center mb-0 text-slate-900 font-bold md:text-3xl sm:text-lg dark:text-white'>
               <OCountUp value={dashboardDetails?.totalUsersCount} />
-              <span className="text-base text-neutral-400 font-normal block pt-3 ">
-                {t("VIEW_NO_OF_USERS")}
+              <span className='text-base text-neutral-400 font-normal block pt-3 '>
+                {t('VIEW_NO_OF_USERS')}
               </span>
             </h3>
-            <span className="text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-10px] p-3 border z-10 bg-white">
+            <span className='text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-10px] p-3 border z-10 bg-white'>
               <FaUserTie />
             </span>
           </div>
 
-          <div
-            className="text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border"
-            
-          >
-            <h3 className="text-center mb-0 text-slate-900 font-bold md:text-3xl sm:text-lg dark:text-white">
+          <div className='text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border'>
+            <h3 className='text-center mb-0 text-slate-900 font-bold md:text-3xl sm:text-lg dark:text-white'>
               <OCountUp value={dashboardDetails?.totalActiveUsersCount} />
 
-              <span className="text-base text-neutral-400 font-normal block pt-3 ">
-                {t("NO_OF_ACTIVE_USERS")}
+              <span className='text-base text-neutral-400 font-normal block pt-3 '>
+                {t('NO_OF_ACTIVE_USERS')}
               </span>
             </h3>
-            <span className="text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-10px] p-3 border z-10 bg-white">
+            <span className='text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-10px] p-3 border z-10 bg-white'>
               <FaUserTie />
             </span>
           </div>
           <div className='text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border'>
             <h3 className='text-center mb-0 text-slate-900 font-bold md:text-3xl sm:text-lg dark:text-white'>
-            {helpers.formattedAmount(dashboardDetails?.AmountAddedByScratchCard)}
+              {helpers.formattedAmount(
+                dashboardDetails?.AmountAddedByScratchCard
+              )}
               <span className='text-base text-neutral-400 font-normal block pt-3 '>
                 {t('Amount added by scratchcard')}
               </span>
             </h3>
             <span className='text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-10px] p-3 border z-10 bg-white'>
-            <img
+              <img
                 src={earning}
                 className='h-8 w-8 bg-black'
                 alt='earningImg'
@@ -224,13 +249,15 @@ function Home () {
           </div>
           <div className='text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border'>
             <h3 className='text-center mb-0 text-slate-900 font-bold md:text-3xl sm:text-lg dark:text-white'>
-            {helpers.formattedAmount(dashboardDetails?.totalPaymentByThaiLocal)}
+              {helpers.formattedAmount(
+                dashboardDetails?.totalPaymentByThaiLocal
+              )}
               <span className='text-base text-neutral-400 font-normal block pt-3 '>
                 {t('Total payment by thai local')}
               </span>
             </h3>
             <span className='text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-10px] p-3 border z-10 bg-white'>
-            <img
+              <img
                 src={earning}
                 className='h-8 w-8 bg-black'
                 alt='earningImg'
@@ -238,16 +265,17 @@ function Home () {
             </span>
           </div>
 
-
           <div className='text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border'>
             <h3 className='text-center mb-0 text-slate-900 font-bold md:text-3xl sm:text-lg dark:text-white'>
-            {helpers.formattedAmount(dashboardDetails?.totalAmountAddedToTourist)}
+              {helpers.formattedAmount(
+                dashboardDetails?.totalAmountAddedToTourist
+              )}
               <span className='text-base text-neutral-400 font-normal block pt-3 '>
                 {t('Amount added by admin in tourist wallet')}
               </span>
             </h3>
             <span className='text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-10px] p-3 border z-10 bg-white'>
-            <img
+              <img
                 src={earning}
                 className='h-8 w-8 bg-black'
                 alt='earningImg'
@@ -256,13 +284,15 @@ function Home () {
           </div>
           <div className='text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border'>
             <h3 className='text-center mb-0 text-slate-900 font-bold md:text-3xl sm:text-lg dark:text-white'>
-              {helpers.formattedAmount(dashboardDetails?.totalAmountAddedToLocal)}
+              {helpers.formattedAmount(
+                dashboardDetails?.totalAmountAddedToLocal
+              )}
               <span className='text-base text-neutral-400 font-normal block pt-3 '>
                 {t('Amount added by admin in thai local wallet')}
               </span>
             </h3>
             <span className='text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-10px] p-3 border z-10 bg-white'>
-            <img
+              <img
                 src={earning}
                 className='h-8 w-8 bg-black'
                 alt='earningImg'
@@ -271,20 +301,22 @@ function Home () {
           </div>
           <div className='text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border'>
             <h3 className='text-center mb-0 text-slate-900 font-bold md:text-3xl sm:text-lg dark:text-white'>
-              {helpers.formattedAmount(dashboardDetails?.totalRewardGainedByUser)}
+              {helpers.formattedAmount(
+                dashboardDetails?.totalRewardGainedByUser
+              )}
               <span className='text-base text-neutral-400 font-normal block pt-3 '>
                 {t('Total reward gain by user')}
               </span>
             </h3>
             <span className='text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-10px] p-3 border z-10 bg-white'>
-            <img
+              <img
                 src={earning}
                 className='h-8 w-8 bg-black'
                 alt='earningImg'
               />
             </span>
           </div>
-          
+
           <div className='text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border'>
             <h3 className='text-center mb-0 text-slate-900 font-bold md:text-3xl sm:text-lg dark:text-white'>
               <OCountUp value={dashboardDetails?.totalTagCount || 0} />
@@ -310,70 +342,21 @@ function Home () {
         </div>
       </div>
       <div className='py-7 px-4 md:px-8 bg-[#F9F9F9] border-solid border-2 border-gray m-10 rounded-md'>
-        <div className='flex justify-center mb-5'>
-          <div className='flex items-center mb-3 ml-4'>
-            <select
-              name='month'
-              className='flex flex-row-reverse border outline-none border-[#E9EDF9] text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
-              value={graphPayload?.graphYear}
-              onChange={handleYearSelect}
-            >
-              <option value='-1'>{t('DASHBOARD_SELECT_YEAR')}</option>
-              {usersGraphYears?.map(year => {
-                return <option key={year}>{year}</option>
-              })}
-            </select>
-          </div>
-
-          <div className='flex items-center mb-3 ml-4'>
-            <select
-              name='month'
-              className='flex flex-row-reverse border outline-none border-[#E9EDF9] text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
-              value={graphPayload?.graphMonth}
-              onChange={handleMonthSelect}
-            >
-              <option value='-1'>{t('DASHBOARD_SELECT_MONTH')}</option>
-              <option value='1'>{t('DASHBOARD_JANUARY')}</option>
-              <option value='2'>{t('DASHBOARD_FEBRUARY')}</option>
-              <option value='3'>{t('DASHBOARD_MARCH')}</option>
-              <option value='4'>{t('DASHBOARD_APRIL')}</option>
-              <option value='5'>{t('DASHBOARD_MAY')}</option>
-              <option value='6'>{t('DASHBOARD_JUNE')}</option>
-              <option value='7'>{t('DASHBOARD_JULY')}</option>
-              <option value='8'>{t('DASHBOARD_AUGUST')}</option>
-              <option value='9'>{t('DASHBOARD_SEPTEMBER')}</option>
-              <option value='10'>{t('DASHBOARD_OCTOBER')}</option>
-              <option value='11'>{t('DASHBOARD_NOVEMBER')}</option>
-              <option value='12'>{t('DASHBOARD_DECEMBER')}</option>
-            </select>
-          </div>
-          <div className='flex items-center ml-2 sm:mb-0'>
-            <button
-              type='button'
-              onClick={handleResetGraph}
-              className='bg-gradientTo text-sm px-8 mb-3 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2'
-            >
-              {t('O_RESET')}
-            </button>
-          </div>
-        </div>
-
-        <div className='sale_report grid grid-cols-2 gap-5 mb-7'>
-          <div className='bg-white p-8 rounded-lg'>
-            <div className='flex justify-between'>
+        
+        <div className='sale_report grid grid-cols-1 gap-5 mb-7 bg-white p-4'>
+        <div className='flex justify-between'>
               <h4 className='font-medium text-lg'>
                 {t('EXPENDITURE_BY_TOURIST')}
               </h4>
             </div>
-            <Line options={lineGraphOptions} data={lineGraphData} />
-          </div>
-
-          <div className='bg-white p-8 rounded-lg'>
-            <h4 className='font-medium text-lg'>
-              {t('PAYMENTS_MADE_BY_LOCALS')}
-            </h4>
-            <Line options={lineGraphOptions} data={lineGraphData2} />
-          </div>
+          <Chart
+            options={chartData.options}
+            series={chartData.series}
+            type='bar'
+            // width='1000'
+            height='600'
+          />
+         
         </div>
       </div>
     </>
