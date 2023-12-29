@@ -38,7 +38,7 @@ function TransactionDetails () {
   const [transactions, setTransactions] = useState([])
   const [page, setPage] = useState(1)
   const [pageSize, setPageSize] = useState(10)
-  const [isDelete, setIsDelete] = useState(false)
+  const [isDelete] = useState(false)
   const [searchTerm, setSearchTerm] = useState('')
   const [isInitialized, setIsInitialized] = useState(false)
   const location = useLocation()
@@ -125,7 +125,6 @@ function TransactionDetails () {
       isReset: true
     })
     setPage(1)
-    setIsDelete(true)
     setSearchTerm('')
     setPageSize(10)
   }
@@ -138,7 +137,6 @@ function TransactionDetails () {
       isFilter: true,
       isReset: false
     })
-    setIsDelete(true)
   }
 
   
