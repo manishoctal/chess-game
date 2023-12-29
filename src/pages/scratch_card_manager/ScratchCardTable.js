@@ -4,8 +4,6 @@ import { AiFillEye } from 'react-icons/ai'
 import { useTranslation } from 'react-i18next'
 import AuthContext from 'context/AuthContext'
 import { isEmpty } from 'lodash'
-
-import { NavLink } from 'react-router-dom'
 import helpers from 'utils/helpers'
 import ScratchCardUserView from './ScratchCardUserView'
 
@@ -16,8 +14,8 @@ const ScratchCardTable = ({ subAdmin, page, pageSize }) => {
 
   const [viewShowModal, setViewShowModal] = useState(false)
 
-  const handleUserView = item => {
-    setItem(item)
+  const handleUserView = element => {
+    setItem(element)
     setViewShowModal(true)
   }
   useEffect(() => {
