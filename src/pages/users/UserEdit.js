@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { apiPut } from '../../utils/apiFetch'
 import apiPath from '../../utils/apiPath'
-import { useForm } from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
 import useToastContext from 'hooks/useToastContext'
 import { useTranslation } from 'react-i18next'
 import OInputField from 'components/reusable/OInputField'
@@ -9,7 +9,9 @@ import { preventMaxInput } from 'utils/validations'
 import FormValidation from '../../utils/formValidation'
 import ODatePicker from 'components/shared/datePicker/ODatePicker'
 import ErrorMessage from 'components/ErrorMessage'
-import helper from 'utils/helpers'
+import DynamicLabel from 'utils/DynamicLabel'
+import PhoneInput from 'react-phone-input-2'
+import helpers from 'utils/helpers'
 
 const UserEdit = ({ setEditShowModal, getAllUser, item }) => {
   const { t } = useTranslation()
@@ -21,6 +23,8 @@ const UserEdit = ({ setEditShowModal, getAllUser, item }) => {
   const {
     register,
     handleSubmit,
+    control,
+
     formState: { errors }
   } = useForm({
     mode: 'onChange',
@@ -28,7 +32,11 @@ const UserEdit = ({ setEditShowModal, getAllUser, item }) => {
     defaultValues: {
       firstName: item?.firstName,
       lastName: item?.lastName,
-      mobile: item?.mobile,
+      mobile: helpers.ternaryCondition(
+        item?.countryCode,
+        item?.countryCode + item?.mobile,
+        'na'
+      ),
       address: item?.address,
       nationalityId: item?.nationalityId,
       email: item?.email
@@ -36,9 +44,17 @@ const UserEdit = ({ setEditShowModal, getAllUser, item }) => {
   })
 
   const formValidation= FormValidation()
+  const [countryCode] = useState('th')
+  const inputRef = useRef(null)
+
 
   const onSubmit = async data => {
     try {
+      data.mobile = data?.mobile?.substring(
+        inputRef?.current?.state.selectedCountry?.countryCode?.length,
+        data?.mobile?.toString()?.length
+      )
+      data.countryCode = inputRef?.current?.state.selectedCountry?.countryCode
       setIsLoading(true)
       const path = apiPath.updateUser + '/' + item._id
       const result = await apiPut(path, {...data,dob:date})
@@ -141,23 +157,56 @@ const UserEdit = ({ setEditShowModal, getAllUser, item }) => {
                   </div>
 
                   <div className='md:py-4 sm:px-2 sm:py-3 md:px-7 px-2'>
-                    <OInputField
-                      wrapperClassName='relative z-0   w-full group'
-                      type='number'
-                      name='mobile'
-                      id='mobile'
-                      inputLabel={
-                        <>
-                          {t('O_MOBILE_NUMBER')}
-                          <span className='text-red-500'>*</span>
-                        </>
+                  <DynamicLabel
+                  name={t('O_MOBILE')}
+                  type={true}
+                  htmlFor={countryCode}
+                />
+
+                <DynamicLabel />
+                <Controller
+                  control={control}
+                  name='mobile'
+                  rules={{
+                    required: 'Please enter mobile no.',
+                    validate: value => {
+                      const inputValue = value
+                        ?.toString()
+                        ?.slice(
+                          inputRef?.current?.state?.selectedCountry?.countryCode
+                            ?.length,
+                          value?.length
+                        )
+                      if (inputValue?.length < 8) {
+                        return 'Mobile no. must be 8 digit'
+                      } else if (inputValue?.length > 12) {
+                        return 'Mobile no. should be not exceed 12 digits'
                       }
-                      min={0}
-                      onKeyDown={helper.preventForNumberInput}
-                      onInput={e => preventMaxInput(e, 10)}
-                      register={register('mobile', formValidation['mobile'])}
-                      errors={errors}
+                    }
+                  }}
+                  render={({ field: { ref, ...field } }) => (
+                    <PhoneInput
+                      {...field}
+                      inputExtraProps={{
+                        ref,
+                        required: true,
+                        autoFocus: true
+                      }}
+                      ref={inputRef}
+                      inputStyle={{
+                        width: '100%',
+                        height: '42px'
+                      }}
+                      style={{ borderRadius: '20px' }}
+                      country={countryCode}
+                      enableSearch
+                      onlyCountries={['th']}
+                      countryCodeEditable={false}
+                     
                     />
+                  )}
+                />
+                <ErrorMessage message={errors?.mobile?.message} />
                   </div>
                   <div className='md:py-4 sm:px-2 sm:py-3 md:px-7 px-2'>
                     <div className='relative z-0  w-full group'>
@@ -166,13 +215,13 @@ const UserEdit = ({ setEditShowModal, getAllUser, item }) => {
                         className='font-medium text-sm text-[#000] dark:text-gray-400  mb-2 block'
                       >
                         {t('USER_DOB')}
-                        <span className='text-red-500'>*</span>
                       </label>
                       <ODatePicker
                         name='validity'
                         id='validity'
                         value={date}
                         // disable={counponData !== undefined}
+                        placeholder={t('USER_DOB')}
                         handleDateChange={handleDateChange}
                         maxDate={
                           new Date(

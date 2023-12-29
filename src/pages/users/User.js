@@ -26,7 +26,7 @@ function User () {
   const [userType, setUserType] = useState('tourist')
   const [page, setPage] = useState(1)
   const [pageSize, setPageSize] = useState(10)
-  const [isDelete, setIsDelete] = useState(false)
+  const [isDelete] = useState(false)
   const [searchTerm, setSearchTerm] = useState('')
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('')
   const [isInitialized, setIsInitialized] = useState(false)
@@ -127,7 +127,6 @@ function User () {
       isFilter: false
     })
     setPage(1)
-    // setIsDelete(true)
     setSearchTerm('')
     setPageSize(10)
   }
@@ -158,7 +157,6 @@ function User () {
       isReset: false
     })
     setPage(1)
-    setIsDelete(true)
   }
   const handleVerify = e => {
     setFilterData({
@@ -168,7 +166,6 @@ function User () {
       isReset: false
     })
     setPage(1)
-    setIsDelete(true)
   }
 
   useEffect(() => {

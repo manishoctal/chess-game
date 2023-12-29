@@ -114,6 +114,36 @@ const SubTable = ({
                   </span>
                 </div>
               </th>
+              <th
+                scope='col'
+                className='py-3 px-6 cursor-pointer text-right'
+                onClick={() => {
+                  if (sort.sortBy === 'updatedAt' && sort.sortType === 'asc') {
+                    setSort({
+                      sortBy: 'updatedAt',
+                      sortType: 'desc'
+                    })
+                  } else {
+                    setSort({
+                      sortBy: 'updatedAt',
+                      sortType: 'asc'
+                    })
+                  }
+                }}
+              >
+                <div className='flex justify-start'>
+                  <span>{t('O_UPDATED_AT')} </span>
+                  <span>
+                    {sort.sortBy === 'updatedAt' && sort.sortType === 'asc' && (
+                      <BsArrowUpShort className='w-4 h-4' />
+                    )}
+                    {sort.sortBy === 'updatedAt' &&
+                      sort.sortType === 'desc' && (
+                        <BsArrowUpShort className='w-4 h-4 rotate-180' />
+                      )}
+                  </span>
+                </div>
+              </th>
               {(manager?.add || manager?.edit || user?.role === 'admin') && (
                 <th scope='col' className='py-3 px-6 text-center'>
                   {t('O_STATUS')}
@@ -136,9 +166,6 @@ const SubTable = ({
                 >
                   {i + 1 + pageSize * (page - 1)}
                 </th>
-                {/* <td className="py-2 px-4 border-r dark:border-[#ffffff38]">
-                  {item?._id}
-                </td> */}
                 <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
                   {startCase(item?.firstName + ' ' + item?.lastName)}
                 </td>
@@ -157,6 +184,9 @@ const SubTable = ({
 
                 <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
                   {dayjs(item?.createdAt).format('DD-MM-YYYY hh:mm A')}
+                </td>
+                <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
+                  {dayjs(item?.updatedAt).format('DD-MM-YYYY hh:mm A')}
                 </td>
                 {(manager?.add || manager?.edit || user?.role === 'admin') && (
                   <td className='py-2 px-4 border-r dark:border-[#ffffff38] text-center'>
