@@ -130,10 +130,7 @@ function Home () {
     ]
   })
 
-  const [graphPayload, setGraphPayload] = useState({
-    graphYear: '-1',
-    graphMonth: '-1'
-  })
+ 
   const [isReset, setIsReset] = useState(false)
  
   const handleDateChange = (start, end) => {
