@@ -238,34 +238,6 @@ function Home () {
             </span>
           </div>
 
-          {/* <div className='text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border'>
-            <h3 className='text-center mb-0 text-slate-900 font-bold md:text-3xl sm:text-lg dark:text-white'>
-              <OCountUp
-                value={dashboardDetails?.totalWalletToBankTransactionCount || 0}
-              />
-              <span className='text-base text-neutral-400 font-normal block pt-3 '>
-                {t('NO_OF_WALLET_TO_BANK_TRANSACTION')}
-              </span>
-            </h3>
-            <span className='text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-10px] p-3 border z-10 bg-white'>
-              
-               <GrTransaction className='h-8 w-8' />
-            </span>
-          </div>
-
-          <div className='text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border'>
-            <h3 className='text-center mb-0 text-slate-900 font-bold md:text-3xl sm:text-lg dark:text-white'>
-              <OCountUp
-                value={dashboardDetails?.totalBankToWalletTransactionCount || 0}
-              />
-              <span className='text-base text-neutral-400 font-normal block pt-3 '>
-                {t('NO_OF_BANK_TO_WALLET_TRANSACTION')}
-              </span>
-            </h3>
-            <span className='text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-10px] p-3 border z-10 bg-white'>
-              <GrTransaction className='h-8 w-8' />
-            </span>
-          </div> */}
 
           <div className='text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border'>
             <h3 className='text-center mb-0 text-slate-900 font-bold md:text-3xl sm:text-lg dark:text-white'>
