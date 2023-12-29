@@ -8,7 +8,7 @@ const ViewImage = ({ setViewShowModal, item ,type}) => {
   return (
     <>
       <div className='justify-center items-center  overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none'>
-        <div className='relative w-auto my-6 mx-auto max-w-xs'>
+        <div className='relative  my-6 mx-auto w-[600px]'>
           <form className='sm:py-4 sm:px-2 py-8 px-7'>
             <div className='border-0 rounded-lg shadow-lg relative flex flex-col  bg-white outline-none focus:outline-none overflow-y-scroll'>
               <div className='flex items-center justify-between p-5 border-b border-solid border-slate-200 rounded-t'>
@@ -24,11 +24,11 @@ const ViewImage = ({ setViewShowModal, item ,type}) => {
               </div>
               <div className='relative p-6 flex-auto'>
                 <div className=' border-2 rounded-md p-5'>
-                  <div className='grid-cols-1 max-h-[400px] overflow-y-auto flex justify-center'>
-                    <div className='mb-3'>
+                  <div className='grid-cols-1 max-h-[300px] flex justify-center'>
+                    <div className='mb-3 w-full'>
                      
-                     {helpers.andOperator(item?.type==='image',<img src={item?.image} alt=''/>)}
-                     {helpers.andOperator(item?.type==='QR',<QRCode value={item?.image} className='w-[100px!important] h-[100px!important] text-center' />)}
+                     {helpers.andOperator(item?.type==='image',<img src={item?.image} alt='' className='h-full w-full object-cover'/>)}
+                     {helpers.andOperator(item?.type==='QR',<QRCode value={item?.image} className='text-center object-contain' style={{width:'100%', height:'100%'}} />)}
                     </div>
                     
                   </div>

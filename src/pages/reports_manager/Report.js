@@ -85,6 +85,7 @@ function Report () {
   const handlePageClick = event => {
     const newPage = event.selected + 1
     setPage(newPage)
+    setAllUser([])
   }
   const dynamicPage = e => {
     setPage(1)

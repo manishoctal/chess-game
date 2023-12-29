@@ -14,8 +14,6 @@ const Table = ({
   getAllFAQ,
   handelEdit,
   paginationObj,
-  sort,
-  setSort,
   manager,
   pageSize
 }) => {
@@ -65,7 +63,6 @@ const Table = ({
               <th scope='col' className='py-3 px-6'>
                 {t('FAQS_TITLE')}
               </th>
-
               <th scope='col' className='py-3 px-6 text-center'>
                 {t('CREATED_DATE')}
               </th>
@@ -97,10 +94,10 @@ const Table = ({
                 <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
                   {startCase(item?.title) || 'N/A'}
                 </td>
-                <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
+                <td className='py-2 px-4 border-r dark:border-[#ffffff38] text-center'>
                   {dayjs(item?.createdAt).format('DD-MM-YYYY hh:mm A')}
                 </td>
-                <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
+                <td className='py-2 px-4 border-r dark:border-[#ffffff38] text-center'>
                   {dayjs(item?.updatedAt).format('DD-MM-YYYY hh:mm A')}
                 </td>
                 {(manager?.add || user?.role === 'admin') && (

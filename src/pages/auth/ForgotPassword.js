@@ -62,10 +62,10 @@ function ForgotPassword() {
                 className="dark:text-white block py-4 px-3 w-full text-sm text-gray-900 bg-transparent border-2 rounded-lg border-[#DFDFDF] appearance-none dark:text-black dark:border-[#DFDFDF]  focus:outline-none focus:ring-0  peer"
                 placeholder=" "
                 {...register("email", {
-                  required: "Please enter email ID.",
+                  required: t("PLEASE_ENTER_EMAIL_ID"),
                   pattern: {
                     value: validationRules.email,
-                    message: "Invalid email address (Ex: example@domain.com).",
+                    message: t("INVALID_EMAIL_ADDRESS"),
                   },
                 })}
               />

@@ -58,7 +58,7 @@ return {
     }
   },
   subAdminLastName: {
-    required: 'Please enter last name.',
+    required: t('PLEASE_ENTER_LAST_NAME'),
     validate: {
       noSpace: value => value.trim() !== '' || t('CANNOT_START_WITH_A_SPACE'),
       onlyAlphabets: value =>
@@ -71,7 +71,7 @@ return {
   },
 
   lastName: {
-    required: 'Please enter last name.',
+    required: t('PLEASE_ENTER_LAST_NAME'),
     pattern: {
       value: /^[^\s].*/,
       message: t('CANNOT_START_WITH_A_SPACE')
@@ -89,7 +89,7 @@ return {
     }
   },
   nationalityId: {
-    required: 'Please enter nationality Id.',
+    required: t('PLEASE_ENTER_NATIONALITY_ID'),
     pattern: {
       value: /^[^\s].*/,
       message: t('CANNOT_START_WITH_A_SPACE')
@@ -107,31 +107,31 @@ return {
     }
   },
   email: {
-    required: 'Please enter email ID.',
+    required: t('PLEASE_ENTER_EMAIL_ID'),
     pattern: {
       value: validationRules.email,
-      message: 'Please enter valid email ID as: example@domain.com.'
+      message: t('INVALID_EMAIL_ADDRESS')
     },
     validate: {
       whiteSpace: value => (value.trim() ? true : t('WHITE_SPACES_NOT_ALLOWED'))
     }
   },
   subject: {
-    required: 'Please enter subject.',
+    required: t('PLEASE_ENTER_SUBJECT'),
     minLength: {
       value: 2,
-      message: 'Subject should contain at least 2 characters.'
+      message: t('SUBJECT_SHOULD_CONTAIN_AT_LEAST_2_CHARACTERS')
     },
     maxLength: {
       value: 500,
-      message: 'Subject should not exceed 500 characters.'
+      message: t('SUBJECT_SHOULD_NOT_EXCEED_500_CHARACTERS')
     },
     validate: {
       whiteSpace: value => (value.trim() ? true : t('WHITE_SPACES_NOT_ALLOWED'))
     }
   },
   mobile: {
-    required: 'Please enter mobile number.',
+    required: t('PLEASE_ENTER_MOBILE_NUMBER'),
     minLength: {
       value: 10,
       message: 'Minimum length should be 10 digits.'

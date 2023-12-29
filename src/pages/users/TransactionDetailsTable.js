@@ -127,7 +127,7 @@ const TransactionDetailsTable = ({
                       <img
                         src={item?.paymentProof}
                         alt=''
-                        className='h-[80px] w-[80px] object-cover'
+                        className='h-[70px] w-[70px] object-cover'
                         
                         />
                         </button>
