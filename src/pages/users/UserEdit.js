@@ -122,15 +122,14 @@ const UserEdit = ({ setEditShowModal, getAllUser, item }) => {
                       inputLabel={
                         <>
                           {t('MERCHANT_LAST_NAME')}
-                          <span className='text-red-500'>*</span>
                         </>
                       }
                       type='text'
                       maxLength={15}
                       onInput={e => preventMaxInput(e, 15)}
                       register={register(
-                        'lastName',
-                        formValidation['lastName']
+                        'lastName'
+                       
                       )}
                       errors={errors}
                     />

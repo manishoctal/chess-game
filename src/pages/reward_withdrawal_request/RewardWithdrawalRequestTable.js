@@ -68,16 +68,13 @@ const RewardWithdrawalRequestTable = ({
                     setSort({
                       sortBy: 'createdAt',
                       sortType: 'desc'
-                    })
-                  } else {
+                    })} else {
                     setSort({
                       sortBy: 'createdAt',
                       sortType: 'asc'
                     })
-                  }
-                }}
-              >
-                <div className='flex justify-start'>
+                  } }}
+              ><div className='flex justify-start'>
                   <span>{t('O_CREATED_AT')} </span>
                   <span>
                     {sort.sortBy === 'createdAt' && sort.sortType === 'asc' && (

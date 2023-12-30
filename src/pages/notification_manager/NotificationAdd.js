@@ -171,7 +171,7 @@ const NotificationAdd = ({ getAllNotifications, handleCategory }) => {
                     {t("O_BACK")}
                   </button>
                   <OButton
-                    label={<>{t("O_ADD")}</>}
+                    label={<>{t("O_SEND")}</>}
                     type="submit"
                     onClick={handleSubmit(onSubmit)}
                   />
