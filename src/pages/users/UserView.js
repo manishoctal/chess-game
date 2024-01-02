@@ -1,6 +1,6 @@
 import OImage from 'components/reusable/OImage'
 import dayjs from 'dayjs'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLocation, Link, useNavigate } from 'react-router-dom'
 import defaultImage from '../../assets/images/No-image-found.jpg'
@@ -408,7 +408,7 @@ const UserView = () => {
                 {helpers.andOperator(item?.kycRecord?.isApproved === 'approved', <img src={checkIcon} alt='' className='absolute right-[-10px] top-[-10px]' />)}
               </div>
               <span className="block text-center">{t('DOCUMENT_NUMBER')}: <b>{helpers.ternaryCondition(item?.kycRecord?.docNumber, item?.kycRecord?.docNumber, 'N/A')}</b></span>
-              {item?.kycRecord?.isApproved === 'pending' ? (
+              {item?.kycRecord?.isApproved === 'pending' && (
                 <div className="flex items-center justify-center p-6">
                   <button
                     className="text-black bg-[#E1E1E1] font-normal px-12 py-2.5 text-sm outline-none focus:outline-none rounded mr-6  ease-linear transition-all duration-150"
@@ -621,7 +621,7 @@ const UserView = () => {
                 {helpers.andOperator(item?.kycRecord?.isApproved === 'approved', <img src={checkIcon} alt='' className='absolute right-[-10px] top-[-10px]' />)}
               </div>
               <span className="block text-center" >{t('DOCUMENT_NUMBER')}: <b>{item?.kycRecord?.docNumber}</b></span>
-              {item?.kycRecord?.isApproved === 'pending' ? (
+              {item?.kycRecord?.isApproved === 'pending' && (
                 <div className="flex items-center justify-center p-6">
                   <button
                     className="text-black bg-[#E1E1E1] font-normal px-12 py-2.5 text-sm outline-none focus:outline-none rounded mr-6  ease-linear transition-all duration-150"
@@ -638,7 +638,7 @@ const UserView = () => {
                   >
                     {t("REJECT")}
                   </button>
-                </div>) : null}
+                </div>)}
 
 
             </div>
