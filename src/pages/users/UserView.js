@@ -1,8 +1,8 @@
 import OImage from 'components/reusable/OImage'
 import dayjs from 'dayjs'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useLocation, Link } from 'react-router-dom'
+import { useLocation, Link, useNavigate } from 'react-router-dom'
 import defaultImage from '../../assets/images/No-image-found.jpg'
 import checkIcon from '../../assets/images/check.png'
 import { startCase } from 'lodash'
@@ -25,11 +25,13 @@ import useToastContext from 'hooks/useToastContext'
 import apiPath from 'utils/apiPath'
 import { apiPut } from 'utils/apiFetch'
 
+
+
 const UserView = () => {
   const { t } = useTranslation()
   const location = useLocation()
   const [item] = useState(location?.state)
-
+  const navigate = useNavigate()
   const notification = useToastContext()
   const approveAndReject = async data => {
     try {
@@ -40,7 +42,7 @@ const UserView = () => {
       const result = await apiPut(path, payload)
       if (result?.data?.success) {
         notification.success(result?.data.message)
-        // setIsAmountModal(false)
+        navigate('/users')
       } else {
         notification.error(result?.data?.message)
       }
@@ -48,6 +50,7 @@ const UserView = () => {
       console.error('error:', error.message)
     }
   }
+
 
   return (
     <div className='p-5 dark:bg-slate-900'>
@@ -381,10 +384,9 @@ const UserView = () => {
             <div className='border border-1 border-[#E1DEDE] rounded-md p-12'>
               <span className='block text-center pb-3'>{t('KYC_DOCUMENT')}</span>
               <div className='relative'>
-
                 <figure className='inline-block overflow-hidden border mb-3 w-full h-[200px]'>
                   <OImage
-                    src={item?.kycRecord?.docImage || defaultImage}
+                    src={item?.kycRecord?.docImageFront || defaultImage}
                     className='w-full h-full object-contain inline '
                     alt=''
                     fallbackUrl={defaultImage}
@@ -393,7 +395,37 @@ const UserView = () => {
                 </figure>
                 {helpers.andOperator(item?.kycRecord?.isApproved === 'approved', <img src={checkIcon} alt='' className='absolute right-[-10px] top-[-10px]' />)}
               </div>
-              <span>{t('DOCUMENT_NUMBER')}:{helpers.ternaryCondition(item?.kycRecord?.docNumber, item?.kycRecord?.docNumber, 'N/A')}</span>
+              <div className='relative'>
+                <figure className='inline-block overflow-hidden border mb-3 w-full h-[200px]'>
+                  <OImage
+                    src={item?.kycRecord?.docImageBack || defaultImage}
+                    className='w-full h-full object-contain inline '
+                    alt=''
+                    fallbackUrl={defaultImage}
+                  />
+
+                </figure>
+                {helpers.andOperator(item?.kycRecord?.isApproved === 'approved', <img src={checkIcon} alt='' className='absolute right-[-10px] top-[-10px]' />)}
+              </div>
+              <span className="block text-center">{t('DOCUMENT_NUMBER')}: <b>{helpers.ternaryCondition(item?.kycRecord?.docNumber, item?.kycRecord?.docNumber, 'N/A')}</b></span>
+              {item?.kycRecord?.isApproved === 'pending' ? (
+                <div className="flex items-center justify-center p-6">
+                  <button
+                    className="text-black bg-[#E1E1E1] font-normal px-12 py-2.5 text-sm outline-none focus:outline-none rounded mr-6  ease-linear transition-all duration-150"
+                    type="button"
+                    onClick={() => approveAndReject("approved")}
+                  >
+                    {t("APPROVE")}
+                  </button>
+                  <button
+                    className="bg-gradientTo text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150"
+                    type="submit"
+                    onClick={() => approveAndReject("rejected")}
+                  >
+                    {t("REJECT")}
+                  </button>
+                </div>
+              ) : null}
             </div>
           </div>
         </div>
@@ -565,10 +597,9 @@ const UserView = () => {
             <div className='border border-1 border-[#E1DEDE] rounded-md p-12'>
               <span className='block text-center pb-3'>{t('KYC_DOCUMENT')}</span>
               <div className='relative'>
-
                 <figure className='inline-block overflow-hidden border mb-3 w-full h-[200px]'>
                   <OImage
-                    src={item?.kycRecord?.docImage || defaultImage}
+                    src={item?.kycRecord?.docImageFront || defaultImage}
                     className='w-full h-full object-contain inline '
                     alt=''
                     fallbackUrl={defaultImage}
@@ -577,26 +608,37 @@ const UserView = () => {
                 </figure>
                 {helpers.andOperator(item?.kycRecord?.isApproved === 'approved', <img src={checkIcon} alt='' className='absolute right-[-10px] top-[-10px]' />)}
               </div>
+              <div className='relative'>
+                <figure className='inline-block overflow-hidden border mb-3 w-full h-[200px]'>
+                  <OImage
+                    src={item?.kycRecord?.docImageBack || defaultImage}
+                    className='w-full h-full object-contain inline '
+                    alt=''
+                    fallbackUrl={defaultImage}
+                  />
 
-              <span className="block text-center" >{t('DOCUMENT_NUMBER')}: <b>{item?.kycRecord?.docNumber}</b></span>
-              <div className="flex items-center justify-center p-6">
-                <button
-                  className="text-black bg-[#E1E1E1] font-normal px-12 py-2.5 text-sm outline-none focus:outline-none rounded mr-6  ease-linear transition-all duration-150"
-                  type="button"
-                  onClick={() => approveAndReject("approved")}
-                >
-                  {t("APPROVE")}
-                </button>
-                {/* {viewType === "view" ? null : ( */}
-                <button
-                  className="bg-gradientTo text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150"
-                  type="submit"
-                  onClick={() => approveAndReject("rejected")}
-                >
-                  {t("REJECT")}
-                </button>
-                {/* )} */}
+                </figure>
+                {helpers.andOperator(item?.kycRecord?.isApproved === 'approved', <img src={checkIcon} alt='' className='absolute right-[-10px] top-[-10px]' />)}
               </div>
+              <span className="block text-center" >{t('DOCUMENT_NUMBER')}: <b>{item?.kycRecord?.docNumber}</b></span>
+              {item?.kycRecord?.isApproved === 'pending' ? (
+                <div className="flex items-center justify-center p-6">
+                  <button
+                    className="text-black bg-[#E1E1E1] font-normal px-12 py-2.5 text-sm outline-none focus:outline-none rounded mr-6  ease-linear transition-all duration-150"
+                    type="button"
+                    onClick={() => approveAndReject("approved")}
+                  >
+                    {t("APPROVE")}
+                  </button>
+
+                  <button
+                    className="bg-gradientTo text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150"
+                    type="submit"
+                    onClick={() => approveAndReject("rejected")}
+                  >
+                    {t("REJECT")}
+                  </button>
+                </div>) : null}
 
 
             </div>
