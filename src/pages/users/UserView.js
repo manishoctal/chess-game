@@ -425,7 +425,7 @@ const UserView = () => {
                     {t("REJECT")}
                   </button>
                 </div>
-              ) : null}
+              )}
             </div>
           </div>
         </div>
