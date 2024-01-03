@@ -52,12 +52,11 @@ const UserView = () => {
       console.error('error:', error.message)
     }
   }
-
+  console.log("item====", item)
   const kycDocSection = async () => {
     if (item?.kycRecord?.isApproved === 'pending') {
       try {
         const result = await new Promise((resolve) => {
-          // Simulate an asynchronous operation, replace this with your actual async logic
           setTimeout(() => {
             resolve(
               <div className="flex items-center justify-center p-6">

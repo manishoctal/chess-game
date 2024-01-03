@@ -202,9 +202,9 @@ const Table = ({
 
                     <td className='py-4 px-3 border-r  dark:border-[#ffffff38] text-center'>
                       {helpers.ternaryCondition(
-                        item?.isKycApproved,
-                        startCase(item?.isKycApproved),
-                        'N/A'
+                        item?.kycRecord?.isApproved,
+                        startCase(item?.kycRecord?.isApproved),
+                        'KYC Not Uploaded Yet'
                       )}
                     </td>
                     <td className='py-4 px-3 border-r  dark:border-[#ffffff38] text-center'>
@@ -216,9 +216,8 @@ const Table = ({
                       <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
                         <label
                           className='inline-flex relative items-center cursor-pointer'
-                          title={`${
-                            item?.status === 'active' ? 'Active' : 'Inactive'
-                          }`}
+                          title={`${item?.status === 'active' ? 'Active' : 'Inactive'
+                            }`}
                         >
                           <input
                             type='checkbox'
