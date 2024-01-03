@@ -86,9 +86,6 @@ const UserView = () => {
         setKycSection(null);
       }
     }
-    else if (item?.kycRecord?.isApproved === 'rejected') {
-      setKycSection(<span className="block text-center mt-4" ><b>{t('REJECTED')}</b></span>)
-    }
     else {
       setKycSection(null);
     }
@@ -470,6 +467,7 @@ const UserView = () => {
               </div>
               <span className="block text-center">{t('DOCUMENT_NUMBER')}: <b>{helpers.ternaryCondition(item?.kycRecord?.docNumber, item?.kycRecord?.docNumber, 'N/A')}</b></span>
               {kycSection}
+              <span className="block text-center mt-4" >{t('KYC_STATUS')}: <b>{helpers.ternaryCondition(item?.kycRecord?.isApproved, item?.kycRecord?.isApproved, 'Kyc not uploaded yet')}</b></span>
             </div>
           </div>
         </div>
@@ -665,6 +663,7 @@ const UserView = () => {
               </div>
               <span className="block text-center" >{t('DOCUMENT_NUMBER')}: <b>{helpers.ternaryCondition(item?.kycRecord?.docNumber, item?.kycRecord?.docNumber, 'N/A')}</b></span>
               {kycSection}
+              <span className="block text-center mt-4" >{t('KYC_STATUS')}: <b>{helpers.ternaryCondition(item?.kycRecord?.isApproved, item?.kycRecord?.isApproved, 'Kyc not uploaded yet')}</b></span>
             </div>
           </div>
         </div>

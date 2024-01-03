@@ -8,7 +8,7 @@ const MySwal = withReactContent(Swal)
 
 dayjs.extend(calendar)
 
-function shuffleArray (array) {
+function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1))
     const temp = array[i]
@@ -235,12 +235,15 @@ const helpers = {
     return compact([firstName, lastName]).join(' ')
   },
   formattedAmount: amount => {
-    return  amount?.toLocaleString('th-TH', {
+    return amount?.toLocaleString('th-TH', {
       style: 'currency',
       currency: 'THB',
       currencyDisplay: 'symbol'
     })
-    
+
+  },
+  capitalizeFirstLetter: (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
   }
 }
 
