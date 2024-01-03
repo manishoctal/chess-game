@@ -85,7 +85,11 @@ const UserView = () => {
         console.error('Error in kycDocSection:', error);
         setKycSection(null);
       }
-    } else {
+    }
+    else if (item?.kycRecord?.isApproved === 'rejected') {
+      setKycSection(<span className="block text-center mt-4" ><b>{t('REJECTED')}</b></span>)
+    }
+    else {
       setKycSection(null);
     }
   };
@@ -99,9 +103,8 @@ const UserView = () => {
     const { isApproved } = kycRecord
     if (isApproved === 'approved') {
       return <img src={checkIcon} alt='' className='absolute right-[-10px] top-[-10px]' />;
-    } else if (isApproved === 'rejected') {
-      return <img src={rejectIcon} alt='' className='absolute right-[-10px] top-[-10px] imgSize' />;
-    } else {
+    }
+    else {
       return null;
     }
   };
