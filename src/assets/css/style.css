@@ -240,5 +240,9 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-confirm {
 .qr-code-container svg {
   width: 200px;
   height: 200px;
-  border: 2px solid #333; 
+  border: 2px solid #333;
+}
+.imgSize {
+  width: 36px;
+  height: 36px;
 }
