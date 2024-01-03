@@ -90,7 +90,24 @@ const UserView = () => {
     }
   };
 
+  const renderApprovalStatus = () => {
+    const kycRecord = item?.kycRecord;
+
+    if (!kycRecord) {
+      return null;
+    }
+    const { isApproved } = kycRecord
+    if (isApproved === 'approved') {
+      return <img src={checkIcon} alt='' className='absolute right-[-10px] top-[-10px]' />;
+    } else if (isApproved === 'rejected') {
+      return <img src={rejectIcon} alt='' className='absolute right-[-10px] top-[-10px] imgSize' />;
+    } else {
+      return null;
+    }
+  };
+
   useEffect(() => {
+    renderApprovalStatus()
     kycDocSection();
   }, [item?.kycRecord?.isApproved]);
 
@@ -434,12 +451,7 @@ const UserView = () => {
                     fallbackUrl={defaultImage}
                   />
                 </figure>
-                {/* {helpers.andOperator(item?.kycRecord?.isApproved === 'approved', <img src={checkIcon} alt='' className='absolute right-[-10px] top-[-10px]' />, item?.kycRecord?.isApproved === 'rejected' && (
-                  <img src={rejectIcon} alt='' className='absolute right-[-10px] top-[-10px]' />
-                ))} */}
-                {
-                  item?.kycRecord?.isApproved === 'approved' ? <img src={checkIcon} alt='' className='absolute right-[-10px] top-[-10px]' /> : item?.kycRecord?.isApproved === 'rejected' ? <img src={rejectIcon} alt='' className='absolute right-[-10px] top-[-10px] imgSize' /> : null
-                }
+                {renderApprovalStatus()}
               </div>
               <div className='relative'>
                 <figure className='inline-block overflow-hidden border mb-3 w-full h-[200px]'>
@@ -451,12 +463,7 @@ const UserView = () => {
                   />
 
                 </figure>
-                {/* {helpers.andOperator(item?.kycRecord?.isApproved === 'approved', <img src={checkIcon} alt='' className='absolute right-[-10px] top-[-10px]' />, item?.kycRecord?.isApproved === 'rejected' && (
-                  <img src={rejectIcon} alt='' className='absolute right-[-10px] top-[-10px]' />
-                ))} */}
-                {
-                  item?.kycRecord?.isApproved === 'approved' ? <img src={checkIcon} alt='' className='absolute right-[-10px] top-[-10px]' /> : item?.kycRecord?.isApproved === 'rejected' ? <img src={rejectIcon} alt='' className='absolute right-[-10px] top-[-10px] imgSize' /> : null
-                }
+                {renderApprovalStatus()}
               </div>
               <span className="block text-center">{t('DOCUMENT_NUMBER')}: <b>{helpers.ternaryCondition(item?.kycRecord?.docNumber, item?.kycRecord?.docNumber, 'N/A')}</b></span>
               {kycSection}
@@ -640,13 +647,7 @@ const UserView = () => {
                   />
 
                 </figure>
-                {/* {helpers.andOperator(item?.kycRecord?.isApproved === 'approved', <img src={checkIcon} alt='' className='absolute right-[-10px] top-[-10px]' />, <img src={checkIcon} alt='' className='absolute right-[-10px] top-[-10px]' />, item?.kycRecord?.isApproved === 'rejected' && (
-                  <img src={rejectIcon} alt='' className='absolute right-[-10px] top-[-10px]' />
-                ))} */}
-                {
-                  item?.kycRecord?.isApproved === 'approved' ? <img src={checkIcon} alt='' className='absolute right-[-10px] top-[-10px]' /> : item?.kycRecord?.isApproved === 'rejected' ? <img src={rejectIcon} alt='' className='absolute right-[-10px] top-[-10px] imgSize' /> : null
-                }
-
+                {renderApprovalStatus()}
               </div>
               <div className='relative'>
                 <figure className='inline-block overflow-hidden border mb-3 w-full h-[200px]'>
@@ -657,12 +658,7 @@ const UserView = () => {
                     fallbackUrl={defaultImage}
                   />
                 </figure>
-                {/* {helpers.andOperator(item?.kycRecord?.isApproved === 'approved', <img src={checkIcon} alt='' className='absolute right-[-10px] top-[-10px]' />, <img src={checkIcon} alt='' className='absolute right-[-10px] top-[-10px]' />, item?.kycRecord?.isApproved === 'rejected' && (
-                  <img src={rejectIcon} alt='' className='absolute right-[-10px] top-[-10px]' />
-                ))} */}
-                {
-                  item?.kycRecord?.isApproved === 'approved' ? <img src={checkIcon} alt='' className='absolute right-[-10px] top-[-10px]' /> : item?.kycRecord?.isApproved === 'rejected' ? <img src={rejectIcon} alt='' className='absolute right-[-10px] top-[-10px] imgSize' /> : null
-                }
+                {renderApprovalStatus()}
               </div>
               <span className="block text-center" >{t('DOCUMENT_NUMBER')}: <b>{helpers.ternaryCondition(item?.kycRecord?.docNumber, item?.kycRecord?.docNumber, 'N/A')}</b></span>
               {kycSection}
