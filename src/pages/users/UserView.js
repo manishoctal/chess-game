@@ -1,6 +1,6 @@
 import OImage from 'components/reusable/OImage'
 import dayjs from 'dayjs'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLocation, Link, useNavigate } from 'react-router-dom'
 import defaultImage from '../../assets/images/No-image-found.jpg'
@@ -33,6 +33,8 @@ const UserView = () => {
   const [item] = useState(location?.state)
   const navigate = useNavigate()
   const notification = useToastContext()
+  const [kycSection, setKycSection] = useState(null);
+
   const approveAndReject = async data => {
     try {
       const payload = {
@@ -51,6 +53,47 @@ const UserView = () => {
     }
   }
 
+  const kycDocSection = async () => {
+    if (item?.kycRecord?.isApproved === 'pending') {
+      try {
+        const result = await new Promise((resolve) => {
+          // Simulate an asynchronous operation, replace this with your actual async logic
+          setTimeout(() => {
+            resolve(
+              <div className="flex items-center justify-center p-6">
+                <button
+                  className="text-black bg-[#E1E1E1] font-normal px-12 py-2.5 text-sm outline-none focus:outline-none rounded mr-6 ease-linear transition-all duration-150"
+                  type="button"
+                  onClick={() => approveAndReject('approved')}
+                >
+                  {t('APPROVE')}
+                </button>
+
+                <button
+                  className="bg-gradientTo text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
+                  type="submit"
+                  onClick={() => approveAndReject('rejected')}
+                >
+                  {t('REJECT')}
+                </button>
+              </div>
+            );
+          }, 0);
+        });
+
+        setKycSection(result);
+      } catch (error) {
+        console.error('Error in kycDocSection:', error);
+        setKycSection(null);
+      }
+    } else {
+      setKycSection(null);
+    }
+  };
+
+  useEffect(() => {
+    kycDocSection();
+  }, [item?.kycRecord?.isApproved]);
 
   return (
     <div className='p-5 dark:bg-slate-900'>
@@ -408,24 +451,7 @@ const UserView = () => {
                 {helpers.andOperator(item?.kycRecord?.isApproved === 'approved', <img src={checkIcon} alt='' className='absolute right-[-10px] top-[-10px]' />)}
               </div>
               <span className="block text-center">{t('DOCUMENT_NUMBER')}: <b>{helpers.ternaryCondition(item?.kycRecord?.docNumber, item?.kycRecord?.docNumber, 'N/A')}</b></span>
-              {item?.kycRecord?.isApproved === 'pending' && (
-                <div className="flex items-center justify-center p-6">
-                  <button
-                    className="text-black bg-[#E1E1E1] font-normal px-12 py-2.5 text-sm outline-none focus:outline-none rounded mr-6  ease-linear transition-all duration-150"
-                    type="button"
-                    onClick={() => approveAndReject("approved")}
-                  >
-                    {t("APPROVE")}
-                  </button>
-                  <button
-                    className="bg-gradientTo text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150"
-                    type="submit"
-                    onClick={() => approveAndReject("rejected")}
-                  >
-                    {t("REJECT")}
-                  </button>
-                </div>
-              )}
+              {kycSection}
             </div>
           </div>
         </div>
@@ -616,31 +642,11 @@ const UserView = () => {
                     alt=''
                     fallbackUrl={defaultImage}
                   />
-
                 </figure>
                 {helpers.andOperator(item?.kycRecord?.isApproved === 'approved', <img src={checkIcon} alt='' className='absolute right-[-10px] top-[-10px]' />)}
               </div>
-              <span className="block text-center" >{t('DOCUMENT_NUMBER')}: <b>{item?.kycRecord?.docNumber}</b></span>
-              {item?.kycRecord?.isApproved === 'pending' && (
-                <div className="flex items-center justify-center p-6">
-                  <button
-                    className="text-black bg-[#E1E1E1] font-normal px-12 py-2.5 text-sm outline-none focus:outline-none rounded mr-6  ease-linear transition-all duration-150"
-                    type="button"
-                    onClick={() => approveAndReject("approved")}
-                  >
-                    {t("APPROVE")}
-                  </button>
-
-                  <button
-                    className="bg-gradientTo text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150"
-                    type="submit"
-                    onClick={() => approveAndReject("rejected")}
-                  >
-                    {t("REJECT")}
-                  </button>
-                </div>)}
-
-
+              <span className="block text-center" >{t('DOCUMENT_NUMBER')}: <b>{helpers.ternaryCondition(item?.kycRecord?.docNumber, item?.kycRecord?.docNumber, 'N/A')}</b></span>
+              {kycSection}
             </div>
           </div>
         </div>
