@@ -466,7 +466,7 @@ const UserView = () => {
               </div>
               <span className="block text-center">{t('DOCUMENT_NUMBER')}: <b>{helpers.ternaryCondition(item?.kycRecord?.docNumber, item?.kycRecord?.docNumber, 'N/A')}</b></span>
               {kycSection}
-              <span className="block text-center mt-4" >{t('KYC_STATUS')}: <b>{helpers.ternaryCondition(item?.kycRecord?.isApproved, item?.kycRecord?.isApproved, 'Kyc not uploaded yet')}</b></span>
+              <span className="block text-center mt-4" >{t('KYC_STATUS')}: <b>{helpers.ternaryCondition(item?.kycRecord?.isApproved, helpers.capitalizeFirstLetter(item?.kycRecord?.isApproved), 'Kyc not uploaded yet')}</b></span>
             </div>
           </div>
         </div>
@@ -662,7 +662,7 @@ const UserView = () => {
               </div>
               <span className="block text-center" >{t('DOCUMENT_NUMBER')}: <b>{helpers.ternaryCondition(item?.kycRecord?.docNumber, item?.kycRecord?.docNumber, 'N/A')}</b></span>
               {kycSection}
-              <span className="block text-center mt-4" >{t('KYC_STATUS')}: <b>{helpers.ternaryCondition(item?.kycRecord?.isApproved, item?.kycRecord?.isApproved, 'Kyc not uploaded yet')}</b></span>
+              <span className="block text-center mt-4" >{t('KYC_STATUS')}: <b>{helpers.ternaryCondition(item?.kycRecord?.isApproved, helpers.capitalizeFirstLetter(item?.kycRecord?.isApproved), 'Kyc not uploaded yet')}</b></span>
             </div>
           </div>
         </div>
