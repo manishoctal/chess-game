@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { useLocation, Link, useNavigate } from 'react-router-dom'
 import defaultImage from '../../assets/images/No-image-found.jpg'
 import checkIcon from '../../assets/images/check.png'
-import { startCase } from 'lodash'
+import { startCase, capitalize } from 'lodash'
 import { IoArrowBackSharp } from 'react-icons/io5'
 import helpers from 'utils/helpers'
 import firstNameIcon from '../../assets/icons/icon/name-icon.svg'
@@ -24,6 +24,7 @@ import bonusIcon from '../../assets/icons/icon/bonus.svg'
 import useToastContext from 'hooks/useToastContext'
 import apiPath from 'utils/apiPath'
 import { apiPut } from 'utils/apiFetch'
+
 
 
 
@@ -466,7 +467,7 @@ const UserView = () => {
               </div>
               <span className="block text-center">{t('DOCUMENT_NUMBER')}: <b>{helpers.ternaryCondition(item?.kycRecord?.docNumber, item?.kycRecord?.docNumber, 'N/A')}</b></span>
               {kycSection}
-              <span className="block text-center mt-4" >{t('KYC_STATUS')}: <b>{helpers.ternaryCondition(item?.kycRecord?.isApproved, helpers.capitalizeFirstLetter(item?.kycRecord?.isApproved), 'Kyc not uploaded yet')}</b></span>
+              <span className="block text-center mt-4" >{t('KYC_STATUS')}: <b>{helpers.ternaryCondition(item?.kycRecord?.isApproved, capitalize(startCase(item?.kycRecord?.isApproved)), 'Kyc not uploaded yet')}</b></span>
             </div>
           </div>
         </div>
@@ -662,7 +663,7 @@ const UserView = () => {
               </div>
               <span className="block text-center" >{t('DOCUMENT_NUMBER')}: <b>{helpers.ternaryCondition(item?.kycRecord?.docNumber, item?.kycRecord?.docNumber, 'N/A')}</b></span>
               {kycSection}
-              <span className="block text-center mt-4" >{t('KYC_STATUS')}: <b>{helpers.ternaryCondition(item?.kycRecord?.isApproved, helpers.capitalizeFirstLetter(item?.kycRecord?.isApproved), 'Kyc not uploaded yet')}</b></span>
+              <span className="block text-center mt-4" >{t('KYC_STATUS')}: <b>{helpers.ternaryCondition(item?.kycRecord?.isApproved, capitalize(startCase(item?.kycRecord?.isApproved)), 'Kyc not uploaded yet')}</b></span>
             </div>
           </div>
         </div>
