@@ -38,6 +38,7 @@ const apiPath = {
   sendFeedbackEmail: "/v1/admin/user/sendFeedbackEmail",
   listAddMoneyToUserWallet: "/v1/admin/user/listAddMoneyToUserWallet",
   allNotificationUser: "/v1/admin/user/all-users",
+  approveAndRejectKyc: "/v1/admin/user/kycStatus"
 };
 
 export default apiPath;

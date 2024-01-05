@@ -389,6 +389,7 @@ const SubAdd = ({ props }) => {
                           />
                         )}
                       </td>
+                      {console.log('data.add && data.view',data.add && data.view)}
                       <td className='py-2 px-4 border-r dark:border-[#ffffff38] '>
                         {helpers.andOperator(
                           data?.shownAll,
@@ -397,7 +398,7 @@ const SubAdd = ({ props }) => {
                             id='all'
                             name={data?.manager}
                             onChange={checkAll}
-                            checked={isCheckAll}
+                            checked={isCheckAll ||(data.add && data.view)}
                             disabled={item?.type === 'view'}
                           />
                         )}

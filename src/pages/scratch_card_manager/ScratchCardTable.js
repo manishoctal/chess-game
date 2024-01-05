@@ -4,20 +4,18 @@ import { AiFillEye } from 'react-icons/ai'
 import { useTranslation } from 'react-i18next'
 import AuthContext from 'context/AuthContext'
 import { isEmpty } from 'lodash'
-
-import { NavLink } from 'react-router-dom'
 import helpers from 'utils/helpers'
 import ScratchCardUserView from './ScratchCardUserView'
 
 const ScratchCardTable = ({ subAdmin, page, pageSize }) => {
   const { t } = useTranslation()
   const { updatePageName } = useContext(AuthContext)
-  const [item, setItem] = useState('')
+  const [cardUser, setCardUser] = useState('')
 
   const [viewShowModal, setViewShowModal] = useState(false)
 
-  const handleUserView = item => {
-    setItem(item)
+  const handleUserView = element => {
+    setCardUser(element)
     setViewShowModal(true)
   }
   useEffect(() => {
@@ -90,7 +88,7 @@ const ScratchCardTable = ({ subAdmin, page, pageSize }) => {
         </table>
       </div>
       {viewShowModal && (
-        <ScratchCardUserView setViewShowModal={setViewShowModal} item={item} />
+        <ScratchCardUserView setViewShowModal={setViewShowModal} item={cardUser} />
       )}
     </div>
   )

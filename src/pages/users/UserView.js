@@ -1,11 +1,11 @@
 import OImage from 'components/reusable/OImage'
 import dayjs from 'dayjs'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useLocation, Link } from 'react-router-dom'
+import { useLocation, Link, useNavigate } from 'react-router-dom'
 import defaultImage from '../../assets/images/No-image-found.jpg'
 import checkIcon from '../../assets/images/check.png'
-import { startCase } from 'lodash'
+import { startCase, capitalize } from 'lodash'
 import { IoArrowBackSharp } from 'react-icons/io5'
 import helpers from 'utils/helpers'
 import firstNameIcon from '../../assets/icons/icon/name-icon.svg'
@@ -21,11 +21,95 @@ import locationIcon from '../../assets/icons/icon/location.svg'
 import cityIcon from '../../assets/icons/icon/city.svg'
 import buildingIcon from '../../assets/icons/icon/building.svg'
 import bonusIcon from '../../assets/icons/icon/bonus.svg'
+import useToastContext from 'hooks/useToastContext'
+import apiPath from 'utils/apiPath'
+import { apiPut } from 'utils/apiFetch'
+
+
+
 
 const UserView = () => {
   const { t } = useTranslation()
   const location = useLocation()
   const [item] = useState(location?.state)
+  const navigate = useNavigate()
+  const notification = useToastContext()
+  const [kycSection, setKycSection] = useState(null);
+
+  const approveAndReject = async data => {
+    try {
+      const payload = {
+        status: data
+      }
+      const path = apiPath.approveAndRejectKyc + '/' + item._id
+      const result = await apiPut(path, payload)
+      if (result?.data?.success) {
+        notification.success(result?.data.message)
+        navigate('/users')
+      } else {
+        notification.error(result?.data?.message)
+      }
+    } catch (error) {
+      console.error('error:', error.message)
+    }
+  }
+  const kycDocSection = async () => {
+    if (item?.kycRecord?.isApproved === 'pending') {
+      try {
+        const result = await new Promise((resolve) => {
+          setTimeout(() => {
+            resolve(
+              <div className="flex items-center justify-center p-6">
+                <button
+                  className="text-black bg-[#E1E1E1] font-normal px-12 py-2.5 text-sm outline-none focus:outline-none rounded mr-6 ease-linear transition-all duration-150"
+                  type="button"
+                  onClick={() => approveAndReject('approved')}
+                >
+                  {t('APPROVE')}
+                </button>
+
+                <button
+                  className="bg-gradientTo text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
+                  type="submit"
+                  onClick={() => approveAndReject('rejected')}
+                >
+                  {t('REJECT')}
+                </button>
+              </div>
+            );
+          }, 0);
+        });
+
+        setKycSection(result);
+      } catch (error) {
+        console.error('Error in kycDocSection:', error);
+        setKycSection(null);
+      }
+    }
+    else {
+      setKycSection(null);
+    }
+  };
+
+  const renderApprovalStatus = () => {
+    const kycRecord = item?.kycRecord;
+
+    if (!kycRecord) {
+      return null;
+    }
+    const { isApproved } = kycRecord
+    if (isApproved === 'approved') {
+      return <img src={checkIcon} alt='' className='absolute right-[-10px] top-[-10px]' />;
+    }
+    else {
+      return null;
+    }
+  };
+
+  useEffect(() => {
+    renderApprovalStatus()
+    kycDocSection();
+  }, [item?.kycRecord?.isApproved]);
 
   return (
     <div className='p-5 dark:bg-slate-900'>
@@ -56,6 +140,26 @@ const UserView = () => {
             </div>
 
             <div className='grid grid-cols-4 bg-[#F2F2F2] rounded-lg p-4 w-[70%] mr-4 px-8'>
+              <div>
+                <div className='flex items-center'>
+                  <figure className='bg-white w-[42px] h-[41px] rounded-full flex items-center justify-center mr-3'>
+                    <img src={firstNameIcon} alt='' />
+                  </figure>
+                  <figcaption className='w-[calc(100%_-_41px)]'>
+                    <span className=' text-[#5 C5C5C] block'>
+                      {t('FAMILY_NAME')}
+                    </span>
+                    <strong>
+                      {' '}
+                      {helpers.ternaryCondition(
+                        item?.familyName,
+                        startCase(item?.familyName),
+                        'N/A'
+                      )}
+                    </strong>
+                  </figcaption>
+                </div>
+              </div>
               <div>
                 <div className='flex items-center'>
                   <figure className='bg-white w-[42px] h-[41px] rounded-full flex items-center justify-center mr-3'>
@@ -117,7 +221,7 @@ const UserView = () => {
                 </figure>
                 <figcaption className='text-white'>
                   <span className='block'>
-                  {helpers.formattedAmount(item?.walletAmount)}  
+                    {helpers.formattedAmount(item?.walletAmount)}
                   </span>
                   <span className='text-sm'>{t('AVAILABLE_BALANCE')}</span>
                 </figcaption>
@@ -337,21 +441,33 @@ const UserView = () => {
               </ul>
             </div>
             <div className='border border-1 border-[#E1DEDE] rounded-md p-12'>
-            <span className='block text-center pb-3'>{t('KYC_DOCUMENT')}</span>
-             <div className='relative'>
-             
-             <figure className='inline-block overflow-hidden border mb-3 w-full h-[200px]'>
-                <OImage
-                  src={item?.kycRecord?.docImage || defaultImage}
-                  className='w-full h-full object-contain inline '
-                  alt=''
-                  fallbackUrl={defaultImage}
-                />
-                
-              </figure>
-             {helpers.andOperator( item?.kycRecord?.isApproved==='approved',<img src={checkIcon} alt='' className='absolute right-[-10px] top-[-10px]'/>)}
+              <span className='block text-center pb-3'>{t('KYC_DOCUMENT')}</span>
+              <div className='relative'>
+                <figure className='inline-block overflow-hidden border mb-3 w-full h-[200px]'>
+                  <OImage
+                    src={item?.kycRecord?.docImageFront || defaultImage}
+                    className='w-full h-full object-contain inline '
+                    alt=''
+                    fallbackUrl={defaultImage}
+                  />
+                </figure>
+                {renderApprovalStatus()}
               </div>
-              <span>{t('DOCUMENT_NUMBER')}:{helpers.ternaryCondition(item?.kycRecord?.docNumber,item?.kycRecord?.docNumber,'N/A')}</span>
+              <div className='relative'>
+                <figure className='inline-block overflow-hidden border mb-3 w-full h-[200px]'>
+                  <OImage
+                    src={item?.kycRecord?.docImageBack || defaultImage}
+                    className='w-full h-full object-contain inline '
+                    alt=''
+                    fallbackUrl={defaultImage}
+                  />
+
+                </figure>
+                {renderApprovalStatus()}
+              </div>
+              <span className="block text-center">{t('DOCUMENT_NUMBER')}: <b>{helpers.ternaryCondition(item?.kycRecord?.docNumber, item?.kycRecord?.docNumber, 'N/A')}</b></span>
+              {kycSection}
+              <span className="block text-center mt-4" >{t('KYC_STATUS')}: <b>{helpers.ternaryCondition(item?.kycRecord?.isApproved, capitalize(startCase(item?.kycRecord?.isApproved)), 'Kyc not uploaded yet')}</b></span>
             </div>
           </div>
         </div>
@@ -440,7 +556,7 @@ const UserView = () => {
                 </figure>
                 <figcaption className='text-white'>
                   <span className='block'>
-                  {helpers.formattedAmount(item?.walletAmount)}    
+                    {helpers.formattedAmount(item?.walletAmount)}
                   </span>
                   <span className='text-sm'>{t('AVAILABLE_BALANCE')}</span>
                 </figcaption>
@@ -521,24 +637,33 @@ const UserView = () => {
               </ul>
             </div>
             <div className='border border-1 border-[#E1DEDE] rounded-md p-12'>
-            <span className='block text-center pb-3'>{t('KYC_DOCUMENT')}</span>
-             <div className='relative'>
-             
-             <figure className='inline-block overflow-hidden border mb-3 w-full h-[200px]'>
-                <OImage
-                  src={item?.kycRecord?.docImage || defaultImage}
-                  className='w-full h-full object-contain inline '
-                  alt=''
-                  fallbackUrl={defaultImage}
-                />
-                
-              </figure>
-             {helpers.andOperator( item?.kycRecord?.isApproved==='approved',<img src={checkIcon} alt='' className='absolute right-[-10px] top-[-10px]'/>)}
-              </div>
+              <span className='block text-center pb-3'>{t('KYC_DOCUMENT')}</span>
+              <div className='relative'>
+                <figure className='inline-block overflow-hidden border mb-3 w-full h-[200px]'>
+                  <OImage
+                    src={item?.kycRecord?.docImageFront || defaultImage}
+                    className='w-full h-full object-contain inline '
+                    alt=''
+                    fallbackUrl={defaultImage}
+                  />
 
-              <span>{t('DOCUMENT_NUMBER')}:{item?.kycRecord?.docNumber}</span>
-              
-                            
+                </figure>
+                {renderApprovalStatus()}
+              </div>
+              <div className='relative'>
+                <figure className='inline-block overflow-hidden border mb-3 w-full h-[200px]'>
+                  <OImage
+                    src={item?.kycRecord?.docImageBack || defaultImage}
+                    className='w-full h-full object-contain inline '
+                    alt=''
+                    fallbackUrl={defaultImage}
+                  />
+                </figure>
+                {renderApprovalStatus()}
+              </div>
+              <span className="block text-center" >{t('DOCUMENT_NUMBER')}: <b>{helpers.ternaryCondition(item?.kycRecord?.docNumber, item?.kycRecord?.docNumber, 'N/A')}</b></span>
+              {kycSection}
+              <span className="block text-center mt-4" >{t('KYC_STATUS')}: <b>{helpers.ternaryCondition(item?.kycRecord?.isApproved, capitalize(startCase(item?.kycRecord?.isApproved)), 'Kyc not uploaded yet')}</b></span>
             </div>
           </div>
         </div>
