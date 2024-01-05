@@ -19,7 +19,7 @@ const AddAmount = ({ setIsAmountModal, getAllUser ,addAmountUser,userType}) => {
   const notification = useToastContext()
   const handleSubmitForm = async data => {
     try {
-      
+      data.amount = parseFloat(data.amount)
       const path = apiPath.addMoneyToUserWallet
       const result = await apiPost(path, {...data,userId:addAmountUser?._id,transactionType:`adminTo${startCase(userType)}Wallet`,userType})
       if (result?.data?.success === true) {
@@ -90,7 +90,7 @@ const AddAmount = ({ setIsAmountModal, getAllUser ,addAmountUser,userType}) => {
                           {...register('amount', {
                             required: t('PLEASE_ENTER_AMOUNT'),
                             minLength: {
-                              value: 2,
+                              value: 1,
                               message: t('MINIMUM_LENGTH_MUST_BE_2')
                             },
                             validate: {
