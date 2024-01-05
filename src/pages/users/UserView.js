@@ -119,7 +119,7 @@ const UserView = () => {
 
       {item?.userType === 'tourist' && (
         <div className='mt-10'>
-          <div className='items-center flex '>
+          <div className='items-center flex mb-5'>
             <div className='mr-5 flex '>
               <figure className='overflow-hidden rounded-full inline-block  border border-2 mb-5'>
                 <OImage
@@ -199,7 +199,7 @@ const UserView = () => {
                   </figcaption>
                 </div>
               </div>
-              <div className='col-span-2 ps-20'>
+              <div className='ps-2'>
                 <div className='flex items-center'>
                   <figure className='bg-white w-[42px] h-[41px] rounded-full flex items-center justify-center mr-3'>
                     <img src={mobileIcon} alt='' />
