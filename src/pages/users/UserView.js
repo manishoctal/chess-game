@@ -106,16 +106,16 @@ const UserView = () => {
     }
   };
 
-  const visitedCities = () => {
-    return item?.visitedCities && item.visitedCities.length > 0
-      ? item.visitedCities.map((city, key) => city).join(', ')
-      : 'N/A';
-  };
-  const planningCities = () => {
-    return item?.planningCities || item?.planningCities?.length > 0
-      ? item.planningCities.map((city, key) => city).join(', ')
-      : 'N/A'
-  }
+  // const visitedCities = () => {
+  //   return item?.visitedCities && item.visitedCities.length > 0
+  //     ? item.visitedCities.map((city, key) => city).join(', ')
+  //     : 'N/A';
+  // };
+  // const planningCities = () => {
+  //   return item?.planningCities || item?.planningCities?.length > 0
+  //     ? item.planningCities.map((city, key) => city).join(', ')
+  //     : 'N/A'
+  // }
 
   useEffect(() => {
     renderApprovalStatus()
@@ -407,7 +407,7 @@ const UserView = () => {
                           {t('CITIES_VISITED_IN_THAILAND')}
                         </span>
                         <strong>
-                          {visitedCities()}
+                          {/* {visitedCities()} */}
                         </strong>
                       </figcaption>
                     </div>
@@ -424,7 +424,7 @@ const UserView = () => {
                           {t('CITIES_GOING_TO_VISIT_IN_THAILAND')}
                         </span>
                         <strong>
-                          {planningCities()}
+                          {/* {planningCities()} */}
                         </strong>
                       </figcaption>
                     </div>
