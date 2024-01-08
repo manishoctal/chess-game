@@ -92,7 +92,7 @@ export const lineGraphData2 = {
     }
   ]
 }
-function Home () {
+function Home() {
   const { t } = useTranslation()
   const { logoutUser } = useContext(AuthContext)
 
@@ -130,9 +130,9 @@ function Home () {
     ]
   })
 
- 
+
   const [isReset, setIsReset] = useState(false)
- 
+
   const handleDateChange = (start, end) => {
     setStartDate(start)
     setEndDate(end)
@@ -297,7 +297,7 @@ function Home () {
 
           <div className='text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border'>
             <h3 className='text-center mb-0 text-slate-900 font-bold md:text-3xl sm:text-lg dark:text-white'>
-              <OCountUp value={dashboardDetails?.totalTagCount || 0} />
+              <OCountUp value={dashboardDetails?.usersBetween10And300 || 0} />
               <span className='text-base text-neutral-400 font-normal block pt-3 '>
                 {t('USERS_BETWEEN_10_BAHT_TO_300_BAHT')}
               </span>
@@ -308,7 +308,7 @@ function Home () {
           </div>
           <div className='text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border'>
             <h3 className='text-center mb-0 text-slate-900 font-bold md:text-3xl sm:text-lg dark:text-white'>
-              <OCountUp value={dashboardDetails?.totalTagCount || 0} />
+              <OCountUp value={dashboardDetails?.usersBetween200And1000 || 0} />
               <span className='text-base text-neutral-400 font-normal block pt-3 '>
                 {t('USERS_BETWEEN_200_BAHT_TO_1000_BAHT')}
               </span>
@@ -320,13 +320,13 @@ function Home () {
         </div>
       </div>
       <div className='py-7 px-4 md:px-8 bg-[#F9F9F9] border-solid border-2 border-gray m-10 rounded-md'>
-        
+
         <div className='sale_report grid grid-cols-1 gap-5 mb-7 bg-white p-4'>
-        <div className='flex justify-between'>
-              <h4 className='font-medium text-lg'>
-                {t('EXPENDITURE_BY_TOURIST')}
-              </h4>
-            </div>
+          <div className='flex justify-between'>
+            <h4 className='font-medium text-lg'>
+              {t('EXPENDITURE_BY_TOURIST')}
+            </h4>
+          </div>
           <Chart
             options={chartData.options}
             series={chartData.series}
@@ -334,7 +334,7 @@ function Home () {
             // width='1000'
             height='600'
           />
-         
+
         </div>
       </div>
     </>

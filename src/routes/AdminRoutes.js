@@ -115,7 +115,7 @@ const AdminRoutes = {
         </>
       )
     },
-   
+
     {
       path: '/scratch-card-manager',
       element: <ScratchCardManager />,
@@ -125,7 +125,7 @@ const AdminRoutes = {
         </>
       )
     },
-   
+
     {
       path: '/sub-admin-manager/add',
       element: <SubAdd />,
