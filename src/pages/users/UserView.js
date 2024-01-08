@@ -106,6 +106,11 @@ const UserView = () => {
     }
   };
 
+  useEffect(() => {
+    renderApprovalStatus()
+    kycDocSection();
+  }, [item?.kycRecord?.isApproved]);
+
   const visitedCities = () => {
     return item?.visitedCities && item.visitedCities.length > 0
       ? item.visitedCities.map((city, key) => city).join(', ')
@@ -116,13 +121,19 @@ const UserView = () => {
       ? item.planningCities.map((city, key) => city).join(', ')
       : 'N/A'
   }
-
-  useEffect(() => {
-    renderApprovalStatus()
-    kycDocSection();
-  }, [item?.kycRecord?.isApproved]);
-
-
+  const InformationSection = ({ iconSrc, title, content }) => {
+    return (
+      <div className='flex items-center'>
+        <figure className='bg-white w-[42px] h-[41px] rounded-full flex items-center justify-center mr-3'>
+          <img src={iconSrc} alt='' />
+        </figure>
+        <figcaption className='w-[calc(100%_-_41px)]'>
+          <span className='text-[#5C5C5C] block'>{title}</span>
+          <strong>{content}</strong>
+        </figcaption>
+      </div>
+    );
+  };
 
   return (
     <div className='p-5 dark:bg-slate-900'>
@@ -151,9 +162,8 @@ const UserView = () => {
                 </span>
               )}
             </div>
-
             <div className='grid grid-cols-4 bg-[#F2F2F2] rounded-lg p-4 w-[70%] mr-4 px-8'>
-              <div>
+              {/* <div>
                 <div className='flex items-center'>
                   <figure className='bg-white w-[42px] h-[41px] rounded-full flex items-center justify-center mr-3'>
                     <img src={firstNameIcon} alt='' />
@@ -224,6 +234,28 @@ const UserView = () => {
                     <strong>{`+${item?.countryCode} ${item?.mobile}`}</strong>
                   </figcaption>
                 </div>
+              </div> */}
+              <InformationSection
+                iconSrc={firstNameIcon}
+                title={t('FAMILY_NAME')}
+                content={helpers.ternaryCondition(item?.familyName, startCase(item?.familyName), 'N/A')}
+              />
+              <InformationSection
+                iconSrc={firstNameIcon}
+                title={t('FIRST_NAME')}
+                content={helpers.ternaryCondition(item?.firstName, startCase(item?.firstName), 'N/A')}
+              />
+              <InformationSection
+                iconSrc={emailIcon}
+                title={t('EMAIL_ADDRESS')}
+                content={helpers.ternaryCondition(item?.email, item?.email, 'N/A')}
+              />
+              <div className='ps-2'>
+                <InformationSection
+                  iconSrc={mobileIcon}
+                  title={t('O_MOBILE_NUMBER')}
+                  content={`+${item?.countryCode} ${item?.mobile}`}
+                />
               </div>
             </div>
 
