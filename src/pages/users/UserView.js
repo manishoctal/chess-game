@@ -374,8 +374,8 @@ const UserView = () => {
                         </span>
                         <strong>
                           {helpers.ternaryCondition(
-                            item?.countryOfLiving,
-                            startCase(item?.countryOfLiving),
+                            item?.countryData,
+                            startCase(item?.countryData),
                             'N/A'
                           )}
                         </strong>
@@ -394,11 +394,9 @@ const UserView = () => {
                           {t('CITIES_VISITED_IN_THAILAND')}
                         </span>
                         <strong>
-                          {helpers.ternaryCondition(
-                            item?.cityVisited?.length > 0,
-                            item?.cityVisited?.join(', '),
-                            'N/A'
-                          )}
+                          {item?.visitedCities || item?.visitedCities?.length > 0
+                            ? item.visitedCities.map((city, key) => city).join(', ')
+                            : 'N/A'}
                         </strong>
                       </figcaption>
                     </div>
@@ -415,8 +413,8 @@ const UserView = () => {
                           {t('CITIES_GOING_TO_VISIT_IN_THAILAND')}
                         </span>
                         <strong>
-                          {item?.cityPlanning?.length > 0
-                            ? item?.cityPlanning?.join(', ')
+                          {item?.planningCities || item?.planningCities?.length > 0
+                            ? item.planningCities.map((city, key) => city).join(', ')
                             : 'N/A'}
                         </strong>
                       </figcaption>
