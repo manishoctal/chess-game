@@ -111,6 +111,17 @@ const UserView = () => {
     kycDocSection();
   }, [item?.kycRecord?.isApproved]);
 
+  const visitedCities = () => {
+    return item?.visitedCities && item.visitedCities.length > 0
+      ? item.visitedCities.map((city, key) => city).join(', ')
+      : 'N/A';
+  };
+  const planningCities = () => {
+    return item?.planningCities || item?.planningCities?.length > 0
+      ? item.planningCities.map((city, key) => city).join(', ')
+      : 'N/A'
+  }
+
   return (
     <div className='p-5 dark:bg-slate-900'>
       <Link to='/users' className='mb-5 ml-4 block'>
@@ -394,9 +405,7 @@ const UserView = () => {
                           {t('CITIES_VISITED_IN_THAILAND')}
                         </span>
                         <strong>
-                          {item?.visitedCities || item?.visitedCities?.length > 0
-                            ? item.visitedCities.map((city, key) => city).join(', ')
-                            : 'N/A'}
+                          {visitedCities()}
                         </strong>
                       </figcaption>
                     </div>
@@ -413,9 +422,7 @@ const UserView = () => {
                           {t('CITIES_GOING_TO_VISIT_IN_THAILAND')}
                         </span>
                         <strong>
-                          {item?.planningCities || item?.planningCities?.length > 0
-                            ? item.planningCities.map((city, key) => city).join(', ')
-                            : 'N/A'}
+                          {planningCities()}
                         </strong>
                       </figcaption>
                     </div>
