@@ -106,11 +106,6 @@ const UserView = () => {
     }
   };
 
-  useEffect(() => {
-    renderApprovalStatus()
-    kycDocSection();
-  }, [item?.kycRecord?.isApproved]);
-
   const visitedCities = () => {
     return item?.visitedCities && item.visitedCities.length > 0
       ? item.visitedCities.map((city, key) => city).join(', ')
@@ -121,6 +116,13 @@ const UserView = () => {
       ? item.planningCities.map((city, key) => city).join(', ')
       : 'N/A'
   }
+
+  useEffect(() => {
+    renderApprovalStatus()
+    kycDocSection();
+  }, [item?.kycRecord?.isApproved]);
+
+
 
   return (
     <div className='p-5 dark:bg-slate-900'>
