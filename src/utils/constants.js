@@ -1,15 +1,19 @@
-export const KYCStatusArray=[
+export const KYCStatusArray = [
   {
-    key:'approved',
-    value:'approved'
+    key: 'approved',
+    value: 'approved'
   },
   {
-    key:'pending',
-    value:'pending'
+    key: 'pending',
+    value: 'pending'
   },
   {
-    key:'KYCNotUploadedYet',
-    value:'KYCNotUploadedYet'
+    key: 'rejected',
+    value: 'rejected'
+  },
+  {
+    key: 'KYCNotUploadedYet',
+    value: 'KYCNotUploadedYet'
   },
 ]
 
