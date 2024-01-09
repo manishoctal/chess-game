@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import 'chartjs-adapter-date-fns'
 import { FaUserTie } from 'react-icons/fa'
-import { apiGet } from 'utils/apiFetch'
+import { apiGet, apiPost } from 'utils/apiFetch'
 import pathObj from 'utils/apiPath'
 import earning from 'assets/images/earning.jpg'
 import dayjs from 'dayjs'
@@ -98,7 +98,7 @@ function Home() {
 
   const [dashboardDetails, setDashboardDetails] = useState({})
   const [startDate, setStartDate] = useState()
-  const [endDate, setEndDate] = useState('')
+  const [endDate, setEndDate] = useState()
   const [chartData] = useState({
     options: {
       chart: {
@@ -154,9 +154,34 @@ function Home() {
       }
     }
   }
+  const getEarningManagerGraph = async () => {
+    try {
+      const payload = {
+        startDate: startDate ? dayjs(startDate).format('YYYY-MM-DD') : null,
+        endDate: endDate ? dayjs(endDate).format('YYYY-MM-DD') : null
+      }
+    //   const payload={}
+    //  if(startDate){
+    //   payload.startDate =dayjs(startDate).format('YYYY-MM-DD')
+    //  }
+    //  if(endDate){
+    //   payload.endDate =dayjs(endDate).format('YYYY-MM-DD')
+    //  }
+      const path = pathObj.earningManagerGraph
+      const result = await apiPost(path, payload)
+      console.log('result', result)
+      
+    } catch (error) {
+      console.error('error:', error)
+      if (error.response.status === 401 || error.response.status === 409) {
+        logoutUser()
+      }
+    }
+  }
 
   useEffect(() => {
     getDashboardDetails()
+    getEarningManagerGraph()
   }, [startDate, endDate])
 
   const handleReset = () => {

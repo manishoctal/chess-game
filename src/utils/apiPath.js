@@ -29,6 +29,7 @@ const apiPath = {
   getSettings: "/v1/admin/setting",
   getUserTransaction: "/v1/admin/transaction/getUserTransaction",
   getDashboardDetails: "/v1/admin/dashboard",
+  earningManagerGraph: "/v1/admin/earningManagerGraph",
   addMoneyToUserWallet: "/v1/admin/user/addMoneyToUserWallet",
   transactionList: "/v1/admin/transaction/transactionList",
   scratchCardHistory: "/v1/admin/scratchCard/history",
