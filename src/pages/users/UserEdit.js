@@ -218,7 +218,7 @@ const UserEdit = ({ setEditShowModal, getAllUser, item }) => {
                       <ODatePicker
                         name='validity'
                         id='validity'
-                        value={date}
+                        value={date&&new Date(date)}
                         // disable={counponData !== undefined}
                         placeholder={t('USER_DOB')}
                         handleDateChange={handleDateChange}

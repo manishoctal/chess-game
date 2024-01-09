@@ -547,7 +547,7 @@ const UserView = () => {
                       {' '}
                       {helpers.ternaryCondition(
                         item?.firstName,
-                        startCase(item?.firstName),
+                        startCase(item?.firstName) +' '+item?.lastName,
                         'N/A'
                       )}
                     </strong>
@@ -663,9 +663,9 @@ const UserView = () => {
                           {t('USER_DOB')}
                         </span>
                         <strong>
-                          {helpers.ternaryCondition(
+                        {helpers.ternaryCondition(
                             item?.dob,
-                            item?.dob,
+                            dayjs(item?.dob).format('D MMM YYYY'),
                             'N/A'
                           )}
                         </strong>
