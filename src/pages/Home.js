@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import 'chartjs-adapter-date-fns'
 import { FaUserTie } from 'react-icons/fa'
-import { apiGet, apiPost } from 'utils/apiFetch'
+import { apiGet } from 'utils/apiFetch'
 import pathObj from 'utils/apiPath'
 import earning from 'assets/images/earning.jpg'
 import dayjs from 'dayjs'
@@ -23,6 +23,9 @@ import AuthContext from 'context/AuthContext'
 import ODateRangePicker from 'components/shared/datePicker/ODateRangePicker'
 import OCountUp from 'components/OCountUp'
 import helpers from 'utils/helpers'
+import { Button, ToggleButtonGroup } from '@mui/material'
+import MuiToggleButton from '@mui/material/ToggleButton';
+import { styled, createTheme, ThemeProvider, StyledEngineProvider} from '@mui/material/styles'
 
 ChartJS.register(
   CategoryScale,
@@ -95,10 +98,10 @@ export const lineGraphData2 = {
 function Home() {
   const { t } = useTranslation()
   const { logoutUser } = useContext(AuthContext)
-
+  const [selectedButton, setSelectedButton] = useState([])
   const [dashboardDetails, setDashboardDetails] = useState({})
   const [startDate, setStartDate] = useState()
-  const [endDate, setEndDate] = useState()
+  const [endDate, setEndDate] = useState('')
   const [chartData] = useState({
     options: {
       chart: {
@@ -138,6 +141,25 @@ function Home() {
     setEndDate(end)
   }
 
+  const handleButtonChange = (e) => {
+    setSelectedButton(e.target.value);
+  }
+
+  const theme = createTheme({
+    palette: {
+      text: {
+        primary: '#00ff00',
+      },
+    },
+  });
+
+  const ToggleButton = styled(MuiToggleButton)(({ selectedcolor }) => ({
+    '&.Mui-selected, &.Mui-selected:hover': {
+      color: 'white',
+      backgroundColor: selectedcolor,
+    },
+  }));
+
   const getDashboardDetails = async () => {
     try {
       const payload = {
@@ -154,34 +176,9 @@ function Home() {
       }
     }
   }
-  const getEarningManagerGraph = async () => {
-    try {
-      const payload = {
-        startDate: startDate ? dayjs(startDate).format('YYYY-MM-DD') : null,
-        endDate: endDate ? dayjs(endDate).format('YYYY-MM-DD') : null
-      }
-    //   const payload={}
-    //  if(startDate){
-    //   payload.startDate =dayjs(startDate).format('YYYY-MM-DD')
-    //  }
-    //  if(endDate){
-    //   payload.endDate =dayjs(endDate).format('YYYY-MM-DD')
-    //  }
-      const path = pathObj.earningManagerGraph
-      const result = await apiPost(path, payload)
-      console.log('result', result)
-      
-    } catch (error) {
-      console.error('error:', error)
-      if (error.response.status === 401 || error.response.status === 409) {
-        logoutUser()
-      }
-    }
-  }
 
   useEffect(() => {
     getDashboardDetails()
-    getEarningManagerGraph()
   }, [startDate, endDate])
 
   const handleReset = () => {
@@ -192,21 +189,7 @@ function Home() {
 
   return (
     <>
-      <div className='sm:flex items-center text-center sm:text-left px-3 md:px-4 xl:px-7 lg:px-5  py-4 md:py-8 border dark:bg-slate-900'>
-        <ODateRangePicker
-          handleDateChange={handleDateChange}
-          isReset={isReset}
-          setIsReset={setIsReset}
-          place='dashboard'
-        />
-        <button
-          type='button'
-          onClick={handleReset}
-          className='bg-gradientTo text-sm px-8 mb-3 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2'
-        >
-          {t('O_RESET')}
-        </button>
-      </div>
+
       <div className='py-4 px-4 md:px-8 dark:bg-slate-900'>
         <div className='sale_report grid pt-10 3xl:grid-cols-4 gap-y-10 gap-4 gap-x-10 2xl:grid-cols-4 sm:grid-cols-2 mb-7 '>
           <div className='text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border'>
@@ -322,7 +305,7 @@ function Home() {
 
           <div className='text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border'>
             <h3 className='text-center mb-0 text-slate-900 font-bold md:text-3xl sm:text-lg dark:text-white'>
-              <OCountUp value={dashboardDetails?.usersBetween10And300 || 0} />
+              <OCountUp value={dashboardDetails?.totalTagCount || 0} />
               <span className='text-base text-neutral-400 font-normal block pt-3 '>
                 {t('USERS_BETWEEN_10_BAHT_TO_300_BAHT')}
               </span>
@@ -333,7 +316,7 @@ function Home() {
           </div>
           <div className='text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border'>
             <h3 className='text-center mb-0 text-slate-900 font-bold md:text-3xl sm:text-lg dark:text-white'>
-              <OCountUp value={dashboardDetails?.usersBetween200And1000 || 0} />
+              <OCountUp value={dashboardDetails?.totalTagCount || 0} />
               <span className='text-base text-neutral-400 font-normal block pt-3 '>
                 {t('USERS_BETWEEN_200_BAHT_TO_1000_BAHT')}
               </span>
@@ -345,7 +328,101 @@ function Home() {
         </div>
       </div>
       <div className='py-7 px-4 md:px-8 bg-[#F9F9F9] border-solid border-2 border-gray m-10 rounded-md'>
+        <div className='sm:flex items-center text-center sm:text-left px-3 md:px-4 xl:px-7 lg:px-5  py-4 md:py-8 border dark:bg-slate-900'>
+        <StyledEngineProvider>
+          <ThemeProvider theme={theme}>
+            <ToggleButtonGroup
+              value={selectedButton}
+              exclusive
+              onChange={handleButtonChange}
+              aria-label="button group"
+              className='px-11'
+            >
+              <ToggleButton value="daily"  selectedcolor="#00abc0">
+                Daily
+              </ToggleButton>
+              <ToggleButton value="weekly"  selectedcolor="#00abc0">
+                Weekly
+              </ToggleButton>
+              <ToggleButton value="monthly"  selectedcolor="#00abc0">
+                Monthly
+              </ToggleButton>
+              <ToggleButton value="yearly"  selectedcolor="#00abc0">
+                Yearly
+              </ToggleButton>
+            </ToggleButtonGroup>
+          </ThemeProvider>
+          </StyledEngineProvider>
+          <ODateRangePicker
+            handleDateChange={handleDateChange}
+            isReset={isReset}
+            setIsReset={setIsReset}
+            place='dashboard'
+          />
+          <button
+            type='button'
+            onClick={handleReset}
+            className='bg-gradientTo text-sm px-8 mb-3 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2'
+          >
+            {t('O_RESET')}
+          </button>
+        </div>
+        <div className='sale_report grid grid-cols-1 gap-5 mb-7 bg-white p-4'>
+          <div className='flex justify-between'>
+            <h4 className='font-medium text-lg'>
+              {t('EXPENDITURE_BY_THAI_LOCAL')}
+            </h4>
+          </div>
+          <Chart
+            options={chartData.options}
+            series={chartData.series}
+            type='bar'
+            // width='1000'
+            height='600'
+          />
 
+        </div>
+      </div>
+      <div className='py-7 px-4 md:px-8 bg-[#F9F9F9] border-solid border-2 border-gray m-10 rounded-md'>
+        <div className='sm:flex items-center text-center sm:text-left px-3 md:px-4 xl:px-7 lg:px-5  py-4 md:py-8 border dark:bg-slate-900'>
+        <StyledEngineProvider>
+          <ThemeProvider theme={theme}>
+            <ToggleButtonGroup
+              value={selectedButton}
+              exclusive
+              onChange={handleButtonChange}
+              aria-label="button group"
+              className='px-11'
+            >
+              <ToggleButton value="daily"  selectedcolor="#00abc0">
+                Daily
+              </ToggleButton>
+              <ToggleButton value="weekly"  selectedcolor="#00abc0">
+                Weekly
+              </ToggleButton>
+              <ToggleButton value="monthly"  selectedcolor="#00abc0">
+                Monthly
+              </ToggleButton>
+              <ToggleButton value="yearly"  selectedcolor="#00abc0">
+                Yearly
+              </ToggleButton>
+            </ToggleButtonGroup>
+          </ThemeProvider>
+          </StyledEngineProvider>
+          <ODateRangePicker
+            handleDateChange={handleDateChange}
+            isReset={isReset}
+            setIsReset={setIsReset}
+            place='dashboard'
+          />
+          <button
+            type='button'
+            onClick={handleReset}
+            className='bg-gradientTo text-sm px-8 mb-3 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2'
+          >
+            {t('O_RESET')}
+          </button>
+        </div>
         <div className='sale_report grid grid-cols-1 gap-5 mb-7 bg-white p-4'>
           <div className='flex justify-between'>
             <h4 className='font-medium text-lg'>
