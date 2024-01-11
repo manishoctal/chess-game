@@ -25,7 +25,7 @@ import OCountUp from 'components/OCountUp'
 import helpers from 'utils/helpers'
 import { Button, ToggleButtonGroup } from '@mui/material'
 import MuiToggleButton from '@mui/material/ToggleButton';
-import { styled, createTheme, ThemeProvider, StyledEngineProvider} from '@mui/material/styles'
+import { styled, createTheme, ThemeProvider, StyledEngineProvider } from '@mui/material/styles'
 
 ChartJS.register(
   CategoryScale,
@@ -144,7 +144,6 @@ function Home() {
   const handleButtonChange = (e) => {
     setSelectedButton(e.target.value);
   }
-
   const theme = createTheme({
     palette: {
       text: {
@@ -179,6 +178,23 @@ function Home() {
 
   useEffect(() => {
     getDashboardDetails()
+    // try {
+    //   const payload = {
+    //     startDate: startDate ? dayjs(startDate).format('YYYY-MM-DD') : null,
+    //     endDate: endDate ? dayjs(endDate).format('YYYY-MM-DD') : null,
+    //     type: selectedButton
+    //   }
+    //   console.log(payload, 'payload')
+    //   const path = pathObj.getEarningManagerGraph
+    //   const result = apiGet(path, payload)
+    //   setDashboardDetails({ ...dashboardDetails, ...result.data.results })
+    // } catch (error) {
+    //   console.error('error:', error)
+    //   if (error.response.status === 401 || error.response.status === 409) {
+    //     logoutUser()
+    //   }
+    // }
+
   }, [startDate, endDate])
 
   const handleReset = () => {
@@ -305,7 +321,7 @@ function Home() {
 
           <div className='text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border'>
             <h3 className='text-center mb-0 text-slate-900 font-bold md:text-3xl sm:text-lg dark:text-white'>
-              <OCountUp value={dashboardDetails?.totalTagCount || 0} />
+              <OCountUp value={dashboardDetails?.usersBetween10And300 || 0} />
               <span className='text-base text-neutral-400 font-normal block pt-3 '>
                 {t('USERS_BETWEEN_10_BAHT_TO_300_BAHT')}
               </span>
@@ -316,7 +332,7 @@ function Home() {
           </div>
           <div className='text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border'>
             <h3 className='text-center mb-0 text-slate-900 font-bold md:text-3xl sm:text-lg dark:text-white'>
-              <OCountUp value={dashboardDetails?.totalTagCount || 0} />
+              <OCountUp value={dashboardDetails?.usersBetween200And1000 || 0} />
               <span className='text-base text-neutral-400 font-normal block pt-3 '>
                 {t('USERS_BETWEEN_200_BAHT_TO_1000_BAHT')}
               </span>
@@ -329,29 +345,29 @@ function Home() {
       </div>
       <div className='py-7 px-4 md:px-8 bg-[#F9F9F9] border-solid border-2 border-gray m-10 rounded-md'>
         <div className='sm:flex items-center text-center sm:text-left px-3 md:px-4 xl:px-7 lg:px-5  py-4 md:py-8 border dark:bg-slate-900'>
-        <StyledEngineProvider>
-          <ThemeProvider theme={theme}>
-            <ToggleButtonGroup
-              value={selectedButton}
-              exclusive
-              onChange={handleButtonChange}
-              aria-label="button group"
-              className='px-11'
-            >
-              <ToggleButton value="daily"  selectedcolor="#00abc0">
-                Daily
-              </ToggleButton>
-              <ToggleButton value="weekly"  selectedcolor="#00abc0">
-                Weekly
-              </ToggleButton>
-              <ToggleButton value="monthly"  selectedcolor="#00abc0">
-                Monthly
-              </ToggleButton>
-              <ToggleButton value="yearly"  selectedcolor="#00abc0">
-                Yearly
-              </ToggleButton>
-            </ToggleButtonGroup>
-          </ThemeProvider>
+          <StyledEngineProvider>
+            <ThemeProvider theme={theme}>
+              <ToggleButtonGroup
+                value={selectedButton}
+                exclusive
+                onChange={handleButtonChange}
+                aria-label="button group"
+                className='px-11'
+              >
+                <ToggleButton value="daily" selectedcolor="#00abc0">
+                  Daily
+                </ToggleButton>
+                <ToggleButton value="weekly" selectedcolor="#00abc0">
+                  Weekly
+                </ToggleButton>
+                <ToggleButton value="monthly" selectedcolor="#00abc0">
+                  Monthly
+                </ToggleButton>
+                <ToggleButton value="yearly" selectedcolor="#00abc0">
+                  Yearly
+                </ToggleButton>
+              </ToggleButtonGroup>
+            </ThemeProvider>
           </StyledEngineProvider>
           <ODateRangePicker
             handleDateChange={handleDateChange}
@@ -385,29 +401,29 @@ function Home() {
       </div>
       <div className='py-7 px-4 md:px-8 bg-[#F9F9F9] border-solid border-2 border-gray m-10 rounded-md'>
         <div className='sm:flex items-center text-center sm:text-left px-3 md:px-4 xl:px-7 lg:px-5  py-4 md:py-8 border dark:bg-slate-900'>
-        <StyledEngineProvider>
-          <ThemeProvider theme={theme}>
-            <ToggleButtonGroup
-              value={selectedButton}
-              exclusive
-              onChange={handleButtonChange}
-              aria-label="button group"
-              className='px-11'
-            >
-              <ToggleButton value="daily"  selectedcolor="#00abc0">
-                Daily
-              </ToggleButton>
-              <ToggleButton value="weekly"  selectedcolor="#00abc0">
-                Weekly
-              </ToggleButton>
-              <ToggleButton value="monthly"  selectedcolor="#00abc0">
-                Monthly
-              </ToggleButton>
-              <ToggleButton value="yearly"  selectedcolor="#00abc0">
-                Yearly
-              </ToggleButton>
-            </ToggleButtonGroup>
-          </ThemeProvider>
+          <StyledEngineProvider>
+            <ThemeProvider theme={theme}>
+              <ToggleButtonGroup
+                value={selectedButton}
+                exclusive
+                onChange={handleButtonChange}
+                aria-label="button group"
+                className='px-11'
+              >
+                <ToggleButton value="daily" selectedcolor="#00abc0">
+                  Daily
+                </ToggleButton>
+                <ToggleButton value="weekly" selectedcolor="#00abc0">
+                  Weekly
+                </ToggleButton>
+                <ToggleButton value="monthly" selectedcolor="#00abc0">
+                  Monthly
+                </ToggleButton>
+                <ToggleButton value="yearly" selectedcolor="#00abc0">
+                  Yearly
+                </ToggleButton>
+              </ToggleButtonGroup>
+            </ThemeProvider>
           </StyledEngineProvider>
           <ODateRangePicker
             handleDateChange={handleDateChange}
