@@ -7,8 +7,8 @@ const apiPath = {
   rewardRequest: "/v1/admin/rewardRequest",
   userProfile: "/v1/user/profile",
   updateUser: "/v1/admin/user/edit",
-  getSubAdmin: "v1/admin/subadmin",
-  editSubAdmin: "v1/admin/subadmin",
+  getSubAdmin: "v1/admin/subAdmin",
+  editSubAdmin: "v1/admin/subAdmin",
   forgetPassword: "/v1/admin/forgot-password",
   resetPassword: "/v1/admin/reset-password",
   changePassword: "/v1/admin/change-password",
@@ -29,6 +29,7 @@ const apiPath = {
   getSettings: "/v1/admin/setting",
   getUserTransaction: "/v1/admin/transaction/getUserTransaction",
   getDashboardDetails: "/v1/admin/dashboard",
+  earningManagerGraph: "/v1/admin/earningManagerGraph",
   addMoneyToUserWallet: "/v1/admin/user/addMoneyToUserWallet",
   transactionList: "/v1/admin/transaction/transactionList",
   scratchCardHistory: "/v1/admin/scratchCard/history",
@@ -38,7 +39,8 @@ const apiPath = {
   sendFeedbackEmail: "/v1/admin/user/sendFeedbackEmail",
   listAddMoneyToUserWallet: "/v1/admin/user/listAddMoneyToUserWallet",
   allNotificationUser: "/v1/admin/user/all-users",
-  approveAndRejectKyc: "/v1/admin/user/kycStatus"
+  approveAndRejectKyc: "/v1/admin/user/kycStatus",
+  getEarningManagerGraph: "/v1/admin/earningManagerGraph"
 };
 
 export default apiPath;
