@@ -135,6 +135,7 @@ function Home() {
   }
 
   const handleButtonChange = (e, type) => {
+    console.log()
     if (type === "first") {
       setSelectedButton(e.target.value)
     } else {
@@ -175,7 +176,7 @@ function Home() {
 
   useEffect(() => {
     getDashboardDetails();
-  }, [startDate, endDate, selectedButton]);
+  }, [startDate, endDate, selectedButton, graphTwoDropdownValue]);
 
   useEffect(() => {
     if (startDate && endDate && selectedButton) {
@@ -356,7 +357,7 @@ function Home() {
           <div className='flex justify-between items-center mb-4'>
             <div>
               <b>Second chart</b>
-              <select className='block p-2 w-full text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]' value={selectedButton} onChange={(e) => handleButtonChange(e, "second")}>
+              <select className='block p-2 w-full text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]' value={graphTwoDropdownValue} onChange={(e) => handleButtonChange(e, "second")}>
                 <option value="">Select</option>
                 <option value="daily">Daily</option>
                 <option value="week">Weekly</option>
