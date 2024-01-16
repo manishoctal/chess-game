@@ -279,9 +279,13 @@ function Home() {
   }
 
   const handleReset = () => {
-    setEndDate('')
-    setStartDate('')
-    setIsReset(!isReset)
+    setEndDate(dayjs().format('YYYY-MM-DD'))
+    setStartDate(dayjs().subtract(1, 'month').format('YYYY-MM-DD'))
+    setGraphTwoStartData(dayjs().subtract(1, 'month').format('YYYY-MM-DD'))
+    setGraphTwoEndDate(dayjs().format('YYYY-MM-DD'))
+    setSelectedButton("month")
+    setGraphTwoDropdownValue("month")
+    // setIsReset(!isReset)
   }
 
   return (
