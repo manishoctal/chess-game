@@ -97,13 +97,13 @@ export const lineGraphData2 = {
 function Home() {
   const { t } = useTranslation()
   const { logoutUser } = useContext(AuthContext)
-  const [selectedButton, setSelectedButton] = useState('month')
+  const [selectedButton, setSelectedButton] = useState("day")
   const [dashboardDetails, setDashboardDetails] = useState({})
   const [startDate, setStartDate] = useState(dayjs().subtract(1, 'month').format('YYYY-MM-DD'))
   const [endDate, setEndDate] = useState(dayjs().format('YYYY-MM-DD'))
   const [graphTwoStartData, setGraphTwoStartData] = useState((dayjs().subtract(1, 'month').format('YYYY-MM-DD')))
   const [graphTwoEndDate, setGraphTwoEndDate] = useState(dayjs().format('YYYY-MM-DD'))
-  const [graphTwoDropdownValue, setGraphTwoDropdownValue] = useState("month")
+  const [graphTwoDropdownValue, setGraphTwoDropdownValue] = useState("day")
   const [chartData, setChartData] = useState({
     options: {
       chart: {
@@ -147,9 +147,11 @@ function Home() {
     if (type === "first") {
       setStartDate(start)
       setEndDate(end)
+      handleActiveForFirst(start, end)
     } else {
       setGraphTwoStartData(start)
       setGraphTwoEndDate(end)
+      handleActiveForSecond(start, end)
     }
   }
 
@@ -168,7 +170,7 @@ function Home() {
     },
   })
 
-
+  console.log(selectedButton, "selectedButton")
   const ToggleButton = styled(MuiToggleButton)(({ selectedcolor }) => ({
     '&.Mui-selected, &.Mui-selected:hover': {
       color: 'white',
@@ -198,37 +200,55 @@ function Home() {
   }, [startDate, endDate])
 
 
-  useEffect(() => {
-    if (startDate && endDate && selectedButton) {
-      const dateDifference = dayjs(endDate).diff(startDate, 'day');
-      if (dateDifference > 365) {
-        setSelectedButton('year')
-      } else if (dateDifference >= 30 || dateDifference >= 31) {
-        setSelectedButton('month')
-      } else if (dateDifference >= 7) {
-        setSelectedButton('week')
-      } else {
-        setSelectedButton('day')
+  const handleActiveForFirst = (start, end) => {
+    if (start && end) {
+      const dateDifference = dayjs(end).diff(start, 'day');
+
+      if (dateDifference > 366) {
+        console.log("year========")
+        setSelectedButton('year');
+      } else if (dateDifference > 31 && dateDifference <= 366) {
+        console.log("month-------")
+        setSelectedButton('month');
       }
-      handleGraphFirst(startDate, endDate, selectedButton, "first")
+      else if (dateDifference > 7 && dateDifference <= 31) {
+        console.log("week-------")
+        setSelectedButton('week');
+      } else {
+        console.log("day-------")
+        setSelectedButton('day');
+      }
     }
-    if (graphTwoDropdownValue && graphTwoEndDate && graphTwoStartData) {
-      const dateDifference = dayjs(graphTwoEndDate).diff(graphTwoStartData, 'day');
-      console.log("dateDifference", dateDifference, dayjs(endDate).startOf('month').diff(startDate, 'day'))
-      if (dateDifference > 365) {
+  }
+  const handleActiveForSecond = (start, end) => {
+    if (start && end) {
+      const dateDifference = dayjs(end).diff(start, 'day');
+      console.log("dateDifference", dateDifference)
+      if (dateDifference > 366) {
         setGraphTwoDropdownValue('year')
-      } else if (dateDifference >= 30 || dateDifference >= 31) {
+      } else if (dateDifference > 31 && dateDifference <= 366) {
         setGraphTwoDropdownValue('month')
-      } else if (dateDifference >= 7) {
+      } else if (dateDifference > 7 && dateDifference <= 31) {
         setGraphTwoDropdownValue('week')
       } else {
         setGraphTwoDropdownValue('day')
       }
-      handleGraphFirst(graphTwoStartData, graphTwoEndDate, graphTwoDropdownValue, "second")
+    }
+
+  }
+
+
+  useEffect(() => {
+
+    if (startDate && endDate && selectedButton) {
+      handleGraphApiCall(startDate, endDate, selectedButton, "first")
+    }
+    if (graphTwoDropdownValue && graphTwoEndDate && graphTwoStartData) {
+      handleGraphApiCall(graphTwoStartData, graphTwoEndDate, graphTwoDropdownValue, "second")
     }
   }, [startDate, endDate, selectedButton, graphTwoStartData, graphTwoEndDate, graphTwoDropdownValue])
 
-  const handleGraphFirst = async (start, end, dropValue, type) => {
+  const handleGraphApiCall = async (start, end, dropValue, type) => {
     try {
       const payload = {
         startDate: start ? dayjs(start).format('YYYY-MM-DD') : null,
@@ -238,11 +258,9 @@ function Home() {
       const path = pathObj.getEarningManagerGraph;
       const result = await apiGet(path, payload)
       if (result?.data?.success === true) {
-        const newCategories = result?.data?.results.xAxis
+        const newCategories = result?.data?.results?.xAxis
         let newData = result?.data?.results?.yAxis
         if (type === "first") {
-
-          console.log("prevData?.series[0]", chartData?.series[0])
           setChartData(prevData => ({
             ...prevData,
             options: {
@@ -282,7 +300,6 @@ function Home() {
         }
       }
       else {
-        // notification.error(result.data.results)
         setChartData("")
         setChartDataTwo("")
       }
@@ -296,8 +313,8 @@ function Home() {
     setStartDate(dayjs().subtract(1, 'month').format('YYYY-MM-DD'))
     setGraphTwoStartData(dayjs().subtract(1, 'month').format('YYYY-MM-DD'))
     setGraphTwoEndDate(dayjs().format('YYYY-MM-DD'))
-    setSelectedButton("day")
-    setGraphTwoDropdownValue("day")
+    setSelectedButton("month")
+    setGraphTwoDropdownValue("month")
     // setIsReset(!isReset)
   }
 
@@ -565,7 +582,7 @@ function Home() {
                 <button
                   type='button'
                   className={`bg-gradientTo text-sm px-8 mb-3 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/4 ${graphTwoDropdownValue === 'day' ? 'bg-gradient-to-b from-blue-300 to-green-500' : ''}`}
-                  onClick={() => ('day', "second")}
+                  onClick={() => handleButtonChange('day', "second")}
 
                 >
                   Daily
