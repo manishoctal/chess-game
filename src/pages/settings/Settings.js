@@ -389,43 +389,6 @@ const Settings = () => {
               <div className='w-full'>
                 <OInputField
                   wrapperClassName='relative z-0  w-full group'
-                  id='payment'
-                  disable={manager?.add === false}
-                  inputLabel={
-                    <>
-                      {t('MINIMUM_THRESHOLD_AMOUNT_FOR_EARNING_REWARD_REQUEST')}
-                    </>
-                  }
-                  type='number'
-                  maxLength={40}
-                  register={register(
-                    'minThresholdAmountForEarningRewardRequest',
-                    {
-                      required: {
-                        value: true,
-                        message: t('PLEASE_ENTER_MINIMUM_THRESHOLD_AMOUNT')
-                      },
-                      maxLength: {
-                        value: 40,
-                        message: t('MAX_LIMIT_IS_40_CHARACTERS')
-                      },
-                      min: {
-                        value: 1,
-                        message: t('MINIMUM_VALUE_MUST_IS_1')
-                      }
-                    }
-                  )}
-                  placeholder=' '
-                />
-                <ErrorMessage
-                  message={
-                    errors?.minThresholdAmountForEarningRewardRequest?.message
-                  }
-                />
-              </div>
-              <div className='w-full'>
-                <OInputField
-                  wrapperClassName='relative z-0  w-full group'
                   type='number'
                   inputLabel={<>{t('REWARD_AMOUNT_PERCENTAGE')}</>}
                   maxLength={40}

@@ -23,10 +23,8 @@ import AuthContext from 'context/AuthContext'
 import ODateRangePicker from 'components/shared/datePicker/ODateRangePicker'
 import OCountUp from 'components/OCountUp'
 import helpers from 'utils/helpers'
-import { Button, ToggleButtonGroup } from '@mui/material'
 import MuiToggleButton from '@mui/material/ToggleButton';
 import { styled, createTheme, ThemeProvider, StyledEngineProvider } from '@mui/material/styles'
-import useToastContext from 'hooks/useToastContext'
 
 ChartJS.register(
   CategoryScale,
@@ -103,7 +101,6 @@ function Home() {
   const [dashboardDetails, setDashboardDetails] = useState({})
   const [startDate, setStartDate] = useState(dayjs().subtract(1, 'month').format('YYYY-MM-DD'))
   const [endDate, setEndDate] = useState(dayjs().format('YYYY-MM-DD'))
-  const [earningGraphDetails, setEarningGraphDetails] = useState({})
   const [graphTwoStartData, setGraphTwoStartData] = useState((dayjs().subtract(1, 'month').format('YYYY-MM-DD')))
   const [graphTwoEndDate, setGraphTwoEndDate] = useState(dayjs().format('YYYY-MM-DD'))
   const [graphTwoDropdownValue, setGraphTwoDropdownValue] = useState("month")
@@ -115,7 +112,7 @@ function Home() {
       xaxis: {
 
         categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999]
-        // categories: ['January', 'Febrauray', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+
       },
     },
     series: [
@@ -133,7 +130,7 @@ function Home() {
       xaxis: {
 
         categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999]
-        // categories: ['January', 'Febrauray', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+
       },
     },
     series: [
@@ -143,7 +140,7 @@ function Home() {
       },
     ],
   })
-  const notification = useToastContext();
+
   const [isReset, setIsReset] = useState(false)
 
   const handleDateChange = (start, end, type) => {
@@ -156,15 +153,13 @@ function Home() {
     }
   }
 
-  const handleButtonChange = (e, type) => {
+  const handleButtonChange = (data, type) => {
     if (type === "first") {
-      setSelectedButton(e.target.value)
+      setSelectedButton(data)
     } else {
-      setGraphTwoDropdownValue(e.target.value)
+      setGraphTwoDropdownValue(data)
     }
   }
-  console.log(selectedButton, "selectedButton")
-  console.log(setGraphTwoDropdownValue, "setGraphTwoDropdownValue")
   const theme = createTheme({
     palette: {
       text: {
@@ -200,19 +195,35 @@ function Home() {
 
   useEffect(() => {
     getDashboardDetails()
-    // console.log(startDate, endDate, "startDate, endDate")
-    // if (startDate && endDate) {
-    //   setSelectedButton('month')
-    //   setGraphTwoDropdownValue('month')
-    // }
   }, [startDate, endDate])
 
 
   useEffect(() => {
     if (startDate && endDate && selectedButton) {
+      const dateDifference = dayjs(endDate).diff(startDate, 'day');
+      if (dateDifference > 365) {
+        setSelectedButton('year')
+      } else if (dateDifference >= 30 || dateDifference >= 31) {
+        setSelectedButton('month')
+      } else if (dateDifference >= 7) {
+        setSelectedButton('week')
+      } else {
+        setSelectedButton('day')
+      }
       handleGraphFirst(startDate, endDate, selectedButton, "first")
     }
     if (graphTwoDropdownValue && graphTwoEndDate && graphTwoStartData) {
+      const dateDifference = dayjs(graphTwoEndDate).diff(graphTwoStartData, 'day');
+      console.log("dateDifference", dateDifference, dayjs(endDate).startOf('month').diff(startDate, 'day'))
+      if (dateDifference > 365) {
+        setGraphTwoDropdownValue('year')
+      } else if (dateDifference >= 30 || dateDifference >= 31) {
+        setGraphTwoDropdownValue('month')
+      } else if (dateDifference >= 7) {
+        setGraphTwoDropdownValue('week')
+      } else {
+        setGraphTwoDropdownValue('day')
+      }
       handleGraphFirst(graphTwoStartData, graphTwoEndDate, graphTwoDropdownValue, "second")
     }
   }, [startDate, endDate, selectedButton, graphTwoStartData, graphTwoEndDate, graphTwoDropdownValue])
@@ -227,41 +238,43 @@ function Home() {
       const path = pathObj.getEarningManagerGraph;
       const result = await apiGet(path, payload)
       if (result?.data?.success === true) {
-        const newCategories = result.data.results.xAxis
-        let newData = result.data.results.yAxis
+        const newCategories = result?.data?.results.xAxis
+        let newData = result?.data?.results?.yAxis
         if (type === "first") {
+
+          console.log("prevData?.series[0]", chartData?.series[0])
           setChartData(prevData => ({
             ...prevData,
             options: {
-              ...prevData.options,
+              ...prevData?.options,
               xaxis: {
-                ...prevData.options.xaxis,
+                ...prevData?.options?.xaxis,
                 categories: newCategories,
               },
             },
             series: [
               {
 
-                ...prevData.series[0],
+                ...prevData?.series[0],
                 data: newData,
               },
             ],
           }));
         } else {
+          console.log("prevData?.series[0]", chartData?.series[0])
 
           setChartDataTwo(prevData => ({
             ...prevData,
             options: {
-              ...prevData.options,
+              ...prevData?.options,
               xaxis: {
-                ...prevData.options.xaxis,
+                ...prevData?.options?.xaxis,
                 categories: newCategories,
               },
             },
             series: [
               {
-
-                ...prevData.series[0],
+                ...prevData?.series[0],
                 data: newData,
               },
             ],
@@ -269,7 +282,7 @@ function Home() {
         }
       }
       else {
-        notification.error(result.data.results)
+        // notification.error(result.data.results)
         setChartData("")
         setChartDataTwo("")
       }
@@ -283,8 +296,8 @@ function Home() {
     setStartDate(dayjs().subtract(1, 'month').format('YYYY-MM-DD'))
     setGraphTwoStartData(dayjs().subtract(1, 'month').format('YYYY-MM-DD'))
     setGraphTwoEndDate(dayjs().format('YYYY-MM-DD'))
-    setSelectedButton("month")
-    setGraphTwoDropdownValue("month")
+    setSelectedButton("day")
+    setGraphTwoDropdownValue("day")
     // setIsReset(!isReset)
   }
 
@@ -430,7 +443,7 @@ function Home() {
       </div>
       <div className='py-7 px-4 md:px-8 bg-[#F9F9F9] border-solid border-2 border-gray m-10 rounded-md'>
         <div className='sm:flex items-center text-center sm:text-left px-3 md:px-4 xl:px-7 lg:px-5  py-4 md:py-8 border dark:bg-slate-900'>
-          <StyledEngineProvider>
+          {/* <StyledEngineProvider>
             <ThemeProvider theme={theme}>
               <ToggleButtonGroup
                 value={selectedButton}
@@ -452,6 +465,41 @@ function Home() {
                   Yearly
                 </ToggleButton>
               </ToggleButtonGroup>
+            </ThemeProvider>
+          </StyledEngineProvider> */}
+          <StyledEngineProvider>
+            <ThemeProvider theme={theme}>
+              <div className='px-11'>
+                <button
+                  type='button'
+                  className={`bg-gradientTo text-sm px-8 mb-3 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/4 ${selectedButton === 'day' ? 'bg-gradient-to-b from-blue-300 to-green-500' : ''}`}
+                  onClick={() => handleButtonChange('day', "first")}
+
+                >
+                  Daily
+                </button>
+                <button
+                  type='button'
+                  className={`bg-gradientTo text-sm px-8 mb-3 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/4 ${selectedButton === 'week' ? 'bg-gradient-to-b from-blue-300 to-green-500' : ''}`}
+                  onClick={() => handleButtonChange('week', "first")}
+                >
+                  Weekly
+                </button>
+                <button
+                  type='button'
+                  className={`bg-gradientTo text-sm px-8 mb-3 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/4 ${selectedButton === 'month' ? 'bg-gradient-to-b from-blue-300 to-green-500' : ''}`}
+                  onClick={() => handleButtonChange('month', "first")}
+                >
+                  Monthly
+                </button>
+                <button
+                  type='button'
+                  className={`bg-gradientTo text-sm px-8 mb-3 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/4 ${selectedButton === 'year' ? 'bg-gradient-to-b from-blue-300 to-green-500' : ''}`}
+                  onClick={() => handleButtonChange('year', "first")}
+                >
+                  Yearly
+                </button>
+              </div>
             </ThemeProvider>
           </StyledEngineProvider>
           <ODateRangePicker
@@ -487,7 +535,7 @@ function Home() {
       </div>
       <div className='py-7 px-4 md:px-8 bg-[#F9F9F9] border-solid border-2 border-gray m-10 rounded-md'>
         <div className='sm:flex items-center text-center sm:text-left px-3 md:px-4 xl:px-7 lg:px-5  py-4 md:py-8 border dark:bg-slate-900'>
-          <StyledEngineProvider>
+          {/* <StyledEngineProvider>
             <ThemeProvider theme={theme}>
               <ToggleButtonGroup
                 value={graphTwoDropdownValue}
@@ -496,19 +544,54 @@ function Home() {
                 aria-label="button group"
                 className='px-11'
               >
-                <ToggleButton value="day" selectedcolor="#00abc0">
+                <ToggleButton style={{ backgroundColor: '#00abc0', color: '#fff' }} value="day" selectedcolor="#00abc0">
                   Daily
                 </ToggleButton>
-                <ToggleButton value="week" selectedcolor="#00abc0">
+                <ToggleButton style={{ backgroundColor: '#00abc0', color: '#fff' }} value="week" selectedcolor="#00abc0">
                   Weekly
-                </ToggleButton>
-                <ToggleButton value="month" selectedcolor="#00abc0">
+                </ToggleButton >
+                <ToggleButton style={{ backgroundColor: '#00abc0', color: '#fff' }} value="month" selectedcolor="#00abc0">
                   Monthly
                 </ToggleButton>
-                <ToggleButton value="year" selectedcolor="#00abc0">
+                <ToggleButton style={{ backgroundColor: '#00abc0', color: '#fff' }} value="year" selectedcolor="#00abc0">
                   Yearly
                 </ToggleButton>
               </ToggleButtonGroup>
+            </ThemeProvider>
+          </StyledEngineProvider> */}
+          <StyledEngineProvider>
+            <ThemeProvider theme={theme}>
+              <div className='px-11'>
+                <button
+                  type='button'
+                  className={`bg-gradientTo text-sm px-8 mb-3 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/4 ${graphTwoDropdownValue === 'day' ? 'bg-gradient-to-b from-blue-300 to-green-500' : ''}`}
+                  onClick={() => ('day', "second")}
+
+                >
+                  Daily
+                </button>
+                <button
+                  type='button'
+                  className={`bg-gradientTo text-sm px-8 mb-3 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/4 ${graphTwoDropdownValue === 'week' ? 'bg-gradient-to-b from-blue-300 to-green-500' : ''}`}
+                  onClick={() => handleButtonChange('week', "second")}
+                >
+                  Weekly
+                </button>
+                <button
+                  type='button'
+                  className={`bg-gradientTo text-sm px-8 mb-3 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/4 ${graphTwoDropdownValue === 'month' ? 'bg-gradient-to-b from-blue-300 to-green-500' : ''}`}
+                  onClick={() => handleButtonChange('month', "second")}
+                >
+                  Monthly
+                </button>
+                <button
+                  type='button'
+                  className={`bg-gradientTo text-sm px-8 mb-3 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/4 ${graphTwoDropdownValue === 'year' ? 'bg-gradient-to-b from-blue-300 to-green-500' : ''}`}
+                  onClick={() => handleButtonChange('year', "second")}
+                >
+                  Yearly
+                </button>
+              </div>
             </ThemeProvider>
           </StyledEngineProvider>
           <ODateRangePicker
