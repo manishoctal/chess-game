@@ -131,7 +131,11 @@ const Table = ({
                 users?.map((item, i) => (
                   <tr
                     key={i}
-                    className='bg-white border-b dark:bg-gray-800 dark:border-[#ffffff38]'
+                    // className='bg-white border-b dark:bg-gray-800 dark:border-[#ffffff38]'
+                    className={`${item && item?.status === "deleted"
+                      ? 'text-red-600 font-bold'
+                      : 'bg-white'
+                      } border-b dark:bg-gray-800 dark:border-[#ffffff38]'`}
                   >
                     <th
                       scope='row'
@@ -139,26 +143,51 @@ const Table = ({
                     >
                       {i + 1 + pageSize * (page - 1)}
                     </th>
-                    <td className='py-4 px-4 border-r  dark:border-[#ffffff38]'>
+                    <td
+                      // className='py-4 px-4 border-r  dark:border-[#ffffff38]'
+                      className={`${item && item?.status === "deleted"
+                        ? 'text-red-600'
+                        : 'bg-white'
+                        } py-4 px-4 border-r  dark:border-[#ffffff38]'`}
+                    >
                       {userType === 'local'
                         ? `${item?.firstName} ${item?.lastName ?? ''}`
                         : item?.firstName || 'N/A'}
                     </td>
-                    <td className='py-2 px-4 border-r  dark:border-[#ffffff38] font-bold text-slate-900'>
+                    <td
+                      // className='py-2 px-4 border-r  dark:border-[#ffffff38] font-bold text-slate-900'
+                      className={`${item && item?.status === "deleted"
+                        ? 'text-red-600'
+                        : 'bg-white'
+                        } py-2 px-4 border-r  dark:border-[#ffffff38] font-bold text-slate-900'`}
+                    >
                       {helpers.ternaryCondition(
                         item?.email,
                         item?.email,
                         'N/A'
                       )}
                     </td>
-                    <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center font-bold text-slate-900'>
+                    <td
+                      // className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center font-bold text-slate-900'
+                      className={`${item && item?.status === "deleted"
+                        ? 'text-red-600'
+                        : 'bg-white'
+                        } py-2 px-4 border-r  dark:border-[#ffffff38] text-center font-bold text-slate-900'`}
+                    >
                       {helpers.ternaryCondition(
                         item?.countryCode,
                         item?.countryCode,
                         'N/A'
                       )}
                     </td>
-                    <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center font-bold text-slate-900'>
+                    <td
+                      // className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center font-bold text-slate-900'
+                      className={`${item && item?.status === "deleted"
+                        ? 'text-red-600'
+                        : 'bg-white'
+                        } py-2 px-4 border-r dark:border-[#ffffff38] text-center font-bold ${item && item?.status === "deleted" ? '' : 'text-slate-900'
+                        }`}
+                    >
                       {helpers.ternaryCondition(
                         item?.mobile,
                         item?.mobile,
@@ -166,7 +195,13 @@ const Table = ({
                       )}
                     </td>
                     {userType === 'local' && (
-                      <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
+                      <td
+                        //  className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'
+                        className={`${item && item?.status === "deleted"
+                          ? 'text-red-600'
+                          : 'bg-white'
+                          } py-2 px-4 border-r  dark:border-[#ffffff38] text-center`}
+                      >
                         {helpers.ternaryCondition(
                           item?.walletAmount,
                           helpers.formattedAmount(item?.walletAmount),
@@ -176,21 +211,39 @@ const Table = ({
                     )}
                     {userType === 'tourist' && (
                       <>
-                        <td className='py-4 px-3 border-r  dark:border-[#ffffff38] text-center '>
+                        <td
+                          // className='py-4 px-3 border-r  dark:border-[#ffffff38] text-center'
+                          className={`${item && item?.status === "deleted"
+                            ? 'text-red-600'
+                            : 'bg-white'
+                            } py-4 px-3 border-r  dark:border-[#ffffff38] text-center`}
+                        >
                           {helpers.ternaryCondition(
                             item?.upcCode,
                             item?.upcCode,
                             'N/A'
                           )}
                         </td>
-                        <td className='py-4 px-3 border-r text-center dark:border-[#ffffff38] '>
+                        <td
+                          // className='py-4 px-3 border-r text-center dark:border-[#ffffff38]'
+                          className={`${item && item?.status === "deleted"
+                            ? 'text-red-600'
+                            : 'bg-white'
+                            } py-4 px-3 border-r text-center dark:border-[#ffffff38]`}
+                        >
                           {helpers.ternaryCondition(
                             item?.referralCode,
                             item?.referralCode,
                             'N/A'
                           )}
                         </td>
-                        <td className='py-4 px-3 border-r text-center dark:border-[#ffffff38] '>
+                        <td
+                          // className='py-4 px-3 border-r text-center dark:border-[#ffffff38]'
+                          className={`${item && item?.status === "deleted"
+                            ? 'text-red-600'
+                            : 'bg-white'
+                            } py-4 px-3 border-r text-center dark:border-[#ffffff38]`}
+                        >
                           {helpers.ternaryCondition(
                             item?.familyName,
                             item?.familyName,
@@ -214,29 +267,31 @@ const Table = ({
                     {helpers.andOperator(
                       manager?.add || user?.permission?.length === 0,
                       <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
-                        <label
-                          className='inline-flex relative items-center cursor-pointer'
-                          title={`${item?.status === 'active' ? 'Active' : 'Inactive'
-                            }`}
-                        >
-                          <input
-                            type='checkbox'
-                            className='sr-only peer'
-                            checked={item?.status === 'active'}
-                            onChange={e =>
-                              helpers.alertFunction(
-                                `${t('ARE_YOU_SURE_YOU_WANT_TO')} ${helpers.ternaryCondition(
-                                  e.target.checked,
-                                  'active',
-                                  'inactive'
-                                )} user ?`,
-                                item,
-                                handelStatusChange
-                              )
-                            }
-                          />
-                          <div className="w-10 h-5 bg-gray-200 rounded-full peer peer-focus:ring-0 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-gradientTo" />
-                        </label>
+                        {item?.status === "deleted" ? <div>deleted</div> :
+                          <label
+                            className='inline-flex relative items-center cursor-pointer'
+                            title={`${item?.status === 'active' ? 'Active' : 'Inactive'
+                              }`}
+                          >
+                            <input
+                              type='checkbox'
+                              className='sr-only peer'
+                              checked={item?.status === 'active'}
+                              onChange={e =>
+                                helpers.alertFunction(
+                                  `${t('ARE_YOU_SURE_YOU_WANT_TO')} ${helpers.ternaryCondition(
+                                    e.target.checked,
+                                    'active',
+                                    'inactive'
+                                  )} user ?`,
+                                  item,
+                                  handelStatusChange
+                                )
+                              }
+                            />
+                            <div className="w-10 h-5 bg-gray-200 rounded-full peer peer-focus:ring-0 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-gradientTo" />
+                          </label>
+                        }
                       </td>
                     )}
                     <td className='py-2 px-4 border-l'>
@@ -305,26 +360,30 @@ const Table = ({
             </tbody>
           </table>
         </div>
-      </div>
+      </div >
 
-      {helpers.andOperator(
-        editShowModal,
-        <UserEdit
-          item={editItem}
-          setEditShowModal={setEditShowModal}
-          getAllUser={getAllUser}
-        />
-      )}
+      {
+        helpers.andOperator(
+          editShowModal,
+          <UserEdit
+            item={editItem}
+            setEditShowModal={setEditShowModal}
+            getAllUser={getAllUser}
+          />
+        )
+      }
 
-      {helpers.andOperator(
-        isAmountModal,
-        <AddAmount
-          addAmountUser={addAmountUser}
-          getAllUser={getAllUser}
-          setIsAmountModal={setIsAmountModal}
-          userType={userType}
-        />
-      )}
+      {
+        helpers.andOperator(
+          isAmountModal,
+          <AddAmount
+            addAmountUser={addAmountUser}
+            getAllUser={getAllUser}
+            setIsAmountModal={setIsAmountModal}
+            userType={userType}
+          />
+        )
+      }
     </>
   )
 }

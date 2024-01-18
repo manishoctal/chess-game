@@ -57,7 +57,6 @@ const ODateRangePicker = (props) => {
   }, [props?.isReset]);
 
   useEffect(() => {
-    console.log(props?.filterData, "55555")
     setStartDate(props?.filterData?.startDate);
     setEndDate(props?.filterData?.endDate);
   }, []);
