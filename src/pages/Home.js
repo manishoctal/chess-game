@@ -7,6 +7,7 @@ import earning from 'assets/images/earning.jpg'
 import dayjs from 'dayjs'
 import { useTranslation } from 'react-i18next'
 import Chart from 'react-apexcharts'
+import formattedAmount from "../utils/helpers"
 
 import {
   Chart as ChartJS,
@@ -25,6 +26,7 @@ import OCountUp from 'components/OCountUp'
 import helpers from 'utils/helpers'
 import MuiToggleButton from '@mui/material/ToggleButton';
 import { styled, createTheme, ThemeProvider, StyledEngineProvider } from '@mui/material/styles'
+import useToastContext from 'hooks/useToastContext'
 
 ChartJS.register(
   CategoryScale,
@@ -110,14 +112,12 @@ function Home() {
         id: 'basic-bar',
       },
       xaxis: {
-
-        categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999]
-
+        Date: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999]
       },
     },
     series: [
       {
-        name: 'series-1',
+        name: 'Earning',
         data: [30, 40, 45, 50, 49, 60, 70, 91, 49, 60, 70, 91],
       },
     ],
@@ -140,7 +140,7 @@ function Home() {
       },
     ],
   })
-
+  const notification = useToastContext()
   const [isReset, setIsReset] = useState(false)
 
   const handleDateChange = (start, end, type) => {
@@ -251,9 +251,11 @@ function Home() {
       };
       const path = pathObj.getEarningManagerGraph;
       const result = await apiGet(path, payload)
-      if (result?.data?.success === true) {
+      if (result?.data?.success) {
         const newCategories = result?.data?.results?.xAxis
         let newData = result?.data?.results?.yAxis
+        // newData = newData.map(amount => { return helpers.formattedAmount(amount) });
+
         if (type === "first") {
           setChartData(prevData => ({
             ...prevData,
@@ -286,20 +288,19 @@ function Home() {
             series: [
               {
                 ...prevData?.series[0],
-                data: newData,
+                data: (newData),
               },
             ],
           }));
         }
-      }
-      else {
-        setChartData("")
-        setChartDataTwo("")
+      } else {
+        notification.error(result?.data?.message)
       }
     } catch (error) {
       console.error('error:', error);
     }
   }
+
 
   const handleReset = () => {
     setEndDate(dayjs().format('YYYY-MM-DD'))
