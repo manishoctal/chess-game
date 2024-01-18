@@ -104,6 +104,8 @@ function Home() {
   const [graphTwoStartData, setGraphTwoStartData] = useState((dayjs().subtract(1, 'month').format('YYYY-MM-DD')))
   const [graphTwoEndDate, setGraphTwoEndDate] = useState(dayjs().format('YYYY-MM-DD'))
   const [graphTwoDropdownValue, setGraphTwoDropdownValue] = useState("day")
+  const [disableYearButtonFirst, setDisableYearButtonFirst] = useState(false)
+  const [disableYearButtonSecond, setDisableYearButtonSecond] = useState(false)
   const [chartData, setChartData] = useState({
     options: {
       chart: {
@@ -148,10 +150,13 @@ function Home() {
       setStartDate(start)
       setEndDate(end)
       handleActiveForFirst(start, end)
+      checkIfButtonShouldBeDisabled(start, end, type);
     } else {
       setGraphTwoStartData(start)
       setGraphTwoEndDate(end)
       handleActiveForSecond(start, end)
+      checkIfButtonShouldBeDisabled(start, end, type);
+
     }
   }
 
@@ -170,7 +175,6 @@ function Home() {
     },
   })
 
-  console.log(selectedButton, "selectedButton")
   const ToggleButton = styled(MuiToggleButton)(({ selectedcolor }) => ({
     '&.Mui-selected, &.Mui-selected:hover': {
       color: 'white',
@@ -203,19 +207,15 @@ function Home() {
   const handleActiveForFirst = (start, end) => {
     if (start && end) {
       const dateDifference = dayjs(end).diff(start, 'day');
-
       if (dateDifference > 366) {
-        console.log("year========")
         setSelectedButton('year');
       } else if (dateDifference > 31 && dateDifference <= 366) {
-        console.log("month-------")
         setSelectedButton('month');
       }
       else if (dateDifference > 7 && dateDifference <= 31) {
-        console.log("week-------")
         setSelectedButton('week');
-      } else {
-        console.log("day-------")
+      }
+      else {
         setSelectedButton('day');
       }
     }
@@ -223,14 +223,15 @@ function Home() {
   const handleActiveForSecond = (start, end) => {
     if (start && end) {
       const dateDifference = dayjs(end).diff(start, 'day');
-      console.log("dateDifference", dateDifference)
       if (dateDifference > 366) {
         setGraphTwoDropdownValue('year')
       } else if (dateDifference > 31 && dateDifference <= 366) {
         setGraphTwoDropdownValue('month')
-      } else if (dateDifference > 7 && dateDifference <= 31) {
+      }
+      else if (dateDifference > 7 && dateDifference <= 31) {
         setGraphTwoDropdownValue('week')
-      } else {
+      }
+      else {
         setGraphTwoDropdownValue('day')
       }
     }
@@ -279,8 +280,6 @@ function Home() {
             ],
           }));
         } else {
-          console.log("prevData?.series[0]", chartData?.series[0])
-
           setChartDataTwo(prevData => ({
             ...prevData,
             options: {
@@ -317,7 +316,38 @@ function Home() {
     setGraphTwoDropdownValue("month")
     // setIsReset(!isReset)
   }
+  const checkIfButtonShouldBeDisabled = (startDate, endDate, type) => {
+    const dateDifference = dayjs(endDate).diff(startDate, 'day');
+    if (dateDifference >= 1 && dateDifference <= 31) {
+      if (type === "second") {
+        setDisableYearButtonSecond(true);
+      }
+      else {
+        setDisableYearButtonFirst(true);
+      }
 
+    } if (dateDifference > 366) {
+      //year
+      if (type === "second") {
+        setDisableYearButtonSecond(true);
+      }
+      else {
+        setDisableYearButtonFirst(true);
+      }
+    } if (dateDifference > 31 && dateDifference <= 366) {
+      //month
+
+      if (type === "second") {
+        setDisableYearButtonSecond(true);
+      }
+      else {
+        setDisableYearButtonFirst(true);
+      }
+    }
+    return false;
+  };
+
+  // console.log("disableYearButtonSecond", disableYearButtonSecond, "disableYearButtonFirst", disableYearButtonFirst)
   return (
     <>
 
@@ -491,7 +521,7 @@ function Home() {
                   type='button'
                   className={`bg-gradientTo text-sm px-8 mb-3 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/4 ${selectedButton === 'day' ? 'bg-gradient-to-b from-blue-300 to-green-500' : ''}`}
                   onClick={() => handleButtonChange('day', "first")}
-
+                  disabled={disableYearButtonFirst}
                 >
                   Daily
                 </button>
@@ -499,6 +529,7 @@ function Home() {
                   type='button'
                   className={`bg-gradientTo text-sm px-8 mb-3 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/4 ${selectedButton === 'week' ? 'bg-gradient-to-b from-blue-300 to-green-500' : ''}`}
                   onClick={() => handleButtonChange('week', "first")}
+                  disabled={disableYearButtonFirst}
                 >
                   Weekly
                 </button>
@@ -506,6 +537,7 @@ function Home() {
                   type='button'
                   className={`bg-gradientTo text-sm px-8 mb-3 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/4 ${selectedButton === 'month' ? 'bg-gradient-to-b from-blue-300 to-green-500' : ''}`}
                   onClick={() => handleButtonChange('month', "first")}
+                  disabled={disableYearButtonFirst}
                 >
                   Monthly
                 </button>
@@ -513,6 +545,7 @@ function Home() {
                   type='button'
                   className={`bg-gradientTo text-sm px-8 mb-3 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/4 ${selectedButton === 'year' ? 'bg-gradient-to-b from-blue-300 to-green-500' : ''}`}
                   onClick={() => handleButtonChange('year', "first")}
+                  disabled={disableYearButtonFirst}
                 >
                   Yearly
                 </button>
@@ -583,7 +616,7 @@ function Home() {
                   type='button'
                   className={`bg-gradientTo text-sm px-8 mb-3 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/4 ${graphTwoDropdownValue === 'day' ? 'bg-gradient-to-b from-blue-300 to-green-500' : ''}`}
                   onClick={() => handleButtonChange('day', "second")}
-
+                  disabled={disableYearButtonSecond}
                 >
                   Daily
                 </button>
@@ -591,6 +624,7 @@ function Home() {
                   type='button'
                   className={`bg-gradientTo text-sm px-8 mb-3 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/4 ${graphTwoDropdownValue === 'week' ? 'bg-gradient-to-b from-blue-300 to-green-500' : ''}`}
                   onClick={() => handleButtonChange('week', "second")}
+                  disabled={disableYearButtonSecond}
                 >
                   Weekly
                 </button>
@@ -598,6 +632,7 @@ function Home() {
                   type='button'
                   className={`bg-gradientTo text-sm px-8 mb-3 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/4 ${graphTwoDropdownValue === 'month' ? 'bg-gradient-to-b from-blue-300 to-green-500' : ''}`}
                   onClick={() => handleButtonChange('month', "second")}
+                  disabled={disableYearButtonSecond}
                 >
                   Monthly
                 </button>
@@ -605,6 +640,7 @@ function Home() {
                   type='button'
                   className={`bg-gradientTo text-sm px-8 mb-3 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/4 ${graphTwoDropdownValue === 'year' ? 'bg-gradient-to-b from-blue-300 to-green-500' : ''}`}
                   onClick={() => handleButtonChange('year', "second")}
+                  disabled={disableYearButtonSecond}
                 >
                   Yearly
                 </button>

@@ -115,7 +115,9 @@ select:-webkit-autofill:focus {
   margin: 0 auto;
 }
 button:disabled {
-  background-color: rgb(59 130 246 / 0.5);
+  /* background-color: rgb(59 130 246 / 0.5); */
+  background-color: lightgray;
+  cursor: not-allowed;
 }
 
 button:hover{
