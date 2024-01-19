@@ -207,9 +207,10 @@ function Home() {
       } else if (dateDifference > 31 && dateDifference <= 366) {
         setSelectedButton('month');
       }
-      else if (dateDifference > 7 && dateDifference <= 31) {
-        setSelectedButton('week');
-      } else {
+      // else if (dateDifference > 7 && dateDifference <= 31) {
+      //   setSelectedButton('week');
+      // }
+      else {
         setSelectedButton('day');
       }
     }
@@ -222,9 +223,11 @@ function Home() {
         setGraphTwoDropdownValue('year')
       } else if (dateDifference > 31 && dateDifference <= 366) {
         setGraphTwoDropdownValue('month')
-      } else if (dateDifference > 7 && dateDifference <= 31) {
-        setGraphTwoDropdownValue('week')
-      } else {
+      }
+      // else if (dateDifference > 7 && dateDifference <= 31) {
+      //   setGraphTwoDropdownValue('week')
+      // }
+      else {
         setGraphTwoDropdownValue('day')
       }
     }
@@ -254,8 +257,6 @@ function Home() {
       if (result?.data?.success) {
         const newCategories = result?.data?.results?.xAxis
         let newData = result?.data?.results?.yAxis
-        // newData = newData.map(amount => { return helpers.formattedAmount(amount) });
-
         if (type === "first") {
           setChartData(prevData => ({
             ...prevData,
@@ -307,9 +308,8 @@ function Home() {
     setStartDate(dayjs().subtract(1, 'month').format('YYYY-MM-DD'))
     setGraphTwoStartData(dayjs().subtract(1, 'month').format('YYYY-MM-DD'))
     setGraphTwoEndDate(dayjs().format('YYYY-MM-DD'))
-    setSelectedButton("month")
-    setGraphTwoDropdownValue("month")
-    // setIsReset(!isReset)
+    setSelectedButton("day")
+    setGraphTwoDropdownValue("day")
   }
 
   return (
