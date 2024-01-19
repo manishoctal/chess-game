@@ -267,7 +267,7 @@ const Table = ({
                     {helpers.andOperator(
                       manager?.add || user?.permission?.length === 0,
                       <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
-                        {item?.status === "deleted" ? <div>deleted</div> :
+                        {item?.status === "deleted" ? <div>Deleted</div> :
                           <label
                             className='inline-flex relative items-center cursor-pointer'
                             title={`${item?.status === 'active' ? 'Active' : 'Inactive'
@@ -317,7 +317,8 @@ const Table = ({
                               </div>
                             )}
                           {(manager?.add || user?.role === 'admin') && (
-                            <div
+
+                            item?.status !== "deleted" ? <div
                               onClick={() => {
                                 setIsAmountModal(true)
                                 setAddAmountUser(item)
@@ -327,7 +328,8 @@ const Table = ({
                                 className='text-green text-lg cursor-pointer  text-slate-600'
                                 title='Add amount'
                               />
-                            </div>
+                            </div> : ""
+
                           )}
                           <div>
                             <NavLink
