@@ -346,7 +346,6 @@ function Home() {
   };
   return (
     <>
-
       <div className='py-4 px-4 md:px-8 dark:bg-slate-900'>
         <div className='sale_report grid pt-10 3xl:grid-cols-4 gap-y-10 gap-4 gap-x-10 2xl:grid-cols-4 sm:grid-cols-2 mb-7 '>
           <div className='text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border'>

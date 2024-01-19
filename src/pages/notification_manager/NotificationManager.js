@@ -11,7 +11,7 @@ import NotificationAdd from './NotificationAdd'
 import PageSizeList from 'components/PageSizeList'
 import helpers from 'utils/helpers'
 
-function NotificationManager () {
+function NotificationManager() {
   const { t } = useTranslation()
   const { logoutUser, notification, user } = useContext(AuthContext)
   const manager =
@@ -62,10 +62,10 @@ function NotificationManager () {
         setAllNotifications(response?.docs)
         setPaginationObj({
           ...paginationObj,
-          page: helpers.ternaryCondition(resultStatus , response.page , null),
-          pageCount: helpers.ternaryCondition(resultStatus , response.totalPages , null),
-          perPageItem: helpers.ternaryCondition(resultStatus , response?.docs.length , null),
-          totalItems: helpers.ternaryCondition(resultStatus , response.totalDocs , null)
+          page: helpers.ternaryCondition(resultStatus, response.page, null),
+          pageCount: helpers.ternaryCondition(resultStatus, response.totalPages, null),
+          perPageItem: helpers.ternaryCondition(resultStatus, response?.docs.length, null),
+          totalItems: helpers.ternaryCondition(resultStatus, response.totalDocs, null)
         })
       }
     } catch (error) {
@@ -77,13 +77,13 @@ function NotificationManager () {
     }
   }
 
-  
+
   const handlePageClick = event => {
     const newPage = event.selected + 1
     setPage(newPage)
   }
 
-  
+
   const handleCategory = () => {
     setCategoryAdd(!categoryAdd)
   }
@@ -184,7 +184,7 @@ function NotificationManager () {
             )}
 
             <div className='flex justify-between'>
-            <PageSizeList  dynamicPage={dynamicPage} pageSize={pageSize}/>
+              <PageSizeList dynamicPage={dynamicPage} pageSize={pageSize} />
               {paginationObj?.totalItems !== 0 && (
                 <Pagination
                   handlePageClick={handlePageClick}
@@ -194,7 +194,7 @@ function NotificationManager () {
               )}
             </div>
 
-            
+
           </div>
         </div>
       </div>
