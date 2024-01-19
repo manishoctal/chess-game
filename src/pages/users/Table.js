@@ -309,15 +309,15 @@ const Table = ({
 
                           {(manager?.add || user?.role === 'admin') &&
                             userType === 'local' && (
-                              <div onClick={() => handelEdit(item)}>
-                                <AiFillEdit
-                                  className='text-green text-lg cursor-pointer  text-slate-600'
-                                  title='Edit user'
-                                />
-                              </div>
+                              item?.status !== "deleted" ?
+                                <div onClick={() => handelEdit(item)}>
+                                  <AiFillEdit
+                                    className='text-green text-lg cursor-pointer  text-slate-600'
+                                    title='Edit user'
+                                  />
+                                </div> : ""
                             )}
                           {(manager?.add || user?.role === 'admin') && (
-
                             item?.status !== "deleted" ? <div
                               onClick={() => {
                                 setIsAmountModal(true)
