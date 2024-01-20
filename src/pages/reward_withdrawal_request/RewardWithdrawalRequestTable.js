@@ -57,6 +57,8 @@ const RewardWithdrawalRequestTable = ({
     }
   }
 
+
+
   return (
     <div className='p-3'><div className='overflow-x-auto relative rounded-lg border'><table className='w-full text-xs text-left text-[#A5A5A5] dark:text-gray-400 '>
       <thead className='text-xs text-gray-900 border border-[#E1E6EE] bg-[#E1E6EE] dark:bg-gray-700 dark:text-gray-400 dark:border-[#ffffff38]'><tr>
@@ -105,11 +107,11 @@ const RewardWithdrawalRequestTable = ({
               {i + 1 + pageSize * (page - 1)}
             </th>
             <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
-              {startCase(
-                item?.userDetail?.firstName +
+              {
+                helpers.formateNull(item?.userDetail?.firstName) +
                 ' ' +
-                item?.userDetail?.lastName
-              )}
+                helpers.formateNull(item?.userDetail?.lastName)
+              }
             </td>
             <td className='py-2 px-4 border-r dark:border-[#ffffff38]'> {helpers.formattedAmount(item?.amount)}</td>
             <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>{dayjs(item?.createdAt).format('DD-MM-YYYY hh:mm A')}</td>

@@ -241,6 +241,13 @@ const helpers = {
       currencyDisplay: 'symbol'
     })
 
+  },
+  formateNull: (text) => {
+    let result = ""
+    if (text) {
+      result = text
+    }
+    return result
   }
 }
 
