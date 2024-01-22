@@ -178,10 +178,10 @@ const UserEdit = ({ setEditShowModal, getAllUser, item }) => {
                                 ?.length,
                               value?.length
                             )
-                          if (inputValue?.length < 8) {
-                            return 'Mobile no. must be 8 digit'
-                          } else if (inputValue?.length > 12) {
-                            return 'Mobile no. should be not exceed 12 digits'
+                          if (inputValue?.length < 9) {
+                            return 'Mobile no. must be 9 digit'
+                          } else if (inputValue?.length > 9) {
+                            return 'Mobile no. should be not exceed 9 digits'
                           }
                         }
                       }}
