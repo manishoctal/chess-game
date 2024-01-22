@@ -1,4 +1,4 @@
-import { isEmpty } from 'lodash'
+import { isEmpty, startCase } from 'lodash'
 import { useTranslation } from 'react-i18next'
 import helpers from 'utils/helpers'
 import QRCodeGenerator from 'components/QRCodeGenerator'
@@ -16,8 +16,8 @@ const TransactionDetailsTable = ({
   const [imageView, setImageView] = useState('')
 
 
-  const handleUserView = (element,type) => {
-    setImageView({image:element,type})
+  const handleUserView = (element, type) => {
+    setImageView({ image: element, type })
     setViewShowModal(true)
   }
   return (
@@ -47,8 +47,9 @@ const TransactionDetailsTable = ({
               <th scope='col' className='py-3 px-3'> {t('payment receipt proof time')} </th>
               <th scope='col' className='py-3 px-3'>  {t('Durations (In Seconds)')} </th>
               <th scope='col' className='py-3 px-3'> {t('QR_CODE')}  </th>
-              
               <th scope='col' className='py-3 px-3'>  {t('PAYMENT_PROOF_BANK')} </th>
+              <th scope='col' className='py-3 px-3'>  {t('O_STATUS')} </th>
+
             </tr>
           </thead>
           <tbody>
@@ -65,10 +66,10 @@ const TransactionDetailsTable = ({
                     {i + 1 + pageSize * (page - 1)}
                   </th>
                   <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
-                    {helpers.ternaryCondition(item?.local?.firstName,item?.local?.firstName , 'N/A')}
+                    {helpers.ternaryCondition(item?.local?.firstName, item?.local?.firstName, 'N/A')}
                   </td>
                   <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
-                  {helpers.formattedAmount(item?.local?.walletAmount)}  
+                    {helpers.formattedAmount(item?.local?.walletAmount)}
                   </td>
                   {userType === 'tourist' && (
                     <>
@@ -80,32 +81,32 @@ const TransactionDetailsTable = ({
                         )}
                       </td>
                       <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
-                      {helpers.formattedAmount(item?.amount)}
+                        {helpers.formattedAmount(item?.amount)}
                       </td>
-                      
+
                     </>
                   )}
                   {userType === 'local' && (
                     <>
                       <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
-                      {helpers.formattedAmount(item?.amount)}
+                        {helpers.formattedAmount(item?.amount)}
                       </td>
                       <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
-                      {helpers.formattedAmount(item?.local?.rewardAmount)}
+                        {helpers.formattedAmount(item?.local?.rewardAmount)}
                       </td>
                     </>
                   )}
                   <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
-                    {helpers.ternaryCondition(item?.tourist?.firstName,item?.tourist?.firstName , 'N/A')}
+                    {helpers.ternaryCondition(item?.tourist?.firstName, item?.tourist?.firstName, 'N/A')}
                   </td>
                   <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
-                    {helpers.ternaryCondition(item?.createdAt,helpers.getDateAndTime(item?.createdAt) , 'N/A')}
+                    {helpers.ternaryCondition(item?.createdAt, helpers.getDateAndTime(item?.createdAt), 'N/A')}
                   </td>
                   <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
-                  {helpers.ternaryCondition(item?.acceptedAt,helpers.getDateAndTime(item?.createdAt) , 'N/A')}
+                    {helpers.ternaryCondition(item?.acceptedAt, helpers.getDateAndTime(item?.createdAt), 'N/A')}
                   </td>
                   <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
-                    {helpers.ternaryCondition(item?.completedAt,helpers.getDateAndTime(item?.completedAt) , 'N/A')}
+                    {helpers.ternaryCondition(item?.completedAt, helpers.getDateAndTime(item?.completedAt), 'N/A')}
                   </td>
                   <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
                     {helpers.getSeconds(
@@ -114,28 +115,35 @@ const TransactionDetailsTable = ({
                     ) ?? 'N/A'}
                   </td>
                   <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center  '>
-                    <button type='button' onClick={()=>handleUserView(item?.qrCodeString,'QR')}>
+                    <button type='button' onClick={() => handleUserView(item?.qrCodeString, 'QR')}>
 
-                    <QRCodeGenerator qrCodeValue={item.qrCodeString} />
+                      <QRCodeGenerator qrCodeValue={item.qrCodeString} />
                     </button>
                   </td>
-                 
-                  <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
-                  {helpers.ternaryCondition(item?.paymentProof , (
-                    <button type='button' onClick={()=>handleUserView(item?.paymentProof,'image')}>
 
-                      <img
-                        src={item?.paymentProof}
-                        alt=''
-                        className='h-[70px] w-[70px] object-cover'
-                        
+                  <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
+                    {helpers.ternaryCondition(item?.paymentProof, (
+                      <button type='button' onClick={() => handleUserView(item?.paymentProof, 'image')}>
+
+                        <img
+                          src={item?.paymentProof}
+                          alt=''
+                          className='h-[70px] w-[70px] object-cover'
+
                         />
-                        </button>
-                    ) , (
+                      </button>
+                    ), (
                       'NA'
                     ))}
                   </td>
-                
+                  <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
+                    {helpers.ternaryCondition(
+                      startCase(item?.status),
+                      startCase(item?.status),
+                      'N/A'
+                    )}
+                  </td>
+
                 </tr>
               ))}
             {isEmpty(transactions) ? (
