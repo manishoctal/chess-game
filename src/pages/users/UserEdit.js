@@ -43,7 +43,7 @@ const UserEdit = ({ setEditShowModal, getAllUser, item }) => {
     }
   })
 
-  const formValidation= FormValidation()
+  const formValidation = FormValidation()
   const [countryCode] = useState('th')
   const inputRef = useRef(null)
 
@@ -57,7 +57,7 @@ const UserEdit = ({ setEditShowModal, getAllUser, item }) => {
       data.countryCode = inputRef?.current?.state.selectedCountry?.countryCode
       setIsLoading(true)
       const path = apiPath.updateUser + '/' + item._id
-      const result = await apiPut(path, {...data,dob:date})
+      const result = await apiPut(path, { ...data, dob: date })
       if (result.data.success) {
         getAllUser()
         setEditShowModal(false)
@@ -115,7 +115,9 @@ const UserEdit = ({ setEditShowModal, getAllUser, item }) => {
                       errors={errors}
                     />
                   </div>
-                  <div className='md:py-4 sm:px-2 sm:py-3 md:px-7 px-2'>
+                  {/* Commented for solve mantis issue */}
+
+                  {/* <div className='md:py-4 sm:px-2 sm:py-3 md:px-7 px-2'>
                     <OInputField
                       wrapperClassName='relative z-0   w-full group'
                       name='lastName'
@@ -129,11 +131,11 @@ const UserEdit = ({ setEditShowModal, getAllUser, item }) => {
                       onInput={e => preventMaxInput(e, 15)}
                       register={register(
                         'lastName'
-                       
+
                       )}
                       errors={errors}
                     />
-                  </div>
+                  </div> */}
                   <div className='md:py-4 sm:px-2 sm:py-3 md:px-7 px-2'>
                     <OInputField
                       wrapperClassName='relative z-0   w-full group'
@@ -156,56 +158,56 @@ const UserEdit = ({ setEditShowModal, getAllUser, item }) => {
                   </div>
 
                   <div className='md:py-4 sm:px-2 sm:py-3 md:px-7 px-2'>
-                  <DynamicLabel
-                  name={t('O_MOBILE')}
-                  type={true}
-                  htmlFor={countryCode}
-                />
-
-                <DynamicLabel />
-                <Controller
-                  control={control}
-                  name='mobile'
-                  rules={{
-                    required: 'Please enter mobile no.',
-                    validate: value => {
-                      const inputValue = value
-                        ?.toString()
-                        ?.slice(
-                          inputRef?.current?.state?.selectedCountry?.countryCode
-                            ?.length,
-                          value?.length
-                        )
-                      if (inputValue?.length < 8) {
-                        return 'Mobile no. must be 8 digit'
-                      } else if (inputValue?.length > 12) {
-                        return 'Mobile no. should be not exceed 12 digits'
-                      }
-                    }
-                  }}
-                  render={({ field: { ref, ...field } }) => (
-                    <PhoneInput
-                      {...field}
-                      inputExtraProps={{
-                        ref,
-                        required: true,
-                        autoFocus: true
-                      }}
-                      ref={inputRef}
-                      inputStyle={{
-                        width: '100%',
-                        height: '42px'
-                      }}
-                      style={{ borderRadius: '20px' }}
-                      country={countryCode}
-                      enableSearch
-                      onlyCountries={['th']}
-                      countryCodeEditable={false}
-                     
+                    <DynamicLabel
+                      name={t('O_MOBILE')}
+                      type={true}
+                      htmlFor={countryCode}
                     />
-                  )}
-                />
-                <ErrorMessage message={errors?.mobile?.message} />
+
+                    <DynamicLabel />
+                    <Controller
+                      control={control}
+                      name='mobile'
+                      rules={{
+                        required: 'Please enter mobile no.',
+                        validate: value => {
+                          const inputValue = value
+                            ?.toString()
+                            ?.slice(
+                              inputRef?.current?.state?.selectedCountry?.countryCode
+                                ?.length,
+                              value?.length
+                            )
+                          if (inputValue?.length < 8) {
+                            return 'Mobile no. must be 8 digit'
+                          } else if (inputValue?.length > 12) {
+                            return 'Mobile no. should be not exceed 12 digits'
+                          }
+                        }
+                      }}
+                      render={({ field: { ref, ...field } }) => (
+                        <PhoneInput
+                          {...field}
+                          inputExtraProps={{
+                            ref,
+                            required: true,
+                            autoFocus: true
+                          }}
+                          ref={inputRef}
+                          inputStyle={{
+                            width: '100%',
+                            height: '42px'
+                          }}
+                          style={{ borderRadius: '20px' }}
+                          country={countryCode}
+                          enableSearch
+                          onlyCountries={['th']}
+                          countryCodeEditable={false}
+
+                        />
+                      )}
+                    />
+                    <ErrorMessage message={errors?.mobile?.message} />
                   </div>
                   <div className='md:py-4 sm:px-2 sm:py-3 md:px-7 px-2'>
                     <div className='relative z-0  w-full group'>
@@ -218,7 +220,7 @@ const UserEdit = ({ setEditShowModal, getAllUser, item }) => {
                       <ODatePicker
                         name='validity'
                         id='validity'
-                        value={date&&new Date(date)}
+                        value={date && new Date(date)}
                         // disable={counponData !== undefined}
                         placeholder={t('USER_DOB')}
                         handleDateChange={handleDateChange}
@@ -254,7 +256,7 @@ const UserEdit = ({ setEditShowModal, getAllUser, item }) => {
                           {t('ADDRESS')}
                           <span className='text-red-500'>*</span>
                         </>
-                      } 
+                      }
                       maxLength={50}
                       autoComplete='off'
                       onInput={e => preventMaxInput(e, 50)}
