@@ -35,9 +35,8 @@ const NotificationAdd = ({ getAllNotifications, handleCategory }) => {
 
       const res = await apiPost(apiPath.notifications, { ...obj });
       if (res.data.success) {
-        setLoading(false);
-        handleCategory();
         notification.success(res?.data?.message);
+        handleCategory()
         getAllNotifications();
       } else {
         notification.error(res?.data?.message);
@@ -182,6 +181,7 @@ const NotificationAdd = ({ getAllNotifications, handleCategory }) => {
                   type="submit"
                   onClick={handleSubmit(onSubmit)}
                   loading={loading}
+                  disabled={loading}
                 />
               </div>
             </div>
