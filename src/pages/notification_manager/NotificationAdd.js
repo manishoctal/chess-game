@@ -8,7 +8,6 @@ import { useTranslation } from "react-i18next";
 import OInputField from "components/reusable/OInputField";
 import FormValidation from "utils/formValidation";
 import OTextArea from "components/reusable/OTextArea";
-import Loader from 'layout/Loader'
 const NotificationAdd = ({ getAllNotifications, handleCategory }) => {
   const [loading, setLoading] = useState(false);
 
@@ -57,7 +56,6 @@ const NotificationAdd = ({ getAllNotifications, handleCategory }) => {
   }, []);
   return (
     <div>
-      {/* {loading && <Loader />} */}
       <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
         <div className="relative my-6 mx-auto">
           <div className="sm:py-4 sm:px-2 py-8 px-7 ">
