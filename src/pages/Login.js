@@ -9,7 +9,7 @@ import Loader from "../layout/Loader";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { useTranslation } from "react-i18next";
 import logoImage from "../assets/images/Vector.png";
-import formValidation from "utils/formValidation";
+import FormValidation from "utils/formValidation";
 function Login() {
   const { t } = useTranslation();
   const [icon, setIcon] = useState(true);
@@ -25,6 +25,7 @@ function Login() {
   const [rememberMe, setRememberMe] = useState(
     window?.localStorage.getItem("rememberMe") === "true"
   );
+  const formValidation = FormValidation()
 
   const handleRememberMe = (e) => {
     window?.localStorage.setItem("rememberMe", e.target.checked);
@@ -89,9 +90,11 @@ function Login() {
                 id="email"
                 className=" dark:text-white block py-4 px-3 w-full text-sm text-gray-900 bg-transparent border-2 rounded-lg border-[#DFDFDF] appearance-none dark:text-black dark:border-[#DFDFDF]  focus:outline-none focus:ring-0  peer"
                 placeholder=" "
+                name="email"
                 onKeyDown={(e) => preventSpace(e)}
                 // autoFocus
-                {...register("email", formValidation.email)}
+                {...register("email", 
+                 formValidation.email)}
               />
 
               <label
@@ -101,6 +104,7 @@ function Login() {
                 {t("O_EMAIL_ID")}
                 <span className="text-red-500">*</span>
               </label>
+              {console.log(errors, "errors")}
               <ErrorMessage message={errors?.email?.message} />
             </div>
             <div className="relative z-0 mb-6 w-full group">
