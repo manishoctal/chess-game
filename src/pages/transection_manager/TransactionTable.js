@@ -22,12 +22,12 @@ const TransactionTable = ({ artistVerification, page, userType, pageSize }) => {
               {userType === 'tourist' && (
                 <>
                   <th className='px-5 py-3 ' scope='col'>{t('TRANSACTION_AMOUNT')}</th>
-                  <th scope='col' className='px-5 py-3 '>{t('REWARD_AMOUNT')}</th>
                 </>
               )}
               {userType === 'local' && (
                 <>
-                  <th scope='col' className='px-5 py-3 '> {t('AMOUNT_DEPOSIT')}</th>
+                  <th scope='col' className='px-5 py-3 '> {t('TRANSACTION_AMOUNT')}</th>
+                  <th scope='col' className='px-5 py-3 '>{t('REWARD_AMOUNT')}</th>
                   <th scope='col' className='px-5 py-3 '>{t('MODE_OF_PAYMENT')}</th>
                 </>
               )}
@@ -56,10 +56,11 @@ const TransactionTable = ({ artistVerification, page, userType, pageSize }) => {
                   {item?.transactionId || 'N/A'}
                 </td>
                 <td
-                  className={`py-2 px-4 border-r dark:border-[#ffffff38] ${item?.transactionAmount < 0 ? 'text-red-600' : 'text-green-500'
-                    }`}
+                 className="py-2 px-4 border-r dark:border-[#ffffff38]"
+                  // className={`py-2 px-4 border-r dark:border-[#ffffff38] ${item?.transactionAmount < 0 ? 'text-red-600' : 'text-green-500'
+                    // }`}
                 >{helpers.formattedAmount(item?.transactionAmount)}</td>
-                {userType === 'tourist' && (
+                {userType === 'local' && (
                   <td className='py-2 px-4 border-r dark:border-[#ffffff38] '>{helpers.formattedAmount(item?.user?.scratchCardDetail?.rewardAmount)}</td>
                 )}
                 {userType === 'local' && (
