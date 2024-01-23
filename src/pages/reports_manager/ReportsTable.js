@@ -37,11 +37,6 @@ const ReportsTable = ({ users, page, userType, pageSize }) => {
               <th scope='col' className='py-3 px-6'>
                 <div className='text-left'>{t('DURATION')} {t('SECONDS')}</div>
               </th>
-
-{/*               
-              {helpers.andOperator( userType==='local',<th scope='col' className='py-3 px-6'>
-                <div className='text-left'>{t('COST_TO_FOREIGN_TOURIST')}</div>
-              </th>)} */}
               <th scope='col' className='py-3 px-6'>
                 <div className='text-left'>{t('THAI_LOCAL_REWARD')}</div>
               </th>
