@@ -213,6 +213,7 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-confirm {
 /* width */
 ::-webkit-scrollbar {
   width: 2px;
+  height:10px;
 }
 
 /* Track */
@@ -222,12 +223,12 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-confirm {
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #fff;
+  background: #b4b4b4;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #fff;
+  background: #ddd;
 }
 
 .rti--input{
