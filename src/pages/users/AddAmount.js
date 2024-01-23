@@ -86,12 +86,16 @@ const AddAmount = ({ setIsAmountModal, getAllUser ,addAmountUser,userType}) => {
                           placeholder=' '
                           step='any'
                           onKeyPress={helper.preventForNumberInput}
-                          maxLength={100}
+                          max={99999999}
                           {...register('amount', {
                             required: t('PLEASE_ENTER_AMOUNT'),
-                            minLength: {
+                            min: {
                               value: 1,
-                              message: t('MINIMUM_LENGTH_MUST_BE_2')
+                              message: t('MINIMUM_AMOUNT_MUST_BE_1')
+                            },
+                            max: {
+                              value: 99999999,
+                              message: t('MAXIMUM_AMOUNT_MUST_BE_99999999')
                             },
                             validate: {
                               whiteSpace: value =>

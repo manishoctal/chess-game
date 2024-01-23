@@ -24,7 +24,6 @@ import AuthContext from 'context/AuthContext'
 import ODateRangePicker from 'components/shared/datePicker/ODateRangePicker'
 import OCountUp from 'components/OCountUp'
 import helpers from 'utils/helpers'
-import MuiToggleButton from '@mui/material/ToggleButton';
 import { styled, createTheme, ThemeProvider, StyledEngineProvider } from '@mui/material/styles'
 import useToastContext from 'hooks/useToastContext'
 
@@ -174,13 +173,6 @@ function Home() {
       },
     },
   })
-
-  const ToggleButton = styled(MuiToggleButton)(({ selectedcolor }) => ({
-    '&.Mui-selected, &.Mui-selected:hover': {
-      color: 'white',
-      backgroundColor: selectedcolor,
-    },
-  }));
 
   const getDashboardDetails = async () => {
     try {

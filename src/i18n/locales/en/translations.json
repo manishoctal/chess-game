@@ -541,5 +541,7 @@
   "USERS_BETWEEN_200_BAHT_TO_1000_BAHT": "Users between 200 baht to 1000 baht",
   "EMAIL_USERNAME_MOBILE_NUMBER": "Email, Name, Mobile No",
   "SEARCH_BY_DISPLAY": "Search by display name",
-  "APPROVE": "Approve"
+  "APPROVE": "Approve",
+  "MINIMUM_AMOUNT_MUST_BE_1": "Minimum amount must be 1.",
+  "MAXIMUM_AMOUNT_MUST_BE_99999999": "Maximum amount must be 99999999."
 }
