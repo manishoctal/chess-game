@@ -92,6 +92,7 @@ const Table = ({
     );
   };
   const getDisplayName = (user, userType) => {
+    console.log(user, userType)
     if (userType === 'local') {
       return `${user?.firstName} ${user?.lastName ?? ''}`;
     } else {
@@ -141,7 +142,7 @@ const Table = ({
           {/* {userType === "local"
             ? `${item?.firstName} ${item?.lastName ?? ""}`
             : item?.firstName || "N/A"} */}
-            {getDisplayName(user, userType)}
+            {getDisplayName(item, userType)}
         </td>
         <td
           // className='py-2 px-4 border-r  dark:border-[#ffffff38] font-bold text-slate-900'
