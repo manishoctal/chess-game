@@ -91,6 +91,27 @@ const Table = ({
       </label>
     );
   };
+  const getDisplayName = (user, userType) => {
+    if (userType === 'local') {
+      return `${user?.firstName} ${user?.lastName ?? ''}`;
+    } else {
+      return user?.firstName || 'N/A';
+    }
+  };
+
+  const getWalletAmount = (user) => {
+    return user?.walletAmount
+      ? helpers.formattedAmount(user?.walletAmount)
+      : 0;
+  };
+
+  const getKycStatusText = (user) => {
+    return helpers.ternaryCondition(
+      user?.kycRecord?.isApproved,
+      startCase(user?.kycRecord?.isApproved),
+      'KYC Not Uploaded Yet'
+    );
+  };
 
   const renderTableRows=()=>{
     return  users?.map((item, i) => (
@@ -117,9 +138,10 @@ const Table = ({
               : "bg-white"
           } py-4 px-4 border-r  dark:border-[#ffffff38]'`}
         >
-          {userType === "local"
+          {/* {userType === "local"
             ? `${item?.firstName} ${item?.lastName ?? ""}`
-            : item?.firstName || "N/A"}
+            : item?.firstName || "N/A"} */}
+            {getDisplayName(user, userType)}
         </td>
         <td
           // className='py-2 px-4 border-r  dark:border-[#ffffff38] font-bold text-slate-900'
@@ -176,11 +198,12 @@ const Table = ({
                 : "bg-white"
             } py-2 px-4 border-r  dark:border-[#ffffff38] text-center`}
           >
-            {helpers.ternaryCondition(
+            {/* {helpers.ternaryCondition(
               item?.walletAmount,
               helpers.formattedAmount(item?.walletAmount),
               0
-            )}
+            )} */}
+            {getWalletAmount(item)}
           </td>
         )}
         {userType === "tourist" && (
@@ -231,11 +254,12 @@ const Table = ({
         )}
 
         <td className="py-4 px-3 border-r  dark:border-[#ffffff38] text-center">
-          {helpers.ternaryCondition(
+        {getKycStatusText(item)}
+          {/* {helpers.ternaryCondition(
             item?.kycRecord?.isApproved,
             startCase(item?.kycRecord?.isApproved),
             "KYC Not Uploaded Yet"
-          )}
+          )} */}
         </td>
         <td className="py-4 px-3 border-r  dark:border-[#ffffff38] text-center">
           {dayjs(item?.createdAt).format("DD-MM-YYYY hh:mm A") ||
