@@ -7,7 +7,7 @@ import earning from 'assets/images/earning.jpg'
 import dayjs from 'dayjs'
 import { useTranslation } from 'react-i18next'
 import Chart from 'react-apexcharts'
-import formattedAmount from "../utils/helpers"
+
 
 import {
   Chart as ChartJS,
