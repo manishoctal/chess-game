@@ -61,7 +61,7 @@ const TransactionTable = ({ artistVerification, page, userType, pageSize }) => {
                     // }`}
                 >{helpers.formattedAmount(item?.transactionAmount)}</td>
                 {userType === 'local' && (
-                  <td className='py-2 px-4 border-r dark:border-[#ffffff38] '>{helpers.formattedAmount(item?.user?.scratchCardDetail?.rewardAmount)}</td>
+                  <td className='py-2 px-4 border-r dark:border-[#ffffff38] '>{helpers.formattedAmount(item?.paymentRequestDetails?.rewardAmount)}</td>
                 )}
                 {userType === 'local' && (
                   <td className='py-2 px-4 border-r dark:border-[#ffffff38] '>
