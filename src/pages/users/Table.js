@@ -62,12 +62,14 @@ const Table = ({
   };
 
   const statusLabel = (item) => {
+    let statusText = item?.status === 'active' ? 'Active' : 'Inactive';
+    let titleText = `${statusText}`;
     return  item?.status === "deleted" ? (
       <div>Deleted</div>
     ) : (
       <label
         className="inline-flex relative items-center cursor-pointer"
-        title={`${item?.status === "active" ? "Active" : "Inactive"}`}
+        title={titleText}
       >
         <input
           type="checkbox"
