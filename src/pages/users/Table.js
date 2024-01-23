@@ -100,16 +100,16 @@ const Table = ({
     }
   };
 
-  const getWalletAmount = (user) => {
-    return user?.walletAmount
-      ? helpers.formattedAmount(user?.walletAmount)
+  const getWalletAmount = (userData) => {
+    return userData?.walletAmount
+      ? helpers.formattedAmount(userData?.walletAmount)
       : 0;
   };
 
-  const getKycStatusText = (user) => {
+  const getKycStatusText = (userKyc) => {
     return helpers.ternaryCondition(
-      user?.kycRecord?.isApproved,
-      startCase(user?.kycRecord?.isApproved),
+      userKyc?.kycRecord?.isApproved,
+      startCase(userKyc?.kycRecord?.isApproved),
       'KYC Not Uploaded Yet'
     );
   };
