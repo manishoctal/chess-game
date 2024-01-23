@@ -35,11 +35,8 @@ const ReportsTable = ({ users, page, userType, pageSize }) => {
                   </div>
               </th>
               <th scope='col' className='py-3 px-6'>
-                <div className='text-left'>{t('DURATION')}{t('SECONDS')}</div>
+                <div className='text-left'>{t('DURATION')} {t('SECONDS')}</div>
               </th>
-              {helpers.andOperator( userType==='local',<th scope='col' className='py-3 px-6'>
-                <div className='text-left'>{t('COST_TO_FOREIGN_TOURIST')}</div>
-              </th>)}
               <th scope='col' className='py-3 px-6'>
                 <div className='text-left'>{t('THAI_LOCAL_REWARD')}</div>
               </th>
@@ -107,7 +104,7 @@ const ReportsTable = ({ users, page, userType, pageSize }) => {
                       </td>
                     )}
                   <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center font-bold text-slate-900'>
-                  {helpers.formattedAmount(item?.local?.rewardAmount)}      
+                  {helpers.formattedAmount(item?.rewardAmount)}      
                   </td>
                   <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
                   {helpers.formattedAmount(item?.amount)}

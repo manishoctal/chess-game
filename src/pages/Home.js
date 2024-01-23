@@ -7,8 +7,6 @@ import earning from 'assets/images/earning.jpg'
 import dayjs from 'dayjs'
 import { useTranslation } from 'react-i18next'
 import Chart from 'react-apexcharts'
-
-
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -24,7 +22,7 @@ import AuthContext from 'context/AuthContext'
 import ODateRangePicker from 'components/shared/datePicker/ODateRangePicker'
 import OCountUp from 'components/OCountUp'
 import helpers from 'utils/helpers'
-import { styled, createTheme, ThemeProvider, StyledEngineProvider } from '@mui/material/styles'
+import { createTheme, ThemeProvider, StyledEngineProvider } from '@mui/material/styles'
 import useToastContext from 'hooks/useToastContext'
 
 ChartJS.register(
@@ -105,8 +103,15 @@ function Home() {
   const [graphTwoStartData, setGraphTwoStartData] = useState((dayjs().subtract(1, 'month').format('YYYY-MM-DD')))
   const [graphTwoEndDate, setGraphTwoEndDate] = useState(dayjs().format('YYYY-MM-DD'))
   const [graphTwoDropdownValue, setGraphTwoDropdownValue] = useState("day")
-  const [disableYearButtonFirst, setDisableYearButtonFirst] = useState(false)
-  const [disableYearButtonSecond, setDisableYearButtonSecond] = useState(false)
+  const [dayDisableForWeek,setDayDisableForWeek]= useState(false)
+  const [dayDisableForDay,setDayDisableForDay]= useState(false)
+  const [dayDisableForMonth,setDayDisableForMonth]= useState(false)
+  const [dayDisableForYear,setDayDisableForyear]= useState(false)
+  
+  const [dayDisableForWeekSecond,setDayDisableForWeekSecond]= useState(false)
+  const [dayDisableForDaySecond,setDayDisableForDaySecond]= useState(false)
+  const [dayDisableForMonthSecond,setDayDisableForMonthSecond]= useState(false)
+  const [dayDisableForYearSecond,setDayDisableForyearSecond]= useState(false)
   const notification = useToastContext()
   const [isReset, setIsReset] = useState(false)
   const [chartData, setChartData] = useState({
@@ -308,34 +313,54 @@ function Home() {
     setGraphTwoDropdownValue("day")
   }
 
+ 
+
   const checkIfButtonShouldBeDisabled = (start, end, type) => {
     const dateDifference = dayjs(end).diff(start, 'day');
+    console.log("dateDifference",dateDifference)
+    //DAY
     if (dateDifference >= 1 && dateDifference <= 31) {
       if (type === "second") {
-        setDisableYearButtonSecond(true)
+        setDayDisableForyearSecond(true)
+        setDayDisableForMonthSecond(true)
       }
       else {
-        setDisableYearButtonFirst(true)
+        setDayDisableForyear(true)
+        setDayDisableForMonth(true)
       }
     }
+    //YEAR
     if (dateDifference > 366) {
       if (type === "second") {
-        setDisableYearButtonSecond(true)
+        setDayDisableForMonthSecond(true)
+        setDayDisableForDaySecond(true)
+        setDayDisableForWeekSecond(true)
       }
       else {
-        setDisableYearButtonFirst(true)
+        setDayDisableForMonth(true)
+        setDayDisableForDay(true)
+        setDayDisableForWeek(true)
       }
     }
+    //YEAR
     if (dateDifference > 31 && dateDifference <= 366) {
       if (type === "second") {
-        setDisableYearButtonSecond(true)
+        setDayDisableForDaySecond(true)
+        setDayDisableForWeekSecond(true)
+        setDayDisableForyearSecond(true)
       }
       else {
-        setDisableYearButtonFirst(true)
+        setDayDisableForDay(true)
+        setDayDisableForWeek(true)
+        setDayDisableForyear(true)
       }
     }
     return false;
   };
+
+
+  console.log("dayDisableForWeek", dayDisableForWeek)
+  console.log("dayDisableForDay", dayDisableForDay)
   return (
     <>
       <div className='py-4 px-4 md:px-8 dark:bg-slate-900'>
@@ -508,7 +533,8 @@ function Home() {
                   type='button'
                   className={`bg-gradientTo text-sm px-8 mb-3 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/4 ${selectedButton === 'day' ? 'bg-gradient-to-b from-blue-300 to-green-500' : ''}`}
                   onClick={() => handleButtonChange('day', "first")}
-                  disabled={disableYearButtonFirst}
+                  disabled={dayDisableForDay}
+                  // disabled={handleDisable(startDate,endDate)}
                 >
                   Daily
                 </button>
@@ -516,7 +542,7 @@ function Home() {
                   type='button'
                   className={`bg-gradientTo text-sm px-8 mb-3 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/4 ${selectedButton === 'week' ? 'bg-gradient-to-b from-blue-300 to-green-500' : ''}`}
                   onClick={() => handleButtonChange('week', "first")}
-                  disabled={disableYearButtonFirst}
+                  disabled={dayDisableForWeek}
                 >
                   Weekly
                 </button>
@@ -524,7 +550,7 @@ function Home() {
                   type='button'
                   className={`bg-gradientTo text-sm px-8 mb-3 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/4 ${selectedButton === 'month' ? 'bg-gradient-to-b from-blue-300 to-green-500' : ''}`}
                   onClick={() => handleButtonChange('month', "first")}
-                  disabled={disableYearButtonFirst}
+                  disabled={dayDisableForMonth}
                 >
                   Monthly
                 </button>
@@ -532,7 +558,7 @@ function Home() {
                   type='button'
                   className={`bg-gradientTo text-sm px-8 mb-3 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/4 ${selectedButton === 'year' ? 'bg-gradient-to-b from-blue-300 to-green-500' : ''}`}
                   onClick={() => handleButtonChange('year', "first")}
-                  disabled={disableYearButtonFirst}
+                  disabled={dayDisableForYear}
                 >
                   Yearly
                 </button>
@@ -603,7 +629,7 @@ function Home() {
                   type='button'
                   className={`bg-gradientTo text-sm px-8 mb-3 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/4 ${graphTwoDropdownValue === 'day' ? 'bg-gradient-to-b from-blue-300 to-green-500' : ''}`}
                   onClick={() => handleButtonChange('day', "second")}
-                  disabled={disableYearButtonSecond}
+                  disabled={dayDisableForDaySecond}
 
                 >
                   Daily
@@ -612,7 +638,7 @@ function Home() {
                   type='button'
                   className={`bg-gradientTo text-sm px-8 mb-3 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/4 ${graphTwoDropdownValue === 'week' ? 'bg-gradient-to-b from-blue-300 to-green-500' : ''}`}
                   onClick={() => handleButtonChange('week', "second")}
-                  disabled={disableYearButtonSecond}
+                  disabled={dayDisableForWeekSecond}
                 >
                   Weekly
                 </button>
@@ -620,7 +646,7 @@ function Home() {
                   type='button'
                   className={`bg-gradientTo text-sm px-8 mb-3 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/4 ${graphTwoDropdownValue === 'month' ? 'bg-gradient-to-b from-blue-300 to-green-500' : ''}`}
                   onClick={() => handleButtonChange('month', "second")}
-                  disabled={disableYearButtonSecond}
+                  disabled={dayDisableForMonthSecond}
                 >
                   Monthly
                 </button>
@@ -628,7 +654,7 @@ function Home() {
                   type='button'
                   className={`bg-gradientTo text-sm px-8 mb-3 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/4 ${graphTwoDropdownValue === 'year' ? 'bg-gradient-to-b from-blue-300 to-green-500' : ''}`}
                   onClick={() => handleButtonChange('year', "second")}
-                  disabled={disableYearButtonSecond}
+                  disabled={dayDisableForYearSecond}
                 >
                   Yearly
                 </button>
