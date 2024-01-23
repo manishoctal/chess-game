@@ -107,7 +107,7 @@ function Home() {
   const [dayDisableForDay,setDayDisableForDay]= useState(false)
   const [dayDisableForMonth,setDayDisableForMonth]= useState(false)
   const [dayDisableForYear,setDayDisableForyear]= useState(false)
-  
+
   const [dayDisableForWeekSecond,setDayDisableForWeekSecond]= useState(false)
   const [dayDisableForDaySecond,setDayDisableForDaySecond]= useState(false)
   const [dayDisableForMonthSecond,setDayDisableForMonthSecond]= useState(false)
@@ -358,9 +358,6 @@ function Home() {
     return false;
   };
 
-
-  console.log("dayDisableForWeek", dayDisableForWeek)
-  console.log("dayDisableForDay", dayDisableForDay)
   return (
     <>
       <div className='py-4 px-4 md:px-8 dark:bg-slate-900'>
