@@ -113,6 +113,55 @@ const Table = ({
     );
   };
 
+  const renderTableCell = (content, classNames) => (
+    <td className={classNames}>{content}</td>
+  );
+
+  const renderUserTypeSpecificCells = (item, userType) => {
+    if (userType === 'local') {
+      return renderTableCell(getWalletAmount(item), `${
+        item && item?.status === 'deleted' ? 'text-red-600' : 'bg-white'
+      } py-2 px-4 border-r  dark:border-[#ffffff38] text-center`);
+    } else if (userType === 'tourist') {
+      return (
+        <>
+          {renderTableCell(
+            helpers.ternaryCondition(item?.upcCode, item?.upcCode, 'N/A'),
+            `${
+              item && item?.status === 'deleted'
+                ? 'text-red-600'
+                : 'bg-white'
+            } py-4 px-3 border-r  dark:border-[#ffffff38] text-center`
+          )}
+          {renderTableCell(
+            helpers.ternaryCondition(
+              item?.referralCode,
+              item?.referralCode,
+              'N/A'
+            ),
+            `${
+              item && item?.status === 'deleted'
+                ? 'text-red-600'
+                : 'bg-white'
+            } py-4 px-3 border-r text-center dark:border-[#ffffff38]`
+          )}
+          {renderTableCell(
+            helpers.ternaryCondition(
+              item?.familyName,
+              item?.familyName,
+              'N/A'
+            ),
+            `${
+              item && item?.status === 'deleted'
+                ? 'text-red-600'
+                : 'bg-white'
+            } py-4 px-3 border-r text-center dark:border-[#ffffff38]`
+          )}
+        </>
+      );
+    }
+  };
+
   const renderTableRows=()=>{
     return  users?.map((item, i) => (
       <tr
@@ -123,126 +172,68 @@ const Table = ({
             : "bg-white"
         } border-b dark:bg-gray-800 dark:border-[#ffffff38]'`}
       >
-        <th
-          scope="row"
-          className="py-4 px-3 border-r  font-medium text-gray-900  dark:text-white dark:border-[#ffffff38]"
-        >
-          {i + 1 + pageSize * (page - 1)}
-        </th>
-        <td
-          className={`${
-            item && item?.status === "deleted"
-              ? "text-red-600"
-              : "bg-white"
-          } py-4 px-4 border-r  dark:border-[#ffffff38]'`}
-        >
-            {getDisplayName(item, userType)}
-        </td>
-        <td
-          className={`${
-            item && item?.status === "deleted"
-              ? "text-red-600"
-              : "bg-white"
-          } py-2 px-4 border-r  dark:border-[#ffffff38] font-bold text-slate-900'`}
-        >
-          {helpers.ternaryCondition(
-            item?.email,
-            item?.email,
-            "N/A"
-          )}
-        </td>
-        <td
-          className={`${
-            item && item?.status === "deleted"
-              ? "text-red-600"
-              : "bg-white"
-          } py-2 px-4 border-r  dark:border-[#ffffff38] text-center font-bold text-slate-900'`}
-        >
-          {helpers.ternaryCondition(
-            item?.countryCode,
-            item?.countryCode,
-            "N/A"
-          )}
-        </td>
-        <td
-          className={`${
-            item && item?.status === "deleted"
-              ? "text-red-600"
-              : "bg-white"
-          } py-2 px-4 border-r dark:border-[#ffffff38] text-center font-bold ${
-            item && item?.status === "deleted"
-              ? ""
-              : "text-slate-900"
-          }`}
-        >
-          {helpers.ternaryCondition(
-            item?.mobile,
-            item?.mobile,
-            "N/A"
-          )}
-        </td>
-        {userType === "local" && (
-          <td
-            className={`${
-              item && item?.status === "deleted"
-                ? "text-red-600"
-                : "bg-white"
-            } py-2 px-4 border-r  dark:border-[#ffffff38] text-center`}
-          >
-            {getWalletAmount(item)}
-          </td>
-        )}
-        {userType === "tourist" && (
-          <>
-            <td
-              className={`${
-                item && item?.status === "deleted"
-                  ? "text-red-600"
-                  : "bg-white"
-              } py-4 px-3 border-r  dark:border-[#ffffff38] text-center`}
-            >
-              {helpers.ternaryCondition(
-                item?.upcCode,
-                item?.upcCode,
-                "N/A"
-              )}
-            </td>
-            <td
-              className={`${
-                item && item?.status === "deleted"
-                  ? "text-red-600"
-                  : "bg-white"
-              } py-4 px-3 border-r text-center dark:border-[#ffffff38]`}
-            >
-              {helpers.ternaryCondition(
-                item?.referralCode,
-                item?.referralCode,
-                "N/A"
-              )}
-            </td>
-            <td
-              className={`${
-                item && item?.status === "deleted"
-                  ? "text-red-600"
-                  : "bg-white"
-              } py-4 px-3 border-r text-center dark:border-[#ffffff38]`}
-            >
-              {helpers.ternaryCondition(
-                item?.familyName,
-                item?.familyName,
-                "N/A"
-              )}
-            </td>
-          </>
-        )}
-
-        <td className="py-4 px-3 border-r  dark:border-[#ffffff38] text-center">
-        {getKycStatusText(item)}
-        </td>
-        <td className="py-4 px-3 border-r  dark:border-[#ffffff38] text-center">
-          {dayjs(item?.createdAt).format("DD-MM-YYYY hh:mm A") ||
-            "N/A"}
-        </td>
+         {renderTableCell(
+        i + 1 + pageSize * (page - 1),
+        'py-4 px-3 border-r  font-medium text-gray-900  dark:text-white dark:border-[#ffffff38]'
+      )}
+        {renderTableCell(
+        getDisplayName(item, userType),
+        `${
+          item && item?.status === 'deleted'
+            ? 'text-red-600'
+            : 'bg-white'
+        } py-4 px-4 border-r  dark:border-[#ffffff38]'`
+      )}
+        {renderTableCell(
+        helpers.ternaryCondition(
+          item?.email,
+          item?.email,
+          'N/A'
+        ),
+        `${
+          item && item?.status === 'deleted'
+            ? 'text-red-600'
+            : 'bg-white'
+        } py-2 px-4 border-r  dark:border-[#ffffff38] font-bold text-slate-900'`
+      )}
+        {renderTableCell(
+        helpers.ternaryCondition(
+          item?.countryCode,
+          item?.countryCode,
+          "N/A"
+        ),
+        `${
+          item && item?.status === "deleted"
+            ? "text-red-600"
+            : "bg-white"
+        } py-2 px-4 border-r  dark:border-[#ffffff38] text-center font-bold text-slate-900'`
+      )}
+        
+         {renderTableCell(
+        helpers.ternaryCondition(
+          item?.mobile,
+          item?.mobile,
+          "N/A"
+        ),
+        `${
+          item && item?.status === "deleted"
+            ? "text-red-600"
+            : "bg-white"
+        } py-2 px-4 border-r dark:border-[#ffffff38] text-center font-bold ${
+          item && item?.status === "deleted"
+            ? ""
+            : "text-slate-900"
+        }`
+      )}
+      {renderUserTypeSpecificCells(item, userType)}
+          {renderTableCell(
+        getKycStatusText(item),
+        'py-4 px-3 border-r  dark:border-[#ffffff38] text-center'
+      )}
+         {renderTableCell(
+        dayjs(item?.createdAt).format('DD-MM-YYYY hh:mm A') || 'N/A',
+        'py-4 px-3 border-r  dark:border-[#ffffff38] text-center'
+      )}
         {helpers.andOperator(
           manager?.add || user?.permission?.length === 0,
           <td className="py-2 px-4 border-r  dark:border-[#ffffff38] text-center">
