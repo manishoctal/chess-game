@@ -93,6 +93,7 @@ export const lineGraphData2 = {
     }
   ]
 }
+
 function Home() {
   const { t } = useTranslation()
   const { logoutUser } = useContext(AuthContext)
