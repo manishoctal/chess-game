@@ -76,35 +76,35 @@ const ReportsTable = ({ users, page, userType, pageSize }) => {
                   >
                     {i + 1 + pageSize * (page - 1)}
                   </th>
-                  <td className='py-4 px-4 border-r  dark:border-[#ffffff38] font-bold text-slate-900'>
+                  <td className='py-4 px-4 border-r  dark:border-[#ffffff38] font-bold text-slate-900 dark:text-slate-400'>
                     {helpers.ternaryCondition(
                      userType==='tourist' ,
                       item?.tourist?.firstName,
                       item?.local?.firstName
                     )}
                   </td>
-                  <td className='py-2 px-4 border-r  dark:border-[#ffffff38] font-bold text-slate-900'>
+                  <td className='py-2 px-4 border-r  dark:border-[#ffffff38] font-bold text-slate-900 dark:text-slate-400'>
                     {helpers.ternaryCondition(
                        userType==='tourist',
                       item?.local?.firstName,
                       item?.tourist?.firstName,
                     )}
                   </td>
-                  <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center font-bold text-slate-900'>
+                  <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center font-bold text-slate-900 dark:text-slate-400'>
                     {helpers.getSeconds(
                       item?.createdAt,
                       item?.acceptedAt
-                      
+
                     )}
                   </td>
                     {helpers.andOperator(
                       userType==='local',
-                  <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center font-bold text-slate-900'>
+                  <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center font-bold text-slate-900 dark:text-slate-400'>
                     {  0}
                       </td>
                     )}
-                  <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center font-bold text-slate-900'>
-                  {helpers.formattedAmount(item?.rewardAmount)}      
+                  <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center font-bold text-slate-900 dark:text-slate-400'>
+                  {helpers.formattedAmount(item?.rewardAmount)}
                   </td>
                   <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'>
                   {helpers.formattedAmount(item?.amount)}
@@ -133,7 +133,7 @@ const ReportsTable = ({ users, page, userType, pageSize }) => {
                   </td>
                   <td className='py-4 px-3 border-r  dark:border-[#ffffff38] text-center'>
                   <button type='button' onClick={()=>handleUserView(item?.qrCodeString,'QR')}>
-                    
+
                   <QRCodeGenerator qrCodeValue={item?.qrCodeString} />
                   </button>
                   </td>

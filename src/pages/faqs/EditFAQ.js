@@ -44,8 +44,8 @@ const EditFAQ = ({ setEditShowModal, getAllFAQ, item, viewType }) => {
             className="sm:py-4 sm:px-2 py-8 px-7"
           >
             <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none min-w-[762px]">
-              <div className="flex items-center justify-between p-5 border-b border-solid border-slate-200 rounded-t">
-                <h3 className="text-xl font-semibold">
+              <div className="dark:bg-gray-900 flex items-center justify-between p-5 border-b border-solid border-slate-200 rounded-t">
+                <h3 className="text-xl font-semibold dark:text-white">
                   {viewType === "view" ? "View FAQs" : t("FAQS_EDIT_FAQS")}
                 </h3>
                 <button
@@ -55,7 +55,7 @@ const EditFAQ = ({ setEditShowModal, getAllFAQ, item, viewType }) => {
                   <span className=" text-[#B8BBBF]  text-4xl ">×</span>
                 </button>
               </div>
-              <div className="relative p-6 flex-auto">
+              <div className="relative p-6 flex-auto dark:bg-gray-800">
                 <div className="grid grid-cols-1">
                   <div className="relative z-0 mb-6 w-full ">
                     <input
@@ -81,7 +81,7 @@ const EditFAQ = ({ setEditShowModal, getAllFAQ, item, viewType }) => {
                     <label
                       htmlFor="title"
                       maxLength={200}
-                      className="peer-focus:font-normal absolute text-sm text-[#A5A5A5] dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 left-3 bg-white p-2 z-10 origin-[2] peer-focus:left-0 peer-focus:text-[#A5A5A5] peer-focus:text-lg peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-8"
+                      className="peer-focus:font-normal absolute text-sm text-[#A5A5A5] dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 left-3 bg-white p-2 z-10 origin-[2] peer-focus:left-0 peer-focus:text-[#A5A5A5] peer-focus:text-lg peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-8 dark:bg-gray-800"
                     >
                       {t("FAQS_TITLE")}
                       <span className="text-red-500">*</span>
@@ -106,7 +106,7 @@ const EditFAQ = ({ setEditShowModal, getAllFAQ, item, viewType }) => {
                     />
                     <label
                       htmlFor="content"
-                      className="peer-focus:font-normal absolute text-sm text-[#A5A5A5] dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 left-3 bg-white p-2 z-10 origin-[2] peer-focus:left-0 peer-focus:text-[#A5A5A5] peer-focus:text-lg peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-8"
+                      className="peer-focus:font-normal absolute text-sm text-[#A5A5A5] dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 left-3 bg-white p-2 z-10 origin-[2] peer-focus:left-0 peer-focus:text-[#A5A5A5] peer-focus:text-lg peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-8 dark:bg-gray-800"
                     >
                       {t("FAQS_CONTENT")}
                       <span className="text-red-500">*</span>
@@ -115,7 +115,7 @@ const EditFAQ = ({ setEditShowModal, getAllFAQ, item, viewType }) => {
                   </div>
                 </div>
               </div>
-              <div className="flex items-center justify-center p-6 border-t border-solid border-slate-200 rounded-b">
+              <div className="dark:bg-gray-900 flex items-center justify-center p-6 border-t border-solid border-slate-200 rounded-b">
                 <button
                   className="text-black bg-[#E1E1E1] font-normal px-12 py-2.5 text-sm outline-none focus:outline-none rounded mr-6  ease-linear transition-all duration-150"
                   type="button"

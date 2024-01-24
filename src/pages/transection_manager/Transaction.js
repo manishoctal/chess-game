@@ -106,8 +106,8 @@ function Transaction () {
 
   return (
     <div>
-      <div className='bg-[#F9F9F9]'>
-        <div className='px-3 py-4'>
+      <div className='bg-[#F9F9F9] dark:bg-slate-900 p-4'>
+        <div className='p-5 dark:bg-slate-800 rounded-md '>
           <div className='flex justify-center items-center grid grid-cols-2 w-[500px]'>
             <button
               type='button'
@@ -130,7 +130,7 @@ function Transaction () {
               {t('THAI_LOCAL')}
             </button>
           </div>
-          <div className='bg-white border border-[#E9EDF9] rounded-lg'>
+          <div className='bg-white border border-[#E9EDF9] rounded-lg dark:bg-gray-800 dark:mt-4'>
             <form className='border-b border-b-[#E3E3E3] 2xl:flex gap-2 px-4 py-3'>
               <div className='col-span-2 flex flex-wrap  items-center'>
                 <div className='flex items-center lg:pt-0 pt-3 flex-wrap justify-center mb-2 2xl:mb-0'>

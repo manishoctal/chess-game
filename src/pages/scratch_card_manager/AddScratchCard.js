@@ -29,7 +29,7 @@ const AddScratchCard = ({ setShowModal, allScratchCard }) => {
 
   const handleSubmitForm = async data => {
     try {
-      
+
       if(date===''){
         setIsValidityError(true)
         return
@@ -68,8 +68,8 @@ const AddScratchCard = ({ setShowModal, allScratchCard }) => {
         <div className='relative w-auto my-6 mx-auto max-w-3xl'>
           <div className='md:py-4 sm:px-2 sm:py-8 px-7'>
             <div className='border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none lg:min-w-[762px]'>
-              <div className='flex items-center justify-between p-5 border-b border-solid border-slate-200 rounded-t'>
-                <h3 className='text-xl font-semibold'>{t('ADD_NEW_COUPON')}</h3>
+              <div className='dark:bg-gray-900 flex items-center justify-between p-5 border-b border-solid border-slate-200 rounded-t'>
+                <h3 className='text-xl font-semibold dark:text-white'>{t('ADD_NEW_COUPON')}</h3>
                 <button
                   className=' ml-auto flex items-center justify-center  text-black border-2 rounded-full  h-8 w-8 float-right text-3xl leading-none font-extralight outline-none focus:outline-none'
                   onClick={() => setShowModal(false)}
@@ -79,7 +79,7 @@ const AddScratchCard = ({ setShowModal, allScratchCard }) => {
                   </span>
                 </button>
               </div>
-              <div className='relative p-6 flex-auto'>
+              <div className='relative p-6 flex-auto dark:bg-gray-800'>
                 <div className='grid grid-cols-2'>
                   <div className='md:py-4 sm:px-2 sm:py-3 md:px-7 px-2'>
                     <OInputField
@@ -141,7 +141,7 @@ const AddScratchCard = ({ setShowModal, allScratchCard }) => {
                     />
                   </div>
 
-             
+
                   <div className='md:py-4 sm:px-2 sm:py-3 md:px-7 px-2'>
                     <div className='relative z-0  w-full group'>
                       <label
@@ -168,7 +168,7 @@ const AddScratchCard = ({ setShowModal, allScratchCard }) => {
                   </div>
                 </div>
               </div>
-              <div className='flex items-center justify-center p-6 border-t border-solid border-slate-200 rounded-b'>
+              <div className='dark:bg-gray-900 flex items-center justify-center p-6 border-t border-solid border-slate-200 rounded-b'>
                 <button
                   className='text-black bg-[#E1E1E1] font-normal px-12 py-2.5 text-sm outline-none focus:outline-none rounded mr-6  ease-linear transition-all duration-150'
                   type='button'

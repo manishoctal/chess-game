@@ -284,10 +284,10 @@ const UserView = () => {
                         <img src={timeIcon} alt='' />
                       </figure>
                       <figcaption className='w-[calc(100%_-_41px)]'>
-                        <span className='block text-[#5C5C5C]'>
+                        <span className='block text-[#5C5C5C] dark:text-white'>
                           {t('REGISTERED_DATE')}
                         </span>
-                        <strong>
+                        <strong className='dark:text-slate-400'>
                           {helpers.ternaryCondition(
                             item?.createdAt,
                             dayjs(item?.createdAt).format('DD-MM-YYYY hh:mm A'),
@@ -305,10 +305,11 @@ const UserView = () => {
                         <img src={refferalCodeIcon} alt='' />
                       </figure>
                       <figcaption className='w-[calc(100%_-_41px)]'>
-                        <span className='block text-[#5C5C5C]'>
+                        <span className='block text-[#5C5C5C] dark:text-white'>
                           {t('USERS_REFERRAL_CODE')}
                         </span>
-                        <strong>
+                        <strong className='dark:text-slate-400'>
+
                           {helpers.ternaryCondition(
                             item?.referralCode,
                             item?.referralCode,
@@ -326,10 +327,11 @@ const UserView = () => {
                         <img src={genderIcon} alt='' />
                       </figure>
                       <figcaption className='w-[calc(100%_-_41px)]'>
-                        <span className='block text-[#5C5C5C]'>
+                        <span className='block text-[#5C5C5C] dark:text-white'>
                           {t('GENDER')}
                         </span>
-                        <strong>
+                        <strong className='dark:text-slate-400'>
+
                           {helpers.ternaryCondition(
                             item?.gender,
                             startCase(item?.gender),
@@ -347,10 +349,11 @@ const UserView = () => {
                         <img src={dobIcon} alt='' />
                       </figure>
                       <figcaption className='w-[calc(100%_-_41px)]'>
-                        <span className='block text-[#5C5C5C]'>
+                        <span className='block text-[#5C5C5C] dark:text-white'>
                           {t('USER_DOB')}
                         </span>
-                        <strong>
+                        <strong className='dark:text-slate-400'>
+
                           {helpers.ternaryCondition(
                             item?.dob,
                             dayjs(item?.dob).format('D MMM YYYY'),
@@ -368,10 +371,11 @@ const UserView = () => {
                         <img src={upcCodeIcon} alt='' />
                       </figure>
                       <figcaption className='w-[calc(100%_-_41px)]'>
-                        <span className='block text-[#5C5C5C]'>
+                        <span className='block text-[#5C5C5C] dark:text-white'>
                           {t('UPC_CODE')}
                         </span>
-                        <strong>
+                        <strong className='dark:text-slate-400'>
+
                           {helpers.ternaryCondition(
                             item?.upcCode,
                             item?.upcCode,
@@ -393,10 +397,11 @@ const UserView = () => {
                         <img src={locationIcon} alt='' />
                       </figure>
                       <figcaption className='w-[calc(100%_-_41px)]'>
-                        <span className='block text-[#5C5C5C]'>
+                        <span className='block text-[#5C5C5C] dark:text-white'>
                           {t('NATIONALITY')}
                         </span>
-                        <strong>
+                        <strong className='dark:text-slate-400'>
+
                           {helpers.ternaryCondition(
                             item?.nationality,
                             item?.nationality,
@@ -414,10 +419,11 @@ const UserView = () => {
                         <img src={cityIcon} alt='' />
                       </figure>
                       <figcaption className='w-[calc(100%_-_41px)]'>
-                        <span className='block text-[#5C5C5C]'>
+                        <span className='block text-[#5C5C5C] dark:text-white'>
                           {t('COUNTRY_OF_LIVING')}
                         </span>
-                        <strong>
+                                               <strong className='dark:text-slate-400'>
+
                           {helpers.ternaryCondition(
                             item?.countryData,
                             startCase(item?.countryData),
@@ -435,10 +441,11 @@ const UserView = () => {
                         <img src={buildingIcon} alt='' />
                       </figure>
                       <figcaption className='w-[calc(100%_-_41px)]'>
-                        <span className='block text-[#5C5C5C]'>
+                        <span className='block text-[#5C5C5C] dark:text-white'>
                           {t('CITIES_VISITED_IN_THAILAND')}
                         </span>
-                        <strong>
+                                               <strong className='dark:text-slate-400'>
+
                           {visitedCities()}
                         </strong>
                       </figcaption>
@@ -452,10 +459,11 @@ const UserView = () => {
                         <img src={buildingIcon} alt='' />
                       </figure>
                       <figcaption className='w-[calc(100%_-_41px)]'>
-                        <span className='block text-[#5C5C5C]'>
+                        <span className='block text-[#5C5C5C] dark:text-white'>
                           {t('CITIES_GOING_TO_VISIT_IN_THAILAND')}
                         </span>
-                        <strong>
+                                               <strong className='dark:text-slate-400'>
+
                           {planningCities()}
                         </strong>
                       </figcaption>
@@ -469,10 +477,11 @@ const UserView = () => {
                         <img src={bonusIcon} alt='' />
                       </figure>
                       <figcaption className='w-[calc(100%_-_41px)]'>
-                        <span className='block text-[#5C5C5C]'>
+                        <span className='block text-[#5C5C5C] dark:text-white'>
                           {t('BONUS_AMOUNT')}
                         </span>
-                        <strong>{item?.bonusAmount || 0}</strong>
+                                               <strong className='dark:text-slate-400'>
+{item?.bonusAmount || 0}</strong>
                       </figcaption>
                     </div>
                   </li>
@@ -480,7 +489,7 @@ const UserView = () => {
               </ul>
             </div>
             <div className='border border-1 border-[#E1DEDE] rounded-md p-12'>
-              <span className='block text-center pb-3'>{t('KYC_DOCUMENT')}</span>
+              <span className='block text-center pb-3 dark:text-white'>{t('KYC_DOCUMENT')}</span>
               <div className='relative'>
                 <figure className='inline-block overflow-hidden border mb-3 w-full h-[200px]'>
                   <OImage
@@ -504,9 +513,9 @@ const UserView = () => {
                 </figure>
                 {renderApprovalStatus()}
               </div>
-              <span className="block text-center">{t('DOCUMENT_NUMBER')}: <b>{helpers.ternaryCondition(item?.kycRecord?.docNumber, item?.kycRecord?.docNumber, 'N/A')}</b></span>
+              <span className="block text-center dark:text-white">{t('DOCUMENT_NUMBER')}: <b>{helpers.ternaryCondition(item?.kycRecord?.docNumber, item?.kycRecord?.docNumber, 'N/A')}</b></span>
               {kycSection}
-              <span className="block text-center mt-4" >{t('KYC_STATUS')}: <b>{helpers.ternaryCondition(item?.kycRecord?.isApproved, capitalize(startCase(item?.kycRecord?.isApproved)), 'Kyc not uploaded yet')}</b></span>
+              <span className="block text-center mt-4 dark:text-white" >{t('KYC_STATUS')}: <b>{helpers.ternaryCondition(item?.kycRecord?.isApproved, capitalize(startCase(item?.kycRecord?.isApproved)), 'Kyc not uploaded yet')}</b></span>
             </div>
           </div>
         </div>
