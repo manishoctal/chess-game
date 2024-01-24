@@ -132,7 +132,7 @@ const Table = ({
                       {(manager?.view || user?.role === 'admin') && (
                         <li
                           onClick={() => handelEdit(item, 'view')}
-                          className='px-2 py-2 hover:bg-white hover:text-gradientTo'
+                          className='px-2 py-2  hover:text-gradientTo'
                         >
                           <button title={t('FAQS_EDIT_FAQS')}>
                             {' '}
@@ -143,7 +143,7 @@ const Table = ({
                       {(manager?.add || user?.role === 'admin') && (
                         <li
                           onClick={() => handelEdit(item, 'edit')}
-                          className='px-2 py-2 hover:bg-white hover:text-gradientTo'
+                          className='px-2 py-2  hover:text-gradientTo'
                         >
                           <button title={t('FAQS_EDIT_FAQS')}>
                             {' '}

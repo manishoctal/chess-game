@@ -75,7 +75,7 @@ const SupportManagerTable = ({
                     </th>
                     <td className='py-4 px-6 border-r'>
                       <div>
-                        <p className='text-sm font-bold text-slate-950 leading-none'>
+                        <p className='text-sm font-bold text-slate-950 leading-none dark:text-slate-400'>
                           {helpers.getFullName(
                             item?.user?.firstName,
                             item?.user?.lastName
@@ -124,7 +124,7 @@ const SupportManagerTable = ({
                       <td className='py-2 px-2 border-l'>
                         <div className=''>
                           <ul className='flex justify-center'>
-                            <li className='px-2 py-2 hover:bg-white hover:text-LightBlue'>
+                            <li className='px-2 py-2  hover:text-LightBlue'>
                               {helpers.ternaryCondition(
                                 item?.replied === false,
                                 <button
@@ -134,7 +134,7 @@ const SupportManagerTable = ({
                                     false,
                                     true
                                   )}
-                                  
+
                                   onClick={() => handleReply(item)}
                                 >
                                   {' '}

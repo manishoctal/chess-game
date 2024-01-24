@@ -47,12 +47,12 @@ const ScratchCardTable = ({ subAdmin, page, pageSize }) => {
               >
                 <th
                   scope='row'
-                  className='py-2 px-4 border-r dark:border-[#ffffff38] font-medium text-gray-900  dark:text-white'
+                  className='py-2 px-4 border-r dark:border-[#ffffff38] font-medium text-gray-900 dark:text-white'
                 >
                   {i + 1 + pageSize * (page - 1)}
                 </th>
 
-                <td className='py-2 px-4 border-r dark:border-[#ffffff38] text-slate-900 font-bold'>{item?.couponCode}</td>
+                <td className='py-2 px-4 border-r dark:border-[#ffffff38] dark:text-slate-400 text-slate-900 font-bold'>{item?.couponCode}</td>
                 <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>{helpers.formattedAmount(item?.couponAmount)}</td>
                 <td className='py-2 px-4 border-r dark:border-[#ffffff38]'>
                 {helpers.formattedAmount(item?.rewardAmount)}
@@ -65,12 +65,12 @@ const ScratchCardTable = ({ subAdmin, page, pageSize }) => {
                   <div className=''>
                     <ul className='flex justify-center'>
                       <li className='px-2 py-2 hover:text-gradientTo'>
-                        
+
                         {  helpers.ternaryCondition(item.isUsed,<button type='button' onClick={() => handleUserView(item)} title={t('VIEW_SCRATCH_CARD_HISTORY')}>
                             {' '}
                             <AiFillEye className='cursor-pointer w-5 h-5 text-slate-600' />
                           </button>,<span className='text-green-500'>{t('UNUSED')}</span>)}
-                       
+
                       </li>
                     </ul>
                   </div>

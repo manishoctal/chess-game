@@ -141,7 +141,7 @@ function Home() {
   const [chartDataTwo, setChartDataTwo] = useState(getDefaultChartData());
   const [isReset, setIsReset] = useState(false)
   const notification = useToastContext()
- 
+
 
   const handleDateChange = (start, end, type) => {
     if (type === "first") {
@@ -460,7 +460,7 @@ function Home() {
           </div>
         </div>
       </div>
-      <div className='py-7 px-4 md:px-8 bg-[#F9F9F9] border-solid border-2 border-gray m-10 rounded-md'>
+      <div className='dark:bg-gray-800 py-7 px-4 md:px-8 bg-[#F9F9F9] border-solid border-2 border-gray m-10 rounded-md'>
         <div className='sm:flex items-center text-center sm:text-left px-3 md:px-4 xl:px-7 lg:px-5  py-4 md:py-8 border dark:bg-slate-900'>
           <StyledEngineProvider>
             <ThemeProvider theme={theme}>
@@ -515,9 +515,9 @@ function Home() {
             {t('O_RESET')}
           </button>
         </div>
-        <div className='sale_report grid grid-cols-1 gap-5 mb-7 bg-white p-4'>
+        <div className='sale_report grid grid-cols-1 gap-5 mb-7 bg-white p-4 dark:bg-gray-900 dark:border'>
           <div className='flex justify-between'>
-            <h4 className='font-medium text-lg'>
+            <h4 className='font-medium text-lg dark:text-white'>
               {t('EXPENDITURE_BY_THAI_LOCAL')}
             </h4>
           </div>
@@ -531,7 +531,7 @@ function Home() {
 
         </div>
       </div>
-      <div className='py-7 px-4 md:px-8 bg-[#F9F9F9] border-solid border-2 border-gray m-10 rounded-md'>
+      <div className='dark:bg-gray-800 py-7 px-4 md:px-8 bg-[#F9F9F9] border-solid border-2 border-gray m-10 rounded-md'>
         <div className='sm:flex items-center text-center sm:text-left px-3 md:px-4 xl:px-7 lg:px-5  py-4 md:py-8 border dark:bg-slate-900'>
           <StyledEngineProvider>
             <ThemeProvider theme={theme}>
@@ -586,9 +586,9 @@ function Home() {
             {t('O_RESET')}
           </button>
         </div>
-        <div className='sale_report grid grid-cols-1 gap-5 mb-7 bg-white p-4'>
+        <div className='dark:bg-gray-900 dark:border sale_report grid grid-cols-1 gap-5 mb-7 bg-white p-4'>
           <div className='flex justify-between'>
-            <h4 className='font-medium text-lg'>
+            <h4 className='font-medium text-lg dark:text-white'>
               {t('EXPENDITURE_BY_TOURIST')}
             </h4>
           </div>

@@ -139,11 +139,11 @@ function TransactionDetails () {
     })
   }
 
-  
+
   return (
     <div>
-      <div className='bg-[#F9F9F9] dark:bg-slate-900'>
-        <div className='px-3 py-4'>
+      <div className='bg-[#F9F9F9] '>
+        <div className='px-3 py-4 dark:bg-gray-900'>
           <div className='bg-white border border-[#E9EDF9] rounded-lg dark:bg-slate-800 dark:border-[#ffffff38]'>
             <form className='border-b border-b-[#E3E3E3]  px-4 py-3 pt-5 flex flex-wrap justify-between'>
               <div className='flex flex-wrap items-center'>
