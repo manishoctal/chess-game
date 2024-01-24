@@ -117,12 +117,12 @@ const Table = ({
     <td className={classNames}>{content}</td>
   );
 
-  const renderUserTypeSpecificCells = (item, userType) => {
-    if (userType === 'local') {
+  const renderUserTypeSpecificCells = (item, userTypeData) => {
+    if (userTypeData === 'local') {
       return renderTableCell(getWalletAmount(item), `${
         item && item?.status === 'deleted' ? 'text-red-600' : 'bg-white'
       } py-2 px-4 border-r  dark:border-[#ffffff38] text-center`);
-    } else if (userType === 'tourist') {
+    } else if (userTypeData === 'tourist') {
       return (
         <>
           {renderTableCell(
