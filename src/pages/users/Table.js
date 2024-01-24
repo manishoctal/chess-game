@@ -128,14 +128,14 @@ const Table = ({
       )}
     </>
   );
-  const renderActionTableCells = (item, userType) => (
+  const renderActionTableCells = (item, userTypeDetail) => (
      <td className="py-2 px-4 border-l">
           <div className="">
             <div className="flex justify-center items-center">
               <NavLink
                 onClick={() => handleUserView(item)}
                 to="/users/view"
-                state={{ ...item, userType }}
+                state={{ ...item, userTypeDetail }}
                 title={t("O_VIEW")}
                 className="px-2 py-2"
               >
@@ -143,7 +143,7 @@ const Table = ({
               </NavLink>
 
               {(manager?.add || user?.role === "admin") &&
-                userType === "local" &&
+                userTypeDetail === "local" &&
                 (item?.status !== "deleted" ? (
                   <div onClick={() => handelEdit(item)}>
                     <AiFillEdit
@@ -173,7 +173,7 @@ const Table = ({
               <div>
                 <NavLink
                   to="/users/transactionDetails"
-                  state={{ userType, userId: item?._id }}
+                  state={{ userTypeDetail, userId: item?._id }}
                 >
                   <MdHistory
                     className="text-green text-lg cursor-pointer  text-slate-600"
