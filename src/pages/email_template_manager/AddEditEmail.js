@@ -183,7 +183,7 @@ let submitButton = isLoading ? (
           placeholder='Write something...'
           readOnly={type === 'view'}
         />
-        
+
         <div className='flex items-center justify-center p-3 mt-3 border bg-[#cbd5e13a]  rounded-b'>
           <Link to='/email-manager'>
             <button

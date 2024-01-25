@@ -77,7 +77,7 @@ function Login() {
             onSubmit={handleSubmit(onSubmit)}
             method="post"
           >
-            <img src={logoImage} alt="logoImage" className="m-auto py-2 max-w-[267px]" />
+            <img src={logoImage} alt="logoImage" className="m-auto py-2 max-w-[267px] dark:invert" />
             <h1 className="text-center text-[40px] font-bold dark:text-white">
               {t("LOGIN_LETS_START")}!
             </h1>
@@ -93,7 +93,7 @@ function Login() {
                 name="email"
                 onKeyDown={(e) => preventSpace(e)}
                 // autoFocus
-                {...register("email", 
+                {...register("email",
                  formValidation.email)}
               />
 

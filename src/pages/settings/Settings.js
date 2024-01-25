@@ -95,10 +95,10 @@ const Settings = () => {
       <form>
         <section className='sm:px-8 px-4 py-4 '>
           <div className='border xl:w-full round'>
-            <header className='border-b  py-2 px-4 bg-gray-100 rounded-t-md '>
-              <div className='font-semibold'>{t('SETTING')}</div>
+            <header className='border-b  py-2 px-4 bg-gray-100 rounded-t-md dark:bg-gray-800 '>
+              <div className='font-semibold dark:text-white'>{t('SETTING')}</div>
             </header>
-            <div className='bg-white py-6 px-4  rounded-b-md'>
+            <div className='bg-white py-6 px-4  rounded-b-md dark:bg-gray-800 dark:text-white'>
               <div className='px-2  w-full'>
                 <div className='justify-between flex items-center'>
 
@@ -174,10 +174,10 @@ const Settings = () => {
 
       <div className='sm:px-8 px-4 py-4 '>
         <div className='border  xl:w-full'>
-          <header className='border-b  py-2 px-4 bg-gray-100 rounded-t-md '>
-            <div className='font-semibold'>{t('SETTINGS')}</div>
+          <header className='border-b  py-2 px-4 bg-gray-100 rounded-t-md dark:bg-gray-800 '>
+            <div className='font-semibold dark:text-white'>{t('SETTINGS')}</div>
           </header>
-          <div className='bg-white py-6 px-4  rounded-b-md'>
+          <div className='bg-white py-6 px-4  rounded-b-md dark:bg-gray-800 dark:text-white'>
             <main className='justify-center  flex-wrap grid  lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1  gap-4'>
               <div className='relative z-0 mb-6 w-full group'>
                 <OInputField
@@ -416,7 +416,7 @@ const Settings = () => {
           </div>
         </div></div>
       {(manager?.add || user?.role === 'admin') && (
-        <div className='text-center mt-4'>
+        <div className='text-center mt-4 '>
           <OButton
             disabled={!isDirty}
             label={<>{t('O_UPDATE')}</>}

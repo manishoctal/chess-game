@@ -62,12 +62,14 @@ const Table = ({
   };
 
   const statusLabel = (item) => {
+    let statusText = item?.status === 'active' ? 'Active' : 'Inactive';
+    let titleText = `${statusText}`;
     return  item?.status === "deleted" ? (
       <div>Deleted</div>
     ) : (
       <label
         className="inline-flex relative items-center cursor-pointer"
-        title={`${item?.status === "active" ? "Active" : "Inactive"}`}
+        title={titleText}
       >
         <input
           type="checkbox"
@@ -89,6 +91,222 @@ const Table = ({
       </label>
     );
   };
+  const getDisplayName = (userDetail, type) => {
+    if (type === 'local') {
+      return `${userDetail?.firstName} ${userDetail?.lastName ?? ''}`;
+    } else {
+      return userDetail?.firstName || 'N/A';
+    }
+  };
+
+  const getWalletAmount = (userData) => {
+    return userData?.walletAmount
+      ? helpers.formattedAmount(userData?.walletAmount)
+      : 0;
+  };
+
+  const getKycStatusText = (userKyc) => {
+    return helpers.ternaryCondition(
+      userKyc?.kycRecord?.isApproved,
+      startCase(userKyc?.kycRecord?.isApproved),
+      'KYC Not Uploaded Yet'
+    );
+  };
+
+  const renderTableCell = (content, classNames) => (
+    <td className={classNames}>{content}</td>
+  );
+  const renderCommonTableCells = (item) => (
+    <>
+      {renderTableCell(
+        getKycStatusText(item),
+        'py-4 px-3 border-r  dark:border-[#ffffff38] text-center'
+      )}
+      {renderTableCell(
+        dayjs(item?.createdAt).format('DD-MM-YYYY hh:mm A') || 'N/A',
+        'py-4 px-3 border-r  dark:border-[#ffffff38] text-center'
+      )}
+    </>
+  );
+  const renderActionTableCells = (item, userTypeDetail) => (
+     <td className="py-2 px-4 border-l">
+          <div className="">
+            <div className="flex justify-center items-center">
+              <NavLink
+                onClick={() => handleUserView(item)}
+                to="/users/view"
+                state={{ ...item, userTypeDetail }}
+                title={t("O_VIEW")}
+                className="px-2 py-2"
+              >
+                <AiFillEye className="cursor-pointer w-5 h-5 text-slate-600 dark:hover:text-white hover:text-blue-700" />{" "}
+              </NavLink>
+
+              {(manager?.add || user?.role === "admin") &&
+                userTypeDetail === "local" &&
+                (item?.status !== "deleted" ? (
+                  <div onClick={() => handelEdit(item)}>
+                    <AiFillEdit
+                      className="text-green text-lg cursor-pointer  text-slate-600"
+                      title="Edit user"
+                    />
+                  </div>
+                ) : (
+                  ""
+                ))}
+              {(manager?.add || user?.role === "admin") &&
+                (item?.status !== "deleted" ? (
+                  <div
+                    onClick={() => {
+                      setIsAmountModal(true);
+                      setAddAmountUser(item);
+                    }}
+                  >
+                    <GiTakeMyMoney
+                      className="text-green text-lg cursor-pointer  text-slate-600"
+                      title="Add amount"
+                    />
+                  </div>
+                ) : (
+                  ""
+                ))}
+              <div>
+                <NavLink
+                  to="/users/transactionDetails"
+                  state={{ userTypeDetail, userId: item?._id }}
+                >
+                  <MdHistory
+                    className="text-green text-lg cursor-pointer  text-slate-600"
+                    title="Transaction details"
+                  />
+                </NavLink>
+              </div>
+            </div>
+          </div>
+        </td>
+  );
+
+  const renderUserTypeSpecificCells = (item, userTypeData) => {
+    if (userTypeData === 'local') {
+      return renderTableCell(getWalletAmount(item), `${
+        item && item?.status === 'deleted' ? 'text-red-600' : 'bg-white dark:bg-gray-800 dark:text-slate-400'
+      } py-2 px-4 border-r  dark:border-[#ffffff38] text-center`);
+    } else if (userTypeData === 'tourist') {
+      return (
+        <>
+          {renderTableCell(
+            helpers.ternaryCondition(item?.upcCode, item?.upcCode, 'N/A'),
+            `${
+              item && item?.status === 'deleted'
+                ? 'text-red-600'
+                : 'bg-white dark:bg-gray-800 dark:text-slate-400'
+            } py-4 px-3 border-r  dark:border-[#ffffff38] text-center`
+          )}
+          {renderTableCell(
+            helpers.ternaryCondition(
+              item?.referralCode,
+              item?.referralCode,
+              'N/A'
+            ),
+            `${
+              item && item?.status === 'deleted'
+                ? 'text-red-600'
+                : 'bg-white dark:bg-gray-800 dark:text-slate-400'
+            } py-4 px-3 border-r text-center dark:border-[#ffffff38]`
+          )}
+          {renderTableCell(
+            helpers.ternaryCondition(
+              item?.familyName,
+              item?.familyName,
+              'N/A'
+            ),
+            `${
+              item && item?.status === 'deleted'
+                ? 'text-red-600'
+                : 'bg-white dark:bg-gray-800 dark:text-slate-400'
+            } py-4 px-3 border-r text-center dark:border-[#ffffff38]`
+          )}
+        </>
+      );
+    }
+  };
+
+  const renderTableRows=()=>{
+    return  users?.map((item, i) => (
+      <tr
+        key={i}
+        className={`${
+          item && item?.status === "deleted"
+            ? "text-red-600 font-bold"
+            : "bg-white"
+        } border-b dark:bg-gray-800 dark:border-[#ffffff38]'`}
+      >
+         {renderTableCell(
+        i + 1 + pageSize * (page - 1),
+        'py-4 px-3 border-r  font-medium text-gray-900  dark:text-white dark:border-[#ffffff38]'
+      )}
+        {renderTableCell(
+        getDisplayName(item, userType),
+        `${
+          item && item?.status === 'deleted'
+            ? 'text-red-600'
+            : 'bg-white dark:bg-gray-800'
+        } py-4 px-4 border-r  dark:border-[#ffffff38]'`
+      )}
+        {renderTableCell(
+        helpers.ternaryCondition(
+          item?.email,
+          item?.email,
+          'N/A'
+        ),
+        `${
+          item && item?.status === 'deleted'
+            ? 'text-red-600'
+            : 'bg-white dark:bg-gray-800'
+        } py-2 px-4 border-r  dark:border-[#ffffff38] font-bold text-slate-900'`
+      )}
+        {renderTableCell(
+        helpers.ternaryCondition(
+          item?.countryCode,
+          item?.countryCode,
+          "N/A"
+        ),
+        `${
+          item && item?.status === "deleted"
+            ? "text-red-600"
+            : 'bg-white dark:bg-gray-800'
+        } py-2 px-4 border-r  dark:border-[#ffffff38] text-center font-bold text-slate-900'`
+      )}
+
+         {renderTableCell(
+        helpers.ternaryCondition(
+          item?.mobile,
+          item?.mobile,
+          "N/A"
+        ),
+        `${
+          item && item?.status === "deleted"
+            ? "text-red-600"
+            : 'bg-white dark:bg-gray-800 dark:text-slate-400'
+        } py-2 px-4 border-r dark:border-[#ffffff38] text-center font-bold ${
+          item && item?.status === "deleted"
+            ? ""
+            : "text-slate-900"
+        }`
+      )}
+
+      {renderUserTypeSpecificCells(item, userType)}
+       {renderCommonTableCells(item)}
+        {helpers.andOperator(
+          manager?.add || user?.permission?.length === 0,
+          <td className="py-2 px-4 border-r  dark:border-[#ffffff38] text-center">
+            {statusLabel(item)}
+          </td>
+        )}
+        {renderActionTableCells(item, userType)}
+      </tr>
+    ))
+  }
 
   return (
     <>
@@ -157,218 +375,7 @@ const Table = ({
               </tr>
             </thead>
             <tbody>
-              {users?.length > 0 &&
-                users?.map((item, i) => (
-                  <tr
-                    key={i}
-                    // className='bg-white border-b dark:bg-gray-800 dark:border-[#ffffff38]'
-                    className={`${
-                      item && item?.status === "deleted"
-                        ? "text-red-600 font-bold"
-                        : "bg-white"
-                    } border-b dark:bg-gray-800 dark:border-[#ffffff38]'`}
-                  >
-                    <th
-                      scope="row"
-                      className="py-4 px-3 border-r  font-medium text-gray-900  dark:text-white dark:border-[#ffffff38]"
-                    >
-                      {i + 1 + pageSize * (page - 1)}
-                    </th>
-                    <td
-                      // className='py-4 px-4 border-r  dark:border-[#ffffff38]'
-                      className={`${
-                        item && item?.status === "deleted"
-                          ? "text-red-600"
-                          : "bg-white"
-                      } py-4 px-4 border-r  dark:border-[#ffffff38]'`}
-                    >
-                      {userType === "local"
-                        ? `${item?.firstName} ${item?.lastName ?? ""}`
-                        : item?.firstName || "N/A"}
-                    </td>
-                    <td
-                      // className='py-2 px-4 border-r  dark:border-[#ffffff38] font-bold text-slate-900'
-                      className={`${
-                        item && item?.status === "deleted"
-                          ? "text-red-600"
-                          : "bg-white"
-                      } py-2 px-4 border-r  dark:border-[#ffffff38] font-bold text-slate-900'`}
-                    >
-                      {helpers.ternaryCondition(
-                        item?.email,
-                        item?.email,
-                        "N/A"
-                      )}
-                    </td>
-                    <td
-                      // className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center font-bold text-slate-900'
-                      className={`${
-                        item && item?.status === "deleted"
-                          ? "text-red-600"
-                          : "bg-white"
-                      } py-2 px-4 border-r  dark:border-[#ffffff38] text-center font-bold text-slate-900'`}
-                    >
-                      {helpers.ternaryCondition(
-                        item?.countryCode,
-                        item?.countryCode,
-                        "N/A"
-                      )}
-                    </td>
-                    <td
-                      // className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center font-bold text-slate-900'
-                      className={`${
-                        item && item?.status === "deleted"
-                          ? "text-red-600"
-                          : "bg-white"
-                      } py-2 px-4 border-r dark:border-[#ffffff38] text-center font-bold ${
-                        item && item?.status === "deleted"
-                          ? ""
-                          : "text-slate-900"
-                      }`}
-                    >
-                      {helpers.ternaryCondition(
-                        item?.mobile,
-                        item?.mobile,
-                        "N/A"
-                      )}
-                    </td>
-                    {userType === "local" && (
-                      <td
-                        //  className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center'
-                        className={`${
-                          item && item?.status === "deleted"
-                            ? "text-red-600"
-                            : "bg-white"
-                        } py-2 px-4 border-r  dark:border-[#ffffff38] text-center`}
-                      >
-                        {helpers.ternaryCondition(
-                          item?.walletAmount,
-                          helpers.formattedAmount(item?.walletAmount),
-                          0
-                        )}
-                      </td>
-                    )}
-                    {userType === "tourist" && (
-                      <>
-                        <td
-                          // className='py-4 px-3 border-r  dark:border-[#ffffff38] text-center'
-                          className={`${
-                            item && item?.status === "deleted"
-                              ? "text-red-600"
-                              : "bg-white"
-                          } py-4 px-3 border-r  dark:border-[#ffffff38] text-center`}
-                        >
-                          {helpers.ternaryCondition(
-                            item?.upcCode,
-                            item?.upcCode,
-                            "N/A"
-                          )}
-                        </td>
-                        <td
-                          // className='py-4 px-3 border-r text-center dark:border-[#ffffff38]'
-                          className={`${
-                            item && item?.status === "deleted"
-                              ? "text-red-600"
-                              : "bg-white"
-                          } py-4 px-3 border-r text-center dark:border-[#ffffff38]`}
-                        >
-                          {helpers.ternaryCondition(
-                            item?.referralCode,
-                            item?.referralCode,
-                            "N/A"
-                          )}
-                        </td>
-                        <td
-                          // className='py-4 px-3 border-r text-center dark:border-[#ffffff38]'
-                          className={`${
-                            item && item?.status === "deleted"
-                              ? "text-red-600"
-                              : "bg-white"
-                          } py-4 px-3 border-r text-center dark:border-[#ffffff38]`}
-                        >
-                          {helpers.ternaryCondition(
-                            item?.familyName,
-                            item?.familyName,
-                            "N/A"
-                          )}
-                        </td>
-                      </>
-                    )}
-
-                    <td className="py-4 px-3 border-r  dark:border-[#ffffff38] text-center">
-                      {helpers.ternaryCondition(
-                        item?.kycRecord?.isApproved,
-                        startCase(item?.kycRecord?.isApproved),
-                        "KYC Not Uploaded Yet"
-                      )}
-                    </td>
-                    <td className="py-4 px-3 border-r  dark:border-[#ffffff38] text-center">
-                      {dayjs(item?.createdAt).format("DD-MM-YYYY hh:mm A") ||
-                        "N/A"}
-                    </td>
-                    {helpers.andOperator(
-                      manager?.add || user?.permission?.length === 0,
-                      <td className="py-2 px-4 border-r  dark:border-[#ffffff38] text-center">
-                        {statusLabel(item)}
-                      </td>
-                    )}
-                    <td className="py-2 px-4 border-l">
-                      <div className="">
-                        <div className="flex justify-center items-center">
-                          <NavLink
-                            onClick={() => handleUserView(item)}
-                            to="/users/view"
-                            state={{ ...item, userType }}
-                            title={t("O_VIEW")}
-                            className="px-2 py-2"
-                          >
-                            <AiFillEye className="cursor-pointer w-5 h-5 text-slate-600 dark:hover:text-white hover:text-blue-700" />{" "}
-                          </NavLink>
-
-                          {(manager?.add || user?.role === "admin") &&
-                            userType === "local" &&
-                            (item?.status !== "deleted" ? (
-                              <div onClick={() => handelEdit(item)}>
-                                <AiFillEdit
-                                  className="text-green text-lg cursor-pointer  text-slate-600"
-                                  title="Edit user"
-                                />
-                              </div>
-                            ) : (
-                              ""
-                            ))}
-                          {(manager?.add || user?.role === "admin") &&
-                            (item?.status !== "deleted" ? (
-                              <div
-                                onClick={() => {
-                                  setIsAmountModal(true);
-                                  setAddAmountUser(item);
-                                }}
-                              >
-                                <GiTakeMyMoney
-                                  className="text-green text-lg cursor-pointer  text-slate-600"
-                                  title="Add amount"
-                                />
-                              </div>
-                            ) : (
-                              ""
-                            ))}
-                          <div>
-                            <NavLink
-                              to="/users/transactionDetails"
-                              state={{ userType, userId: item?._id }}
-                            >
-                              <MdHistory
-                                className="text-green text-lg cursor-pointer  text-slate-600"
-                                title="Transaction details"
-                              />
-                            </NavLink>
-                          </div>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
+              {users?.length > 0 && renderTableRows()}
               {helpers.ternaryCondition(
                 isEmpty(users),
                 <tr className="bg-white text-center border-b dark:bg-gray-800 dark:border-gray-700">
