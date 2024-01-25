@@ -183,13 +183,13 @@ const Table = ({
               </div>
             </div>
           </div>
-        </td> 
+        </td>
   );
 
   const renderUserTypeSpecificCells = (item, userTypeData) => {
     if (userTypeData === 'local') {
       return renderTableCell(getWalletAmount(item), `${
-        item && item?.status === 'deleted' ? 'text-red-600' : 'bg-white'
+        item && item?.status === 'deleted' ? 'text-red-600' : 'bg-white dark:bg-gray-800 dark:text-slate-400'
       } py-2 px-4 border-r  dark:border-[#ffffff38] text-center`);
     } else if (userTypeData === 'tourist') {
       return (
@@ -199,7 +199,7 @@ const Table = ({
             `${
               item && item?.status === 'deleted'
                 ? 'text-red-600'
-                : 'bg-white'
+                : 'bg-white dark:bg-gray-800 dark:text-slate-400'
             } py-4 px-3 border-r  dark:border-[#ffffff38] text-center`
           )}
           {renderTableCell(
@@ -211,7 +211,7 @@ const Table = ({
             `${
               item && item?.status === 'deleted'
                 ? 'text-red-600'
-                : 'bg-white'
+                : 'bg-white dark:bg-gray-800 dark:text-slate-400'
             } py-4 px-3 border-r text-center dark:border-[#ffffff38]`
           )}
           {renderTableCell(
@@ -223,7 +223,7 @@ const Table = ({
             `${
               item && item?.status === 'deleted'
                 ? 'text-red-600'
-                : 'bg-white'
+                : 'bg-white dark:bg-gray-800 dark:text-slate-400'
             } py-4 px-3 border-r text-center dark:border-[#ffffff38]`
           )}
         </>
@@ -250,7 +250,7 @@ const Table = ({
         `${
           item && item?.status === 'deleted'
             ? 'text-red-600'
-            : 'bg-white'
+            : 'bg-white dark:bg-gray-800'
         } py-4 px-4 border-r  dark:border-[#ffffff38]'`
       )}
         {renderTableCell(
@@ -262,7 +262,7 @@ const Table = ({
         `${
           item && item?.status === 'deleted'
             ? 'text-red-600'
-            : 'bg-white'
+            : 'bg-white dark:bg-gray-800'
         } py-2 px-4 border-r  dark:border-[#ffffff38] font-bold text-slate-900'`
       )}
         {renderTableCell(
@@ -274,10 +274,10 @@ const Table = ({
         `${
           item && item?.status === "deleted"
             ? "text-red-600"
-            : "bg-white"
+            : 'bg-white dark:bg-gray-800'
         } py-2 px-4 border-r  dark:border-[#ffffff38] text-center font-bold text-slate-900'`
       )}
-        
+
          {renderTableCell(
         helpers.ternaryCondition(
           item?.mobile,
@@ -287,7 +287,7 @@ const Table = ({
         `${
           item && item?.status === "deleted"
             ? "text-red-600"
-            : "bg-white"
+            : 'bg-white dark:bg-gray-800 dark:text-slate-400'
         } py-2 px-4 border-r dark:border-[#ffffff38] text-center font-bold ${
           item && item?.status === "deleted"
             ? ""

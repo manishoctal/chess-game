@@ -81,7 +81,7 @@ const Sidebar = () => {
 
   return (
     <div
-      className={`sidebar lg:block z-10  ${
+      className={`sidebar lg:block z-10   ${
         sidebarStatus === 'open' ? 'block' : 'sidebarHide'
       } bg-gradient-to-t from-gradpurple to-gradientFrom w-[220px] xl:w-[280px] fixed h-full overflow-y-auto`}
       // onClick={handleSidebar}
