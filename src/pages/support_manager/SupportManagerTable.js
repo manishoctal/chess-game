@@ -76,17 +76,19 @@ const SupportManagerTable = ({
                     <td className='py-4 px-6 border-r'>
                       <div>
                         <p className='text-sm font-bold text-slate-950 leading-none dark:text-slate-400'>
-                          {helpers.getFullName(
+                          {item?.user?.firstName && item?.user?.lastName ? helpers.getFullName(
                             item?.user?.firstName,
                             item?.user?.lastName
-                          )}{' '}
-                          ({startCase(item?.user?.userType) ?? ''})
+                          ): item?.user?.firstName && !item?.user?.lastName ? item?.user?.firstName : 'N/A' }
+                          ({item?.user?.userType ? item?.user?.userType : 'N/A'})
+                          {/* ({startCase(item?.user?.userType) ?? ''}) */}
                         </p>
                         <p className='text-sm text-muted-foreground'>
-                          {item?.user?.email ?? ''}
+                          {item?.user?.email ? item?.user?.email : 'N/A'}
                         </p>
                         <p className='text-sm text-muted-foreground'>
-                          {`+${item?.user?.countryCode} ${item?.user?.mobile}`}
+                          {item?.user?.countryCode ? `+${item?.user?.countryCode} ${item?.user?.mobile}` : 'N/A'}
+                          {/* {`+${item?.user?.countryCode} ${item?.user?.mobile}`} */}
                         </p>
                       </div>
                     </td>
