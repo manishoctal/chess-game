@@ -38,8 +38,8 @@ export default function Credential ({ setViewShowModal, email }) {
       <div className='justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none'>
         <div className='relative w-auto my-6 mx-auto max-w-3xl'>
           <div className='border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none min-w-[762px]'>
-            <div className='flex items-center justify-between p-5 border-b border-solid border-slate-200 rounded-t'>
-              <h3 className='text-xl font-semibold'>{t('LOGIN_CREDENTIAL')}</h3>
+            <div className='dark:bg-gray-900 flex items-center justify-between p-5 border-b border-solid border-slate-200 rounded-t'>
+              <h3 className='text-xl font-semibold dark:text-white'>{t('LOGIN_CREDENTIAL')}</h3>
               <button
                 className=' ml-auto flex items-center justify-center  text-black border-2 rounded-full  h-8 w-8 float-right text-3xl leading-none font-extralight outline-none focus:outline-none'
                 onClick={() => closeModal()}
@@ -49,7 +49,7 @@ export default function Credential ({ setViewShowModal, email }) {
                 </span>
               </button>
             </div>
-            <div className='relative p-6 flex-auto'>
+            <div className='relative p-6 flex-auto dark:bg-gray-800'>
               <div className=''>
                 <div>
                   <div className='sm:py-4 sm:px-2 py-8 px-7 grid grid-cols-2 gap-4'>
@@ -65,7 +65,7 @@ export default function Credential ({ setViewShowModal, email }) {
                       />
                       <label
                         htmlFor='email'
-                        className='peer-focus:font-normal absolute text-sm text-[#A5A5A5] dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 left-3 bg-white p-2 z-10 origin-[2] peer-focus:left-0 peer-focus:text-[#A5A5A5] peer-focus:text-lg peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-8'
+                        className='dark:bg-gray-800 peer-focus:font-normal absolute text-sm text-[#A5A5A5] dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 left-3 bg-white p-2 z-10 origin-[2] peer-focus:left-0 peer-focus:text-[#A5A5A5] peer-focus:text-lg peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-8'
                       >
                         {t('ADMIN_EMAIL')}
                       </label>
@@ -85,7 +85,7 @@ export default function Credential ({ setViewShowModal, email }) {
                       />
                       <label
                         htmlFor='password'
-                        className='peer-focus:font-normal absolute text-sm text-[#A5A5A5] dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 left-3 bg-white p-2 z-10 origin-[2] peer-focus:left-0 peer-focus:text-[#A5A5A5] peer-focus:text-lg peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-8'
+                        className='dark:bg-gray-800 peer-focus:font-normal absolute text-sm text-[#A5A5A5] dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 left-3 bg-white p-2 z-10 origin-[2] peer-focus:left-0 peer-focus:text-[#A5A5A5] peer-focus:text-lg peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-8'
                       >
                         {t('O_PASSWORD')}
                       </label>
@@ -95,7 +95,7 @@ export default function Credential ({ setViewShowModal, email }) {
                 <div />
               </div>
             </div>
-            <div className='flex items-center justify-center p-6 border-t border-solid border-slate-200 rounded-b'>
+            <div className='dark:bg-gray-900 flex items-center justify-center p-6 border-t border-solid border-slate-200 rounded-b'>
               <button
                 className='text-black bg-[#E1E1E1] font-normal px-12 py-2.5 text-sm outline-none focus:outline-none rounded mr-6  ease-linear transition-all duration-150'
                 type='button'

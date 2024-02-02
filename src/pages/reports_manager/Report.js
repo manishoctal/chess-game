@@ -28,7 +28,7 @@ function Report () {
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('')
   const [isInitialized, setIsInitialized] = useState(false)
 
- 
+
 
   const [filterData, setFilterData] = useState({
     category: '',
@@ -159,7 +159,7 @@ function Report () {
           <div className='bg-white border border-[#E9EDF9] rounded-lg dark:bg-slate-800 dark:border-[#ffffff38]'>
             <form className='border-b border-b-[#E3E3E3]  px-4 py-3 pt-5 flex flex-wrap justify-between'>
               <div className='flex flex-wrap items-center'>
-                <div className='flex items-center lg:pt-0 pt-3 justify-center'> 
+                <div className='flex items-center lg:pt-0 pt-3 justify-center'>
                   <ODateRangePicker handleDateChange={handleDateChange} isReset={filterData?.isReset} setIsReset={setFilterData}/>
                   <button type='button' onClick={() => handleReset()}  className='bg-gradientTo text-sm px-8 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2' title= {t('O_RESET')}
                   >
@@ -181,12 +181,12 @@ function Report () {
             </form>
             <ReportsTable users={users} page={page} pageSize={pageSize} userType={userType}/>
             <div className='flex justify-between'>
-            <PageSizeList  dynamicPage={dynamicPage} pageSize={pageSize}/>       
+            <PageSizeList  dynamicPage={dynamicPage} pageSize={pageSize}/>
               {paginationObj?.totalItems ? ( <Pagination handlePageClick={handlePageClick} options={paginationObj} page={page}/>) : null}
             </div>
           </div>
         </div>
-      </div> 
+      </div>
     </div>
   )
 }

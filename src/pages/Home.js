@@ -7,8 +7,6 @@ import earning from 'assets/images/earning.jpg'
 import dayjs from 'dayjs'
 import { useTranslation } from 'react-i18next'
 import Chart from 'react-apexcharts'
-
-
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -24,7 +22,7 @@ import AuthContext from 'context/AuthContext'
 import ODateRangePicker from 'components/shared/datePicker/ODateRangePicker'
 import OCountUp from 'components/OCountUp'
 import helpers from 'utils/helpers'
-import { styled, createTheme, ThemeProvider, StyledEngineProvider } from '@mui/material/styles'
+import { createTheme, ThemeProvider, StyledEngineProvider } from '@mui/material/styles'
 import useToastContext from 'hooks/useToastContext'
 
 ChartJS.register(
@@ -95,6 +93,7 @@ export const lineGraphData2 = {
     }
   ]
 }
+
 function Home() {
   const { t } = useTranslation()
   const { logoutUser } = useContext(AuthContext)
@@ -105,44 +104,43 @@ function Home() {
   const [graphTwoStartData, setGraphTwoStartData] = useState((dayjs().subtract(1, 'month').format('YYYY-MM-DD')))
   const [graphTwoEndDate, setGraphTwoEndDate] = useState(dayjs().format('YYYY-MM-DD'))
   const [graphTwoDropdownValue, setGraphTwoDropdownValue] = useState("day")
-  const [disableYearButtonFirst, setDisableYearButtonFirst] = useState(false)
-  const [disableYearButtonSecond, setDisableYearButtonSecond] = useState(false)
-  const notification = useToastContext()
-  const [isReset, setIsReset] = useState(false)
-  const [chartData, setChartData] = useState({
+  const getDefaultDateDisableState = () => ({
+    first: {
+      day: false,
+      week: false,
+      month: false,
+      year: false,
+    },
+    second: {
+      day: false,
+      week: false,
+      month: false,
+      year: false,
+    },
+  });
+
+  const getDefaultChartData = () => ({
     options: {
       chart: {
         id: 'basic-bar',
       },
       xaxis: {
-        Date: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999]
+        categories: [],
       },
     },
     series: [
       {
         name: 'Earning',
-        data: [30, 40, 45, 50, 49, 60, 70, 91, 49, 60, 70, 91],
+        data: [],
       },
     ],
-  })
-  const [chartDataTwo, setChartDataTwo] = useState({
-    options: {
-      chart: {
-        id: 'basic-bar',
-      },
-      xaxis: {
+  });
 
-        categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999]
-
-      },
-    },
-    series: [
-      {
-        name: 'series-1',
-        data: [30, 40, 45, 50, 49, 60, 70, 91, 49, 60, 70, 91],
-      },
-    ],
-  })
+  const [dateDisableState, setDateDisableState] = useState(getDefaultDateDisableState());
+  const [chartData, setChartData] = useState(getDefaultChartData());
+  const [chartDataTwo, setChartDataTwo] = useState(getDefaultChartData());
+  const [isReset, setIsReset] = useState(false)
+  const notification = useToastContext()
 
 
   const handleDateChange = (start, end, type) => {
@@ -150,13 +148,12 @@ function Home() {
       setStartDate(start)
       setEndDate(end)
       handleActiveForFirst(start, end)
-      checkIfButtonShouldBeDisabled(start, end, type);
     } else {
       setGraphTwoStartData(start)
       setGraphTwoEndDate(end)
       handleActiveForSecond(start, end)
-      checkIfButtonShouldBeDisabled(start, end, type);
     }
+    checkIfButtonShouldBeDisabled(start, end, type);
   }
 
   const handleButtonChange = (data, type) => {
@@ -204,9 +201,6 @@ function Home() {
       } else if (dateDifference > 31 && dateDifference <= 366) {
         setSelectedButton('month');
       }
-      // else if (dateDifference > 7 && dateDifference <= 31) {
-      //   setSelectedButton('week');
-      // }
       else {
         setSelectedButton('day');
       }
@@ -221,25 +215,12 @@ function Home() {
       } else if (dateDifference > 31 && dateDifference <= 366) {
         setGraphTwoDropdownValue('month')
       }
-      // else if (dateDifference > 7 && dateDifference <= 31) {
-      //   setGraphTwoDropdownValue('week')
-      // }
       else {
         setGraphTwoDropdownValue('day')
       }
     }
 
   }
-
-
-  useEffect(() => {
-    if (startDate && endDate && selectedButton) {
-      handleGraphApiCall(startDate, endDate, selectedButton, "first")
-    }
-    if (graphTwoDropdownValue && graphTwoEndDate && graphTwoStartData) {
-      handleGraphApiCall(graphTwoStartData, graphTwoEndDate, graphTwoDropdownValue, "second")
-    }
-  }, [startDate, endDate, selectedButton, graphTwoStartData, graphTwoEndDate, graphTwoDropdownValue])
 
   const handleGraphApiCall = async (start, end, dropValue, type) => {
     try {
@@ -298,6 +279,38 @@ function Home() {
     }
   }
 
+  useEffect(() => {
+    if (startDate && endDate && selectedButton) {
+      handleGraphApiCall(startDate, endDate, selectedButton, "first")
+    }
+    if (graphTwoDropdownValue && graphTwoEndDate && graphTwoStartData) {
+      handleGraphApiCall(graphTwoStartData, graphTwoEndDate, graphTwoDropdownValue, "second")
+    }
+  }, [startDate, endDate, selectedButton, graphTwoStartData, graphTwoEndDate, graphTwoDropdownValue])
+
+  const checkIfButtonShouldBeDisabled = (start, end, type) => {
+    const dateDifference = dayjs(end).diff(start, 'day');
+    const updatedDateDisableState = { ...dateDisableState };
+
+    if (dateDifference >= 1 && dateDifference <= 31) {
+      updatedDateDisableState[type].year = true;
+      updatedDateDisableState[type].month = true;
+    }
+
+    if (dateDifference > 366) {
+      updatedDateDisableState[type].month = true;
+      updatedDateDisableState[type].day = true;
+      updatedDateDisableState[type].week = true;
+    }
+
+    if (dateDifference > 31 && dateDifference <= 366) {
+      updatedDateDisableState[type].day = true;
+      updatedDateDisableState[type].week = true;
+      updatedDateDisableState[type].year = true;
+    }
+
+    setDateDisableState(updatedDateDisableState);
+  };
 
   const handleReset = () => {
     setEndDate(dayjs().format('YYYY-MM-DD'))
@@ -308,34 +321,6 @@ function Home() {
     setGraphTwoDropdownValue("day")
   }
 
-  const checkIfButtonShouldBeDisabled = (start, end, type) => {
-    const dateDifference = dayjs(end).diff(start, 'day');
-    if (dateDifference >= 1 && dateDifference <= 31) {
-      if (type === "second") {
-        setDisableYearButtonSecond(true)
-      }
-      else {
-        setDisableYearButtonFirst(true)
-      }
-    }
-    if (dateDifference > 366) {
-      if (type === "second") {
-        setDisableYearButtonSecond(true)
-      }
-      else {
-        setDisableYearButtonFirst(true)
-      }
-    }
-    if (dateDifference > 31 && dateDifference <= 366) {
-      if (type === "second") {
-        setDisableYearButtonSecond(true)
-      }
-      else {
-        setDisableYearButtonFirst(true)
-      }
-    }
-    return false;
-  };
   return (
     <>
       <div className='py-4 px-4 md:px-8 dark:bg-slate-900'>
@@ -475,32 +460,8 @@ function Home() {
           </div>
         </div>
       </div>
-      <div className='py-7 px-4 md:px-8 bg-[#F9F9F9] border-solid border-2 border-gray m-10 rounded-md'>
+      <div className='dark:bg-gray-800 py-7 px-4 md:px-8 bg-[#F9F9F9] border-solid border-2 border-gray m-10 rounded-md'>
         <div className='sm:flex items-center text-center sm:text-left px-3 md:px-4 xl:px-7 lg:px-5  py-4 md:py-8 border dark:bg-slate-900'>
-          {/* <StyledEngineProvider>
-            <ThemeProvider theme={theme}>
-              <ToggleButtonGroup
-                value={selectedButton}
-                exclusive
-                onChange={(e) => handleButtonChange(e, "first")}
-                aria-label="button group"
-                className='px-11'
-              >
-                <ToggleButton value="day" selectedcolor="#00abc0">
-                  Daily
-                </ToggleButton>
-                <ToggleButton value="week" selectedcolor="#00abc0">
-                  Weekly
-                </ToggleButton>
-                <ToggleButton value="month" selectedcolor="#00abc0">
-                  Monthly
-                </ToggleButton>
-                <ToggleButton value="year" selectedcolor="#00abc0">
-                  Yearly
-                </ToggleButton>
-              </ToggleButtonGroup>
-            </ThemeProvider>
-          </StyledEngineProvider> */}
           <StyledEngineProvider>
             <ThemeProvider theme={theme}>
               <div className='px-11'>
@@ -508,7 +469,7 @@ function Home() {
                   type='button'
                   className={`bg-gradientTo text-sm px-8 mb-3 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/4 ${selectedButton === 'day' ? 'bg-gradient-to-b from-blue-300 to-green-500' : ''}`}
                   onClick={() => handleButtonChange('day', "first")}
-                  disabled={disableYearButtonFirst}
+                  disabled={dateDisableState.first.day}
                 >
                   Daily
                 </button>
@@ -516,7 +477,7 @@ function Home() {
                   type='button'
                   className={`bg-gradientTo text-sm px-8 mb-3 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/4 ${selectedButton === 'week' ? 'bg-gradient-to-b from-blue-300 to-green-500' : ''}`}
                   onClick={() => handleButtonChange('week', "first")}
-                  disabled={disableYearButtonFirst}
+                  disabled={dateDisableState.first.week}
                 >
                   Weekly
                 </button>
@@ -524,7 +485,7 @@ function Home() {
                   type='button'
                   className={`bg-gradientTo text-sm px-8 mb-3 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/4 ${selectedButton === 'month' ? 'bg-gradient-to-b from-blue-300 to-green-500' : ''}`}
                   onClick={() => handleButtonChange('month', "first")}
-                  disabled={disableYearButtonFirst}
+                  disabled={dateDisableState.first.month}
                 >
                   Monthly
                 </button>
@@ -532,7 +493,7 @@ function Home() {
                   type='button'
                   className={`bg-gradientTo text-sm px-8 mb-3 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/4 ${selectedButton === 'year' ? 'bg-gradient-to-b from-blue-300 to-green-500' : ''}`}
                   onClick={() => handleButtonChange('year', "first")}
-                  disabled={disableYearButtonFirst}
+                  disabled={dateDisableState.first.year}
                 >
                   Yearly
                 </button>
@@ -554,9 +515,9 @@ function Home() {
             {t('O_RESET')}
           </button>
         </div>
-        <div className='sale_report grid grid-cols-1 gap-5 mb-7 bg-white p-4'>
+        <div className='sale_report grid grid-cols-1 gap-5 mb-7 bg-white p-4 dark:bg-gray-900 dark:border'>
           <div className='flex justify-between'>
-            <h4 className='font-medium text-lg'>
+            <h4 className='font-medium text-lg dark:text-white'>
               {t('EXPENDITURE_BY_THAI_LOCAL')}
             </h4>
           </div>
@@ -570,32 +531,8 @@ function Home() {
 
         </div>
       </div>
-      <div className='py-7 px-4 md:px-8 bg-[#F9F9F9] border-solid border-2 border-gray m-10 rounded-md'>
+      <div className='dark:bg-gray-800 py-7 px-4 md:px-8 bg-[#F9F9F9] border-solid border-2 border-gray m-10 rounded-md'>
         <div className='sm:flex items-center text-center sm:text-left px-3 md:px-4 xl:px-7 lg:px-5  py-4 md:py-8 border dark:bg-slate-900'>
-          {/* <StyledEngineProvider>
-            <ThemeProvider theme={theme}>
-              <ToggleButtonGroup
-                value={graphTwoDropdownValue}
-                exclusive
-                onChange={(e) => handleButtonChange(e, "second")}
-                aria-label="button group"
-                className='px-11'
-              >
-                <ToggleButton style={{ backgroundColor: '#00abc0', color: '#fff' }} value="day" selectedcolor="#00abc0">
-                  Daily
-                </ToggleButton>
-                <ToggleButton style={{ backgroundColor: '#00abc0', color: '#fff' }} value="week" selectedcolor="#00abc0">
-                  Weekly
-                </ToggleButton >
-                <ToggleButton style={{ backgroundColor: '#00abc0', color: '#fff' }} value="month" selectedcolor="#00abc0">
-                  Monthly
-                </ToggleButton>
-                <ToggleButton style={{ backgroundColor: '#00abc0', color: '#fff' }} value="year" selectedcolor="#00abc0">
-                  Yearly
-                </ToggleButton>
-              </ToggleButtonGroup>
-            </ThemeProvider>
-          </StyledEngineProvider> */}
           <StyledEngineProvider>
             <ThemeProvider theme={theme}>
               <div className='px-11'>
@@ -603,8 +540,7 @@ function Home() {
                   type='button'
                   className={`bg-gradientTo text-sm px-8 mb-3 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/4 ${graphTwoDropdownValue === 'day' ? 'bg-gradient-to-b from-blue-300 to-green-500' : ''}`}
                   onClick={() => handleButtonChange('day', "second")}
-                  disabled={disableYearButtonSecond}
-
+                  disabled={dateDisableState.second.day}
                 >
                   Daily
                 </button>
@@ -612,7 +548,7 @@ function Home() {
                   type='button'
                   className={`bg-gradientTo text-sm px-8 mb-3 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/4 ${graphTwoDropdownValue === 'week' ? 'bg-gradient-to-b from-blue-300 to-green-500' : ''}`}
                   onClick={() => handleButtonChange('week', "second")}
-                  disabled={disableYearButtonSecond}
+                  disabled={dateDisableState.second.week}
                 >
                   Weekly
                 </button>
@@ -620,7 +556,7 @@ function Home() {
                   type='button'
                   className={`bg-gradientTo text-sm px-8 mb-3 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/4 ${graphTwoDropdownValue === 'month' ? 'bg-gradient-to-b from-blue-300 to-green-500' : ''}`}
                   onClick={() => handleButtonChange('month', "second")}
-                  disabled={disableYearButtonSecond}
+                  disabled={dateDisableState.second.month}
                 >
                   Monthly
                 </button>
@@ -628,7 +564,7 @@ function Home() {
                   type='button'
                   className={`bg-gradientTo text-sm px-8 mb-3 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/4 ${graphTwoDropdownValue === 'year' ? 'bg-gradient-to-b from-blue-300 to-green-500' : ''}`}
                   onClick={() => handleButtonChange('year', "second")}
-                  disabled={disableYearButtonSecond}
+                  disabled={dateDisableState.second.year}
                 >
                   Yearly
                 </button>
@@ -650,9 +586,9 @@ function Home() {
             {t('O_RESET')}
           </button>
         </div>
-        <div className='sale_report grid grid-cols-1 gap-5 mb-7 bg-white p-4'>
+        <div className='dark:bg-gray-900 dark:border sale_report grid grid-cols-1 gap-5 mb-7 bg-white p-4'>
           <div className='flex justify-between'>
-            <h4 className='font-medium text-lg'>
+            <h4 className='font-medium text-lg dark:text-white'>
               {t('EXPENDITURE_BY_TOURIST')}
             </h4>
           </div>
