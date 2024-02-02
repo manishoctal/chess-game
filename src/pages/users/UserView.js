@@ -533,7 +533,7 @@ const UserView = () => {
               )}
             </div>
 
-            <div className='grid grid-cols-4 bg-[#F2F2F2] rounded-lg p-4 w-[70%] mr-4 px-8 flex justify-between'>
+            <div className='grid grid-cols-3 bg-[#F2F2F2] rounded-lg p-4 w-[70%] mr-4 px-8 flex justify-between'>
               <div>
                 <div className='flex items-center'>
                   <figure className='bg-white w-[42px] h-[41px] rounded-full flex items-center justify-center mr-3'>
