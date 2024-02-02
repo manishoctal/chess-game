@@ -163,78 +163,7 @@ const UserView = () => {
               )}
             </div>
             <div className='grid grid-cols-4 bg-[#F2F2F2] rounded-lg p-4 w-[70%] mr-4 px-8'>
-              {/* <div>
-                <div className='flex items-center'>
-                  <figure className='bg-white w-[42px] h-[41px] rounded-full flex items-center justify-center mr-3'>
-                    <img src={firstNameIcon} alt='' />
-                  </figure>
-                  <figcaption className='w-[calc(100%_-_41px)]'>
-                    <span className=' text-[#5 C5C5C] block'>
-                      {t('FAMILY_NAME')}
-                    </span>
-                    <strong>
-                      {' '}
-                      {helpers.ternaryCondition(
-                        item?.familyName,
-                        startCase(item?.familyName),
-                        'N/A'
-                      )}
-                    </strong>
-                  </figcaption>
-                </div>
-              </div>
-              <div>
-                <div className='flex items-center'>
-                  <figure className='bg-white w-[42px] h-[41px] rounded-full flex items-center justify-center mr-3'>
-                    <img src={firstNameIcon} alt='' />
-                  </figure>
-                  <figcaption className='w-[calc(100%_-_41px)]'>
-                    <span className=' text-[#5 C5C5C] block'>
-                      {t('FIRST_NAME')}
-                    </span>
-                    <strong>
-                      {' '}
-                      {helpers.ternaryCondition(
-                        item?.firstName,
-                        startCase(item?.firstName),
-                        'N/A'
-                      )}
-                    </strong>
-                  </figcaption>
-                </div>
-              </div>
-              <div>
-                <div className='flex items-center'>
-                  <figure className='bg-white w-[42px] h-[41px] rounded-full flex items-center justify-center mr-3'>
-                    <img src={emailIcon} alt='' />
-                  </figure>
-                  <figcaption className='w-[calc(100%_-_41px)]'>
-                    <span className='block text-[#5 C5C5C]'>
-                      {t('EMAIL_ADDRESS')}
-                    </span>
-                    <strong>
-                      {helpers.ternaryCondition(
-                        item?.email,
-                        item?.email,
-                        'N/A'
-                      )}
-                    </strong>
-                  </figcaption>
-                </div>
-              </div>
-              <div className='ps-2'>
-                <div className='flex items-center'>
-                  <figure className='bg-white w-[42px] h-[41px] rounded-full flex items-center justify-center mr-3'>
-                    <img src={mobileIcon} alt='' />
-                  </figure>
-                  <figcaption className='w-[calc(100%_-_41px)]'>
-                    <span className='block text-[#5 C5C5C]'>
-                      {t('O_MOBILE_NUMBER')}
-                    </span>
-                    <strong>{`+${item?.countryCode} ${item?.mobile}`}</strong>
-                  </figcaption>
-                </div>
-              </div> */}
+            
               <InformationSection
                 iconSrc={firstNameIcon}
                 title={t('FAMILY_NAME')}
@@ -556,7 +485,7 @@ const UserView = () => {
                       {' '}
                       {helpers.ternaryCondition(
                         item?.firstName,
-                        startCase(item?.firstName) +' '+item?.lastName,
+                        startCase((item?.firstName ?? "") +' '+(item?.lastName ?? "")),
                         'N/A'
                       )}
                     </strong>
