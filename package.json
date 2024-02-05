@@ -59,6 +59,7 @@
     "start": "env-cmd -f .env react-scripts start",
     "build:development": "rimraf ./build && env-cmd -f .env.development npm run build",
     "build:uat": "rimraf ./build && env-cmd -f .env.uat npm run build",
+    "build:production": "rimraf ./build && env-cmd -f .env.production npm run build",
     "build": "rimraf ./build && react-scripts build",
     "test": "standard",
     "eject": "react-scripts eject"
