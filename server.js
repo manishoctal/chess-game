@@ -8,4 +8,4 @@ app.get("/*", function (req, res) {
 	res.sendFile(path.join(__dirname, "build", "index.html"));
 });
 
-app.listen(5050);
+app.listen(2070);
