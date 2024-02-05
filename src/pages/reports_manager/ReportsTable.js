@@ -99,9 +99,9 @@ const ReportsTable = ({ users, page, userType, pageSize }) => {
                   </td>
                     {helpers.andOperator(
                       userType==='local',
-                  <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center font-bold text-slate-900 dark:text-slate-400'>
-                    {  0}
-                      </td>
+                  // <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center font-bold text-slate-900 dark:text-slate-400'>
+                  //   {  0}
+                  //     </td>
                     )}
                   <td className='py-2 px-4 border-r  dark:border-[#ffffff38] text-center font-bold text-slate-900 dark:text-slate-400'>
                   {helpers.formattedAmount(item?.rewardAmount)}
