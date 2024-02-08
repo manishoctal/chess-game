@@ -62,9 +62,9 @@ const Table = ({
   };
 
   const statusLabel = (item) => {
-    let statusText = item?.status === 'active' ? 'Active' : 'Inactive';
+    let statusText = item?.status === "active" ? "Active" : "Inactive";
     let titleText = `${statusText}`;
-    return  item?.status === "deleted" ? (
+    return item?.status === "deleted" ? (
       <div>Deleted</div>
     ) : (
       <label
@@ -92,10 +92,10 @@ const Table = ({
     );
   };
   const getDisplayName = (userDetail, type) => {
-    if (type === 'local') {
-      return `${userDetail?.firstName} ${userDetail?.lastName ?? ''}`;
+    if (type === "local") {
+      return `${userDetail?.firstName} ${userDetail?.lastName ?? ""}`;
     } else {
-      return userDetail?.firstName || 'N/A';
+      return userDetail?.firstName || "N/A";
     }
   };
 
@@ -109,7 +109,7 @@ const Table = ({
     return helpers.ternaryCondition(
       userKyc?.kycRecord?.isApproved,
       startCase(userKyc?.kycRecord?.isApproved),
-      'KYC Not Uploaded Yet'
+      "KYC Not Uploaded Yet"
     );
   };
 
@@ -120,110 +120,103 @@ const Table = ({
     <>
       {renderTableCell(
         getKycStatusText(item),
-        'py-4 px-3 border-r  dark:border-[#ffffff38] text-center'
+        "py-4 px-3 border-r  dark:border-[#ffffff38] text-center"
       )}
       {renderTableCell(
-        dayjs(item?.createdAt).format('DD-MM-YYYY hh:mm A') || 'N/A',
-        'py-4 px-3 border-r  dark:border-[#ffffff38] text-center'
+        dayjs(item?.createdAt).format("DD-MM-YYYY hh:mm A") || "N/A",
+        "py-4 px-3 border-r  dark:border-[#ffffff38] text-center"
       )}
     </>
   );
   const renderActionTableCells = (item, userTypeDetail) => (
-     <td className="py-2 px-4 border-l">
-          <div className="">
-            <div className="flex justify-center items-center">
-              <NavLink
-                onClick={() => handleUserView(item)}
-                to="/users/view"
-                state={{ ...item, userTypeDetail }}
-                title={t("O_VIEW")}
-                className="px-2 py-2"
-              >
-                <AiFillEye className="cursor-pointer w-5 h-5 text-slate-600 dark:hover:text-white hover:text-blue-700" />{" "}
-              </NavLink>
+    <td className="py-2 px-4 border-l">
+      <div className="">
+        <div className="flex justify-center items-center">
+          <NavLink
+            onClick={() => handleUserView(item)}
+            to="/users/view"
+            state={{ ...item, userTypeDetail }}
+            title={t("O_VIEW")}
+            className="px-2 py-2"
+          >
+            <AiFillEye className="cursor-pointer w-5 h-5 text-slate-600 dark:hover:text-white hover:text-blue-700" />{" "}
+          </NavLink>
 
-              {(manager?.add || user?.role === "admin") &&
-                userTypeDetail === "local" &&
-                (item?.status !== "deleted" ? (
-                  <div onClick={() => handelEdit(item)}>
-                    <AiFillEdit
-                      className="text-green text-lg cursor-pointer  text-slate-600"
-                      title="Edit user"
-                    />
-                  </div>
-                ) : (
-                  ""
-                ))}
-              {(manager?.add || user?.role === "admin") &&
-                (item?.status !== "deleted" ? (
-                  <div
-                    onClick={() => {
-                      setIsAmountModal(true);
-                      setAddAmountUser(item);
-                    }}
-                  >
-                    <GiTakeMyMoney
-                      className="text-green text-lg cursor-pointer  text-slate-600"
-                      title="Add amount"
-                    />
-                  </div>
-                ) : (
-                  ""
-                ))}
-              <div>
-                <NavLink
-                  to="/users/transactionDetails"
-                  state={{ userTypeDetail, userId: item?._id }}
-                >
-                  <MdHistory
-                    className="text-green text-lg cursor-pointer  text-slate-600"
-                    title="Transaction details"
-                  />
-                </NavLink>
+          {(manager?.add || user?.role === "admin") &&
+            userTypeDetail === "local" &&
+            (item?.status !== "deleted" ? (
+              <div onClick={() => handelEdit(item)}>
+                <AiFillEdit
+                  className="text-green text-lg cursor-pointer  text-slate-600"
+                  title="Edit user"
+                />
               </div>
-            </div>
+            ) : (
+              ""
+            ))}
+          {(manager?.add || user?.role === "admin") &&
+            (item?.status !== "deleted" ? (
+              <div
+                onClick={() => {
+                  setIsAmountModal(true);
+                  setAddAmountUser(item);
+                }}
+              >
+                <GiTakeMyMoney
+                  className="text-green text-lg cursor-pointer  text-slate-600"
+                  title="Add amount"
+                />
+              </div>
+            ) : (
+              ""
+            ))}
+          <div>
+            <NavLink
+              to="/users/transactionDetails"
+              state={{ userTypeDetail, userId: item?._id }}
+            >
+              <MdHistory
+                className="text-green text-lg cursor-pointer  text-slate-600"
+                title="Transaction details"
+              />
+            </NavLink>
           </div>
-        </td> 
+        </div>
+      </div>
+    </td>
   );
 
   const renderUserTypeSpecificCells = (item, userTypeData) => {
-    if (userTypeData === 'local') {
-      return renderTableCell(getWalletAmount(item), `${
-        item && item?.status === 'deleted' ? 'text-red-600' : 'bg-white'
-      } py-2 px-4 border-r  dark:border-[#ffffff38] text-center`);
-    } else if (userTypeData === 'tourist') {
+    if (userTypeData === "local") {
+      return renderTableCell(
+        getWalletAmount(item),
+        `${
+          item && item?.status === "deleted" ? "text-red-600" : "bg-white"
+        } py-2 px-4 border-r  dark:border-[#ffffff38] text-center`
+      );
+    } else if (userTypeData === "tourist") {
       return (
         <>
           {renderTableCell(
-            helpers.ternaryCondition(item?.upcCode, item?.upcCode, 'N/A'),
+            helpers.ternaryCondition(item?.upcCode, item?.upcCode, "N/A"),
             `${
-              item && item?.status === 'deleted'
-                ? 'text-red-600'
-                : 'bg-white'
+              item && item?.status === "deleted" ? "text-red-600" : "bg-white"
             } py-4 px-3 border-r  dark:border-[#ffffff38] text-center`
           )}
           {renderTableCell(
             helpers.ternaryCondition(
               item?.referralCode,
               item?.referralCode,
-              'N/A'
+              "N/A"
             ),
             `${
-              item && item?.status === 'deleted'
-                ? 'text-red-600'
-                : 'bg-white'
+              item && item?.status === "deleted" ? "text-red-600" : "bg-white"
             } py-4 px-3 border-r text-center dark:border-[#ffffff38]`
           )}
           {renderTableCell(
-            helpers.ternaryCondition(
-              item?.familyName,
-              item?.familyName,
-              'N/A'
-            ),
+            helpers.ternaryCondition(item?.familyName, item?.familyName, "N/A"),
             `${
-              item && item?.status === 'deleted'
-                ? 'text-red-600'
-                : 'bg-white'
+              item && item?.status === "deleted" ? "text-red-600" : "bg-white"
             } py-4 px-3 border-r text-center dark:border-[#ffffff38]`
           )}
         </>
@@ -231,8 +224,8 @@ const Table = ({
     }
   };
 
-  const renderTableRows=()=>{
-    return  users?.map((item, i) => (
+  const renderTableRows = () => {
+    return users?.map((item, i) => (
       <tr
         key={i}
         className={`${
@@ -241,62 +234,41 @@ const Table = ({
             : "bg-white"
         } border-b dark:bg-gray-800 dark:border-[#ffffff38]'`}
       >
-         {renderTableCell(
-        i + 1 + pageSize * (page - 1),
-        'py-4 px-3 border-r  font-medium text-gray-900  dark:text-white dark:border-[#ffffff38]'
-      )}
         {renderTableCell(
-        getDisplayName(item, userType),
-        `${
-          item && item?.status === 'deleted'
-            ? 'text-red-600'
-            : 'bg-white'
-        } py-4 px-4 border-r  dark:border-[#ffffff38]'`
-      )}
+          i + 1 + pageSize * (page - 1),
+          "py-4 px-3 border-r  font-medium text-gray-900  dark:text-white dark:border-[#ffffff38]"
+        )}
         {renderTableCell(
-        helpers.ternaryCondition(
-          item?.email,
-          item?.email,
-          'N/A'
-        ),
-        `${
-          item && item?.status === 'deleted'
-            ? 'text-red-600'
-            : 'bg-white'
-        } py-2 px-4 border-r  dark:border-[#ffffff38] font-bold text-slate-900'`
-      )}
+          getDisplayName(item, userType),
+          `${
+            item && item?.status === "deleted" ? "text-red-600" : "bg-white"
+          } py-4 px-4 border-r  dark:border-[#ffffff38]'`
+        )}
         {renderTableCell(
-        helpers.ternaryCondition(
-          item?.countryCode,
-          item?.countryCode,
-          "N/A"
-        ),
-        `${
-          item && item?.status === "deleted"
-            ? "text-red-600"
-            : "bg-white"
-        } py-2 px-4 border-r  dark:border-[#ffffff38] text-center font-bold text-slate-900'`
-      )}
-        
-         {renderTableCell(
-        helpers.ternaryCondition(
-          item?.mobile,
-          item?.mobile,
-          "N/A"
-        ),
-        `${
-          item && item?.status === "deleted"
-            ? "text-red-600"
-            : "bg-white"
-        } py-2 px-4 border-r dark:border-[#ffffff38] text-center font-bold ${
-          item && item?.status === "deleted"
-            ? ""
-            : "text-slate-900"
-        }`
-      )}
+          helpers.ternaryCondition(item?.email, item?.email, "N/A"),
+          `${
+            item && item?.status === "deleted" ? "text-red-600" : "bg-white"
+          } py-2 px-4 border-r  dark:border-[#ffffff38] font-bold text-slate-900'`
+        )}
 
-      {renderUserTypeSpecificCells(item, userType)}
-       {renderCommonTableCells(item)}
+        {renderTableCell(
+          helpers.ternaryCondition(item?.countryCode, item?.countryCode, "N/A"),
+          `${
+            item && item?.status === "deleted" ? "text-red-600" : "bg-white"
+          } py-2 px-4 border-r  dark:border-[#ffffff38] text-center font-bold text-slate-900'`
+        )}
+
+        {renderTableCell(
+          helpers.ternaryCondition(item?.mobile, item?.mobile, "N/A"),
+          `${
+            item && item?.status === "deleted" ? "text-red-600" : "bg-white"
+          } py-2 px-4 border-r dark:border-[#ffffff38] text-center font-bold ${
+            item && item?.status === "deleted" ? "" : "text-slate-900"
+          }`
+        )}
+
+        {renderUserTypeSpecificCells(item, userType)}
+        {renderCommonTableCells(item)}
         {helpers.andOperator(
           manager?.add || user?.permission?.length === 0,
           <td className="py-2 px-4 border-r  dark:border-[#ffffff38] text-center">
@@ -305,8 +277,8 @@ const Table = ({
         )}
         {renderActionTableCells(item, userType)}
       </tr>
-    ))
-  }
+    ));
+  };
 
   return (
     <>
