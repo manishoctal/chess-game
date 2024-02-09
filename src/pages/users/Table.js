@@ -224,6 +224,15 @@ const Table = ({
     }
   };
 
+  const renderStatusTableCell = (item) => {
+    helpers.andOperator(
+      manager?.add || user?.permission?.length === 0,
+      <td className="py-2 px-4 border-r  dark:border-[#ffffff38] text-center">
+        {statusLabel(item)}
+      </td>
+    );
+  };
+
   const renderTableRows = () => {
     return users?.map((item, i) => (
       <tr
@@ -269,12 +278,13 @@ const Table = ({
 
         {renderUserTypeSpecificCells(item, userType)}
         {renderCommonTableCells(item)}
-        {helpers.andOperator(
+        {/* {helpers.andOperator(
           manager?.add || user?.permission?.length === 0,
           <td className="py-2 px-4 border-r  dark:border-[#ffffff38] text-center">
             {statusLabel(item)}
           </td>
-        )}
+        )} */}
+        {renderStatusTableCell(item)}
         {renderActionTableCells(item, userType)}
       </tr>
     ));
