@@ -185,8 +185,8 @@ function Home() {
   const getDashboardDetails = async () => {
     try {
       const payload = {
-        startDate: helpers?.ternaryCondition(startDate , dayjs(startDate).format("YYYY-MM-DD") , null),
-        endDate: helpers?.ternaryCondition(endDate , dayjs(endDate).format("YYYY-MM-DD") , null),
+        startDate: helpers?.ternaryCondition(startDate, dayjs(startDate).format("YYYY-MM-DD"), null),
+        endDate: helpers?.ternaryCondition(endDate, dayjs(endDate).format("YYYY-MM-DD"), null),
       };
       const path = pathObj.getDashboardDetails;
       const result = await apiGet(path, payload);
@@ -326,6 +326,22 @@ function Home() {
     setGraphTwoEndDate(dayjs().format("YYYY-MM-DD"));
     setSelectedButton("day");
     setGraphTwoDropdownValue("day");
+  };
+
+  const generateButton = (buttonType, label, selectedButton, handleButtonChange, disableState) => {
+    const isActive = selectedButton === buttonType;
+
+    return (
+      <button
+        type="button"
+        className={`bg-gradientTo text-sm px-8 mb-3 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/4 ${isActive ? "bg-gradient-to-b from-blue-300 to-green-500" : ""
+          }`}
+        onClick={() => handleButtonChange(buttonType, "first")}
+        disabled={disableState}
+      >
+        {label}
+      </button>
+    );
   };
 
   return (
@@ -472,54 +488,10 @@ function Home() {
           <StyledEngineProvider>
             <ThemeProvider theme={theme}>
               <div className="px-11">
-                <button
-                  type="button"
-                  className={`bg-gradientTo text-sm px-8 mb-3 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/4 ${
-                    selectedButton === "day"
-                      ? "bg-gradient-to-b from-blue-300 to-green-500"
-                      : ""
-                  }`}
-                  onClick={() => handleButtonChange("day", "first")}
-                  disabled={dateDisableState.first.day}
-                >
-                  Daily
-                </button>
-                <button
-                  type="button"
-                  className={`bg-gradientTo text-sm px-8 mb-3 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/4 ${
-                    selectedButton === "week"
-                      ? "bg-gradient-to-b from-blue-300 to-green-500"
-                      : ""
-                  }`}
-                  onClick={() => handleButtonChange("week", "first")}
-                  disabled={dateDisableState.first.week}
-                >
-                  Weekly
-                </button>
-                <button
-                  type="button"
-                  className={`bg-gradientTo text-sm px-8 mb-3 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/4 ${
-                    selectedButton === "month"
-                      ? "bg-gradient-to-b from-blue-300 to-green-500"
-                      : ""
-                  }`}
-                  onClick={() => handleButtonChange("month", "first")}
-                  disabled={dateDisableState.first.month}
-                >
-                  Monthly
-                </button>
-                <button
-                  type="button"
-                  className={`bg-gradientTo text-sm px-8 mb-3 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/4 ${
-                    selectedButton === "year"
-                      ? "bg-gradient-to-b from-blue-300 to-green-500"
-                      : ""
-                  }`}
-                  onClick={() => handleButtonChange("year", "first")}
-                  disabled={dateDisableState.first.year}
-                >
-                  Yearly
-                </button>
+                {generateButton("day", "Daily", selectedButton, handleButtonChange, dateDisableState.first.day)}
+                {generateButton("week", "Weekly", selectedButton, handleButtonChange, dateDisableState.first.week)}
+                {generateButton("month", "Monthly", selectedButton, handleButtonChange, dateDisableState.first.month)}
+                {generateButton("year", "Yearly", selectedButton, handleButtonChange, dateDisableState.first.year)}
               </div>
             </ThemeProvider>
           </StyledEngineProvider>
@@ -565,11 +537,10 @@ function Home() {
               <div className="px-11">
                 <button
                   type="button"
-                  className={`bg-gradientTo text-sm px-8 mb-3 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/4 ${
-                    graphTwoDropdownValue === "day"
+                  className={`bg-gradientTo text-sm px-8 mb-3 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/4 ${graphTwoDropdownValue === "day"
                       ? "bg-gradient-to-b from-blue-300 to-green-500"
                       : ""
-                  }`}
+                    }`}
                   onClick={() => handleButtonChange("day", "second")}
                   disabled={dateDisableState.second.day}
                 >
@@ -577,11 +548,10 @@ function Home() {
                 </button>
                 <button
                   type="button"
-                  className={`bg-gradientTo text-sm px-8 mb-3 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/4 ${
-                    graphTwoDropdownValue === "week"
+                  className={`bg-gradientTo text-sm px-8 mb-3 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/4 ${graphTwoDropdownValue === "week"
                       ? "bg-gradient-to-b from-blue-300 to-green-500"
                       : ""
-                  }`}
+                    }`}
                   onClick={() => handleButtonChange("week", "second")}
                   disabled={dateDisableState.second.week}
                 >
@@ -589,11 +559,10 @@ function Home() {
                 </button>
                 <button
                   type="button"
-                  className={`bg-gradientTo text-sm px-8 mb-3 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/4 ${
-                    graphTwoDropdownValue === "month"
+                  className={`bg-gradientTo text-sm px-8 mb-3 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/4 ${graphTwoDropdownValue === "month"
                       ? "bg-gradient-to-b from-blue-300 to-green-500"
                       : ""
-                  }`}
+                    }`}
                   onClick={() => handleButtonChange("month", "second")}
                   disabled={dateDisableState.second.month}
                 >
@@ -601,11 +570,10 @@ function Home() {
                 </button>
                 <button
                   type="button"
-                  className={`bg-gradientTo text-sm px-8 mb-3 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/4 ${
-                    graphTwoDropdownValue === "year"
+                  className={`bg-gradientTo text-sm px-8 mb-3 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/4 ${graphTwoDropdownValue === "year"
                       ? "bg-gradient-to-b from-blue-300 to-green-500"
                       : ""
-                  }`}
+                    }`}
                   onClick={() => handleButtonChange("year", "second")}
                   disabled={dateDisableState.second.year}
                 >
