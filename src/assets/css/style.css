@@ -265,4 +265,15 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-confirm {
   100% {
     transform: rotate(360deg);
   }
+  
+}
+
+@media(max-width:991px)
+{
+  .showToggle {
+    padding-top: 65px;
+}
+.showToggleMenu svg {
+  color: #fff;
+}
 }
