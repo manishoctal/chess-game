@@ -343,6 +343,7 @@ function Home() {
       </button>
     );
   };
+  
 
   return (
     <>
@@ -535,10 +536,10 @@ function Home() {
           <StyledEngineProvider>
             <ThemeProvider theme={theme}>
               <div className="px-11">
-              {generateButton("day", "Daily", selectedButton, handleButtonChange, dateDisableState.second.day,"second")}
-                {generateButton("week", "Weekly", selectedButton, handleButtonChange, dateDisableState.second.week,"second")}
-                {generateButton("month", "Monthly", selectedButton, handleButtonChange, dateDisableState.second.month, "second")}
-                {generateButton("year", "Yearly", selectedButton, handleButtonChange, dateDisableState.second.year, "second")}
+              {generateButton("day", "Daily", graphTwoDropdownValue, handleButtonChange, dateDisableState.second.day,"second")}
+                {generateButton("week", "Weekly", graphTwoDropdownValue, handleButtonChange, dateDisableState.second.week,"second")}
+                {generateButton("month", "Monthly", graphTwoDropdownValue, handleButtonChange, dateDisableState.second.month, "second")}
+                {generateButton("year", "Yearly", graphTwoDropdownValue, handleButtonChange, dateDisableState.second.year, "second")}
               </div>
             </ThemeProvider>
           </StyledEngineProvider>
