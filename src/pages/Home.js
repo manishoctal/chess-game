@@ -185,8 +185,8 @@ function Home() {
   const getDashboardDetails = async () => {
     try {
       const payload = {
-        startDate: startDate ? dayjs(startDate).format("YYYY-MM-DD") : null,
-        endDate: endDate ? dayjs(endDate).format("YYYY-MM-DD") : null,
+        startDate: helpers?.ternaryCondition(startDate , dayjs(startDate).format("YYYY-MM-DD") , null),
+        endDate: helpers?.ternaryCondition(endDate , dayjs(endDate).format("YYYY-MM-DD") , null),
       };
       const path = pathObj.getDashboardDetails;
       const result = await apiGet(path, payload);
