@@ -96,7 +96,9 @@ export const lineGraphData2 = {
   ],
 };
 
+
 function Home() {
+  console.log("Check")
   const { t } = useTranslation();
   const { logoutUser } = useContext(AuthContext);
   const [selectedButton, setSelectedButton] = useState("day");
