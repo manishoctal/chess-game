@@ -231,56 +231,64 @@ const Table = ({
         {statusLabel(item)}
       </td>
     );
+  const getRowClassName = (item) => {
+    return item && item.status === "deleted"
+      ? "text-red-600 font-bold"
+      : "bg-white";
+  };
 
   const renderTableRows = () => {
-    return users?.map((item, i) => (
-      <tr
-        key={i}
-        className={`${
-          item && item?.status === "deleted"
-            ? "text-red-600 font-bold"
-            : "bg-white"
-        } border-b dark:bg-gray-800 dark:border-[#ffffff38]'`}
-      >
-        {renderTableCell(
-          i + 1 + pageSize * (page - 1),
-          "py-4 px-3 border-r  font-medium text-gray-900  dark:text-white dark:border-[#ffffff38]"
-        )}
-        {renderTableCell(
-          getDisplayName(item, userType),
-          `${
-            item && item?.status === "deleted" ? "text-red-600" : "bg-white"
-          } py-4 px-4 border-r  dark:border-[#ffffff38]'`
-        )}
-        {renderTableCell(
-          helpers.ternaryCondition(item?.email, item?.email, "N/A"),
-          `${
-            item && item?.status === "deleted" ? "text-red-600" : "bg-white"
-          } py-2 px-4 border-r  dark:border-[#ffffff38] font-bold text-slate-900'`
-        )}
+    return users?.map((item, i) => {
+      const rowClassName = getRowClassName(item);
 
-        {renderTableCell(
-          helpers.ternaryCondition(item?.countryCode, item?.countryCode, "N/A"),
-          `${
-            item && item?.status === "deleted" ? "text-red-600" : "bg-white"
-          } py-2 px-4 border-r  dark:border-[#ffffff38] text-center font-bold text-slate-900'`
-        )}
+      return (
+        <tr key={i} className={rowClassName}>
+          {renderTableCell(
+            i + 1 + pageSize * (page - 1),
+            "py-4 px-3 border-r  font-medium text-gray-900  dark:text-white dark:border-[#ffffff38]"
+          )}
+          {renderTableCell(
+            getDisplayName(item, userType),
+            `${
+              item && item?.status === "deleted" ? "text-red-600" : "bg-white"
+            } py-4 px-4 border-r  dark:border-[#ffffff38]'`
+          )}
+          {renderTableCell(
+            helpers.ternaryCondition(item?.email, item?.email, "N/A"),
+            `${
+              item && item?.status === "deleted" ? "text-red-600" : "bg-white"
+            } py-2 px-4 border-r  dark:border-[#ffffff38] font-bold text-slate-900'`
+          )}
 
-        {renderTableCell(
-          helpers.ternaryCondition(item?.mobile, item?.mobile, "N/A"),
-          `${
-            item && item?.status === "deleted" ? "text-red-600" : "bg-white"
-          } py-2 px-4 border-r dark:border-[#ffffff38] text-center font-bold ${
-            item && item?.status === "deleted" ? "" : "text-slate-900"
-          }`
-        )}
+          {renderTableCell(
+            helpers.ternaryCondition(
+              item?.countryCode,
+              item?.countryCode,
+              "N/A"
+            ),
+            `${
+              item && item?.status === "deleted" ? "text-red-600" : "bg-white"
+            } py-2 px-4 border-r  dark:border-[#ffffff38] text-center font-bold text-slate-900'`
+          )}
 
-        {renderUserTypeSpecificCells(item, userType)}
-        {renderCommonTableCells(item)}
-        {renderStatusTableCell(item)}
-        {renderActionTableCells(item, userType)}
-      </tr>
-    ));
+          {renderTableCell(
+            helpers.ternaryCondition(item?.mobile, item?.mobile, "N/A"),
+            `${
+              item && item?.status === "deleted" ? "text-red-600" : "bg-white"
+            } py-2 px-4 border-r dark:border-[#ffffff38] text-center font-bold ${
+              item && item?.status === "deleted" ? "" : "text-slate-900"
+            }`
+          )}
+
+          {renderUserTypeSpecificCells(item, userType)}
+          {renderCommonTableCells(item)}
+          {renderStatusTableCell(item)}
+          {renderActionTableCells(item, userType)}
+        </tr>
+      );
+      // )
+      // )
+    });
   };
 
   return (
