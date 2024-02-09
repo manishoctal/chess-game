@@ -51,12 +51,12 @@ const SupportManagerTable = ({
             ({item?.user?.userType ? item?.user?.userType : "N/A"})
           </p>
           <p className="text-sm text-muted-foreground">
-            {item?.user?.email ? item?.user?.email : "N/A"}
+            {helpers?.ternaryCondition(item?.user?.email , item?.user?.email , "N/A")}
           </p>
           <p className="text-sm text-muted-foreground">
-            {item?.user?.countryCode
-              ? `+${item?.user?.countryCode} ${item?.user?.mobile}`
-              : "N/A"}
+            {helpers?.ternaryCondition(item?.user?.countryCode
+              , `+${item?.user?.countryCode} ${item?.user?.mobile}`
+              , "N/A")}
           </p>
         </div>
       </td>
