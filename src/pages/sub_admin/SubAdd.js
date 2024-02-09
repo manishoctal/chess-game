@@ -389,7 +389,6 @@ const SubAdd = ({ props }) => {
                           />
                         )}
                       </td>
-                      {console.log('data.add && data.view',data.add && data.view)}
                       <td className='py-2 px-4 border-r dark:border-[#ffffff38] '>
                         {helpers.andOperator(
                           data?.shownAll,
