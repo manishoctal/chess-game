@@ -237,7 +237,6 @@ function Home() {
   const handleActiveForSecond = (start, end) => {
     if (start && end) {
       const dateDifference = dayjs(end).diff(start, "day");
-      console.log("dateDifference", dateDifference);
       if (dateDifference > 366) {
         setGraphTwoDropdownValue("year");
       } else if (dateDifference > 31 && dateDifference <= 366) {
