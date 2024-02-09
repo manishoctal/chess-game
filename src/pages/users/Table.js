@@ -224,14 +224,13 @@ const Table = ({
     }
   };
 
-  const renderStatusTableCell = (item) => {
+  const renderStatusTableCell = (item) =>
     helpers.andOperator(
       manager?.add || user?.permission?.length === 0,
       <td className="py-2 px-4 border-r  dark:border-[#ffffff38] text-center">
         {statusLabel(item)}
       </td>
     );
-  };
 
   const renderTableRows = () => {
     return users?.map((item, i) => (

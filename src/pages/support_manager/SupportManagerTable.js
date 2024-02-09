@@ -31,15 +31,7 @@ const SupportManagerTable = ({
     setIsReply(true);
   };
 
-  const SupportTableRow = ({
-    item,
-    index,
-    pageSize,
-    manager,
-    user,
-    handleReply,
-    handleUserView,
-  }) => (
+  const SupportTableRow = ({ item, index }) => (
     <tr
       key={index}
       className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
@@ -258,16 +250,7 @@ const SupportManagerTable = ({
                   //     </td>
                   //   )}
                   // </tr>
-                  <SupportTableRow
-                    key={i}
-                    item={item}
-                    index={i}
-                    pageSize={pageSize}
-                    manager={manager}
-                    user={user}
-                    handleReply={handleReply}
-                    handleUserView={handleUserView}
-                  />
+                  <SupportTableRow key={i} item={item} index={i} />
                 ))}
               {isEmpty(notifications) && (
                 <tr className="bg-white text-center border-b dark:bg-gray-800 dark:border-gray-700">
