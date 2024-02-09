@@ -269,8 +269,8 @@ function Home() {
   const handleGraphApiCall = async (start, end, dropValue, type) => {
     try {
       const payload = {
-        startDate: start ? dayjs(start).format("YYYY-MM-DD") : null,
-        endDate: end ? dayjs(end).format("YYYY-MM-DD") : null,
+        startDate: helpers?.ternaryCondition(start , dayjs(start).format("YYYY-MM-DD") , null),
+        endDate: helpers?.ternaryCondition(end , dayjs(end).format("YYYY-MM-DD") , null),
         type: dropValue,
       };
       const path = pathObj.getEarningManagerGraph;
@@ -328,7 +328,7 @@ function Home() {
     setGraphTwoDropdownValue("day");
   };
 
-  const generateButton = (buttonType, label, selectedButton, handleButtonChange, disableState) => {
+  const generateButton = (buttonType, label, selectedButton, handleButtonChange, disableState, keyFor) => {
     const isActive = selectedButton === buttonType;
 
     return (
@@ -336,7 +336,7 @@ function Home() {
         type="button"
         className={`bg-gradientTo text-sm px-8 mb-3 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/4 ${isActive ? "bg-gradient-to-b from-blue-300 to-green-500" : ""
           }`}
-        onClick={() => handleButtonChange(buttonType, "first")}
+        onClick={() => handleButtonChange(buttonType, keyFor)}
         disabled={disableState}
       >
         {label}
@@ -488,10 +488,10 @@ function Home() {
           <StyledEngineProvider>
             <ThemeProvider theme={theme}>
               <div className="px-11">
-                {generateButton("day", "Daily", selectedButton, handleButtonChange, dateDisableState.first.day)}
-                {generateButton("week", "Weekly", selectedButton, handleButtonChange, dateDisableState.first.week)}
-                {generateButton("month", "Monthly", selectedButton, handleButtonChange, dateDisableState.first.month)}
-                {generateButton("year", "Yearly", selectedButton, handleButtonChange, dateDisableState.first.year)}
+                {generateButton("day", "Daily", selectedButton, handleButtonChange, dateDisableState.first.day,"first")}
+                {generateButton("week", "Weekly", selectedButton, handleButtonChange, dateDisableState.first.week,"first")}
+                {generateButton("month", "Monthly", selectedButton, handleButtonChange, dateDisableState.first.month, "first")}
+                {generateButton("year", "Yearly", selectedButton, handleButtonChange, dateDisableState.first.year, "first")}
               </div>
             </ThemeProvider>
           </StyledEngineProvider>
@@ -535,50 +535,10 @@ function Home() {
           <StyledEngineProvider>
             <ThemeProvider theme={theme}>
               <div className="px-11">
-                <button
-                  type="button"
-                  className={`bg-gradientTo text-sm px-8 mb-3 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/4 ${graphTwoDropdownValue === "day"
-                      ? "bg-gradient-to-b from-blue-300 to-green-500"
-                      : ""
-                    }`}
-                  onClick={() => handleButtonChange("day", "second")}
-                  disabled={dateDisableState.second.day}
-                >
-                  Daily
-                </button>
-                <button
-                  type="button"
-                  className={`bg-gradientTo text-sm px-8 mb-3 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/4 ${graphTwoDropdownValue === "week"
-                      ? "bg-gradient-to-b from-blue-300 to-green-500"
-                      : ""
-                    }`}
-                  onClick={() => handleButtonChange("week", "second")}
-                  disabled={dateDisableState.second.week}
-                >
-                  Weekly
-                </button>
-                <button
-                  type="button"
-                  className={`bg-gradientTo text-sm px-8 mb-3 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/4 ${graphTwoDropdownValue === "month"
-                      ? "bg-gradient-to-b from-blue-300 to-green-500"
-                      : ""
-                    }`}
-                  onClick={() => handleButtonChange("month", "second")}
-                  disabled={dateDisableState.second.month}
-                >
-                  Monthly
-                </button>
-                <button
-                  type="button"
-                  className={`bg-gradientTo text-sm px-8 mb-3 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/4 ${graphTwoDropdownValue === "year"
-                      ? "bg-gradient-to-b from-blue-300 to-green-500"
-                      : ""
-                    }`}
-                  onClick={() => handleButtonChange("year", "second")}
-                  disabled={dateDisableState.second.year}
-                >
-                  Yearly
-                </button>
+              {generateButton("day", "Daily", selectedButton, handleButtonChange, dateDisableState.second.day,"second")}
+                {generateButton("week", "Weekly", selectedButton, handleButtonChange, dateDisableState.second.week,"second")}
+                {generateButton("month", "Monthly", selectedButton, handleButtonChange, dateDisableState.second.month, "second")}
+                {generateButton("year", "Yearly", selectedButton, handleButtonChange, dateDisableState.second.year, "second")}
               </div>
             </ThemeProvider>
           </StyledEngineProvider>
