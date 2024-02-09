@@ -248,6 +248,23 @@ function Home() {
     }
   };
 
+  const setChartDataForType = (prevData, newCategories, newData) => ({
+    ...prevData,
+    options: {
+      ...prevData?.options,
+      xaxis: {
+        ...prevData?.options?.xaxis,
+        categories: newCategories,
+      },
+    },
+    series: [
+      {
+        ...prevData?.series[0],
+        data: newData,
+      },
+    ],
+  });
+
   const handleGraphApiCall = async (start, end, dropValue, type) => {
     try {
       const payload = {
@@ -261,39 +278,13 @@ function Home() {
         const newCategories = result?.data?.results?.xAxis;
         let newData = result?.data?.results?.yAxis;
         if (type === "first") {
-          setChartData((prevData) => ({
-            ...prevData,
-            options: {
-              ...prevData?.options,
-              xaxis: {
-                ...prevData?.options?.xaxis,
-                categories: newCategories,
-              },
-            },
-            series: [
-              {
-                ...prevData?.series[0],
-                data: newData,
-              },
-            ],
-          }));
+          setChartData((prevData) =>
+            setChartDataForType(prevData, newCategories, newData)
+          );
         } else {
-          setChartDataTwo((prevData) => ({
-            ...prevData,
-            options: {
-              ...prevData?.options,
-              xaxis: {
-                ...prevData?.options?.xaxis,
-                categories: newCategories,
-              },
-            },
-            series: [
-              {
-                ...prevData?.series[0],
-                data: newData,
-              },
-            ],
-          }));
+          setChartDataTwo((prevData) =>
+            setChartDataForType(prevData, newCategories, newData)
+          );
         }
       } else {
         notification.error(result?.data?.message);
