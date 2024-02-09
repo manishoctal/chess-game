@@ -277,12 +277,6 @@ const Table = ({
 
         {renderUserTypeSpecificCells(item, userType)}
         {renderCommonTableCells(item)}
-        {/* {helpers.andOperator(
-          manager?.add || user?.permission?.length === 0,
-          <td className="py-2 px-4 border-r  dark:border-[#ffffff38] text-center">
-            {statusLabel(item)}
-          </td>
-        )} */}
         {renderStatusTableCell(item)}
         {renderActionTableCells(item, userType)}
       </tr>
