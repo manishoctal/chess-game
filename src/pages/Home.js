@@ -328,15 +328,15 @@ function Home() {
     setGraphTwoDropdownValue("day");
   };
 
-  const generateButton = (buttonType, label, selectedButton, handleButtonChange, disableState, keyFor) => {
-    const isActive = selectedButton === buttonType;
+  const generateButton = (buttonType, label, selectedButtons, handleButtonChangeData, disableState, keyFor) => {
+    const isActive = selectedButtons === buttonType;
 
     return (
       <button
         type="button"
         className={`bg-gradientTo text-sm px-8 mb-3 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/4 ${isActive ? "bg-gradient-to-b from-blue-300 to-green-500" : ""
           }`}
-        onClick={() => handleButtonChange(buttonType, keyFor)}
+        onClick={() => handleButtonChangeData(buttonType, keyFor)}
         disabled={disableState}
       >
         {label}
