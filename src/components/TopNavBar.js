@@ -6,7 +6,7 @@ import OImage from "./reusable/OImage";
 import { t } from "i18next";
 
 const TopNavBar = () => {
-  const { logoutUser, user, handleSidebar, pageName, updatePageName } =
+  const { logoutUser, user, handleSidebar, pageName, updatePageName,sidebarStatus  } =
     useContext(AuthContext);
 
   const handleLogout = () => {
@@ -18,7 +18,7 @@ const TopNavBar = () => {
   return (
     <div className="linHeader border-b py-4 px-4 md:px-8 dark:bg-slate-900">
       <header className="bg-white items-center flex dark:bg-slate-900">
-        <div className="mr-4 dark:text-white" onClick={() => handleSidebar()}>
+      <div className={`mr-4 dark:text-white z-50 ${sidebarStatus === 'open' ? 'showToggleMenu' : ""}`} onClick={() => handleSidebar()}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"

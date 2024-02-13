@@ -104,7 +104,6 @@ function Login() {
                 {t("O_EMAIL_ID")}
                 <span className="text-red-500">*</span>
               </label>
-              {console.log(errors, "errors")}
               <ErrorMessage message={errors?.email?.message} />
             </div>
             <div className="relative z-0 mb-6 w-full group">

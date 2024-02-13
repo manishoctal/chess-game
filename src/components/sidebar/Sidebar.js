@@ -90,7 +90,8 @@ const Sidebar = () => {
         <Link
           to='/dashboard'
           onClick={() => updatePageName('Dashboard')}
-          className='px-2 py-6 w-full text-center flex justify-center'
+          // className='px-2 py-6 w-full text-center flex justify-center'
+          className={`px-2 py-6 w-full text-center flex justify-center ${sidebarStatus === 'open' ? 'showToggle' : ''}`}
         >
           <img
             src={logoImage}
