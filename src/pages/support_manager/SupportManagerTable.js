@@ -7,7 +7,6 @@ import { FaReply } from "react-icons/fa";
 import SupportView from "./SupportView";
 import helpers from "utils/helpers";
 import { AiFillEye } from "react-icons/ai";
-
 const SupportManagerTable = ({
   notifications,
   paginationObj,
