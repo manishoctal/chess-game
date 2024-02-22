@@ -424,6 +424,9 @@
   "PLEASE_ENTER_NEGATIVE_AMOUNT_MAXIMUM_LIMIT": "Please enter negative amount maximum limit.",
   "PLEASE_ENTER_MAXIMUM_TRANSFER_MONEY_LIMIT": "Please enter maximum transfer money limit.",
   "PLEASE_ENTER_SIGN_UP_BONUS": "Please enter sign up bonus.",
+  "PLEASE_ENTER_SIGN_UP_BONUS_FOR_LOCAL": "Please enter sign up bonus for local",
+  "PLEASE_ENTER_SIGN_UP_BONUS_TOURIST": "Please enter sign up bonus for tourist",
+
   "ONLY_DIGITS_ARE_ALLOWED": "Only digits are allowed.",
   "PLEASE_ENTER_UPC_CODE_REFERRAL_AMOUNT": "Please enter upc code referral amount.",
   "PLEASE_ENTER_REFERRAL_BONUS": "Please enter referral bonus.",
@@ -478,6 +481,8 @@
   "REFERRAL_BONUS_FOR_LOCALS": "Referral Bonus for locals",
   "UPC_CODE_REFERRAL_AMOUNT": "UPC code referral amount",
   "SIGN_UP_BONUS": "Sign up bonus",
+  "SIGN_UP_BONUS_FOR_LOCAL": "Sign up bonus for local",
+  "SIGN_UP_BONUS_FOR_TOURIST": "Sign up bonus for tourist",
   "TRANSFER_MONEY_LIMIT_MAXIMUM": "Transfer money limit (maximum)",
   "NEGATIVE_AMOUNT_MAXIMUM_LIMIT": "Negative Amount maximum limit",
   "TIME_TO_LOG_ACTIVE_USERS_ON_THE_APP": "Time to log active users  on the app",

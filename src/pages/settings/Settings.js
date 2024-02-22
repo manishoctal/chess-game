@@ -307,6 +307,7 @@ const Settings = () => {
 
                 <ErrorMessage message={errors?.upcCodeReferralAmount?.message} />
               </div>
+
               <div className='mb-4  w-full'>
                 <OInputField
                   type='number'
@@ -334,6 +335,62 @@ const Settings = () => {
                 <ErrorMessage message={errors?.signupBonus?.message} />
               </div>
 
+              {/* added two parameter for signupBonusForLocal,signupBonosForTourist */}
+
+              <div className='mb-4  w-full'>
+                <OInputField
+                  type='number'
+                  id='signupBonusForLocal'
+                  maxLength={40}
+                  wrapperClassName='relative z-0  w-full group'
+                  disable={manager?.add === false}
+                  inputLabel={<>{t('SIGN_UP_BONUS_FOR_LOCAL')}</>}
+                  register={register('signupBonusForLocal', {
+                    required: {
+                      value: true,
+                      message: t('PLEASE_ENTER_SIGN_UP_BONUS_FOR_LOCAL')
+                    },
+                    maxLength: {
+                      value: 40,
+                      message: t('MAX_LIMIT_IS_40_CHARACTERS')
+                    },
+                    min: {
+                      value: 1,
+                      message: t('MINIMUM_VALUE_MUST_IS_1')
+                    }
+                  })}
+                  placeholder=' '
+                />
+                <ErrorMessage message={errors?.signupBonusForLocal?.message} />
+              </div>
+
+              <div className='mb-4  w-full'>
+                <OInputField
+                  type='number'
+                  id='signupBonusForTourist'
+                  maxLength={40}
+                  wrapperClassName='relative z-0  w-full group'
+                  disable={manager?.add === false}
+                  inputLabel={<>{t('SIGN_UP_BONUS_FOR_TOURIST')}</>}
+                  register={register('signupBonusForTourist', {
+                    required: {
+                      value: true,
+                      message: t('PLEASE_ENTER_SIGN_UP_BONUS_TOURIST')
+                    },
+                    maxLength: {
+                      value: 40,
+                      message: t('MAX_LIMIT_IS_40_CHARACTERS')
+                    },
+                    min: {
+                      value: 1,
+                      message: t('MINIMUM_VALUE_MUST_IS_1')
+                    }
+                  })}
+                  placeholder=' '
+                />
+                <ErrorMessage message={errors?.signupBonusForTourist?.message} />
+              </div>
+              {/* added two parameter for signupBonusForLocal,signupBonosForTourist */}
               <div className='w-full'>
                 <OInputField
                   wrapperClassName='relative z-0  w-full group'
