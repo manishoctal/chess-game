@@ -158,7 +158,7 @@ const UserView = () => {
               <figure className="overflow-hidden rounded-full inline-block  border border-2 mb-5">
                 <OImage
                   className="w-[100px] h-[100px] inline"
-                  src={item?.profilePic || defaultImage}
+                  src={helpers?.orOperator(item?.profilePic, defaultImage)}
                   fallbackUrl={defaultImage}
                   alt=""
                 />
