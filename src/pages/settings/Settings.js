@@ -308,7 +308,7 @@ const Settings = () => {
                 <ErrorMessage message={errors?.upcCodeReferralAmount?.message} />
               </div>
 
-              <div className='mb-4  w-full'>
+              {/* <div className='mb-4  w-full'>
                 <OInputField
                   type='number'
                   id='signupBonus'
@@ -333,7 +333,7 @@ const Settings = () => {
                   placeholder=' '
                 />
                 <ErrorMessage message={errors?.signupBonus?.message} />
-              </div>
+              </div> */}
 
               {/* added two parameter for signupBonusForLocal,signupBonosForTourist */}
 
