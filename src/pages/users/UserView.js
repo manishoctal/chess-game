@@ -157,7 +157,7 @@ const UserView = () => {
             <div className="mr-5 flex ">
               <figure className="overflow-hidden rounded-full inline-block  border border-2 mb-5">
                 <OImage
-                  className="w-[100px] h-[100px] inline"
+                  className="w-[100px] h-[100px] inline "
                   src={helpers?.orOperator(item?.profilePic, defaultImage)}
                   fallbackUrl={defaultImage}
                   alt=""
@@ -439,7 +439,7 @@ const UserView = () => {
                 <figure className="inline-block overflow-hidden border mb-3 w-full h-[200px]">
                   <OImage
                     src={item?.kycRecord?.docImageFront || defaultImage}
-                    className="w-full h-full object-contain inline "
+                    className="w-full h-full object-contain inline cursor-pointer"
                     alt=""
                     onClick={() =>
                       handleShowImage(item?.kycRecord?.docImageFront)
@@ -453,7 +453,7 @@ const UserView = () => {
                 <figure className="inline-block overflow-hidden border mb-3 w-full h-[200px]">
                   <OImage
                     src={item?.kycRecord?.docImageBack || defaultImage}
-                    className="w-full h-full object-contain inline "
+                    className="w-full h-full object-contain inline cursor-pointer"
                     alt=""
                     onClick={() =>
                       handleShowImage(item?.kycRecord?.docImageFront)
