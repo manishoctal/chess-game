@@ -120,7 +120,7 @@ const UserView = () => {
       : "N/A";
   };
   const planningCities = () => {
-    return item?.planningCities || item?.planningCities?.length > 0
+    return item?.planningCities &&  item?.planningCities?.length > 0
       ? item.planningCities.map((city, key) => city).join(", ")
       : "N/A";
   };
