@@ -456,7 +456,7 @@ const UserView = () => {
                     className="w-full h-full object-contain inline cursor-pointer"
                     alt=""
                     onClick={() =>
-                      handleShowImage(item?.kycRecord?.docImageFront)
+                      handleShowImage(item?.kycRecord?.docImageBack)
                     }
                     fallbackUrl={defaultImage}
                   />
