@@ -652,15 +652,15 @@ const UserView = () => {
                 </div>
               </ul>
             </div>
-            <div className="border border-1 border-[#E1DEDE] rounded-md p-12">
-              <span className="block text-center pb-3">
+            <div className="border border-1  border-[#E1DEDE] rounded-md p-12">
+              <span className="block text-center pb-3 ">
                 {t("KYC_DOCUMENT")}
               </span>
               <div className="relative">
                 <figure className="inline-block overflow-hidden border mb-3 w-full h-[200px]">
                   <OImage
                     src={item?.kycRecord?.docImageFront || defaultImage}
-                    className="w-full h-full object-contain inline "
+                    className="w-full h-full object-contain inline  cursor-pointer"
                     onClick={() =>
                       handleShowImage(item?.kycRecord?.docImageFront)
                     }
@@ -674,10 +674,10 @@ const UserView = () => {
                 <figure className="inline-block overflow-hidden border mb-3 w-full h-[200px]">
                   <OImage
                     src={item?.kycRecord?.docImageBack || defaultImage}
-                    className="w-full h-full object-contain inline "
+                    className="w-full h-full object-contain inline cursor-pointer"
                     alt=""
                     onClick={() =>
-                      handleShowImage(item?.kycRecord?.docImageFront)
+                      handleShowImage(item?.kycRecord?.docImageBack)
                     }
                     fallbackUrl={defaultImage}
                   />
