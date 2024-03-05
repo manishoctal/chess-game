@@ -551,7 +551,6 @@
   "MAXIMUM_AMOUNT_MUST_BE_99999999": "Maximum amount must be 99999999.",
   "WALLET_TYPE":"Type (Scratch card, Debit/Credit card)",
   "TRANSACTION_DATE_TIME": "Transaction Date/Time",
-  "DEBIT_CARD": "Debit Card",
-  "CREDIT_CARD": "Credit Card",
+  "CREDIT_DEBIT_CARD": " Debit/Credit Card",
   "SCRATCH_CARD":"Scratch Card"
 }

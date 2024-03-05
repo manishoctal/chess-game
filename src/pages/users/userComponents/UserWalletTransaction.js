@@ -127,8 +127,9 @@ const UserWalletTransaction = (item) => {
                 <option defaultValue value="">
                   {t("O_ALL")}
                 </option>
-                <option value="cardDebitCredit">{t("DEBIT_CARD")}</option>
-                <option value="cardDebitCredit">{t("CREDIT_CARD")}</option>
+                <option value="cardDebitCredit">
+                  {t("CREDIT_DEBIT_CARD")}
+                </option>
                 <option value="addMoneyTopUp">{t("SCRATCH_CARD")}</option>
               </select>
             </div>
@@ -179,7 +180,11 @@ const UserWalletTransaction = (item) => {
                     {startCase(walletData?.transactionAmount) || "N/A"}
                   </td>
                   <td className="py-2 px-4 border-r dark:border-[#ffffff38]">
-                    {walletData?.type || "N/A"}
+                    {walletData?.transactionType
+                      ? walletData?.transactionType === "addMoneyTopUp"
+                        ? "Scratch Card"
+                        : "Debit/Credit Card"
+                      : "N/A"}
                   </td>
                   <td className="py-2 px-4 border-r dark:border-[#ffffff38]">
                     {dayjs(walletData?.createdAt).format("DD-MM-YYYY hh:mm A")}
