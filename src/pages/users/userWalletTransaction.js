@@ -211,7 +211,7 @@ const UserWalletTransaction = () => {
                   <td className="py-2 px-4 border-r dark:border-[#ffffff38]">
                     {item?.user?.type || "N/A"}
                   </td>
-                  <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-center">
+                  <td className="py-2 px-4 border-r dark:border-[#ffffff38]">
                     {dayjs(item?.createdAt).format("DD-MM-YYYY hh:mm A")}
                   </td>
                 </tr>

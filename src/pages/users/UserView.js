@@ -227,7 +227,7 @@ const UserView = () => {
               </div>
             </div>
             <div
-              className="bg-[#000] rounded-lg p-4 cursor-pointer "
+              className="bg-[#000] rounded-lg p-4 cursor-pointer"
               onClick={handleWalletBox}
             >
               <div className="flex items-center">
