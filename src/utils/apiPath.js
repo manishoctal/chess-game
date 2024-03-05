@@ -40,7 +40,8 @@ const apiPath = {
   listAddMoneyToUserWallet: "/v1/admin/user/listAddMoneyToUserWallet",
   allNotificationUser: "/v1/admin/user/all-users",
   approveAndRejectKyc: "/v1/admin/user/kycStatus",
-  getEarningManagerGraph: "/v1/admin/earningManagerGraph"
+  getEarningManagerGraph: "/v1/admin/earningManagerGraph",
+  walletTransactionList: "/v1/admin/transaction/getTransactionList",
 };
 
 export default apiPath;
