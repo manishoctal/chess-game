@@ -2,7 +2,6 @@ import React from "react";
 import timeIcon from "../../../assets/icons/icon/time.svg";
 import dayjs from "dayjs";
 import { useTranslation } from "react-i18next";
-import { useLocation } from "react-router-dom";
 import defaultImage from "../../../assets/images/No-image-found.jpg";
 import { startCase, capitalize } from "lodash";
 import helpers from "utils/helpers";
