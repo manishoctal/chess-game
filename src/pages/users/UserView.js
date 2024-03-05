@@ -111,16 +111,6 @@ const UserView = () => {
     kycDocSection();
   }, [item?.kycRecord?.isApproved]);
 
-  // const visitedCities = () => {
-  //   return item?.visitedCities && item.visitedCities.length > 0
-  //     ? item.visitedCities.map((city, key) => city).join(", ")
-  //     : "N/A";
-  // };
-  // const planningCities = () => {
-  //   return item?.planningCities && item?.planningCities?.length > 0
-  //     ? item.planningCities.map((city, key) => city).join(", ")
-  //     : "N/A";
-  // };
   const InformationSection = ({ iconSrc, title, content }) => {
     return (
       <div className="flex items-center">

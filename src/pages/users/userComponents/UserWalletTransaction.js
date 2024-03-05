@@ -1,11 +1,9 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { apiGet } from "../../../utils/apiFetch";
 import apiPath from "../../../utils/apiPath";
 import Pagination from "../../Pagination";
 import { useTranslation } from "react-i18next";
-import AuthContext from "context/AuthContext";
 import PageSizeList from "components/PageSizeList";
-import helpers from "utils/helpers";
 import ODateRangePicker from "components/shared/datePicker/ODateRangePicker";
 import dayjs from "dayjs";
 import { isEmpty, startCase } from "lodash";
@@ -105,7 +103,6 @@ const UserWalletTransaction = (item) => {
     setPage(1);
   };
 
-  console.log(filterData, "item");
   return (
     <div className="bg-white border border-[#E9EDF9] rounded-lg dark:bg-gray-800 dark:mt-4">
       <form className="border-b border-b-[#E3E3E3] 2xl:flex gap-2 px-4 py-3">
@@ -166,7 +163,7 @@ const UserWalletTransaction = (item) => {
               </tr>
             </thead>
             <tbody>
-              {allWalletTransaction?.map((item, i) => (
+              {allWalletTransaction?.map((walletData, i) => (
                 <tr
                   key={i}
                   className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
@@ -178,13 +175,13 @@ const UserWalletTransaction = (item) => {
                     {i + 1 + pageSize * (page - 1)}
                   </th>
                   <td className="py-2 px-4 border-r dark:border-[#ffffff38]">
-                    {startCase(item?.transactionAmount) || "N/A"}
+                    {startCase(walletData?.transactionAmount) || "N/A"}
                   </td>
                   <td className="py-2 px-4 border-r dark:border-[#ffffff38]">
-                    {item?.type || "N/A"}
+                    {walletData?.type || "N/A"}
                   </td>
                   <td className="py-2 px-4 border-r dark:border-[#ffffff38]">
-                    {dayjs(item?.createdAt).format("DD-MM-YYYY hh:mm A")}
+                    {dayjs(walletData?.createdAt).format("DD-MM-YYYY hh:mm A")}
                   </td>
                 </tr>
               ))}

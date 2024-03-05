@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import timeIcon from "../../../assets/icons/icon/time.svg";
 import dayjs from "dayjs";
 import { useTranslation } from "react-i18next";
@@ -23,7 +23,6 @@ const UserDetail = ({
   kycSection,
 }) => {
   const { t } = useTranslation();
-  const location = useLocation();
 
   const visitedCities = () => {
     return item?.visitedCities && item.visitedCities.length > 0
