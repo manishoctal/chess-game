@@ -27,10 +27,11 @@ const UserWalletTransaction = (item) => {
     isReset: false,
     isFilter: false,
   });
-  const [sort, setSort] = useState({
+
+  const sort = {
     sortBy: "createdAt",
     sortType: "desc",
-  });
+  };
 
   const dynamicPage = (e) => {
     setPage(1);
@@ -73,7 +74,7 @@ const UserWalletTransaction = (item) => {
 
   useEffect(() => {
     allTransaction();
-  }, [filterData, page, sort]);
+  }, [filterData, page]);
 
   const handleReset = () => {
     setFilterData({
