@@ -1,24 +1,18 @@
-import React, { useContext, useEffect, useState } from "react";
-import { apiGet } from "../../utils/apiFetch";
-import apiPath from "../../utils/apiPath";
-import Pagination from "../Pagination";
+import React, { useEffect, useState } from "react";
+import { apiGet } from "../../../utils/apiFetch";
+import apiPath from "../../../utils/apiPath";
+import Pagination from "../../Pagination";
 import { useTranslation } from "react-i18next";
-import AuthContext from "context/AuthContext";
 import PageSizeList from "components/PageSizeList";
-import helpers from "utils/helpers";
 import ODateRangePicker from "components/shared/datePicker/ODateRangePicker";
 import dayjs from "dayjs";
 import { isEmpty, startCase } from "lodash";
 
-const UserWalletTransaction = () => {
+const UserWalletTransaction = (item) => {
   const { t } = useTranslation();
-  const { user } = useContext(AuthContext);
-  const manager =
-    user?.permission?.find((e) => e.manager === "transaction_manager") ?? {};
-  const [artistVerification, setArtistVerification] = useState([]);
+  const [allWalletTransaction, setAllWalletTransaction] = useState([]);
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
-  const [userType, setUserType] = useState("tourist");
 
   const [paginationObj, setPaginationObj] = useState({
     page: 1,
@@ -26,7 +20,7 @@ const UserWalletTransaction = () => {
     pageRangeDisplayed: 10,
   });
   const [filterData, setFilterData] = useState({
-    category: "foreignTourist",
+    category: "",
     searchkey: "",
     startDate: "",
     endDate: "",
@@ -44,25 +38,23 @@ const UserWalletTransaction = () => {
   };
   const allTransaction = async (data) => {
     try {
-      const { startDate, endDate } = filterData;
+      const { startDate, endDate, category } = filterData;
 
       const payload = {
         page,
         pageSize,
-        // status: category,
+        keyword: category,
         startDate: startDate ? dayjs(startDate).format("YYYY-MM-DD") : null,
         endDate: endDate ? dayjs(endDate).format("YYYY-MM-DD") : null,
-
         sortBy: sort.sortBy,
         sortType: sort.sortType,
-        userType,
       };
 
-      const path = apiPath.transactionList;
+      const path = apiPath.walletTransactionList + "/" + item.item._id;
       const result = await apiGet(path, payload);
       const response = result?.data?.results?.docs;
       const resultStatus = result?.data?.success;
-      setArtistVerification(response);
+      setAllWalletTransaction(response);
       setPaginationObj({
         ...paginationObj,
         page: resultStatus ? result?.data?.results.page : null,
@@ -81,7 +73,7 @@ const UserWalletTransaction = () => {
 
   useEffect(() => {
     allTransaction();
-  }, [filterData, page, sort, userType]);
+  }, [filterData, page, sort]);
 
   const handleReset = () => {
     setFilterData({
@@ -106,6 +98,7 @@ const UserWalletTransaction = () => {
   };
 
   const statusPage = (e) => {
+    console.log(e.target.value);
     setFilterData({ ...filterData, category: e.target.value, isFilter: true });
     setPage(1);
   };
@@ -133,8 +126,8 @@ const UserWalletTransaction = () => {
                 <option defaultValue value="">
                   {t("O_ALL")}
                 </option>
-                <option value="debit">{t("DEBIT_CARD")}</option>
-                <option value="credit">{t("CREDIT_CARD")}</option>
+                <option value="cardDebitCredit">{t("DEBIT_CARD")}</option>
+                <option value="cardDebitCredit">{t("CREDIT_CARD")}</option>
                 <option value="addMoneyTopUp">{t("SCRATCH_CARD")}</option>
               </select>
             </div>
@@ -167,34 +160,10 @@ const UserWalletTransaction = () => {
                 <th className="px-5 py-3 " scope="col">
                   {t("TRANSACTION_DATE_TIME")}
                 </th>
-                {/* {userType === "tourist" && (
-                  <>
-                    <th className="px-5 py-3 " scope="col">
-                      {t("TRANSACTION_AMOUNT")}
-                    </th>
-                  </>
-                )}
-                {userType === "local" && (
-                  <>
-                    <th scope="col" className="px-5 py-3 ">
-                      {" "}
-                      {t("TRANSACTION_AMOUNT")}
-                    </th>
-                    <th scope="col" className="px-5 py-3 ">
-                      {t("REWARD_AMOUNT")}
-                    </th>
-                    <th scope="col" className="px-5 py-3 ">
-                      {t("MODE_OF_PAYMENT")}
-                    </th>
-                  </>
-                )}
-                <th scope="col" className="py-3 px-5 text-center">
-                  {t("O_CREATED_AT")}
-                </th> */}
               </tr>
             </thead>
             <tbody>
-              {artistVerification?.map((item, i) => (
+              {allWalletTransaction?.map((walletData, i) => (
                 <tr
                   key={i}
                   className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
@@ -206,17 +175,17 @@ const UserWalletTransaction = () => {
                     {i + 1 + pageSize * (page - 1)}
                   </th>
                   <td className="py-2 px-4 border-r dark:border-[#ffffff38]">
-                    {startCase(item?.user?.amount) || "N/A"}
+                    {startCase(walletData?.transactionAmount) || "N/A"}
                   </td>
                   <td className="py-2 px-4 border-r dark:border-[#ffffff38]">
-                    {item?.user?.type || "N/A"}
+                    {walletData?.type || "N/A"}
                   </td>
                   <td className="py-2 px-4 border-r dark:border-[#ffffff38]">
-                    {dayjs(item?.createdAt).format("DD-MM-YYYY hh:mm A")}
+                    {dayjs(walletData?.createdAt).format("DD-MM-YYYY hh:mm A")}
                   </td>
                 </tr>
               ))}
-              {isEmpty(artistVerification) ? (
+              {isEmpty(allWalletTransaction) ? (
                 <tr className="bg-white border-b w-full text-center dark:bg-gray-800 dark:border-gray-700">
                   <td className="py-4 px-6" colSpan={6}>
                     {t("O_NO_RECORD_FOUND")}
