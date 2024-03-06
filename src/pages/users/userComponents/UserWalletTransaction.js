@@ -7,6 +7,7 @@ import PageSizeList from "components/PageSizeList";
 import ODateRangePicker from "components/shared/datePicker/ODateRangePicker";
 import dayjs from "dayjs";
 import { isEmpty, startCase } from "lodash";
+import helpers from "utils/helpers";
 
 const UserWalletTransaction = (item) => {
   const { t } = useTranslation();
@@ -104,6 +105,17 @@ const UserWalletTransaction = (item) => {
     setPage(1);
   };
 
+  const handleTransactionType = (walletData) =>
+    helpers.ternaryCondition(
+      walletData?.transactionType,
+      helpers.ternaryCondition(
+        walletData.transactionType === "addMoneyTopUp",
+        "Scratch Card",
+        "Debit/Credit Card"
+      ),
+      "N/A"
+    );
+
   return (
     <div className="bg-white border border-[#E9EDF9] rounded-lg dark:bg-gray-800 dark:mt-4">
       <form className="border-b border-b-[#E3E3E3] 2xl:flex gap-2 px-4 py-3">
@@ -180,11 +192,7 @@ const UserWalletTransaction = (item) => {
                     {startCase(walletData?.transactionAmount) || "N/A"}
                   </td>
                   <td className="py-2 px-4 border-r dark:border-[#ffffff38]">
-                    {walletData?.transactionType
-                      ? walletData?.transactionType === "addMoneyTopUp"
-                        ? "Scratch Card"
-                        : "Debit/Credit Card"
-                      : "N/A"}
+                    {handleTransactionType(walletData)}
                   </td>
                   <td className="py-2 px-4 border-r dark:border-[#ffffff38]">
                     {dayjs(walletData?.createdAt).format("DD-MM-YYYY hh:mm A")}
