@@ -192,11 +192,6 @@ const UserWalletTransaction = (item) => {
                     {startCase(walletData?.transactionAmount) || "N/A"}
                   </td>
                   <td className="py-2 px-4 border-r dark:border-[#ffffff38]">
-                    {/* {walletData?.transactionType
-                      ? walletData?.transactionType === "addMoneyTopUp"
-                        ? "Scratch Card"
-                        : "Debit/Credit Card"
-                      : "N/A"} */}
                     {handleTransactionType(walletData)}
                   </td>
                   <td className="py-2 px-4 border-r dark:border-[#ffffff38]">
