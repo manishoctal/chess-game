@@ -198,7 +198,7 @@ const UserWalletTransaction = (item) => {
                     {handleTransactionType(walletData)}
                   </td>
                   <td className="py-2 px-4 border-r dark:border-[#ffffff38]">
-                    {startCase(walletData?.referenceNumber) || "N/A"}
+                    {walletData?.referenceNumber || "N/A"}
                   </td>
                   <td className="py-2 px-4 border-r dark:border-[#ffffff38]">
                     {dayjs(walletData?.createdAt).format("DD-MM-YYYY hh:mm A")}
