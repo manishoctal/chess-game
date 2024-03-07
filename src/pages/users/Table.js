@@ -123,7 +123,7 @@ const Table = ({
         "py-4 px-3 border-r  dark:border-[#ffffff38] text-center"
       )}
       {renderTableCell(
-        dayjs(item?.createdAt).format("DD-MM-YYYY hh:mm A") || "N/A",
+        helpers.getDateAndTime(item?.createdAt) || "N/A",
         "py-4 px-3 border-r  dark:border-[#ffffff38] text-center"
       )}
     </>

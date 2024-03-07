@@ -172,6 +172,9 @@ const UserWalletTransaction = (item) => {
                   {t("WALLET_TYPE")}
                 </th>
                 <th className="px-5 py-3 " scope="col">
+                  {t("REFERENCE_NUMBER")}
+                </th>
+                <th className="px-5 py-3 " scope="col">
                   {t("TRANSACTION_DATE_TIME")}
                 </th>
               </tr>
@@ -195,7 +198,10 @@ const UserWalletTransaction = (item) => {
                     {handleTransactionType(walletData)}
                   </td>
                   <td className="py-2 px-4 border-r dark:border-[#ffffff38]">
-                    {dayjs(walletData?.createdAt).format("DD-MM-YYYY hh:mm A")}
+                    {walletData?.referenceNumber || "N/A"}
+                  </td>
+                  <td className="py-2 px-4 border-r dark:border-[#ffffff38]">
+                    {helpers.getDateAndTime(walletData?.createdAt)}
                   </td>
                 </tr>
               ))}
