@@ -2,6 +2,7 @@ import { isEmpty, startCase } from "lodash";
 import dayjs from "dayjs";
 import { useTranslation } from "react-i18next";
 import { BsArrowUpShort } from "react-icons/bs";
+import helpers from "utils/helpers";
 
 const NotificationTable = ({
   notifications,
@@ -64,7 +65,6 @@ const NotificationTable = ({
                   </span>
                 </div>
               </th>
-
             </tr>
           </thead>
           <tbody>
@@ -92,7 +92,7 @@ const NotificationTable = ({
                     {startCase(item?.sendTo) || "N/A"}
                   </td>
                   <td className="py-4 px-6 border-r text-right">
-                    {dayjs(item?.createdAt).format("DD-MM-YYYY hh:mm A")}
+                    {helpers.getDateAndTime(item?.createdAt)}
                   </td>
                 </tr>
               ))}

@@ -52,7 +52,7 @@ const UserDetail = ({
                   <strong className="dark:text-slate-400">
                     {helpers.ternaryCondition(
                       item?.createdAt,
-                      dayjs(item?.createdAt).format("DD-MM-YYYY hh:mm A"),
+                      helpers.getDateAndTime(item?.createdAt),
                       "N/A"
                     )}
                   </strong>
