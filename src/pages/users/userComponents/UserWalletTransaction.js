@@ -192,7 +192,8 @@ const UserWalletTransaction = (item) => {
                     {i + 1 + pageSize * (page - 1)}
                   </th>
                   <td className="py-2 px-4 border-r dark:border-[#ffffff38]">
-                    {startCase(walletData?.transactionAmount) || "N/A"}
+                    {helpers.formattedAmount(walletData?.transactionAmount) ||
+                      "N/A"}
                   </td>
                   <td className="py-2 px-4 border-r dark:border-[#ffffff38]">
                     {handleTransactionType(walletData)}
