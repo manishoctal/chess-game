@@ -35,7 +35,7 @@ const TransactionDetailsTable = ({
               </th>
               <th scope="col" className="py-3 px-6">
                 {" "}
-                {t("Account Balance")}{" "}
+                {t("AMOUNT")}{" "}
               </th>
               {userType === "tourist" && (
                 <>

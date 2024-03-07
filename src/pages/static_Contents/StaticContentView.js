@@ -6,6 +6,7 @@ import OImage from "components/reusable/OImage";
 import { useNavigate, useLocation } from "react-router-dom";
 import noImageFound from "../../assets/images/No-image-found.jpg";
 import AuthContext from "context/AuthContext";
+import helpers from "utils/helpers";
 
 const StaticContentView = ({ currentItem }) => {
   const { t } = useTranslation();
@@ -44,9 +45,7 @@ const StaticContentView = ({ currentItem }) => {
                     <div className="relative z-0 w-full group">
                       <strong>Created date:</strong>
                       <h6>
-                        {dayjs(location?.state?.createdAt).format(
-                          "DD-MM-YYYY hh:mm A"
-                        )}{" "}
+                        {helpers.getDateAndTime(location?.state?.createdAt)}{" "}
                       </h6>
                     </div>
                   </div>
