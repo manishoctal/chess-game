@@ -548,5 +548,9 @@
   "SEARCH_BY_DISPLAY": "Search by display name",
   "APPROVE": "Approve",
   "MINIMUM_AMOUNT_MUST_BE_1": "Minimum amount must be 1.",
-  "MAXIMUM_AMOUNT_MUST_BE_99999999": "Maximum amount must be 99999999."
+  "MAXIMUM_AMOUNT_MUST_BE_99999999": "Maximum amount must be 99999999.",
+  "WALLET_TYPE":"Type (Scratch card, Debit/Credit card)",
+  "TRANSACTION_DATE_TIME": "Transaction Date/Time",
+  "CREDIT_DEBIT_CARD": " Debit/Credit Card",
+  "SCRATCH_CARD":"Scratch Card"
 }
