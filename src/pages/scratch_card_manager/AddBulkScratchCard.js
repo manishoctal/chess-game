@@ -12,7 +12,7 @@ import dayjs from "dayjs";
 import helper from "utils/helpers";
 import { toNumber } from "lodash";
 
-const AddScratchCard = ({ setShowModal, allScratchCard }) => {
+const AddBulkScratchCard = ({ setShowBulkModal, allScratchCard }) => {
   const { t } = useTranslation();
   const {
     register,
@@ -46,7 +46,7 @@ const AddScratchCard = ({ setShowModal, allScratchCard }) => {
       if (result?.data?.success === true) {
         notification.success(result?.data.message);
         allScratchCard();
-        setShowModal(false);
+        setShowBulkModal(false);
       } else {
         notification.error(result?.data?.message);
       }
@@ -72,7 +72,7 @@ const AddScratchCard = ({ setShowModal, allScratchCard }) => {
                 </h3>
                 <button
                   className=" ml-auto flex items-center justify-center  text-black border-2 rounded-full  h-8 w-8 float-right text-3xl leading-none font-extralight outline-none focus:outline-none"
-                  onClick={() => setShowModal(false)}
+                  onClick={() => setShowBulkModal(false)}
                 >
                   <span className=" text-[#B8BBBF]  text-4xl " title="Close">
                     ×
@@ -84,19 +84,19 @@ const AddScratchCard = ({ setShowModal, allScratchCard }) => {
                   <div className="md:py-4 sm:px-2 sm:py-3 md:px-7 px-2">
                     <OInputField
                       wrapperClassName="relative z-0  w-full group"
-                      name="couponCode"
+                      name="numbersOfCoupon"
                       inputLabel={
                         <>
-                          {t("Coupon code")}
+                          {t("NUMBER_OF_COUPON")}
                           <span className="text-red-500">*</span>
                         </>
                       }
                       type="text"
                       autoFocus
-                      maxLength={15}
+                      //   maxLength={15}
                       register={register(
-                        "couponCode",
-                        formValidation["couponCode"]
+                        "numbersOfCoupon",
+                        formValidation["numbersOfCoupon"]
                       )}
                       errors={errors}
                     />
@@ -173,7 +173,7 @@ const AddScratchCard = ({ setShowModal, allScratchCard }) => {
                 <button
                   className="text-black bg-[#E1E1E1] font-normal px-12 py-2.5 text-sm outline-none focus:outline-none rounded mr-6  ease-linear transition-all duration-150"
                   type="button"
-                  onClick={() => setShowModal(false)}
+                  onClick={() => setShowBulkModal(false)}
                 >
                   {t("O_BACK")}
                 </button>
@@ -205,4 +205,4 @@ const AddScratchCard = ({ setShowModal, allScratchCard }) => {
   );
 };
 
-export default AddScratchCard;
+export default AddBulkScratchCard;

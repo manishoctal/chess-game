@@ -552,5 +552,10 @@
   "WALLET_TYPE":"Type (Scratch card, Debit/Credit card)",
   "TRANSACTION_DATE_TIME": "Transaction Date/Time",
   "CREDIT_DEBIT_CARD": " Debit/Credit Card",
-  "SCRATCH_CARD":"Scratch Card"
+  "SCRATCH_CARD":"Scratch Card",
+  "PLEASE_SELECT_EXPIRY_DATE":"Please select expiry date",
+  "ADD_BULK":"Add bulk",
+  "NUMBER_OF_COUPON":"How many coupons would you like to add?",
+  "PLEASE_ENTER_NUMBER_OF_COUPONS": "Please enter the number of coupon codes to be generated."
+
 }
