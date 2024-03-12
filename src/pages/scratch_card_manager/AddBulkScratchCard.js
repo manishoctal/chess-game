@@ -33,11 +33,11 @@ const AddBulkScratchCard = ({ setShowBulkModal, allScratchCard }) => {
         setIsValidityError(true);
         return;
       }
-      const path = apiPath.addScratchCard;
+      const path = apiPath.addBulkScratchCard;
       const payload = {
         ...data,
         expiryDate: date ? dayjs(date).format("YYYY-MM-DD") : null,
-        couponCode: data?.couponCode?.toUpperCase(),
+        numbersOfCoupon: toNumber(data?.numbersOfCoupon),
         couponAmount: toNumber(data?.couponAmount),
         rewardAmount: toNumber(data?.rewardAmount),
       };
@@ -93,7 +93,6 @@ const AddBulkScratchCard = ({ setShowBulkModal, allScratchCard }) => {
                       }
                       type="text"
                       autoFocus
-                      //   maxLength={15}
                       register={register(
                         "numbersOfCoupon",
                         formValidation["numbersOfCoupon"]

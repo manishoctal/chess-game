@@ -46,6 +46,12 @@ const FormValidation = () => {
     },
     numbersOfCoupon: {
       required: t("PLEASE_ENTER_NUMBER_OF_COUPONS"),
+      validate: {
+        notGreaterThan100: (value) =>
+          parseInt(value, 10) <= 100 || t("NUMBER_NOT_GREATER_THAN_100"),
+        notLessThan0: (value) =>
+          parseInt(value, 10) >= 0 || t("NUMBER_NOT_LESS_THAN_0"),
+      },
     },
 
     subAdminName: {
