@@ -34,6 +34,7 @@ const apiPath = {
   transactionList: "/v1/admin/transaction/transactionList",
   scratchCardHistory: "/v1/admin/scratchCard/history",
   addScratchCard: "/v1/admin/scratchCard",
+  addBulkScratchCard: "/v1/admin/scratchCard/generate/bulk-scratch-cards",
   depositAmount: "/v1/admin/depositAmount",
   supportRequest: "/v1/admin/user/list/supportRequest",
   sendFeedbackEmail: "/v1/admin/user/sendFeedbackEmail",
