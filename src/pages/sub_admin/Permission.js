@@ -81,16 +81,6 @@ const Permission = [
     shownAdd: true,
     shownAll: true,
   },
-
-  {
-    manager: "email_manager",
-    add: false,
-    edit: false,
-    view: false,
-    shownView: true,
-    shownAdd: true,
-    shownAll: true,
-  },
   {
     manager: "feedback_manager",
     add: false,
@@ -100,6 +90,16 @@ const Permission = [
     shownAdd: true,
     shownAll: true,
   },
+  {
+    manager: "email_manager",
+    add: false,
+    edit: false,
+    view: false,
+    shownView: true,
+    shownAdd: true,
+    shownAll: true,
+  },
+
   {
     manager: "report_manager",
     add: false,
