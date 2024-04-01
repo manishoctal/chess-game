@@ -46,7 +46,7 @@ const Permission = [
   },
 
   {
-    manager: "notification_manager",
+    manager: "settings",
     add: false,
     edit: false,
     view: false,
@@ -56,7 +56,7 @@ const Permission = [
   },
 
   {
-    manager: "settings",
+    manager: "notification_manager",
     add: false,
     edit: false,
     view: false,
