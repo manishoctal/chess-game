@@ -6,8 +6,6 @@ import { AiFillEdit, AiFillDelete, AiFillEye } from "react-icons/ai";
 import AuthContext from "context/AuthContext";
 import { useTranslation } from "react-i18next";
 import useToastContext from "hooks/useToastContext";
-import helper from "../../utils/helpers";
-import dayjs from "dayjs";
 import helpers from "../../utils/helpers";
 
 const Table = ({
@@ -114,7 +112,7 @@ const Table = ({
                         className="sr-only peer"
                         checked={item?.status === "active"}
                         onChange={(e) =>
-                          helper.alertFunction(
+                          helpers.alertFunction(
                             `Are you sure want to ${
                               e.target.checked ? "active" : "inactive"
                             } '${item.title}'?`,
@@ -156,7 +154,7 @@ const Table = ({
                       {(manager?.delete || user?.role === "admin") && (
                         <li
                           onClick={(e) =>
-                            helper.alertFunction(
+                            helpers.alertFunction(
                               `Are you sure want to delete '${item.title}'?`,
                               item,
                               handelDelete,

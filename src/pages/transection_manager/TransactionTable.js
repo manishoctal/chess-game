@@ -1,5 +1,4 @@
 import React from "react";
-import dayjs from "dayjs";
 import { useTranslation } from "react-i18next";
 import { isEmpty, startCase } from "lodash";
 import helpers from "utils/helpers";
