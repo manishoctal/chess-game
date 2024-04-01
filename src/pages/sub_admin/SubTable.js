@@ -1,12 +1,9 @@
 import React, { useContext, useState, useEffect } from "react";
-import dayjs from "dayjs";
 import { AiFillEdit, AiFillEye } from "react-icons/ai";
 import { useTranslation } from "react-i18next";
 import { BsArrowUpShort } from "react-icons/bs";
 import AuthContext from "context/AuthContext";
 import { isEmpty, startCase } from "lodash";
-import helper from "../../utils/helpers";
-
 import { useNavigate } from "react-router-dom";
 import TableModal from "./TableModal";
 import helpers from "../../utils/helpers";
@@ -202,7 +199,7 @@ const SubTable = ({
                         className="sr-only peer"
                         checked={item?.status === "active"}
                         onChange={(e) =>
-                          helper.alertFunction(
+                          helpers.alertFunction(
                             `${t("ARE_YOU_SURE_YOU_WANT_TO")} ${
                               e.target.checked ? "active" : "inactive"
                             } '${item.name}'?`,

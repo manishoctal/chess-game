@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import dayjs from "dayjs";
 import { useTranslation } from "react-i18next";
 import AuthContext from "context/AuthContext";
 import { isEmpty, startCase } from "lodash";

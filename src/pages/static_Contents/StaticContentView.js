@@ -1,6 +1,5 @@
 import React, { useContext, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import dayjs from "dayjs";
 import { startCase } from "lodash";
 import OImage from "components/reusable/OImage";
 import { useNavigate, useLocation } from "react-router-dom";
