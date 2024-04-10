@@ -13,19 +13,17 @@ import helper from "utils/helpers";
 import { toNumber } from "lodash";
 
 const AddBulkScratchCard = ({ setShowBulkModal, allScratchCard }) => {
+  const notification = useToastContext();
+  const formValidation = FormValidation();
+  const [date, setDate] = useState("");
+  const [isValidityError, setIsValidityError] = useState(false);
+  const [isLoading] = useState(false);
   const { t } = useTranslation();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({ mode: "onChange", shouldFocusError: true, defaultValues: {} });
-
-  const [isLoading] = useState(false);
-
-  const notification = useToastContext();
-  const formValidation = FormValidation();
-  const [date, setDate] = useState("");
-  const [isValidityError, setIsValidityError] = useState(false);
 
   const handleSubmitForm = async (data) => {
     try {

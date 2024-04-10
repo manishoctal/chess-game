@@ -1,5 +1,4 @@
 import { isEmpty, startCase } from "lodash";
-import dayjs from "dayjs";
 import { useTranslation } from "react-i18next";
 import { BsArrowUpShort } from "react-icons/bs";
 import helpers from "utils/helpers";

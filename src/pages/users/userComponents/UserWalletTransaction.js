@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import PageSizeList from "components/PageSizeList";
 import ODateRangePicker from "components/shared/datePicker/ODateRangePicker";
 import dayjs from "dayjs";
-import { isEmpty, startCase } from "lodash";
+import { isEmpty } from "lodash";
 import helpers from "utils/helpers";
 
 const UserWalletTransaction = (item) => {

@@ -1,29 +1,29 @@
 const Permission = [
   {
-    manager: 'user_manager',
+    manager: "user_manager",
     add: false,
     edit: false,
     view: false,
     shownView: true,
     shownAdd: true,
-    shownAll: true
+    shownAll: true,
   },
   {
-    manager: 'transaction_manager',
+    manager: "transaction_manager",
     add: false,
     edit: false,
     view: false,
     shownView: true,
-    shownAdd: false
+    shownAdd: false,
   },
   {
-    manager: 'subAdmin_manager',
+    manager: "subAdmin_manager",
     add: false,
     edit: false,
     view: false,
     shownView: true,
     shownAdd: true,
-    shownAll: true
+    shownAll: true,
   },
   // {
   //   manager: 'reports_manager',
@@ -34,91 +34,91 @@ const Permission = [
   //   shownAdd: true,
   //   shownAll: true
   // },
+
   {
-    manager: 'scratch_card_manager',
+    manager: "scratch_card_manager",
     add: false,
     edit: false,
     view: false,
     shownView: true,
     shownAdd: true,
-    shownAll: true
+    shownAll: true,
   },
 
   {
-    manager: 'notification_manager',
+    manager: "settings",
     add: false,
     edit: false,
     view: false,
     shownView: true,
     shownAdd: true,
-    shownAll: true
+    shownAll: true,
   },
 
   {
-    manager: 'settings',
+    manager: "notification_manager",
     add: false,
     edit: false,
     view: false,
     shownView: true,
     shownAdd: true,
-    shownAll: true
+    shownAll: true,
   },
   {
-    manager: 'static_page_management',
+    manager: "static_page_management",
     add: false,
     edit: false,
     view: false,
     shownView: true,
     shownAdd: true,
-    shownAll: true
+    shownAll: true,
   },
   {
-    manager: 'FAQ',
+    manager: "FAQ",
     add: false,
     edit: false,
     view: false,
     shownView: true,
     shownAdd: true,
-    shownAll: true
+    shownAll: true,
   },
 
   {
-    manager: 'email_manager',
+    manager: "email_manager",
     add: false,
     edit: false,
     view: false,
     shownView: true,
     shownAdd: true,
-    shownAll: true
+    shownAll: true,
   },
   {
-    manager: 'feedback_manager',
+    manager: "feedback_manager",
     add: false,
     edit: false,
     view: false,
     shownView: true,
     shownAdd: true,
-    shownAll: true
+    shownAll: true,
   },
   {
-    manager: 'report_manager',
+    manager: "report_manager",
     add: false,
     edit: false,
     view: false,
     shownView: true,
     shownAdd: false,
-    shownAll: false
+    shownAll: false,
   },
   {
-    manager: 'reward_withdrawal_request',
+    manager: "reward_withdrawal_request",
     add: false,
     edit: false,
     view: false,
     shownView: true,
     shownAdd: true,
-    shownAll: true
+    shownAll: true,
   },
+];
 
-]
-
-export default Permission
+export default Permission;
