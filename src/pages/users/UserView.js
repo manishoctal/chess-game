@@ -222,8 +222,8 @@ const UserView = () => {
               </div>
             </div>
             <div
-              className="bg-[#000] rounded-lg p-4 cursor-pointer"
-              onClick={handleWalletBox}
+              className="bg-[#000] rounded-lg p-4 "
+              // onClick={handleWalletBox} //TODO: Need to revert if we deploy stripe related code, add cursor-pointer class above
             >
               <div className="flex items-center">
                 <figure className="mr-3">
