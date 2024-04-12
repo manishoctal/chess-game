@@ -430,7 +430,11 @@ const UserView = () => {
                         <div className="relative mt-4">
                           <figure className="inline-block overflow-hidden border mb-3 w-90 h-[210px]">
                             <OImage
-                              onClick={() => handleUserView(item?.qrCode, "QR")}
+                              onClick={
+                                item?.qrCode
+                                  ? () => handleUserView(item.qrCode, "QR")
+                                  : undefined
+                              }
                               src={item?.qrCode || defaultImage}
                               className="w-full h-full object-contain inline  cursor-pointer"
                               alt=""
