@@ -558,6 +558,7 @@
   "NUMBER_OF_COUPON":"How many coupons would you like to add?",
   "PLEASE_ENTER_NUMBER_OF_COUPONS": "Please enter the number of coupon codes to be generated.",
   "NUMBER_NOT_GREATER_THAN_1000":"Number should not be greater than 1000",
-  "NUMBER_NOT_LESS_THAN_0":"Number should not be less than 0"
+  "NUMBER_NOT_LESS_THAN_0":"Number should not be less than 0",
+  "LOCAL_QR_CODE":"QR code"
 
 }

@@ -21,6 +21,7 @@ import { apiPut } from "utils/apiFetch";
 import ShowImage from "./ShowImage";
 import UserWalletTransaction from "./userComponents/UserWalletTransaction";
 import UserDetail from "./userComponents/UserDetail";
+import ViewImage from "./ViewImage";
 
 const UserView = () => {
   const { t } = useTranslation();
@@ -31,6 +32,8 @@ const UserView = () => {
   const [kycSection, setKycSection] = useState(null);
   const [showBanner, setShowBanner] = useState(false);
   const [walletBox, setWalletBox] = useState(false);
+  const [viewShowModal, setViewShowModal] = useState(false);
+  const [imageView, setImageView] = useState("");
 
   const approveAndReject = async (data) => {
     try {
@@ -138,6 +141,11 @@ const UserView = () => {
 
   const handleBack = () => {
     setWalletBox(false);
+  };
+
+  const handleUserView = (element, type) => {
+    setImageView({ image: element, type });
+    setViewShowModal(true);
   };
 
   return (
@@ -387,10 +395,6 @@ const UserView = () => {
                     </div>
                   </li>
                 </div>
-              </ul>
-            </div>
-            <div className="border border-1 border-[#E1DEDE] rounded-md p-6 ps-3">
-              <ul>
                 <div>
                   <li className="mb-4">
                     <div className="flex items-center">
@@ -408,6 +412,32 @@ const UserView = () => {
                             "N/A"
                           )}
                         </strong>
+                      </figcaption>
+                    </div>
+                  </li>
+                </div>
+              </ul>
+            </div>
+            <div className="border border-1 border-[#E1DEDE] rounded-md p-6 ps-3">
+              <ul>
+                <div>
+                  <li className="mb-4">
+                    <div className="flex items-center">
+                      <figcaption className="w-[calc(100%_-_41px)]">
+                        <span className="block text-[#5C5C5C]">
+                          {t("LOCAL_QR_CODE")}
+                        </span>
+                        <div className="relative mt-4">
+                          <figure className="inline-block overflow-hidden border mb-3 w-90 h-[210px]">
+                            <OImage
+                              onClick={() => handleUserView(item?.qrCode, "QR")}
+                              src={item?.qrCode || defaultImage}
+                              className="w-full h-full object-contain inline  cursor-pointer"
+                              alt=""
+                              fallbackUrl={defaultImage}
+                            />
+                          </figure>
+                        </div>
                       </figcaption>
                     </div>
                   </li>
@@ -474,6 +504,9 @@ const UserView = () => {
 
       {showBanner && showImage && (
         <ShowImage handleShowImage={handleShowImage} showImage={showImage} />
+      )}
+      {viewShowModal && (
+        <ViewImage setViewShowModal={setViewShowModal} item={imageView} />
       )}
     </div>
   );
