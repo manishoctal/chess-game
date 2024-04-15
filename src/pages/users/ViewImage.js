@@ -5,6 +5,7 @@ import helpers from "utils/helpers";
 
 const ViewImage = ({ setViewShowModal, item, type }) => {
   const { t } = useTranslation();
+
   return (
     <>
       <div className="justify-center items-center  overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
@@ -27,19 +28,11 @@ const ViewImage = ({ setViewShowModal, item, type }) => {
                   <div className="grid-cols-1 max-h-[300px] flex justify-center">
                     <div className="mb-3 w-full">
                       {helpers.andOperator(
-                        item?.type === "image",
+                        item?.type === "QR",
                         <img
                           src={item?.image}
                           alt=""
                           className="h-full w-full object-cover"
-                        />
-                      )}
-                      {helpers.andOperator(
-                        item?.type === "QR",
-                        <QRCode
-                          value={item?.image}
-                          className="text-center object-contain"
-                          style={{ width: "100%", height: "100%" }}
                         />
                       )}
                     </div>
