@@ -5,7 +5,7 @@ import helpers from "utils/helpers";
 
 const ViewImage = ({ setViewShowModal, item, type }) => {
   const { t } = useTranslation();
-  console.log(item, "item");
+
   return (
     <>
       <div className="justify-center items-center  overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
