@@ -54,6 +54,9 @@ export const lineGraphOptions = {
   scales: {
     y: {
       beginAtZero: true,
+      ticks: {
+        stepSize: 80,
+      },
     },
   },
 };
@@ -96,9 +99,7 @@ export const lineGraphData2 = {
   ],
 };
 
-
 function Home() {
-  console.log("Check")
   const { t } = useTranslation();
   const { logoutUser } = useContext(AuthContext);
   const [selectedButton, setSelectedButton] = useState("day");
@@ -185,8 +186,16 @@ function Home() {
   const getDashboardDetails = async () => {
     try {
       const payload = {
-        startDate: helpers?.ternaryCondition(startDate, dayjs(startDate).format("YYYY-MM-DD"), null),
-        endDate: helpers?.ternaryCondition(endDate, dayjs(endDate).format("YYYY-MM-DD"), null),
+        startDate: helpers?.ternaryCondition(
+          startDate,
+          dayjs(startDate).format("YYYY-MM-DD"),
+          null
+        ),
+        endDate: helpers?.ternaryCondition(
+          endDate,
+          dayjs(endDate).format("YYYY-MM-DD"),
+          null
+        ),
       };
       const path = pathObj.getDashboardDetails;
       const result = await apiGet(path, payload);
@@ -269,23 +278,35 @@ function Home() {
   const handleGraphApiCall = async (start, end, dropValue, type) => {
     try {
       const payload = {
-        startDate: helpers?.ternaryCondition(start , dayjs(start).format("YYYY-MM-DD") , null),
-        endDate: helpers?.ternaryCondition(end , dayjs(end).format("YYYY-MM-DD") , null),
+        startDate: helpers?.ternaryCondition(
+          start,
+          dayjs(start).format("YYYY-MM-DD"),
+          null
+        ),
+        endDate: helpers?.ternaryCondition(
+          end,
+          dayjs(end).format("YYYY-MM-DD"),
+          null
+        ),
         type: dropValue,
       };
       const path = pathObj.getEarningManagerGraph;
       const result = await apiGet(path, payload);
       if (result?.data?.success) {
         const newCategories = result?.data?.results?.xAxis;
-        let newData = result?.data?.results?.yAxis;
-        if (type === "first") {
-          setChartData((prevData) =>
-            setChartDataForType(prevData, newCategories, newData)
-          );
-        } else {
-          setChartDataTwo((prevData) =>
-            setChartDataForType(prevData, newCategories, newData)
-          );
+        let yAxisData = result?.data?.results?.yAxis;
+
+        if (Array.isArray(yAxisData)) {
+          let newData = yAxisData.map((number) => Math.round(number));
+          if (type === "first") {
+            setChartData((prevData) =>
+              setChartDataForType(prevData, newCategories, newData)
+            );
+          } else {
+            setChartDataTwo((prevData) =>
+              setChartDataForType(prevData, newCategories, newData)
+            );
+          }
         }
       } else {
         notification.error(result?.data?.message);
@@ -328,14 +349,22 @@ function Home() {
     setGraphTwoDropdownValue("day");
   };
 
-  const generateButton = (buttonType, label, selectedButtons, handleButtonChangeData, disableState, keyFor) => {
+  const generateButton = (
+    buttonType,
+    label,
+    selectedButtons,
+    handleButtonChangeData,
+    disableState,
+    keyFor
+  ) => {
     const isActive = selectedButtons === buttonType;
 
     return (
       <button
         type="button"
-        className={`bg-gradientTo text-sm px-8 mb-3 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/4 ${isActive ? "bg-gradient-to-b from-blue-300 to-green-500" : ""
-          }`}
+        className={`bg-gradientTo text-sm px-8 mb-3 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/4 ${
+          isActive ? "bg-gradient-to-b from-blue-300 to-green-500" : ""
+        }`}
         onClick={() => handleButtonChangeData(buttonType, keyFor)}
         disabled={disableState}
       >
@@ -343,7 +372,6 @@ function Home() {
       </button>
     );
   };
-  
 
   return (
     <>
@@ -356,7 +384,7 @@ function Home() {
                 {t("VIEW_NO_OF_USERS")}
               </span>
             </h3>
-            <span className="text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-10px] p-3 border z-10 bg-white">
+            <span className="text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-30px] p-3 border z-10 bg-white">
               <FaUserTie />
             </span>
           </div>
@@ -369,7 +397,7 @@ function Home() {
                 {t("NO_OF_ACTIVE_USERS")}
               </span>
             </h3>
-            <span className="text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-10px] p-3 border z-10 bg-white">
+            <span className="">
               <FaUserTie />
             </span>
           </div>
@@ -382,7 +410,7 @@ function Home() {
                 {t("Amount added by scratchcard")}
               </span>
             </h3>
-            <span className="text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-10px] p-3 border z-10 bg-white">
+            <span className="text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-30px] p-3 border z-10 bg-white">
               <img
                 src={earning}
                 className="h-8 w-8 bg-black"
@@ -399,7 +427,7 @@ function Home() {
                 {t("Total payment by thai local")}
               </span>
             </h3>
-            <span className="text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-10px] p-3 border z-10 bg-white">
+            <span className="text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-30px] p-3 border z-10 bg-white">
               <img
                 src={earning}
                 className="h-8 w-8 bg-black"
@@ -417,7 +445,7 @@ function Home() {
                 {t("Amount added by admin in tourist wallet")}
               </span>
             </h3>
-            <span className="text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-10px] p-3 border z-10 bg-white">
+            <span className="text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-30px] p-3 border z-10 bg-white">
               <img
                 src={earning}
                 className="h-8 w-8 bg-black"
@@ -434,7 +462,7 @@ function Home() {
                 {t("Amount added by admin in thai local wallet")}
               </span>
             </h3>
-            <span className="text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-10px] p-3 border z-10 bg-white">
+            <span className="text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-30px] p-3 border z-10 bg-white">
               <img
                 src={earning}
                 className="h-8 w-8 bg-black"
@@ -451,7 +479,7 @@ function Home() {
                 {t("Total reward gain by user")}
               </span>
             </h3>
-            <span className="text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-10px] p-3 border z-10 bg-white">
+            <span className="text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-30px] p-3 border z-10 bg-white">
               <img
                 src={earning}
                 className="h-8 w-8 bg-black"
@@ -467,7 +495,7 @@ function Home() {
                 {t("USERS_BETWEEN_10_BAHT_TO_300_BAHT")}
               </span>
             </h3>
-            <span className="text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-10px] p-3 border z-10 bg-white">
+            <span className="text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-30px] p-3 border z-10 bg-white">
               <FaUserTie className="h-8 w-8" />
             </span>
           </div>
@@ -478,7 +506,7 @@ function Home() {
                 {t("USERS_BETWEEN_200_BAHT_TO_1000_BAHT")}
               </span>
             </h3>
-            <span className="text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-10px] p-3 border z-10 bg-white">
+            <span className="text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-30px] p-3 border z-10 bg-white">
               <FaUserTie className="h-8 w-8" />
             </span>
           </div>
@@ -489,10 +517,38 @@ function Home() {
           <StyledEngineProvider>
             <ThemeProvider theme={theme}>
               <div className="px-11">
-                {generateButton("day", "Daily", selectedButton, handleButtonChange, dateDisableState.first.day,"first")}
-                {generateButton("week", "Weekly", selectedButton, handleButtonChange, dateDisableState.first.week,"first")}
-                {generateButton("month", "Monthly", selectedButton, handleButtonChange, dateDisableState.first.month, "first")}
-                {generateButton("year", "Yearly", selectedButton, handleButtonChange, dateDisableState.first.year, "first")}
+                {generateButton(
+                  "day",
+                  "Daily",
+                  selectedButton,
+                  handleButtonChange,
+                  dateDisableState.first.day,
+                  "first"
+                )}
+                {generateButton(
+                  "week",
+                  "Weekly",
+                  selectedButton,
+                  handleButtonChange,
+                  dateDisableState.first.week,
+                  "first"
+                )}
+                {generateButton(
+                  "month",
+                  "Monthly",
+                  selectedButton,
+                  handleButtonChange,
+                  dateDisableState.first.month,
+                  "first"
+                )}
+                {generateButton(
+                  "year",
+                  "Yearly",
+                  selectedButton,
+                  handleButtonChange,
+                  dateDisableState.first.year,
+                  "first"
+                )}
               </div>
             </ThemeProvider>
           </StyledEngineProvider>
@@ -536,10 +592,38 @@ function Home() {
           <StyledEngineProvider>
             <ThemeProvider theme={theme}>
               <div className="px-11">
-              {generateButton("day", "Daily", graphTwoDropdownValue, handleButtonChange, dateDisableState.second.day,"second")}
-                {generateButton("week", "Weekly", graphTwoDropdownValue, handleButtonChange, dateDisableState.second.week,"second")}
-                {generateButton("month", "Monthly", graphTwoDropdownValue, handleButtonChange, dateDisableState.second.month, "second")}
-                {generateButton("year", "Yearly", graphTwoDropdownValue, handleButtonChange, dateDisableState.second.year, "second")}
+                {generateButton(
+                  "day",
+                  "Daily",
+                  graphTwoDropdownValue,
+                  handleButtonChange,
+                  dateDisableState.second.day,
+                  "second"
+                )}
+                {generateButton(
+                  "week",
+                  "Weekly",
+                  graphTwoDropdownValue,
+                  handleButtonChange,
+                  dateDisableState.second.week,
+                  "second"
+                )}
+                {generateButton(
+                  "month",
+                  "Monthly",
+                  graphTwoDropdownValue,
+                  handleButtonChange,
+                  dateDisableState.second.month,
+                  "second"
+                )}
+                {generateButton(
+                  "year",
+                  "Yearly",
+                  graphTwoDropdownValue,
+                  handleButtonChange,
+                  dateDisableState.second.year,
+                  "second"
+                )}
               </div>
             </ThemeProvider>
           </StyledEngineProvider>

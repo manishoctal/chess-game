@@ -119,7 +119,7 @@ const UserView = () => {
         </figure>
         <figcaption className="w-[calc(100%_-_41px)]">
           <span className="text-[#5C5C5C] block">{title}</span>
-          <strong>{content}</strong>
+          <strong className="truncate max-w-[200px] block">{content}</strong>
         </figcaption>
       </div>
     );
@@ -357,8 +357,8 @@ const UserView = () => {
                         </span>
                         <strong>
                           {helpers.ternaryCondition(
-                            item?.nationalityId,
-                            item?.nationalityId,
+                            item?.nationality,
+                            item?.nationality,
                             "N/A"
                           )}
                         </strong>
