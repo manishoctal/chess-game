@@ -235,7 +235,7 @@ const UserDetail = ({
                     {t("BONUS_AMOUNT")}
                   </span>
                   <strong className="dark:text-slate-400">
-                    {item?.bonusAmount || 0}
+                    {item?.rewardAmount || 0}
                   </strong>
                 </figcaption>
               </div>
