@@ -96,9 +96,7 @@ export const lineGraphData2 = {
   ],
 };
 
-
 function Home() {
-  console.log("Check")
   const { t } = useTranslation();
   const { logoutUser } = useContext(AuthContext);
   const [selectedButton, setSelectedButton] = useState("day");
@@ -185,8 +183,16 @@ function Home() {
   const getDashboardDetails = async () => {
     try {
       const payload = {
-        startDate: helpers?.ternaryCondition(startDate, dayjs(startDate).format("YYYY-MM-DD"), null),
-        endDate: helpers?.ternaryCondition(endDate, dayjs(endDate).format("YYYY-MM-DD"), null),
+        startDate: helpers?.ternaryCondition(
+          startDate,
+          dayjs(startDate).format("YYYY-MM-DD"),
+          null
+        ),
+        endDate: helpers?.ternaryCondition(
+          endDate,
+          dayjs(endDate).format("YYYY-MM-DD"),
+          null
+        ),
       };
       const path = pathObj.getDashboardDetails;
       const result = await apiGet(path, payload);
@@ -269,23 +275,35 @@ function Home() {
   const handleGraphApiCall = async (start, end, dropValue, type) => {
     try {
       const payload = {
-        startDate: helpers?.ternaryCondition(start , dayjs(start).format("YYYY-MM-DD") , null),
-        endDate: helpers?.ternaryCondition(end , dayjs(end).format("YYYY-MM-DD") , null),
+        startDate: helpers?.ternaryCondition(
+          start,
+          dayjs(start).format("YYYY-MM-DD"),
+          null
+        ),
+        endDate: helpers?.ternaryCondition(
+          end,
+          dayjs(end).format("YYYY-MM-DD"),
+          null
+        ),
         type: dropValue,
       };
       const path = pathObj.getEarningManagerGraph;
       const result = await apiGet(path, payload);
       if (result?.data?.success) {
         const newCategories = result?.data?.results?.xAxis;
-        let newData = result?.data?.results?.yAxis;
-        if (type === "first") {
-          setChartData((prevData) =>
-            setChartDataForType(prevData, newCategories, newData)
-          );
-        } else {
-          setChartDataTwo((prevData) =>
-            setChartDataForType(prevData, newCategories, newData)
-          );
+        let yAxisData = result?.data?.results?.yAxis;
+
+        if (Array.isArray(yAxisData)) {
+          let newData = yAxisData.map((number) => number);
+          if (type === "first") {
+            setChartData((prevData) =>
+              setChartDataForType(prevData, newCategories, newData)
+            );
+          } else {
+            setChartDataTwo((prevData) =>
+              setChartDataForType(prevData, newCategories, newData)
+            );
+          }
         }
       } else {
         notification.error(result?.data?.message);
@@ -328,14 +346,22 @@ function Home() {
     setGraphTwoDropdownValue("day");
   };
 
-  const generateButton = (buttonType, label, selectedButtons, handleButtonChangeData, disableState, keyFor) => {
+  const generateButton = (
+    buttonType,
+    label,
+    selectedButtons,
+    handleButtonChangeData,
+    disableState,
+    keyFor
+  ) => {
     const isActive = selectedButtons === buttonType;
 
     return (
       <button
         type="button"
-        className={`bg-gradientTo text-sm px-8 mb-3 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/4 ${isActive ? "bg-gradient-to-b from-blue-300 to-green-500" : ""
-          }`}
+        className={`bg-gradientTo text-sm px-8 mb-3 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/4 ${
+          isActive ? "bg-gradient-to-b from-blue-300 to-green-500" : ""
+        }`}
         onClick={() => handleButtonChangeData(buttonType, keyFor)}
         disabled={disableState}
       >
@@ -343,7 +369,6 @@ function Home() {
       </button>
     );
   };
-  
 
   return (
     <>
@@ -489,10 +514,38 @@ function Home() {
           <StyledEngineProvider>
             <ThemeProvider theme={theme}>
               <div className="px-11">
-                {generateButton("day", "Daily", selectedButton, handleButtonChange, dateDisableState.first.day,"first")}
-                {generateButton("week", "Weekly", selectedButton, handleButtonChange, dateDisableState.first.week,"first")}
-                {generateButton("month", "Monthly", selectedButton, handleButtonChange, dateDisableState.first.month, "first")}
-                {generateButton("year", "Yearly", selectedButton, handleButtonChange, dateDisableState.first.year, "first")}
+                {generateButton(
+                  "day",
+                  "Daily",
+                  selectedButton,
+                  handleButtonChange,
+                  dateDisableState.first.day,
+                  "first"
+                )}
+                {generateButton(
+                  "week",
+                  "Weekly",
+                  selectedButton,
+                  handleButtonChange,
+                  dateDisableState.first.week,
+                  "first"
+                )}
+                {generateButton(
+                  "month",
+                  "Monthly",
+                  selectedButton,
+                  handleButtonChange,
+                  dateDisableState.first.month,
+                  "first"
+                )}
+                {generateButton(
+                  "year",
+                  "Yearly",
+                  selectedButton,
+                  handleButtonChange,
+                  dateDisableState.first.year,
+                  "first"
+                )}
               </div>
             </ThemeProvider>
           </StyledEngineProvider>
@@ -536,10 +589,38 @@ function Home() {
           <StyledEngineProvider>
             <ThemeProvider theme={theme}>
               <div className="px-11">
-              {generateButton("day", "Daily", graphTwoDropdownValue, handleButtonChange, dateDisableState.second.day,"second")}
-                {generateButton("week", "Weekly", graphTwoDropdownValue, handleButtonChange, dateDisableState.second.week,"second")}
-                {generateButton("month", "Monthly", graphTwoDropdownValue, handleButtonChange, dateDisableState.second.month, "second")}
-                {generateButton("year", "Yearly", graphTwoDropdownValue, handleButtonChange, dateDisableState.second.year, "second")}
+                {generateButton(
+                  "day",
+                  "Daily",
+                  graphTwoDropdownValue,
+                  handleButtonChange,
+                  dateDisableState.second.day,
+                  "second"
+                )}
+                {generateButton(
+                  "week",
+                  "Weekly",
+                  graphTwoDropdownValue,
+                  handleButtonChange,
+                  dateDisableState.second.week,
+                  "second"
+                )}
+                {generateButton(
+                  "month",
+                  "Monthly",
+                  graphTwoDropdownValue,
+                  handleButtonChange,
+                  dateDisableState.second.month,
+                  "second"
+                )}
+                {generateButton(
+                  "year",
+                  "Yearly",
+                  graphTwoDropdownValue,
+                  handleButtonChange,
+                  dateDisableState.second.year,
+                  "second"
+                )}
               </div>
             </ThemeProvider>
           </StyledEngineProvider>

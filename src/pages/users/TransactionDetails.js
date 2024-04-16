@@ -54,7 +54,7 @@ function TransactionDetails() {
     isReset: false,
     isFilter: false,
   });
-  console.log(location, "location?.state?.userType");
+
   const getTransactionDetails = async (data) => {
     try {
       const { category, startDate, endDate, searchkey } = filterData;
@@ -108,7 +108,6 @@ function TransactionDetails() {
   }, [page, filterData, pageSize]);
 
   useEffect(() => {
-    console.log(userType, "userType---");
     const pageName =
       userType === "local"
         ? t("TRANSACTION_DETAILS_LOCAL")
