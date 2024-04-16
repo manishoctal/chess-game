@@ -31,8 +31,6 @@ const UserView = () => {
   const [kycSection, setKycSection] = useState(null);
   const [showBanner, setShowBanner] = useState(false);
   const [walletBox, setWalletBox] = useState(false);
-  const [viewShowModal, setViewShowModal] = useState(false);
-  const [imageView, setImageView] = useState("");
 
   const approveAndReject = async (data) => {
     try {
@@ -134,9 +132,9 @@ const UserView = () => {
     setShowBanner(!showBanner);
   };
 
-  const handleWalletBox = () => {
-    setWalletBox(true);
-  };
+  // const handleWalletBox = () => {
+  //   setWalletBox(true);
+  // };
 
   const handleBack = () => {
     setWalletBox(false);

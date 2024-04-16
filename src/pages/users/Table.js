@@ -172,7 +172,7 @@ const Table = ({
           <div>
             <NavLink
               to="/users/transactionDetails"
-              state={{ userTypeDetail, userId: item?._id }}
+              state={{ userId: item?._id, userTypeDetail }}
             >
               <MdHistory
                 className="text-green text-lg cursor-pointer  text-slate-600"
