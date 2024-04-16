@@ -357,8 +357,8 @@ const UserView = () => {
                         </span>
                         <strong>
                           {helpers.ternaryCondition(
-                            item?.nationalityId,
-                            item?.nationalityId,
+                            item?.nationality,
+                            item?.nationality,
                             "N/A"
                           )}
                         </strong>
