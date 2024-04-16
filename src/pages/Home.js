@@ -54,6 +54,9 @@ export const lineGraphOptions = {
   scales: {
     y: {
       beginAtZero: true,
+      ticks: {
+        stepSize: 80,
+      },
     },
   },
 };
@@ -294,7 +297,7 @@ function Home() {
         let yAxisData = result?.data?.results?.yAxis;
 
         if (Array.isArray(yAxisData)) {
-          let newData = yAxisData.map((number) => number);
+          let newData = yAxisData.map((number) => Math.round(number));
           if (type === "first") {
             setChartData((prevData) =>
               setChartDataForType(prevData, newCategories, newData)
@@ -381,7 +384,7 @@ function Home() {
                 {t("VIEW_NO_OF_USERS")}
               </span>
             </h3>
-            <span className="text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-10px] p-3 border z-10 bg-white">
+            <span className="text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-30px] p-3 border z-10 bg-white">
               <FaUserTie />
             </span>
           </div>
@@ -394,7 +397,7 @@ function Home() {
                 {t("NO_OF_ACTIVE_USERS")}
               </span>
             </h3>
-            <span className="text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-10px] p-3 border z-10 bg-white">
+            <span className="">
               <FaUserTie />
             </span>
           </div>
@@ -407,7 +410,7 @@ function Home() {
                 {t("Amount added by scratchcard")}
               </span>
             </h3>
-            <span className="text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-10px] p-3 border z-10 bg-white">
+            <span className="text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-30px] p-3 border z-10 bg-white">
               <img
                 src={earning}
                 className="h-8 w-8 bg-black"
@@ -424,7 +427,7 @@ function Home() {
                 {t("Total payment by thai local")}
               </span>
             </h3>
-            <span className="text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-10px] p-3 border z-10 bg-white">
+            <span className="text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-30px] p-3 border z-10 bg-white">
               <img
                 src={earning}
                 className="h-8 w-8 bg-black"
@@ -442,7 +445,7 @@ function Home() {
                 {t("Amount added by admin in tourist wallet")}
               </span>
             </h3>
-            <span className="text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-10px] p-3 border z-10 bg-white">
+            <span className="text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-30px] p-3 border z-10 bg-white">
               <img
                 src={earning}
                 className="h-8 w-8 bg-black"
@@ -459,7 +462,7 @@ function Home() {
                 {t("Amount added by admin in thai local wallet")}
               </span>
             </h3>
-            <span className="text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-10px] p-3 border z-10 bg-white">
+            <span className="text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-30px] p-3 border z-10 bg-white">
               <img
                 src={earning}
                 className="h-8 w-8 bg-black"
@@ -476,7 +479,7 @@ function Home() {
                 {t("Total reward gain by user")}
               </span>
             </h3>
-            <span className="text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-10px] p-3 border z-10 bg-white">
+            <span className="text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-30px] p-3 border z-10 bg-white">
               <img
                 src={earning}
                 className="h-8 w-8 bg-black"
@@ -492,7 +495,7 @@ function Home() {
                 {t("USERS_BETWEEN_10_BAHT_TO_300_BAHT")}
               </span>
             </h3>
-            <span className="text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-10px] p-3 border z-10 bg-white">
+            <span className="text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-30px] p-3 border z-10 bg-white">
               <FaUserTie className="h-8 w-8" />
             </span>
           </div>
@@ -503,7 +506,7 @@ function Home() {
                 {t("USERS_BETWEEN_200_BAHT_TO_1000_BAHT")}
               </span>
             </h3>
-            <span className="text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-10px] p-3 border z-10 bg-white">
+            <span className="text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-30px] p-3 border z-10 bg-white">
               <FaUserTie className="h-8 w-8" />
             </span>
           </div>
