@@ -43,7 +43,7 @@ function TransactionDetails() {
   const [searchTerm, setSearchTerm] = useState("");
   const [isInitialized, setIsInitialized] = useState(false);
   const location = useLocation();
-  const [userType] = useState(location?.state?.userType);
+  const [userType] = useState(location?.state?.userTypeDetail);
   const [userId] = useState(location?.state?.userId);
 
   const [filterData, setFilterData] = useState({
@@ -54,7 +54,7 @@ function TransactionDetails() {
     isReset: false,
     isFilter: false,
   });
-
+  console.log(location, "location?.state?.userType");
   const getTransactionDetails = async (data) => {
     try {
       const { category, startDate, endDate, searchkey } = filterData;
@@ -108,6 +108,7 @@ function TransactionDetails() {
   }, [page, filterData, pageSize]);
 
   useEffect(() => {
+    console.log(userType, "userType---");
     const pageName =
       userType === "local"
         ? t("TRANSACTION_DETAILS_LOCAL")
