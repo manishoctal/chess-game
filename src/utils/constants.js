@@ -1,23 +1,21 @@
 export const KYCStatusArray = [
   {
-    key: 'approved',
-    value: 'approved'
+    key: "approved",
+    value: "approved",
   },
   {
-    key: 'pending',
-    value: 'pending'
+    key: "pending",
+    value: "pending",
   },
   {
-    key: 'rejected',
-    value: 'rejected'
+    key: "rejected",
+    value: "rejected",
   },
   {
-    key: 'KYCNotUploadedYet',
-    value: 'KYCNotUploadedYet'
+    key: "KYCNotUploadedYet",
+    value: "KYCNotUploadedYet",
   },
-]
-
-
+];
 
 export const validationRules = {
   email: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
@@ -41,5 +39,3 @@ export const formLengthValidation = {
   InterestValidation:
     "please enter name in uppercase, lowercase, and all special characters.",
 };
-
-
