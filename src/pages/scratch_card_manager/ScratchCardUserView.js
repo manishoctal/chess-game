@@ -1,9 +1,28 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { apiGet } from "utils/apiFetch";
+import apiPath from "utils/apiPath";
 import helpers from "utils/helpers";
 
 const ScratchCardUserView = ({ setViewShowModal, item }) => {
   const { t } = useTranslation();
+  const [userDetail, setUserDetail] = useState({});
+
+  const fetchData = async () => {
+    try {
+      const path = apiPath.viewScratchCard + "/" + item?.usedBy;
+      const result = await apiGet(path);
+      const response = result?.data?.results;
+      const resultStatus = result?.data?.success;
+      setUserDetail(response);
+    } catch (error) {
+      console.error("error in get all sub admin list==>>>>", error.message);
+    }
+  };
+  useEffect(() => {
+    fetchData();
+  }, [item]);
+
   return (
     <>
       <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
@@ -31,15 +50,12 @@ const ScratchCardUserView = ({ setViewShowModal, item }) => {
                         <strong>{t("FOREIGN_TOURIST_NAME")}:</strong>
                       </div>
                       <div>
-                        {item?.scratchCardUsedHistory?.userDetail?.firstName &&
-                        item?.scratchCardUsedHistory?.userDetail?.lastName
+                        {userDetail?.firstName && userDetail?.lastName
                           ? helpers.getFullName(
-                              item?.scratchCardUsedHistory?.userDetail
-                                ?.firstName,
-                              item?.scratchCardUsedHistory?.userDetail?.lastName
+                              userDetail?.firstName,
+                              userDetail?.lastName
                             )
-                          : item?.scratchCardUsedHistory?.userDetail
-                              ?.firstName || "N/A"}
+                          : userDetail?.firstName || "N/A"}
                       </div>
                     </div>
                     <div className="mb-3">
