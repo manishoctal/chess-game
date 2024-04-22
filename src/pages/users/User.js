@@ -12,9 +12,11 @@ import helpers from "utils/helpers";
 import OSearch from "components/reusable/OSearch";
 import { startCase } from "lodash";
 import { KYCStatusArray } from "utils/constants";
+import { useLocation } from "react-router-dom";
 
 function User() {
   const { t } = useTranslation();
+  const location = useLocation();
   const { logoutUser, user, updatePageName } = useContext(AuthContext);
   const [paginationObj, setPaginationObj] = useState({
     page: 1,
@@ -23,7 +25,9 @@ function User() {
   });
 
   const [users, setAllUser] = useState([]);
-  const [userType, setUserType] = useState("tourist");
+  const [userType, setUserType] = useState(
+    location?.state?.userType ? location?.state?.userType : "tourist"
+  );
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [isDelete] = useState(false);

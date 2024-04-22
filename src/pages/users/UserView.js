@@ -2,7 +2,7 @@ import OImage from "components/reusable/OImage";
 import dayjs from "dayjs";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useLocation, Link, useNavigate } from "react-router-dom";
+import { useLocation, Link, useNavigate, NavLink } from "react-router-dom";
 import defaultImage from "../../assets/images/No-image-found.jpg";
 import checkIcon from "../../assets/images/check.png";
 import { startCase, capitalize } from "lodash";
@@ -147,11 +147,14 @@ const UserView = () => {
           <IoArrowBackSharp />
         </Link>
       ) : (
-        <Link to="/users" className="mb-5 ml-4 block">
+        <NavLink
+          to="/users"
+          state={{ userType: item.userType }}
+          className="mb-5 ml-4 block"
+        >
           <IoArrowBackSharp />
-        </Link>
+        </NavLink>
       )}
-
       {item?.userType === "tourist" && (
         <div className="mt-10">
           <div className="items-center flex mb-5">
