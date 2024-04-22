@@ -11,7 +11,7 @@ import OTextArea from "components/reusable/OTextArea";
 const NotificationAdd = ({ getAllNotifications, handleCategory }) => {
   const [loading, setLoading] = useState(false);
 
-  const formValidation = FormValidation()
+  const formValidation = FormValidation();
   const { t } = useTranslation();
   const {
     register,
@@ -36,18 +36,16 @@ const NotificationAdd = ({ getAllNotifications, handleCategory }) => {
       const res = await apiPost(apiPath.notifications, { ...obj });
       if (res.data.success) {
         notification.success(res?.data?.message);
-        handleCategory()
+        handleCategory();
         getAllNotifications();
       } else {
         notification.error(res?.data?.message);
       }
     } catch (err) {
       console.error("err:", err);
-    }
-    finally {
+    } finally {
       setLoading(false);
     }
-
   };
 
   useEffect(() => {
@@ -118,11 +116,10 @@ const NotificationAdd = ({ getAllNotifications, handleCategory }) => {
                           type="radio"
                           checked={availableFor === "all"}
                           name="default-radio"
-                          onChange={() => setAvailableFor('all')}
+                          onChange={() => setAvailableFor("all")}
                           className="w-4 cursor-pointer h-4 text-blue-600 bg-gray-100 border-gray-300 rounded  dark:bg-gray-700 dark:border-gray-600"
                         />
                         <label
-
                           for="default-checkbox"
                           className="ml-2 text-sm font-medium cursor-pointer text-gray-900 dark:text-gray-300"
                         >
@@ -135,11 +132,10 @@ const NotificationAdd = ({ getAllNotifications, handleCategory }) => {
                           type="radio"
                           checked={availableFor === "tourist"}
                           name="default-radio"
-                          onChange={() => setAvailableFor('tourist')}
+                          onChange={() => setAvailableFor("tourist")}
                           className="w-4 cursor-pointer h-4 text-blue-600 bg-gray-100 border-gray-300 rounded  dark:bg-gray-700 dark:border-gray-600"
                         />
                         <label
-
                           for="default-checkbox"
                           className="ml-2 text-sm font-medium cursor-pointer text-gray-900 dark:text-gray-300"
                         >
@@ -153,11 +149,10 @@ const NotificationAdd = ({ getAllNotifications, handleCategory }) => {
                           type="radio"
                           checked={availableFor === "local"}
                           name="default-radio"
-                          onChange={() => setAvailableFor('local')}
+                          onChange={() => setAvailableFor("local")}
                           className="w-4 cursor-pointer h-4 text-blue-600 bg-gray-100 border-gray-300 rounded dark:bg-gray-700 dark:border-gray-600"
                         />
                         <label
-
                           for="default-checkbox1"
                           className="ml-2 text-sm font-medium cursor-pointer text-gray-900 dark:text-gray-300"
                         >
