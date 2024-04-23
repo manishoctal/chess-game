@@ -139,7 +139,7 @@ const UserView = () => {
   const handleBack = () => {
     setWalletBox(false);
   };
-
+  console.log(item?.profilePic);
   return (
     <div className="p-5 dark:bg-slate-900">
       {walletBox ? (
@@ -158,11 +158,17 @@ const UserView = () => {
       {item?.userType === "tourist" && (
         <div className="mt-10">
           <div className="items-center flex mb-5">
-            <div className="mr-5 flex ">
+            <div className="mr-5 flex cursor-pointer">
               <figure className="overflow-hidden rounded-full inline-block  border border-2 mb-5">
                 <OImage
-                  className="w-[100px] h-[100px] inline "
+                  className="w-[100px] h-[100px] inline"
                   src={helpers?.orOperator(item?.profilePic, defaultImage)}
+                  onClick={
+                    item?.profilePic !==
+                    "https://octal-dev.s3.ap-south-1.amazonaws.com/"
+                      ? () => handleShowImage(item.profilePic)
+                      : undefined
+                  }
                   fallbackUrl={defaultImage}
                   alt=""
                 />
@@ -256,11 +262,17 @@ const UserView = () => {
       {item?.userType === "local" && (
         <div className="mt-10">
           <div className="flex items-center">
-            <div className="flex mr-5">
+            <div className="flex mr-5 cursor-pointer">
               <figure className="inline-block overflow-hidden rounded-full border border-2 mb-5">
                 <OImage
                   src={item?.profilePic || defaultImage}
                   className="w-[100px] h-[100px] inline"
+                  onClick={
+                    item?.profilePic !==
+                    "https://octal-dev.s3.ap-south-1.amazonaws.com/"
+                      ? () => handleShowImage(item.profilePic)
+                      : undefined
+                  }
                   fallbackUrl={defaultImage}
                   alt=""
                 />
