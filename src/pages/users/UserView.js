@@ -423,6 +423,27 @@ const UserView = () => {
                     </div>
                   </li>
                 </div>
+                <div>
+                  <li className="mb-4">
+                    <div className="flex items-center">
+                      <figure className="bg-[#F2F2F2] w-[42px] h-[41px] rounded-full flex items-center justify-center mr-3">
+                        <img src={locationIcon} alt="" />
+                      </figure>
+                      <figcaption className="w-[calc(100%_-_41px)]">
+                        <span className="block text-[#5C5C5C]">
+                          {t("DRIVING_LICENSE")}
+                        </span>
+                        <strong>
+                          {helpers.ternaryCondition(
+                            item?.drivingLicense,
+                            item?.drivingLicense,
+                            "N/A"
+                          )}
+                        </strong>
+                      </figcaption>
+                    </div>
+                  </li>
+                </div>
               </ul>
             </div>
             <div className="border border-1 border-[#E1DEDE] rounded-md p-6 ps-3">
