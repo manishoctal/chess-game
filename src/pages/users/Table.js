@@ -153,6 +153,7 @@ const Table = ({
             ) : (
               ""
             ))}
+            
           {(manager?.add || user?.role === "admin") &&
             (item?.status !== "deleted" ? (
               <div
