@@ -7,13 +7,14 @@ import dayjs from "dayjs";
 import ODateRangePicker from "components/shared/datePicker/ODateRangePicker";
 import { useTranslation } from "react-i18next";
 import TransactionDetailsTable from "./TransactionDetailsTable";
-import { Link, useLocation } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import PageSizeList from "components/PageSizeList";
 import OSearch from "components/reusable/OSearch";
 import { IoArrowBackSharp } from "react-icons/io5";
 
 function TransactionDetails() {
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
+  const navigate = useNavigate()
 
   useEffect(() => {
     if (!isInitialized) {
@@ -45,6 +46,8 @@ function TransactionDetails() {
   const location = useLocation();
   const [userType] = useState(location?.state?.userTypeDetail);
   const [userId] = useState(location?.state?.userId);
+
+  
 
   const [filterData, setFilterData] = useState({
     category: "",
@@ -140,13 +143,17 @@ function TransactionDetails() {
     });
   };
 
+  const handleBackToUser=()=>{
+    navigate('/users', {state:location?.state})
+  }
+
   return (
     <div>
       <div className="bg-[#F9F9F9] ">
         <div className="px-3 py-4 dark:bg-gray-900">
-          <Link to="/users" className="mb-5 ml-4 block">
+          <a onClick={()=>handleBackToUser()} className="mb-5 ml-4 block">
             <IoArrowBackSharp />
-          </Link>
+          </a>
           <div className="bg-white border border-[#E9EDF9] rounded-lg dark:bg-slate-800 dark:border-[#ffffff38]">
             <form className="border-b border-b-[#E3E3E3]  px-4 py-3 pt-5 flex flex-wrap justify-between">
               <div className="flex flex-wrap items-center">
