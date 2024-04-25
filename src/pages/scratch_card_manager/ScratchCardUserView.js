@@ -13,7 +13,6 @@ const ScratchCardUserView = ({ setViewShowModal, item }) => {
       const path = apiPath.viewScratchCard + "/" + item?.usedBy;
       const result = await apiGet(path);
       const response = result?.data?.results;
-      const resultStatus = result?.data?.success;
       setUserDetail(response);
     } catch (error) {
       console.error("error in get all sub admin list==>>>>", error.message);
@@ -30,9 +29,7 @@ const ScratchCardUserView = ({ setViewShowModal, item }) => {
           <form className="sm:py-4 sm:px-2 py-8 px-7">
             <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none min-w-[762px]">
               <div className="dark:bg-gray-900 flex items-center justify-between p-5 border-b border-solid border-slate-200 rounded-t">
-                <h3 className="text-xl font-semibold dark:text-white">
-                  {t("O_VIEW_USER")}
-                </h3>
+                <h3 className="text-xl font-semibold dark:text-white">{t("O_VIEW_USER")}</h3>
                 <button
                   className=" ml-auto flex items-center justify-center  text-black border-2 rounded-full  h-8 w-8 float-right text-3xl leading-none font-extralight outline-none focus:outline-none"
                   onClick={() => setViewShowModal(false)}
@@ -51,10 +48,7 @@ const ScratchCardUserView = ({ setViewShowModal, item }) => {
                       </div>
                       <div>
                         {userDetail?.firstName && userDetail?.lastName
-                          ? helpers.getFullName(
-                              userDetail?.firstName,
-                              userDetail?.lastName
-                            )
+                          ? helpers.getFullName(userDetail?.firstName, userDetail?.lastName)
                           : userDetail?.firstName || "N/A"}
                       </div>
                     </div>

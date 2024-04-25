@@ -25,9 +25,7 @@ function User() {
   });
 
   const [users, setAllUser] = useState([]);
-  const [userType, setUserType] = useState(
-    location?.state?.userType ? location?.state?.userType : "tourist"
-  );
+  const [userType, setUserType] = useState(location?.state?.userType ? location?.state?.userType : "tourist");
 
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
@@ -52,8 +50,7 @@ function User() {
 
   const getAllUser = async (data) => {
     try {
-      const { category, startDate, endDate, searchkey, isKYCVerified } =
-        filterData;
+      const { category, startDate, endDate, searchkey, isKYCVerified } = filterData;
 
       const payload = {
         page,
@@ -78,21 +75,9 @@ function User() {
         setPaginationObj({
           ...paginationObj,
           page: helpers.ternaryCondition(resultStatus, response.page, null),
-          perPageItem: helpers.ternaryCondition(
-            resultStatus,
-            response?.docs.length,
-            null
-          ),
-          totalItems: helpers.ternaryCondition(
-            resultStatus,
-            response.totalDocs,
-            null
-          ),
-          pageCount: helpers.ternaryCondition(
-            resultStatus,
-            response.totalPages,
-            null
-          ),
+          perPageItem: helpers.ternaryCondition(resultStatus, response?.docs.length, null),
+          totalItems: helpers.ternaryCondition(resultStatus, response.totalDocs, null),
+          pageCount: helpers.ternaryCondition(resultStatus, response.totalPages, null),
         });
       }
     } catch (error) {
@@ -229,11 +214,7 @@ function User() {
             <form className="border-b border-b-[#E3E3E3]  px-4 py-3 pt-5 flex flex-wrap justify-between">
               <div className="flex flex-wrap items-center">
                 <div className="flex items-center lg:pt-0 pt-3 justify-center">
-                  <ODateRangePicker
-                    handleDateChange={handleDateChange}
-                    isReset={filterData?.isReset}
-                    setIsReset={setFilterData}
-                  />
+                  <ODateRangePicker handleDateChange={handleDateChange} isReset={filterData?.isReset} setIsReset={setFilterData} />
 
                   <div className="flex items-center mb-3 ml-3">
                     <select
@@ -285,20 +266,13 @@ function User() {
                 </div>
               </div>
               <div className="flex items-center md:justify-end px-4">
-                <label
-                  htmlFor="default-search"
-                  className="mb-2 font-medium text-sm  text-gray-900 sr-only"
-                >
+                <label htmlFor="default-search" className="mb-2 font-medium text-sm  text-gray-900 sr-only">
                   {" "}
                   {t("O_SEARCH")}
                 </label>
                 <div className="flex">
                   <div className="relative">
-                    <OSearch
-                      searchTerm={searchTerm}
-                      setSearchTerm={setSearchTerm}
-                      placeholder={t("SEARCH_BY_KEYWORD")}
-                    />
+                    <OSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm} placeholder={t("SEARCH_BY_KEYWORD")} />
                   </div>
                 </div>
               </div>
@@ -321,12 +295,7 @@ function User() {
               <PageSizeList dynamicPage={dynamicPage} pageSize={pageSize} />
 
               {paginationObj?.totalItems ? (
-                <Pagination
-                  handlePageClick={handlePageClick}
-                  options={paginationObj}
-                  isDelete={isDelete}
-                  page={page}
-                />
+                <Pagination handlePageClick={handlePageClick} options={paginationObj} isDelete={isDelete} page={page} />
               ) : null}
             </div>
           </div>
