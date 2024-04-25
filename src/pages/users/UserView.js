@@ -133,7 +133,7 @@ const UserView = () => {
   const handleBack = () => {
     setWalletBox(false);
   };
-  console.log(item, "item?.userType------");
+
   return (
     <div className="p-5 dark:bg-slate-900">
       {helpers.ternaryCondition(
