@@ -7,14 +7,14 @@ import dayjs from "dayjs";
 import ODateRangePicker from "components/shared/datePicker/ODateRangePicker";
 import { useTranslation } from "react-i18next";
 import TransactionDetailsTable from "./TransactionDetailsTable";
-import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import PageSizeList from "components/PageSizeList";
 import OSearch from "components/reusable/OSearch";
 import { IoArrowBackSharp } from "react-icons/io5";
 
 function TransactionDetails() {
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!isInitialized) {
@@ -46,8 +46,6 @@ function TransactionDetails() {
   const location = useLocation();
   const [userType] = useState(location?.state?.userTypeDetail);
   const [userId] = useState(location?.state?.userId);
-
-  
 
   const [filterData, setFilterData] = useState({
     category: "",
@@ -111,10 +109,7 @@ function TransactionDetails() {
   }, [page, filterData, pageSize]);
 
   useEffect(() => {
-    const pageName =
-      userType === "local"
-        ? t("TRANSACTION_DETAILS_LOCAL")
-        : t("TRANSACTION_DETAILS_TOURIST");
+    const pageName = userType === "local" ? t("TRANSACTION_DETAILS_LOCAL") : t("TRANSACTION_DETAILS_TOURIST");
     updatePageName(pageName);
   }, []);
 
@@ -143,26 +138,22 @@ function TransactionDetails() {
     });
   };
 
-  const handleBackToUser=()=>{
-    navigate('/users', {state:location?.state})
-  }
+  const handleBackToUser = () => {
+    navigate("/users", { state: location?.state });
+  };
 
   return (
     <div>
       <div className="bg-[#F9F9F9] ">
         <div className="px-3 py-4 dark:bg-gray-900">
-          <a onClick={()=>handleBackToUser()} className="mb-5 ml-4 block">
+          <a onClick={() => handleBackToUser()} className="mb-5 ml-4 block">
             <IoArrowBackSharp />
           </a>
           <div className="bg-white border border-[#E9EDF9] rounded-lg dark:bg-slate-800 dark:border-[#ffffff38]">
             <form className="border-b border-b-[#E3E3E3]  px-4 py-3 pt-5 flex flex-wrap justify-between">
               <div className="flex flex-wrap items-center">
                 <div className="flex items-center lg:pt-0 pt-3 justify-center">
-                  <ODateRangePicker
-                    handleDateChange={handleDateChange}
-                    isReset={filterData?.isReset}
-                    setIsReset={setFilterData}
-                  />
+                  <ODateRangePicker handleDateChange={handleDateChange} isReset={filterData?.isReset} setIsReset={setFilterData} />
 
                   <button
                     type="button"
@@ -174,39 +165,22 @@ function TransactionDetails() {
                 </div>
               </div>
               <div className="flex items-center md:justify-end px-4">
-                <label
-                  htmlFor="default-search"
-                  className="mb-2 text-sm font-medium text-gray-900 sr-only"
-                >
+                <label htmlFor="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only">
                   {t("O_SEARCH")}
                 </label>
                 <div className="flex">
                   <div className="relative">
-                    <OSearch
-                      searchTerm={searchTerm}
-                      setSearchTerm={setSearchTerm}
-                      placeholder={t("SEARCH_BY_KEYWORD")}
-                    />
+                    <OSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm} placeholder={t("SEARCH_BY_KEYWORD")} />
                   </div>
                 </div>
               </div>
             </form>
-            <TransactionDetailsTable
-              transactions={transactions}
-              page={page}
-              userType={userType}
-              pageSize={pageSize}
-            />
+            <TransactionDetailsTable transactions={transactions} page={page} userType={userType} pageSize={pageSize} />
 
             <div className="flex justify-between">
               <PageSizeList dynamicPage={dynamicPage} pageSize={pageSize} />
               {paginationObj?.totalItems ? (
-                <Pagination
-                  handlePageClick={handlePageClick}
-                  options={paginationObj}
-                  isDelete={isDelete}
-                  page={page}
-                />
+                <Pagination handlePageClick={handlePageClick} options={paginationObj} isDelete={isDelete} page={page} />
               ) : null}
             </div>
           </div>
