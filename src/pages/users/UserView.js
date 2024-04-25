@@ -126,9 +126,9 @@ const UserView = () => {
     setShowBanner(!showBanner);
   };
 
-  // const handleWalletBox = () => {
-  //   setWalletBox(true);
-  // };
+  const handleWalletBox = () => {
+    setWalletBox(false);
+  };
 
   const handleBack = () => {
     setWalletBox(false);
@@ -154,11 +154,7 @@ const UserView = () => {
                 <OImage
                   className="w-[100px] h-[100px] inline"
                   src={helpers?.orOperator(item?.profilePic, defaultImage)}
-                  onClick={helpers.ternaryCondition(
-                    item?.profilePic !== "https://octal-dev.s3.ap-south-1.amazonaws.com/",
-                    () => handleShowImage(item.profilePic),
-                    undefined
-                  )}
+                  onClick={helpers.ternaryCondition(item?.profilePic !== "https://octal-dev.s3.ap-south-1.amazonaws.com/", () => handleShowImage(item.profilePic), undefined)}
                   fallbackUrl={defaultImage}
                   alt=""
                 />
@@ -173,36 +169,16 @@ const UserView = () => {
             <div className="grid grid-cols-4 bg-[#F2F2F2] rounded-lg p-4 w-[70%] mr-4 px-8">
               {helpers.ternaryCondition(
                 walletBox,
-                <InformationSection
-                  iconSrc={firstNameIcon}
-                  title={t("USER_ID")}
-                  content={helpers.ternaryCondition(item?.userId, startCase(item?.userId), "N/A")}
-                />,
-                <InformationSection
-                  iconSrc={firstNameIcon}
-                  title={t("FAMILY_NAME")}
-                  content={helpers.ternaryCondition(item?.familyName, startCase(item?.familyName), "N/A")}
-                />
+                <InformationSection iconSrc={firstNameIcon} title={t("USER_ID")} content={helpers.ternaryCondition(item?.userId, startCase(item?.userId), "N/A")} />,
+                <InformationSection iconSrc={firstNameIcon} title={t("FAMILY_NAME")} content={helpers.ternaryCondition(item?.familyName, startCase(item?.familyName), "N/A")} />
               )}
-              <InformationSection
-                iconSrc={firstNameIcon}
-                title={t("FIRST_NAME")}
-                content={helpers.ternaryCondition(item?.firstName, startCase(item?.firstName), "N/A")}
-              />
-              <InformationSection
-                iconSrc={emailIcon}
-                title={t("EMAIL_ADDRESS")}
-                content={helpers.ternaryCondition(item?.email, item?.email, "N/A")}
-              />
+              <InformationSection iconSrc={firstNameIcon} title={t("FIRST_NAME")} content={helpers.ternaryCondition(item?.firstName, startCase(item?.firstName), "N/A")} />
+              <InformationSection iconSrc={emailIcon} title={t("EMAIL_ADDRESS")} content={helpers.ternaryCondition(item?.email, item?.email, "N/A")} />
               <div className="ps-2">
                 <InformationSection iconSrc={mobileIcon} title={t("O_MOBILE_NUMBER")} content={`+${item?.countryCode} ${item?.mobile}`} />
               </div>
             </div>
-            <div
-              className="bg-[#000] rounded-lg p-4 "
-              //  onClick={handleWalletBox}
-              // TODO: Need to revert if we deploy stripe related code, add cursor-pointer class above
-            >
+            <div className="bg-[#000] rounded-lg p-4" onClick={handleWalletBox}>
               <div className="flex items-center">
                 <figure className="mr-3">
                   <img src={balanceIcon} alt="" />
@@ -231,11 +207,7 @@ const UserView = () => {
                 <OImage
                   src={item?.profilePic || defaultImage}
                   className="w-[100px] h-[100px] inline"
-                  onClick={helpers.ternaryCondition(
-                    item?.profilePic !== "https://octal-dev.s3.ap-south-1.amazonaws.com/",
-                    () => handleShowImage(item.profilePic),
-                    undefined
-                  )}
+                  onClick={helpers.ternaryCondition(item?.profilePic !== "https://octal-dev.s3.ap-south-1.amazonaws.com/", () => handleShowImage(item.profilePic), undefined)}
                   fallbackUrl={defaultImage}
                   alt=""
                 />
@@ -256,10 +228,7 @@ const UserView = () => {
                   </figure>
                   <figcaption className="w-[calc(100%_-_41px)]">
                     <span className="block text-[#5 C5C5C]">{t("NAME")}</span>
-                    <strong>
-                      {" "}
-                      {helpers.ternaryCondition(item?.firstName, startCase((item?.firstName ?? "") + " " + (item?.lastName ?? "")), "N/A")}
-                    </strong>
+                    <strong> {helpers.ternaryCondition(item?.firstName, startCase((item?.firstName ?? "") + " " + (item?.lastName ?? "")), "N/A")}</strong>
                   </figcaption>
                 </div>
               </div>
@@ -414,10 +383,7 @@ const UserView = () => {
               </span>
               {kycSection}
               <span className="block text-center mt-4">
-                {t("KYC_STATUS")}:{" "}
-                <b>
-                  {helpers.ternaryCondition(item?.kycRecord?.isApproved, capitalize(startCase(item?.kycRecord?.isApproved)), "Kyc not uploaded yet")}
-                </b>
+                {t("KYC_STATUS")}: <b>{helpers.ternaryCondition(item?.kycRecord?.isApproved, capitalize(startCase(item?.kycRecord?.isApproved)), "Kyc not uploaded yet")}</b>
               </span>
             </div>
           </div>
