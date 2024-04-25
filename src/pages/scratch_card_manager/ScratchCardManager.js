@@ -14,8 +14,7 @@ import AddBulkScratchCard from "./AddBulkScratchCard";
 function ScratchCardManager() {
   const { t } = useTranslation();
   const { user, updatePageName } = useContext(AuthContext);
-  const manager =
-    user?.permission?.find((e) => e.manager === "scratch_card_manager") ?? {};
+  const manager = user?.permission?.find((e) => e.manager === "scratch_card_manager") ?? {};
 
   const ternaryCondition = (condition, first, second) => {
     return condition ? first : second;
@@ -55,16 +54,8 @@ function ScratchCardManager() {
         page,
         pageSize: pageSize,
 
-        startDate: ternaryCondition(
-          startDate,
-          dayjs(startDate).format("YYYY-MM-DD"),
-          null
-        ),
-        endDate: ternaryCondition(
-          endDate,
-          dayjs(endDate).format("YYYY-MM-DD"),
-          null
-        ),
+        startDate: ternaryCondition(startDate, dayjs(startDate).format("YYYY-MM-DD"), null),
+        endDate: ternaryCondition(endDate, dayjs(endDate).format("YYYY-MM-DD"), null),
         keyword: searchkey,
         sortBy: sort.sortBy,
         sortType: sort.sortType,
@@ -79,11 +70,7 @@ function ScratchCardManager() {
         ...paginationObj,
         page: ternaryCondition(resultStatus, response.page, null),
         pageCount: ternaryCondition(resultStatus, response.totalPages, null),
-        perPageItem: ternaryCondition(
-          resultStatus,
-          response?.docs.length,
-          null
-        ),
+        perPageItem: ternaryCondition(resultStatus, response?.docs.length, null),
         totalItems: ternaryCondition(resultStatus, response.totalDocs, null),
       });
     } catch (error) {
@@ -140,11 +127,7 @@ function ScratchCardManager() {
                 <div className="col-span-2 flex flex-wrap  items-center">
                   <div className="flex items-center lg:pt-0 pt-3 flex-wrap justify-center mb-2 2xl:mb-0">
                     <div className="relative flex items-center mb-3">
-                      <OSearch
-                        searchTerm={searchTerm}
-                        setSearchTerm={setSearchTerm}
-                        placeholder={t("SEARCH_BY_COUPON_CODE")}
-                      />
+                      <OSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm} placeholder={t("SEARCH_BY_COUPON_CODE")} />
                     </div>
                   </div>
                 </div>
@@ -159,9 +142,6 @@ function ScratchCardManager() {
                       + {t("ADD_BULK")}
                     </button>
                   )}
-                  {/* {
-                    // TODO: Need to revert above commented code if we deploy bulk card related code
-                  } */}
                   {(manager?.add || user?.role === "admin") && (
                     <button
                       title={t("ADD_NEW")}
@@ -174,21 +154,12 @@ function ScratchCardManager() {
                   )}
                 </div>
               </form>
-              <ScratchCardTable
-                subAdmin={subAdmin?.docs}
-                page={page}
-                pageSize={pageSize}
-              />
+              <ScratchCardTable subAdmin={subAdmin?.docs} page={page} pageSize={pageSize} />
               <div className="flex justify-between">
                 <PageSizeList dynamicPage={dynamicPage} pageSize={pageSize} />
                 {ternaryCondition(
                   paginationObj?.totalItems,
-                  <Pagination
-                    handlePageClick={handlePageClick}
-                    options={paginationObj}
-                    isDelete={isDelete}
-                    page={page}
-                  />,
+                  <Pagination handlePageClick={handlePageClick} options={paginationObj} isDelete={isDelete} page={page} />,
                   null
                 )}
               </div>
@@ -196,18 +167,8 @@ function ScratchCardManager() {
           </div>
         </div>
       </div>
-      {showModal && (
-        <AddScratchCard
-          setShowModal={setShowModal}
-          allScratchCard={allScratchCard}
-        />
-      )}
-      {showBulkModal && (
-        <AddBulkScratchCard
-          setShowBulkModal={setShowBulkModal}
-          allScratchCard={allScratchCard}
-        />
-      )}
+      {showModal && <AddScratchCard setShowModal={setShowModal} allScratchCard={allScratchCard} />}
+      {showBulkModal && <AddBulkScratchCard setShowBulkModal={setShowBulkModal} allScratchCard={allScratchCard} />}
     </>
   );
 }
