@@ -13,7 +13,6 @@ const ScratchCardUserView = ({ setViewShowModal, item }) => {
       const path = apiPath.viewScratchCard + "/" + item?.usedBy;
       const result = await apiGet(path);
       const response = result?.data?.results;
-      // const resultStatus = result?.data?.success;
       setUserDetail(response);
     } catch (error) {
       console.error("error in get all sub admin list==>>>>", error.message);

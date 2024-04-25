@@ -94,13 +94,7 @@ const UserView = () => {
     }
     const { isApproved } = kycRecord;
     if (isApproved === "approved") {
-      return (
-        <img
-          src={checkIcon}
-          alt=""
-          className="absolute right-[-10px] top-[-10px]"
-        />
-      );
+      return <img src={checkIcon} alt="" className="absolute right-[-10px] top-[-10px]" />;
     } else {
       return null;
     }
@@ -139,23 +133,20 @@ const UserView = () => {
   const handleBack = () => {
     setWalletBox(false);
   };
-  console.log(item?.profilePic);
+  console.log(item, "item?.userType------");
   return (
     <div className="p-5 dark:bg-slate-900">
-      {walletBox ? (
+      {helpers.ternaryCondition(
+        walletBox,
         <Link className="mb-5 ml-4 block" onClick={handleBack}>
           <IoArrowBackSharp />
-        </Link>
-      ) : (
-        <NavLink
-          to="/users"
-          state={{ userType: item.userType }}
-          className="mb-5 ml-4 block"
-        >
+        </Link>,
+        <NavLink to="/users" state={{ userType: item.userType }} className="mb-5 ml-4 block">
           <IoArrowBackSharp />
         </NavLink>
       )}
-      {item?.userType === "tourist" && (
+      {helpers.andOperator(
+        item?.userType === "tourist",
         <div className="mt-10">
           <div className="items-center flex mb-5">
             <div className="mr-5 flex cursor-pointer">
@@ -163,103 +154,76 @@ const UserView = () => {
                 <OImage
                   className="w-[100px] h-[100px] inline"
                   src={helpers?.orOperator(item?.profilePic, defaultImage)}
-                  onClick={
-                    item?.profilePic !==
-                    "https://octal-dev.s3.ap-south-1.amazonaws.com/"
-                      ? () => handleShowImage(item.profilePic)
-                      : undefined
-                  }
+                  onClick={helpers.ternaryCondition(
+                    item?.profilePic !== "https://octal-dev.s3.ap-south-1.amazonaws.com/",
+                    () => handleShowImage(item.profilePic),
+                    undefined
+                  )}
                   fallbackUrl={defaultImage}
                   alt=""
                 />
               </figure>
-              {item?.verificationStatus === "verified" && (
+              {helpers.andOperator(
+                item?.verificationStatus === "verified",
                 <span>
-                  <img
-                    alt=""
-                    src={item?.verificationStatus === "verified" && checkIcon}
-                  />
+                  <img src={item?.verificationStatus === "verified" && checkIcon} alt="" />
                 </span>
               )}
             </div>
             <div className="grid grid-cols-4 bg-[#F2F2F2] rounded-lg p-4 w-[70%] mr-4 px-8">
-              {walletBox ? (
+              {helpers.ternaryCondition(
+                walletBox,
                 <InformationSection
                   iconSrc={firstNameIcon}
                   title={t("USER_ID")}
-                  content={helpers.ternaryCondition(
-                    item?.userId,
-                    startCase(item?.userId),
-                    "N/A"
-                  )}
-                />
-              ) : (
+                  content={helpers.ternaryCondition(item?.userId, startCase(item?.userId), "N/A")}
+                />,
                 <InformationSection
                   iconSrc={firstNameIcon}
                   title={t("FAMILY_NAME")}
-                  content={helpers.ternaryCondition(
-                    item?.familyName,
-                    startCase(item?.familyName),
-                    "N/A"
-                  )}
+                  content={helpers.ternaryCondition(item?.familyName, startCase(item?.familyName), "N/A")}
                 />
               )}
               <InformationSection
                 iconSrc={firstNameIcon}
                 title={t("FIRST_NAME")}
-                content={helpers.ternaryCondition(
-                  item?.firstName,
-                  startCase(item?.firstName),
-                  "N/A"
-                )}
+                content={helpers.ternaryCondition(item?.firstName, startCase(item?.firstName), "N/A")}
               />
               <InformationSection
                 iconSrc={emailIcon}
                 title={t("EMAIL_ADDRESS")}
-                content={helpers.ternaryCondition(
-                  item?.email,
-                  item?.email,
-                  "N/A"
-                )}
+                content={helpers.ternaryCondition(item?.email, item?.email, "N/A")}
               />
               <div className="ps-2">
-                <InformationSection
-                  iconSrc={mobileIcon}
-                  title={t("O_MOBILE_NUMBER")}
-                  content={`+${item?.countryCode} ${item?.mobile}`}
-                />
+                <InformationSection iconSrc={mobileIcon} title={t("O_MOBILE_NUMBER")} content={`+${item?.countryCode} ${item?.mobile}`} />
               </div>
             </div>
             <div
               className="bg-[#000] rounded-lg p-4 "
-              // onClick={handleWalletBox} //TODO: Need to revert if we deploy stripe related code, add cursor-pointer class above
+              //  onClick={handleWalletBox}
+              // TODO: Need to revert if we deploy stripe related code, add cursor-pointer class above
             >
               <div className="flex items-center">
                 <figure className="mr-3">
                   <img src={balanceIcon} alt="" />
                 </figure>
                 <figcaption className="text-white">
-                  <span className="block">
-                    {helpers.formattedAmount(item?.walletAmount)}
-                  </span>
+                  <span className="block">{helpers.formattedAmount(item?.walletAmount)}</span>
                   <span className="text-sm">{t("AVAILABLE_BALANCE")}</span>
                 </figcaption>
               </div>
             </div>
           </div>
-          {walletBox ? (
-            <UserWalletTransaction item={item} />
-          ) : (
-            <UserDetail
-              item={item}
-              handleShowImage={handleShowImage}
-              renderApprovalStatus={renderApprovalStatus}
-              kycSection={kycSection}
-            />
+          {helpers.ternaryCondition(
+            walletBox,
+            <UserWalletTransaction item={item} />,
+            <UserDetail item={item} handleShowImage={handleShowImage} renderApprovalStatus={renderApprovalStatus} kycSection={kycSection} />
           )}
         </div>
       )}
-      {item?.userType === "local" && (
+
+      {helpers.andOperator(
+        item?.userType === "local",
         <div className="mt-10">
           <div className="flex items-center">
             <div className="flex mr-5 cursor-pointer">
@@ -267,22 +231,19 @@ const UserView = () => {
                 <OImage
                   src={item?.profilePic || defaultImage}
                   className="w-[100px] h-[100px] inline"
-                  onClick={
-                    item?.profilePic !==
-                    "https://octal-dev.s3.ap-south-1.amazonaws.com/"
-                      ? () => handleShowImage(item.profilePic)
-                      : undefined
-                  }
+                  onClick={helpers.ternaryCondition(
+                    item?.profilePic !== "https://octal-dev.s3.ap-south-1.amazonaws.com/",
+                    () => handleShowImage(item.profilePic),
+                    undefined
+                  )}
                   fallbackUrl={defaultImage}
                   alt=""
                 />
               </figure>
-              {item?.verificationStatus === "verified" && (
+              {helpers.andOperator(
+                item?.verificationStatus === "verified",
                 <span>
-                  <img
-                    src={item?.verificationStatus === "verified" && checkIcon}
-                    alt=""
-                  />
+                  <img src={item?.verificationStatus === "verified" && checkIcon} alt="" />
                 </span>
               )}
             </div>
@@ -297,13 +258,7 @@ const UserView = () => {
                     <span className="block text-[#5 C5C5C]">{t("NAME")}</span>
                     <strong>
                       {" "}
-                      {helpers.ternaryCondition(
-                        item?.firstName,
-                        startCase(
-                          (item?.firstName ?? "") + " " + (item?.lastName ?? "")
-                        ),
-                        "N/A"
-                      )}
+                      {helpers.ternaryCondition(item?.firstName, startCase((item?.firstName ?? "") + " " + (item?.lastName ?? "")), "N/A")}
                     </strong>
                   </figcaption>
                 </div>
@@ -314,16 +269,8 @@ const UserView = () => {
                     <img src={emailIcon} alt="" />
                   </figure>
                   <figcaption className="w-[calc(100%_-_41px)]">
-                    <span className="block text-[#5 C5C5C]">
-                      {t("EMAIL_ADDRESS")}
-                    </span>
-                    <strong>
-                      {helpers.ternaryCondition(
-                        item?.email,
-                        item?.email,
-                        "N/A"
-                      )}
-                    </strong>
+                    <span className="block text-[#5 C5C5C]">{t("EMAIL_ADDRESS")}</span>
+                    <strong>{helpers.ternaryCondition(item?.email, item?.email, "N/A")}</strong>
                   </figcaption>
                 </div>
               </div>
@@ -333,9 +280,7 @@ const UserView = () => {
                     <img src={mobileIcon} alt="" />
                   </figure>
                   <figcaption className="w-[calc(100%_-_41px)]">
-                    <span className="block text-[#5 C5C5C]">
-                      {t("O_MOBILE_NUMBER")}
-                    </span>
+                    <span className="block text-[#5 C5C5C]">{t("O_MOBILE_NUMBER")}</span>
                     <strong>{`+${item?.countryCode} ${item?.mobile}`}</strong>
                   </figcaption>
                 </div>
@@ -348,9 +293,7 @@ const UserView = () => {
                   <img src={balanceIcon} alt="" />
                 </figure>
                 <figcaption className="text-white">
-                  <span className="block">
-                    {helpers.formattedAmount(item?.walletAmount)}
-                  </span>
+                  <span className="block">{helpers.formattedAmount(item?.walletAmount)}</span>
                   <span className="text-sm">{t("AVAILABLE_BALANCE")}</span>
                 </figcaption>
               </div>
@@ -367,16 +310,8 @@ const UserView = () => {
                         <img src={cityIcon} alt="" />
                       </figure>
                       <figcaption className="w-[calc(100%_-_41px)]">
-                        <span className="block text-[#5C5C5C]">
-                          {t("NATIONALITY_ID")}
-                        </span>
-                        <strong>
-                          {helpers.ternaryCondition(
-                            item?.nationalityId,
-                            item?.nationalityId,
-                            "N/A"
-                          )}
-                        </strong>
+                        <span className="block text-[#5C5C5C]">{t("NATIONALITY_ID")}</span>
+                        <strong>{helpers.ternaryCondition(item?.nationalityId, item?.nationalityId, "N/A")}</strong>
                       </figcaption>
                     </div>
                   </li>
@@ -388,16 +323,8 @@ const UserView = () => {
                         <img src={locationIcon} alt="" />
                       </figure>
                       <figcaption className="w-[calc(100%_-_41px)]">
-                        <span className="block text-[#5C5C5C]">
-                          {t("ADDRESS")}
-                        </span>
-                        <strong>
-                          {helpers.ternaryCondition(
-                            item?.address,
-                            item?.address,
-                            "N/A"
-                          )}
-                        </strong>
+                        <span className="block text-[#5C5C5C]">{t("ADDRESS")}</span>
+                        <strong>{helpers.ternaryCondition(item?.address, item?.address, "N/A")}</strong>
                       </figcaption>
                     </div>
                   </li>
@@ -409,16 +336,8 @@ const UserView = () => {
                         <img src={dobIcon} alt="" />
                       </figure>
                       <figcaption className="w-[calc(100%_-_41px)]">
-                        <span className="block text-[#5C5C5C]">
-                          {t("USER_DOB")}
-                        </span>
-                        <strong>
-                          {helpers.ternaryCondition(
-                            item?.dob,
-                            dayjs(item?.dob).format("D MMM YYYY"),
-                            "N/A"
-                          )}
-                        </strong>
+                        <span className="block text-[#5C5C5C]">{t("USER_DOB")}</span>
+                        <strong>{helpers.ternaryCondition(item?.dob, dayjs(item?.dob).format("D MMM YYYY"), "N/A")}</strong>
                       </figcaption>
                     </div>
                   </li>
@@ -430,16 +349,8 @@ const UserView = () => {
                         <img src={locationIcon} alt="" />
                       </figure>
                       <figcaption className="w-[calc(100%_-_41px)]">
-                        <span className="block text-[#5C5C5C]">
-                          {t("DRIVING_LICENSE")}
-                        </span>
-                        <strong>
-                          {helpers.ternaryCondition(
-                            item?.drivingLicense,
-                            item?.drivingLicense,
-                            "N/A"
-                          )}
-                        </strong>
+                        <span className="block text-[#5C5C5C]">{t("DRIVING_LICENSE")}</span>
+                        <strong>{helpers.ternaryCondition(item?.drivingLicense, item?.drivingLicense, "N/A")}</strong>
                       </figcaption>
                     </div>
                   </li>
@@ -452,9 +363,7 @@ const UserView = () => {
                   <li className="mb-4">
                     <div className="flex items-center">
                       <figcaption className="w-[calc(100%_-_41px)]">
-                        <span className="block text-[#5C5C5C]">
-                          {t("LOCAL_QR_CODE")}
-                        </span>
+                        <span className="block text-[#5C5C5C]">{t("LOCAL_QR_CODE")}</span>
                         <div className="relative mt-4">
                           <figure className="inline-block overflow-hidden border mb-3 w-90 h-[210px]">
                             <OImage
@@ -475,17 +384,13 @@ const UserView = () => {
               </ul>
             </div>
             <div className="border border-1  border-[#E1DEDE] rounded-md p-12">
-              <span className="block text-center pb-3 ">
-                {t("KYC_DOCUMENT")}
-              </span>
+              <span className="block text-center pb-3 ">{t("KYC_DOCUMENT")}</span>
               <div className="relative">
                 <figure className="inline-block overflow-hidden border mb-3 w-full h-[200px]">
                   <OImage
                     src={item?.kycRecord?.docImageFront || defaultImage}
                     className="w-full h-full object-contain inline  cursor-pointer"
-                    onClick={() =>
-                      handleShowImage(item?.kycRecord?.docImageFront)
-                    }
+                    onClick={() => handleShowImage(item?.kycRecord?.docImageFront)}
                     alt=""
                     fallbackUrl={defaultImage}
                   />
@@ -498,33 +403,20 @@ const UserView = () => {
                     src={item?.kycRecord?.docImageBack || defaultImage}
                     className="w-full h-full object-contain inline cursor-pointer"
                     alt=""
-                    onClick={() =>
-                      handleShowImage(item?.kycRecord?.docImageBack)
-                    }
+                    onClick={() => handleShowImage(item?.kycRecord?.docImageBack)}
                     fallbackUrl={defaultImage}
                   />
                 </figure>
                 {renderApprovalStatus()}
               </div>
               <span className="block text-center">
-                {t("DOCUMENT_NUMBER")}:{" "}
-                <b>
-                  {helpers.ternaryCondition(
-                    item?.kycRecord?.docNumber,
-                    item?.kycRecord?.docNumber,
-                    "N/A"
-                  )}
-                </b>
+                {t("DOCUMENT_NUMBER")}: <b>{helpers.ternaryCondition(item?.kycRecord?.docNumber, item?.kycRecord?.docNumber, "N/A")}</b>
               </span>
               {kycSection}
               <span className="block text-center mt-4">
                 {t("KYC_STATUS")}:{" "}
                 <b>
-                  {helpers.ternaryCondition(
-                    item?.kycRecord?.isApproved,
-                    capitalize(startCase(item?.kycRecord?.isApproved)),
-                    "Kyc not uploaded yet"
-                  )}
+                  {helpers.ternaryCondition(item?.kycRecord?.isApproved, capitalize(startCase(item?.kycRecord?.isApproved)), "Kyc not uploaded yet")}
                 </b>
               </span>
             </div>
@@ -532,9 +424,7 @@ const UserView = () => {
         </div>
       )}
 
-      {showBanner && showImage && (
-        <ShowImage handleShowImage={handleShowImage} showImage={showImage} />
-      )}
+      {showBanner && showImage && <ShowImage handleShowImage={handleShowImage} showImage={showImage} />}
     </div>
   );
 };
