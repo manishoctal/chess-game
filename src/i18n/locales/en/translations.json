@@ -450,6 +450,8 @@
   "THAI_LOCAL": "Thai Local",
   "DEPOSITE_AMOUNT": "Deposite amount",
   "REFERENCE_NUMBER": "Reference Number",
+  "REFERENCE_NUMBER_FOR_TXN": "Reference Number (Transaction)",
+  "REFERENCE_NUMBER_FOR_SCRATCH_CARD": "Reference Number (Scratch Card)",
   "BANK_RECEIPT": "Bank Receipt",
   "EARNED_MONEY": "Earned Money",
   "DASHBOARD_SELECT_MONTH": "Select month",
