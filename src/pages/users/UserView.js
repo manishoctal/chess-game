@@ -21,6 +21,7 @@ import { apiPut } from "utils/apiFetch";
 import ShowImage from "./ShowImage";
 import UserWalletTransaction from "./userComponents/UserWalletTransaction";
 import UserDetail from "./userComponents/UserDetail";
+import bonusIcon from "../../assets/icons/icon/bonus.svg";
 
 const UserView = () => {
   const { t } = useTranslation();
@@ -320,6 +321,19 @@ const UserView = () => {
                       <figcaption className="w-[calc(100%_-_41px)]">
                         <span className="block text-[#5C5C5C]">{t("DRIVING_LICENSE")}</span>
                         <strong>{helpers.ternaryCondition(item?.drivingLicense, item?.drivingLicense, "N/A")}</strong>
+                      </figcaption>
+                    </div>
+                  </li>
+                </div>
+                <div>
+                  <li className="mb-4">
+                    <div className="flex items-center">
+                      <figure className="bg-[#F2F2F2] w-[42px] h-[41px] rounded-full flex items-center justify-center mr-3">
+                        <img src={bonusIcon} alt="" />
+                      </figure>
+                      <figcaption className="w-[calc(100%_-_41px)]">
+                        <span className="block text-[#5C5C5C] dark:text-white">{t("BONUS_AMOUNT")}</span>
+                        <strong className="dark:text-slate-400">{item?.signUpBonusAmount || 0}</strong>
                       </figcaption>
                     </div>
                   </li>
