@@ -132,7 +132,7 @@ function ScratchCardManager() {
                   </div>
                 </div>
                 <div className="flex items-center justify-end px-4 ms-auto mb-3">
-                  {(manager?.add || user?.role === "admin") && (
+                  {/* {(manager?.add || user?.role === "admin") && (
                     <button
                       title={t("ADD_BULK")}
                       type="button"
@@ -141,7 +141,7 @@ function ScratchCardManager() {
                     >
                       + {t("ADD_BULK")}
                     </button>
-                  )}
+                  )} */}
                   {(manager?.add || user?.role === "admin") && (
                     <button
                       title={t("ADD_NEW")}
