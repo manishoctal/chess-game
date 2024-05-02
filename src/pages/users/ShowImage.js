@@ -4,7 +4,7 @@ import React from "react";
 const ShowImage = ({ handleShowImage, showImage }) => {
   return (
     <div>
-      <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+      <div className="justify-center items-center  overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
         <div className="relative my-6 mx-auto w-[500px]">
           <div className="sm:py-4 sm:px-2 py-8 px-7 ">
             <button
