@@ -45,7 +45,7 @@ function TransactionDetails() {
   const [isInitialized, setIsInitialized] = useState(false);
   const location = useLocation();
   const [userType] = useState(location?.state?.userTypeDetail);
-  const [userId] = useState(location?.state?.userId);
+  const [userId] = useState(location?.state?._id);
 
   const [filterData, setFilterData] = useState({
     category: "",
