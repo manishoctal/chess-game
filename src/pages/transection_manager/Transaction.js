@@ -80,7 +80,7 @@ function Transaction() {
 
   useEffect(() => {
     allTransaction();
-  }, [filterData, page, sort, userType]);
+  }, [filterData, page, sort, pageSize, userType]);
 
   const handleReset = () => {
     setFilterData({
@@ -112,9 +112,8 @@ function Transaction() {
             <button
               type="button"
               title={t("FOREIGN_TOURIST")}
-              className={`pr-6 bg-white border border-1 border-[#000] text-sm px-8 ml-3 mb-3 py-2 rounded-lg items-center  text-black  sm:w-auto w-1/2 ${
-                userType === "tourist" && "bg-[#000!important] text-white"
-              }`}
+              className={`pr-6 bg-white border border-1 border-[#000] text-sm px-8 ml-3 mb-3 py-2 rounded-lg items-center  text-black  sm:w-auto w-1/2 ${userType === "tourist" && "bg-[#000!important] text-white"
+                }`}
               onClick={() => setUserType("tourist")}
             >
               {t("FOREIGN_TOURIST")}
@@ -122,9 +121,8 @@ function Transaction() {
             <button
               type="button"
               title={t("THAI_LOCAL")}
-              className={` pr-6 bg-white border border-1 border-[#000] text-sm px-8 ml-3 mb-3 py-2 rounded-lg items-center  text-black  sm:w-auto w-1/2 ${
-                userType === "local" && "bg-[#000!important] text-white"
-              }`}
+              className={` pr-6 bg-white border border-1 border-[#000] text-sm px-8 ml-3 mb-3 py-2 rounded-lg items-center  text-black  sm:w-auto w-1/2 ${userType === "local" && "bg-[#000!important] text-white"
+                }`}
               onClick={() => setUserType("local")}
             >
               {t("THAI_LOCAL")}
