@@ -75,11 +75,18 @@ function TransactionDetails() {
       const result = await apiGet(path, payload);
       if (result?.status === 200) {
         const response = result?.data?.results?.docs;
+        const resultStatus = result?.data?.success;
         setTransactions(response);
+        setPaginationObj({
+          ...paginationObj,
+          page: resultStatus ? result?.data?.results.page : null,
+          pageCount: resultStatus ? result?.data?.results.totalPages : null,
+          perPageItem: resultStatus ? response?.length : null,
+          totalItems: resultStatus ? result?.data?.results.totalDocs : null,
+        });
       }
     } catch (error) {
       console.error("error ", error);
-      setPaginationObj({});
       if (error.response.status === 401 || error.response.status === 409) {
         logoutUser();
       }
@@ -179,9 +186,7 @@ function TransactionDetails() {
 
             <div className="flex justify-between">
               <PageSizeList dynamicPage={dynamicPage} pageSize={pageSize} />
-              {paginationObj?.totalItems ? (
-                <Pagination handlePageClick={handlePageClick} options={paginationObj} isDelete={isDelete} page={page} />
-              ) : null}
+              {paginationObj?.totalItems ? <Pagination handlePageClick={handlePageClick} options={paginationObj} isDelete={isDelete} page={page} /> : null}
             </div>
           </div>
         </div>
