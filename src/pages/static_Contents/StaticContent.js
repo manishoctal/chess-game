@@ -98,7 +98,7 @@ const StaticContent = () => {
       const response = result?.data?.results
       const resultStatus = result?.data?.success
 
-      setCountryList(response?.docs)
+      setCountryList(response)
       setPaginationObj({
         ...paginationObj,
         page: ternaryCondition(resultStatus, response.page, null),
@@ -152,8 +152,6 @@ const StaticContent = () => {
   }
 
   return (
-    <>
-      {' '}
       <div className='bg-[#F9F9F9] dark:bg-slate-900'>
         <div className='px-3 py-4'>
           <div className='bg-white border border-[#E9EDF9] rounded-lg dark:bg-slate-800 dark:border-[#ffffff38]'>
@@ -209,7 +207,7 @@ const StaticContent = () => {
           </div>
         </div>
       </div>
-    </>
+    
   )
 }
 

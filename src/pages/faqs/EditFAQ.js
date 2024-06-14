@@ -4,6 +4,8 @@ import { useForm } from "react-hook-form";
 import ErrorMessage from "components/ErrorMessage";
 import useToastContext from "hooks/useToastContext";
 import { useTranslation } from "react-i18next";
+import { useState } from "react";
+import helpers from "utils/helpers";
 
 const EditFAQ = ({ setEditShowModal, getAllFAQ, item, viewType }) => {
   const { t } = useTranslation();
@@ -20,9 +22,11 @@ const EditFAQ = ({ setEditShowModal, getAllFAQ, item, viewType }) => {
     },
   });
   const notification = useToastContext();
+  const [loader, setLoader] = useState(false)
 
   const onSubmit = async (data) => {
     try {
+      setLoader(true)
       const path = apiPath.getFAQs + "/" + item._id;
       const result = await apiPut(path, data);
       if (result?.status === 200) {
@@ -32,6 +36,8 @@ const EditFAQ = ({ setEditShowModal, getAllFAQ, item, viewType }) => {
       }
     } catch (error) {
       console.error("error in get all faqs list==>>>>", error.message);
+    } finally {
+      setLoader(false)
     }
   };
 
@@ -123,14 +129,19 @@ const EditFAQ = ({ setEditShowModal, getAllFAQ, item, viewType }) => {
                 >
                   {t("CLOSE")}
                 </button>
-                {viewType === "view" ? null : (
+
+                {helpers.ternaryCondition(loader, <button className="bg-gradientTo text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150">
+                  <div className="spinner-container">
+                    <div className="loading-spinner" />
+                  </div>
+                </button>, viewType === "view" ? null : (
                   <button
                     className="bg-gradientTo text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150"
                     type="submit"
                   >
                     {t("O_EDIT")}
                   </button>
-                )}
+                ))}
               </div>
             </div>
           </form>

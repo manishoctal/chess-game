@@ -28,6 +28,7 @@ import {
   StyledEngineProvider,
 } from "@mui/material/styles";
 import useToastContext from "hooks/useToastContext";
+import { Link } from "react-router-dom";
 
 ChartJS.register(
   CategoryScale,
@@ -114,6 +115,14 @@ function Home() {
   const [graphTwoEndDate, setGraphTwoEndDate] = useState(
     dayjs().format("YYYY-MM-DD")
   );
+
+  const [filterData, setFilterData] = useState({
+    startDate: "",
+    endDate: "",
+    isReset: false,
+    isFilter: false,
+  });
+
   const [graphTwoDropdownValue, setGraphTwoDropdownValue] = useState("day");
   const getDefaultDateDisableState = () => ({
     first: {
@@ -187,13 +196,13 @@ function Home() {
     try {
       const payload = {
         startDate: helpers?.ternaryCondition(
-          startDate,
-          dayjs(startDate).format("YYYY-MM-DD"),
+          filterData?.startDate,
+          dayjs(filterData?.startDate).format("YYYY-MM-DD"),
           null
         ),
         endDate: helpers?.ternaryCondition(
-          endDate,
-          dayjs(endDate).format("YYYY-MM-DD"),
+          filterData?.endDate,
+          dayjs(filterData?.endDate).format("YYYY-MM-DD"),
           null
         ),
       };
@@ -210,7 +219,29 @@ function Home() {
 
   useEffect(() => {
     getDashboardDetails();
-  }, [startDate, endDate]);
+  }, [startDate, endDate, filterData]);
+
+
+  const handleResetDashboard = () => {
+    setFilterData({
+      startDate: "",
+      endDate: "",
+      isReset: true,
+      isFilter: false,
+    });
+  };
+
+  const handleDashboardDateChange = (start, end) => {
+    setFilterData({
+      ...filterData,
+      startDate: start,
+      endDate: end,
+      isFilter: true,
+      isReset: false,
+    });
+  };
+
+
 
   useEffect(() => {
     if (startDate && endDate && selectedButton) {
@@ -362,9 +393,8 @@ function Home() {
     return (
       <button
         type="button"
-        className={`bg-gradientTo text-sm px-8 mb-3 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/4 ${
-          isActive ? "bg-gradient-to-b from-blue-300 to-green-500" : ""
-        }`}
+        className={`bg-gradientTo text-sm px-8 mb-3 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/4 ${isActive ? "bg-gradient-to-b from-blue-300 to-green-500" : ""
+          }`}
         onClick={() => handleButtonChangeData(buttonType, keyFor)}
         disabled={disableState}
       >
@@ -376,38 +406,40 @@ function Home() {
   return (
     <>
       <div className="py-4 px-4 md:px-8 dark:bg-slate-900">
+
+        <div className="flex flex-wrap items-center mt-3 mb-3">
+          <div className="flex items-center lg:pt-0 pt-3 justify-center">
+            <ODateRangePicker handleDateChange={handleDashboardDateChange} isReset={filterData?.isReset} setIsReset={setFilterData} />
+            <button
+              type="button"
+              onClick={() => handleResetDashboard()}
+              className="bg-gradientTo text-sm px-8 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2"
+              title={t("O_RESET")}
+            >
+              {t("O_RESET")}
+            </button>
+          </div>
+        </div>
         <div className="sale_report grid pt-10 3xl:grid-cols-4 gap-y-10 gap-4 gap-x-10 2xl:grid-cols-4 sm:grid-cols-2 mb-7 ">
-          <div className="text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border">
-            <h3 className="text-center mb-0 text-slate-900 font-bold md:text-3xl sm:text-lg dark:text-white">
-              <OCountUp value={dashboardDetails?.totalUsersCount} />
-              <span className="text-base text-neutral-400 font-normal block pt-3 ">
-                {t("VIEW_NO_OF_USERS")}
+          <Link to='/users'>
+            <div className="text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border">
+              <h3 className="text-center mb-0 text-slate-900 font-bold md:text-3xl sm:text-lg dark:text-white">
+                <OCountUp value={dashboardDetails?.totalNumberOfUsers} />
+                <span className="text-base text-neutral-400 font-normal block pt-3 ">
+                  {t("VIEW_NO_OF_USERS")}
+                </span>
+              </h3>
+              <span className="text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-30px] p-3 border z-10 bg-white">
+                <FaUserTie />
               </span>
-            </h3>
-            <span className="text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-30px] p-3 border z-10 bg-white">
-              <FaUserTie />
-            </span>
-          </div>
-
+            </div>
+          </Link>
           <div className="text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border">
             <h3 className="text-center mb-0 text-slate-900 font-bold md:text-3xl sm:text-lg dark:text-white">
-              <OCountUp value={dashboardDetails?.totalActiveUsersCount} />
+              <OCountUp value={dashboardDetails?.totalPlayerCards} />
 
               <span className="text-base text-neutral-400 font-normal block pt-3 ">
-                {t("NO_OF_ACTIVE_USERS")}
-              </span>
-            </h3>
-            <span className="">
-              <FaUserTie />
-            </span>
-          </div>
-          <div className="text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border">
-            <h3 className="text-center mb-0 text-slate-900 font-bold md:text-3xl sm:text-lg dark:text-white">
-              {helpers.formattedAmount(
-                dashboardDetails?.AmountAddedByScratchCard
-              )}
-              <span className="text-base text-neutral-400 font-normal block pt-3 ">
-                {t("Amount added by scratchcard")}
+                {t("Total Player Cards")}
               </span>
             </h3>
             <span className="text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-30px] p-3 border z-10 bg-white">
@@ -420,11 +452,10 @@ function Home() {
           </div>
           <div className="text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border">
             <h3 className="text-center mb-0 text-slate-900 font-bold md:text-3xl sm:text-lg dark:text-white">
-              {helpers.formattedAmount(
-                dashboardDetails?.totalPaymentByThaiLocal
-              )}
+              <OCountUp value={dashboardDetails?.totalPlayerStockList} />
+
               <span className="text-base text-neutral-400 font-normal block pt-3 ">
-                {t("Total payment by thai local")}
+                {t("Total Player stock list")}
               </span>
             </h3>
             <span className="text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-30px] p-3 border z-10 bg-white">
@@ -438,11 +469,10 @@ function Home() {
 
           <div className="text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border">
             <h3 className="text-center mb-0 text-slate-900 font-bold md:text-3xl sm:text-lg dark:text-white">
-              {helpers.formattedAmount(
-                dashboardDetails?.totalAmountAddedToTourist
-              )}
+              <OCountUp value={dashboardDetails?.totalTradingQuestionPosted} />
+
               <span className="text-base text-neutral-400 font-normal block pt-3 ">
-                {t("Amount added by admin in tourist wallet")}
+                {t("Total Trading Question Posted")}
               </span>
             </h3>
             <span className="text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-30px] p-3 border z-10 bg-white">
@@ -456,10 +486,10 @@ function Home() {
           <div className="text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border">
             <h3 className="text-center mb-0 text-slate-900 font-bold md:text-3xl sm:text-lg dark:text-white">
               {helpers.formattedAmount(
-                dashboardDetails?.totalAmountAddedToLocal
+                dashboardDetails?.totalAdminProfit
               )}
               <span className="text-base text-neutral-400 font-normal block pt-3 ">
-                {t("Amount added by admin in thai local wallet")}
+                {t("Total Admin profit")}
               </span>
             </h3>
             <span className="text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-30px] p-3 border z-10 bg-white">
@@ -473,10 +503,10 @@ function Home() {
           <div className="text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border">
             <h3 className="text-center mb-0 text-slate-900 font-bold md:text-3xl sm:text-lg dark:text-white">
               {helpers.formattedAmount(
-                dashboardDetails?.totalRewardGainedByUser
+                dashboardDetails?.totalAmountDeposit
               )}
               <span className="text-base text-neutral-400 font-normal block pt-3 ">
-                {t("Total reward gain by user")}
+                {t("Total Amount Deposit")}
               </span>
             </h3>
             <span className="text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-30px] p-3 border z-10 bg-white">
@@ -490,26 +520,18 @@ function Home() {
 
           <div className="text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border">
             <h3 className="text-center mb-0 text-slate-900 font-bold md:text-3xl sm:text-lg dark:text-white">
-              <OCountUp value={dashboardDetails?.usersBetween10And300 || 0} />
+              {helpers.formattedAmount(
+                dashboardDetails?.totalAmountWithdrawal
+              )}
               <span className="text-base text-neutral-400 font-normal block pt-3 ">
-                {t("USERS_BETWEEN_10_BAHT_TO_300_BAHT")}
+                {t("Total Amount Withdrawal")}
               </span>
             </h3>
             <span className="text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-30px] p-3 border z-10 bg-white">
               <FaUserTie className="h-8 w-8" />
             </span>
           </div>
-          <div className="text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border">
-            <h3 className="text-center mb-0 text-slate-900 font-bold md:text-3xl sm:text-lg dark:text-white">
-              <OCountUp value={dashboardDetails?.usersBetween200And1000 || 0} />
-              <span className="text-base text-neutral-400 font-normal block pt-3 ">
-                {t("USERS_BETWEEN_200_BAHT_TO_1000_BAHT")}
-              </span>
-            </h3>
-            <span className="text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-30px] p-3 border z-10 bg-white">
-              <FaUserTie className="h-8 w-8" />
-            </span>
-          </div>
+
         </div>
       </div>
       <div className="dark:bg-gray-800 py-7 px-4 md:px-8 bg-[#F9F9F9] border-solid border-2 border-gray m-10 rounded-md">
@@ -587,7 +609,7 @@ function Home() {
           />
         </div>
       </div>
-      <div className="dark:bg-gray-800 py-7 px-4 md:px-8 bg-[#F9F9F9] border-solid border-2 border-gray m-10 rounded-md">
+      {/* <div className="dark:bg-gray-800 py-7 px-4 md:px-8 bg-[#F9F9F9] border-solid border-2 border-gray m-10 rounded-md">
         <div className="sm:flex items-center text-center sm:text-left px-3 md:px-4 xl:px-7 lg:px-5  py-4 md:py-8 border dark:bg-slate-900">
           <StyledEngineProvider>
             <ThemeProvider theme={theme}>
@@ -661,7 +683,7 @@ function Home() {
             height="600"
           />
         </div>
-      </div>
+      </div> */}
     </>
   );
 }

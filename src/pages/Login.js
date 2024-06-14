@@ -1,19 +1,24 @@
 import ErrorMessage from "components/ErrorMessage";
 import OButton from "components/reusable/OButton";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { validationRules } from "utils/constants";
 import AuthContext from "../context/AuthContext";
 import Loader from "../layout/Loader";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
+import Captcha from '../components/reusable/captcha/Captcha'
 import { useTranslation } from "react-i18next";
-import logoImage from "../assets/images/Vector.png";
+import logoImage from "../assets/images/login-logo.png";
 import FormValidation from "utils/formValidation";
 function Login() {
   const { t } = useTranslation();
   const [icon, setIcon] = useState(true);
-
+  const canvasRef = useRef(null);
+  const [captchaInput, setCaptchaInput] = useState("");
+  const [generatedCaptcha, setGeneratedCaptcha] = useState("");
+  const [message, setMessage] = useState("");
+  const [messageClass, setMessageClass] = useState("");
   const navigate = useNavigate();
   const { loginUser, user } = useContext(AuthContext);
   const {
@@ -42,6 +47,20 @@ function Login() {
   }, []);
 
   const onSubmit = (data) => {
+
+if(!captchaInput){
+  setMessage("Please enter CAPTCHA value");
+  setMessageClass("text-red-600");
+  return;
+}
+
+    if (captchaInput !== generatedCaptcha) {
+      setMessage("CAPTCHA validation failed");
+      setMessageClass("text-red-600");
+      return;
+    }
+
+
     if (rememberMe) {
       window?.localStorage.setItem("email", data.email);
       window?.localStorage.setItem("password", data.password);
@@ -49,6 +68,8 @@ function Login() {
       window?.localStorage.removeItem("email");
       window?.localStorage.removeItem("password");
     }
+    setMessage("CAPTCHA validation successful!");
+    setMessageClass("text-green-600");
     loginUser(data);
   };
   useEffect(() => {
@@ -66,6 +87,10 @@ function Login() {
       e.preventDefault();
     }
   };
+
+
+
+
 
   return (
     <div className="bg-gradient-to-r from-gradientFrom to-gradientTo h-screen">
@@ -94,7 +119,7 @@ function Login() {
                 onKeyDown={(e) => preventSpace(e)}
                 // autoFocus
                 {...register("email",
-                 formValidation.email)}
+                  formValidation.email)}
               />
 
               <label
@@ -151,6 +176,38 @@ function Login() {
               )}
               <ErrorMessage message={errors?.password?.message} />
             </div>
+
+            <div className="flex justify-between">
+              <div>
+                <input
+                  type="text"
+                  name='captcha'
+                  id='captcha'
+                  placeholder='Enter CAPTCHA:'
+                  className="dark:text-white block py-4 px-3 w-full text-sm text-gray-900 bg-transparent border-2 rounded-lg border-[#DFDFDF] appearance-none dark:text-black dark:border-[#DFDFDF]  focus:outline-none focus:ring-0  peer"
+                  value={captchaInput}
+                  onChange={(e) => setCaptchaInput(e.target.value)}
+                />
+
+                {/* <label
+                  htmlFor="captcha"
+                  className="dark:bg-slate-900 dark:text-white peer-focus:font-normal absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 left-3 bg-white p-2 z-10 origin-[2] peer-focus:left-0 peer-focus:text-[#A5A5A5] peer-focus:text-lg  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-8"
+                >
+                  {t("O_PASSWORD")}
+                  <span className="text-red-500">*</span>
+                </label> */}
+
+               
+              </div>
+            <div className="mt-2">
+              <Captcha onChange={setGeneratedCaptcha} />
+              </div>
+            </div>
+            <div className="mb-3">
+                  {message && (
+                    <p className={`text-sm ${messageClass}`}>{message}.</p>
+                  )}
+                </div>
             <div className="flex items-start mb-8">
               <div className="flex items-center h-5">
                 <div>

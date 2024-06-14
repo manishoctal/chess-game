@@ -3,6 +3,7 @@ import SharedLayout from 'utils/SharedLayout'
 import { useTranslation } from 'react-i18next'
 import SubAdmin from 'pages/sub_admin/SubAdmin'
 import SubAdd from 'pages/sub_admin/SubAdd'
+import BannerManager from 'pages/banner_manager/Banner'
 import StaticContent from 'pages/static_Contents/StaticContent'
 import AddStaticContent from 'pages/static_Contents/AddStaticContent'
 import EditStaticContent from 'pages/static_Contents/EditStaticContent'
@@ -42,9 +43,7 @@ const AdminRoutes = {
       path: '/dashboard',
       element: <Home />,
       name: (
-        <>
           <UseChange data='NAV_DASHBOARD' />
-        </>
       )
     },
     {
@@ -55,18 +54,14 @@ const AdminRoutes = {
       path: '/sub-admin-manager',
       element: <SubAdmin />,
       name: (
-        <>
           <UseChange data='SUB_ADMIN_MANAGERS' />
-        </>
       )
     },
     {
       path: '/users',
       element: <User />,
       name: (
-        <>
           <UseChange data='USER_MANAGER' />
-        </>
       )
     },
 
@@ -74,45 +69,35 @@ const AdminRoutes = {
       path: '/users/view',
       element: <UserView />,
       name: (
-        <>
           <UseChange data='USER_MANAGER' />
-        </>
       )
     },
     {
       path: '/usersWalletHistory',
       element: <UserWalletHistory />,
       name: (
-        <>
           <UseChange data='USER_MANAGER' />
-        </>
       )
     },
     {
       path: '/users/transactionDetails',
       element: <TransactionDetails />,
       name: (
-        <>
           <UseChange data='USER_MANAGER' />
-        </>
       )
     },
     {
       path: '/transactions',
       element: <Transaction />,
       name: (
-        <>
           <UseChange data='NAV_TRANSACTION_MANAGER' />
-        </>
       )
     },
     {
       path: '/feedback-manager',
       element: <SupportManager />,
       name: (
-        <>
           <UseChange data='FEEDBACK_MANAGER' />
-        </>
       )
     },
 
@@ -120,9 +105,7 @@ const AdminRoutes = {
       path: '/scratch-card-manager',
       element: <ScratchCardManager />,
       name: (
-        <>
           <UseChange data='SCRATCH_CARD_MANAGER' />
-        </>
       )
     },
 
@@ -130,36 +113,37 @@ const AdminRoutes = {
       path: '/sub-admin-manager/add',
       element: <SubAdd />,
       name: (
-        <>
           <UseChange data='SUB_ADMIN_MANAGERS' />
-        </>
       )
     },
+
+    {
+      path: '/banner-manager',
+      element: <BannerManager />,
+      name: (
+          <UseChange data='EMAIL_MANAGER' />
+      )
+    },
+
     {
       path: '/email-manager',
       element: <EmailTemplate />,
       name: (
-        <>
           <UseChange data='EMAIL_MANAGER' />
-        </>
       )
     },
     {
       path: '/email-manager/add',
       element: <AddEditEmail />,
       name: (
-        <>
           <UseChange data='EMAIL_MANAGER' />
-        </>
       )
     },
     {
       path: '/email-manager/edit',
       element: <AddEditEmail />,
       name: (
-        <>
           <UseChange data='EMAIL_MANAGER' />
-        </>
       )
     },
 
@@ -167,36 +151,28 @@ const AdminRoutes = {
       path: '/static-content',
       element: <StaticContent />,
       name: (
-        <>
           <UseChange data='NAV_STATIC_CONTENTS' />
-        </>
       )
     },
     {
       path: '/static-content/add',
       element: <AddStaticContent />,
       name: (
-        <>
           <UseChange data='NAV_STATIC_CONTENTS' />
-        </>
       )
     },
     {
       path: '/static-content/edit',
       element: <EditStaticContent />,
       name: (
-        <>
           <UseChange data='NAV_STATIC_CONTENTS' />
-        </>
       )
     },
     {
       path: '/static-content/view',
       element: <StaticContentView />,
       name: (
-        <>
           <UseChange data='NAV_STATIC_CONTENTS' />
-        </>
       )
     },
 
@@ -204,9 +180,7 @@ const AdminRoutes = {
       path: '/notification_manager',
       element: <NotificationManager />,
       name: (
-        <>
           <UseChange data='NOTIFICATION_MANAGER' />
-        </>
       )
     },
 
@@ -214,81 +188,63 @@ const AdminRoutes = {
       path: '/notification_manager/add',
       element: <NotificationAdd />,
       name: (
-        <>
           <UseChange data='NOTIFICATION_MANAGER' />
-        </>
       )
     },
     {
       path: '/faqs',
       element: <Faq />,
       name: (
-        <>
           <UseChange data='FAQS' />
-        </>
       )
     },
     {
       path: '/setting',
       element: <Settings />,
       name: (
-        <>
           <UseChange data='SETTINGS' />
-        </>
       )
     },
     {
       path: '/report-manager',
       element: <Report />,
       name: (
-        <>
           <UseChange data='REPORT_MANAGER' />
-        </>
       )
     },
     {
       path: '/reward-withdrawal-request',
       element: <RewardWithdrawalRequest />,
       name: (
-        <>
           <UseChange data='REWARD_WITHDRAWAL_REQUEST' />
-        </>
       )
     },
     {
       path: '/profile',
       element: <Profile />,
       name: (
-        <>
           <UseChange data='NAV_EARNING_MANAGER' />
-        </>
       )
     },
     {
       path: '/change-password',
       element: <ChangePassword />,
       name: (
-        <>
           <UseChange data='NAV_EARNING_MANAGER' />
-        </>
       )
     },
     {
       path: '/notification-list',
       element: <BellNotifications />,
       name: (
-        <>
           <UseChange data='O_NOTIFICATION' />
-        </>
       )
     },
     {
       path: '/',
       element: <Home />,
       name: (
-        <>
           <UseChange data='NAV_DASHBOARD' />
-        </>
       )
     }
   ]

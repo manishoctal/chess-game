@@ -1,19 +1,18 @@
-import { AiFillEdit  } from 'react-icons/ai'
+import { AiFillEdit, AiFillEye  } from 'react-icons/ai'
 import { useTranslation } from 'react-i18next'
 import dayjs from 'dayjs'
 import { useContext, useEffect } from 'react'
 import { isEmpty } from 'lodash'
 import AuthContext from 'context/AuthContext'
 import { BsArrowUpShort } from 'react-icons/bs'
+import { Link } from 'react-router-dom'
 
 const StaticContentList = ({
   countryList,
   page,
-  getStaticContent,
   handleEdit,
   sort,
   setSort,
-  handleView,
   manager
 }) => {
   const { t } = useTranslation()
@@ -100,6 +99,7 @@ const StaticContentList = ({
                       <td className='py-2 px-4 border-l '>
                         <div className=''>
                           <ul className='flex justify-center'>
+                            {item?.slug!=='faq'?
                             <li
                               onClick={() => handleEdit(item)}
                               className='px-2 py-2 hover:bg-white hover:text-gradientTo'
@@ -109,10 +109,27 @@ const StaticContentList = ({
                                 className='hover:text-blue-700 transition duration-150 ease-in-out'
                                 data-bs-toggle='tooltip'
                               >
-                                {' '}
+                                <AiFillEdit className='cursor-pointer w-5 h-5 text-slate-600' />
+                              </a>
+                            </li>:
+                            <>
+                            <li className='px-2 py-2 hover:bg-white hover:text-gradientTo'>
+                             <Link title='view' className='hover:text-blue-700 transition duration-150 ease-in-out' data-bs-toggle='tooltip' to='/faqs'>
+                               <AiFillEye className='cursor-pointer w-5 h-5 text-slate-600' />
+                             </Link>
+                           </li>
+                            
+                            <li onClick={() => handleEdit(item)}  className='px-2 py-2 hover:bg-white hover:text-gradientTo' >
+                              <a
+                                title='Edit'
+                                className='hover:text-blue-700 transition duration-150 ease-in-out'
+                                data-bs-toggle='tooltip'
+                              >
                                 <AiFillEdit className='cursor-pointer w-5 h-5 text-slate-600' />
                               </a>
                             </li>
+                            </>
+                            }
                           </ul>
                         </div>
                       </td>

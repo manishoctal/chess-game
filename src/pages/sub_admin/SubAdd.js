@@ -21,6 +21,7 @@ const SubAdd = ({ props }) => {
   const navigate = useNavigate()
   const location = useLocation()
   const inputRef = useRef(null)
+  const [loader, setLoader] = useState(false)
   const item = location.state
   const {
     register,
@@ -49,14 +50,14 @@ const SubAdd = ({ props }) => {
   const [permissionJons, setPermission] = useState(
     helpers.ternaryCondition(item?.type, getValues('permission'), Permission)
   )
-  const formValidation= FormValidation()
+  const formValidation = FormValidation()
 
   const { updatePageName } = useContext(AuthContext)
-  const [countryCode] = useState('th')
+  const [countryCode] = useState('in')
   const [isSelectAll, setIsSelectAll] = useState(false)
   const [isCheckAll, setIsCheckAll] = useState(false)
   const onChange = event => {
-    if(!event.target.checked){
+    if (!event.target.checked) {
       setIsSelectAll(false)
     }
     setPermission(current =>
@@ -91,6 +92,7 @@ const SubAdd = ({ props }) => {
     data.countryCode = inputRef?.current?.state.selectedCountry?.countryCode
     const myData = { ...data }
     try {
+      setLoader(true)
       let path = apiPath.getSubAdmin
       let result
       const myObj = {
@@ -127,6 +129,8 @@ const SubAdd = ({ props }) => {
       }
     } catch (error) {
       console.error('error in get all sub admin list==>>>>', error.message)
+    } finally {
+      setLoader(false)
     }
   }
   useEffect(() => {
@@ -295,7 +299,7 @@ const SubAdd = ({ props }) => {
                       style={{ borderRadius: '20px' }}
                       country={countryCode}
                       enableSearch
-                      onlyCountries={['th']}
+                      onlyCountries={['in']}
                       countryCodeEditable={false}
                       disabled={item?.type === 'view'}
                     />
@@ -397,7 +401,7 @@ const SubAdd = ({ props }) => {
                             id='all'
                             name={data?.manager}
                             onChange={checkAll}
-                            checked={isCheckAll ||(data.add && data.view)}
+                            checked={isCheckAll || (data.add && data.view)}
                             disabled={item?.type === 'view'}
                           />
                         )}
@@ -419,7 +423,11 @@ const SubAdd = ({ props }) => {
           {t('O_BACK')}
         </button>
 
-        {helpers.ternaryCondition(
+        {loader ? <button className="bg-gradientTo text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150">
+          <div className="spinner-container">
+            <div className="loading-spinner" />
+          </div>
+        </button> : helpers.ternaryCondition(
           item?.type !== 'view',
           <button
             className='bg-gradientTo text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150'

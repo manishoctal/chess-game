@@ -158,11 +158,10 @@ const Settings = () => {
                     <button
                       type="button"
                       title={t("DEPOSIT_AMOUNT")}
-                      className="bg-gradientTo hover:bg-DarkBlue cursor-pointer   text-white  font-normal active:bg-slate-100 text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150
-      undefined "
+                      className="bg-gradientTo hover:bg-DarkBlue cursor-pointer   text-white  font-normal active:bg-slate-100 text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150"
                       onClick={() => setIsAmountModal(true)}
                     >
-                      {" "}
+                     
                       {t("DEPOSIT_AMOUNT")}
                     </button>
                   </div>
@@ -187,16 +186,16 @@ const Settings = () => {
                   wrapperClassName="relative z-0  w-full group"
                   type="text"
                   inputLabel={<>{t("ADMIN_EMAIL_ADDRESS")}</>}
-                  id="email"
+                  id="adminEmail"
                   value={codeValue.toLowerCase()}
                   maxLength={50}
                   autoComplete="off"
                   onInput={(e) => preventMaxInput(e, 50)}
-                  register={register("email", formValidation["email"])}
+                  register={register("adminEmail", formValidation["email"])}
                   placeholder=" "
                   disable={manager?.add === false}
                 />
-                <ErrorMessage message={errors?.email?.message} />
+                <ErrorMessage message={errors?.adminEmail?.message} />
               </div>
               <div className="relative z-0 mb-6 w-full group">
                 <OInputField
@@ -205,8 +204,8 @@ const Settings = () => {
                   maxLength={40}
                   disable={manager?.add === false}
                   inputLabel={<>{t("MIN_WITHDRAWAL_AMOUNT_TO_BANK")}</>}
-                  id="minWithdrawAmountToBank"
-                  register={register("minWithdrawAmountToBank", {
+                  id="minWithdrawalLimit"
+                  register={register("minWithdrawalLimit", {
                     required: {
                       value: true,
                       message: t(
@@ -225,7 +224,38 @@ const Settings = () => {
                   placeholder=" "
                 />
                 <ErrorMessage
-                  message={errors?.minWithdrawAmountToBank?.message}
+                  message={errors?.minWithdrawalLimit?.message}
+                />
+              </div>
+
+              <div className="relative z-0 mb-6 w-full group">
+                <OInputField
+                  wrapperClassName="relative z-0  w-full group"
+                  type="number"
+                  maxLength={40}
+                  disable={manager?.add === false}
+                  inputLabel={<>{t("Max_WITHDRAWAL_AMOUNT_TO_BANK")}</>}
+                  id="maxWithdrawalLimit"
+                  register={register("maxWithdrawalLimit", {
+                    required: {
+                      value: true,
+                      message: t(
+                        "PLEASE_ENTER_MAXIMUM_WITHDRAWAL_AMOUNT_TO_BANK"
+                      ),
+                    },
+                    maxLength: {
+                      value: 40,
+                      message: t("MAX_LIMIT_IS_40_CHARACTERS"),
+                    },
+                    min: {
+                      value: 1,
+                      message: t(t("MINIMUM_VALUE_MUST_IS_1")),
+                    },
+                  })}
+                  placeholder=" "
+                />
+                <ErrorMessage
+                  message={errors?.maxWithdrawalLimit?.message}
                 />
               </div>
 
@@ -260,10 +290,10 @@ const Settings = () => {
                   type="number"
                   disable={manager?.add === false}
                   wrapperClassName="relative z-0  w-full group"
-                  inputLabel={<>{t("REFERRAL_BONUS_FOR_LOCALS")}</>}
+                  inputLabel={<>{t("PLATFORM_FEE")}</>}
                   maxLength={40}
-                  id="referralBonusLocals"
-                  register={register("referralBonusLocals", {
+                  id="playerCardPlatfromFee"
+                  register={register("playerCardPlatfromFee", {
                     required: {
                       value: true,
                       message: t("PLEASE_ENTER_REFERRAL_BONUS"),
@@ -314,35 +344,6 @@ const Settings = () => {
                   message={errors?.upcCodeReferralAmount?.message}
                 />
               </div>
-
-              {/* <div className='mb-4  w-full'>
-                <OInputField
-                  type='number'
-                  id='signupBonus'
-                  maxLength={40}
-                  wrapperClassName='relative z-0  w-full group'
-                  disable={manager?.add === false}
-                  inputLabel={<>{t('SIGN_UP_BONUS')}</>}
-                  register={register('signupBonus', {
-                    required: {
-                      value: true,
-                      message: t('PLEASE_ENTER_SIGN_UP_BONUS')
-                    },
-                    maxLength: {
-                      value: 40,
-                      message: t('MAX_LIMIT_IS_40_CHARACTERS')
-                    },
-                    min: {
-                      value: 1,
-                      message: t('MINIMUM_VALUE_MUST_IS_1')
-                    }
-                  })}
-                  placeholder=' '
-                />
-                <ErrorMessage message={errors?.signupBonus?.message} />
-              </div> */}
-
-              {/* added two parameter for signupBonusForLocal,signupBonosForTourist */}
 
               <div className="mb-4  w-full">
                 <OInputField

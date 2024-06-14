@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { apiDelete, apiGet, apiPut } from '../../utils/apiFetch'
 import apiPath from '../../utils/apiPath'
-import SubTable from './SubTable'
+import SubTable from './BannerTable'
 import Pagination from '../Pagination'
 import dayjs from 'dayjs'
 import ODateRangePicker from 'components/shared/datePicker/ODateRangePicker'
@@ -11,14 +11,15 @@ import { useNavigate } from 'react-router-dom'
 import useToastContext from 'hooks/useToastContext'
 import PageSizeList from 'components/PageSizeList'
 import OSearch from 'components/reusable/OSearch'
+import BannerAdd from './BannerAdd'
 
 function SubAdmin () {
   const { t } = useTranslation()
-  const navigate = useNavigate()
   const notification = useToastContext()
   const { user, updatePageName } = useContext(AuthContext)
+  const [showModal, setShowModal] = useState(false)
   const manager =
-    user?.permission?.find(e => e.manager === 'subAdmin_manager') ?? {}
+    user?.permission?.find(e => e.manager === 'banner_manager') ?? {}
   const [subAdmin, setSubAdmin] = useState()
   const [page, setPage] = useState(1)
   const [pageSize, setPageSize] = useState(10)
@@ -59,7 +60,7 @@ function SubAdmin () {
         sortType: sort.sortType
       }
 
-      const path = apiPath.getSubAdmin
+      const path = apiPath.getBanner
       const result = await apiGet(path, payload)
       const response = result?.data?.results
       const resultStatus = result?.data?.success
@@ -108,7 +109,7 @@ function SubAdmin () {
 
   const handelDelete = async item => {
     try {
-      const path = apiPath.editSubAdmin + '/' + item?._id
+      const path = apiPath.bannerDelete + '/' + item?._id
       const result = await apiDelete(path)
       if (result?.status === 200) {
         notification.success(result?.data.message)
@@ -170,9 +171,14 @@ function SubAdmin () {
     }
   }, [searchTerm])
   useEffect(() => {
-    updatePageName(t('SUB_ADMIN_MANAGERS'))
+    updatePageName(t('BANNER_MANAGER'))
   }, [])
 
+
+
+
+
+  
   return (
     <div>
       <div className='bg-[#F9F9F9] dark:bg-slate-900'>
@@ -182,7 +188,7 @@ function SubAdmin () {
               <div className='col-span-2 flex flex-wrap  items-center'>
                 <div className='flex items-center lg:pt-0 pt-3 flex-wrap justify-center mb-2 2xl:mb-0'>
                   <div className='relative flex items-center mb-3'>
-                  <OSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm} placeholder={t('EMAIL_USERNAME_MOBILE_NUMBER')}/>
+                  <OSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm} placeholder={t('SEARCH_BY_BANNER_ID')}/>
                   </div>
 
                   <ODateRangePicker
@@ -221,12 +227,12 @@ function SubAdmin () {
               <div className='flex items-center justify-end px-4 ms-auto mb-3'>
                 {(manager?.add || user?.role === 'admin') && (
                   <button
-                    title={t('ADD_SUB_ADMIN')}
+                    title={t('ADD_BANNER')}
                     type='button'
                     className='bg-gradientTo flex text-sm px-8 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue whitespace-nowrap'
-                    onClick={() => navigate('/sub-admin-manager/add')}
+                    onClick={() => setShowModal(true)}
                   >
-                    + {t('ADD_SUB_ADMIN')}
+                    + {t('ADD_BANNER')}
                   </button>
                 )}
               </div>
@@ -257,6 +263,19 @@ function SubAdmin () {
           </div>
         </div>
       </div>
+
+
+      {showModal && (
+        <BannerAdd setShowModal={setShowModal} getAllFAQ={allSubAdmin}/>
+      )}
+      {/* {editShowModal && (
+        <EditFAQ
+          setEditShowModal={setEditShowModal}
+          getAllFAQ={getAllFAQ}
+          item={item}
+          viewType={editView}
+        />
+      )} */}
     </div>
   )
 }
