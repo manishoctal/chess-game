@@ -1,6 +1,6 @@
 module.exports = {
   apps : [{
-    name: 'jam-jang-admin',
+    name: 'cricker-pandit-admin',
     script: 'server.js',
     watch: false
   }],

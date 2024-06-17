@@ -16,7 +16,7 @@ import faqs from '../../assets/images/faqs.svg'
 import emailManager from '../../assets/images/email-manager.svg'
 import Logout from '../../assets/images/logout.svg'
 import { useTranslation } from 'react-i18next'
-import logoImage from '../../assets/images/Vector.png'
+import logoImage from '../../assets/images/logo-admin.png'
 
 const classNames = require('classnames')
 
@@ -81,17 +81,14 @@ const Sidebar = () => {
 
   return (
     <div
-      className={`sidebar lg:block z-10   ${
-        sidebarStatus === 'open' ? 'block' : 'sidebarHide'
-      } bg-gradient-to-t from-gradpurple to-gradientFrom w-[220px] xl:w-[280px] fixed h-full overflow-y-auto`}
-      // onClick={handleSidebar}
+      className={`sidebar lg:block z-10   ${sidebarStatus === 'open' ? 'block' : 'sidebarHide'
+        } bg-gradient-to-t from-gradpurple to-gradientFrom w-[220px] xl:w-[280px] fixed h-full overflow-y-auto`}
     >
       <div className='text-sideBarNavColor'>
         <Link
           to='/dashboard'
           onClick={() => updatePageName('Dashboard')}
-          // className='px-2 py-6 w-full text-center flex justify-center'
-          className={`px-2 py-6 w-full text-center flex justify-center ${sidebarStatus === 'open' ? 'showToggle' : ''}`}
+          className={`px-2 py-8 w-full text-center flex justify-center ${sidebarStatus === 'open' ? 'showToggle' : ''}`}
         >
           <img
             src={logoImage}
@@ -226,6 +223,21 @@ const Sidebar = () => {
               />
             )
           )}
+
+          {andOperator(
+            checkSidebarPermission('banner_manager'),
+            generateNavLink(
+              '/banner-manager',
+              'BANNER_MANAGER',
+              <img
+                src={rewardWithdrawalRequest}
+                title={t('BANNER_MANAGER')}
+                className='max-w-[18px]'
+                alt=''
+              />
+            )
+          )}
+
           {andOperator(
             checkSidebarPermission('email_manager'),
             generateNavLink(

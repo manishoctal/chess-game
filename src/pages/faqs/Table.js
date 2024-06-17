@@ -7,6 +7,7 @@ import AuthContext from "context/AuthContext";
 import { useTranslation } from "react-i18next";
 import useToastContext from "hooks/useToastContext";
 import helpers from "../../utils/helpers";
+import { BsArrowUpShort } from "react-icons/bs";
 
 const Table = ({
   FAQs,
@@ -15,6 +16,7 @@ const Table = ({
   paginationObj,
   manager,
   pageSize,
+  sort, setSort
 }) => {
   const { t } = useTranslation();
   const { user } = useContext(AuthContext);
@@ -59,18 +61,127 @@ const Table = ({
               <th scope="col" className="py-3 px-6">
                 {t("S.NO")}
               </th>
-              <th scope="col" className="py-3 px-6">
-                {t("FAQS_TITLE")}
+              <th
+                scope="col"
+                className="py-3 px-6 cursor-pointer"
+                onClick={() => {
+                  if (sort.sortBy === "title" && sort.sortType === "asc") {
+                    setSort({
+                      sortBy: "title",
+                      sortType: "desc",
+                    });
+                  } else {
+                    setSort({
+                      sortBy: "title",
+                      sortType: "asc",
+                    });
+                  }
+                }}
+              >
+                <div className="flex">
+                  <span>{t("FAQS_TITLE")}</span>
+                  <span>
+                    {sort.sortBy === "title" && sort.sortType === "asc" && (
+                      <BsArrowUpShort className="w-4 h-4" />
+                    )}
+                    {sort.sortBy === "title" && sort.sortType === "desc" && (
+                      <BsArrowUpShort className="w-4 h-4 rotate-180" />
+                    )}
+                  </span>
+                </div>
               </th>
-              <th scope="col" className="py-3 px-6 text-center">
-                {t("CREATED_DATE")}
+              <th
+                scope="col"
+                className="py-3 px-6 cursor-pointer"
+                onClick={() => {
+                  if (sort.sortBy === "createdAt" && sort.sortType === "asc") {
+                    setSort({
+                      sortBy: "createdAt",
+                      sortType: "desc",
+                    });
+                  } else {
+                    setSort({
+                      sortBy: "createdAt",
+                      sortType: "asc",
+                    });
+                  }
+                }}
+              >
+                <div className="flex justify-center">
+                  <span>{t("O_CREATED_AT")}</span>
+                  <span>
+                    {sort.sortBy === "createdAt" && sort.sortType === "asc" && (
+                      <BsArrowUpShort className="w-4 h-4" />
+                    )}
+                    {sort.sortBy === "createdAt" && sort.sortType === "desc" && (
+                      <BsArrowUpShort className="w-4 h-4 rotate-180" />
+                    )}
+                  </span>
+                </div>
               </th>
-              <th scope="col" className="py-3 px-6 text-center">
-                {t("O_UPDATED_AT")}
+
+
+              <th
+                scope="col"
+                className="py-3 px-6 cursor-pointer"
+                onClick={() => {
+                  if (sort.sortBy === "updatedAt" && sort.sortType === "asc") {
+                    setSort({
+                      sortBy: "updatedAt",
+                      sortType: "desc",
+                    });
+                  } else {
+                    setSort({
+                      sortBy: "updatedAt",
+                      sortType: "asc",
+                    });
+                  }
+                }}
+              >
+                <div className="flex justify-center">
+                  <span>{t("O_UPDATED_AT")}</span>
+                  <span>
+                    {sort.sortBy === "updatedAt" && sort.sortType === "asc" && (
+                      <BsArrowUpShort className="w-4 h-4" />
+                    )}
+                    {sort.sortBy === "updatedAt" && sort.sortType === "desc" && (
+                      <BsArrowUpShort className="w-4 h-4 rotate-180" />
+                    )}
+                  </span>
+                </div>
               </th>
+
+
+
               {(manager?.add || user?.role === "admin") && (
-                <th scope="col" className="py-3 px-6 text-center">
-                  {t("O_STATUS")}
+                <th
+                  scope="col"
+                  className="py-3 px-6 cursor-pointer"
+                  onClick={() => {
+                    if (sort.sortBy === "status" && sort.sortType === "asc") {
+                      setSort({
+                        sortBy: "status",
+                        sortType: "desc",
+                      });
+                    } else {
+                      setSort({
+                        sortBy: "status",
+                        sortType: "asc",
+                      });
+                    }
+                  }}
+                >
+                  <div className="flex justify-center">
+                    <span>{t("O_STATUS")}</span>
+                    <span>
+                      {sort.sortBy === "status" && sort.sortType === "asc" && (
+                        <BsArrowUpShort className="w-4 h-4" />
+                      )}
+                      {sort.sortBy === "status" && sort.sortType === "desc" && (
+                        <BsArrowUpShort className="w-4 h-4 rotate-180" />
+                      )}
+                    </span>
+                  </div>
                 </th>
               )}
               <th scope="col" className="py-3 px-6 text-center">
@@ -103,9 +214,8 @@ const Table = ({
                   <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-center">
                     <label
                       className="inline-flex relative items-center cursor-pointer"
-                      title={`${
-                        item?.status === "active" ? "Active" : "Inactive"
-                      }`}
+                      title={`${item?.status === "active" ? "Active" : "Inactive"
+                        }`}
                     >
                       <input
                         type="checkbox"
@@ -113,8 +223,7 @@ const Table = ({
                         checked={item?.status === "active"}
                         onChange={(e) =>
                           helpers.alertFunction(
-                            `Are you sure want to ${
-                              e.target.checked ? "active" : "inactive"
+                            `Are you sure want to ${e.target.checked ? "active" : "inactive"
                             } '${item.title}'?`,
                             item,
                             handelStatusChange

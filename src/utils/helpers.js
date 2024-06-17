@@ -46,6 +46,12 @@ const helpers = {
       sameElse: "DD/MM/YYYY", // Everything else ( 17/10/2011 )
     });
   },
+
+getFormattedDate:(date,format)=>{
+  const formatedDate=date?dayjs(date).format(format||'YYYY-MM-DD'):null
+return formatedDate
+},
+
   marketStatus: (s) => {
     let status;
     switch (s) {

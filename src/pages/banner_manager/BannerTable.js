@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import { AiFillEdit, AiFillEye } from "react-icons/ai";
+import { AiFillDelete, AiFillEdit, AiFillEye } from "react-icons/ai";
 import { useTranslation } from "react-i18next";
 import { BsArrowUpShort } from "react-icons/bs";
 import AuthContext from "context/AuthContext";
@@ -7,6 +7,7 @@ import { isEmpty, startCase } from "lodash";
 import { useNavigate } from "react-router-dom";
 import TableModal from "./TableModal";
 import helpers from "../../utils/helpers";
+import OImage from "components/reusable/OImage";
 
 const SubTable = ({
   subAdmin,
@@ -27,6 +28,14 @@ const SubTable = ({
     updatePageName(t("SUB_ADMIN_MANAGERS"));
   }, []);
 
+
+
+const onDeleteBanner=(e)=>{
+
+}
+
+
+
   return (
     <div className="p-3">
       <div className="overflow-x-auto relative rounded-lg border">
@@ -36,52 +45,39 @@ const SubTable = ({
               <th scope="col" className="py-3 px-6">
                 {t("S.NO")}
               </th>
-              <th scope="col" className="py-3 px-6">
-                {t("SUB_ADMIN_ID")}
-              </th>
-              <th scope="col" className="py-3 px-6">
-                {t("O_NAME")}
-              </th>
-
               <th
                 scope="col"
                 className="py-3 px-6 cursor-pointer"
                 onClick={() => {
-                  if (sort.sortBy === "email" && sort.sortType === "asc") {
+                  if (sort.sortBy === "bannerId" && sort.sortType === "asc") {
                     setSort({
-                      sortBy: "email",
+                      sortBy: "bannerId",
                       sortType: "desc",
                     });
                   } else {
                     setSort({
-                      sortBy: "email",
+                      sortBy: "bannerId",
                       sortType: "asc",
                     });
                   }
                 }}
               >
                 <div className="flex">
-                  <span>{t("O_EMAIL_ID")} </span>
+                  <span>{t("BANNER_ID")}</span>
                   <span>
-                    {sort.sortBy === "email" && sort.sortType === "asc" && (
+                    {sort.sortBy === "bannerId" && sort.sortType === "asc" && (
                       <BsArrowUpShort className="w-4 h-4" />
                     )}
-                    {sort.sortBy === "email" && sort.sortType === "desc" && (
+                    {sort.sortBy === "bannerId" && sort.sortType === "desc" && (
                       <BsArrowUpShort className="w-4 h-4 rotate-180" />
                     )}
                   </span>
                 </div>
               </th>
-              <th scope="col" className="py-3 px-6">
-                {t("O_COUNTRY_CODE")}
-              </th>
-              <th scope="col" className="py-3 px-6">
-                {t("O_MOBILE")}
-              </th>
-              <th scope="col" className="py-3 px-6">
-                {t("ADDRESS")}
-              </th>
 
+              <th scope="col" className="py-3 px-6">
+                {t("BANNER_IMAGE")}
+              </th>
               <th
                 scope="col"
                 className="py-3 px-6 cursor-pointer text-right"
@@ -166,25 +162,22 @@ const SubTable = ({
                 </th>
 
                 <td className="py-2 px-4 border-r dark:border-[#ffffff38]">
-                  {startCase(item?.adminId)||'N/A'}
+                  {startCase(item?.bannerId) || 'N/A'}
                 </td>
 
                 <td className="py-2 px-4 border-r dark:border-[#ffffff38]">
-                  {startCase(item?.firstName + " " + item?.lastName)}
+                  <OImage
+                    src={
+                      item?.image
+                        ? item?.image
+                        : null
+                    }
+                    fallbackUrl='/images/user.png'
+                    className='w-24 h-24'
+                    alt=''
+                    style={{ borderRadius: '50%' }}
+                  />
                 </td>
-                <td className="py-2 px-4 border-r dark:border-[#ffffff38]">
-                  {item?.email || "N/A"}
-                </td>
-                <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-center">
-                  {item?.countryCode&&'+'+item?.countryCode || "N/A"}
-                </td>
-                <td className="py-2 px-4 border-r dark:border-[#ffffff38]">
-                  {item?.mobile || "N/A"}
-                </td>
-                <td className="py-2 px-4 border-r dark:border-[#ffffff38]">
-                  {startCase(item?.address) || "N/A"}
-                </td>
-
                 <td className="py-2 px-4 border-r dark:border-[#ffffff38]">
                   {helpers.getDateAndTime(item?.createdAt)}
                 </td>
@@ -195,9 +188,8 @@ const SubTable = ({
                   <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-center">
                     <label
                       className="inline-flex relative items-center cursor-pointer"
-                      title={`${
-                        item?.status === "active" ? "Active" : "Inactive"
-                      }`}
+                      title={`${item?.status === "active" ? "Active" : "Inactive"
+                        }`}
                     >
                       <input
                         type="checkbox"
@@ -205,9 +197,8 @@ const SubTable = ({
                         checked={item?.status === "active"}
                         onChange={(e) =>
                           helpers.alertFunction(
-                            `${t("ARE_YOU_SURE_YOU_WANT_TO")} ${
-                              e.target.checked ? "active" : "inactive"
-                            } '${item.name}'?`,
+                            `${t("ARE_YOU_SURE_YOU_WANT_TO")} ${e.target.checked ? "active" : "inactive"
+                            } banner ID '${item?.bannerId}'?`,
                             item,
                             handelStatusChange
                           )
@@ -229,7 +220,7 @@ const SubTable = ({
                         className="px-2 py-2 hover:text-gradientTo"
                       >
                         <a title={t("O_VIEW")}>
-                          {" "}
+
                           <AiFillEye className="cursor-pointer w-5 h-5 text-slate-600" />
                         </a>
                       </li>
@@ -243,11 +234,33 @@ const SubTable = ({
                           className="px-2 py-2 hover:text-gradientTo"
                         >
                           <a title={t("O_EDIT")}>
-                            {" "}
+
                             <AiFillEdit className="cursor-pointer w-5 h-5 text-slate-600" />
                           </a>
                         </li>
                       )}
+
+
+                      {(manager?.add || user?.role === "admin") && (
+                        <li
+                        onClick={(e) =>
+                          helpers.alertFunction(
+                            `${t("ARE_YOU_SURE_YOU_WANT_TO")} delete banner ID"
+                             '${item?.bannerId}'?`,
+                            item,
+                            handelDelete
+                          )
+                        }
+
+                          className="px-2 py-2 hover:text-gradientTo"
+                        >
+                          <a title={t("O_DELETE")}>
+
+                            <AiFillDelete className="cursor-pointer w-5 h-5 text-red-600" />
+                          </a>
+                        </li>
+                      )}
+
                     </ul>
                   </div>
                 </td>
