@@ -5,14 +5,13 @@ import Toast from './Toast'
 import AuthContext from 'context/AuthContext'
 
 function MainLayout ({ children, type }) {
-  const { sidebarStatus } = useContext(AuthContext)
+  const { sidebarStatus,user } = useContext(AuthContext)
   return (
     <div className='main_wrap'>
       <Loader />
       <Toast />
       {type}
-      <div className={`right_panel  ${sidebarStatus === 'open' ? 'xl:ml-[280px] lg:ml-[220px] ml-0' : ''
-          }  `}>
+      <div className={`right_panel ${user?.isPasswordSet? sidebarStatus === 'open' ? 'xl:ml-[280px] lg:ml-[220px] ml-0' : '':'' }  `}>
         <TopNavBar />
         {children}
       </div>

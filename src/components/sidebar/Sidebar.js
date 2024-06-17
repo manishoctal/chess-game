@@ -17,6 +17,7 @@ import emailManager from '../../assets/images/email-manager.svg'
 import Logout from '../../assets/images/logout.svg'
 import { useTranslation } from 'react-i18next'
 import logoImage from '../../assets/images/logo-admin.png'
+import Swal from 'sweetalert2'
 
 const classNames = require('classnames')
 
@@ -46,9 +47,21 @@ const Sidebar = () => {
   )
 
   const handleLogout = () => {
-    if (window.confirm('Are you sure to logout?')) {
-      logoutUser()
-    }
+    Swal.fire({
+      html: "<b>Are you sure you want to logout?</b>",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes",
+      cancelButtonText: "No"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        logoutUser()
+      }
+    });
+
+
   }
 
   const checkSidebarPermission = arg => {

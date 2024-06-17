@@ -31,7 +31,6 @@ export default function AddEditEmail () {
     defaultValues: {
       title: editItem?.title,
       subject: editItem?.subject
-      // signature: editItem?.signature
     }
   })
 

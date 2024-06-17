@@ -5,8 +5,8 @@ import AuthContext from 'context/AuthContext'
 import { isEmpty } from 'lodash'
 import helper from '../../utils/helpers'
 import { Link } from 'react-router-dom'
-import { MdModeEditOutline } from 'react-icons/md'
 import { BsArrowUpShort } from 'react-icons/bs'
+import { AiFillEdit } from 'react-icons/ai'
 
 const Table = ({
   emailTemplate,
@@ -121,12 +121,7 @@ const Table = ({
                               state={{ item, type: 'edit' }}
                             >
                               <div className=''>
-                                <MdModeEditOutline
-                                  style={{
-                                    fontSize: '24px',
-                                    cursor: 'pointer'
-                                  }}
-                                />
+                              <AiFillEdit className="cursor-pointer w-5 h-5 text-slate-600" />
                               </div>
                             </Link>
                           </td>

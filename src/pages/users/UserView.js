@@ -142,7 +142,7 @@ const UserView = () => {
         <Link className="mb-5 ml-4 block" onClick={handleBack}>
           <IoArrowBackSharp />
         </Link>,
-        <NavLink to="/users" state={{ userType: item.userType }} className="mb-5 ml-4 block">
+        <NavLink to="/users" state={{ userType: item?.userType }} className="mb-5 ml-4 block">
           <IoArrowBackSharp />
         </NavLink>
       )}

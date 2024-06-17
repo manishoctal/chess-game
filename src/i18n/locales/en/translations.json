@@ -590,7 +590,11 @@
   "MAXIMUM_STOCK_USER_CAN_PURCHASE":"Maximum Stocks User Can Purchase",
   "MAXIMUM_CARD_USER_CAN_PURCHASE":"Maximum Card User Can Purchase",
   "TDS_IN_PERCENTAGE":"TDS (%)",
-  "ANY_PARTICULAR_USERS":"Any Particular Users"
+  "ANY_PARTICULAR_USERS":"Any Particular Users",
+  "USER_ID_EMAIL_MOBILE":"Name, User ID , Mobile No, Email ID",
+  "INVITE_CODE":"Invite Code",
+  "JOINED_DATE":"Joined Date",
+  "KYC_VERIFIED":"KYC Verified"
 
 
 

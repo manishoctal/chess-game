@@ -55,7 +55,6 @@ function User() {
       const payload = {
         page,
         pageSize: pageSize,
-        userType,
         status: category,
         startDate: startDate ? dayjs(startDate).format("YYYY-MM-DD") : null,
         endDate: endDate ? dayjs(endDate).format("YYYY-MM-DD") : null,
@@ -104,7 +103,7 @@ function User() {
 
   useEffect(() => {
     getAllUser();
-  }, [page, filterData, sort, pageSize, userType]);
+  }, [page, filterData, sort, pageSize]);
 
   useEffect(() => {
     updatePageName(t("O_USERS"));
@@ -169,8 +168,8 @@ function User() {
       setFilterData({
         ...filterData,
         isReset: false,
-        searchkey: debouncedSearchTerm ? debouncedSearchTerm : "",
-        isFilter: debouncedSearchTerm ? true : false,
+        searchkey: debouncedSearchTerm|| "",
+        isFilter: !!debouncedSearchTerm ,
       });
       setPage(1);
     }
@@ -182,34 +181,7 @@ function User() {
     <div>
       <div className="bg-[#F9F9F9] dark:bg-slate-900">
         <div className="px-3 py-4">
-          {/* <div className="flex justify-center items-center grid grid-cols-2 w-[500px]">
-            <button
-              type="button"
-              title={t("FOREIGN_TOURIST")}
-              className={`pr-6 bg-white border border-1 border-[#000] text-sm px-8 ml-3 mb-3 py-2 rounded-lg items-center  text-black  sm:w-auto w-1/2 ${
-                userType === "tourist" && "bg-[#000!important] text-white"
-              }`}
-              onClick={() => {
-                setUserType("tourist");
-                handleReset();
-              }}
-            >
-              {t("FOREIGN_TOURIST")}
-            </button>
-            <button
-              type="button"
-              title={t("THAI_LOCAL")}
-              className={` pr-6 bg-white border border-1 border-[#000] text-sm px-8 ml-3 mb-3 py-2 rounded-lg items-center  text-black  sm:w-auto w-1/2 ${
-                userType === "local" && "bg-[#000!important] text-white"
-              }`}
-              onClick={() => {
-                setUserType("local");
-                handleReset();
-              }}
-            >
-              {t("THAI_LOCAL")}
-            </button>
-          </div> */}
+         
           <div className="bg-white border border-[#E9EDF9] rounded-lg dark:bg-slate-800 dark:border-[#ffffff38]">
             <form className="border-b border-b-[#E3E3E3]  px-4 py-3 pt-5 flex flex-wrap justify-between">
               <div className="flex flex-wrap items-center">
@@ -267,12 +239,12 @@ function User() {
               </div>
               <div className="flex items-center md:justify-end px-4">
                 <label htmlFor="default-search" className="mb-2 font-medium text-sm  text-gray-900 sr-only">
-                  {" "}
-                  {t("O_SEARCH")}
+                 
+                  {t("USER_ID_EMAIL_MOBILE")}
                 </label>
                 <div className="flex">
                   <div className="relative">
-                    <OSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm} placeholder={t("SEARCH_BY_KEYWORD")} />
+                    <OSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm} placeholder={t("USER_ID_EMAIL_MOBILE")} inputClass={'2xl:min-w-[350px] xl:min-w-[300px]  2xl:min-w-[250px] xl:min-w-[300px]'}/>
                   </div>
                 </div>
               </div>
@@ -290,10 +262,8 @@ function User() {
               userType={userType}
               manager={manager}
             />
-
             <div className="flex justify-between">
               <PageSizeList dynamicPage={dynamicPage} pageSize={pageSize} />
-
               {paginationObj?.totalItems ? (
                 <Pagination handlePageClick={handlePageClick} options={paginationObj} isDelete={isDelete} page={page} />
               ) : null}

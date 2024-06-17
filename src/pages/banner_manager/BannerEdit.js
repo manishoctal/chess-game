@@ -8,7 +8,6 @@ import helpers from "utils/helpers";
 import OImage from "components/reusable/OImage";
 
 const BannerEdit = ({ setEditShowModal, getAllFAQ, item, viewType }) => {
-    console.log('item', item, "editView", viewType)
     const { t } = useTranslation();
     const {
         handleSubmit,
