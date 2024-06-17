@@ -11,6 +11,7 @@ const apiPath = {
   editSubAdmin: "v1/admin/subAdmin",
   bannerDelete:'v1/admin/banner',
   getBanner:'v1/admin/banner',
+  bannerEdit:'v1/admin/banner',
   forgetPassword: "/v1/admin/forgot-password",
   resetPassword: "/v1/admin/reset-password",
   changePassword: "/v1/admin/change-password",

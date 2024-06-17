@@ -58,15 +58,15 @@ function EmailTemplate() {
       const path = apiPath.emailTemplate;
       const result = await apiGet(path, payload);
       const response = result?.data?.results;
-      const resultStatus = result?.data?.success;
+      // const resultStatus = result?.data?.success;
       setEmailTemplate(response);
-      setPaginationObj({
-        ...paginationObj,
-        page: resultStatus ? response.page : null,
-        pageCount: resultStatus ? response.totalPages : null,
-        perPageItem: resultStatus ? response?.docs.length : null,
-        totalItems: resultStatus ? response.totalDocs : null,
-      });
+      // setPaginationObj({
+      //   ...paginationObj,
+      //   page: resultStatus ? response.page : null,
+      //   pageCount: resultStatus ? response.totalPages : null,
+      //   perPageItem: resultStatus ? response?.docs.length : null,
+      //   totalItems: resultStatus ? response.totalDocs : null,
+      // });
     } catch (error) {
       console.error("error in get all sub admin list==>>>>", error.message);
     }
@@ -149,7 +149,7 @@ function EmailTemplate() {
              
             </form>
             <Table
-              emailTemplate={emailTemplate?.docs}
+              emailTemplate={emailTemplate}
               allEmailTemplate={allEmailTemplate}
               page={page}
               setSort={setSort}
