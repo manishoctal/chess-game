@@ -246,7 +246,7 @@ return formatedDate
   formattedAmount: (amount) => {
     return amount?.toLocaleString("th-TH", {
       style: "currency",
-      currency: "THB",
+      currency: "INR",
       currencyDisplay: "symbol",
     });
   },

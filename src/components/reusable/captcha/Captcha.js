@@ -45,7 +45,7 @@ const Captcha = ({ onChange }) => {
     }, 1000);
   };
   return (
-    <div className='text-center flex items-center  justify-center  mb-4'>
+    <div className='text-center flex items-center  justify-center  mb-4' style={{height:'25px'}}>
       <canvas ref={canvasRef} width="150" height="40" className=' bg-slate-300'/>
       <div onClick={handleClick} className="flex items-center cursor-pointer">
       <IoIosRefresh className={`text-2xl ml-2 ${isRotating ? 'rotate' : ''}`} />

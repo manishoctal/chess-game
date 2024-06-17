@@ -119,7 +119,7 @@ const StaticContentList = ({
                              </Link>
                            </li>
                             
-                            <li onClick={() => handleEdit(item)}  className='px-2 py-2 hover:bg-white hover:text-gradientTo' >
+                            {/* <li onClick={() => handleEdit(item)}  className='px-2 py-2 hover:bg-white hover:text-gradientTo' >
                               <a
                                 title='Edit'
                                 className='hover:text-blue-700 transition duration-150 ease-in-out'
@@ -127,7 +127,7 @@ const StaticContentList = ({
                               >
                                 <AiFillEdit className='cursor-pointer w-5 h-5 text-slate-600' />
                               </a>
-                            </li>
+                            </li> */}
                             </>
                             }
                           </ul>

@@ -11,7 +11,6 @@ import OImage from "components/reusable/OImage";
 const BannerAdd = ({ setShowModal, getAllFAQ }) => {
   const { t } = useTranslation();
   const {
-    register,
     handleSubmit,
     formState: { errors },
   } = useForm({ mode: "onChange", shouldFocusError: true, defaultValues: {} });

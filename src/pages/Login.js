@@ -102,7 +102,7 @@ if(!captchaInput){
             onSubmit={handleSubmit(onSubmit)}
             method="post"
           >
-            <img src={logoImage} alt="logoImage" className="m-auto py-2 max-w-[267px] dark:invert" />
+            <img src={logoImage} alt="logoImage" className="m-auto py-2 max-w-[267px]" style={{filter:` brightness(1) invert(1)`}} />
             <h1 className="text-center text-[40px] font-bold dark:text-white">
               {t("LOGIN_LETS_START")}!
             </h1>
@@ -162,15 +162,13 @@ if(!captchaInput){
               {icon ? (
                 <span
                   className="dark:text-white password_view cursor-pointer absolute top-[18px] right-[20px]"
-                  onClick={() => changeIcon()}
-                >
+                  onClick={() => changeIcon()} >
                   <AiFillEyeInvisible />
                 </span>
               ) : (
                 <span
                   className="dark:text-white password_view absolute top-[18px] right-[20px]"
-                  onClick={() => changeIcon()}
-                >
+                  onClick={() => changeIcon()}>
                   <AiFillEye />
                 </span>
               )}
@@ -186,18 +184,9 @@ if(!captchaInput){
                   placeholder='Enter CAPTCHA:'
                   className="dark:text-white block py-4 px-3 w-full text-sm text-gray-900 bg-transparent border-2 rounded-lg border-[#DFDFDF] appearance-none dark:text-black dark:border-[#DFDFDF]  focus:outline-none focus:ring-0  peer"
                   value={captchaInput}
+                  style={{height:'45px'}}
                   onChange={(e) => setCaptchaInput(e.target.value)}
                 />
-
-                {/* <label
-                  htmlFor="captcha"
-                  className="dark:bg-slate-900 dark:text-white peer-focus:font-normal absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 left-3 bg-white p-2 z-10 origin-[2] peer-focus:left-0 peer-focus:text-[#A5A5A5] peer-focus:text-lg  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-8"
-                >
-                  {t("O_PASSWORD")}
-                  <span className="text-red-500">*</span>
-                </label> */}
-
-               
               </div>
             <div className="mt-2">
               <Captcha onChange={setGeneratedCaptcha} />
