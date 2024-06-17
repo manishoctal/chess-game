@@ -288,7 +288,7 @@
   "ADD_FAQS": "Add FAQs",
   "FAQS": "FAQs",
   "DELETE_FAQS": "Delete FAQs",
-  "PLATFORM_FEE": "Platform fee %[Player card]",
+  "PLATFORM_FEE": "Platform Fee %[Player card]",
   "ARTWORK_ELIGIBILITY_FOR_TRADING": "Platform Fee",
   "CUSTOMER_NAME_OR_EMAIL": "Customer name or email",
   "ARTWORK_NAME": "Customer name or email",
@@ -568,7 +568,30 @@
   "SEARCH_BY_BANNER_ID":"Banner ID",
   "ADD_BANNER":"Add Banner",
   "BANNER_ID":"Banner ID",
-  "BANNER_IMAGE":"Banner Image"
+  "BANNER_IMAGE":"Banner Image",
+  "VIEW_BANNER":"View Banner",
+  "EDIT_BANNER":"Edit Banner",
+  "PLEASE_ENTER_MAXIMUM_WITHDRAWAL_AMOUNT_TO_BANK":"Please enter maximum withdraw amount.",
+  "PLEASE_ENTER_REFERRAL_AMOUNT":"Please enter referral amount.",
+  "PLEASE_ENTER_PLAYER_CARD_PLATFORM_FEE":"Please enter player card platform fee.",
+   "PLEASE_ENTER_STOCK_PLATFORM_FEE":"Please enter stock platform fee.",
+   "PLEASE_ENTER_QUESTION_TRADE_FEE":"Please enter question trade platform fee.",
+   "PLEASE_ENTER_NUMBER_OF_PLAYER_STOCK":"Please enter number of player stock.",
+   "PLEASE_ENTER_NUMBER_OF_PLAYER_CARD":"Please enter number of player card.",
+   "PLEASE_ENTER_PENALTY_OF_STOCK_PERCENTAGE":"Please enter penalty of stock percentage.",
+   "PLEASE_ENTER_MAXIMUM_STOCK_CAN_PURCHASE":"Please enter maximum purchasable stock.",
+   "PLEASE_ENTER_MAXIMUM_CARD_CAN_PURCHASE":"Please enter maximum purchasable card.",
+   "PLEASE_ENTER_TDS":"Please enter TDS.",
+  "PLATFORM_FEE_STOCK_PERCENTAGE":"Platform Fee % [Stock]",
+  "PLATFORM_FEE_QUESTION_TRADE":"Platform Fee % [Question Trade]",
+  "NUMBER_OF_PLAYER_STOCK":"Number of Player Stock",
+  "NUMBER_OF_PLAYER_CARD":"Number of Player Cards",
+  "PENALTY_OF_PERCENTAGE":"Penalty of Stock (Percentage)",
+  "MAXIMUM_STOCK_USER_CAN_PURCHASE":"Maximum Stocks User Can Purchase",
+  "MAXIMUM_CARD_USER_CAN_PURCHASE":"Maximum Card User Can Purchase",
+  "TDS_IN_PERCENTAGE":"TDS (%)",
+  "ANY_PARTICULAR_USERS":"Any Particular Users"
+
 
 
 }

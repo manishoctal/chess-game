@@ -18,6 +18,7 @@ const SubTable = ({
   manager,
   handelStatusChange,
   pageSize,
+  editViewBanner
 }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -212,11 +213,7 @@ const onDeleteBanner=(e)=>{
                   <div className="">
                     <ul className="flex justify-center">
                       <li
-                        onClick={() =>
-                          navigate("/sub-admin-manager/add", {
-                            state: { item, type: "view" },
-                          })
-                        }
+                        onClick={() =>{editViewBanner('view',item)} }
                         className="px-2 py-2 hover:text-gradientTo"
                       >
                         <a title={t("O_VIEW")}>
@@ -226,11 +223,7 @@ const onDeleteBanner=(e)=>{
                       </li>
                       {(manager?.add || user?.role === "admin") && (
                         <li
-                          onClick={() =>
-                            navigate("/sub-admin-manager/add", {
-                              state: { item, type: "edit" },
-                            })
-                          }
+                          onClick={() =>{editViewBanner('edit',item)}}
                           className="px-2 py-2 hover:text-gradientTo"
                         >
                           <a title={t("O_EDIT")}>

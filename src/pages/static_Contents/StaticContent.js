@@ -97,19 +97,18 @@ const StaticContent = () => {
       const result = await apiGet(path, payload)
       const response = result?.data?.results
       const resultStatus = result?.data?.success
-
       setCountryList(response)
-      setPaginationObj({
-        ...paginationObj,
-        page: ternaryCondition(resultStatus, response.page, null),
-        pageCount: ternaryCondition(resultStatus, response.totalPages, null),
-        perPageItem: ternaryCondition(
-          resultStatus,
-          response?.docs.length,
-          null
-        ),
-        totalItems: ternaryCondition(resultStatus, response.totalDocs, null)
-      })
+      // setPaginationObj({
+      //   ...paginationObj,
+      //   page: ternaryCondition(resultStatus, response.page, null),
+      //   pageCount: ternaryCondition(resultStatus, response.totalPages, null),
+      //   perPageItem: ternaryCondition(
+      //     resultStatus,
+      //     response?.docs.length,
+      //     null
+      //   ),
+      //   totalItems: ternaryCondition(resultStatus, response.totalDocs, null)
+      // })
     } catch (error) {
       console.error('error in get all country list==>>>>', error.message)
     }

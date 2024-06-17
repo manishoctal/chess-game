@@ -243,26 +243,26 @@ function Home() {
 
 
 
-  useEffect(() => {
-    if (startDate && endDate && selectedButton) {
-      handleGraphApiCall(startDate, endDate, selectedButton, "first");
-    }
-    if (graphTwoDropdownValue && graphTwoEndDate && graphTwoStartData) {
-      handleGraphApiCall(
-        graphTwoStartData,
-        graphTwoEndDate,
-        graphTwoDropdownValue,
-        "second"
-      );
-    }
-  }, [
-    startDate,
-    endDate,
-    selectedButton,
-    graphTwoStartData,
-    graphTwoEndDate,
-    graphTwoDropdownValue,
-  ]);
+  // useEffect(() => {
+  //   if (startDate && endDate && selectedButton) {
+  //     handleGraphApiCall(startDate, endDate, selectedButton, "first");
+  //   }
+  //   if (graphTwoDropdownValue && graphTwoEndDate && graphTwoStartData) {
+  //     handleGraphApiCall(
+  //       graphTwoStartData,
+  //       graphTwoEndDate,
+  //       graphTwoDropdownValue,
+  //       "second"
+  //     );
+  //   }
+  // }, [
+  //   startDate,
+  //   endDate,
+  //   selectedButton,
+  //   graphTwoStartData,
+  //   graphTwoEndDate,
+  //   graphTwoDropdownValue,
+  // ]);
 
   const handleActiveForFirst = (start, end) => {
     if (start && end) {
@@ -534,7 +534,7 @@ function Home() {
 
         </div>
       </div>
-      <div className="dark:bg-gray-800 py-7 px-4 md:px-8 bg-[#F9F9F9] border-solid border-2 border-gray m-10 rounded-md">
+      {/* <div className="dark:bg-gray-800 py-7 px-4 md:px-8 bg-[#F9F9F9] border-solid border-2 border-gray m-10 rounded-md">
         <div className="sm:flex items-center text-center sm:text-left px-3 md:px-4 xl:px-7 lg:px-5  py-4 md:py-8 border dark:bg-slate-900">
           <StyledEngineProvider>
             <ThemeProvider theme={theme}>
@@ -608,7 +608,7 @@ function Home() {
             height="600"
           />
         </div>
-      </div>
+      </div> */}
       {/* <div className="dark:bg-gray-800 py-7 px-4 md:px-8 bg-[#F9F9F9] border-solid border-2 border-gray m-10 rounded-md">
         <div className="sm:flex items-center text-center sm:text-left px-3 md:px-4 xl:px-7 lg:px-5  py-4 md:py-8 border dark:bg-slate-900">
           <StyledEngineProvider>

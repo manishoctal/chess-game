@@ -94,7 +94,7 @@ const Sidebar = () => {
             src={logoImage}
             className='inline max-w-[187px]'
             alt=''
-            style={{ filter: 'brightness(0) invert(1)' }}
+            // style={{ filter: 'brightness(0) invert(1)' }}
           />
         </Link>
         <div className='profile text-center'>
@@ -105,7 +105,6 @@ const Sidebar = () => {
         </div>
 
         <nav className='pt-4 pb-5 flex flex-col justify-center font-normal text-xs overflow-y-auto'>
-          {/* {checkSidebarPermission("dashboard") && ( */}
           {generateNavLink(
             '/dashboard',
             'NAV_DASHBOARD',
@@ -116,7 +115,7 @@ const Sidebar = () => {
               alt=''
             />
           )}
-          {andOperator(
+          {/* {andOperator(
             checkSidebarPermission('user_manager'),
             generateNavLink(
               '/users',
@@ -128,9 +127,9 @@ const Sidebar = () => {
                 alt=''
               />
             )
-          )}
+          )} */}
 
-          {andOperator(
+          {/* {andOperator(
             checkSidebarPermission('transaction_manager'),
             generateNavLink(
               '/transactions',
@@ -142,7 +141,7 @@ const Sidebar = () => {
                 alt=''
               />
             )
-          )}
+          )} */}
 
           {andOperator(
             checkSidebarPermission('subAdmin_manager'),
@@ -171,7 +170,7 @@ const Sidebar = () => {
               />
             )
           )}
-          {andOperator(
+          {/* {andOperator(
             checkSidebarPermission('scratch_card_manager'),
             generateNavLink(
               '/scratch-card-manager',
@@ -183,8 +182,8 @@ const Sidebar = () => {
                 alt=''
               />
             )
-          )}
-          {andOperator(
+          )} */}
+          {/* {andOperator(
             checkSidebarPermission('feedback_manager'),
             generateNavLink(
               '/feedback-manager',
@@ -196,8 +195,8 @@ const Sidebar = () => {
                 alt=''
               />
             )
-          )}
-          {andOperator(
+          )} */}
+          {/* {andOperator(
             checkSidebarPermission('report_manager'),
             generateNavLink(
               '/report-manager',
@@ -209,8 +208,8 @@ const Sidebar = () => {
                 alt=''
               />
             )
-          )}
-          {andOperator(
+          )} */}
+          {/* {andOperator(
             checkSidebarPermission('reward_withdrawal_request'),
             generateNavLink(
               '/reward-withdrawal-request',
@@ -222,7 +221,7 @@ const Sidebar = () => {
                 alt=''
               />
             )
-          )}
+          )} */}
 
           {andOperator(
             checkSidebarPermission('banner_manager'),

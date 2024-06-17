@@ -7,17 +7,20 @@ import dayjs from 'dayjs'
 import ODateRangePicker from 'components/shared/datePicker/ODateRangePicker'
 import { useTranslation } from 'react-i18next'
 import AuthContext from 'context/AuthContext'
-import { useNavigate } from 'react-router-dom'
 import useToastContext from 'hooks/useToastContext'
 import PageSizeList from 'components/PageSizeList'
 import OSearch from 'components/reusable/OSearch'
 import BannerAdd from './BannerAdd'
+import EditBanner from './BannerEdit'
+
 
 function SubAdmin () {
   const { t } = useTranslation()
   const notification = useToastContext()
   const { user, updatePageName } = useContext(AuthContext)
   const [showModal, setShowModal] = useState(false)
+  const [editShowModal, setEditShowModal] = useState(false)
+  const [editView, setEditView] = useState()
   const manager =
     user?.permission?.find(e => e.manager === 'banner_manager') ?? {}
   const [subAdmin, setSubAdmin] = useState()
@@ -175,7 +178,12 @@ function SubAdmin () {
   }, [])
 
 
-
+const[item,setItem]=useState()
+  const editViewBanner=async(type,item)=>{
+    setEditView(type)
+    setItem(item)
+    setEditShowModal(true)
+  }
 
 
   
@@ -224,6 +232,7 @@ function SubAdmin () {
                   </button>
                 </div>
               </div>
+              {subAdmin?.docs?.length<5&&
               <div className='flex items-center justify-end px-4 ms-auto mb-3'>
                 {(manager?.add || user?.role === 'admin') && (
                   <button
@@ -235,12 +244,13 @@ function SubAdmin () {
                     + {t('ADD_BANNER')}
                   </button>
                 )}
-              </div>
+              </div>}
             </form>
             <SubTable
               subAdmin={subAdmin?.docs}
               allSubAdmin={allSubAdmin}
               handelDelete={handelDelete}
+              editViewBanner={editViewBanner}
               page={page}
               setSort={setSort}
               sort={sort}
@@ -268,14 +278,14 @@ function SubAdmin () {
       {showModal && (
         <BannerAdd setShowModal={setShowModal} getAllFAQ={allSubAdmin}/>
       )}
-      {/* {editShowModal && (
-        <EditFAQ
+      {editShowModal && (
+        <EditBanner
           setEditShowModal={setEditShowModal}
-          getAllFAQ={getAllFAQ}
+          getAllFAQ={allSubAdmin}
           item={item}
           viewType={editView}
         />
-      )} */}
+      )}
     </div>
   )
 }

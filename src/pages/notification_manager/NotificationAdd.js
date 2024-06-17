@@ -120,7 +120,7 @@ const NotificationAdd = ({ getAllNotifications, handleCategory }) => {
                           className="w-4 cursor-pointer h-4 text-blue-600 bg-gray-100 border-gray-300 rounded  dark:bg-gray-700 dark:border-gray-600"
                         />
                         <label
-                          for="default-checkbox"
+                          htmlFor="default-checkbox"
                           className="ml-2 text-sm font-medium cursor-pointer text-gray-900 dark:text-gray-300"
                         >
                           {t("ALL_USERS")}
@@ -128,7 +128,7 @@ const NotificationAdd = ({ getAllNotifications, handleCategory }) => {
                       </div>
                       <div className="flex items-center w-[200px]">
                         <input
-                          id="default-checkbox"
+                          id="default-checkbox1"
                           type="radio"
                           checked={availableFor === "tourist"}
                           name="default-radio"
@@ -136,27 +136,10 @@ const NotificationAdd = ({ getAllNotifications, handleCategory }) => {
                           className="w-4 cursor-pointer h-4 text-blue-600 bg-gray-100 border-gray-300 rounded  dark:bg-gray-700 dark:border-gray-600"
                         />
                         <label
-                          for="default-checkbox"
+                          htmlFor="default-checkbox1"
                           className="ml-2 text-sm font-medium cursor-pointer text-gray-900 dark:text-gray-300"
                         >
-                          {t("ALL_TOURIST_USERS")}
-                        </label>
-                      </div>
-
-                      <div className="flex items-center w-[200px]">
-                        <input
-                          id="default-checkbox1"
-                          type="radio"
-                          checked={availableFor === "local"}
-                          name="default-radio"
-                          onChange={() => setAvailableFor("local")}
-                          className="w-4 cursor-pointer h-4 text-blue-600 bg-gray-100 border-gray-300 rounded dark:bg-gray-700 dark:border-gray-600"
-                        />
-                        <label
-                          for="default-checkbox1"
-                          className="ml-2 text-sm font-medium cursor-pointer text-gray-900 dark:text-gray-300"
-                        >
-                          {t("ALL_THAI_USERS")}
+                          {t("ANY_PARTICULAR_USERS")}
                         </label>
                       </div>
                     </div>

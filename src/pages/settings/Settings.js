@@ -22,6 +22,8 @@ const Settings = () => {
   const { logoutUser, user, updatePageName } = useContext(AuthContext);
   const manager = user?.permission?.find((e) => e.manager === "settings") ?? {};
   const { t } = useTranslation();
+  const [settingsDetails, setSettingsDetails] = useState("");
+
   const {
     register,
     handleSubmit,
@@ -32,13 +34,13 @@ const Settings = () => {
   } = useForm({
     mode: "onBlur",
     shouldFocusError: true,
-    defaultValues: {},
+    defaultValues: {
+    },
   });
   const [settingChangeLoading, setSettingChangeLoading] = useState(false);
   const formValidation = FormValidation();
 
   const [pic] = useState(user?.profilePic ?? imageDefault);
-  const [settingsDetails, setSettingsDetails] = useState("");
   const [viewShowModal, setViewShowModal] = useState(false);
   const [isAmountModal, setIsAmountModal] = useState(false);
 
@@ -47,8 +49,8 @@ const Settings = () => {
   const handleSubmitForm = async (data) => {
     try {
       setSettingChangeLoading(true);
-
-      const res = await apiPut(pathObj.getSettings, data);
+      const payload = { ...data, adminEmail: data?.adminEmail?.toLowerCase() }
+      const res = await apiPut(pathObj.getSettings, payload);
       if (res.data.success === true) {
         getSettings();
         notification.success(res?.data?.message);
@@ -87,8 +89,6 @@ const Settings = () => {
   useEffect(() => {
     updatePageName(t("SETTINGS"));
   }, []);
-
-  const codeValue = watch("email") ? watch("email") : "";
 
   return (
     <section className="">
@@ -142,14 +142,14 @@ const Settings = () => {
                     </div>
                   </div>
 
-                  <div className="flex justify-between items-center">
+                  {/* <div className="flex justify-between items-center">
                     <div className="pr-3">
-                      {t("TOTAL_ADMIN_AMOUNT")}{" "}
+                      {t("TOTAL_ADMIN_AMOUNT")}
                       <strong
                         className="ps-2 text-blue"
                         style={{ color: "#0ea5e9" }}
                       >
-                        {" "}
+                       
                         {helpers.formattedAmount(
                           settingsDetails?.defaultWalletAmount
                         )}
@@ -161,10 +161,10 @@ const Settings = () => {
                       className="bg-gradientTo hover:bg-DarkBlue cursor-pointer   text-white  font-normal active:bg-slate-100 text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150"
                       onClick={() => setIsAmountModal(true)}
                     >
-                     
+
                       {t("DEPOSIT_AMOUNT")}
                     </button>
-                  </div>
+                  </div> */}
                 </div>
               </div>
 
@@ -187,7 +187,6 @@ const Settings = () => {
                   type="text"
                   inputLabel={<>{t("ADMIN_EMAIL_ADDRESS")}</>}
                   id="adminEmail"
-                  value={codeValue.toLowerCase()}
                   maxLength={50}
                   autoComplete="off"
                   onInput={(e) => preventMaxInput(e, 50)}
@@ -266,11 +265,11 @@ const Settings = () => {
                   disable={manager?.add === false}
                   inputLabel={<>{t("REFERRAL_BONUS_FOR_TOURIST")}</>}
                   maxLength={40}
-                  id="referralBonusTourist"
-                  register={register("referralBonusTourist", {
+                  id="referralAmount"
+                  register={register("referralAmount", {
                     required: {
                       value: true,
-                      message: t("PLEASE_ENTER_REFERRAL_BONUS"),
+                      message: t("PLEASE_ENTER_REFERRAL_AMOUNT"),
                     },
                     maxLength: {
                       value: 40,
@@ -283,8 +282,38 @@ const Settings = () => {
                   })}
                   placeholder=" "
                 />
-                <ErrorMessage message={errors?.referralBonusTourist?.message} />
+                <ErrorMessage message={errors?.referralAmount?.message} />
               </div>
+
+
+
+              <div className="mb-4  w-full">
+                <OInputField
+                  type="number"
+                  id="signupBonus"
+                  maxLength={40}
+                  wrapperClassName="relative z-0  w-full group"
+                  disable={manager?.add === false}
+                  inputLabel={<>{t("SIGN_UP_BONUS_FOR_LOCAL")}</>}
+                  register={register("signupBonus", {
+                    required: {
+                      value: true,
+                      message: t("PLEASE_ENTER_SIGN_UP_BONUS_FOR_LOCAL"),
+                    },
+                    maxLength: {
+                      value: 40,
+                      message: t("MAX_LIMIT_IS_40_CHARACTERS"),
+                    },
+                    min: {
+                      value: 1,
+                      message: t("MINIMUM_VALUE_MUST_IS_1"),
+                    },
+                  })}
+                  placeholder=" "
+                />
+                <ErrorMessage message={errors?.signupBonus?.message} />
+              </div>
+
               <div className="relative z-0 mb-6 w-full group">
                 <OInputField
                   type="number"
@@ -296,7 +325,7 @@ const Settings = () => {
                   register={register("playerCardPlatfromFee", {
                     required: {
                       value: true,
-                      message: t("PLEASE_ENTER_REFERRAL_BONUS"),
+                      message: t("PLEASE_ENTER_PLAYER_CARD_PLATFORM_FEE"),
                     },
                     maxLength: {
                       value: 40,
@@ -309,20 +338,20 @@ const Settings = () => {
                   })}
                   placeholder=" "
                 />
-                <ErrorMessage message={errors?.referralBonusLocals?.message} />
+                <ErrorMessage message={errors?.playerCardPlatfromFee?.message} />
               </div>
               <div className="w-full">
                 <OInputField
                   type="number"
                   maxLength={40}
-                  inputLabel={<>{t("UPC_CODE_REFERRAL_AMOUNT")}</>}
+                  inputLabel={<>{t("PLATFORM_FEE_STOCK_PERCENTAGE")}</>}
                   wrapperClassName="relative z-0  w-full group"
-                  name="upcCodeReferralAmount"
+                  name="stockPlatfromFee"
                   disable={manager?.add === false}
-                  register={register("upcCodeReferralAmount", {
+                  register={register("stockPlatfromFee", {
                     required: {
                       value: true,
-                      message: t("PLEASE_ENTER_UPC_CODE_REFERRAL_AMOUNT"),
+                      message: t("PLEASE_ENTER_STOCK_PLATFORM_FEE"),
                     },
                     pattern: {
                       value: /^\d+$/,
@@ -341,49 +370,24 @@ const Settings = () => {
                 />
 
                 <ErrorMessage
-                  message={errors?.upcCodeReferralAmount?.message}
+                  message={errors?.stockPlatfromFee?.message}
                 />
               </div>
+
+             
 
               <div className="mb-4  w-full">
                 <OInputField
                   type="number"
-                  id="signupBonusForLocal"
+                  id="questionTradePlatformKey"
                   maxLength={40}
                   wrapperClassName="relative z-0  w-full group"
                   disable={manager?.add === false}
-                  inputLabel={<>{t("SIGN_UP_BONUS_FOR_LOCAL")}</>}
-                  register={register("signupBonusForLocal", {
+                  inputLabel={<>{t("PLATFORM_FEE_QUESTION_TRADE")}</>}
+                  register={register("questionTradePlatformKey", {
                     required: {
                       value: true,
-                      message: t("PLEASE_ENTER_SIGN_UP_BONUS_FOR_LOCAL"),
-                    },
-                    maxLength: {
-                      value: 40,
-                      message: t("MAX_LIMIT_IS_40_CHARACTERS"),
-                    },
-                    min: {
-                      value: 1,
-                      message: t("MINIMUM_VALUE_MUST_IS_1"),
-                    },
-                  })}
-                  placeholder=" "
-                />
-                <ErrorMessage message={errors?.signupBonusForLocal?.message} />
-              </div>
-
-              <div className="mb-4  w-full">
-                <OInputField
-                  type="number"
-                  id="signupBonusForTourist"
-                  maxLength={40}
-                  wrapperClassName="relative z-0  w-full group"
-                  disable={manager?.add === false}
-                  inputLabel={<>{t("SIGN_UP_BONUS_FOR_TOURIST")}</>}
-                  register={register("signupBonusForTourist", {
-                    required: {
-                      value: true,
-                      message: t("PLEASE_ENTER_SIGN_UP_BONUS_TOURIST"),
+                      message: t("PLEASE_ENTER_QUESTION_TRADE_FEE"),
                     },
                     maxLength: {
                       value: 40,
@@ -397,49 +401,22 @@ const Settings = () => {
                   placeholder=" "
                 />
                 <ErrorMessage
-                  message={errors?.signupBonusForTourist?.message}
+                  message={errors?.questionTradePlatformKey?.message}
                 />
               </div>
-              {/* added two parameter for signupBonusForLocal,signupBonosForTourist */}
-              {/* <div className='w-full'>
-                <OInputField
-                  wrapperClassName='relative z-0  w-full group'
-                  id='payment'
-                  type='number'
-                  disable={manager?.add === false}
-                  inputLabel={<>{t('TRANSFER_MONEY_LIMIT_MAXIMUM')}</>}
-                  maxLength={40}
-                  register={register('maxTransferMoneyLimit', {
-                    required: {
-                      value: true,
-                      message: t('PLEASE_ENTER_MAXIMUM_TRANSFER_MONEY_LIMIT')
-                    },
-                    maxLength: {
-                      value: 40,
-                      message: t('MAX_LIMIT_IS_40_CHARACTERS')
-                    },
-                    min: {
-                      value: 1,
-                      message: t('MINIMUM_VALUE_MUST_IS_1')
-                    }
-                  })}
-                  placeholder=' '
-                />
-                <ErrorMessage message={errors?.maxTransferMoneyLimit?.message} />
-              </div> */}
-              {/* {hide for mantis} */}
+
               <div className="w-full">
                 <OInputField
-                  inputLabel={<>{t("NEGATIVE_AMOUNT_MAXIMUM_LIMIT")}</>}
+                  inputLabel={<>{t("NUMBER_OF_PLAYER_STOCK")}</>}
                   wrapperClassName="relative z-0  w-full group"
                   type="number"
                   id="payment"
                   disable={manager?.add === false}
                   maxLength={40}
-                  register={register("negativeAmountMaxLimit", {
+                  register={register("numberOfPlayerStocks", {
                     required: {
                       value: true,
-                      message: t("PLEASE_ENTER_NEGATIVE_AMOUNT_MAXIMUM_LIMIT"),
+                      message: t("PLEASE_ENTER_NUMBER_OF_PLAYER_STOCK"),
                     },
                     maxLength: {
                       value: 40,
@@ -453,21 +430,52 @@ const Settings = () => {
                   placeholder=" "
                 />
                 <ErrorMessage
-                  message={errors?.negativeAmountMaxLimit?.message}
+                  message={errors?.numberOfPlayerStocks?.message}
                 />
               </div>
+
+
+              <div className="w-full">
+                <OInputField
+                  inputLabel={<>{t("NUMBER_OF_PLAYER_CARD")}</>}
+                  wrapperClassName="relative z-0  w-full group"
+                  type="number"
+                  id="payment"
+                  disable={manager?.add === false}
+                  maxLength={40}
+                  register={register("numberOfPlayerCards", {
+                    required: {
+                      value: true,
+                      message: t("PLEASE_ENTER_NUMBER_OF_PLAYER_CARD"),
+                    },
+                    maxLength: {
+                      value: 40,
+                      message: t("MAX_LIMIT_IS_40_CHARACTERS"),
+                    },
+                    min: {
+                      value: 1,
+                      message: t("MINIMUM_VALUE_MUST_IS_1"),
+                    },
+                  })}
+                  placeholder=" "
+                />
+                <ErrorMessage
+                  message={errors?.numberOfPlayerCards?.message}
+                />
+              </div>
+
               <div className="w-full">
                 <OInputField
                   wrapperClassName="relative z-0  w-full group"
                   type="number"
-                  inputLabel={<>{t("REWARD_AMOUNT_PERCENTAGE")}</>}
+                  inputLabel={<>{t("PENALTY_OF_PERCENTAGE")}</>}
                   maxLength={40}
                   disable={manager?.add === false}
                   id="payment"
-                  register={register("rewardAmountPercentage", {
+                  register={register("penaltyStockPercentage", {
                     required: {
                       value: true,
-                      message: t("PLEASE_ENTER_REWARD_AMOUNT_PERCENTAGE"),
+                      message: t("PLEASE_ENTER_PENALTY_OF_STOCK_PERCENTAGE"),
                     },
                     maxLength: {
                       value: 3,
@@ -481,9 +489,104 @@ const Settings = () => {
                   placeholder=" "
                 />
                 <ErrorMessage
-                  message={errors?.rewardAmountPercentage?.message}
+                  message={errors?.penaltyStockPercentage?.message}
                 />
               </div>
+
+
+              <div className="w-full mb-4">
+                <OInputField
+                  wrapperClassName="relative z-0  w-full group"
+                  type="number"
+                  inputLabel={<>{t("MAXIMUM_STOCK_USER_CAN_PURCHASE")}</>}
+                  maxLength={40}
+                  disable={manager?.add === false}
+                  id="payment"
+                  register={register("maximumStockPurchase", {
+                    required: {
+                      value: true,
+                      message: t("PLEASE_ENTER_MAXIMUM_STOCK_CAN_PURCHASE"),
+                    },
+                    maxLength: {
+                      value: 3,
+                      message: t("MAX_LIMIT_IS_3_CHARACTERS"),
+                    },
+                    min: {
+                      value: 1,
+                      message: t("MINIMUM_VALUE_MUST_IS_1"),
+                    },
+                  })}
+                  placeholder=" "
+                />
+                <ErrorMessage
+                  message={errors?.maximumStockPurchase?.message}
+                />
+              </div>
+
+
+
+              <div className="w-full mb-4">
+                <OInputField
+                  wrapperClassName="relative z-0  w-full group"
+                  type="number"
+                  inputLabel={<>{t("MAXIMUM_CARD_USER_CAN_PURCHASE")}</>}
+                  maxLength={40}
+                  disable={manager?.add === false}
+                  id="payment"
+                  register={register("maximumCardPurchase", {
+                    required: {
+                      value: true,
+                      message: t("PLEASE_ENTER_MAXIMUM_CARD_CAN_PURCHASE"),
+                    },
+                    maxLength: {
+                      value: 3,
+                      message: t("MAX_LIMIT_IS_3_CHARACTERS"),
+                    },
+                    min: {
+                      value: 1,
+                      message: t("MINIMUM_VALUE_MUST_IS_1"),
+                    },
+                  })}
+                  placeholder=" "
+                />
+                <ErrorMessage
+                  message={errors?.maximumCardPurchase?.message}
+                />
+              </div>
+
+
+              <div className="w-full mb-4">
+                <OInputField
+                  wrapperClassName="relative z-0  w-full group"
+                  type="number"
+                  inputLabel={<>{t("TDS_IN_PERCENTAGE")}</>}
+                  maxLength={40}
+                  disable={manager?.add === false}
+                  id="payment"
+                  register={register("tds", {
+                    required: {
+                      value: true,
+                      message: t("PLEASE_ENTER_TDS"),
+                    },
+                    maxLength: {
+                      value: 3,
+                      message: t("MAX_LIMIT_IS_3_CHARACTERS"),
+                    },
+                    min: {
+                      value: 1,
+                      message: t("MINIMUM_VALUE_MUST_IS_1"),
+                    },
+                  })}
+                  placeholder=" "
+                />
+                <ErrorMessage
+                  message={errors?.tds?.message}
+                />
+              </div>
+
+
+
+
             </main>
           </div>
         </div>
