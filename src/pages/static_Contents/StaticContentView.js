@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { startCase } from "lodash";
 import OImage from "components/reusable/OImage";
@@ -6,16 +6,28 @@ import { useNavigate, useLocation } from "react-router-dom";
 import noImageFound from "../../assets/images/No-image-found.jpg";
 import AuthContext from "context/AuthContext";
 import helpers from "utils/helpers";
-
-const StaticContentView = ({ currentItem }) => {
+import { Buffer } from 'buffer'
+const StaticContentView = () => {
   const { t } = useTranslation();
   const location = useLocation();
   const { updatePageName } = useContext(AuthContext);
   const navigate = useNavigate();
-
+  const [content,setContent]=useState()
   useEffect(() => {
     updatePageName(t("VIEW_STATIC_CONTENT"));
   }, []);
+
+
+  const getContent = async () => {
+    const newContent = await Buffer.from(location?.state?.content, 'base64').toString(
+      'ascii'
+    )
+    setContent(newContent)
+  }
+
+  useEffect(()=>{
+    if(location?.state?.content) getContent()
+  },[location])
 
   return (
     <>
@@ -31,24 +43,24 @@ const StaticContentView = ({ currentItem }) => {
                   <div className="sm:py-4 sm:px-2 py-8 px-7 col-span-1">
                     <div className="relative z-0 w-full group">
                       <strong>Title:</strong>
-                      <h6>{location?.state?.title || ""}</h6>
+                      <h6>{location?.state?.title || "N/A"}</h6>
                     </div>
                   </div>
                   <div className="sm:py-4 sm:px-2 py-8 px-7 col-span-1">
                     <div className="relative z-0 w-full group">
                       <strong>Status:</strong>
-                      <h6>{startCase(location?.state?.status) || ""}</h6>
+                      <h6>{startCase(location?.state?.status) || "N/A"}</h6>
                     </div>
                   </div>
                   <div className="sm:py-4 sm:px-2 py-8 px-7 col-span-1">
                     <div className="relative z-0 w-full group">
                       <strong>Created date:</strong>
                       <h6>
-                        {helpers.getDateAndTime(location?.state?.createdAt)}{" "}
+                        {helpers.getDateAndTime(location?.state?.createdAt)}
                       </h6>
                     </div>
                   </div>
-                  <div className="sm:py-4 sm:px-2 py-8 px-7 col-span-1">
+                  {/* <div className="sm:py-4 sm:px-2 py-8 px-7 col-span-1">
                     <div className="relative z-0 w-full group">
                       <strong>Image:</strong>
                       <OImage
@@ -56,16 +68,15 @@ const StaticContentView = ({ currentItem }) => {
                         fallbackUrl={noImageFound}
                         alt=""
                       />
-                      {/* <h6>{currentItem?.StaticContentImage}{' '}</h6> */}
                     </div>
-                  </div>
+                  </div> */}
                   <div className="sm:py-4 sm:px-2 py-8 px-7 col-span-3 max-h-[540px] overflow-y-auto">
                     <div className="relative z-0 w-full group">
                       <strong>Description:</strong>
                       <div
                         className="break-words"
                         dangerouslySetInnerHTML={{
-                          __html: location?.state?.description || "N/A",
+                          __html: content || "N/A",
                         }}
                       />
                     </div>
@@ -80,7 +91,7 @@ const StaticContentView = ({ currentItem }) => {
         <button
           className="text-black bg-[#E1E1E1] font-normal px-12 py-2.5 text-sm outline-none focus:outline-none rounded mr-6  ease-linear transition-all duration-150"
           type="button"
-          onClick={() => navigate("/StaticContent")}
+          onClick={() => navigate("/static-content")}
         >
           {t("CLOSE")}
         </button>

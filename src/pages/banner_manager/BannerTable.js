@@ -30,13 +30,6 @@ const SubTable = ({
   }, []);
 
 
-
-const onDeleteBanner=(e)=>{
-
-}
-
-
-
   return (
     <div className="p-3">
       <div className="overflow-x-auto relative rounded-lg border">
@@ -167,17 +160,21 @@ const onDeleteBanner=(e)=>{
                 </td>
 
                 <td className="py-2 px-4 border-r dark:border-[#ffffff38]">
-                  <OImage
-                    src={
-                      item?.image
-                        ? item?.image
-                        : null
-                    }
-                    fallbackUrl='/images/user.png'
-                    className='w-24 h-24'
-                    alt=''
-                    style={{ borderRadius: '50%' }}
-                  />
+                  <ul>
+                    <li onClick={() => { editViewBanner('view', item) }} style={{cursor:'pointer'}}>
+                      <OImage
+                        src={
+                          item?.image
+                            ? item?.image
+                            : null
+                        }
+                        fallbackUrl='/images/user.png'
+                        className='w-24 h-24'
+                        alt=''
+                        style={{ borderRadius: '50%' }}
+                      />
+                    </li>
+                  </ul>
                 </td>
                 <td className="py-2 px-4 border-r dark:border-[#ffffff38]">
                   {helpers.getDateAndTime(item?.createdAt)}
@@ -213,7 +210,7 @@ const onDeleteBanner=(e)=>{
                   <div className="">
                     <ul className="flex justify-center">
                       <li
-                        onClick={() =>{editViewBanner('view',item)} }
+                        onClick={() => { editViewBanner('view', item) }}
                         className="px-2 py-2 hover:text-gradientTo"
                       >
                         <a title={t("O_VIEW")}>
@@ -223,7 +220,7 @@ const onDeleteBanner=(e)=>{
                       </li>
                       {(manager?.add || user?.role === "admin") && (
                         <li
-                          onClick={() =>{editViewBanner('edit',item)}}
+                          onClick={() => { editViewBanner('edit', item) }}
                           className="px-2 py-2 hover:text-gradientTo"
                         >
                           <a title={t("O_EDIT")}>
@@ -236,14 +233,14 @@ const onDeleteBanner=(e)=>{
 
                       {(manager?.add || user?.role === "admin") && (
                         <li
-                        onClick={(e) =>
-                          helpers.alertFunction(
-                            `${t("ARE_YOU_SURE_YOU_WANT_TO")} delete banner ID"
+                          onClick={(e) =>
+                            helpers.alertFunction(
+                              `${t("ARE_YOU_SURE_YOU_WANT_TO")} delete banner ID"
                              '${item?.bannerId}'?`,
-                            item,
-                            handelDelete
-                          )
-                        }
+                              item,
+                              handelDelete
+                            )
+                          }
 
                           className="px-2 py-2 hover:text-gradientTo"
                         >

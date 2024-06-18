@@ -97,7 +97,7 @@ function SubAdmin () {
     try {
       const payload = {
         status: item?.status === 'inactive' ? 'active' : 'inactive',
-        type: 'subAdmin'
+        type: 'banner'
       }
       const path = `${apiPath.changeStatus}/${item?._id}`
       const result = await apiPut(path, payload)
@@ -232,7 +232,7 @@ const[item,setItem]=useState()
                   </button>
                 </div>
               </div>
-              {subAdmin?.docs?.length<5&&
+             
               <div className='flex items-center justify-end px-4 ms-auto mb-3'>
                 {(manager?.add || user?.role === 'admin') && (
                   <button
@@ -244,7 +244,7 @@ const[item,setItem]=useState()
                     + {t('ADD_BANNER')}
                   </button>
                 )}
-              </div>}
+              </div>
             </form>
             <SubTable
               subAdmin={subAdmin?.docs}

@@ -4,6 +4,7 @@ import AuthContext from "../context/AuthContext";
 import { Link } from "react-router-dom";
 import OImage from "./reusable/OImage";
 import { t } from "i18next";
+import Swal from "sweetalert2";
 
 const TopNavBar = () => {
   const {
@@ -14,11 +15,20 @@ const TopNavBar = () => {
     updatePageName,
     sidebarStatus,
   } = useContext(AuthContext);
-
   const handleLogout = () => {
-    if (window.confirm("Are you sure to logout?")) {
-      logoutUser();
-    }
+    Swal.fire({
+      html: "<b>Are you sure you want to logout?</b>",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes",
+      cancelButtonText: "No"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        logoutUser()
+      }
+    });
   };
 
   return (

@@ -153,7 +153,7 @@ const Table = ({
             ) : (
               ""
             ))}
-            
+
           {(manager?.add || user?.role === "admin") &&
             (item?.status !== "deleted" ? (
               <div
@@ -173,7 +173,7 @@ const Table = ({
           <div>
             <NavLink
               to="/users/transactionDetails"
-              state={{ userId: item?._id,...item, userTypeDetail }}
+              state={{ userId: item?._id, ...item, userTypeDetail }}
             >
               <MdHistory
                 className="text-green text-lg cursor-pointer  text-slate-600"
@@ -190,8 +190,7 @@ const Table = ({
     if (userTypeData === "local") {
       return renderTableCell(
         getWalletAmount(item),
-        `${
-          item && item?.status === "deleted" ? "text-red-600" : "bg-white"
+        `${item && item?.status === "deleted" ? "text-red-600" : "bg-white"
         } py-2 px-4 border-r  dark:border-[#ffffff38] text-center`
       );
     } else if (userTypeData === "tourist") {
@@ -199,8 +198,7 @@ const Table = ({
         <>
           {renderTableCell(
             helpers.ternaryCondition(item?.upcCode, item?.upcCode, "N/A"),
-            `${
-              item && item?.status === "deleted" ? "text-red-600" : "bg-white"
+            `${item && item?.status === "deleted" ? "text-red-600" : "bg-white"
             } py-4 px-3 border-r  dark:border-[#ffffff38] text-center`
           )}
           {renderTableCell(
@@ -209,14 +207,12 @@ const Table = ({
               item?.referralCode,
               "N/A"
             ),
-            `${
-              item && item?.status === "deleted" ? "text-red-600" : "bg-white"
+            `${item && item?.status === "deleted" ? "text-red-600" : "bg-white"
             } py-4 px-3 border-r text-center dark:border-[#ffffff38]`
           )}
           {renderTableCell(
             helpers.ternaryCondition(item?.familyName, item?.familyName, "N/A"),
-            `${
-              item && item?.status === "deleted" ? "text-red-600" : "bg-white"
+            `${item && item?.status === "deleted" ? "text-red-600" : "bg-white"
             } py-4 px-3 border-r text-center dark:border-[#ffffff38]`
           )}
         </>
@@ -249,14 +245,12 @@ const Table = ({
           )}
           {renderTableCell(
             getDisplayName(item, userType),
-            `${
-              item && item?.status === "deleted" ? "text-red-600" : "bg-white"
+            `${item && item?.status === "deleted" ? "text-red-600" : "bg-white"
             } py-4 px-4 border-r  dark:border-[#ffffff38]'`
           )}
           {renderTableCell(
             helpers.ternaryCondition(item?.email, item?.email, "N/A"),
-            `${
-              item && item?.status === "deleted" ? "text-red-600" : "bg-white"
+            `${item && item?.status === "deleted" ? "text-red-600" : "bg-white"
             } py-2 px-4 border-r  dark:border-[#ffffff38] font-bold text-slate-900'`
           )}
 
@@ -266,17 +260,14 @@ const Table = ({
               item?.countryCode,
               "N/A"
             ),
-            `${
-              item && item?.status === "deleted" ? "text-red-600" : "bg-white"
+            `${item && item?.status === "deleted" ? "text-red-600" : "bg-white"
             } py-2 px-4 border-r  dark:border-[#ffffff38] text-center font-bold text-slate-900'`
           )}
 
           {renderTableCell(
             helpers.ternaryCondition(item?.mobile, item?.mobile, "N/A"),
-            `${
-              item && item?.status === "deleted" ? "text-red-600" : "bg-white"
-            } py-2 px-4 border-r dark:border-[#ffffff38] text-center font-bold ${
-              item && item?.status === "deleted" ? "" : "text-slate-900"
+            `${item && item?.status === "deleted" ? "text-red-600" : "bg-white"
+            } py-2 px-4 border-r dark:border-[#ffffff38] text-center font-bold ${item && item?.status === "deleted" ? "" : "text-slate-900"
             }`
           )}
 
@@ -302,11 +293,10 @@ const Table = ({
                   {t("S.NO")}
                 </th>
                 <th scope="col" className="py-3 px-6">
-                  {helpers.ternaryCondition(
-                    userType === "local",
-                    t("NAME"),
-                    t("FIRST_NAME")
-                  )}
+                  {t("FULL_NAME")}
+                </th>
+                <th scope="col" className="py-3 px-6">
+                  {t("USER_NAME")}
                 </th>
 
                 <th scope="col" className="py-3 px-6">
@@ -318,33 +308,21 @@ const Table = ({
                 <th scope="col" className="py-3 px-6">
                   <div className="text-left">{t("O_MOBILE_NUMBER")}</div>
                 </th>
-                {helpers.andOperator(
-                  userType === "local",
-                  <th scope="col" className="py-3 px-6 text-left">
-                    {t("AVAILABLE_BALANCE")}
-                  </th>
-                )}
-                {helpers.andOperator(
-                  userType === "tourist",
-                  <>
-                    <th scope="col" className="py-3 px-6 text-left">
-                      {t("UPC_CODE")}
-                    </th>
-                    <th scope="col" className="py-3 px-6 text-left">
-                      {t("REFERRAL_CODE")}
-                    </th>
-                    <th scope="col" className="py-3 px-6 text-left">
-                      {t("FAMILY_NAME")}
-                    </th>
-                  </>
-                )}
 
                 <th scope="col" className="py-3 px-6 text-left">
-                  {t("KYC_STATUS")}
+                  {t("INVITE_CODE")}
                 </th>
                 <th scope="col" className="py-3 px-6 text-left">
-                  {t("O_CREATED_AT")}
+                  {t("JOINED_DATE")}
                 </th>
+
+
+                <th scope="col" className="py-3 px-6 text-left">
+                  {t("KYC_VERIFIED")}
+                </th>
+                {/* <th scope="col" className="py-3 px-6 text-left">
+                  {t("O_CREATED_AT")}
+                </th> */}
 
                 {helpers.andOperator(
                   manager?.add || user?.permission?.length === 0,
