@@ -16,21 +16,23 @@ function Wallet() {
   const { t } = useTranslation()
   const { user, updatePageName } = useContext(AuthContext)
   const [editShowModal, setEditShowModal] = useState(false)
+  const [pageSize, setPageSize] = useState(10)
+  const [isDelete] = useState(false)
   const [editView, setEditView] = useState()
   const manager =
     user?.permission?.find(e => e.manager === 'wallet_manager') ?? {}
   const [subAdmin, setSubAdmin] = useState()
   const [page, setPage] = useState(1)
-  const [pageSize, setPageSize] = useState(10)
-  const [isDelete] = useState(false)
-  const [paginationObj, setPaginationObj] = useState({
+ 
+  const [paginationObj, setPaginationWalletObj] = useState({
     page: 1,
     pageCount: 1,
     pageRangeDisplayed: 10
   })
-  const [searchTerm, setSearchTerm] = useState('')
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('')
   const [isInitialized, setIsInitialized] = useState(false)
+  const [searchTerm, setSearchTerm] = useState('')
+
   const [filterData, setFilterData] = useState({
     category: '',
     searchKey: '',
@@ -66,7 +68,7 @@ function Wallet() {
       const response = result?.data?.results
       const resultStatus = result?.data?.success
       setSubAdmin(response)
-      setPaginationObj({
+      setPaginationWalletObj({
         ...paginationObj,
         page: resultStatus ? response.page : null,
         pageCount: resultStatus ? response.totalPages : null,
@@ -118,6 +120,10 @@ function Wallet() {
     })
   }
 
+
+  useEffect(() => {
+    updatePageName(t('WALLET_MANAGER'))
+  }, [])
   // debounce search start
   useEffect(() => {
     if (!isInitialized) {
@@ -144,9 +150,7 @@ function Wallet() {
 
     // debounce search end
     
-  useEffect(() => {
-    updatePageName(t('WALLET_MANAGER'))
-  }, [])
+
 
 
   const [item, setItem] = useState()
