@@ -26,6 +26,7 @@ const SubAdd = () => {
   const {
     register,
     handleSubmit,
+
     control,
     getValues,
     formState: { errors }
@@ -55,123 +56,135 @@ const SubAdd = () => {
   const [countryCode] = useState('in')
   const [isSelectAll, setIsSelectAll] = useState(false)
   const [isCheckAll, setIsCheckAll] = useState(false)
-
-  useEffect(() => {
-    updatePageTitle();
-    initializePermissions();
-  }, []);
-
-  const updatePageTitle = () => {
-    if (item?.type === 'add') {
-      updatePageName(t('ADD_SUB_ADMIN'));
-    } else if (item?.type === 'edit') {
-      updatePageName(t('EDIT_SUB_ADMIN'));
-    } else if (item?.type === 'view') {
-      updatePageName(t('VIEW_SUB_ADMIN'));
+  const onChange = event => {
+    if (!event.target.checked) {
+      setIsSelectAll(false)
     }
-  };
+    setPermission(current =>
+      current.map(obj => {
+        if (obj.manager === event.target.name) {
+          if (event.target.id === 'add' || event.target.id === 'edit') {
+            return {
+              ...obj,
+              [event.target.id]: event.target.checked,
+              view: event.target.checked
+            }
+          } else if (event.target.id === 'view' && !event.target.checked) {
+            return {
+              ...obj,
+              add: false,
+              edit: false,
+              view: false
+            }
+          }
+          return { ...obj, [event.target.id]: event.target.checked }
+        }
+        return obj
+      })
+    )
+  }
 
-  const initializePermissions = () => {
-    const permissionData = getValues('permission');
-    if (permissionData?.length > 0 && permissionData[0]?.manager === 'dashboard' && (item?.type === 'edit' || item?.type === 'view')) {
-      permissionData.shift();
-      setPermission(permissionData);
-    }
-  };
-
-  const onChange = (event) => {
-    const { checked, id, name } = event.target;
-    if (!checked) setIsSelectAll(false);
-
-    setPermission(current => current.map(obj => {
-      if (obj.manager === name) {
-        let newPermissions = { ...obj, [id]: checked };
-        if (id === 'add' || id === 'edit') newPermissions.view = checked;
-        if (id === 'view' && !checked) newPermissions = { ...obj, add: false, edit: false, view: false };
-        return newPermissions;
-      }
-      return obj;
-    }));
-  };
-
-  const selectAll = (event) => {
-    const checked = event.target.checked;
-    setIsSelectAll(checked);
-    setIsCheckAll(checked);
-    setPermission(current => current.map(obj => ({
-      ...obj,
-      add: checked,
-      view: checked,
-      delete: checked,
-    })));
-  };
-
-  const checkAll = (event) => {
-    const checked = event.target.checked;
-    setPermission(current => current.map(obj => {
-      if (obj.manager === event.target.name) {
-        return { ...obj, add: checked, view: checked, delete: checked };
-      }
-      return obj;
-    }));
-  };
-
-  const onSubmit = async (data) => {
+  const onSubmit = async data => {
     data.mobile = data?.mobile?.substring(
       inputRef?.current?.state.selectedCountry?.countryCode?.length,
       data?.mobile?.toString()?.length
-    );
-    data.countryCode = inputRef?.current?.state.selectedCountry?.countryCode;
-    const myData = { ...data };
-
+    )
+    data.countryCode = inputRef?.current?.state.selectedCountry?.countryCode
+    const myData = { ...data }
     try {
-      setLoader(true);
-      let result;
-      if (item?.type === 'edit') {
-        result = await handleEditSubmit(myData);
-      } else {
-        result = await handleAddSubmit(myData);
+      setLoader(true)
+      let path = apiPath.getSubAdmin
+      let result
+      const myObj = {
+        manager: 'dashboard',
+        add: true,
+        edit: true,
+        view: true
       }
-      handleApiResponse(result);
+      if (item?.type === 'edit') {
+        const permission = JSON.stringify([...permissionJons])
+        const editSendData = {
+          ...myData,
+          permission,
+          name: data?.firstName + data?.lastName
+        }
+
+        path = apiPath.editSubAdmin + '/' + item?.item?._id
+        result = await apiPut(path, editSendData)
+      } else {
+        const permission = JSON.stringify([myObj, ...permissionJons])
+        const sendData = {
+          ...myData,
+          permission,
+          name: data?.firstName + data?.lastName
+        }
+        path = apiPath.getSubAdmin
+        result = await apiPost(path, sendData)
+      }
+      if (result?.data?.success) {
+        navigate('/sub-admin-manager')
+        notification.success(result?.data.message)
+      } else {
+        notification.error(result?.data.message)
+      }
     } catch (error) {
-      console.error('error in get all sub admin list==>>>>', error.message);
+      console.error('error in get all sub admin list==>>>>', error.message)
     } finally {
-      setLoader(false);
+      setLoader(false)
     }
-  };
-
-  const handleEditSubmit = async (myData) => {
-    const permission = JSON.stringify([...permissionJons]);
-    const editSendData = {
-      ...myData,
-      permission,
-      name: myData.firstName + myData.lastName,
-    };
-    const path = apiPath.editSubAdmin + '/' + item?.item?._id;
-    return await apiPut(path, editSendData);
-  };
-
-  const handleAddSubmit = async (myData) => {
-    const permission = JSON.stringify([{ manager: 'dashboard', add: true, edit: true, view: true }, ...permissionJons]);
-    const sendData = {
-      ...myData,
-      permission,
-      name: myData.firstName + myData.lastName,
-    };
-    const path = apiPath.getSubAdmin;
-    return await apiPost(path, sendData);
-  };
-
-  const handleApiResponse = (result) => {
-    if (result?.data?.success) {
-      navigate('/sub-admin-manager');
-      notification.success(result?.data.message);
-    } else {
-      notification.error(result?.data.message);
+  }
+  useEffect(() => {
+    if (item?.type === 'add') {
+      updatePageName(t('ADD_SUB_ADMIN'))
+    } else if (item?.type === 'edit') {
+      updatePageName(t('EDIT_SUB_ADMIN'))
+    } else if (item?.type === 'view') {
+      updatePageName(t('VIEW_SUB_ADMIN'))
     }
-  };
+  }, [])
 
+  useEffect(() => {
+    const permissionData = getValues('permission')
+    if (
+      permissionData?.length > 0 &&
+      permissionData[0]?.manager === 'dashboard' &&
+      (item?.type === 'edit' || item?.type === 'view')
+    ) {
+      permissionData.shift()
+      setPermission(permissionData)
+    }
+  }, [])
 
+  const checkAll = event => {
+    setPermission(current =>
+      current.map(obj => {
+        if (obj.manager === event.target.name) {
+          return {
+            ...obj,
+            add: event.target.checked,
+            view: event.target.checked,
+            delete: event.target.checked
+          }
+        }
+        return obj
+      })
+    )
+  }
+
+  const selectAll = event => {
+    setIsSelectAll(event.target.checked)
+    setIsCheckAll(event.target.checked)
+    setPermission(current =>
+      current.map(obj => {
+        return {
+          ...obj,
+          add: event.target.checked,
+          view: event.target.checked,
+          delete: event.target.checked
+        }
+      })
+    )
+  }
   let itemType = helpers.ternaryCondition(
     item?.type === 'edit',
     t('O_EDIT'),
