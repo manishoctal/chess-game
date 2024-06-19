@@ -1,43 +1,18 @@
 import { useForm } from "react-hook-form";
-import { apiPost, apiPut } from "../../utils/apiFetch";
-import apiPath from "../../utils/apiPath";
-import useToastContext from "hooks/useToastContext";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import helpers from "utils/helpers";
 import OInputField from "components/reusable/OInputField";
-
 const BannerEdit = ({ setEditShowModal, viewType }) => {
     const { t } = useTranslation();
     const {
         handleSubmit,
         register,
-        setValue,
         formState: { errors },
     } = useForm({ mode: "onChange", shouldFocusError: true, defaultValues: {} });
-    const [loader, setLoader] = useState(false)
-    const [picture, setPicture] = useState()
-    const notification = useToastContext();
-    const handleSubmitForm = async (data) => {
-        // try {
-        //     setLoader(true)
-        //     const path = `${apiPath.bannerEdit}/${item?._id}`
-        //     let formData = new FormData()
-        //     formData.append('image', picture?.file[0])
-        //     const result = await apiPut(path, formData);
-        //     if (result?.data?.success === true) {
-        //         notification.success(result?.data?.message);
-        //         getAllFAQ();
-        //         setEditShowModal(false);
-        //     } else {
-        //         notification.error(result?.data?.message);
-        //     }
-        // } catch (error) {
-        //     console.error("error:", error.message);
-        // } finally {
-        //     setLoader(false)
+    const [loader] = useState(false)
 
-        // }
+    const handleSubmitForm = async () => {
     };
 
     return (

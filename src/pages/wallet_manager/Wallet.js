@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { apiDelete, apiGet, apiPut } from '../../utils/apiFetch'
+import { apiDelete, apiGet} from '../../utils/apiFetch'
 import apiPath from '../../utils/apiPath'
 import SubTable from './WalletTable'
 import Pagination from '../Pagination'
@@ -98,12 +98,12 @@ function SubAdmin() {
 
 
 
-  const handelDelete = async item => {
+  const handelDelete = async details => {
     try {
-      const path = apiPath.bannerDelete + '/' + item?._id
+      const path = apiPath.bannerDelete + '/' + details?._id
       const result = await apiDelete(path)
       if (result?.status === 200) {
-        notification.success(result?.data.message)
+        notification.success(result?.data?.message)
         allWalletList({ deletePage: 1 })
       }
     } catch (error) {
@@ -134,10 +134,6 @@ function SubAdmin() {
       isFilter: true
     })
   }
-  const statusPage = e => {
-    setPage(1)
-    setFilterData({ ...filterData, category: e.target.value, isFilter: true })
-  }
 
   useEffect(() => {
     if (!isInitialized) {
@@ -167,9 +163,9 @@ function SubAdmin() {
 
 
   const [item, setItem] = useState()
-  const editViewBanner = async (type, item) => {
+  const editViewBanner = async (type, data) => {
     setEditView(type)
-    setItem(item)
+    setItem(data)
     setEditShowModal(true)
   }
 

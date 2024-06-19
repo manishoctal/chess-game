@@ -9,8 +9,6 @@ import ODateRangePicker from "components/shared/datePicker/ODateRangePicker";
 import { useTranslation } from "react-i18next";
 import PageSizeList from "components/PageSizeList";
 import helpers from "utils/helpers";
-import { startCase } from "lodash";
-import { KYCStatusArray } from "utils/constants";
 import { useLocation } from "react-router-dom";
 import SearchWithOption from '../../components/reusable/SearchableDropdown'
 function User() {
@@ -157,16 +155,6 @@ function User() {
     });
     setPage(1);
   };
-  const handleVerify = (e) => {
-    setFilterData({
-      ...filterData,
-      isKYCVerified: e?.target?.value,
-      isFilter: true,
-      isReset: false,
-    });
-    setPage(1);
-  };
-
   const[isSelected,setIsSelected]=useState(false)
 
 
@@ -232,27 +220,6 @@ function User() {
                       <option value="inactive">{t("O_INACTIVE")}</option>
                     </select>
                   </div>
-
-                  {/* <div className="flex items-center mb-3 ml-3">
-                    <select
-                      id="countries"
-                      type=" password"
-                      name="floating_password"
-                      className="block p-2 w-full text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF] focus:outline-none focus:ring-0  peer"
-                      placeholder=" "
-                      value={filterData?.isKYCVerified}
-                      onChange={(e) => handleVerify(e)}
-                    >
-                      <option defaultValue value="">
-                        {t("KYC_STATUS")}
-                      </option>
-                      {KYCStatusArray.map(({ key, value }) => (
-                        <option key={key} value={value}>
-                          {startCase(key)}
-                        </option>
-                      ))}
-                    </select>
-                  </div> */}
 
                   <button
                     type="button"
