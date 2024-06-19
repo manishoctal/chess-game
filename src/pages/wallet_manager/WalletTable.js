@@ -43,26 +43,26 @@ const SubTable = ({
                 scope="col"
                 className="py-3 px-6 cursor-pointer"
                 onClick={() => {
-                  if (sort.sortBy === "bannerId" && sort.sortType === "asc") {
+                  if (sort.sortBy === "userId" && sort.sortType === "asc") {
                     setSort({
-                      sortBy: "bannerId",
+                      sortBy: "userId",
                       sortType: "desc",
                     });
                   } else {
                     setSort({
-                      sortBy: "bannerId",
+                      sortBy: "userId",
                       sortType: "asc",
                     });
                   }
                 }}
               >
                 <div className="flex">
-                  <span>{t("BANNER_ID")}</span>
+                  <span>{t("USER_ID")}</span>
                   <span>
-                    {sort.sortBy === "bannerId" && sort.sortType === "asc" && (
+                    {sort.sortBy === "userId" && sort.sortType === "asc" && (
                       <BsArrowUpShort className="w-4 h-4" />
                     )}
-                    {sort.sortBy === "bannerId" && sort.sortType === "desc" && (
+                    {sort.sortBy === "userId" && sort.sortType === "desc" && (
                       <BsArrowUpShort className="w-4 h-4 rotate-180" />
                     )}
                   </span>
@@ -70,8 +70,40 @@ const SubTable = ({
               </th>
 
               <th scope="col" className="py-3 px-6 flex justify-center">
-                {t("BANNER_IMAGE")}
+                {t("FULL_NAME")}
               </th>
+
+              <th
+                scope="col"
+                className="py-3 px-6 cursor-pointer text-right"
+                onClick={() => {
+                  if (sort.sortBy === "userName" && sort.sortType === "asc") {
+                    setSort({
+                      sortBy: "userName",
+                      sortType: "desc",
+                    });
+                  } else {
+                    setSort({
+                      sortBy: "userName",
+                      sortType: "asc",
+                    });
+                  }
+                }}
+              >
+                <div className="flex justify-start">
+                  <span>{t("USER_NAME")} </span>
+                  <span>
+                    {sort.sortBy === "userName" && sort.sortType === "asc" && (
+                      <BsArrowUpShort className="w-4 h-4" />
+                    )}
+                    {sort.sortBy === "userName" &&
+                      sort.sortType === "desc" && (
+                        <BsArrowUpShort className="w-4 h-4 rotate-180" />
+                      )}
+                  </span>
+                </div>
+              </th>
+
               <th
                 scope="col"
                 className="py-3 px-6 cursor-pointer text-right"
@@ -102,6 +134,10 @@ const SubTable = ({
                   </span>
                 </div>
               </th>
+
+
+
+
               <th
                 scope="col"
                 className="py-3 px-6 cursor-pointer text-right"

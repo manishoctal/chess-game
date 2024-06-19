@@ -90,26 +90,22 @@ const Table = ({
       </label>
     );
   };
-  const getDisplayName = (userDetail, type) => {
-    if (type === "local") {
-      return `${userDetail?.firstName} ${userDetail?.lastName ?? ""}`;
-    } else {
-      return userDetail?.firstName || "N/A";
-    }
+  const getDisplayName = (userDetail) => {
+    return `${userDetail?.firstName} ${userDetail?.lastName ?? ""}`;
   };
 
+  const getDisplayUserId = (userDetail) => {
+    return userDetail?.userId ?? "";
+  };
+  
+
   const getWalletAmount = (userData) => {
-    return userData?.walletAmount
-      ? helpers.formattedAmount(userData?.walletAmount)
-      : 0;
+    return userData?.inviteCode ? userData?.inviteCode : 'N/A'
+
   };
 
   const getKycStatusText = (userKyc) => {
-    return helpers.ternaryCondition(
-      userKyc?.kycRecord?.isApproved,
-      startCase(userKyc?.kycRecord?.isApproved),
-      "KYC Not Uploaded Yet"
-    );
+    return helpers.ternaryCondition(userKyc?.kycStatus, 'Yes', 'No',);
   };
 
   const renderTableCell = (content, classNames) => (
@@ -118,17 +114,18 @@ const Table = ({
   const renderCommonTableCells = (item) => (
     <>
       {renderTableCell(
-        getKycStatusText(item),
-        "py-4 px-3 border-r  dark:border-[#ffffff38] text-center"
+        helpers.getDateAndTime(item?.createdAt) || "N/A",
+        "py-4 px-3 border-r  dark:border-[#ffffff38] text-center border font-bold"
       )}
       {renderTableCell(
-        helpers.getDateAndTime(item?.createdAt) || "N/A",
-        "py-4 px-3 border-r  dark:border-[#ffffff38] text-center"
+        getKycStatusText(item),
+        "py-4 px-3 border-r  dark:border-[#ffffff38] text-center border font-bold"
       )}
+
     </>
   );
   const renderActionTableCells = (item, userTypeDetail) => (
-    <td className="py-2 px-4 border-l">
+    <td className="py-2 px-4 border-l border">
       <div className="">
         <div className="flex justify-center items-center">
           <NavLink
@@ -154,7 +151,7 @@ const Table = ({
               ""
             ))}
 
-          {(manager?.add || user?.role === "admin") &&
+          {/* {(manager?.add || user?.role === "admin") &&
             (item?.status !== "deleted" ? (
               <div
                 onClick={() => {
@@ -169,8 +166,8 @@ const Table = ({
               </div>
             ) : (
               ""
-            ))}
-          <div>
+            ))} */}
+          {/* <div>
             <NavLink
               to="/users/transactionDetails"
               state={{ userId: item?._id, ...item, userTypeDetail }}
@@ -180,50 +177,21 @@ const Table = ({
                 title="Transaction details"
               />
             </NavLink>
-          </div>
+          </div> */}
         </div>
       </div>
     </td>
   );
 
-  const renderUserTypeSpecificCells = (item, userTypeData) => {
-    if (userTypeData === "local") {
-      return renderTableCell(
-        getWalletAmount(item),
-        `${item && item?.status === "deleted" ? "text-red-600" : "bg-white"
-        } py-2 px-4 border-r  dark:border-[#ffffff38] text-center`
-      );
-    } else if (userTypeData === "tourist") {
-      return (
-        <>
-          {renderTableCell(
-            helpers.ternaryCondition(item?.upcCode, item?.upcCode, "N/A"),
-            `${item && item?.status === "deleted" ? "text-red-600" : "bg-white"
-            } py-4 px-3 border-r  dark:border-[#ffffff38] text-center`
-          )}
-          {renderTableCell(
-            helpers.ternaryCondition(
-              item?.referralCode,
-              item?.referralCode,
-              "N/A"
-            ),
-            `${item && item?.status === "deleted" ? "text-red-600" : "bg-white"
-            } py-4 px-3 border-r text-center dark:border-[#ffffff38]`
-          )}
-          {renderTableCell(
-            helpers.ternaryCondition(item?.familyName, item?.familyName, "N/A"),
-            `${item && item?.status === "deleted" ? "text-red-600" : "bg-white"
-            } py-4 px-3 border-r text-center dark:border-[#ffffff38]`
-          )}
-        </>
-      );
-    }
-  };
+  const renderUserTypeSpecificCells = (item) => {
+    return renderTableCell(getWalletAmount(item), "bg-white py-2 px-4 border-r border  dark:border-[#ffffff38] text-center font-bold"
+    );
+  }
 
   const renderStatusTableCell = (item) =>
     helpers.andOperator(
       manager?.add || user?.permission?.length === 0,
-      <td className="py-2 px-4 border-r  dark:border-[#ffffff38] text-center">
+      <td className="py-2 px-4 border-r  dark:border-[#ffffff38] text-center border">
         {statusLabel(item)}
       </td>
     );
@@ -239,38 +207,13 @@ const Table = ({
 
       return (
         <tr key={i} className={rowClassName}>
-          {renderTableCell(
-            i + 1 + pageSize * (page - 1),
-            "py-4 px-3 border-r  font-medium text-gray-900  dark:text-white dark:border-[#ffffff38]"
-          )}
-          {renderTableCell(
-            getDisplayName(item, userType),
-            `${item && item?.status === "deleted" ? "text-red-600" : "bg-white"
-            } py-4 px-4 border-r  dark:border-[#ffffff38]'`
-          )}
-          {renderTableCell(
-            helpers.ternaryCondition(item?.email, item?.email, "N/A"),
-            `${item && item?.status === "deleted" ? "text-red-600" : "bg-white"
-            } py-2 px-4 border-r  dark:border-[#ffffff38] font-bold text-slate-900'`
-          )}
-
-          {renderTableCell(
-            helpers.ternaryCondition(
-              item?.countryCode,
-              item?.countryCode,
-              "N/A"
-            ),
-            `${item && item?.status === "deleted" ? "text-red-600" : "bg-white"
-            } py-2 px-4 border-r  dark:border-[#ffffff38] text-center font-bold text-slate-900'`
-          )}
-
-          {renderTableCell(
-            helpers.ternaryCondition(item?.mobile, item?.mobile, "N/A"),
-            `${item && item?.status === "deleted" ? "text-red-600" : "bg-white"
-            } py-2 px-4 border-r dark:border-[#ffffff38] text-center font-bold ${item && item?.status === "deleted" ? "" : "text-slate-900"
-            }`
-          )}
-
+          {renderTableCell(i + 1 + pageSize * (page - 1), "py-4 px-3 border-r border  font-medium text-gray-900  dark:text-white dark:border-[#ffffff38]")}
+          {renderTableCell(getDisplayUserId(item, userType), "bg-white py-4 px-4 border-r border  dark:border-[#ffffff38]")}
+          {renderTableCell(getDisplayName(item, userType), "bg-white py-4 px-4 border-r border  dark:border-[#ffffff38]")}
+          {renderTableCell(helpers.ternaryCondition(item?.userName, item?.userName, "N/A"), "bg-white border py-2 px-4 border-r  dark:border-[#ffffff38] font-bold ")}
+          {renderTableCell(helpers.ternaryCondition(item?.email, item?.email, "N/A"), "bg-white py-2 px-4 border-r border  dark:border-[#ffffff38] font-bold text-slate-900")}
+          {renderTableCell(helpers.ternaryCondition(item?.countryCode, '+' + item?.countryCode, "N/A"), "bg-white border py-2 px-4 border-r  dark:border-[#ffffff38] text-center font-bold")}
+          {renderTableCell(helpers.ternaryCondition(item?.mobile, item?.mobile, "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold")}
           {renderUserTypeSpecificCells(item, userType)}
           {renderCommonTableCells(item)}
           {renderStatusTableCell(item)}
@@ -291,6 +234,9 @@ const Table = ({
               <tr>
                 <th scope="col" className="py-3 px-3">
                   {t("S.NO")}
+                </th>
+                <th scope="col" className="py-3 px-6">
+                  {t("USER_ID")}
                 </th>
                 <th scope="col" className="py-3 px-6">
                   {t("FULL_NAME")}

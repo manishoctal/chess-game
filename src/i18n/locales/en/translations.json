@@ -462,7 +462,7 @@
   "FIRST_NAME": "First Name",
   "KYC_COMPLETED": "KYC Completed",
   "NATIONALITY_ID": "Nationality ID",
-  "AVAILABLE_BALANCE": "Available balance",
+  "AVAILABLE_BALANCE": "Wallet balance",
   "UPC_CODE": "UPC code",
   "META_DESC": "Meta Description",
   "META_KEYWORD": "Meta Keyword",
@@ -471,7 +471,7 @@
   "NATIONALITY": "Nationality",
   "SETTING": "Settings",
   "ADMIN_EMAIL": "Admin email",
-  "KYC_DOCUMENT": "KYC Document",
+  "KYC_DOCUMENT": "KYC Details",
   "BONUS_AMOUNT": "Bonus Amount",
   "CITIES_GOING_TO_VISIT_IN_THAILAND": "Cities going to visit in Thailand",
   "CITIES_VISITED_IN_THAILAND": "Cities visited in Thailand",
@@ -594,7 +594,32 @@
   "USER_ID_EMAIL_MOBILE":"Name, User ID , Mobile No, Email ID",
   "INVITE_CODE":"Invite Code",
   "JOINED_DATE":"Joined Date",
-  "KYC_VERIFIED":"KYC Verified"
+  "KYC_VERIFIED":"KYC Verified",
+  "USER_NAME":"User Name",
+  "FRONT_PROOF_ID_IMAGE":"Front Proof ID Image",
+  "BACK_PROOF_ID_IMAGE":"Back Proof ID Image",
+  "GOVERNMENT_ID_PDF":"Government ID PDF",
+  "O_PORTFOLIO":"Portfolio",
+  "PLAYER_CARD":"Player Card",
+  "O_INVESTMENT":"Investment",
+  "TOTAL_SELLING_CARD":"Total Selling Card",
+  "RETURN_SELLING_CARD":"Return Selling Card",
+  "CARD_BOUGHT":"Card Bought",
+  "CARD_SOLD":"Card Sold",
+  "CARD_HOLD":"Card Hold",
+  
+  "TOTAL_SELLING_STOCK":"Total Selling Stock",
+  "RETURN_SELLING_STOCK":"Return Selling Stock",
+  "STOCK_BOUGHT":"Stock Bought",
+  "STOCK_SOLD":"Stock Sold",
+  "STOCK_HOLD":"Stock Hold",
+  "INVITE_CODE_USED":"Invite Code Used",
+  "PLAYER_STOCK":"Player Stock",
+  "SPECIFIC_USER":"Specific User",
+  "SEARCH_USER_BY_NAME":"Search By User Name",
+  "WALLET_MANAGER":"Wallet Manager",
+  "SEARCH_BY_FULL_NAME_USER_IS_MOBILE_NO":"Name, User ID, Mobile No."
+
 
 
 

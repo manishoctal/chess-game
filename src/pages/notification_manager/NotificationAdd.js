@@ -2,16 +2,24 @@ import OButton from "components/reusable/OButton";
 import useToastContext from "hooks/useToastContext";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { apiPost } from "../../utils/apiFetch";
+import { apiGet, apiPost } from "../../utils/apiFetch";
 import apiPath from "../../utils/apiPath";
 import { useTranslation } from "react-i18next";
 import OInputField from "components/reusable/OInputField";
 import FormValidation from "utils/formValidation";
 import OTextArea from "components/reusable/OTextArea";
+import DynamicLabel from "utils/DynamicLabel";
+import Select from "react-select";
+import ErrorMessage from "components/ErrorMessage";
 const NotificationAdd = ({ getAllNotifications, handleCategory }) => {
   const [loading, setLoading] = useState(false);
-
+  const [notificationUserError, setNotificationUserError] = useState(false);
+  const [usersSuggestion, setUsersSuggestion] = useState([]);
+  const [selectedUsers, setSelectedUsers] = useState('');
   const formValidation = FormValidation();
+  const [searchTerm, setSearchTerm] = useState("");
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
+  const [isInitialized, setIsInitialized] = useState(false);
   const { t } = useTranslation();
   const {
     register,
@@ -21,16 +29,31 @@ const NotificationAdd = ({ getAllNotifications, handleCategory }) => {
     mode: "onChange",
     shouldFocusError: true,
   });
+  const customStyles = {
+    option: (provided) => ({
+      ...provided,
+      fontSize: '12px',
+      zIndex: 999
+    }),
 
+    singleValue: (provided) => ({
+      ...provided,
+      fontSize: '12px',
+    }),
+  };
   const notification = useToastContext();
   const [availableFor, setAvailableFor] = useState("all");
 
   const onSubmit = async (data) => {
+    if (availableFor === 'specificUser' && selectedUsers=='') {
+      setNotificationUserError(true);
+    }else{
     try {
       setLoading(true);
       const obj = {
         ...data,
         sendTo: availableFor,
+        user:availableFor!=='all'?selectedUsers?.value:null
       };
 
       const res = await apiPost(apiPath.notifications, { ...obj });
@@ -46,7 +69,50 @@ const NotificationAdd = ({ getAllNotifications, handleCategory }) => {
     } finally {
       setLoading(false);
     }
+  }
   };
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      setDebouncedSearchTerm(searchTerm?.trim());
+    }, 500);
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, [searchTerm]);
+
+
+
+  const handleSearchOption = async (event) => {
+    try {
+      const payload = {
+        keyword: event
+      };
+      const path = apiPath.searchUsers;
+      const result = await apiGet(path, payload);
+      if (result?.data?.success) {
+        const formattedOption = result?.data?.results?.map((res) => { return ({ label: `${res?.name + ',' + '(' + res?.email + ')'}`, value: res?._id }) })
+        setUsersSuggestion(formattedOption)
+
+      }
+
+    } catch (error) {
+      console.error("error ", error);
+    }
+  };
+
+
+  useEffect(() => {
+    if (!isInitialized) {
+      setIsInitialized(true);
+    } else if (searchTerm) {
+      handleSearchOption(debouncedSearchTerm)
+    }
+  }, [debouncedSearchTerm]);
+
+
+
+
 
   useEffect(() => {
     getAllNotifications();
@@ -116,7 +182,7 @@ const NotificationAdd = ({ getAllNotifications, handleCategory }) => {
                           type="radio"
                           checked={availableFor === "all"}
                           name="default-radio"
-                          onChange={() => setAvailableFor("all")}
+                          onChange={() => {setAvailableFor("all");setSelectedUsers('')}}
                           className="w-4 cursor-pointer h-4 text-blue-600 bg-gray-100 border-gray-300 rounded  dark:bg-gray-700 dark:border-gray-600"
                         />
                         <label
@@ -130,9 +196,9 @@ const NotificationAdd = ({ getAllNotifications, handleCategory }) => {
                         <input
                           id="default-checkbox1"
                           type="radio"
-                          checked={availableFor === "tourist"}
+                          checked={availableFor === "specificUser"}
                           name="default-radio"
-                          onChange={() => setAvailableFor("tourist")}
+                          onChange={() => {setAvailableFor("specificUser");setSelectedUsers('')}}
                           className="w-4 cursor-pointer h-4 text-blue-600 bg-gray-100 border-gray-300 rounded  dark:bg-gray-700 dark:border-gray-600"
                         />
                         <label
@@ -142,6 +208,41 @@ const NotificationAdd = ({ getAllNotifications, handleCategory }) => {
                           {t("ANY_PARTICULAR_USERS")}
                         </label>
                       </div>
+
+                    </div>
+                    <div>
+                      {availableFor == 'specificUser' && <div className="relative z-0 w-full group md:py-3 sm:py-3">
+                        <DynamicLabel
+                          name={<>{t("SPECIFIC_USER")} <span className="text-red-600">*</span></>}
+                          type={false}
+                        />
+                        <Select
+                          // isMulti
+                          wrapperClassName="relative z-0 mb-2 w-full group"
+                          name="language"
+                          inputValue={searchTerm}
+                          onInputChange={(value) => setSearchTerm(value)}
+                          placeholder={
+                            <>
+                              {t("SEARCH_USER_BY_NAME")}
+                            </>
+                          }
+                          options={[{label:t('SEARCH_USER_BY_NAME'),value:''},...usersSuggestion]}
+                          defaultValue={t("SELECT_USERS")}
+                          onChange={(e) => {
+                            if(e?.value==''){
+                              setSelectedUsers('');
+                            }else{
+                            setSelectedUsers(e);
+                            setNotificationUserError(false);}}}
+                          selectStyles={customStyles}
+                          value={selectedUsers}
+                        />
+                        {selectedUsers=='' && notificationUserError && (
+                          <ErrorMessage message="Please select users." />
+                        )}
+
+                      </div>}
                     </div>
                   </div>
                 </div>

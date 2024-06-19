@@ -9,11 +9,10 @@ import ODateRangePicker from "components/shared/datePicker/ODateRangePicker";
 import { useTranslation } from "react-i18next";
 import PageSizeList from "components/PageSizeList";
 import helpers from "utils/helpers";
-import OSearch from "components/reusable/OSearch";
 import { startCase } from "lodash";
 import { KYCStatusArray } from "utils/constants";
 import { useLocation } from "react-router-dom";
-
+import SearchWithOption from '../../components/reusable/SearchWithOption'
 function User() {
   const { t } = useTranslation();
   const location = useLocation();
@@ -25,7 +24,7 @@ function User() {
   });
 
   const [users, setAllUser] = useState([]);
-  const [userType, setUserType] = useState(location?.state?.userType ? location?.state?.userType : "tourist");
+  const [userType] = useState(location?.state?.userType ? location?.state?.userType : "tourist");
 
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
@@ -37,7 +36,7 @@ function User() {
   const [filterData, setFilterData] = useState({
     isKYCVerified: "",
     category: "",
-    searchkey: "",
+    userId: "",
     startDate: "",
     endDate: "",
     isReset: false,
@@ -48,9 +47,9 @@ function User() {
     sort_type: "desc",
   });
 
-  const getAllUser = async (data) => {
+  const getAllUser = async () => {
     try {
-      const { category, startDate, endDate, searchkey, isKYCVerified } = filterData;
+      const { category, startDate, endDate, searchkey, isKYCVerified,userId } = filterData;
 
       const payload = {
         page,
@@ -62,6 +61,7 @@ function User() {
         sortKey: sort?.sort_key,
         sortType: sort?.sort_type,
         isKYCVerified,
+        userId:userId||null
       };
 
       const path = apiPath.getUsers;
@@ -114,7 +114,7 @@ function User() {
       isKYCVerified: "",
       category: "",
       kycStatus: "",
-      searchkey: "",
+      userId: "",
       startDate: "",
       endDate: "",
       isReset: true,
@@ -134,9 +134,15 @@ function User() {
       isReset: false,
     });
   };
+
+
+
+
+  const [filteredItems, setFilteredItems] = useState([]);
+  const [dropdownVisible, setDropdownVisible] = useState(false);
   useEffect(() => {
     const timeoutId = setTimeout(() => {
-      setDebouncedSearchTerm(searchTerm.trim());
+      setDebouncedSearchTerm(searchTerm?.trim());
     }, 500);
     return () => {
       clearTimeout(timeoutId);
@@ -161,27 +167,48 @@ function User() {
     setPage(1);
   };
 
+  const[isSelected,setIsSelected]=useState(false)
+
+
+  const handleSearchOption = async (event) => {
+    const value = event;
+    if (value === '') {
+      setFilteredItems([]);
+      setDropdownVisible(false);
+    } else {
+      try {
+       
+        const payload = {
+          keyword: event
+        };
+        const path = apiPath.searchUsers;
+        const result = await apiGet(path, payload);
+        if (result?.status === 200) {
+          const resultData = result?.data?.results
+          setFilteredItems(resultData);
+        }
+      
+      } catch (error) {
+        console.error("error ", error);
+      }
+      setDropdownVisible(true);
+    }
+  };
   useEffect(() => {
     if (!isInitialized) {
       setIsInitialized(true);
-    } else if (searchTerm || !filterData?.isReset) {
-      setFilterData({
-        ...filterData,
-        isReset: false,
-        searchkey: debouncedSearchTerm|| "",
-        isFilter: !!debouncedSearchTerm ,
-      });
+    } else if ((searchTerm || !filterData?.isReset)&&!isSelected) {
+      handleSearchOption(debouncedSearchTerm)
       setPage(1);
     }
   }, [debouncedSearchTerm]);
-
   const manager = user?.permission?.find((e) => e.manager === "user_manager");
 
   return (
     <div>
       <div className="bg-[#F9F9F9] dark:bg-slate-900">
         <div className="px-3 py-4">
-         
+
           <div className="bg-white border border-[#E9EDF9] rounded-lg dark:bg-slate-800 dark:border-[#ffffff38]">
             <form className="border-b border-b-[#E3E3E3]  px-4 py-3 pt-5 flex flex-wrap justify-between">
               <div className="flex flex-wrap items-center">
@@ -206,7 +233,7 @@ function User() {
                     </select>
                   </div>
 
-                  <div className="flex items-center mb-3 ml-3">
+                  {/* <div className="flex items-center mb-3 ml-3">
                     <select
                       id="countries"
                       type=" password"
@@ -225,7 +252,7 @@ function User() {
                         </option>
                       ))}
                     </select>
-                  </div>
+                  </div> */}
 
                   <button
                     type="button"
@@ -239,12 +266,12 @@ function User() {
               </div>
               <div className="flex items-center md:justify-end px-4">
                 <label htmlFor="default-search" className="mb-2 font-medium text-sm  text-gray-900 sr-only">
-                 
+
                   {t("USER_ID_EMAIL_MOBILE")}
                 </label>
                 <div className="flex">
                   <div className="relative">
-                    <OSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm} placeholder={t("USER_ID_EMAIL_MOBILE")} inputClass={'2xl:min-w-[350px] xl:min-w-[300px]  2xl:min-w-[250px] xl:min-w-[300px]'}/>
+                    <SearchWithOption searchTerm={searchTerm} setIsSelected={setIsSelected} setFilterData={setFilterData} filterData={filterData} setSearchTerm={setSearchTerm} filteredItems={filteredItems} dropdownVisible={dropdownVisible} setDropdownVisible={setDropdownVisible} setFilteredItems={setFilteredItems} placeholder={t('USER_ID_EMAIL_MOBILE')} />
                   </div>
                 </div>
               </div>

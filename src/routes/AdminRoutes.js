@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 import SubAdmin from 'pages/sub_admin/SubAdmin'
 import SubAdd from 'pages/sub_admin/SubAdd'
 import BannerManager from 'pages/banner_manager/Banner'
+import WalletManager from 'pages/wallet_manager/Wallet'
 import StaticContent from 'pages/static_Contents/StaticContent'
 import AddStaticContent from 'pages/static_Contents/AddStaticContent'
 import EditStaticContent from 'pages/static_Contents/EditStaticContent'
@@ -122,6 +123,14 @@ const AdminRoutes = {
       element: <BannerManager />,
       name: (
           <UseChange data='EMAIL_MANAGER' />
+      )
+    },
+
+    {
+      path: '/wallet-manager',
+      element: <WalletManager />,
+      name: (
+          <UseChange data='WALLET_MANAGER' />
       )
     },
 
