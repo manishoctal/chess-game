@@ -1,29 +1,21 @@
-import React, { useContext, useState, useEffect } from "react";
-import { AiFillDelete, AiFillEdit, AiFillEye } from "react-icons/ai";
+import React, { useContext, useEffect } from "react";
+import { AiFillEdit, AiFillWallet } from "react-icons/ai";
 import { useTranslation } from "react-i18next";
-import { BsArrowUpShort } from "react-icons/bs";
 import AuthContext from "context/AuthContext";
 import { isEmpty, startCase } from "lodash";
-import { useNavigate } from "react-router-dom";
-import TableModal from "./TableModal";
 import helpers from "../../utils/helpers";
-import OImage from "components/reusable/OImage";
-
+import OWalletTableHead from '../../components/reusable/OTableHead'
 const SubTable = ({
   subAdmin,
-  handelDelete,
   page,
   sort,
   setSort,
   manager,
-  handelStatusChange,
   pageSize,
   editViewBanner
 }) => {
   const { t } = useTranslation();
-  const navigate = useNavigate();
   const { user, updatePageName } = useContext(AuthContext);
-  const [modalTable, setModalTable] = useState(false);
 
   useEffect(() => {
     updatePageName(t("SUB_ADMIN_MANAGERS"));
@@ -39,140 +31,14 @@ const SubTable = ({
               <th scope="col" className="py-3 px-6">
                 {t("S.NO")}
               </th>
-              <th
-                scope="col"
-                className="py-3 px-6 cursor-pointer"
-                onClick={() => {
-                  if (sort.sortBy === "userId" && sort.sortType === "asc") {
-                    setSort({
-                      sortBy: "userId",
-                      sortType: "desc",
-                    });
-                  } else {
-                    setSort({
-                      sortBy: "userId",
-                      sortType: "asc",
-                    });
-                  }
-                }}
-              >
-                <div className="flex">
-                  <span>{t("USER_ID")}</span>
-                  <span>
-                    {sort.sortBy === "userId" && sort.sortType === "asc" && (
-                      <BsArrowUpShort className="w-4 h-4" />
-                    )}
-                    {sort.sortBy === "userId" && sort.sortType === "desc" && (
-                      <BsArrowUpShort className="w-4 h-4 rotate-180" />
-                    )}
-                  </span>
-                </div>
-              </th>
-
-              <th scope="col" className="py-3 px-6 flex justify-center">
-                {t("FULL_NAME")}
-              </th>
-
-              <th
-                scope="col"
-                className="py-3 px-6 cursor-pointer text-right"
-                onClick={() => {
-                  if (sort.sortBy === "userName" && sort.sortType === "asc") {
-                    setSort({
-                      sortBy: "userName",
-                      sortType: "desc",
-                    });
-                  } else {
-                    setSort({
-                      sortBy: "userName",
-                      sortType: "asc",
-                    });
-                  }
-                }}
-              >
-                <div className="flex justify-start">
-                  <span>{t("USER_NAME")} </span>
-                  <span>
-                    {sort.sortBy === "userName" && sort.sortType === "asc" && (
-                      <BsArrowUpShort className="w-4 h-4" />
-                    )}
-                    {sort.sortBy === "userName" &&
-                      sort.sortType === "desc" && (
-                        <BsArrowUpShort className="w-4 h-4 rotate-180" />
-                      )}
-                  </span>
-                </div>
-              </th>
-
-              <th
-                scope="col"
-                className="py-3 px-6 cursor-pointer text-right"
-                onClick={() => {
-                  if (sort.sortBy === "createdAt" && sort.sortType === "asc") {
-                    setSort({
-                      sortBy: "createdAt",
-                      sortType: "desc",
-                    });
-                  } else {
-                    setSort({
-                      sortBy: "createdAt",
-                      sortType: "asc",
-                    });
-                  }
-                }}
-              >
-                <div className="flex justify-start">
-                  <span>{t("O_CREATED_AT")} </span>
-                  <span>
-                    {sort.sortBy === "createdAt" && sort.sortType === "asc" && (
-                      <BsArrowUpShort className="w-4 h-4" />
-                    )}
-                    {sort.sortBy === "createdAt" &&
-                      sort.sortType === "desc" && (
-                        <BsArrowUpShort className="w-4 h-4 rotate-180" />
-                      )}
-                  </span>
-                </div>
-              </th>
-
-
-
-
-              <th
-                scope="col"
-                className="py-3 px-6 cursor-pointer text-right"
-                onClick={() => {
-                  if (sort.sortBy === "updatedAt" && sort.sortType === "asc") {
-                    setSort({
-                      sortBy: "updatedAt",
-                      sortType: "desc",
-                    });
-                  } else {
-                    setSort({
-                      sortBy: "updatedAt",
-                      sortType: "asc",
-                    });
-                  }
-                }}
-              >
-                <div className="flex justify-start">
-                  <span>{t("O_UPDATED_AT")} </span>
-                  <span>
-                    {sort.sortBy === "updatedAt" && sort.sortType === "asc" && (
-                      <BsArrowUpShort className="w-4 h-4" />
-                    )}
-                    {sort.sortBy === "updatedAt" &&
-                      sort.sortType === "desc" && (
-                        <BsArrowUpShort className="w-4 h-4 rotate-180" />
-                      )}
-                  </span>
-                </div>
-              </th>
-              {(manager?.add || manager?.edit || user?.role === "admin") && (
-                <th scope="col" className="py-3 px-6 text-center">
-                  {t("O_STATUS")}
-                </th>
-              )}
+              <OWalletTableHead sort={sort} setSort={setSort} name='USER_ID' fieldName='userId' />
+              <OWalletTableHead sort={sort} setSort={setSort} name='FULL_NAME' fieldName='name' />
+              <OWalletTableHead sort={sort} setSort={setSort} name='USER_NAME' fieldName='userName' />
+              <OWalletTableHead sort={sort} setSort={setSort} name='MOBILE_NUMBER' fieldName='mobile' />
+              <OWalletTableHead sort={sort} setSort={setSort} name='EMAIL_ID' fieldName='email' />
+              <OWalletTableHead sort={sort} setSort={setSort} name='DEPOSIT_BALANCE' fieldName='depositBalance' />
+              <OWalletTableHead sort={sort} setSort={setSort} name='BONUS_AMOUNT_BALANCE' fieldName='bonusAmountBalance' />
+              <OWalletTableHead sort={sort} setSort={setSort} name='WINNING_AMOUNT_BALANCE' fieldName='winningAmountBalance' />
               <th scope="col" className="py-3 px-6 text-center">
                 {t("O_ACTION")}
               </th>
@@ -195,22 +61,8 @@ const SubTable = ({
                   {startCase(item?.bannerId) || 'N/A'}
                 </td>
 
-                <td className="py-2 px-4 border-r dark:border-[#ffffff38]  flex justify-center">
-                  <ul>
-                    <li onClick={() => { editViewBanner('view', item) }} style={{cursor:'pointer'}}>
-                      <OImage
-                        src={
-                          item?.image
-                            ? item?.image
-                            : null
-                        }
-                        fallbackUrl='/images/user.png'
-                        className='w-14 h-14'
-                        alt=''
-                        style={{ borderRadius: '50%' }}
-                      />
-                    </li>
-                  </ul>
+                <td className="py-2 px-4 border-r dark:border-[#ffffff38]">
+                  {item?.name||'N/A'}
                 </td>
                 <td className="py-2 px-4 border-r dark:border-[#ffffff38]">
                   {helpers.getDateAndTime(item?.createdAt)}
@@ -218,42 +70,22 @@ const SubTable = ({
                 <td className="py-2 px-4 border-r dark:border-[#ffffff38]">
                   {helpers.getDateAndTime(item?.updatedAt)}
                 </td>
-                {(manager?.add || manager?.edit || user?.role === "admin") && (
-                  <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-center">
-                    <label
-                      className="inline-flex relative items-center cursor-pointer"
-                      title={`${item?.status === "active" ? "Active" : "Inactive"
-                        }`}
-                    >
-                      <input
-                        type="checkbox"
-                        className="sr-only peer"
-                        checked={item?.status === "active"}
-                        onChange={(e) =>
-                          helpers.alertFunction(
-                            `${t("ARE_YOU_SURE_YOU_WANT_TO")} ${e.target.checked ? "active" : "inactive"
-                            } banner ID '${item?.bannerId}'?`,
-                            item,
-                            handelStatusChange
-                          )
-                        }
-                      />
-                      <div className="w-10 h-5 bg-gray-200 rounded-full peer peer-focus:ring-0 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-gradientTo" />
-                    </label>
-                  </td>
-                )}
+                <td className="py-2 px-4 border-r dark:border-[#ffffff38]">
+                  {helpers.getDateAndTime(item?.updatedAt)}
+                </td>
+                <td className="py-2 px-4 border-r dark:border-[#ffffff38]">
+                  {helpers.getDateAndTime(item?.updatedAt)}
+                </td>
+                <td className="py-2 px-4 border-r dark:border-[#ffffff38]">
+                  {helpers.getDateAndTime(item?.updatedAt)}
+                </td>
+                <td className="py-2 px-4 border-r dark:border-[#ffffff38]">
+                  {helpers.getDateAndTime(item?.updatedAt)}
+                </td>
                 <td className="py-2 px-4 border-l">
                   <div className="">
                     <ul className="flex justify-center">
-                      <li
-                        onClick={() => { editViewBanner('view', item) }}
-                        className="px-2 py-2 hover:text-gradientTo"
-                      >
-                        <a title={t("O_VIEW")}>
 
-                          <AiFillEye className="cursor-pointer w-5 h-5 text-slate-600" />
-                        </a>
-                      </li>
                       {(manager?.add || user?.role === "admin") && (
                         <li
                           onClick={() => { editViewBanner('edit', item) }}
@@ -265,27 +97,15 @@ const SubTable = ({
                           </a>
                         </li>
                       )}
+                      {(manager?.view || user?.role === "admin") && (<li
+                        onClick={() => { editViewBanner('view', item) }}
+                        className="px-2 py-2 hover:text-gradientTo"
+                      >
+                        <a title={t("O_VIEW")}>
 
-
-                      {(manager?.add || user?.role === "admin") && (
-                        <li
-                          onClick={(e) =>
-                            helpers.alertFunction(
-                              `${t("ARE_YOU_SURE_YOU_WANT_TO")} delete banner ID"
-                             '${item?.bannerId}'?`,
-                              item,
-                              handelDelete
-                            )
-                          }
-
-                          className="px-2 py-2 hover:text-gradientTo"
-                        >
-                          <a title={t("O_DELETE")}>
-
-                            <AiFillDelete className="cursor-pointer w-5 h-5 text-red-600" />
-                          </a>
-                        </li>
-                      )}
+                          <AiFillWallet className="cursor-pointer w-5 h-5 text-slate-600" />
+                        </a>
+                      </li>)}
 
                     </ul>
                   </div>
@@ -302,9 +122,7 @@ const SubTable = ({
           </tbody>
         </table>
       </div>
-      {modalTable ? (
-        <TableModal setModalTable={setModalTable} modalTable={modalTable} />
-      ) : null}
+     
     </div>
   );
 };

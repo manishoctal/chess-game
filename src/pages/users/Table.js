@@ -212,7 +212,7 @@ const Table = ({
           {renderTableCell(getDisplayName(item, userType), "bg-white py-4 px-4 border-r border  dark:border-[#ffffff38]")}
           {renderTableCell(helpers.ternaryCondition(item?.userName, item?.userName, "N/A"), "bg-white border py-2 px-4 border-r  dark:border-[#ffffff38] font-bold ")}
           {renderTableCell(helpers.ternaryCondition(item?.email, item?.email, "N/A"), "bg-white py-2 px-4 border-r border  dark:border-[#ffffff38] font-bold text-slate-900")}
-          {renderTableCell(helpers.ternaryCondition(item?.countryCode, '+' + item?.countryCode, "N/A"), "bg-white border py-2 px-4 border-r  dark:border-[#ffffff38] text-center font-bold")}
+          {renderTableCell(helpers.ternaryCondition(item?.countryCode,item?.countryCode?.includes('+')?item?.countryCode:'+'+item?.countryCode, "N/A"), "bg-white border py-2 px-4 border-r  dark:border-[#ffffff38] text-center font-bold")}
           {renderTableCell(helpers.ternaryCondition(item?.mobile, item?.mobile, "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold")}
           {renderUserTypeSpecificCells(item, userType)}
           {renderCommonTableCells(item)}

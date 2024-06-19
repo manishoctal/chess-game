@@ -12,7 +12,7 @@ import helpers from "utils/helpers";
 import { startCase } from "lodash";
 import { KYCStatusArray } from "utils/constants";
 import { useLocation } from "react-router-dom";
-import SearchWithOption from '../../components/reusable/SearchWithOption'
+import SearchWithOption from '../../components/reusable/SearchableDropdown'
 function User() {
   const { t } = useTranslation();
   const location = useLocation();
