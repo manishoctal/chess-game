@@ -397,7 +397,7 @@ const SubAdd = () => {
                             id='all'
                             name={data?.manager}
                             onChange={checkAll}
-                            checked={isCheckAll || (data.add && data.view)}
+                            checked={isCheckAll || (helpers.andOperator(data.add, data.view))}
                             disabled={item?.type === 'view'}
                           />
                         )}
