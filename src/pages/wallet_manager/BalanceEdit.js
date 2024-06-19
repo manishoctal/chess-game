@@ -59,7 +59,7 @@ const BalanceEdit = ({ setEditShowModal, viewType }) => {
                                         <option value={'edit_deposit'}>{t('EDIT_WINNING_AMOUNT_BALANCE')}</option>]}
                                     />
                                 </div>
-                                {errors?.balanceType&&<div class="text-sm text-red-600 w-[389px] flex justify-center">{errors?.balanceType?.message}</div>}
+                                {errors?.balanceType && <div class="text-sm text-red-600 w-[389px] flex justify-center">{errors?.balanceType?.message}</div>}
                             </div>
 
 
@@ -123,16 +123,19 @@ const BalanceEdit = ({ setEditShowModal, viewType }) => {
                                 >
                                     {t("CLOSE")}
                                 </button>
-                                {viewType !== 'view' && helpers.ternaryCondition(loader, <button className="bg-gradientTo text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150">
-                                    <div className="spinner-container">
-                                        <div className="loading-spinner" />
-                                    </div>
-                                </button>, <button
-                                    className="bg-gradientTo text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150"
-                                    type="submit"
-                                >
-                                    {t("O_EDIT")}
-                                </button>)}
+                                {helpers.andOperator(viewType !== 'view',
+                                    helpers.ternaryCondition(loader,
+                                        <button className="bg-gradientTo text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150">
+                                            <div className="spinner-container">
+                                                <div className="loading-spinner" />
+                                            </div>
+                                        </button>, 
+                                        <button
+                                            className="bg-gradientTo text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150"
+                                            type="submit"
+                                        >
+                                        {t("O_EDIT")}
+                                    </button>))}
 
                             </div>
                         </div>
