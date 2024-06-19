@@ -4,7 +4,6 @@ import apiPath from '../../utils/apiPath'
 import dayjs from 'dayjs'
 import StaticContentView from './StaticContentView'
 import StaticContentList from './StaticContentList'
-import Pagination from '../Pagination'
 import AuthContext from 'context/AuthContext'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
@@ -21,11 +20,7 @@ const StaticContent = () => {
     user?.permission?.find(e => e.manager === 'static_page_management') ?? {}
   const { t } = useTranslation()
   const [page, setPage] = useState(1)
-  const [paginationObj, setPaginationObj] = useState({
-    page: 1,
-    pageCount: 1,
-    pageRangeDisplayed: 10
-  })
+ 
   const [countryList, setCountryList] = useState([])
   const [countryEdit, setCountryEdit] = useState(false)
   const [currentItem, setCurrentItem] = useState('')
@@ -66,11 +61,6 @@ const StaticContent = () => {
     }
   }
 
-  const handlePageClick = event => {
-    const newPage = event.selected + 1
-    setPage(newPage)
-  }
-
   const getStaticContent = async () => {
     try {
       const { status, startDate, endDate, searchkey } = filterData
@@ -96,19 +86,8 @@ const StaticContent = () => {
       const path = apiPath.getStaticContent
       const result = await apiGet(path, payload)
       const response = result?.data?.results
-      const resultStatus = result?.data?.success
       setCountryList(response)
-      // setPaginationObj({
-      //   ...paginationObj,
-      //   page: ternaryCondition(resultStatus, response.page, null),
-      //   pageCount: ternaryCondition(resultStatus, response.totalPages, null),
-      //   perPageItem: ternaryCondition(
-      //     resultStatus,
-      //     response?.docs.length,
-      //     null
-      //   ),
-      //   totalItems: ternaryCondition(resultStatus, response.totalDocs, null)
-      // })
+     
     } catch (error) {
       console.error('error in get all country list==>>>>', error.message)
     }
@@ -195,14 +174,7 @@ const StaticContent = () => {
                 getStaticContent={getStaticContent}
               />
             )}
-            {andOperator(
-              paginationObj?.totalItems,
-              <Pagination
-                handlePageClick={handlePageClick}
-                options={paginationObj}
-                page={page}
-              />
-            )}
+            
           </div>
         </div>
       </div>

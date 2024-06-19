@@ -8,7 +8,7 @@ import TableModal from "./TableModal";
 import helpers from "../../utils/helpers";
 import OImage from "components/reusable/OImage";
 
-const SubTable = ({
+const BannerTable = ({
   subAdmin,
   handelDelete,
   page,
@@ -271,4 +271,4 @@ const SubTable = ({
   );
 };
 
-export default SubTable;
+export default BannerTable;

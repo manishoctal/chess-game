@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import { apiGet, apiPut } from "../../utils/apiFetch";
 import apiPath from "../../utils/apiPath";
 import Table from "./Table";
-import Pagination from "../Pagination";
 import dayjs from "dayjs";
 import AuthContext from "context/AuthContext";
 import useToastContext from "hooks/useToastContext";

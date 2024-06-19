@@ -1,9 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { startCase } from "lodash";
-import OImage from "components/reusable/OImage";
 import { useNavigate, useLocation } from "react-router-dom";
-import noImageFound from "../../assets/images/No-image-found.jpg";
 import AuthContext from "context/AuthContext";
 import helpers from "utils/helpers";
 import { Buffer } from 'buffer'
@@ -60,16 +58,7 @@ const StaticContentView = () => {
                       </h6>
                     </div>
                   </div>
-                  {/* <div className="sm:py-4 sm:px-2 py-8 px-7 col-span-1">
-                    <div className="relative z-0 w-full group">
-                      <strong>Image:</strong>
-                      <OImage
-                        src={location?.state?.StaticContentImage}
-                        fallbackUrl={noImageFound}
-                        alt=""
-                      />
-                    </div>
-                  </div> */}
+                 
                   <div className="sm:py-4 sm:px-2 py-8 px-7 col-span-3 max-h-[540px] overflow-y-auto">
                     <div className="relative z-0 w-full group">
                       <strong>Description:</strong>

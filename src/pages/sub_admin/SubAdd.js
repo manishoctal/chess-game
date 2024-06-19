@@ -16,7 +16,7 @@ import helpers from 'utils/helpers'
 import { preventMaxInput } from 'utils/validations'
 const { startCase, capitalize } = require('lodash')
 
-const SubAdd = ({ props }) => {
+const SubAdd = () => {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const location = useLocation()
@@ -26,7 +26,6 @@ const SubAdd = ({ props }) => {
   const {
     register,
     handleSubmit,
-    // watch,
     control,
     getValues,
     formState: { errors }
@@ -56,33 +55,63 @@ const SubAdd = ({ props }) => {
   const [countryCode] = useState('in')
   const [isSelectAll, setIsSelectAll] = useState(false)
   const [isCheckAll, setIsCheckAll] = useState(false)
+  // const onChange = event => {
+  //   if (!event.target.checked) {
+  //     setIsSelectAll(false)
+  //   }
+  //   setPermission(current =>
+  //     current.map(obj => {
+  //       if (obj.manager === event.target.name) {
+  //         if (event.target.id === 'add' || event.target.id === 'edit') {
+  //           return {
+  //             ...obj,
+  //             [event.target.id]: event.target.checked,
+  //             view: event.target.checked
+  //           }
+  //         } else if (event.target.id === 'view' && !event.target.checked) {
+  //           return {
+  //             ...obj,
+  //             add: false,
+  //             edit: false,
+  //             view: false
+  //           }
+  //         }
+  //         return { ...obj, [event.target.id]: event.target.checked }
+  //       }
+  //       return obj
+  //     })
+  //   )
+  // }
+
   const onChange = event => {
-    if (!event.target.checked) {
-      setIsSelectAll(false)
+    const { checked, id, name } = event.target;
+  
+    if (!checked) {
+      setIsSelectAll(false);
     }
-    setPermission(current =>
-      current.map(obj => {
-        if (obj.manager === event.target.name) {
-          if (event.target.id === 'add' || event.target.id === 'edit') {
-            return {
-              ...obj,
-              [event.target.id]: event.target.checked,
-              view: event.target.checked
-            }
-          } else if (event.target.id === 'view' && !event.target.checked) {
-            return {
-              ...obj,
-              add: false,
-              edit: false,
-              view: false
-            }
-          }
-          return { ...obj, [event.target.id]: event.target.checked }
-        }
-        return obj
-      })
-    )
-  }
+  
+    const updatePermissions = (obj) => {
+      if (obj.manager !== name) {
+        return obj;
+      }
+  
+      let newPermissions = { ...obj, [id]: checked };
+  
+      if (id === 'add' || id === 'edit') {
+        newPermissions.view = checked;
+      }
+  
+      if (id === 'view' && !checked) {
+        newPermissions = { ...obj, add: false, edit: false, view: false };
+      }
+  
+      return newPermissions;
+    };
+  
+    setPermission(current => current.map(updatePermissions));
+  };
+  
+
 
   const onSubmit = async data => {
     data.mobile = data?.mobile?.substring(
@@ -336,9 +365,7 @@ const SubAdd = ({ props }) => {
                     <th scope='col' className='py-3 px-6 '>
                       {t('SUB_ADMIN_ADD_EDIT')}
                     </th>
-                    {/* <th scope="col" className="py-3 px-6 ">
-                      {t("O_DELETE")}
-                    </th> */}
+                  
                     <th scope='col' className='py-3 px-6'>
                       <div className='flex items-center justify-between '>
                         {t('O_ALL')}
