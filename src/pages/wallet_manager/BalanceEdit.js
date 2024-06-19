@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import helpers from "utils/helpers";
 import OInputField from "components/reusable/OInputField";
-const BannerEdit = ({ setEditShowModal, viewType }) => {
+const BalanceEdit = ({ setEditShowModal, viewType }) => {
     const { t } = useTranslation();
     const {
         handleSubmit,
@@ -143,4 +143,4 @@ const BannerEdit = ({ setEditShowModal, viewType }) => {
     );
 };
 
-export default BannerEdit;
+export default BalanceEdit;

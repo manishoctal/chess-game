@@ -55,34 +55,6 @@ const SubAdd = () => {
   const [countryCode] = useState('in')
   const [isSelectAll, setIsSelectAll] = useState(false)
   const [isCheckAll, setIsCheckAll] = useState(false)
-  // const onChange = event => {
-  //   if (!event.target.checked) {
-  //     setIsSelectAll(false)
-  //   }
-  //   setPermission(current =>
-  //     current.map(obj => {
-  //       if (obj.manager === event.target.name) {
-  //         if (event.target.id === 'add' || event.target.id === 'edit') {
-  //           return {
-  //             ...obj,
-  //             [event.target.id]: event.target.checked,
-  //             view: event.target.checked
-  //           }
-  //         } else if (event.target.id === 'view' && !event.target.checked) {
-  //           return {
-  //             ...obj,
-  //             add: false,
-  //             edit: false,
-  //             view: false
-  //           }
-  //         }
-  //         return { ...obj, [event.target.id]: event.target.checked }
-  //       }
-  //       return obj
-  //     })
-  //   )
-  // }
-
   const onChange = event => {
     const { checked, id, name } = event.target;
   
@@ -111,57 +83,54 @@ const SubAdd = () => {
     setPermission(current => current.map(updatePermissions));
   };
   
-
-
-  const onSubmit = async data => {
-    data.mobile = data?.mobile?.substring(
-      inputRef?.current?.state.selectedCountry?.countryCode?.length,
-      data?.mobile?.toString()?.length
-    )
-    data.countryCode = inputRef?.current?.state.selectedCountry?.countryCode
-    const myData = { ...data }
-    try {
-      setLoader(true)
-      let path = apiPath.getSubAdmin
-      let result
-      const myObj = {
-        manager: 'dashboard',
-        add: true,
-        edit: true,
-        view: true
-      }
-      if (item?.type === 'edit') {
-        const permission = JSON.stringify([...permissionJons])
-        const editSendData = {
-          ...myData,
-          permission,
-          name: data?.firstName + data?.lastName
+  const onSubmit = async (data) => {
+    const formatMobile = (mobile, countryCodeLength) => mobile?.substring(countryCodeLength, mobile?.toString()?.length);
+  
+    const getCountryCode = () => inputRef?.current?.state.selectedCountry?.countryCode;
+  
+    const prepareSendData = (myData, permission, data, path) => ({
+      ...myData,
+      permission,
+      name: data?.firstName + data?.lastName,
+      path,
+    });
+  
+    const handleApiCall = async (path, sendData, isEdit) => {
+      try {
+        setLoader(true);
+        const result = isEdit ? await apiPut(path, sendData) : await apiPost(path, sendData);
+  
+        if (result?.data?.success) {
+          navigate('/sub-admin-manager');
+          notification.success(result?.data.message);
+        } else {
+          notification.error(result?.data.message);
         }
+      } catch (error) {
+        console.error('error in get all sub admin list==>>>>', error.message);
+      } finally {
+        setLoader(false);
+      }
+    };
+  
+    const countryCode = getCountryCode();
+    data.mobile = formatMobile(data.mobile, countryCode.length);
+    data.countryCode = countryCode;
+  
+    const myData = { ...data };
+  
+    const isEdit = item?.type === 'edit';
+    const permission = JSON.stringify(isEdit ? [...permissionJons] : [{ manager: 'dashboard', add: true, edit: true, view: true }, ...permissionJons]);
+  
+    const sendData = prepareSendData(myData, permission, data, isEdit ? `${apiPath.editSubAdmin}/${item?.item?._id}` : apiPath.getSubAdmin);
+  
+    await handleApiCall(sendData.path, sendData, isEdit);
+  };
+  
 
-        path = apiPath.editSubAdmin + '/' + item?.item?._id
-        result = await apiPut(path, editSendData)
-      } else {
-        const permission = JSON.stringify([myObj, ...permissionJons])
-        const sendData = {
-          ...myData,
-          permission,
-          name: data?.firstName + data?.lastName
-        }
-        path = apiPath.getSubAdmin
-        result = await apiPost(path, sendData)
-      }
-      if (result?.data?.success) {
-        navigate('/sub-admin-manager')
-        notification.success(result?.data.message)
-      } else {
-        notification.error(result?.data.message)
-      }
-    } catch (error) {
-      console.error('error in get all sub admin list==>>>>', error.message)
-    } finally {
-      setLoader(false)
-    }
-  }
+
+
+
   useEffect(() => {
     if (item?.type === 'add') {
       updatePageName(t('ADD_SUB_ADMIN'))
