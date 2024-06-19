@@ -20,7 +20,7 @@ const StaticContent = () => {
     user?.permission?.find(e => e.manager === 'static_page_management') ?? {}
   const { t } = useTranslation()
   const [page, setPage] = useState(1)
- 
+
   const [countryList, setCountryList] = useState([])
   const [countryEdit, setCountryEdit] = useState(false)
   const [currentItem, setCurrentItem] = useState('')
@@ -41,6 +41,7 @@ const StaticContent = () => {
     sortType: 'desc'
   })
 
+  // edit content navigation function start
   const handleEdit = async item => {
     setCurrentItem(item)
     setCountryEdit(!countryEdit)
@@ -51,6 +52,11 @@ const StaticContent = () => {
     const newData = { ...item, content: newContent }
     navigate('/static-content/edit', { state: newData })
   }
+  // edit content navigation function end
+
+
+  // view content function start
+
   const handleView = item => {
     setCurrentItem(item)
     setCountryView(!countryView)
@@ -60,6 +66,9 @@ const StaticContent = () => {
       navigate('/static-content/view', { state: item })
     }
   }
+  // view content function end
+
+  // get all static content start
 
   const getStaticContent = async () => {
     try {
@@ -87,7 +96,7 @@ const StaticContent = () => {
       const result = await apiGet(path, payload)
       const response = result?.data?.results
       setCountryList(response)
-     
+
     } catch (error) {
       console.error('error in get all country list==>>>>', error.message)
     }
@@ -97,7 +106,10 @@ const StaticContent = () => {
     getStaticContent()
   }, [page, filterData, sort])
 
-  
+  // get all static content end
+
+  // debounce search function start
+
   useEffect(() => {
     if (!isInitialized) {
       setIsInitialized(true)
@@ -120,6 +132,8 @@ const StaticContent = () => {
       clearTimeout(timeoutId)
     }
   }, [searchTerm])
+  // debounce search function end
+
 
   useEffect(() => {
     updatePageName(t('NAV_STATIC_CONTENTS'))
@@ -130,55 +144,55 @@ const StaticContent = () => {
   }
 
   return (
-      <div className='bg-[#F9F9F9] dark:bg-slate-900'>
-        <div className='px-3 py-4'>
-          <div className='bg-white border border-[#E9EDF9] rounded-lg dark:bg-slate-800 dark:border-[#ffffff38]'>
-            <form className='border-b border-b-[#E3E3E3] 2xl:flex gap-2 px-4 py-3'>
-              <div className='col-span-2 flex flex-wrap  items-center mb-2 2xl:mb-0'>
-                <div className='flex items-center lg:pt-0 pt-3 flex-wrap '>
-                  <div className='relative flex items-center mb-3'>
-                  <OSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm}  placeholder={t('SEARCH_BY_TITLE')}/>
+    <div className='bg-[#F9F9F9] dark:bg-slate-900'>
+      <div className='px-3 py-4'>
+        <div className='bg-white border border-[#E9EDF9] rounded-lg dark:bg-slate-800 dark:border-[#ffffff38]'>
+          <form className='border-b border-b-[#E3E3E3] 2xl:flex gap-2 px-4 py-3'>
+            <div className='col-span-2 flex flex-wrap  items-center mb-2 2xl:mb-0'>
+              <div className='flex items-center lg:pt-0 pt-3 flex-wrap '>
+                <div className='relative flex items-center mb-3'>
+                  <OSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm} placeholder={t('SEARCH_BY_TITLE')} />
 
-                  </div>
-                 
                 </div>
-              </div>
-             
-            </form>
-            <StaticContentList
-              countryList={countryList}
-              getStaticContent={getStaticContent}
-              page={page}
-              handleEdit={handleEdit}
-              handleView={handleView}
-              currentItem={currentItem}
-              countryView={countryView}
-              setSort={setSort}
-              sort={sort}
-              manager={manager}
-            />
-            {andOperator(
-              countryView,
-              <StaticContentView
-                countryView={countryView}
-                currentItem={currentItem}
-                handleView={handleView}
-              />
-            )}
 
-            {andOperator(
-              countryEdit,
-              <staticContentEdit
-                handleEdit={handleEdit}
-                currentItem={currentItem}
-                getStaticContent={getStaticContent}
-              />
-            )}
-            
-          </div>
+              </div>
+            </div>
+
+          </form>
+          <StaticContentList
+            countryList={countryList}
+            getStaticContent={getStaticContent}
+            page={page}
+            handleEdit={handleEdit}
+            handleView={handleView}
+            currentItem={currentItem}
+            countryView={countryView}
+            setSort={setSort}
+            sort={sort}
+            manager={manager}
+          />
+          {andOperator(
+            countryView,
+            <StaticContentView
+              countryView={countryView}
+              currentItem={currentItem}
+              handleView={handleView}
+            />
+          )}
+
+          {andOperator(
+            countryEdit,
+            <staticContentEdit
+              handleEdit={handleEdit}
+              currentItem={currentItem}
+              getStaticContent={getStaticContent}
+            />
+          )}
+
         </div>
       </div>
-    
+    </div>
+
   )
 }
 

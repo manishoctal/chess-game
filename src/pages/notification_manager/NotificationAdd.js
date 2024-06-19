@@ -44,6 +44,7 @@ const NotificationAdd = ({ getAllNotifications, handleCategory }) => {
   const notification = useToastContext();
   const [availableFor, setAvailableFor] = useState("all");
 
+  // add notification function start
   const onSubmit = async (data) => {
     if (availableFor === 'specificUser' && selectedUsers=='') {
       setNotificationUserError(true);
@@ -72,6 +73,10 @@ const NotificationAdd = ({ getAllNotifications, handleCategory }) => {
   }
   };
 
+
+  // add notification function end
+
+  // debounce function for search start
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       setDebouncedSearchTerm(searchTerm?.trim());
@@ -109,7 +114,7 @@ const NotificationAdd = ({ getAllNotifications, handleCategory }) => {
       handleSearchOption(debouncedSearchTerm)
     }
   }, [debouncedSearchTerm]);
-
+  // debounce function for search end
 
 
 

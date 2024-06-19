@@ -19,8 +19,7 @@ function Wallet() {
   const [pageSize, setPageSize] = useState(10)
   const [isDelete] = useState(false)
   const [editView, setEditView] = useState()
-  const manager =
-    user?.permission?.find(e => e.manager === 'wallet_manager') ?? {}
+  const manager =user?.permission?.find(e => e.manager === 'wallet_manager') ?? {}
   const [subAdmin, setSubAdmin] = useState()
   const [page, setPage] = useState(1)
  
@@ -81,7 +80,8 @@ function Wallet() {
   }
 
   useEffect(() => {
-    allWalletList()
+    // api call function
+
   }, [filterData, page, sort, pageSize])
 
   // get all wallet list end

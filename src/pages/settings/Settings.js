@@ -39,6 +39,8 @@ const Settings = () => {
   const [isAmountModal, setIsAmountModal] = useState(false);
   const notification = useToastContext();
 
+
+  // change setting function start
   const handleSubmitForm = async (data) => {
     try {
       setSettingChangeLoading(true);
@@ -56,15 +58,21 @@ const Settings = () => {
       setSettingChangeLoading(false);
     }
   };
+
+  // change setting function end
+
   const handleUserView = () => {
     setViewShowModal(true);
   };
+
+  // get all setting function start
+
   const getSettings = async () => {
     try {
       const res = await apiGet(pathObj.getSettings);
       if (res) {
         reset(res?.data?.results);
-        
+
       }
     } catch (error) {
       console.error("error:", error);
@@ -78,6 +86,7 @@ const Settings = () => {
   useEffect(() => {
     getSettings();
   }, []);
+  // get all setting function end
 
   useEffect(() => {
     updatePageName(t("SETTINGS"));
@@ -343,7 +352,7 @@ const Settings = () => {
                 />
               </div>
 
-             
+
 
               <div className="mb-4  w-full">
                 <OInputField

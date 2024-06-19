@@ -12,6 +12,7 @@ import PageSizeList from 'components/PageSizeList'
 import OSearch from 'components/reusable/OSearch'
 import BannerAdd from './BannerAdd'
 import EditBanner from './BannerEdit'
+import helpers from 'utils/helpers'
 
 
 function Banner() {
@@ -19,14 +20,15 @@ function Banner() {
   const notification = useToastContext()
   const { user, updatePageName } = useContext(AuthContext)
   const [showModal, setShowModal] = useState(false)
+  const [page, setPage] = useState(1)
+  const [pageSize, setPageSize] = useState(10)
+  const [isDelete] = useState(false)
   const [editShowModal, setEditShowModal] = useState(false)
   const [editView, setEditView] = useState()
   const manager =
     user?.permission?.find(e => e.manager === 'banner_manager') ?? {}
   const [subAdmin, setSubAdmin] = useState()
-  const [page, setPage] = useState(1)
-  const [pageSize, setPageSize] = useState(10)
-  const [isDelete] = useState(false)
+
   const [paginationObj, setPaginationObj] = useState({
     page: 1,
     pageCount: 1,
@@ -35,6 +37,10 @@ function Banner() {
   const [searchTerm, setSearchTerm] = useState('')
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('')
   const [isInitialized, setIsInitialized] = useState(false)
+  const [sort, setSort] = useState({
+    sortBy: 'createdAt',
+    sortType: 'desc'
+  })
   const [filterData, setFilterData] = useState({
     category: '',
     searchKey: '',
@@ -43,12 +49,9 @@ function Banner() {
     isReset: false,
     isFilter: false
   })
-  const [sort, setSort] = useState({
-    sortBy: 'createdAt',
-    sortType: 'desc'
-  })
 
-  const allSubAdmin = async (data, pageNO) => {
+  // get all banner function start
+  const getAllBanner = async (data, pageNO) => {
     try {
       const { category, startDate, endDate, searchKey } = filterData
 
@@ -79,6 +82,13 @@ function Banner() {
       console.error('error in get all sub admin list==>>>>', error.message)
     }
   }
+
+  useEffect(() => {
+    getAllBanner()
+  }, [filterData, page, sort, pageSize])
+
+  // get all banner function end
+
   const handlePageClick = event => {
     const newPage = event.selected + 1
     setPage(newPage)
@@ -89,9 +99,8 @@ function Banner() {
     setPageSize(e.target.value)
   }
 
-  useEffect(() => {
-    allSubAdmin()
-  }, [filterData, page, sort, pageSize])
+
+  // banner status change function start
 
   const handelStatusChange = async details => {
     try {
@@ -103,12 +112,17 @@ function Banner() {
       const result = await apiPut(path, payload)
       if (result?.status === 200) {
         notification.success(result?.data?.message)
-        allSubAdmin({ statusChange: 1 })
+        getAllBanner({ statusChange: 1 })
       }
     } catch (error) {
       console.error('error in get all users list==>>>>', error.message)
     }
   }
+
+
+  // banner status change function end
+
+  // banner delete change function start
 
   const handelDelete = async details => {
     try {
@@ -116,12 +130,15 @@ function Banner() {
       const result = await apiDelete(path)
       if (result?.status === 200) {
         notification.success(result?.data?.message)
-        allSubAdmin({ deletePage: 1 })
+        getAllBanner({ deletePage: 1 })
       }
     } catch (error) {
       console.error('error in get all FAQs list==>>>>', error.message)
     }
   }
+
+  // banner delete change function end
+
 
   const handleReset = () => {
     setFilterData({
@@ -151,6 +168,18 @@ function Banner() {
     setFilterData({ ...filterData, category: e.target.value, isFilter: true })
   }
 
+
+
+
+  const [item, setItem] = useState()
+  const editViewBanner = async (type, data) => {
+    setEditView(type)
+    setItem(data)
+    setEditShowModal(true)
+  }
+
+  // debounce search start
+
   useEffect(() => {
     if (!isInitialized) {
       setIsInitialized(true)
@@ -173,17 +202,14 @@ function Banner() {
       clearTimeout(timeoutId)
     }
   }, [searchTerm])
+
+  // debounce search end
+
   useEffect(() => {
     updatePageName(t('BANNER_MANAGER'))
   }, [])
 
 
-  const [item, setItem] = useState()
-  const editViewBanner = async (type, data) => {
-    setEditView(type)
-    setItem(data)
-    setEditShowModal(true)
-  }
 
 
 
@@ -204,7 +230,7 @@ function Banner() {
                     isReset={filterData?.isReset}
                     setIsReset={setFilterData}
                   />
-                  {(manager?.add || manager?.edit || user?.role === 'admin') && <div className='flex items-center mb-3 ml-3'>
+                  {helpers.andOperator((manager?.add || manager?.edit || user?.role === 'admin'), <div className='flex items-center mb-3 ml-3'>
                     <select
                       id='countries'
                       type=' password'
@@ -220,7 +246,7 @@ function Banner() {
                       <option value='active'>{t('O_ACTIVE')}</option>
                       <option value='inactive'>{t('O_INACTIVE')}</option>
                     </select>
-                  </div>}
+                  </div>)}
 
                   <button
                     type='button'
@@ -248,7 +274,7 @@ function Banner() {
             </form>
             <SubTable
               subAdmin={subAdmin?.docs}
-              allSubAdmin={allSubAdmin}
+              allSubAdmin={getAllBanner}
               handelDelete={handelDelete}
               editViewBanner={editViewBanner}
               page={page}
@@ -276,12 +302,12 @@ function Banner() {
 
 
       {showModal && (
-        <BannerAdd setShowModal={setShowModal} getAllFAQ={allSubAdmin} />
+        <BannerAdd setShowModal={setShowModal} getAllFAQ={getAllBanner} />
       )}
       {editShowModal && (
         <EditBanner
           setEditShowModal={setEditShowModal}
-          getAllFAQ={allSubAdmin}
+          getAllFAQ={getAllBanner}
           item={item}
           viewType={editView}
         />

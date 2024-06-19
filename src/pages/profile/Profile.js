@@ -90,6 +90,7 @@ const Profile = () => {
     setOpen(true)
   }
 
+  // update profile function start
   const handleSubmitForm = async data => {
     try {
       setUpdateProfileLoading(true)
@@ -121,6 +122,9 @@ const Profile = () => {
       setUpdateProfileLoading(false)
     }
   }
+
+    // update profile function end
+
 
   useEffect(() => {
     updatePageName(t('EDIT_PROFILE'))

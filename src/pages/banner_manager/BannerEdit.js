@@ -16,6 +16,8 @@ const BannerEdit = ({ setEditShowModal, getAllFAQ, item, viewType }) => {
     const [picture, setPicture] = useState()
     const notification = useToastContext();
     const [imageError, setImageError] = useState('')
+
+    // edit banner function start
     const handleSubmitForm = async (data) => {
         if (!picture?.file) {
             setImageError('Please choose image.')
@@ -42,11 +44,16 @@ const BannerEdit = ({ setEditShowModal, getAllFAQ, item, viewType }) => {
         }
     };
 
+    // edit banner function end
+
+
+    // change file function start
     const handleFileChange = e => {
         const url = URL.createObjectURL(e?.target?.files[0])
         setPicture({ file: e?.target?.files, url: url })
         setImageError('')
     }
+    // change file function end
 
     useEffect(() => {
         setPicture({ file: [item?.image], url: item?.image })
@@ -59,7 +66,7 @@ const BannerEdit = ({ setEditShowModal, getAllFAQ, item, viewType }) => {
                         <div className="overflow-hidden border border-white dark:border-[#ffffff38] rounded-lg shadow-lg relative flex flex-col min-w-[502px] bg-white outline-none focus:outline-none">
                             <div className="dark:bg-gray-900 flex items-center justify-between p-5 border-b dark:border-[#ffffff38] border-solid border-slate-200 rounded-t dark:bg-slate-900">
                                 <h3 className="text-xl font-semibold dark:text-white">
-                                    { viewType=='edit'?t("EDIT_BANNER"): t("VIEW_BANNER")}
+                                    {viewType == 'edit' ? t("EDIT_BANNER") : t("VIEW_BANNER")}
                                 </h3>
                                 <button
                                     className=" ml-auto flex items-center justify-center  text-black border-2 rounded-full  h-8 w-8 float-right text-3xl leading-none font-extralight outline-none focus:outline-none"
@@ -75,7 +82,7 @@ const BannerEdit = ({ setEditShowModal, getAllFAQ, item, viewType }) => {
                                     </button>
                                 </button>
                             </div>
-                            {viewType=='edit'&&<div className="flex justify-center mt-5">
+                            {viewType == 'edit' && <div className="flex justify-center mt-5">
                                 <input
                                     type='file'
                                     accept='image/png, image/jpg, image/jpeg'

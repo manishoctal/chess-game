@@ -16,6 +16,8 @@ const BannerAdd = ({ setShowModal, getAllFAQ }) => {
   const [picture, setPicture] = useState()
   const notification = useToastContext();
   const [imageError, setImageError] = useState('')
+
+  // banner add function start
   const handleSubmitForm = async (data) => {
     if (!picture?.file) {
       setImageError('Please choose image.')
@@ -24,8 +26,8 @@ const BannerAdd = ({ setShowModal, getAllFAQ }) => {
     try {
       setLoader(true)
       const path = apiPath.bannerAdd;
-      let formData=new FormData()
-      formData.append('image',picture?.file[0])
+      let formData = new FormData()
+      formData.append('image', picture?.file[0])
       const result = await apiPost(path, formData);
       if (result?.data?.success === true) {
         notification.success(result?.data?.message);
@@ -42,12 +44,19 @@ const BannerAdd = ({ setShowModal, getAllFAQ }) => {
     }
   };
 
+  // banner add function end
+
+
+  // change file function start
   const handleFileChange = e => {
     const url = URL.createObjectURL(e?.target?.files[0])
     setPicture({ file: e?.target?.files, url: url })
     setImageError('')
 
   }
+
+  // change file function end
+
   return (
     <>
       <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">

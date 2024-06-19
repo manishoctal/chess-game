@@ -24,6 +24,8 @@ const EditFAQ = ({ setEditShowModal, getAllFAQ, item, viewType }) => {
   const notification = useToastContext();
   const [loader, setLoader] = useState(false)
 
+
+    // edit faq function start
   const onSubmit = async (data) => {
     try {
       setLoader(true)
@@ -40,6 +42,7 @@ const EditFAQ = ({ setEditShowModal, getAllFAQ, item, viewType }) => {
       setLoader(false)
     }
   };
+    // edit faq function end
 
   return (
     <>

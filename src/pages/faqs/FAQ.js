@@ -41,6 +41,7 @@ function Faq() {
     isFilter: false,
   });
 
+// get all faq function start
   const getAllFAQ = async () => {
     try {
       const payload = {
@@ -73,6 +74,7 @@ function Faq() {
       }
     }
   }
+// get all faq function end
 
   const dynamicPage = e => {
     setPage(1)
