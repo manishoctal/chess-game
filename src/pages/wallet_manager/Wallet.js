@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { apiDelete, apiGet} from '../../utils/apiFetch'
+import { apiGet} from '../../utils/apiFetch'
 import apiPath from '../../utils/apiPath'
 import SubTable from './WalletTable'
 import Pagination from '../Pagination'
@@ -7,7 +7,6 @@ import dayjs from 'dayjs'
 import ODateRangePicker from 'components/shared/datePicker/ODateRangePicker'
 import { useTranslation } from 'react-i18next'
 import AuthContext from 'context/AuthContext'
-import useToastContext from 'hooks/useToastContext'
 import PageSizeList from 'components/PageSizeList'
 import OSearch from 'components/reusable/OSearch'
 import BalanceEdit from './BalanceEdit'
@@ -15,7 +14,6 @@ import BalanceEdit from './BalanceEdit'
 
 function Wallet() {
   const { t } = useTranslation()
-  const notification = useToastContext()
   const { user, updatePageName } = useContext(AuthContext)
   const [editShowModal, setEditShowModal] = useState(false)
   const [editView, setEditView] = useState()
