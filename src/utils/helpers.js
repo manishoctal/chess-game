@@ -48,8 +48,7 @@ const helpers = {
   },
 
 getFormattedDate:(date,format)=>{
-  const formatedDate=date?dayjs(date).format(format||'YYYY-MM-DD'):null
-return formatedDate
+  return date?dayjs(date).format(format||'YYYY-MM-DD'):null
 },
 
   marketStatus: (s) => {

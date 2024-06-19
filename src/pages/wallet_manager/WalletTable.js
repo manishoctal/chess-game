@@ -5,7 +5,7 @@ import AuthContext from "context/AuthContext";
 import { isEmpty, startCase } from "lodash";
 import helpers from "../../utils/helpers";
 import OWalletTableHead from '../../components/reusable/OTableHead'
-const SubTable = ({
+const WalletTable = ({
   subAdmin,
   page,
   sort,
@@ -127,4 +127,4 @@ const SubTable = ({
   );
 };
 
-export default SubTable;
+export default WalletTable;

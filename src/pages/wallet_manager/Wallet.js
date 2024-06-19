@@ -13,7 +13,7 @@ import OSearch from 'components/reusable/OSearch'
 import BalanceEdit from './BalanceEdit'
 
 
-function SubAdmin() {
+function Wallet() {
   const { t } = useTranslation()
   const notification = useToastContext()
   const { user, updatePageName } = useContext(AuthContext)
@@ -241,4 +241,4 @@ function SubAdmin() {
   )
 }
 
-export default SubAdmin
+export default Wallet
