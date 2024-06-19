@@ -69,7 +69,7 @@ const SubAdd = () => {
               [event.target.id]: event.target.checked,
               view: event.target.checked
             }
-          } else if (event.target.id === 'view' && !event.target.checked) {
+          } else if (helpers.andOperator(event.target.id === 'view',!event.target.checked)) {
             return {
               ...obj,
               add: false,
@@ -146,9 +146,7 @@ const SubAdd = () => {
   useEffect(() => {
     const permissionData = getValues('permission')
     if (
-      permissionData?.length > 0 &&
-      permissionData[0]?.manager === 'dashboard' &&
-      (item?.type === 'edit' || item?.type === 'view')
+      permissionData?.length > 0 &&helpers.andOperator(permissionData[0]?.manager === 'dashboard',(item?.type === 'edit' || item?.type === 'view'))
     ) {
       permissionData.shift()
       setPermission(permissionData)
