@@ -69,7 +69,7 @@ const SubAdd = () => {
               [event.target.id]: event.target.checked,
               view: event.target.checked
             }
-          } else if (helpers.andOperator(event.target.id === 'view',!event.target.checked)) {
+          } else if (helpers.andOperator(event.target.id === 'view', !event.target.checked)) {
             return {
               ...obj,
               add: false,
@@ -146,7 +146,7 @@ const SubAdd = () => {
   useEffect(() => {
     const permissionData = getValues('permission')
     if (
-      permissionData?.length > 0 &&helpers.andOperator(permissionData[0]?.manager === 'dashboard',(item?.type === 'edit' || item?.type === 'view'))
+      permissionData?.length > 0 && helpers.andOperator(permissionData[0]?.manager === 'dashboard', (item?.type === 'edit' || item?.type === 'view'))
     ) {
       permissionData.shift()
       setPermission(permissionData)
@@ -334,7 +334,7 @@ const SubAdd = () => {
                     <th scope='col' className='py-3 px-6 '>
                       {t('SUB_ADMIN_ADD_EDIT')}
                     </th>
-                  
+
                     <th scope='col' className='py-3 px-6'>
                       <div className='flex items-center justify-between '>
                         {t('O_ALL')}
@@ -419,21 +419,23 @@ const SubAdd = () => {
           {t('O_BACK')}
         </button>
 
-        {loader ? <button className="bg-gradientTo text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150">
+        {helpers.ternaryCondition(loader, <button className="bg-gradientTo text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150">
           <div className="spinner-container">
             <div className="loading-spinner" />
           </div>
-        </button> : helpers.ternaryCondition(
-          item?.type !== 'view',
-          <button
-            className='bg-gradientTo text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150'
-            type='submit'
-            onClick={handleSubmit(onSubmit)}
-          >
-            {itemType}
-          </button>,
-          null
-        )}
+        </button>,
+          helpers.ternaryCondition(item?.type !== 'view',
+            <button
+              className='bg-gradientTo text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150'
+              type='submit'
+              onClick={handleSubmit(onSubmit)}
+            >
+              {itemType}
+            </button>,
+            null
+          )
+        )
+        }
       </div>
     </>
   )
