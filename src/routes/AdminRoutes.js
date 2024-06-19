@@ -22,13 +22,6 @@ import Login from 'pages/Login'
 import User from 'pages/users/User'
 import UserView from 'pages/users/UserView'
 import NotificationAdd from 'pages/notification_manager/NotificationAdd'
-import Transaction from 'pages/transection_manager/Transaction'
-import UserWalletHistory from 'pages/users/UserWalletHistory'
-import TransactionDetails from 'pages/users/TransactionDetails'
-import ScratchCardManager from 'pages/scratch_card_manager/ScratchCardManager'
-import SupportManager from 'pages/support_manager/SupportManager'
-import Report from 'pages/reports_manager/Report'
-import RewardWithdrawalRequest from 'pages/reward_withdrawal_request/RewardWithdrawalRequest'
 import AuthorizationRoute from 'utils/AuthorizationRoute'
 
 const UseChange = ({ data }) => {
