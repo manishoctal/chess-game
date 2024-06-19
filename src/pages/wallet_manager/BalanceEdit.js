@@ -13,6 +13,7 @@ const BalanceEdit = ({ setEditShowModal, viewType }) => {
     const [loader] = useState(false)
 
     const handleSubmitForm = async () => {
+        console.log('sdfdfdsf')
     };
 
     return (

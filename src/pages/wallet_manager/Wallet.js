@@ -104,7 +104,7 @@ function Wallet() {
       const result = await apiDelete(path)
       if (result?.status === 200) {
         notification.success(result?.data?.message)
-        allWalletList({ deletePage: 1 })
+        allWalletList()
       }
     } catch (error) {
       console.error('error in get all FAQs list==>>>>', error.message)
