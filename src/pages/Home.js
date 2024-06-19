@@ -163,7 +163,7 @@ function Home() {
   const [dateDisableState, setDateDisableState] = useState(
     getDefaultDateDisableState()
   );
-  const [chartData, setChartData] = useState(getDefaultChartData());
+  const [setChartData] = useState(getDefaultChartData());
   const [chartDataTwo, setChartDataTwo] = useState(getDefaultChartData());
   const [isReset, setIsReset] = useState(false);
   const notification = useToastContext();
@@ -247,26 +247,26 @@ function Home() {
 
 
 
-  // useEffect(() => {
-  //   if (startDate && endDate && selectedButton) {
-  //     handleGraphApiCall(startDate, endDate, selectedButton, "first");
-  //   }
-  //   if (graphTwoDropdownValue && graphTwoEndDate && graphTwoStartData) {
-  //     handleGraphApiCall(
-  //       graphTwoStartData,
-  //       graphTwoEndDate,
-  //       graphTwoDropdownValue,
-  //       "second"
-  //     );
-  //   }
-  // }, [
-  //   startDate,
-  //   endDate,
-  //   selectedButton,
-  //   graphTwoStartData,
-  //   graphTwoEndDate,
-  //   graphTwoDropdownValue,
-  // ]);
+  useEffect(() => {
+    if (startDate && endDate && selectedButton) {
+      handleGraphApiCall(startDate, endDate, selectedButton, "first");
+    }
+    if (graphTwoDropdownValue && graphTwoEndDate && graphTwoStartData) {
+      handleGraphApiCall(
+        graphTwoStartData,
+        graphTwoEndDate,
+        graphTwoDropdownValue,
+        "second"
+      );
+    }
+  }, [
+    startDate,
+    endDate,
+    selectedButton,
+    graphTwoStartData,
+    graphTwoEndDate,
+    graphTwoDropdownValue,
+  ]);
 
   const handleActiveForFirst = (start, end) => {
     if (start && end) {
@@ -447,12 +447,6 @@ function Home() {
               </span>
             </h3>
             <span className="text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-30px] p-3 border z-10 bg-white">
-              {/* <img
-                src={earning}
-                className="h-8 w-8 bg-black"
-                alt="earningImg"
-              /> */}
-
               <FaAddressCard size={30}/>
             </span>
           </div>
@@ -465,12 +459,6 @@ function Home() {
               </span>
             </h3>
             <span className="text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-30px] p-3 border z-10 bg-white">
-              {/* <img
-                src={earning}
-                className="h-8 w-8 bg-black"
-                alt="earningImg"
-              /> */}
-
               <AiOutlineStock size={30}/>
             </span>
           </div>
@@ -484,11 +472,7 @@ function Home() {
               </span>
             </h3>
             <span className="text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-30px] p-3 border z-10 bg-white">
-              {/* <img
-                src={earning}
-                className="h-8 w-8 bg-black"
-                alt="earningImg"
-              /> */}
+             
               <FaRegQuestionCircle size={30} />
 
             </span>
@@ -503,11 +487,7 @@ function Home() {
               </span>
             </h3>
             <span className="text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-30px] p-3 border z-10 bg-white">
-              {/* <img
-                src={earning}
-                className="h-8 w-8 bg-black"
-                alt="earningImg"
-              /> */}
+            
               <GiProfit size={30} />
             </span>
           </div>
@@ -539,89 +519,13 @@ function Home() {
               </span>
             </h3>
             <span className="text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-30px] p-3 border z-10 bg-white">
-              {/* <FaUserTie className="h-8 w-8" /> */}
               <BiMoneyWithdraw size={30} />
             </span>
           </div>
 
         </div>
       </div>
-      {/* <div className="dark:bg-gray-800 py-7 px-4 md:px-8 bg-[#F9F9F9] border-solid border-2 border-gray m-10 rounded-md">
-        <div className="sm:flex items-center text-center sm:text-left px-3 md:px-4 xl:px-7 lg:px-5  py-4 md:py-8 border dark:bg-slate-900">
-          <StyledEngineProvider>
-            <ThemeProvider theme={theme}>
-              <div className="px-11">
-                {generateButton(
-                  "day",
-                  "Daily",
-                  selectedButton,
-                  handleButtonChange,
-                  dateDisableState.first.day,
-                  "first"
-                )}
-                {generateButton(
-                  "week",
-                  "Weekly",
-                  selectedButton,
-                  handleButtonChange,
-                  dateDisableState.first.week,
-                  "first"
-                )}
-                {generateButton(
-                  "month",
-                  "Monthly",
-                  selectedButton,
-                  handleButtonChange,
-                  dateDisableState.first.month,
-                  "first"
-                )}
-                {generateButton(
-                  "year",
-                  "Yearly",
-                  selectedButton,
-                  handleButtonChange,
-                  dateDisableState.first.year,
-                  "first"
-                )}
-              </div>
-            </ThemeProvider>
-          </StyledEngineProvider>
-          <ODateRangePicker
-            handleDateChange={(start, end) =>
-              handleDateChange(start, end, "first")
-            }
-            isReset={isReset}
-            setIsReset={setIsReset}
-            filterData={{
-              endDate: new Date(endDate),
-              startDate: new Date(startDate),
-            }}
-            place="dashboard"
-          />
-          <button
-            type="button"
-            onClick={handleReset}
-            className="bg-gradientTo text-sm px-8 mb-3 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2"
-          >
-            {t("O_RESET")}
-          </button>
-        </div>
-        <div className="sale_report grid grid-cols-1 gap-5 mb-7 bg-white p-4 dark:bg-gray-900 dark:border">
-          <div className="flex justify-between">
-            <h4 className="font-medium text-lg dark:text-white">
-              {t("EXPENDITURE_BY_THAI_LOCAL")}
-            </h4>
-          </div>
-          <Chart
-            options={chartData.options}
-            series={chartData.series}
-            type="bar"
-            // width='1000'
-            height="600"
-          />
-        </div>
-      </div> */}
-      {/* <div className="dark:bg-gray-800 py-7 px-4 md:px-8 bg-[#F9F9F9] border-solid border-2 border-gray m-10 rounded-md">
+      <div className="dark:bg-gray-800 py-7 px-4 md:px-8 bg-[#F9F9F9] border-solid border-2 border-gray m-10 rounded-md">
         <div className="sm:flex items-center text-center sm:text-left px-3 md:px-4 xl:px-7 lg:px-5  py-4 md:py-8 border dark:bg-slate-900">
           <StyledEngineProvider>
             <ThemeProvider theme={theme}>
@@ -695,7 +599,7 @@ function Home() {
             height="600"
           />
         </div>
-      </div> */}
+      </div>
     </>
   );
 }
