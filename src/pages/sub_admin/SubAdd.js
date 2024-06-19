@@ -98,7 +98,7 @@ const SubAdd = () => {
     const handleApiCall = async (path, sendData, isEdit) => {
       try {
         setLoader(true);
-        const result = isEdit ? await apiPut(path, sendData) : await apiPost(path, sendData);
+        const result = helpers?.ternaryCondition(isEdit, await apiPut(path, sendData) , await apiPost(path, sendData));
   
         if (result?.data?.success) {
           navigate('/sub-admin-manager');
@@ -120,17 +120,15 @@ const SubAdd = () => {
     const myData = { ...data };
   
     const isEdit = item?.type === 'edit';
-    const permission = JSON.stringify(isEdit ? [...permissionJons] : [{ manager: 'dashboard', add: true, edit: true, view: true }, ...permissionJons]);
+    const permission = JSON.stringify(helpers.ternaryCondition(isEdit, [...permissionJons] , [{ manager: 'dashboard', add: true, edit: true, view: true }, ...permissionJons]));
   
-    const sendData = prepareSendData(myData, permission, data, isEdit ? `${apiPath.editSubAdmin}/${item?.item?._id}` : apiPath.getSubAdmin);
+    const sendData = prepareSendData(myData, permission, data, helpers.ternaryCondition( isEdit , `${apiPath.editSubAdmin}/${item?.item?._id}` , apiPath.getSubAdmin));
   
     await handleApiCall(sendData.path, sendData, isEdit);
   };
   
 
-
-
-
+  
   useEffect(() => {
     if (item?.type === 'add') {
       updatePageName(t('ADD_SUB_ADMIN'))
