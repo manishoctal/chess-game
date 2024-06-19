@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import helpers from 'utils/helpers';
 
 function SearchableDropdown({ searchTerm, setSearchTerm, setFilteredItems,placeholder, setDropdownVisible,filterData, dropdownVisible, filteredItems, setIsSelected,setFilterData }) {
+//  option click function start
     const handleItemClick = (item) => {
         setSearchTerm(`${item?.name}`);
         setFilteredItems([]);
@@ -10,8 +11,11 @@ function SearchableDropdown({ searchTerm, setSearchTerm, setFilteredItems,placeh
         setHighlightedIndex(-1);
         setFilterData({...filterData, userId: item?._id});
     };
-    const [highlightedIndex, setHighlightedIndex] = useState(-1);
 
+    //  option click function end
+
+    //  keyboard navigation start for option 
+    const [highlightedIndex, setHighlightedIndex] = useState(-1);
     const handleKeyDown = (event) => {
         if (!dropdownVisible) return;
 
@@ -40,7 +44,7 @@ function SearchableDropdown({ searchTerm, setSearchTerm, setFilteredItems,placeh
         setTimeout(() => setDropdownVisible(false), 100);
     };
 
-
+    //  keyboard navigation end for option 
     return (
         <div className="p-4">
             <div className="relative">

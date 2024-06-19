@@ -9,14 +9,6 @@ const Permission = [
     shownAll: true,
   },
   {
-    manager: "transaction_manager",
-    add: false,
-    edit: false,
-    view: false,
-    shownView: true,
-    shownAdd: false,
-  },
-  {
     manager: "subAdmin_manager",
     add: false,
     edit: false,
@@ -45,25 +37,7 @@ const Permission = [
     shownAdd: true,
     shownAll: true,
   },
-  // {
-  //   manager: 'reports_manager',
-  //   add: false,
-  //   edit: false,
-  //   view: false,
-  //   shownView: true,
-  //   shownAdd: true,
-  //   shownAll: true
-  // },
 
-  {
-    manager: "scratch_card_manager",
-    add: false,
-    edit: false,
-    view: false,
-    shownView: true,
-    shownAdd: true,
-    shownAll: true,
-  },
 
   {
     manager: "settings",
@@ -105,33 +79,6 @@ const Permission = [
 
   {
     manager: "email_manager",
-    add: false,
-    edit: false,
-    view: false,
-    shownView: true,
-    shownAdd: true,
-    shownAll: true,
-  },
-  {
-    manager: "feedback_manager",
-    add: false,
-    edit: false,
-    view: false,
-    shownView: true,
-    shownAdd: true,
-    shownAll: true,
-  },
-  {
-    manager: "report_manager",
-    add: false,
-    edit: false,
-    view: false,
-    shownView: true,
-    shownAdd: false,
-    shownAll: false,
-  },
-  {
-    manager: "reward_withdrawal_request",
     add: false,
     edit: false,
     view: false,

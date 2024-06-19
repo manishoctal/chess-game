@@ -4,12 +4,11 @@ import { useTranslation } from "react-i18next";
 import { BsArrowUpShort } from "react-icons/bs";
 import AuthContext from "context/AuthContext";
 import { isEmpty, startCase } from "lodash";
-import { useNavigate } from "react-router-dom";
 import TableModal from "./TableModal";
 import helpers from "../../utils/helpers";
 import OImage from "components/reusable/OImage";
 
-const SubTable = ({
+const BannerTable = ({
   subAdmin,
   handelDelete,
   page,
@@ -21,7 +20,6 @@ const SubTable = ({
   editViewBanner
 }) => {
   const { t } = useTranslation();
-  const navigate = useNavigate();
   const { user, updatePageName } = useContext(AuthContext);
   const [modalTable, setModalTable] = useState(false);
 
@@ -273,4 +271,4 @@ const SubTable = ({
   );
 };
 
-export default SubTable;
+export default BannerTable;

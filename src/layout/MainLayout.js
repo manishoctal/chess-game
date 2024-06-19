@@ -3,6 +3,7 @@ import TopNavBar from '../components/TopNavBar'
 import Loader from './Loader'
 import Toast from './Toast'
 import AuthContext from 'context/AuthContext'
+import helpers from 'utils/helpers'
 
 function MainLayout ({ children, type }) {
   const { sidebarStatus,user } = useContext(AuthContext)
@@ -11,7 +12,7 @@ function MainLayout ({ children, type }) {
       <Loader />
       <Toast />
       {type}
-      <div className={`right_panel ${user?.isPasswordSet? sidebarStatus === 'open' ? 'xl:ml-[280px] lg:ml-[220px] ml-0' : '':'' }  `}>
+      <div className={`right_panel ${user?.isPasswordSet?helpers.ternaryCondition(sidebarStatus === 'open' ,'xl:ml-[280px] lg:ml-[220px] ml-0', ''):'' }  `}>
         <TopNavBar />
         {children}
       </div>

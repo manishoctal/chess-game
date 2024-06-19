@@ -16,6 +16,8 @@ const AddFAQ = ({ setShowModal, getAllFAQ }) => {
   } = useForm({ mode: "onChange", shouldFocusError: true, defaultValues: {} });
   const [loader, setLoader] = useState(false)
   const notification = useToastContext();
+
+  // add faq function start
   const handleSubmitForm = async (data) => {
     try {
       setLoader(true)
@@ -35,6 +37,8 @@ const AddFAQ = ({ setShowModal, getAllFAQ }) => {
 
     }
   };
+
+    // add faq function end
 
   return (
     <>

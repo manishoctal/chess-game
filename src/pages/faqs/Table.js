@@ -22,6 +22,7 @@ const Table = ({
   const { user } = useContext(AuthContext);
   const notification = useToastContext();
 
+  // change status of faq function start
   const handelStatusChange = async (item) => {
     try {
       const payload = {
@@ -38,6 +39,9 @@ const Table = ({
       console.error("error in get all faqs list==>>>>", error.message);
     }
   };
+  // change status of faq function end
+
+  // delete faq function start
 
   const handelDelete = async (item) => {
     try {
@@ -51,6 +55,7 @@ const Table = ({
       console.error("error in get all FAQs list==>>>>", error.message);
     }
   };
+  // delete faq function end
 
   return (
     <div className="p-3">

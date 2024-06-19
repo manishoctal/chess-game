@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import { apiGet, apiPut } from "../../utils/apiFetch";
 import apiPath from "../../utils/apiPath";
 import Table from "./Table";
-import Pagination from "../Pagination";
 import dayjs from "dayjs";
 import AuthContext from "context/AuthContext";
 import useToastContext from "hooks/useToastContext";
@@ -17,13 +16,7 @@ function EmailTemplate() {
   const [emailTemplate, setEmailTemplate] = useState([]);
   const [page, setPage] = useState(1);
   const [pageSize] = useState(10);
-  const [isDelete] = useState(false);
-  const [paginationObj, setPaginationObj] = useState({
-    page: 1,
-    pageCount: 1,
-    pageRangeDisplayed: 10,
-  });
-  const {t} = useTranslation()
+  const { t } = useTranslation()
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
   const [isInitialized, setIsInitialized] = useState(false);
@@ -40,7 +33,8 @@ function EmailTemplate() {
     sortType: "desc",
   });
 
-  const allEmailTemplate = async (data) => {
+  // get all email template function start
+  const allEmailTemplate = async () => {
     try {
       const { category, startDate, endDate, searchkey } = filterData;
 
@@ -58,30 +52,27 @@ function EmailTemplate() {
       const path = apiPath.emailTemplate;
       const result = await apiGet(path, payload);
       const response = result?.data?.results;
-      // const resultStatus = result?.data?.success;
       setEmailTemplate(response);
-      // setPaginationObj({
-      //   ...paginationObj,
-      //   page: resultStatus ? response.page : null,
-      //   pageCount: resultStatus ? response.totalPages : null,
-      //   perPageItem: resultStatus ? response?.docs.length : null,
-      //   totalItems: resultStatus ? response.totalDocs : null,
-      // });
+
     } catch (error) {
       console.error("error in get all sub admin list==>>>>", error.message);
     }
   };
-  const handlePageClick = (event) => {
-    const newPage = event.selected + 1;
-    setPage(newPage);
-  };
 
 
+  useEffect(() => {
+    allEmailTemplate();
+  }, [filterData, page, sort]);
+
+  // get all email template function end
+
+
+  // change status of email template start
   const handelStatusChange = async (item) => {
     try {
       const payload = {
         status: item?.status === "inactive" ? "active" : "inactive",
-        type:'email'
+        type: 'email'
       };
       const path = `${apiPath.changeStatus}/${item?._id}`;
       const result = await apiPut(path, payload);
@@ -103,12 +94,14 @@ function EmailTemplate() {
     }
   };
 
-  useEffect(() => {
-    allEmailTemplate();
-  }, [filterData, page, sort]);
 
-  
+  // change status of email template end
 
+
+
+
+
+// debounce search start
   useEffect(() => {
     if (!isInitialized) {
       setIsInitialized(true);
@@ -132,6 +125,8 @@ function EmailTemplate() {
     };
   }, [searchTerm]);
 
+  // debounce search end
+
   return (
     <div>
       <div className="bg-[#F9F9F9] dark:bg-slate-900">
@@ -141,12 +136,12 @@ function EmailTemplate() {
               <div className="col-span-2 flex flex-wrap  items-center">
                 <div className="flex items-center lg:pt-0 pt-3 flex-wrap justify-center mb-2 2xl:mb-0">
                   <div className="relative flex items-center mb-3">
-                  <OSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm}  placeholder={t("EMAIL_TEMPLATE_NAME")}/>
+                    <OSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm} placeholder={t("EMAIL_TEMPLATE_NAME")} />
                   </div>
-                 
+
                 </div>
               </div>
-             
+
             </form>
             <Table
               emailTemplate={emailTemplate}
@@ -157,14 +152,7 @@ function EmailTemplate() {
               manager={manager}
               handelStatusChange={handelStatusChange}
             />
-            {paginationObj?.totalItems ? (
-              <Pagination
-                handlePageClick={handlePageClick}
-                options={paginationObj}
-                isDelete={isDelete}
-                page={page}
-              />
-            ) : null}
+
           </div>
         </div>
       </div>

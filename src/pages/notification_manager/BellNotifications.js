@@ -31,6 +31,7 @@ const BellNotifications = () => {
     sortType: 'desc'
   })
 
+  // get all notification function start
   const getNotifications = async () => {
     try {
       const { startDate, endDate } = filterData
@@ -62,6 +63,9 @@ const BellNotifications = () => {
       }
     }
   }
+
+    // get all notification function end
+
   const handlePageClick = event => {
     const newPage = event.selected + 1
     setPage(newPage)
@@ -80,8 +84,6 @@ const BellNotifications = () => {
   return (
     <>
       <div className='p-3'>
-        {/* <div className='font-semibold py-3'>{t('O_NOTIFICATION')}</div> */}
-
         <div className='overflow-x-auto relative rounded-lg border'>
           <table className='w-full text-xs text-left text-[#A5A5A5] dark:text-gray-400 '>
             <thead className='text-xs text-gray-900 border border-[#E1E6EE] uppercase bg-[#E1E6EE] dark:bg-gray-700 dark:text-gray-400'>

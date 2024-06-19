@@ -1,6 +1,6 @@
 import ErrorMessage from "components/ErrorMessage";
 import OButton from "components/reusable/OButton";
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { validationRules } from "utils/constants";
@@ -14,7 +14,6 @@ import FormValidation from "utils/formValidation";
 function Login() {
   const { t } = useTranslation();
   const [icon, setIcon] = useState(true);
-  const canvasRef = useRef(null);
   const [captchaInput, setCaptchaInput] = useState("");
   const [generatedCaptcha, setGeneratedCaptcha] = useState("");
   const [message, setMessage] = useState("");
@@ -46,14 +45,14 @@ function Login() {
     }
   }, []);
 
+
+  // login function start
   const onSubmit = (data) => {
-
-if(!captchaInput){
-  setMessage("Please enter CAPTCHA value");
-  setMessageClass("text-red-600");
-  return;
-}
-
+    if (!captchaInput) {
+      setMessage("Please enter CAPTCHA value");
+      setMessageClass("text-red-600");
+      return;
+    }
     if (captchaInput !== generatedCaptcha) {
       setMessage("CAPTCHA validation failed");
       setMessageClass("text-red-600");
@@ -72,6 +71,10 @@ if(!captchaInput){
     setMessageClass("text-green-600");
     loginUser(data);
   };
+
+
+    // login function end
+
   useEffect(() => {
     if (user !== null) {
       navigate("/dashboard");
@@ -102,7 +105,7 @@ if(!captchaInput){
             onSubmit={handleSubmit(onSubmit)}
             method="post"
           >
-            <img src={logoImage} alt="logoImage" className="m-auto py-2 max-w-[267px]" style={{filter:` brightness(1) invert(1)`}} />
+            <img src={logoImage} alt="logoImage" className="m-auto py-2 max-w-[267px]" style={{ filter: ` brightness(1) invert(1)` }} />
             <h1 className="text-center text-[40px] font-bold dark:text-white">
               {t("LOGIN_LETS_START")}!
             </h1>
@@ -117,7 +120,6 @@ if(!captchaInput){
                 placeholder=" "
                 name="email"
                 onKeyDown={(e) => preventSpace(e)}
-                // autoFocus
                 {...register("email",
                   formValidation.email)}
               />
@@ -184,19 +186,19 @@ if(!captchaInput){
                   placeholder='Enter CAPTCHA:'
                   className="dark:text-white block py-4 px-3 w-full text-sm text-gray-900 bg-transparent border-2 rounded-lg border-[#DFDFDF] appearance-none dark:text-black dark:border-[#DFDFDF]  focus:outline-none focus:ring-0  peer"
                   value={captchaInput}
-                  style={{height:'45px'}}
+                  style={{ height: '45px' }}
                   onChange={(e) => setCaptchaInput(e.target.value)}
                 />
               </div>
-            <div className="mt-2">
-              <Captcha onChange={setGeneratedCaptcha} />
+              <div className="mt-2">
+                <Captcha onChange={setGeneratedCaptcha} />
               </div>
             </div>
             <div className="mb-3">
-                  {message && (
-                    <p className={`text-sm ${messageClass}`}>{message}.</p>
-                  )}
-                </div>
+              {message && (
+                <p className={`text-sm ${messageClass}`}>{message}.</p>
+              )}
+            </div>
             <div className="flex items-start mb-8">
               <div className="flex items-center h-5">
                 <div>

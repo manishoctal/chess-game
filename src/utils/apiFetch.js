@@ -16,9 +16,7 @@ instance.interceptors.request.use((config) => {
   if (!token) {
     return config;
   }
-  // if (config.url !== "v1/admin/notification" && config.method !== "post") {
     document.getElementById("loader").classList.remove("hidden");
-  // }
 
   config = {
     ...config,

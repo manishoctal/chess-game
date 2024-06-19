@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { apiDelete, apiGet, apiPut } from '../../utils/apiFetch'
+import { apiGet} from '../../utils/apiFetch'
 import apiPath from '../../utils/apiPath'
 import SubTable from './WalletTable'
 import Pagination from '../Pagination'
@@ -7,34 +7,31 @@ import dayjs from 'dayjs'
 import ODateRangePicker from 'components/shared/datePicker/ODateRangePicker'
 import { useTranslation } from 'react-i18next'
 import AuthContext from 'context/AuthContext'
-import useToastContext from 'hooks/useToastContext'
 import PageSizeList from 'components/PageSizeList'
 import OSearch from 'components/reusable/OSearch'
-import BannerAdd from './BannerAdd'
-import EditBanner from './BannerEdit'
+import BalanceEdit from './BalanceEdit'
 
 
-function SubAdmin () {
+function Wallet() {
   const { t } = useTranslation()
-  const notification = useToastContext()
   const { user, updatePageName } = useContext(AuthContext)
-  const [showModal, setShowModal] = useState(false)
   const [editShowModal, setEditShowModal] = useState(false)
-  const [editView, setEditView] = useState()
-  const manager =
-    user?.permission?.find(e => e.manager === 'wallet_manager') ?? {}
-  const [subAdmin, setSubAdmin] = useState()
-  const [page, setPage] = useState(1)
   const [pageSize, setPageSize] = useState(10)
   const [isDelete] = useState(false)
-  const [paginationObj, setPaginationObj] = useState({
+  const [editView, setEditView] = useState()
+  const manager =user?.permission?.find(e => e.manager === 'wallet_manager') ?? {}
+  const [subAdmin, setSubAdmin] = useState()
+  const [page, setPage] = useState(1)
+ 
+  const [paginationObj, setPaginationWalletObj] = useState({
     page: 1,
     pageCount: 1,
     pageRangeDisplayed: 10
   })
-  const [searchTerm, setSearchTerm] = useState('')
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('')
   const [isInitialized, setIsInitialized] = useState(false)
+  const [searchTerm, setSearchTerm] = useState('')
+
   const [filterData, setFilterData] = useState({
     category: '',
     searchKey: '',
@@ -48,7 +45,9 @@ function SubAdmin () {
     sortType: 'desc'
   })
 
-  const allSubAdmin = async (data, pageNO) => {
+
+  // get all wallet list start
+  const allWalletList = async () => {
     try {
       const { category, startDate, endDate, searchKey } = filterData
 
@@ -68,7 +67,7 @@ function SubAdmin () {
       const response = result?.data?.results
       const resultStatus = result?.data?.success
       setSubAdmin(response)
-      setPaginationObj({
+      setPaginationWalletObj({
         ...paginationObj,
         page: resultStatus ? response.page : null,
         pageCount: resultStatus ? response.totalPages : null,
@@ -79,6 +78,14 @@ function SubAdmin () {
       console.error('error in get all sub admin list==>>>>', error.message)
     }
   }
+
+  useEffect(() => {
+    // api call function
+
+  }, [filterData, page, sort, pageSize])
+
+  // get all wallet list end
+
   const handlePageClick = event => {
     const newPage = event.selected + 1
     setPage(newPage)
@@ -87,40 +94,6 @@ function SubAdmin () {
   const dynamicPage = e => {
     setPage(1)
     setPageSize(e.target.value)
-  }
-
-  useEffect(() => {
-    allSubAdmin()
-  }, [filterData, page, sort, pageSize])
-
-  const handelStatusChange = async item => {
-    try {
-      const payload = {
-        status: item?.status === 'inactive' ? 'active' : 'inactive',
-        type: 'banner'
-      }
-      const path = `${apiPath.changeStatus}/${item?._id}`
-      const result = await apiPut(path, payload)
-      if (result?.status === 200) {
-        notification.success(result.data.message)
-        allSubAdmin({ statusChange: 1 })
-      }
-    } catch (error) {
-      console.error('error in get all users list==>>>>', error.message)
-    }
-  }
-
-  const handelDelete = async item => {
-    try {
-      const path = apiPath.bannerDelete + '/' + item?._id
-      const result = await apiDelete(path)
-      if (result?.status === 200) {
-        notification.success(result?.data.message)
-        allSubAdmin({ deletePage: 1 })
-      }
-    } catch (error) {
-      console.error('error in get all FAQs list==>>>>', error.message)
-    }
   }
 
   const handleReset = () => {
@@ -146,11 +119,12 @@ function SubAdmin () {
       isFilter: true
     })
   }
-  const statusPage = e => {
-    setPage(1)
-    setFilterData({ ...filterData, category: e.target.value, isFilter: true })
-  }
 
+
+  useEffect(() => {
+    updatePageName(t('WALLET_MANAGER'))
+  }, [])
+  // debounce search start
   useEffect(() => {
     if (!isInitialized) {
       setIsInitialized(true)
@@ -173,20 +147,21 @@ function SubAdmin () {
       clearTimeout(timeoutId)
     }
   }, [searchTerm])
-  useEffect(() => {
-    updatePageName(t('WALLET_MANAGER'))
-  }, [])
+
+    // debounce search end
+    
 
 
-const[item,setItem]=useState()
-  const editViewBanner=async(type,item)=>{
+
+  const [item, setItem] = useState()
+  const editViewBanner = async (type, data) => {
     setEditView(type)
-    setItem(item)
+    setItem(data)
     setEditShowModal(true)
   }
 
 
-  
+
   return (
     <div>
       <div className='bg-[#F9F9F9] dark:bg-slate-900'>
@@ -196,7 +171,7 @@ const[item,setItem]=useState()
               <div className='col-span-2 flex flex-wrap  items-center'>
                 <div className='flex items-center lg:pt-0 pt-3 flex-wrap justify-center mb-2 2xl:mb-0'>
                   <div className='relative flex items-center mb-3'>
-                  <OSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm} placeholder={t('SEARCH_BY_FULL_NAME_USER_IS_MOBILE_NO')}/>
+                    <OSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm} placeholder={t('SEARCH_BY_FULL_NAME_USER_IS_MOBILE_NO')} />
                   </div>
 
                   <ODateRangePicker
@@ -204,7 +179,7 @@ const[item,setItem]=useState()
                     isReset={filterData?.isReset}
                     setIsReset={setFilterData}
                   />
-                
+
 
                   <button
                     type='button'
@@ -216,24 +191,22 @@ const[item,setItem]=useState()
                   </button>
                 </div>
               </div>
-             
-             
+
+
             </form>
             <SubTable
               subAdmin={subAdmin?.docs}
-              allSubAdmin={allSubAdmin}
-              handelDelete={handelDelete}
+              allSubAdmin={allWalletList}
               editViewBanner={editViewBanner}
               page={page}
               setSort={setSort}
               sort={sort}
               manager={manager}
-              handelStatusChange={handelStatusChange}
               pageSize={pageSize}
             />
 
             <div className='flex justify-between'>
-            <PageSizeList  dynamicPage={dynamicPage} pageSize={pageSize}/>
+              <PageSizeList dynamicPage={dynamicPage} pageSize={pageSize} />
               {paginationObj?.totalItems ? (
                 <Pagination
                   handlePageClick={handlePageClick}
@@ -246,15 +219,10 @@ const[item,setItem]=useState()
           </div>
         </div>
       </div>
-
-
-      {showModal && (
-        <BannerAdd setShowModal={setShowModal} getAllFAQ={allSubAdmin}/>
-      )}
       {editShowModal && (
-        <EditBanner
+        <BalanceEdit
           setEditShowModal={setEditShowModal}
-          getAllFAQ={allSubAdmin}
+          getAllFAQ={allWalletList}
           item={item}
           viewType={editView}
         />
@@ -263,4 +231,4 @@ const[item,setItem]=useState()
   )
 }
 
-export default SubAdmin
+export default Wallet
