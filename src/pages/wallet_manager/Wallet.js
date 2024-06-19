@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { apiDelete, apiGet, apiPut } from '../../utils/apiFetch'
 import apiPath from '../../utils/apiPath'
-import SubTable from './BannerTable'
+import SubTable from './WalletTable'
 import Pagination from '../Pagination'
 import dayjs from 'dayjs'
 import ODateRangePicker from 'components/shared/datePicker/ODateRangePicker'
@@ -22,7 +22,7 @@ function SubAdmin () {
   const [editShowModal, setEditShowModal] = useState(false)
   const [editView, setEditView] = useState()
   const manager =
-    user?.permission?.find(e => e.manager === 'banner_manager') ?? {}
+    user?.permission?.find(e => e.manager === 'wallet_manager') ?? {}
   const [subAdmin, setSubAdmin] = useState()
   const [page, setPage] = useState(1)
   const [pageSize, setPageSize] = useState(10)
@@ -174,7 +174,7 @@ function SubAdmin () {
     }
   }, [searchTerm])
   useEffect(() => {
-    updatePageName(t('BANNER_MANAGER'))
+    updatePageName(t('WALLET_MANAGER'))
   }, [])
 
 
@@ -196,7 +196,7 @@ const[item,setItem]=useState()
               <div className='col-span-2 flex flex-wrap  items-center'>
                 <div className='flex items-center lg:pt-0 pt-3 flex-wrap justify-center mb-2 2xl:mb-0'>
                   <div className='relative flex items-center mb-3'>
-                  <OSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm} placeholder={t('SEARCH_BY_BANNER_ID')}/>
+                  <OSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm} placeholder={t('SEARCH_BY_FULL_NAME_USER_IS_MOBILE_NO')}/>
                   </div>
 
                   <ODateRangePicker
@@ -204,23 +204,7 @@ const[item,setItem]=useState()
                     isReset={filterData?.isReset}
                     setIsReset={setFilterData}
                   />
-                  {(manager?.add || manager?.edit || user?.role === 'admin') && <div className='flex items-center mb-3 ml-3'>
-                    <select
-                      id='countries'
-                      type=' password'
-                      name='floating_password'
-                      className='block p-2 w-full text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer'
-                      placeholder=' '
-                      value={filterData?.category}
-                      onChange={e => statusPage(e)}
-                    >
-                      <option defaultValue value=''>
-                        {t('O_ALL')}
-                      </option>
-                      <option value='active'>{t('O_ACTIVE')}</option>
-                      <option value='inactive'>{t('O_INACTIVE')}</option>
-                    </select>
-                  </div>}
+                
 
                   <button
                     type='button'
@@ -233,18 +217,7 @@ const[item,setItem]=useState()
                 </div>
               </div>
              
-              <div className='flex items-center justify-end px-4 ms-auto mb-3'>
-                {(manager?.add || user?.role === 'admin') && (
-                  <button
-                    title={t('ADD_BANNER')}
-                    type='button'
-                    className='bg-gradientTo flex text-sm px-8 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue whitespace-nowrap'
-                    onClick={() => setShowModal(true)}
-                  >
-                    + {t('ADD_BANNER')}
-                  </button>
-                )}
-              </div>
+             
             </form>
             <SubTable
               subAdmin={subAdmin?.docs}

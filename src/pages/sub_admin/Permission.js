@@ -25,6 +25,26 @@ const Permission = [
     shownAdd: true,
     shownAll: true,
   },
+
+  {
+    manager: "banner_manager",
+    add: false,
+    edit: false,
+    view: false,
+    shownView: true,
+    shownAdd: true,
+    shownAll: true,
+  },
+
+  {
+    manager: "wallet_manager",
+    add: false,
+    edit: false,
+    view: false,
+    shownView: true,
+    shownAdd: true,
+    shownAll: true,
+  },
   // {
   //   manager: 'reports_manager',
   //   add: false,

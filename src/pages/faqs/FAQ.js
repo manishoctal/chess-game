@@ -29,6 +29,7 @@ function Faq() {
   const [page, setPage] = useState(1)
   const [pageSize, setPageSize] = useState(10)
   const [item, setItem] = useState('')
+  const [isDelete] = useState(false)
   const [sort, setSort] = useState({
     sortBy: 'createdAt',
     sortType: 'desc'
@@ -201,6 +202,7 @@ function Faq() {
                   handlePageClick={handlePageClick}
                   options={paginationObj}
                   page={page}
+                  isDelete={isDelete}
                 />
               )}
             </div>

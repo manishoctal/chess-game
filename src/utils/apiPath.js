@@ -1,6 +1,7 @@
 const apiPath = {
   loginUser: "/v1/admin/login",
   getUsers: "/v1/admin/user",
+  getUserDetails:'/v1/admin/user/details',
   acceptRewardRequest: "v1/admin/rewardRequest/accept",
   rejectRewardRequest: "v1/admin/rewardRequest/reject",
   getReports: "/v1/admin/report",
@@ -24,6 +25,7 @@ const apiPath = {
   notificationToggle: "/v1/admin/notification-toggle",
   changeContentStatus: "/v1/admin/static-content/change-status",
   getFAQs: "/v1/admin/faq",
+  searchUsers:'/v1/admin/user/search',
   bannerAdd:'/v1/admin/banner',
   changeFAQStatus: "/v1/admin/faqs/status",
   reportAbuseListing: "v1/admin/report-abuse",

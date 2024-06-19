@@ -17,6 +17,7 @@ import emailManager from '../../assets/images/email-manager.svg'
 import Logout from '../../assets/images/logout.svg'
 import { useTranslation } from 'react-i18next'
 import logoImage from '../../assets/images/logo-admin.png'
+import Swal from 'sweetalert2'
 
 const classNames = require('classnames')
 
@@ -46,9 +47,21 @@ const Sidebar = () => {
   )
 
   const handleLogout = () => {
-    if (window.confirm('Are you sure to logout?')) {
-      logoutUser()
-    }
+    Swal.fire({
+      html: "<b>Are you sure you want to logout?</b>",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes",
+      cancelButtonText: "No"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        logoutUser()
+      }
+    });
+
+
   }
 
   const checkSidebarPermission = arg => {
@@ -94,7 +107,7 @@ const Sidebar = () => {
             src={logoImage}
             className='inline max-w-[187px]'
             alt=''
-            // style={{ filter: 'brightness(0) invert(1)' }}
+          // style={{ filter: 'brightness(0) invert(1)' }}
           />
         </Link>
         <div className='profile text-center'>
@@ -115,33 +128,6 @@ const Sidebar = () => {
               alt=''
             />
           )}
-          {/* {andOperator(
-            checkSidebarPermission('user_manager'),
-            generateNavLink(
-              '/users',
-              'USER_MANAGER',
-              <img
-                src={userManager}
-                className='max-w-[18px]'
-                title={t('USER_MANAGER')}
-                alt=''
-              />
-            )
-          )} */}
-
-          {/* {andOperator(
-            checkSidebarPermission('transaction_manager'),
-            generateNavLink(
-              '/transactions',
-              'NAV_TRANSACTION_MANAGER',
-              <img
-                src={transactionManager}
-                className='max-w-[18px]'
-                title={t('NAV_TRANSACTION_MANAGER')}
-                alt=''
-              />
-            )
-          )} */}
 
           {andOperator(
             checkSidebarPermission('subAdmin_manager'),
@@ -158,18 +144,34 @@ const Sidebar = () => {
           )}
 
           {andOperator(
-            checkSidebarPermission('notification_manager'),
+            checkSidebarPermission('user_manager'),
             generateNavLink(
-              '/notification_manager',
-              'NOTIFICATION_MANAGER',
+              '/users',
+              'USER_MANAGER',
               <img
-                src={notificationManager}
+                src={userManager}
                 className='max-w-[18px]'
-                title={t('NOTIFICATION_MANAGER')}
+                title={t('USER_MANAGER')}
                 alt=''
               />
             )
           )}
+
+          {/* {andOperator(
+            checkSidebarPermission('transaction_manager'),
+            generateNavLink(
+              '/transactions',
+              'NAV_TRANSACTION_MANAGER',
+              <img
+                src={transactionManager}
+                className='max-w-[18px]'
+                title={t('NAV_TRANSACTION_MANAGER')}
+                alt=''
+              />
+            )
+          )} */}
+
+
           {/* {andOperator(
             checkSidebarPermission('scratch_card_manager'),
             generateNavLink(
@@ -237,6 +239,21 @@ const Sidebar = () => {
             )
           )}
 
+
+          {/* {andOperator(
+            checkSidebarPermission('wallet_manager'),
+            generateNavLink(
+              '/wallet-manager',
+              'WALLET_MANAGER',
+              <img
+                src={rewardWithdrawalRequest}
+                title={t('WALLET_MANAGER')}
+                className='max-w-[18px]'
+                alt=''
+              />
+            )
+          )} */}
+
           {andOperator(
             checkSidebarPermission('email_manager'),
             generateNavLink(
@@ -250,15 +267,16 @@ const Sidebar = () => {
               />
             )
           )}
+
           {andOperator(
-            checkSidebarPermission('settings'),
+            checkSidebarPermission('notification_manager'),
             generateNavLink(
-              '/setting',
-              'SETTINGS',
+              '/notification_manager',
+              'NOTIFICATION_MANAGER',
               <img
-                src={globalSettings}
+                src={notificationManager}
                 className='max-w-[18px]'
-                title={t('SETTINGS')}
+                title={t('NOTIFICATION_MANAGER')}
                 alt=''
               />
             )
@@ -277,7 +295,6 @@ const Sidebar = () => {
               />
             )
           )}
-
           {checkSidebarPermission('FAQ') &&
             generateNavLink(
               '/faqs',
@@ -289,6 +306,21 @@ const Sidebar = () => {
                 alt=''
               />
             )}
+
+          {andOperator(
+            checkSidebarPermission('settings'),
+            generateNavLink(
+              '/setting',
+              'SETTINGS',
+              <img
+                src={globalSettings}
+                className='max-w-[18px]'
+                title={t('SETTINGS')}
+                alt=''
+              />
+            )
+          )}
+
           <Link
             onClick={handleLogout}
             className='flex items-center px-4 lg:px-7 py-4 hover:bg-sideBarNavActiveColor hover:text-gradientTo'

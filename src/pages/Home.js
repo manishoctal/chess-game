@@ -1,6 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
 import "chartjs-adapter-date-fns";
-import { FaUserTie } from "react-icons/fa";
+import { BiMoneyWithdraw } from "react-icons/bi";
+import { FaUserTie, FaRegQuestionCircle,FaAddressCard  } from "react-icons/fa";
+import { AiOutlineStock } from "react-icons/ai";
+import { GiProfit } from "react-icons/gi";
+
 import { apiGet } from "utils/apiFetch";
 import pathObj from "utils/apiPath";
 import earning from "assets/images/earning.jpg";
@@ -443,11 +447,13 @@ function Home() {
               </span>
             </h3>
             <span className="text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-30px] p-3 border z-10 bg-white">
-              <img
+              {/* <img
                 src={earning}
                 className="h-8 w-8 bg-black"
                 alt="earningImg"
-              />
+              /> */}
+
+              <FaAddressCard size={30}/>
             </span>
           </div>
           <div className="text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border">
@@ -459,11 +465,13 @@ function Home() {
               </span>
             </h3>
             <span className="text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-30px] p-3 border z-10 bg-white">
-              <img
+              {/* <img
                 src={earning}
                 className="h-8 w-8 bg-black"
                 alt="earningImg"
-              />
+              /> */}
+
+              <AiOutlineStock size={30}/>
             </span>
           </div>
 
@@ -476,11 +484,13 @@ function Home() {
               </span>
             </h3>
             <span className="text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-30px] p-3 border z-10 bg-white">
-              <img
+              {/* <img
                 src={earning}
                 className="h-8 w-8 bg-black"
                 alt="earningImg"
-              />
+              /> */}
+              <FaRegQuestionCircle size={30} />
+
             </span>
           </div>
           <div className="text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border">
@@ -493,11 +503,12 @@ function Home() {
               </span>
             </h3>
             <span className="text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-30px] p-3 border z-10 bg-white">
-              <img
+              {/* <img
                 src={earning}
                 className="h-8 w-8 bg-black"
                 alt="earningImg"
-              />
+              /> */}
+              <GiProfit size={30} />
             </span>
           </div>
           <div className="text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border">
@@ -528,7 +539,8 @@ function Home() {
               </span>
             </h3>
             <span className="text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-30px] p-3 border z-10 bg-white">
-              <FaUserTie className="h-8 w-8" />
+              {/* <FaUserTie className="h-8 w-8" /> */}
+              <BiMoneyWithdraw size={30} />
             </span>
           </div>
 

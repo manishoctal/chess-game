@@ -1,11 +1,11 @@
 import OImage from "components/reusable/OImage";
 import dayjs from "dayjs";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useLocation, Link, useNavigate, NavLink } from "react-router-dom";
 import defaultImage from "../../assets/images/No-image-found.jpg";
 import checkIcon from "../../assets/images/check.png";
-import { startCase, capitalize } from "lodash";
+import { startCase } from "lodash";
 import { IoArrowBackSharp } from "react-icons/io5";
 import helpers from "utils/helpers";
 import firstNameIcon from "../../assets/icons/icon/name-icon.svg";
@@ -17,22 +17,50 @@ import locationIcon from "../../assets/icons/icon/location.svg";
 import cityIcon from "../../assets/icons/icon/city.svg";
 import useToastContext from "hooks/useToastContext";
 import apiPath from "utils/apiPath";
-import { apiPut } from "utils/apiFetch";
+import { apiGet, apiPut } from "utils/apiFetch";
 import ShowImage from "./ShowImage";
-import UserWalletTransaction from "./userComponents/UserWalletTransaction";
-import UserDetail from "./userComponents/UserDetail";
 import bonusIcon from "../../assets/icons/icon/bonus.svg";
+import AuthContext from "context/AuthContext";
 
 const UserView = () => {
   const { t } = useTranslation();
+  const { logoutUser } = useContext(AuthContext);
   const location = useLocation();
-  const [item] = useState(location?.state);
+  const [item,setItems] = useState();
   const navigate = useNavigate();
   const notification = useToastContext();
   const [kycSection, setKycSection] = useState(null);
   const [showBanner, setShowBanner] = useState(false);
   const [walletBox, setWalletBox] = useState(false);
 
+
+
+const getUserDetails=async()=>{
+  try {
+    const payload = {
+      userId:location?.state?._id||null
+    };
+    const path = apiPath.getUserDetails;
+    const result = await apiGet(path, payload);
+    if (result?.data?.success) {
+     setItems(result?.data?.results)
+    }
+  } catch (error) {
+    console.error("error ", error);
+    if (error.response.status === 401 || error.response.status === 409) {
+      logoutUser();
+    }
+  }
+}
+
+
+useEffect(()=>{
+  if(location?.state){
+    getUserDetails()
+  }else{
+    navigate('/users')
+  }
+},[location])
   const approveAndReject = async (data) => {
     try {
       const payload = {
@@ -142,7 +170,7 @@ const UserView = () => {
         <Link className="mb-5 ml-4 block" onClick={handleBack}>
           <IoArrowBackSharp />
         </Link>,
-        <NavLink to="/users" state={{ userType: item.userType }} className="mb-5 ml-4 block">
+        <NavLink to="/users" state={{ userType: item?.userType }} className="mb-5 ml-4 block">
           <IoArrowBackSharp />
         </NavLink>
       )}
@@ -191,218 +219,290 @@ const UserView = () => {
               </div>
             </div>
           </div>
-          {helpers.ternaryCondition(
-            walletBox,
-            <UserWalletTransaction item={item} />,
-            <UserDetail item={item} handleShowImage={handleShowImage} renderApprovalStatus={renderApprovalStatus} kycSection={kycSection} />
-          )}
         </div>
       )}
 
-      {helpers.andOperator(
-        item?.userType === "local",
-        <div className="mt-10">
-          <div className="flex items-center">
-            <div className="flex mr-5 cursor-pointer">
-              <figure className="inline-block overflow-hidden rounded-full border border-2 mb-5">
-                <OImage
-                  src={item?.profilePic || defaultImage}
-                  className="w-[100px] h-[100px] inline"
-                  onClick={helpers.ternaryCondition(item?.profilePic !== "https://octal-dev.s3.ap-south-1.amazonaws.com/", () => handleShowImage(item.profilePic), undefined)}
-                  fallbackUrl={defaultImage}
-                  alt=""
-                />
-              </figure>
-              {helpers.andOperator(
-                item?.verificationStatus === "verified",
-                <span>
-                  <img src={item?.verificationStatus === "verified" && checkIcon} alt="" />
-                </span>
-              )}
-            </div>
+      <div className="mt-10">
+        <div className="flex items-center">
+          <div className="flex mr-5 cursor-pointer">
+            <figure className="inline-block overflow-hidden rounded-full border border-2 mb-5">
+              <OImage
+                src={item?.profilePic || defaultImage}
+                className="w-[100px] h-[100px] inline"
+                onClick={helpers.ternaryCondition(item?.profilePic !== "https://octal-dev.s3.ap-south-1.amazonaws.com/", () => handleShowImage(item.profilePic), undefined)}
+                fallbackUrl={defaultImage}
+                alt=""
+              />
+            </figure>
+            {helpers.andOperator(
+              item?.verificationStatus === "verified",
+              <span>
+                <img src={item?.verificationStatus === "verified" && checkIcon} alt="" />
+              </span>
+            )}
+          </div>
 
-            <div className="grid grid-cols-3 bg-[#F2F2F2] rounded-lg p-4 w-[70%] mr-4 px-8 flex justify-between">
-              <div>
-                <div className="flex items-center">
-                  <figure className="bg-white w-[42px] h-[41px] rounded-full flex items-center justify-center mr-3">
-                    <img src={firstNameIcon} alt="" />
-                  </figure>
-                  <figcaption className="w-[calc(100%_-_41px)]">
-                    <span className="block text-[#5 C5C5C]">{t("NAME")}</span>
-                    <strong> {helpers.ternaryCondition(item?.firstName, startCase((item?.firstName ?? "") + " " + (item?.lastName ?? "")), "N/A")}</strong>
-                  </figcaption>
-                </div>
-              </div>
-              <div>
-                <div className="flex items-center">
-                  <figure className="bg-white w-[42px] h-[41px] rounded-full flex items-center justify-center mr-3">
-                    <img src={emailIcon} alt="" />
-                  </figure>
-                  <figcaption className="w-[calc(100%_-_41px)]">
-                    <span className="block text-[#5 C5C5C]">{t("EMAIL_ADDRESS")}</span>
-                    <strong>{helpers.ternaryCondition(item?.email, item?.email, "N/A")}</strong>
-                  </figcaption>
-                </div>
-              </div>
-              <div>
-                <div className="flex items-center">
-                  <figure className="bg-white w-[42px] h-[41px] rounded-full flex items-center justify-center mr-3">
-                    <img src={mobileIcon} alt="" />
-                  </figure>
-                  <figcaption className="w-[calc(100%_-_41px)]">
-                    <span className="block text-[#5 C5C5C]">{t("O_MOBILE_NUMBER")}</span>
-                    <strong>{`+${item?.countryCode} ${item?.mobile}`}</strong>
-                  </figcaption>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-[#000] rounded-lg p-4 ">
+          <div className="grid grid-cols-3 bg-[#F2F2F2] rounded-lg p-4 w-[70%] mr-4 px-8 flex justify-between">
+            <div>
               <div className="flex items-center">
-                <figure className="mr-3">
-                  <img src={balanceIcon} alt="" />
+                <figure className="bg-white w-[42px] h-[41px] rounded-full flex items-center justify-center mr-3">
+                  <img src={firstNameIcon} alt="" />
                 </figure>
-                <figcaption className="text-white">
-                  <span className="block">{helpers.formattedAmount(item?.walletAmount)}</span>
-                  <span className="text-sm">{t("AVAILABLE_BALANCE")}</span>
+                <figcaption className="w-[calc(100%_-_41px)]">
+                  <span className="block text-[#5 C5C5C]">{t("NAME")}</span>
+                  <strong> {helpers.ternaryCondition(item?.firstName, startCase((item?.firstName ?? "") + " " + (item?.lastName ?? "")), "N/A")}</strong>
+                </figcaption>
+              </div>
+            </div>
+            <div>
+              <div className="flex items-center">
+                <figure className="bg-white w-[42px] h-[41px] rounded-full flex items-center justify-center mr-3">
+                  <img src={emailIcon} alt="" />
+                </figure>
+                <figcaption className="w-[calc(100%_-_41px)]">
+                  <span className="block text-[#5 C5C5C]">{t("EMAIL_ADDRESS")}</span>
+                  <strong>{helpers.ternaryCondition(item?.email, item?.email, "N/A")}</strong>
+                </figcaption>
+              </div>
+            </div>
+            <div>
+              <div className="flex items-center">
+                <figure className="bg-white w-[42px] h-[41px] rounded-full flex items-center justify-center mr-3">
+                  <img src={mobileIcon} alt="" />
+                </figure>
+                <figcaption className="w-[calc(100%_-_41px)]">
+                  <span className="block text-[#5 C5C5C]">{t("O_MOBILE_NUMBER")}</span>
+                  <strong>{ item?.mobile?`+${item?.countryCode} ${item?.mobile}`:'N/A'}</strong>
                 </figcaption>
               </div>
             </div>
           </div>
 
-          <div className="grid grid-cols-3 gap-5">
-            <div className="border border-1 border-[#E1DEDE] rounded-md p-6 ps-3">
-              <ul>
-                <div>
-                  <li className="mb-4">
-                    <div className="flex items-center">
-                      <figure className="bg-[#F2F2F2] w-[42px] h-[41px] rounded-full flex items-center justify-center mr-3">
-                        <img src={cityIcon} alt="" />
-                      </figure>
-                      <figcaption className="w-[calc(100%_-_41px)]">
-                        <span className="block text-[#5C5C5C]">{t("NATIONALITY_ID")}</span>
-                        <strong>{helpers.ternaryCondition(item?.nationalityId, item?.nationalityId, "N/A")}</strong>
-                      </figcaption>
-                    </div>
-                  </li>
-                </div>
-                <div>
-                  <li className="mb-4">
-                    <div className="flex items-center">
-                      <figure className="bg-[#F2F2F2] w-[42px] h-[41px] rounded-full flex items-center justify-center mr-3">
-                        <img src={locationIcon} alt="" />
-                      </figure>
-                      <figcaption className="w-[calc(100%_-_41px)]">
-                        <span className="block text-[#5C5C5C]">{t("ADDRESS")}</span>
-                        <strong>{helpers.ternaryCondition(item?.address, item?.address, "N/A")}</strong>
-                      </figcaption>
-                    </div>
-                  </li>
-                </div>
-                <div>
-                  <li className="mb-4">
-                    <div className="flex items-center">
-                      <figure className="bg-[#F2F2F2] w-[42px] h-[41px] rounded-full flex items-center justify-center mr-3">
-                        <img src={dobIcon} alt="" />
-                      </figure>
-                      <figcaption className="w-[calc(100%_-_41px)]">
-                        <span className="block text-[#5C5C5C]">{t("USER_DOB")}</span>
-                        <strong>{helpers.ternaryCondition(item?.dob, dayjs(item?.dob).format("D MMM YYYY"), "N/A")}</strong>
-                      </figcaption>
-                    </div>
-                  </li>
-                </div>
-                <div>
-                  <li className="mb-4">
-                    <div className="flex items-center">
-                      <figure className="bg-[#F2F2F2] w-[42px] h-[41px] rounded-full flex items-center justify-center mr-3">
-                        <img src={locationIcon} alt="" />
-                      </figure>
-                      <figcaption className="w-[calc(100%_-_41px)]">
-                        <span className="block text-[#5C5C5C]">{t("DRIVING_LICENSE")}</span>
-                        <strong>{helpers.ternaryCondition(item?.drivingLicense, item?.drivingLicense, "N/A")}</strong>
-                      </figcaption>
-                    </div>
-                  </li>
-                </div>
-                <div>
-                  <li className="mb-4">
-                    <div className="flex items-center">
-                      <figure className="bg-[#F2F2F2] w-[42px] h-[41px] rounded-full flex items-center justify-center mr-3">
-                        <img src={bonusIcon} alt="" />
-                      </figure>
-                      <figcaption className="w-[calc(100%_-_41px)]">
-                        <span className="block text-[#5C5C5C] dark:text-white">{t("BONUS_AMOUNT")}</span>
-                        <strong className="dark:text-slate-400">{item?.signUpBonusAmount || 0}</strong>
-                      </figcaption>
-                    </div>
-                  </li>
-                </div>
-              </ul>
-            </div>
-            <div className="border border-1 border-[#E1DEDE] rounded-md p-6 ps-3">
-              <ul>
-                <div>
-                  <li className="mb-4">
-                    <div className="flex items-center">
-                      <figcaption className="w-[calc(100%_-_41px)]">
-                        <span className="block text-[#5C5C5C]">{t("LOCAL_QR_CODE")}</span>
-                        <div className="relative mt-4">
-                          <figure className="inline-block overflow-hidden border mb-3 w-90 h-[210px]">
-                            <OImage
-                              onClick={() => {
-                                handleShowImage(item?.qrCode);
-                              }}
-                              src={item?.qrCode || defaultImage}
-                              className="w-full h-full object-contain inline cursor-pointer"
-                              alt=""
-                              fallbackUrl={defaultImage}
-                            />
-                          </figure>
-                        </div>
-                      </figcaption>
-                    </div>
-                  </li>
-                </div>
-              </ul>
-            </div>
-            <div className="border border-1  border-[#E1DEDE] rounded-md p-12">
-              <span className="block text-center pb-3 ">{t("KYC_DOCUMENT")}</span>
-              <div className="relative">
-                <figure className="inline-block overflow-hidden border mb-3 w-full h-[200px]">
-                  <OImage
-                    src={item?.kycRecord?.docImageFront || defaultImage}
-                    className="w-full h-full object-contain inline  cursor-pointer"
-                    onClick={() => handleShowImage(item?.kycRecord?.docImageFront)}
-                    alt=""
-                    fallbackUrl={defaultImage}
-                  />
-                </figure>
-                {renderApprovalStatus()}
-              </div>
-              <div className="relative">
-                <figure className="inline-block overflow-hidden border mb-3 w-full h-[200px]">
-                  <OImage
-                    src={item?.kycRecord?.docImageBack || defaultImage}
-                    className="w-full h-full object-contain inline cursor-pointer"
-                    alt=""
-                    onClick={() => handleShowImage(item?.kycRecord?.docImageBack)}
-                    fallbackUrl={defaultImage}
-                  />
-                </figure>
-                {renderApprovalStatus()}
-              </div>
-              <span className="block text-center">
-                {t("DOCUMENT_NUMBER")}: <b>{helpers.ternaryCondition(item?.kycRecord?.docNumber, item?.kycRecord?.docNumber, "N/A")}</b>
-              </span>
-              {kycSection}
-              <span className="block text-center mt-4">
-                {t("KYC_STATUS")}: <b>{helpers.ternaryCondition(item?.kycRecord?.isApproved, capitalize(startCase(item?.kycRecord?.isApproved)), "Kyc not uploaded yet")}</b>
-              </span>
+          <div className="bg-[#4a24c2] rounded-lg p-4 ">
+            <div className="flex items-center">
+              <figure className="mr-3">
+                <img src={balanceIcon} alt="" />
+              </figure>
+              <figcaption className="text-white">
+                <span className="block">{helpers.formattedAmount(item?.walletAmount)}</span>
+                <span className="text-sm">{t("AVAILABLE_BALANCE")}</span>
+              </figcaption>
             </div>
           </div>
         </div>
-      )}
+
+        <div className="grid grid-cols-3 gap-5">
+          <div className="border border-1 border-[#E1DEDE] rounded-md p-6 ps-3">
+            <ul>
+              <div>
+                <li className="mb-4">
+                  <div className="flex items-center">
+                    <figure className="bg-[#F2F2F2] w-[42px] h-[41px] rounded-full flex items-center justify-center mr-3">
+                      <img src={cityIcon} alt="" />
+                    </figure>
+                    <figcaption className="w-[calc(100%_-_41px)]">
+                      <span className="block text-[#5C5C5C]">{t("USER_ID")}</span>
+                      <strong>{helpers.ternaryCondition(item?.userId, item?.userId, "N/A")}</strong>
+                    </figcaption>
+                  </div>
+                </li>
+              </div>
+              <div>
+                <li className="mb-4">
+                  <div className="flex items-center">
+                    <figure className="bg-[#F2F2F2] w-[42px] h-[41px] rounded-full flex items-center justify-center mr-3">
+                      <img src={locationIcon} alt="" />
+                    </figure>
+                    <figcaption className="w-[calc(100%_-_41px)]">
+                      <span className="block text-[#5C5C5C]">{t("USER_NAME")}</span>
+                      <strong>{helpers.ternaryCondition(item?.userName, item?.userName, "N/A")}</strong>
+                    </figcaption>
+                  </div>
+                </li>
+              </div>
+              <div>
+                <li className="mb-4">
+                  <div className="flex items-center">
+                    <figure className="bg-[#F2F2F2] w-[42px] h-[41px] rounded-full flex items-center justify-center mr-3">
+                      <img src={dobIcon} alt="" />
+                    </figure>
+                    <figcaption className="w-[calc(100%_-_41px)]">
+                      <span className="block text-[#5C5C5C]">{t("O_CREATED_AT")}</span>
+                      <strong>{helpers.ternaryCondition(item?.createdAt, dayjs(item?.createdAt).format("D MMM YYYY"), "N/A")}</strong>
+                    </figcaption>
+                  </div>
+                </li>
+              </div>
+              <div>
+                <li className="mb-4">
+                  <div className="flex items-center">
+                    <figure className="bg-[#F2F2F2] w-[42px] h-[41px] rounded-full flex items-center justify-center mr-3">
+                      <img src={locationIcon} alt="" />
+                    </figure>
+                    <figcaption className="w-[calc(100%_-_41px)]">
+                      <span className="block text-[#5C5C5C]">{t("INVITE_CODE_USED")}</span>
+                      <strong>{helpers.ternaryCondition(item?.inviteByCode, item?.inviteByCode, "N/A")}</strong>
+                    </figcaption>
+                  </div>
+                </li>
+              </div>
+              <div>
+                <li className="mb-4">
+                  <div className="flex items-center">
+                    <figure className="bg-[#F2F2F2] w-[42px] h-[41px] rounded-full flex items-center justify-center mr-3">
+                      <img src={bonusIcon} alt="" />
+                    </figure>
+                    <figcaption className="w-[calc(100%_-_41px)]">
+                      <span className="block text-[#5C5C5C] dark:text-white">{t("INVITE_CODE")}</span>
+                      <strong className="dark:text-slate-400">{item?.inviteCode || 'N/A'}</strong>
+                    </figcaption>
+                  </div>
+                </li>
+              </div>
+            </ul>
+          </div>
+
+          <div className="border border-1  border-[#E1DEDE] rounded-md p-12">
+            <span className="block text-center pb-3 font-bold ">{t("KYC_DOCUMENT")}</span>
+            <div className="relative">
+              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{t('GOVERNMENT_ID_PDF')}</label>
+              <figure className="inline-block overflow-hidden border mb-3 w-full h-[200px]">
+                <OImage
+                  src={item?.kycRecord?.docImageFront || defaultImage}
+                  className="w-full h-full object-contain inline  cursor-pointer"
+                  onClick={() => handleShowImage(item?.kycRecord?.docImageFront)}
+                  alt=""
+                  fallbackUrl={defaultImage}
+                />
+              </figure>
+              {renderApprovalStatus()}
+            </div>
+
+            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white text-center">or</label>
+
+            <div className="relative">
+              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{t('FRONT_PROOF_ID_IMAGE')}</label>
+              <figure className="inline-block overflow-hidden border mb-3 w-full h-[200px]">
+                <OImage
+                  src={item?.kycRecord?.docImageFront || defaultImage}
+                  className="w-full h-full object-contain inline  cursor-pointer"
+                  onClick={() => handleShowImage(item?.kycRecord?.docImageFront)}
+                  alt=""
+                  fallbackUrl={defaultImage}
+                />
+              </figure>
+              {renderApprovalStatus()}
+            </div>
+            <div className="relative">
+              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{t('BACK_PROOF_ID_IMAGE')}</label>
+              <figure className="inline-block overflow-hidden border mb-3 w-full h-[200px]">
+                <OImage
+                  src={item?.kycRecord?.docImageBack || defaultImage}
+                  className="w-full h-full object-contain inline cursor-pointer"
+                  alt=""
+                  onClick={() => handleShowImage(item?.kycRecord?.docImageBack)}
+                  fallbackUrl={defaultImage}
+                />
+              </figure>
+              {renderApprovalStatus()}
+            </div>
+            {kycSection}
+            <span className="block text-center mt-4">
+              {t("KYC_VERIFIED")}: <b>{helpers.ternaryCondition(item?.kycStatus, 'Yes', 'No')}</b>
+            </span>
+          </div>
+          <div className="border border-1 border-[#E1DEDE] rounded-md p-6 ps-3">
+            <ul>
+              <div>
+                <li className="mb-4">
+                  <div className="flex items-center">
+                    <figcaption className="w-[calc(100%_-_41px)]">
+                      <span className="block text-[#5C5C5C] font-bold mb-4">{t("O_PORTFOLIO")}</span>
+                      <div className="relative mt-4">
+                        <figure className="inline-block overflow-hidden border mb-3 w-90 h-[210px] w-[480px]">
+                          <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white p-2 mt-3">{t('PLAYER_CARD')}</label>
+                          <div className="flex justify-between mb-9">
+                            <div>
+                              <label className="block text-sm font-medium text-gray-900 dark:text-white px-2 mb-1">{t('O_INVESTMENT')}</label>
+                              <span className="block text-sm font-medium text-gray-900 dark:text-white px-2 text-center">{helpers.formattedAmount(100)}</span>
+                            </div>
+                            <div>
+                              <label className="block text-sm font-medium text-gray-900 dark:text-white px-2 mb-1">{t('TOTAL_SELLING_CARD')}</label>
+                              <span className="block text-sm font-medium text-gray-900 dark:text-white px-2 text-center">{helpers.formattedAmount(100)}</span>
+                            </div>
+                            <div>
+                              <label className="block text-sm font-medium text-gray-900 dark:text-white px-2 mb-1">{t('RETURN_SELLING_CARD')}</label>
+                              <span className="block text-sm font-medium text-gray-900 dark:text-white px-2 text-center">{helpers.formattedAmount(100)}</span>
+                            </div>
+                          </div>
+
+                          <div className="flex justify-between">
+                            <div>
+                              <label className="block text-sm font-medium text-gray-900 dark:text-white px-2 mb-1">{t('CARD_BOUGHT')}</label>
+                              <span className="block text-sm font-medium text-gray-900 dark:text-white px-2 text-center">{helpers.formattedAmount(100)}</span>
+                            </div>
+                            <div>
+                              <label className="block text-sm font-medium text-gray-900 dark:text-white px-2 mb-1">{t('CARD_SOLD')}</label>
+                              <span className="block text-sm font-medium text-gray-900 dark:text-white px-2 text-center">{helpers.formattedAmount(100)}</span>
+                            </div>
+                            <div>
+                              <label className="block text-sm font-medium text-gray-900 dark:text-white px-2 mb-1">{t('CARD_HOLD')}</label>
+                              <span className="block text-sm font-medium text-gray-900 dark:text-white px-2 text-center">{helpers.formattedAmount(100)}</span>
+                            </div>
+                          </div>
+                        </figure>
+                      </div>
+
+
+
+                      <div className="relative mt-4">
+                        <figure className="inline-block overflow-hidden border mb-3 w-90 h-[210px] w-[480px]">
+                          <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white p-2 mt-3">{t('PLAYER_STOCK')}</label>
+                          <div className="flex justify-between mb-9">
+                          <div>
+                              <label className="block text-sm font-medium text-gray-900 dark:text-white px-2 mb-1">{t('O_INVESTMENT')}</label>
+                              <span className="block text-sm font-medium text-gray-900 dark:text-white px-2 text-center">{helpers.formattedAmount(100)}</span>
+                            </div>
+                            <div>
+                              <label className="block text-sm font-medium text-gray-900 dark:text-white px-2 mb-1">{t('TOTAL_SELLING_STOCK')}</label>
+                              <span className="block text-sm font-medium text-gray-900 dark:text-white px-2 text-center">{helpers.formattedAmount(100)}</span>
+                            </div>
+                            <div>
+                              <label className="block text-sm font-medium text-gray-900 dark:text-white px-2 mb-1">{t('RETURN_SELLING_STOCK')}</label>
+                              <span className="block text-sm font-medium text-gray-900 dark:text-white px-2 text-center">{helpers.formattedAmount(100)}</span>
+                            </div>
+                          </div>
+
+                          <div className="flex justify-between">
+                            <div>
+                              <label className="block text-sm font-medium text-gray-900 dark:text-white px-2 mb-1">{t('STOCK_BOUGHT')}</label>
+                              <span className="block text-sm font-medium text-gray-900 dark:text-white px-2 text-center">{helpers.formattedAmount(100)}</span>
+                            </div>
+                            <div>
+                              <label className="block text-sm font-medium text-gray-900 dark:text-white px-2 mb-1">{t('STOCK_SOLD')}</label>
+                              <span className="block text-sm font-medium text-gray-900 dark:text-white px-2 text-center">{helpers.formattedAmount(100)}</span>
+                            </div>
+                            <div>
+                              <label className="block text-sm font-medium text-gray-900 dark:text-white px-2 mb-1">{t('STOCK_HOLD')}</label>
+                              <span className="block text-sm font-medium text-gray-900 dark:text-white px-2 text-center">{helpers.formattedAmount(100)}</span>
+                            </div>
+                    
+                          </div>
+                        </figure>
+                      </div>
+
+
+
+                    </figcaption>
+                  </div>
+                </li>
+              </div>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+
 
       {showBanner && showImage && <ShowImage handleShowImage={handleShowImage} showImage={showImage} />}
     </div>
