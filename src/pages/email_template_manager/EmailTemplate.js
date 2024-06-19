@@ -17,12 +17,6 @@ function EmailTemplate() {
   const [emailTemplate, setEmailTemplate] = useState([]);
   const [page, setPage] = useState(1);
   const [pageSize] = useState(10);
-  const [isDelete] = useState(false);
-  const [paginationObj, setPaginationObj] = useState({
-    page: 1,
-    pageCount: 1,
-    pageRangeDisplayed: 10,
-  });
   const {t} = useTranslation()
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
@@ -40,7 +34,7 @@ function EmailTemplate() {
     sortType: "desc",
   });
 
-  const allEmailTemplate = async (data) => {
+  const allEmailTemplate = async () => {
     try {
       const { category, startDate, endDate, searchkey } = filterData;
 
@@ -58,25 +52,12 @@ function EmailTemplate() {
       const path = apiPath.emailTemplate;
       const result = await apiGet(path, payload);
       const response = result?.data?.results;
-      // const resultStatus = result?.data?.success;
       setEmailTemplate(response);
-      // setPaginationObj({
-      //   ...paginationObj,
-      //   page: resultStatus ? response.page : null,
-      //   pageCount: resultStatus ? response.totalPages : null,
-      //   perPageItem: resultStatus ? response?.docs.length : null,
-      //   totalItems: resultStatus ? response.totalDocs : null,
-      // });
+     
     } catch (error) {
       console.error("error in get all sub admin list==>>>>", error.message);
     }
   };
-  const handlePageClick = (event) => {
-    const newPage = event.selected + 1;
-    setPage(newPage);
-  };
-
-
   const handelStatusChange = async (item) => {
     try {
       const payload = {
@@ -157,14 +138,7 @@ function EmailTemplate() {
               manager={manager}
               handelStatusChange={handelStatusChange}
             />
-            {paginationObj?.totalItems ? (
-              <Pagination
-                handlePageClick={handlePageClick}
-                options={paginationObj}
-                isDelete={isDelete}
-                page={page}
-              />
-            ) : null}
+           
           </div>
         </div>
       </div>

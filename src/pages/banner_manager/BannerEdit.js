@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { apiPost, apiPut } from "../../utils/apiFetch";
+import { apiPut } from "../../utils/apiFetch";
 import apiPath from "../../utils/apiPath";
 import useToastContext from "hooks/useToastContext";
 import { useTranslation } from "react-i18next";
@@ -11,7 +11,6 @@ const BannerEdit = ({ setEditShowModal, getAllFAQ, item, viewType }) => {
     const { t } = useTranslation();
     const {
         handleSubmit,
-        formState: { errors },
     } = useForm({ mode: "onChange", shouldFocusError: true, defaultValues: {} });
     const [loader, setLoader] = useState(false)
     const [picture, setPicture] = useState()

@@ -9,7 +9,6 @@ import { useTranslation } from "react-i18next";
 import AuthContext from "context/AuthContext";
 import OInputField from "components/reusable/OInputField";
 import imageDefault from "../../assets/images/No-image-found.jpg";
-
 import OImage from "components/reusable/OImage";
 import { Link } from "react-router-dom";
 import Credential from "./Credential";
@@ -22,14 +21,10 @@ const Settings = () => {
   const { logoutUser, user, updatePageName } = useContext(AuthContext);
   const manager = user?.permission?.find((e) => e.manager === "settings") ?? {};
   const { t } = useTranslation();
-  const [settingsDetails, setSettingsDetails] = useState("");
-
   const {
     register,
     handleSubmit,
     reset,
-    watch,
-
     formState: { isDirty, errors },
   } = useForm({
     mode: "onBlur",
@@ -39,11 +34,9 @@ const Settings = () => {
   });
   const [settingChangeLoading, setSettingChangeLoading] = useState(false);
   const formValidation = FormValidation();
-
   const [pic] = useState(user?.profilePic ?? imageDefault);
   const [viewShowModal, setViewShowModal] = useState(false);
   const [isAmountModal, setIsAmountModal] = useState(false);
-
   const notification = useToastContext();
 
   const handleSubmitForm = async (data) => {
@@ -71,7 +64,7 @@ const Settings = () => {
       const res = await apiGet(pathObj.getSettings);
       if (res) {
         reset(res?.data?.results);
-        setSettingsDetails(res?.data?.results);
+        
       }
     } catch (error) {
       console.error("error:", error);
@@ -141,30 +134,6 @@ const Settings = () => {
                       </div>
                     </div>
                   </div>
-
-                  {/* <div className="flex justify-between items-center">
-                    <div className="pr-3">
-                      {t("TOTAL_ADMIN_AMOUNT")}
-                      <strong
-                        className="ps-2 text-blue"
-                        style={{ color: "#0ea5e9" }}
-                      >
-                       
-                        {helpers.formattedAmount(
-                          settingsDetails?.defaultWalletAmount
-                        )}
-                      </strong>
-                    </div>
-                    <button
-                      type="button"
-                      title={t("DEPOSIT_AMOUNT")}
-                      className="bg-gradientTo hover:bg-DarkBlue cursor-pointer   text-white  font-normal active:bg-slate-100 text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150"
-                      onClick={() => setIsAmountModal(true)}
-                    >
-
-                      {t("DEPOSIT_AMOUNT")}
-                    </button>
-                  </div> */}
                 </div>
               </div>
 

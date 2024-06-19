@@ -1,4 +1,3 @@
-import ErrorMessage from "components/ErrorMessage";
 import { useForm } from "react-hook-form";
 import { apiPost } from "../../utils/apiFetch";
 import apiPath from "../../utils/apiPath";
@@ -12,7 +11,6 @@ const BannerAdd = ({ setShowModal, getAllFAQ }) => {
   const { t } = useTranslation();
   const {
     handleSubmit,
-    formState: { errors },
   } = useForm({ mode: "onChange", shouldFocusError: true, defaultValues: {} });
   const [loader, setLoader] = useState(false)
   const [picture, setPicture] = useState()
