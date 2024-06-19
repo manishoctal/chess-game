@@ -14,7 +14,7 @@ import BannerAdd from './BannerAdd'
 import EditBanner from './BannerEdit'
 
 
-function SubAdmin () {
+function Banner() {
   const { t } = useTranslation()
   const notification = useToastContext()
   const { user, updatePageName } = useContext(AuthContext)
@@ -93,16 +93,16 @@ function SubAdmin () {
     allSubAdmin()
   }, [filterData, page, sort, pageSize])
 
-  const handelStatusChange = async item => {
+  const handelStatusChange = async details => {
     try {
       const payload = {
-        status: item?.status === 'inactive' ? 'active' : 'inactive',
+        status: details?.status === 'inactive' ? 'active' : 'inactive',
         type: 'banner'
       }
-      const path = `${apiPath.changeStatus}/${item?._id}`
+      const path = `${apiPath.changeStatus}/${details?._id}`
       const result = await apiPut(path, payload)
       if (result?.status === 200) {
-        notification.success(result.data.message)
+        notification.success(result?.data?.message)
         allSubAdmin({ statusChange: 1 })
       }
     } catch (error) {
@@ -110,12 +110,12 @@ function SubAdmin () {
     }
   }
 
-  const handelDelete = async item => {
+  const handelDelete = async details => {
     try {
-      const path = apiPath.bannerDelete + '/' + item?._id
+      const path = apiPath.bannerDelete + '/' + details?._id
       const result = await apiDelete(path)
       if (result?.status === 200) {
-        notification.success(result?.data.message)
+        notification.success(result?.data?.message)
         allSubAdmin({ deletePage: 1 })
       }
     } catch (error) {
@@ -178,15 +178,15 @@ function SubAdmin () {
   }, [])
 
 
-const[item,setItem]=useState()
-  const editViewBanner=async(type,item)=>{
+  const [item, setItem] = useState()
+  const editViewBanner = async (type, data) => {
     setEditView(type)
-    setItem(item)
+    setItem(data)
     setEditShowModal(true)
   }
 
 
-  
+
   return (
     <div>
       <div className='bg-[#F9F9F9] dark:bg-slate-900'>
@@ -196,7 +196,7 @@ const[item,setItem]=useState()
               <div className='col-span-2 flex flex-wrap  items-center'>
                 <div className='flex items-center lg:pt-0 pt-3 flex-wrap justify-center mb-2 2xl:mb-0'>
                   <div className='relative flex items-center mb-3'>
-                  <OSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm} placeholder={t('SEARCH_BY_BANNER_ID')}/>
+                    <OSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm} placeholder={t('SEARCH_BY_BANNER_ID')} />
                   </div>
 
                   <ODateRangePicker
@@ -232,7 +232,7 @@ const[item,setItem]=useState()
                   </button>
                 </div>
               </div>
-             
+
               <div className='flex items-center justify-end px-4 ms-auto mb-3'>
                 {(manager?.add || user?.role === 'admin') && (
                   <button
@@ -260,7 +260,7 @@ const[item,setItem]=useState()
             />
 
             <div className='flex justify-between'>
-            <PageSizeList  dynamicPage={dynamicPage} pageSize={pageSize}/>
+              <PageSizeList dynamicPage={dynamicPage} pageSize={pageSize} />
               {paginationObj?.totalItems ? (
                 <Pagination
                   handlePageClick={handlePageClick}
@@ -276,7 +276,7 @@ const[item,setItem]=useState()
 
 
       {showModal && (
-        <BannerAdd setShowModal={setShowModal} getAllFAQ={allSubAdmin}/>
+        <BannerAdd setShowModal={setShowModal} getAllFAQ={allSubAdmin} />
       )}
       {editShowModal && (
         <EditBanner
@@ -290,4 +290,4 @@ const[item,setItem]=useState()
   )
 }
 
-export default SubAdmin
+export default Banner
