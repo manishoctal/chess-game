@@ -63,7 +63,7 @@ const SubAdd = () => {
     setPermission(current =>
       current.map(obj => {
         if (obj.manager === event.target.name) {
-          if (event.target.id === 'add' || event.target.id === 'edit') {
+          if (helpers.orOperator(event.target.id === 'add', event.target.id === 'edit')) {
             return {
               ...obj,
               [event.target.id]: event.target.checked,
@@ -146,7 +146,7 @@ const SubAdd = () => {
   useEffect(() => {
     const permissionData = getValues('permission')
     if (
-      permissionData?.length > 0 && helpers.andOperator(permissionData[0]?.manager === 'dashboard', (item?.type === 'edit' || item?.type === 'view'))
+      permissionData?.length > 0 && helpers.andOperator(permissionData[0]?.manager === 'dashboard', (helpers.orOperator(item?.type === 'edit', item?.type === 'view')))
     ) {
       permissionData.shift()
       setPermission(permissionData)
@@ -397,7 +397,7 @@ const SubAdd = () => {
                             id='all'
                             name={data?.manager}
                             onChange={checkAll}
-                            checked={isCheckAll || (helpers.andOperator(data.add, data.view))}
+                            checked={helpers.orOperator(isCheckAll, (helpers.andOperator(data.add, data.view)))}
                             disabled={item?.type === 'view'}
                           />
                         )}
