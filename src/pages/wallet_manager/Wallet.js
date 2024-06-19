@@ -96,21 +96,6 @@ function Wallet() {
     setPageSize(e.target.value)
   }
 
-
-
-  const handelDelete = async details => {
-    try {
-      const path = apiPath.bannerDelete + '/' + details?._id
-      const result = await apiDelete(path)
-      if (result?.status === 200) {
-        notification.success(result?.data?.message)
-        allWalletList()
-      }
-    } catch (error) {
-      console.error('error in get all FAQs list==>>>>', error.message)
-    }
-  }
-
   const handleReset = () => {
     setFilterData({
       category: '',
@@ -135,6 +120,7 @@ function Wallet() {
     })
   }
 
+  // debounce search start
   useEffect(() => {
     if (!isInitialized) {
       setIsInitialized(true)
@@ -157,6 +143,9 @@ function Wallet() {
       clearTimeout(timeoutId)
     }
   }, [searchTerm])
+
+    // debounce search end
+    
   useEffect(() => {
     updatePageName(t('WALLET_MANAGER'))
   }, [])
@@ -206,7 +195,6 @@ function Wallet() {
             <SubTable
               subAdmin={subAdmin?.docs}
               allSubAdmin={allWalletList}
-              handelDelete={handelDelete}
               editViewBanner={editViewBanner}
               page={page}
               setSort={setSort}
