@@ -26,7 +26,7 @@ function Faq() {
   const [page, setPage] = useState(1)
   const [pageSize, setPageSize] = useState(10)
   const [item, setItem] = useState('')
-  const [isDelete] = useState(false)
+  const [isDelete,setIsDelete] = useState(false)
   const [sort, setSort] = useState({
     sortBy: 'createdAt',
     sortType: 'desc'
@@ -42,8 +42,15 @@ function Faq() {
   });
 
 // get all faq function start
-  const getAllFAQ = async () => {
+  const getAllFAQ = async (data) => {
     try {
+
+      if ( data?.deletePage &&  FAQs?.length <= 1) {
+        setPage(page - 1);
+        setIsDelete(true);
+      } else {
+        setIsDelete(false);
+      }
       const payload = {
         page,
         pageSize: pageSize,
@@ -54,6 +61,7 @@ function Faq() {
         endDate: helpers.getFormattedDate(filterData?.endDate)
       }
 
+  
       const path = apiPath.getFAQs
       const result = await apiGet(path, payload)
       if (result?.status === 200) {

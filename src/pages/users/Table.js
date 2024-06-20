@@ -3,11 +3,11 @@ import { apiPut } from "../../utils/apiFetch";
 import apiPath from "../../utils/apiPath";
 import { isEmpty } from "lodash";
 import useToastContext from "hooks/useToastContext";
-import { AiFillEdit, AiFillEye } from "react-icons/ai";
+import { AiFillEdit, AiFillEye, AiFillWallet } from "react-icons/ai";
 import { useTranslation } from "react-i18next";
 import { NavLink } from "react-router-dom";
 import UserEdit from "./UserEdit";
-import AddAmount from "./AddAmount";
+import ViewWalletBalance from "./ViewWalletBalance";
 import helpers from "../../utils/helpers";
 
 const Table = ({
@@ -26,7 +26,6 @@ const Table = ({
   const [editShowModal, setEditShowModal] = useState(false);
   const [editItem, setEditItem] = useState("");
   const [isAmountModal, setIsAmountModal] = useState(false);
-  const [addAmountUser] = useState("");
 
   const handelStatusChange = async (item) => {
     try {
@@ -92,7 +91,7 @@ const Table = ({
   const getDisplayUserId = (userDetail) => {
     return userDetail?.userId ?? "N/A";
   };
-  
+
 
   const getWalletAmount = (userData) => {
     return userData?.inviteCode ? userData?.inviteCode : 'N/A'
@@ -119,6 +118,18 @@ const Table = ({
 
     </>
   );
+
+
+// on View Wallet balance modal function start
+const[viewBalance,setViewBalance]=useState()
+const onViewWalletBalance=(e)=>{
+  setIsAmountModal(true)
+  setViewBalance(e)
+}
+// on View Wallet balance modal function end
+
+
+
   const renderActionTableCells = (item, userTypeDetail) => (
     <td className="py-2 px-4 border-l border">
       <div className="">
@@ -162,6 +173,19 @@ const Table = ({
         {statusLabel(item)}
       </td>
     );
+
+
+  const renderWalletTableCell = (e) => {
+    return <td className="py-2 px-4 border-r  dark:border-[#ffffff38]  border text-center">
+        <div className="flex justify-center" onClick={()=>{onViewWalletBalance(e)}}>
+          <AiFillWallet
+            className="text-green text-lg cursor-pointer  text-slate-600"
+            title="User Wallet"
+          />
+        </div>
+      </td>
+    
+  }
   const getRowClassName = (item) => {
     return item && item.status === "deleted"
       ? "text-red-600 font-bold"
@@ -179,10 +203,11 @@ const Table = ({
           {renderTableCell(getDisplayName(item), "bg-white py-4 px-4 border-r border  dark:border-[#ffffff38]")}
           {renderTableCell(helpers.ternaryCondition(item?.userName, item?.userName, "N/A"), "bg-white border py-2 px-4 border-r  dark:border-[#ffffff38] font-bold ")}
           {renderTableCell(helpers.ternaryCondition(item?.email, item?.email, "N/A"), "bg-white py-2 px-4 border-r border  dark:border-[#ffffff38] font-bold text-slate-900")}
-          {renderTableCell(helpers.ternaryCondition(item?.countryCode,item?.countryCode?.includes('+')?item?.countryCode:'+'+item?.countryCode, "N/A"), "bg-white border py-2 px-4 border-r  dark:border-[#ffffff38] text-center font-bold")}
+          {renderTableCell(helpers.ternaryCondition(item?.countryCode, item?.countryCode?.includes('+') ? item?.countryCode : '+' + item?.countryCode, "N/A"), "bg-white border py-2 px-4 border-r  dark:border-[#ffffff38] text-center font-bold")}
           {renderTableCell(helpers.ternaryCondition(item?.mobile, item?.mobile, "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold")}
           {renderUserTypeSpecificCells(item)}
           {renderCommonTableCells(item)}
+          {renderWalletTableCell(item)}
           {renderStatusTableCell(item)}
           {renderActionTableCells(item, userType)}
         </tr>
@@ -233,9 +258,9 @@ const Table = ({
                 <th scope="col" className="py-3 px-6 text-left">
                   {t("KYC_VERIFIED")}
                 </th>
-                {/* <th scope="col" className="py-3 px-6 text-left">
-                  {t("O_CREATED_AT")}
-                </th> */}
+                <th scope="col" className="py-3 px-6 text-left">
+                  {t("O_WALLET")}
+                </th>
 
                 {helpers.andOperator(
                   manager?.add || user?.permission?.length === 0,
@@ -278,11 +303,9 @@ const Table = ({
 
       {helpers.andOperator(
         isAmountModal,
-        <AddAmount
-          addAmountUser={addAmountUser}
-          getAllUser={getAllUser}
+        <ViewWalletBalance
           setIsAmountModal={setIsAmountModal}
-          userType={userType}
+          viewBalance={viewBalance}
         />
       )}
     </>

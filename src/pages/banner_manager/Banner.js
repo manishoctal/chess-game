@@ -22,12 +22,12 @@ function Banner() {
   const [showModal, setShowModal] = useState(false)
   const [page, setPage] = useState(1)
   const [pageSize, setPageSize] = useState(10)
-  const [isDelete] = useState(false)
+  const [isDelete, setIsDelete] = useState(false)
   const [editShowModal, setEditShowModal] = useState(false)
   const [editView, setEditView] = useState()
   const manager =
     user?.permission?.find(e => e.manager === 'banner_manager') ?? {}
-  const [subAdmin, setSubAdmin] = useState()
+  const [bannerData, setAllBanner] = useState()
 
   const [paginationObj, setPaginationObj] = useState({
     page: 1,
@@ -51,10 +51,15 @@ function Banner() {
   })
 
   // get all banner function start
-  const getAllBanner = async (data, pageNO) => {
+  const getAllBanner = async (data) => {
     try {
+      if (data?.deletePage && bannerData?.docs?.length <= 1) {
+        setPage(page - 1);
+        setIsDelete(true);
+      } else {
+        setIsDelete(false);
+      }
       const { category, startDate, endDate, searchKey } = filterData
-
       const payload = {
         page,
         pageSize: pageSize,
@@ -70,7 +75,7 @@ function Banner() {
       const result = await apiGet(path, payload)
       const response = result?.data?.results
       const resultStatus = result?.data?.success
-      setSubAdmin(response)
+      setAllBanner(response)
       setPaginationObj({
         ...paginationObj,
         page: resultStatus ? response.page : null,
@@ -273,8 +278,8 @@ function Banner() {
               </div>
             </form>
             <SubTable
-              subAdmin={subAdmin?.docs}
-              allSubAdmin={getAllBanner}
+              allBanner={bannerData?.docs}
+              allbannerData={getAllBanner}
               handelDelete={handelDelete}
               editViewBanner={editViewBanner}
               page={page}

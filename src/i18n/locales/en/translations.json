@@ -528,7 +528,7 @@
   "AMOUNT_PAID": "Amount paid",
   "THAI_LOCAL_REWARD": "Thai local reward",
   "SECONDS": "(Seconds)",
-  "DEPOSIT_AMOUNT": "Deposit amount",
+  "DEPOSIT_AMOUNT": "Deposit Amount",
   "COST_TO_FOREIGN_TOURIST": "Cost to foreign tourist",
   "TOTAL_ADMIN_AMOUNT": "Total super admin amount:",
   "VIEW_SCRATCH_CARD_HISTORY": "View scratch card history",
@@ -634,7 +634,12 @@
   "PLEASE_ENTER_BALANCE":"Please enter balance.",
   "PLEASE_SELECT_BALANCE_TYPE":"Please select balance type.",
   "ENTER_BALANCE":"Enter Balance",
-  "ENTER_CURRENT_BALANCE":"Enter Current Balance"
+  "ENTER_CURRENT_BALANCE":"Enter Current Balance",
+  "DRAG_AND_DROP_IMAGE":"Drag and drop an image here or click to upload",
+  "SELECT_IMAGE_TO_PREVIEW":"Selected Image Preview",
+  "O_WALLET":"Wallet",
+  "VIEW_WALLET_AMOUNT":"View Wallet Amount",
+  "WINNING_AMOUNT":"Winning Amount"
 
 
 

@@ -284,7 +284,7 @@ useEffect(()=>{
                 <img src={balanceIcon} alt="" />
               </figure>
               <figcaption className="text-white">
-                <span className="block">{helpers.formattedAmount(item?.walletAmount)}</span>
+                <span className="block">{helpers.formattedAmount(item?.totalAmount)||0}</span>
                 <span className="text-sm">{t("AVAILABLE_BALANCE")}</span>
               </figcaption>
             </div>

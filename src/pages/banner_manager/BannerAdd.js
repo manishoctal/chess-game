@@ -5,7 +5,7 @@ import useToastContext from "hooks/useToastContext";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import helpers from "utils/helpers";
-import OImage from "components/reusable/OImage";
+import ImageUploader from "components/reusable/ImageUploader";
 
 const BannerAdd = ({ setShowModal, getAllFAQ }) => {
   const { t } = useTranslation();
@@ -18,7 +18,7 @@ const BannerAdd = ({ setShowModal, getAllFAQ }) => {
   const [imageError, setImageError] = useState('')
 
   // banner add function start
-  const handleSubmitForm = async (data) => {
+  const handleSubmitForm = async () => {
     if (!picture?.file) {
       setImageError('Please choose image.')
       return
@@ -27,7 +27,7 @@ const BannerAdd = ({ setShowModal, getAllFAQ }) => {
       setLoader(true)
       const path = apiPath.bannerAdd;
       let formData = new FormData()
-      formData.append('image', picture?.file[0])
+      formData.append('image', picture?.file)
       const result = await apiPost(path, formData);
       if (result?.data?.success === true) {
         notification.success(result?.data?.message);
@@ -49,10 +49,13 @@ const BannerAdd = ({ setShowModal, getAllFAQ }) => {
 
   // change file function start
   const handleFileChange = e => {
-    const url = URL.createObjectURL(e?.target?.files[0])
-    setPicture({ file: e?.target?.files, url: url })
-    setImageError('')
-
+    if (e) {
+      const url = URL.createObjectURL(e)
+      setPicture({ file: e, url: url })
+      setImageError('')
+    } else {
+      setPicture()
+    }
   }
 
   // change file function end
@@ -76,35 +79,16 @@ const BannerAdd = ({ setShowModal, getAllFAQ }) => {
                     className="hover:text-blue-700 transition duration-150 ease-in-out"
                     data-bs-toggle="tooltip"
                   >
-                    {" "}
+
                     <span className=" text-[#B8BBBF]  text-4xl ">×</span>
                   </button>
                 </button>
               </div>
-              <div className="flex justify-center mt-5">
-                <input
-                  type='file'
-                  accept='image/png, image/jpg, image/jpeg'
-                  name='profilePic'
-                  onChange={handleFileChange}
-                  style={{ width: '35%' }}
-                />
+              <div className="flex justify-center">
+                <ImageUploader onFileChange={handleFileChange}  />
               </div>
-              {imageError && <small className="text-red-500 text-center w-[86%]">{imageError}</small>}
+              {imageError && <small className="text-red-500 text-center">{imageError}</small>}
 
-              <label className="block text-sm font-medium text-gray-900 dark:text-white mt-4 mx-4 ">Banner Image:</label>
-              <div className="h-[300px] ">
-                <OImage
-                  src={
-                    picture?.url
-                      ? picture?.url
-                      : null
-                  }
-                  fallbackUrl='/images/user.png'
-                  className='p-4 h-[300px]  w-[600px]'
-                  alt=''
-                />
-              </div>
               <div className="dark:border-[#ffffff38] dark:bg-slate-900 flex items-center justify-center p-6 border-t border-solid border-slate-200 rounded-b">
                 <button
                   className="text-black bg-[#E1E1E1] font-normal px-12 py-2.5 text-sm outline-none focus:outline-none rounded mr-6  ease-linear transition-all duration-150"

@@ -115,27 +115,7 @@ const UserEdit = ({ setEditShowModal, getAllUser, item }) => {
                       errors={errors}
                     />
                   </div>
-                  {/* Commented for solve mantis issue */}
-
-                  {/* <div className='md:py-4 sm:px-2 sm:py-3 md:px-7 px-2'>
-                    <OInputField
-                      wrapperClassName='relative z-0   w-full group'
-                      name='lastName'
-                      inputLabel={
-                        <>
-                          {t('MERCHANT_LAST_NAME')}
-                        </>
-                      }
-                      type='text'
-                      maxLength={15}
-                      onInput={e => preventMaxInput(e, 15)}
-                      register={register(
-                        'lastName'
-
-                      )}
-                      errors={errors}
-                    />
-                  </div> */}
+                 
                   <div className='md:py-4 sm:px-2 sm:py-3 md:px-7 px-2'>
                     <OInputField
                       wrapperClassName='relative z-0   w-full group'
@@ -221,7 +201,6 @@ const UserEdit = ({ setEditShowModal, getAllUser, item }) => {
                         name='validity'
                         id='validity'
                         value={date && new Date(date)}
-                        // disable={counponData !== undefined}
                         placeholder={t('USER_DOB')}
                         handleDateChange={handleDateChange}
                         maxDate={
