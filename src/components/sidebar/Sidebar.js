@@ -165,22 +165,7 @@ const Sidebar = () => {
               />
             )
           )}
-
-
-          {andOperator(
-            checkSidebarPermission('wallet_manager'),
-            generateNavLink(
-              '/wallet-manager',
-              'WALLET_MANAGER',
-              <img
-                src={rewardWithdrawalRequest}
-                title={t('WALLET_MANAGER')}
-                className='max-w-[18px]'
-                alt=''
-              />
-            )
-          )}
-
+  
           {andOperator(
             checkSidebarPermission('email_manager'),
             generateNavLink(

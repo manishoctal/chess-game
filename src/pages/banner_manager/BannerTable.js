@@ -9,7 +9,7 @@ import helpers from "../../utils/helpers";
 import OImage from "components/reusable/OImage";
 
 const BannerTable = ({
-  subAdmin,
+  allBanner,
   handelDelete,
   page,
   sort,
@@ -141,7 +141,7 @@ const BannerTable = ({
             </tr>
           </thead>
           <tbody>
-            {subAdmin?.map((item, i) => (
+            {allBanner?.map((item, i) => (
               <tr
                 key={i}
                 className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
@@ -254,7 +254,7 @@ const BannerTable = ({
                 </td>
               </tr>
             ))}
-            {isEmpty(subAdmin) ? (
+            {isEmpty(allBanner) ? (
               <tr className="bg-white border-b w-full text-center dark:bg-gray-800 dark:border-gray-700">
                 <td className="py-4 px-6" colSpan={9}>
                   {t("O_NO_RECORD_FOUND")}
