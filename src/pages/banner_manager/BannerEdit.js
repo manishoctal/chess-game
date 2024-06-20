@@ -50,18 +50,18 @@ const BannerEdit = ({ setEditShowModal, getAllFAQ, item, viewType }) => {
 
     // change file function start
     const handleFileChange = e => {
-        if(e){
-        const url = URL.createObjectURL(e)
-        setPicture({ file: e, url: url })
-        setImageError('')
-    }else{
-        setPicture()
-    }
+        if (e) {
+            const url = URL.createObjectURL(e)
+            setPicture({ file: e, url: url })
+            setImageError('')
+        } else {
+            setPicture()
+        }
     }
     // change file function end
 
     useEffect(() => {
-        setPicture({ file:[item?.image], url: item?.image })
+        setPicture({ file: [item?.image], url: item?.image })
     }, [])
     return (
         <>
@@ -88,26 +88,26 @@ const BannerEdit = ({ setEditShowModal, getAllFAQ, item, viewType }) => {
                                 </button>
                             </div>
                             {viewType == 'edit' && <div className="flex justify-center mt-5">
-                              
-                                <ImageUploader onFileChange={handleFileChange} defaultImage={item?.image}/>
+
+                                <ImageUploader onFileChange={handleFileChange} defaultImage={item?.image} />
                             </div>}
-                            {imageError && <small className="text-red-500 text-center">{imageError}</small>}
+                            {helpers.andOperator(imageError, <small className="text-red-500 text-center">{imageError}</small>)}
 
-                           {viewType == 'view'&&<>
-                            <label className="block text-sm font-medium text-gray-900 dark:text-white mt-4 mx-4 ">Banner Image:</label>
+                            {helpers.andOperator(viewType == 'view', <>
+                                <label className="block text-sm font-medium text-gray-900 dark:text-white mt-4 mx-4 ">Banner Image:</label>
 
-                           <div className="h-[300px] ">
-                                <OImage
-                                    src={
-                                        picture?.url
-                                            ? picture?.url
-                                            : null
-                                    }
-                                    fallbackUrl='/images/user.png'
-                                    className='p-4 h-[300px]  w-[600px]'
-                                    alt=''
-                                />
-                            </div> </>}
+                                <div className="h-[300px] ">
+                                    <OImage
+                                        src={
+                                            picture?.url
+                                                ? picture?.url
+                                                : null
+                                        }
+                                        fallbackUrl='/images/user.png'
+                                        className='p-4 h-[300px]  w-[600px]'
+                                        alt=''
+                                    />
+                                </div> </>)}
                             <div className="dark:border-[#ffffff38] dark:bg-slate-900 flex items-center justify-center p-6 border-t border-solid border-slate-200 rounded-b">
                                 <button
                                     className="text-black bg-[#E1E1E1] font-normal px-12 py-2.5 text-sm outline-none focus:outline-none rounded mr-6  ease-linear transition-all duration-150"
