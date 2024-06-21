@@ -42,7 +42,7 @@ function ViewOfferManager() {
     const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('')
     const [isInitialized, setIsInitialized] = useState(false)
     const [searchTerm, setSearchTerm] = useState('')
-    
+
     // get all offer list start
     const ViewallOfferList = async () => {
         try {
@@ -109,15 +109,7 @@ function ViewOfferManager() {
 
    
 
-    const handleDateChange = (start, end) => {
-        setPage(1)
-        setFilterData({
-            ...filterData,
-            startDate: start,
-            endDate: end,
-            isFilter: true
-        })
-    }
+
 
 
 
@@ -135,6 +127,16 @@ function ViewOfferManager() {
             setPage(1)
         }
     }, [debouncedSearchTerm])
+
+    const handleDateChange = (start, end) => {
+        setPage(1)
+        setFilterData({
+            ...filterData,
+            startDate: start,
+            endDate: end,
+            isFilter: true
+        })
+    }
 
     useEffect(() => {
         const timeoutId = setTimeout(() => {

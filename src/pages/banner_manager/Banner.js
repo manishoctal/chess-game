@@ -29,7 +29,7 @@ function Banner() {
     user?.permission?.find(e => e.manager === 'banner_manager') ?? {}
   const [bannerData, setAllBanner] = useState()
 
-  const [paginationObj, setPaginationObj] = useState({
+  const [bannerPaginationObj, setBannerbannerPaginationObj] = useState({
     page: 1,
     pageCount: 1,
     pageRangeDisplayed: 10
@@ -76,8 +76,8 @@ function Banner() {
       const response = result?.data?.results
       const resultStatus = result?.data?.success
       setAllBanner(response)
-      setPaginationObj({
-        ...paginationObj,
+      setBannerbannerPaginationObj({
+        ...bannerPaginationObj,
         page: resultStatus ? response.page : null,
         pageCount: resultStatus ? response.totalPages : null,
         perPageItem: resultStatus ? response?.docs.length : null,
@@ -104,19 +104,7 @@ function Banner() {
     setPageSize(e.target.value)
   }
 
-  const handleReset = () => {
-    setFilterData({
-      category: '',
-      startDate: '',
-      searchKey: '',
-      endDate: '',
-      isReset: true,
-      isFilter: false
-    })
-    setPage(1)
-    setSearchTerm('')
-    setPageSize(10)
-  }
+
   
   // banner status change function start
 
@@ -193,6 +181,20 @@ function Banner() {
   }, [debouncedSearchTerm])
 
 
+  const handleReset = () => {
+    setFilterData({
+      category: '',
+      startDate: '',
+      searchKey: '',
+      endDate: '',
+      isReset: true,
+      isFilter: false
+    })
+    setPage(1)
+    setSearchTerm('')
+    setPageSize(10)
+  }
+
   const handleDateChange = (start, end) => {
     setPage(1)
     setFilterData({
@@ -203,7 +205,7 @@ function Banner() {
     })
   }
 
-  
+
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       setDebouncedSearchTerm(searchTerm)
@@ -297,10 +299,10 @@ function Banner() {
 
             <div className='flex justify-between'>
               <PageSizeList dynamicPage={dynamicPage} pageSize={pageSize} />
-              {paginationObj?.totalItems ? (
+              {bannerPaginationObj?.totalItems ? (
                 <Pagination
                   handlePageClick={handlePageClick}
-                  options={paginationObj}
+                  options={bannerPaginationObj}
                   isDelete={isDelete}
                   page={page}
                 />
