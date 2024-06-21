@@ -24,8 +24,8 @@ const AddEditOffer = ({ setEditShowModal, viewType, getAllOfferData, offerDetail
         if(offerDetails&&viewType=='edit'){
             reset(offerDetails)
             const dateFormate = new Date(offerDetails?.expiryDate);
-            dateFormate.toLocaleString('en-GB');
-            console.log('offerDetails',dateFormate)
+           const localeDate= dateFormate.toLocaleString('en-GB');
+            console.log('offerDetails',localeDate)
 
         }
     },[offerDetails])
