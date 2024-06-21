@@ -10,7 +10,7 @@ import apiPath from "utils/apiPath";
 import useToastContext from "hooks/useToastContext";
 import { Link } from "react-router-dom";
 
-const WalletTable = ({
+const OfferTable = ({
   subAdmin,
   allOfferList,
   page,
@@ -165,4 +165,4 @@ const getTableData=(details)=>{
   );
 };
 
-export default WalletTable;
+export default OfferTable;

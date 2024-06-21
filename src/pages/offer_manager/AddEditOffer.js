@@ -8,7 +8,7 @@ import ErrorMessage from "components/ErrorMessage";
 import apiPath from "utils/apiPath";
 import { apiPost } from "utils/apiFetch";
 import useToastContext from "hooks/useToastContext";
-const BalanceEdit = ({ setEditShowModal, viewType, getAllOfferData, offerDetails }) => {
+const AddEditOffer = ({ setEditShowModal, viewType, getAllOfferData, offerDetails }) => {
     const { t } = useTranslation();
     const [date, setDate] = useState("");
     const {
@@ -23,9 +23,9 @@ const BalanceEdit = ({ setEditShowModal, viewType, getAllOfferData, offerDetails
     useEffect(()=>{
         if(offerDetails&&viewType=='edit'){
             reset(offerDetails)
-            const date = new Date(offerDetails?.expiryDate);
-            date.toLocaleString('en-GB');
-            console.log('offerDetails',date)
+            const dateFormate = new Date(offerDetails?.expiryDate);
+            dateFormate.toLocaleString('en-GB');
+            console.log('offerDetails',dateFormate)
 
         }
     },[offerDetails])
@@ -260,4 +260,4 @@ const BalanceEdit = ({ setEditShowModal, viewType, getAllOfferData, offerDetails
     );
 };
 
-export default BalanceEdit;
+export default AddEditOffer;
