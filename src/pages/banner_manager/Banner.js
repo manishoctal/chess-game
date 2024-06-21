@@ -104,7 +104,20 @@ function Banner() {
     setPageSize(e.target.value)
   }
 
-
+  const handleReset = () => {
+    setFilterData({
+      category: '',
+      startDate: '',
+      searchKey: '',
+      endDate: '',
+      isReset: true,
+      isFilter: false
+    })
+    setPage(1)
+    setSearchTerm('')
+    setPageSize(10)
+  }
+  
   // banner status change function start
 
   const handelStatusChange = async details => {
@@ -145,29 +158,9 @@ function Banner() {
   // banner delete change function end
 
 
-  const handleReset = () => {
-    setFilterData({
-      category: '',
-      startDate: '',
-      searchKey: '',
-      endDate: '',
-      isReset: true,
-      isFilter: false
-    })
-    setPage(1)
-    setSearchTerm('')
-    setPageSize(10)
-  }
+ 
 
-  const handleDateChange = (start, end) => {
-    setPage(1)
-    setFilterData({
-      ...filterData,
-      startDate: start,
-      endDate: end,
-      isFilter: true
-    })
-  }
+
   const statusPage = e => {
     setPage(1)
     setFilterData({ ...filterData, category: e.target.value, isFilter: true })
@@ -199,6 +192,18 @@ function Banner() {
     }
   }, [debouncedSearchTerm])
 
+
+  const handleDateChange = (start, end) => {
+    setPage(1)
+    setFilterData({
+      ...filterData,
+      startDate: start,
+      endDate: end,
+      isFilter: true
+    })
+  }
+
+  
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       setDebouncedSearchTerm(searchTerm)
