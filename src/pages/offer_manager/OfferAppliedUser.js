@@ -1,26 +1,18 @@
-import React, { useContext, useEffect } from "react";
-import { AiFillEdit, AiFillWallet } from "react-icons/ai";
+import React  from "react";
 import { useTranslation } from "react-i18next";
-import AuthContext from "context/AuthContext";
 import { isEmpty, startCase } from "lodash";
 import helpers from "../../utils/helpers";
 import OWalletTableHead from '../../components/reusable/OTableHead'
-const WalletTable = ({
+
+const OfferAppliedUser = ({
   subAdmin,
   page,
   sort,
   setSort,
-  manager,
   pageSize,
-  editViewBanner
 }) => {
   const { t } = useTranslation();
-  const { user, updatePageName } = useContext(AuthContext);
-
-  useEffect(() => {
-    updatePageName(t("SUB_ADMIN_MANAGERS"));
-  }, []);
-
+// change status of offer function start
 
   return (
     <div className="p-3">
@@ -35,13 +27,11 @@ const WalletTable = ({
               <OWalletTableHead sort={sort} setSort={setSort} name='FULL_NAME' fieldName='name' />
               <OWalletTableHead sort={sort} setSort={setSort} name='USER_NAME' fieldName='userName' />
               <OWalletTableHead sort={sort} setSort={setSort} name='MOBILE_NUMBER' fieldName='mobile' />
-              <OWalletTableHead sort={sort} setSort={setSort} name='EMAIL_ID' fieldName='email' />
-              <OWalletTableHead sort={sort} setSort={setSort} name='DEPOSIT_BALANCE' fieldName='depositBalance' />
-              <OWalletTableHead sort={sort} setSort={setSort} name='BONUS_AMOUNT_BALANCE' fieldName='bonusAmountBalance' />
-              <OWalletTableHead sort={sort} setSort={setSort} name='WINNING_AMOUNT_BALANCE' fieldName='winningAmountBalance' />
-              <th scope="col" className="py-3 px-6 text-center">
-                {t("O_ACTION")}
-              </th>
+              <OWalletTableHead sort={sort} setSort={setSort} name='OFFER_CODE' fieldName='offerCode' />
+              <OWalletTableHead sort={sort} setSort={setSort} name='USED_DATE' fieldName='usedDate' />
+              <OWalletTableHead sort={sort} setSort={setSort} name='AMOUNT_ADDED' fieldName='amountAdded' />
+              <OWalletTableHead sort={sort} setSort={setSort} name='CASH_BONUS' fieldName='cashBonus' />
+             
             </tr>
           </thead>
           <tbody>
@@ -62,7 +52,7 @@ const WalletTable = ({
                 </td>
 
                 <td className="py-2 px-4 border-r dark:border-[#ffffff38]">
-                  {item?.name||'N/A'}
+                  {item?.name || 'N/A'}
                 </td>
                 <td className="py-2 px-4 border-r dark:border-[#ffffff38]">
                   {helpers.getDateAndTime(item?.createdAt)}
@@ -79,36 +69,9 @@ const WalletTable = ({
                 <td className="py-2 px-4 border-r dark:border-[#ffffff38]">
                   {helpers.getDateAndTime(item?.updatedAt)}
                 </td>
-                <td className="py-2 px-4 border-r dark:border-[#ffffff38]">
-                  {helpers.getDateAndTime(item?.updatedAt)}
-                </td>
+                
                 <td className="py-2 px-4 border-l">
-                  <div className="">
-                    <ul className="flex justify-center">
-
-                      {(manager?.add || user?.role === "admin") && (
-                        <li
-                          onClick={() => { editViewBanner('edit', item) }}
-                          className="px-2 py-2 hover:text-gradientTo"
-                        >
-                          <a title={t("O_EDIT")}>
-
-                            <AiFillEdit className="cursor-pointer w-5 h-5 text-slate-600" />
-                          </a>
-                        </li>
-                      )}
-                      {(manager?.view || user?.role === "admin") && (<li
-                        onClick={() => { editViewBanner('view', item) }}
-                        className="px-2 py-2 hover:text-gradientTo"
-                      >
-                        <a title={t("O_VIEW")}>
-
-                          <AiFillWallet className="cursor-pointer w-5 h-5 text-slate-600" />
-                        </a>
-                      </li>)}
-
-                    </ul>
-                  </div>
+                {helpers.getDateAndTime(item?.updatedAt)}
                 </td>
               </tr>
             ))}
@@ -122,9 +85,9 @@ const WalletTable = ({
           </tbody>
         </table>
       </div>
-     
+
     </div>
   );
 };
 
-export default WalletTable;
+export default OfferAppliedUser;

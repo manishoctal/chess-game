@@ -29,7 +29,7 @@ const Permission = [
   },
 
   {
-    manager: "wallet_manager",
+    manager: "offer_manager",
     add: false,
     edit: false,
     view: false,

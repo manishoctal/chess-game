@@ -165,7 +165,22 @@ const Sidebar = () => {
               />
             )
           )}
-  
+
+
+          {andOperator(
+            checkSidebarPermission('offer_manager'),
+            generateNavLink(
+              '/offer-manager',
+              'OFFER_MANAGER',
+              <img
+                src={rewardWithdrawalRequest}
+                title={t('OFFER_MANAGER')}
+                className='max-w-[18px]'
+                alt=''
+              />
+            )
+          )}
+
           {andOperator(
             checkSidebarPermission('email_manager'),
             generateNavLink(

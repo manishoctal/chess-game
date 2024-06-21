@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { BsArrowUpShort } from 'react-icons/bs';
 import helpers from 'utils/helpers';
 
-function OTableHead({sort, name, fieldName, setSort}) {
+function OTableHead({sort, name, fieldName, setSort,classTd}) {
   const { t } = useTranslation();
   return (
         <th
@@ -23,7 +23,7 @@ function OTableHead({sort, name, fieldName, setSort}) {
                   }
                 }}
               >
-                <div className={`flex ${helpers.ternaryCondition(fieldName=='status','justify-center','justify-start')} `}>
+                <div className={`flex ${helpers.ternaryCondition(fieldName=='status','justify-center','justify-start')} ${classTd||''}`}>
                   <span>{t(name)}</span>
                   <span>
                     {sort?.sortBy === fieldName && sort?.sortType === "asc" && (

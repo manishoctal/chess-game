@@ -4,7 +4,8 @@ import { useTranslation } from 'react-i18next'
 import SubAdmin from 'pages/sub_admin/SubAdmin'
 import SubAdd from 'pages/sub_admin/SubAdd'
 import BannerManager from 'pages/banner_manager/Banner'
-import WalletManager from 'pages/wallet_manager/Wallet'
+import OfferManager from 'pages/offer_manager/OfferManager'
+import ViewOfferManager from 'pages/offer_manager/ViewOfferManager'
 import StaticContent from 'pages/static_Contents/StaticContent'
 import AddStaticContent from 'pages/static_Contents/AddStaticContent'
 import EditStaticContent from 'pages/static_Contents/EditStaticContent'
@@ -85,10 +86,18 @@ const AdminRoutes = {
     },
 
     {
-      path: '/wallet-manager',
-      element: <AuthorizationRoute><WalletManager /></AuthorizationRoute>,
+      path: '/offer-manager',
+      element: <AuthorizationRoute><OfferManager /></AuthorizationRoute>,
       name: (
-          <UseChange data='WALLET_MANAGER' />
+          <UseChange data='OFFER_MANAGER' />
+      )
+    },
+
+    {
+      path: '/offer-manager/view',
+      element: <AuthorizationRoute><ViewOfferManager /></AuthorizationRoute>,
+      name: (
+          <UseChange data='VIEW_OFFER_MANAGER' />
       )
     },
 
