@@ -21,6 +21,7 @@ function ODatePicker({ handleDateChange, value,minDate,maxDate ,placeholder,inpu
         maxDate,
         defaultDate: dates,
       }}
+      value={dates}
       onChange={onChange}
     />
   );

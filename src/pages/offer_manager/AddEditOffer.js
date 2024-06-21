@@ -6,11 +6,11 @@ import OInputField from "components/reusable/OInputField";
 import ODatePicker from "components/shared/datePicker/ODatePicker";
 import ErrorMessage from "components/ErrorMessage";
 import apiPath from "utils/apiPath";
-import { apiPost } from "utils/apiFetch";
+import { apiPost, apiPut } from "utils/apiFetch";
 import useToastContext from "hooks/useToastContext";
 const AddEditOffer = ({ setEditShowModal, viewType, getAllOfferData, offerDetails }) => {
     const { t } = useTranslation();
-    const [date, setDate] = useState("");
+    const [date, setDate] = useState(helpers.ternaryCondition(viewType == 'edit', new Date(offerDetails?.expiryDate), ''));
     const {
         handleSubmit,
         register,
@@ -20,24 +20,32 @@ const AddEditOffer = ({ setEditShowModal, viewType, getAllOfferData, offerDetail
         formState: { errors },
     } = useForm({ mode: "onChange", shouldFocusError: true, defaultValues: {} });
     const [loader] = useState(false)
-    useEffect(()=>{
-        if(offerDetails&&viewType=='edit'){
-            reset(offerDetails)
+    useEffect(() => {
+        if (offerDetails && viewType == 'edit') {
+            reset({
+                addMinimumAmount: offerDetails?.addMinimumAmount,
+                cashBackAmount: offerDetails?.cashBackAmount,
+                code: offerDetails?.code,
+                expiryDate: offerDetails?.expiryDate,
+                limitPerUser: offerDetails?.limitPerUser,
+                maxUserLimit: offerDetails?.maxUserLimit
+            })
             const dateFormate = new Date(offerDetails?.expiryDate);
-           const localeDate= dateFormate.toLocaleString('en-GB');
-            console.log('offerDetails',localeDate)
+            setDate(dateFormate)
 
         }
-    },[offerDetails])
+    }, [offerDetails])
     const notification = useToastContext();
 
     const handleSubmitAddOfferForm = async (e) => {
         try {
-            const path = apiPath.getAllOffer;
-            const result = await apiPost(path, e);
+            const path = helpers.ternaryCondition(viewType == 'add', apiPath.getAllOffer, apiPath.getAllOffer + '/' + offerDetails?._id);
+            const apiFunction = helpers.ternaryCondition(viewType === 'add', apiPost, apiPut);
+            const result = await apiFunction(path, e);
             if (result?.status === 200) {
-                notification.success(result.data.message);
+                notification.success(result?.data?.message);
                 getAllOfferData({ statusChange: 1 });
+                setEditShowModal(false)
             }
         }
         catch (error) {
@@ -186,11 +194,11 @@ const AddEditOffer = ({ setEditShowModal, viewType, getAllOfferData, offerDetail
                                 <div className='px-2 flex justify-center'>
                                     <OInputField
                                         wrapperClassName='relative z-0 mb-3 w-[250px] group'
-                                        name='addAmountUpTo'
+                                        name='addMinimumAmount'
                                         inputLabel={t('ADD_AMOUNT_UP_TO')}
                                         labelType={true}
                                         placeholder={t('ENTER_ADD_AMOUNT_UP_TO')}
-                                        register={register("addAmountUpTo", {
+                                        register={register("addMinimumAmount", {
                                             required: {
                                                 value: true,
                                                 message: t("PLEASE_ENTER_ADD_UP_TO_AMOUNT"),

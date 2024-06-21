@@ -663,7 +663,8 @@
   "SEARCH_BY_USER_ID_USE_NAME":"User ID , User Name",
   "EXPORT_CSV":"Export CSV",
   "VIEW_OFFER_MANAGER":"View Offer Manager",
-  "MAX_LIMIT_IS_5_CHARACTERS":"Max limit is 5 characters."
+  "MAX_LIMIT_IS_5_CHARACTERS":"Max limit is 5 characters.",
+  "EDIT_OFFER":"Edit Offer"
 
 
 

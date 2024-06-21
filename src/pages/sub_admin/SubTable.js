@@ -1,16 +1,14 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { AiFillEdit, AiFillEye } from "react-icons/ai";
 import { useTranslation } from "react-i18next";
 import { BsArrowUpShort } from "react-icons/bs";
 import AuthContext from "context/AuthContext";
 import { isEmpty, startCase } from "lodash";
 import { useNavigate } from "react-router-dom";
-import TableModal from "./TableModal";
 import helpers from "../../utils/helpers";
 
 const SubTable = ({
   subAdmin,
-  handelDelete,
   page,
   sort,
   setSort,
@@ -21,7 +19,6 @@ const SubTable = ({
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { user, updatePageName } = useContext(AuthContext);
-  const [modalTable, setModalTable] = useState(false);
 
   useEffect(() => {
     updatePageName(t("SUB_ADMIN_MANAGERS"));
@@ -263,9 +260,7 @@ const SubTable = ({
           </tbody>
         </table>
       </div>
-      {modalTable ? (
-        <TableModal setModalTable={setModalTable} modalTable={modalTable} />
-      ) : null}
+      
     </div>
   );
 };
