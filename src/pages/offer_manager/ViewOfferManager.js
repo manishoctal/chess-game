@@ -20,19 +20,14 @@ function ViewOfferManager() {
     const [pageSize, setPageSize] = useState(10)
     const [isDelete] = useState(false)
     const [editView, setEditView] = useState()
+    const [sort, setSort] = useState({
+        sortBy: 'createdAt',
+        sortType: 'desc'
+    })
+    const [item, setItem] = useState()
     const manager = user?.permission?.find(e => e.manager === 'offer_manager') ?? {}
     const [subAdmin, setSubAdmin] = useState()
     const [page, setPage] = useState(1)
-
-    const [viewPaginationObj, setPaginationViewObj] = useState({
-        page: 1,
-        pageCount: 1,
-        pageRangeDisplayed: 10
-    })
-    const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('')
-    const [isInitialized, setIsInitialized] = useState(false)
-    const [searchTerm, setSearchTerm] = useState('')
-
     const [filterData, setFilterData] = useState({
         category: '',
         searchKey: '',
@@ -41,18 +36,20 @@ function ViewOfferManager() {
         isReset: false,
         isFilter: false
     })
-    const [sort, setSort] = useState({
-        sortBy: 'createdAt',
-        sortType: 'desc'
+    const [viewPaginationObj, setPaginationViewObj] = useState({
+        page: 1,
+        pageCount: 1,
+        pageRangeDisplayed: 10
     })
-
-
+    const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('')
+    const [isInitialized, setIsInitialized] = useState(false)
+    const [searchTerm, setSearchTerm] = useState('')
     // get all offer list start
     const ViewallOfferList = async () => {
         try {
             const { category, startDate, endDate, searchKey } = filterData
 
-            const payload = {
+            const payloadData = {
                 page,
                 pageSize: pageSize,
                 status: category,
@@ -64,7 +61,7 @@ function ViewOfferManager() {
             }
 
             const path = apiPath.getBanner
-            const result = await apiGet(path, payload)
+            const result = await apiGet(path, payloadData)
             const response = result?.data?.results
             const resultStatus = result?.data?.success
             setSubAdmin(response)
@@ -78,18 +75,6 @@ function ViewOfferManager() {
         } catch (error) {
             console.error('error in get all sub admin list==>>>>', error.message)
         }
-    }
-
-    useEffect(() => {
-        // api call function
-        ViewallOfferList()
-    }, [filterData, page, sort, pageSize])
-
-    // get all wallet list end
-
-    const handlePageClick = event => {
-        const newPage = event.selected + 1
-        setPage(newPage)
     }
 
     const dynamicPage = e => {
@@ -111,6 +96,20 @@ function ViewOfferManager() {
         setPageSize(10)
     }
 
+    useEffect(() => {
+        // api call function
+        ViewallOfferList()
+    }, [filterData, page, sort, pageSize])
+
+    // get all offer list end
+
+    const handlePageClick = event => {
+        const newPage = event.selected + 1
+        setPage(newPage)
+    }
+
+   
+
     const handleDateChange = (start, end) => {
         setPage(1)
         setFilterData({
@@ -122,9 +121,6 @@ function ViewOfferManager() {
     }
 
 
-    useEffect(() => {
-        updatePageName(t('VIEW_OFFER_MANAGER'))
-    }, [])
 
     // debounce search start
     useEffect(() => {
@@ -152,10 +148,13 @@ function ViewOfferManager() {
 
     // debounce search end
 
+    useEffect(() => {
+        updatePageName(t('VIEW_OFFER_MANAGER'))
+    }, [])
 
 
 
-    const [item, setItem] = useState()
+    
     const editViewBanner = async (type, data) => {
         setEditView(type)
         setItem(data)
