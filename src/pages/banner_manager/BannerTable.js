@@ -1,7 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { AiFillDelete, AiFillEdit, AiFillEye } from "react-icons/ai";
 import { useTranslation } from "react-i18next";
-import { BsArrowUpShort } from "react-icons/bs";
 import AuthContext from "context/AuthContext";
 import { isEmpty, startCase } from "lodash";
 import helpers from "../../utils/helpers";

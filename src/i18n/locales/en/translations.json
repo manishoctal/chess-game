@@ -664,7 +664,8 @@
   "EXPORT_CSV":"Export CSV",
   "VIEW_OFFER_MANAGER":"View Offer Manager",
   "MAX_LIMIT_IS_5_CHARACTERS":"Max limit is 5 characters.",
-  "EDIT_OFFER":"Edit Offer"
+  "EDIT_OFFER":"Edit Offer",
+  "USED_DATE":"Used Date"
 
 
 

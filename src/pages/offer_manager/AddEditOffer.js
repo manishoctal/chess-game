@@ -8,6 +8,7 @@ import ErrorMessage from "components/ErrorMessage";
 import apiPath from "utils/apiPath";
 import { apiPost, apiPut } from "utils/apiFetch";
 import useToastContext from "hooks/useToastContext";
+import LoaderButton from "components/reusable/LoaderButton";
 const AddEditOffer = ({ setEditShowModal, viewType, getAllOfferData, offerDetails }) => {
     const { t } = useTranslation();
     const [date, setDate] = useState(helpers.ternaryCondition(viewType == 'edit', new Date(offerDetails?.expiryDate), ''));
@@ -19,7 +20,7 @@ const AddEditOffer = ({ setEditShowModal, viewType, getAllOfferData, offerDetail
         reset,
         formState: { errors },
     } = useForm({ mode: "onChange", shouldFocusError: true, defaultValues: {} });
-    const [loader] = useState(false)
+    const [loader, setLoader] = useState(false)
     useEffect(() => {
         if (offerDetails && viewType == 'edit') {
             reset({
@@ -39,6 +40,7 @@ const AddEditOffer = ({ setEditShowModal, viewType, getAllOfferData, offerDetail
 
     const handleSubmitAddOfferForm = async (e) => {
         try {
+            setLoader(true)
             const path = helpers.ternaryCondition(viewType == 'add', apiPath.getAllOffer, apiPath.getAllOffer + '/' + offerDetails?._id);
             const apiFunction = helpers.ternaryCondition(viewType === 'add', apiPost, apiPut);
             const result = await apiFunction(path, e);
@@ -46,10 +48,13 @@ const AddEditOffer = ({ setEditShowModal, viewType, getAllOfferData, offerDetail
                 notification.success(result?.data?.message);
                 getAllOfferData({ statusChange: 1 });
                 setEditShowModal(false)
+                setLoader(false)
             }
         }
         catch (error) {
             console.error("error in get all users list==>>>>", error.message);
+        } finally {
+            setLoader(false)
         }
     };
     const handleDateChange = (dates) => {
@@ -249,11 +254,7 @@ const AddEditOffer = ({ setEditShowModal, viewType, getAllOfferData, offerDetail
                                 </button>
                                 {helpers.andOperator(viewType !== 'view',
                                     helpers.ternaryCondition(loader,
-                                        <button className="bg-gradientTo text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150">
-                                            <div className="spinner-container">
-                                                <div className="loading-spinner" />
-                                            </div>
-                                        </button>,
+                                         <LoaderButton/>,
                                         <button
                                             className="bg-gradientTo text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150"
                                             type="submit"

@@ -11,8 +11,6 @@ import PageSizeList from 'components/PageSizeList'
 import OSearch from 'components/reusable/OSearch'
 import AddEditOffer from './AddEditOffer'
 import { Link } from 'react-router-dom'
-
-
 function ViewOfferManager() {
     const { t } = useTranslation()
     const { user, updatePageName } = useContext(AuthContext)
@@ -44,6 +42,7 @@ function ViewOfferManager() {
     const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('')
     const [isInitialized, setIsInitialized] = useState(false)
     const [searchTerm, setSearchTerm] = useState('')
+    
     // get all offer list start
     const ViewallOfferList = async () => {
         try {
