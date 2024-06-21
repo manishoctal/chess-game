@@ -159,4 +159,5 @@ const AddFAQ = ({ setShowModal, getAllFAQ }) => {
   );
 };
 
+
 export default AddFAQ;
