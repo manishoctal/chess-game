@@ -9,6 +9,7 @@ import { NavLink } from "react-router-dom";
 import UserEdit from "./UserEdit";
 import ViewWalletBalance from "./ViewWalletBalance";
 import helpers from "../../utils/helpers";
+import OUserTableHead from '../../components/reusable/OTableHead'
 
 const Table = ({
   users,
@@ -17,6 +18,8 @@ const Table = ({
   user,
   manager,
   page,
+  setSort,
+  sort,
   userType,
   pageSize,
 }) => {
@@ -227,34 +230,17 @@ const onViewWalletBalance=(e)=>{
                 <th scope="col" className="py-3 px-3">
                   {t("S.NO")}
                 </th>
-                <th scope="col" className="py-3 px-6">
-                  {t("USER_ID")}
-                </th>
-                <th scope="col" className="py-3 px-6">
-                  {t("FULL_NAME")}
-                </th>
-                <th scope="col" className="py-3 px-6">
-                  {t("USER_NAME")}
-                </th>
 
-                <th scope="col" className="py-3 px-6">
-                  <div className="text-left">{t("O_EMAIL_ID")}</div>
-                </th>
+                <OUserTableHead sort={sort} setSort={setSort} name='USER_ID' fieldName='userId' />
+                <OUserTableHead sort={sort} setSort={setSort} name='FULL_NAME' fieldName='fullName' />
+                <OUserTableHead sort={sort} setSort={setSort} name='USER_NAME' fieldName='userName' />
+                <OUserTableHead sort={sort} setSort={setSort} name='O_EMAIL_ID' fieldName='email' />   
                 <th scope="col" className="py-3 px-6">
                   <div className="text-left">{t("COUNTRY_CODE")}</div>
                 </th>
-                <th scope="col" className="py-3 px-6">
-                  <div className="text-left">{t("O_MOBILE_NUMBER")}</div>
-                </th>
-
-                <th scope="col" className="py-3 px-6 text-left">
-                  {t("INVITE_CODE")}
-                </th>
-                <th scope="col" className="py-3 px-6 text-left">
-                  {t("JOINED_DATE")}
-                </th>
-
-
+                <OUserTableHead sort={sort} setSort={setSort} name='O_MOBILE_NUMBER' fieldName='mobile'/>
+                <OUserTableHead sort={sort} setSort={setSort} name='INVITE_CODE' fieldName='inviteCode'/>
+                <OUserTableHead sort={sort} setSort={setSort} name='JOINED_DATE' fieldName='createdAt'/>
                 <th scope="col" className="py-3 px-6 text-left">
                   {t("KYC_VERIFIED")}
                 </th>
@@ -264,10 +250,7 @@ const onViewWalletBalance=(e)=>{
 
                 {helpers.andOperator(
                   manager?.add || user?.permission?.length === 0,
-                  <th scope="col" className="py-3 px-6 text-left">
-                    {t("O_STATUS")}
-                  </th>
-                )}
+                  <OUserTableHead sort={sort} setSort={setSort} name='O_STATUS' fieldName='status'/>)}
                 <th scope="col" className="py-3 px-6 text-left">
                   {t("O_ACTION")}
                 </th>

@@ -57,10 +57,10 @@ const getOfferUserValue=(details,detailsClass)=>{
                   {getOfferUserValue(startCase(item?.rows?.fullName) || 'N/A')}
                   {getOfferUserValue(item?.rows?.userName ||'N/A')}
                   {getOfferUserValue(item?.rows?.mobile ||'N/A')}
-                  {getOfferUserValue(item?.rows?.offerDetails?.code ||'N/A','font-bold dark')}
+                  {getOfferUserValue(item?.rows?.offerDetails?.code ||'N/A','font-bold')}
                   {getOfferUserValue(helpers.getDateAndTime(item?.rows?.created_at))}
-                  {getOfferUserValue(helpers.formattedAmount(item?.rows?.transactionAmount) ||'N/A','font-bold dark')}
-                  {getOfferUserValue(helpers.formattedAmount(item?.rows?.cashbackAmount) ||'N/A','font-bold dark')}
+                  {getOfferUserValue(helpers.formattedAmount(item?.rows?.transactionAmount) ||'N/A','font-bold')}
+                  {getOfferUserValue(helpers.formattedAmount(item?.rows?.cashbackAmount) ||'N/A','font-bold')}
                 </tr>
               ))}
               {isEmpty(offerUsers) ? (

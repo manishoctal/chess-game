@@ -50,8 +50,8 @@ const OfferTable = ({
   // change status of offer function end
 
 
-const getTableData=(details)=>{
-  return <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-center">
+const getTableData=(details,dataClass)=>{
+  return <td className={`py-2 px-4 border-r dark:border-[#ffffff38] text-center ${dataClass||''}`}>
   {details || 'N/A'}
 </td>
 }
@@ -94,7 +94,7 @@ const getTableData=(details)=>{
                 </th>
 
                 {getTableData(item?.offerId)}
-                {getTableData(item?.code)}
+                {getTableData(item?.code,'font-bold')}
                 {getTableData(item?.maxUserLimit)}
                 {getTableData(item?.limitPerUser)}
                 {getTableData(helpers.formattedAmount(item?.cashBackAmount))}

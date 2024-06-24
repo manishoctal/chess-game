@@ -10,12 +10,13 @@ import AuthContext from 'context/AuthContext'
 import PageSizeList from 'components/PageSizeList'
 import OSearch from 'components/reusable/OSearch'
 import AddEditOffer from './AddEditOffer'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import helpers from 'utils/helpers'
 import { startCase } from 'lodash'
 
 function ViewOfferManager() {
     const { t } = useTranslation()
+    const router = useNavigate()
     const { state } = useLocation()
     const { user, updatePageName } = useContext(AuthContext)
     const [editShowModal, setEditShowModal] = useState(false)
@@ -26,6 +27,12 @@ function ViewOfferManager() {
         sortBy: 'createdAt',
         sortType: 'desc'
     })
+    useEffect(() => {
+        if (!state?._id) {
+            router('/offer-manager')
+        }
+    }, [state])
+
     const [item, setItem] = useState()
     const manager = user?.permission?.find(e => e.manager === 'offer_manager') ?? {}
     const [offerUsers, setOfferUsers] = useState()
@@ -169,8 +176,6 @@ function ViewOfferManager() {
     const getTableHeader = (name) => {
         return <th className='text-center py-3 px-6'>{t(name)}</th>
     }
-
-
     return (
         <div>
             <div className='bg-[#F9F9F9] dark:bg-slate-900'>
@@ -199,8 +204,8 @@ function ViewOfferManager() {
                                         {state?.limitPerUser || 'N/A'}
                                     </td>
                                     {getTableData(helpers.formattedAmount(state?.cashBackAmount) || 'N/A')}
-                                    {getTableData(helpers?.getFormattedDate(state?.expiryDate))}
-                                    {getTableData(helpers?.getFormattedDate(state?.createdAt))}
+                                    {getTableData(helpers?.getDateAndTime(state?.expiryDate))}
+                                    {getTableData(helpers?.getDateAndTime(state?.createdAt))}
                                     {getTableData(startCase(state?.status), 'text-green-600')}
                                 </tr>
                             </tbody>

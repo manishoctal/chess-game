@@ -41,8 +41,8 @@ function User() {
     isFilter: false,
   });
   const [sort, setSort] = useState({
-    sort_key: "createdAt",
-    sort_type: "desc",
+    sortBy: "createdAt",
+    sortType: "desc",
   });
 
   // get all user start
@@ -57,8 +57,8 @@ function User() {
         startDate: startDate ? dayjs(startDate).format("YYYY-MM-DD") : null,
         endDate: endDate ? dayjs(endDate).format("YYYY-MM-DD") : null,
         keyword: searchkey?.trim(),
-        sortKey: sort?.sort_key,
-        sortType: sort?.sort_type,
+        sortKey: sort?.sortBy,
+        sortType: sort?.sortType,
         isKYCVerified,
         userId: userId || null
       };
