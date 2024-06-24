@@ -10,9 +10,13 @@ import AuthContext from 'context/AuthContext'
 import PageSizeList from 'components/PageSizeList'
 import OSearch from 'components/reusable/OSearch'
 import AddEditOffer from './AddEditOffer'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
+import helpers from 'utils/helpers'
+import { startCase } from 'lodash'
+
 function ViewOfferManager() {
     const { t } = useTranslation()
+    const { state } = useLocation()
     const { user, updatePageName } = useContext(AuthContext)
     const [editShowModal, setEditShowModal] = useState(false)
     const [pageSize, setPageSize] = useState(10)
@@ -24,7 +28,7 @@ function ViewOfferManager() {
     })
     const [item, setItem] = useState()
     const manager = user?.permission?.find(e => e.manager === 'offer_manager') ?? {}
-    const [subAdmin, setSubAdmin] = useState()
+    const [offerUsers, setOfferUsers] = useState()
     const [page, setPage] = useState(1)
     const [filterData, setFilterData] = useState({
         category: '',
@@ -59,11 +63,11 @@ function ViewOfferManager() {
                 sortType: sort.sortType
             }
 
-            const path = apiPath.getBanner
+            const path = apiPath.getOfferUsers + '/' + state?._id
             const result = await apiGet(path, payloadData)
             const response = result?.data?.results
             const resultStatus = result?.data?.success
-            setSubAdmin(response)
+            setOfferUsers(response)
             setPaginationViewObj({
                 ...viewPaginationObj,
                 page: resultStatus ? response.page : null,
@@ -106,10 +110,6 @@ function ViewOfferManager() {
         const newPage = event.selected + 1
         setPage(newPage)
     }
-
-   
-
-
 
 
 
@@ -155,15 +155,15 @@ function ViewOfferManager() {
 
 
 
-    
+
     const editViewBanner = async (type, data) => {
         setEditView(type)
         setItem(data)
         setEditShowModal(true)
     }
 
-    const getTableData = (details) => {
-        return <td className="py-2 px-4 border-r border dark:border-[#ffffff38] text-center">
+    const getTableData = (details, inputClass) => {
+        return <td className={`py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-semibold ${inputClass || ''}`}>
             {details || 'N/A'}
         </td>
     }
@@ -178,6 +178,38 @@ function ViewOfferManager() {
             <div className='bg-[#F9F9F9] dark:bg-slate-900'>
                 <div className='px-3 py-4'>
                     <Link aria-current="page" className="mb-5 ml-4 block active" to='/offer-manager'><svg stroke="currentColor" fill="currentColor" strokeWidth={0} viewBox="0 0 512 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path fill="none" strokeLinecap="square" strokeMiterlimit={10} strokeWidth={48} d="M244 400L100 256l144-144M120 256h292" /></svg></Link>
+
+                    <div className='m-5'>
+                        <table className="w-full text-xs text-left text-[#A5A5A5] dark:text-gray-400 ">
+
+                            <thead className="text-xs text-gray-900 border border-[#E1E6EE] bg-[#E1E6EE] dark:bg-gray-700 dark:text-gray-400 dark:border-[#ffffff38]">
+                                <tr>
+                                    {getTableHeader('OFFER_ID')}
+                                    {getTableHeader('OFFER_CODE')}
+                                    {getTableHeader('RESTRICTED_USES')}
+                                    {getTableHeader('CASH_BONUS')}
+                                    {getTableHeader('EXPIRY_DATE')}
+                                    {getTableHeader('O_CREATED_AT')}
+                                    {getTableHeader('O_STATUS')}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                    {getTableData(state?.offerId)}
+                                    {getTableData(state?.code)}
+                                    <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-center font-semibold" style={{ width: '17%' }}>
+                                        {state?.limitPerUser || 'N/A'}
+                                    </td>
+                                    {getTableData(helpers.formattedAmount(state?.cashBackAmount) || 'N/A')}
+                                    {getTableData(helpers?.getFormattedDate(state?.expiryDate))}
+                                    {getTableData(helpers?.getFormattedDate(state?.createdAt))}
+                                    {getTableData(startCase(state?.status), 'text-green-600')}
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+
                     <div className='bg-white border border-[#E9EDF9] rounded-lg dark:bg-slate-800 dark:border-[#ffffff38]'>
                         <form className='border-b border-b-[#E3E3E3] 2xl:flex gap-2 px-4 py-3 justify-between'>
                             <div className='col-span-2 flex flex-wrap  items-center'>
@@ -185,12 +217,10 @@ function ViewOfferManager() {
                                     <div className='relative flex items-center mb-3'>
                                         <OSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm} placeholder={t('SEARCH_BY_USER_ID_USE_NAME')} />
                                     </div>
-
                                     <ODateRangePicker
                                         handleDateChange={handleDateChange}
                                         isReset={filterData?.isReset}
-                                        setIsReset={setFilterData}
-                                    />
+                                        setIsReset={setFilterData} />
                                     <button
                                         type='button'
                                         onClick={handleReset}
@@ -210,39 +240,9 @@ function ViewOfferManager() {
                                 {t('EXPORT_CSV')}
                             </button>
                         </form>
-                        <div className='m-5'>
-                            <table className="w-full text-xs text-left text-[#A5A5A5] dark:text-gray-400 ">
 
-                                <thead className="text-xs text-gray-900 border border-[#E1E6EE] bg-[#E1E6EE] dark:bg-gray-700 dark:text-gray-400 dark:border-[#ffffff38]">
-                                    <tr>
-                                        {getTableHeader('OFFER_ID')}
-                                        {getTableHeader('OFFER_CODE')}
-                                        {getTableHeader('RESTRICTED_USES')}
-                                        {getTableHeader('CASH_BONUS')}
-                                        {getTableHeader('EXPIRY_DATE')}
-                                        {getTableHeader('O_CREATED_AT')}
-                                        {getTableHeader('O_STATUS')}
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                        {getTableData('')}
-                                        {getTableData('')}
-
-                                        <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-center" style={{ width: '17%' }}>
-                                            {'N/A'}
-                                        </td>
-                                        {getTableData('')}
-                                        {getTableData('')}
-                                        {getTableData('')}
-                                        {getTableData('')}
-                                    </tr>
-                                </tbody>
-                            </table>
-
-                        </div>
                         <OfferAppliedTable
-                            subAdmin={subAdmin?.docs}
+                            offerUsers={offerUsers?.docs}
                             editViewBanner={editViewBanner}
                             page={page}
                             setSort={setSort}

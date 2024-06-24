@@ -8,7 +8,7 @@ import OWalletTableHead from '../../components/reusable/OTableHead'
 import { apiPut } from "utils/apiFetch";
 import apiPath from "utils/apiPath";
 import useToastContext from "hooks/useToastContext";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 const OfferTable = ({
   subAdmin,
@@ -139,10 +139,9 @@ const getTableData=(details)=>{
                         </li>
                       )}
                       {(manager?.view || user?.role === "admin") && (<li className="px-2 py-2 hover:text-gradientTo">
-                        <Link to='/offer-manager/view' title={t("O_VIEW")}>
-
+                        <NavLink to='/offer-manager/view' title={t("O_VIEW")} state={item}>
                           <AiFillEye className="cursor-pointer w-5 h-5 text-slate-600" />
-                        </Link>
+                        </NavLink>
                       </li>)}
 
                     </ul>

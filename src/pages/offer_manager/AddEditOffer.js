@@ -21,6 +21,8 @@ const AddEditOffer = ({ setEditShowModal, viewType, getAllOfferData, offerDetail
         formState: { errors },
     } = useForm({ mode: "onChange", shouldFocusError: true, defaultValues: {} });
     const [loader, setLoader] = useState(false)
+  
+    // default value for edit code
     useEffect(() => {
         if (offerDetails && viewType == 'edit') {
             reset({
@@ -36,8 +38,11 @@ const AddEditOffer = ({ setEditShowModal, viewType, getAllOfferData, offerDetail
 
         }
     }, [offerDetails])
+
     const notification = useToastContext();
 
+
+    // submit function start
     const handleSubmitAddOfferForm = async (e) => {
         try {
             setLoader(true)
@@ -57,6 +62,8 @@ const AddEditOffer = ({ setEditShowModal, viewType, getAllOfferData, offerDetail
             setLoader(false)
         }
     };
+// submit function end
+
     const handleDateChange = (dates) => {
         setValue('expiryDate', dates)
         clearErrors('expiryDate')
@@ -232,7 +239,7 @@ const AddEditOffer = ({ setEditShowModal, viewType, getAllOfferData, offerDetail
                                             handleDateChange={handleDateChange}
                                             minDate="today"
                                             placeholder={t("EXPIRY_DATE")}
-                                            inputClass={'relative z-0  w-[250px] group h-12 mt-1'}
+                                            inputClass={'relative z-0  !w-[250px] group h-12 mt-1'}
                                             {...register('expiryDate', { required: t('PLEASE_CHOOSE_EXPIRY_DATE') })}
                                         />
 
@@ -254,7 +261,7 @@ const AddEditOffer = ({ setEditShowModal, viewType, getAllOfferData, offerDetail
                                 </button>
                                 {helpers.andOperator(viewType !== 'view',
                                     helpers.ternaryCondition(loader,
-                                         <LoaderButton/>,
+                                        <LoaderButton />,
                                         <button
                                             className="bg-gradientTo text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150"
                                             type="submit"

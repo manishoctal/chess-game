@@ -41,9 +41,7 @@ const BannerTable = ({
                 {t("BANNER_IMAGE")}
               </th>
               <OBannerTableHead sort={sort} setSort={setSort} name='O_CREATED_AT' fieldName='createdAt' classTd={'justify-center'}/>
-
               <OBannerTableHead sort={sort} setSort={setSort} name='O_UPDATED_AT' fieldName='updatedAt' classTd={'justify-center'}/>
-
               {(manager?.add || manager?.edit || user?.role === "admin") && (
                 <th scope="col" className="py-3 px-6 text-center">
                   {t("O_STATUS")}

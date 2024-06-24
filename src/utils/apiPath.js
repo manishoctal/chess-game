@@ -51,6 +51,7 @@ const apiPath = {
   getEarningManagerGraph: "/v1/admin/earningManagerGraph",
   walletTransactionList: "/v1/admin/transaction/getTransactionList",
   getAllOffer:'/v1/admin/offer',
+  getOfferUsers:'/v1/admin/offer/get-offer-users'
 };
 
 export default apiPath;
