@@ -1,7 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { AiFillEdit, AiFillEye } from "react-icons/ai";
 import { useTranslation } from "react-i18next";
-import { BsArrowUpShort } from "react-icons/bs";
 import AuthContext from "context/AuthContext";
 import { isEmpty, startCase } from "lodash";
 import { useNavigate } from "react-router-dom";
@@ -35,7 +34,6 @@ const SubTable = ({
               </th>
               <OSubadminTableHead sort={sort} setSort={setSort} name='SUB_ADMIN_ID' fieldName='adminId' />
               <OSubadminTableHead sort={sort} setSort={setSort} name='O_NAME' fieldName='name' />
-
               <OSubadminTableHead sort={sort} setSort={setSort} name='O_EMAIL_ID' fieldName='email' />
               <th scope="col" className="py-3 px-6">
                 {t("O_COUNTRY_CODE")}
@@ -43,10 +41,7 @@ const SubTable = ({
               <OSubadminTableHead sort={sort} setSort={setSort} name='O_MOBILE' fieldName='mobile' />
               <OSubadminTableHead sort={sort} setSort={setSort} name='ADDRESS' fieldName='address' />
               <OSubadminTableHead sort={sort} setSort={setSort} name='O_CREATED_AT' fieldName='createdAt' />
-
               <OSubadminTableHead sort={sort} setSort={setSort} name='O_UPDATED_AT' fieldName='updatedAt' />
-
-
               {(manager?.add || manager?.edit || user?.role === "admin") && (
                 <OSubadminTableHead sort={sort} setSort={setSort} name='O_STATUS' fieldName='status' />
               )}
