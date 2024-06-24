@@ -184,7 +184,6 @@ function ViewOfferManager() {
 
                     <div className='m-5'>
                         <table className="w-full text-xs text-left text-[#A5A5A5] dark:text-gray-400 ">
-
                             <thead className="text-xs text-gray-900 border border-[#E1E6EE] bg-[#E1E6EE] dark:bg-gray-700 dark:text-gray-400 dark:border-[#ffffff38]">
                                 <tr>
                                     {getTableHeader('OFFER_ID')}
@@ -206,13 +205,11 @@ function ViewOfferManager() {
                                     {getTableData(helpers.formattedAmount(state?.cashBackAmount) || 'N/A')}
                                     {getTableData(helpers?.getDateAndTime(state?.expiryDate))}
                                     {getTableData(helpers?.getDateAndTime(state?.createdAt))}
-                                    {getTableData(startCase(state?.status), 'text-green-600')}
+                                    {getTableData(startCase(state?.status), helpers.ternaryCondition(state?.status=='active','text-green-600','text-red-600'))}
                                 </tr>
                             </tbody>
                         </table>
-
                     </div>
-
                     <div className='bg-white border border-[#E9EDF9] rounded-lg dark:bg-slate-800 dark:border-[#ffffff38]'>
                         <form className='border-b border-b-[#E3E3E3] 2xl:flex gap-2 px-4 py-3 justify-between'>
                             <div className='col-span-2 flex flex-wrap  items-center'>
@@ -243,7 +240,6 @@ function ViewOfferManager() {
                                 {t('EXPORT_CSV')}
                             </button>
                         </form>
-
                         <OfferAppliedTable
                             offerUsers={offerUsers?.docs}
                             editViewBanner={editViewBanner}
@@ -251,9 +247,7 @@ function ViewOfferManager() {
                             setSort={setSort}
                             sort={sort}
                             manager={manager}
-                            pageSize={pageSize}
-                        />
-
+                            pageSize={pageSize}/>
                         <div className='flex justify-between'>
                             <PageSizeList dynamicPage={dynamicPage} pageSize={pageSize} />
                             {viewPaginationObj?.totalItems ? (
@@ -261,8 +255,7 @@ function ViewOfferManager() {
                                     handlePageClick={handlePageClick}
                                     options={viewPaginationObj}
                                     isDelete={isDelete}
-                                    page={page}
-                                />
+                                    page={page}/>
                             ) : null}
                         </div>
                     </div>
@@ -273,8 +266,7 @@ function ViewOfferManager() {
                     setEditShowModal={setEditShowModal}
                     getAllFAQ={ViewallOfferList}
                     item={item}
-                    viewType={editView}
-                />
+                    viewType={editView}/>
             )}
         </div>
     )
