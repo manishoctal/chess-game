@@ -8,7 +8,7 @@ import helpers from "utils/helpers";
 import ImageUploader from "components/reusable/ImageUploader";
 import LoaderButton from "components/reusable/LoaderButton";
 
-const BannerAdd = ({ setShowModal, getAllFAQ }) => {
+const BannerAdd = ({ setAddShowModal, getAllFAQ }) => {
   const { t } = useTranslation();
   const {
     handleSubmit,
@@ -33,7 +33,7 @@ const BannerAdd = ({ setShowModal, getAllFAQ }) => {
       if (result?.data?.success === true) {
         notification.success(result?.data?.message);
         getAllFAQ();
-        setShowModal(false);
+        setAddShowModal(false);
       } else {
         notification.error(result?.data?.message);
       }
@@ -73,7 +73,7 @@ const BannerAdd = ({ setShowModal, getAllFAQ }) => {
                 </h3>
                 <button
                   className=" ml-auto flex items-center justify-center  text-black border-2 rounded-full  h-8 w-8 float-right text-3xl leading-none font-extralight outline-none focus:outline-none"
-                  onClick={() => setShowModal(false)}
+                  onClick={() => setAddShowModal(false)}
                 >
                   <button type="button"
                     title={t("CLOSE")}
@@ -94,17 +94,11 @@ const BannerAdd = ({ setShowModal, getAllFAQ }) => {
                 <button
                   className="text-black bg-[#E1E1E1] font-normal px-12 py-2.5 text-sm outline-none focus:outline-none rounded mr-6  ease-linear transition-all duration-150"
                   type="button"
-                  onClick={() => setShowModal(false)}
-                >
-                  {t("CLOSE")}
-                </button>
+                  onClick={() => setAddShowModal(false)}> {t("CLOSE")}</button>
 
                 {helpers.ternaryCondition(loader, <LoaderButton/>, <button
                   className="bg-gradientTo text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150"
-                  type="submit"
-                >
-                  {t("O_ADD")}
-                </button>)}
+                  type="submit">{t("O_ADD")}</button>)}
 
               </div>
             </div>

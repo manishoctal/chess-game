@@ -15,7 +15,7 @@ import AddEditOffer from './AddEditOffer'
 function OfferManager() {
   const { t } = useTranslation()
   const { user, updatePageName } = useContext(AuthContext)
-  const [editShowModal, setEditShowModal] = useState(false)
+  const [editShowModal, setEditShowOfferModal] = useState(false)
   const [pageSize, setPageSize] = useState(10)
   const [isDelete] = useState(false)
   const [editView, setEditView] = useState()
@@ -169,7 +169,7 @@ function OfferManager() {
   const editViewBanner = async (type, data) => {
     setEditView(type)
     setItem(data)
-    setEditShowModal(true)
+    setEditShowOfferModal(true)
   }
 
 // add edit modal end
@@ -225,7 +225,7 @@ function OfferManager() {
               <button
                 type='button'
                 title={t('ADD_OFFER')}
-                onClick={()=>{setEditShowModal(true);setEditView('add')}}
+                onClick={()=>{setEditShowOfferModal(true);setEditView('add')}}
                 className='bg-gradientTo text-sm px-8 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2'
               >
                + {t('ADD_OFFER')}
@@ -259,7 +259,7 @@ function OfferManager() {
       </div>
       {editShowModal && (
         <AddEditOffer
-          setEditShowModal={setEditShowModal}
+          setEditShowOfferModal={setEditShowOfferModal}
           getAllOfferData={allOfferList}
           offerDetails={item}
           viewType={editView}

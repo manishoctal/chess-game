@@ -1,4 +1,4 @@
-import { apiPut } from "../../utils/apiFetch";
+import { apiPost, apiPut } from "../../utils/apiFetch";
 import apiPath from "../../utils/apiPath";
 import { useForm } from "react-hook-form";
 import ErrorMessage from "components/ErrorMessage";
@@ -14,7 +14,6 @@ const EditFAQ = ({ setEditShowModal, getAllFAQ, item, viewType }) => {
     handleSubmit,
     formState: { errors },
   } = useForm({
-    mode: "onBlur",
     shouldFocusError: true,
     defaultValues: {
       title: item?.title,
@@ -25,14 +24,15 @@ const EditFAQ = ({ setEditShowModal, getAllFAQ, item, viewType }) => {
   const [loader, setLoader] = useState(false)
 
 
-    // edit faq function start
+  // edit faq function start
   const onSubmit = async (data) => {
     try {
       setLoader(true)
-      const path = apiPath.getFAQs + "/" + item._id;
-      const result = await apiPut(path, data);
+      const path = helpers.ternaryCondition(viewType == 'add', apiPath.getFAQs, apiPath.getFAQs + "/" + item?._id);
+      const apiFunction = helpers.ternaryCondition(viewType === 'add', apiPost, apiPut);
+      const result = await apiFunction(path, data);
       if (result?.status === 200) {
-        notification.success(result?.data.message);
+        notification.success(result?.data?.message);
         getAllFAQ();
         setEditShowModal(false);
       }
@@ -42,22 +42,22 @@ const EditFAQ = ({ setEditShowModal, getAllFAQ, item, viewType }) => {
       setLoader(false)
     }
   };
-    // edit faq function end
+  // edit faq function end
 
   return (
     <>
-      <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+      <div className="justify-center  items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
         <div className="relative w-auto my-6 mx-auto max-w-3xl">
           <form
             onSubmit={handleSubmit(onSubmit)}
             className="sm:py-4 sm:px-2 py-8 px-7"
           >
-            <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none min-w-[762px]">
+            <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none min-w-[502px]">
               <div className="dark:bg-gray-900 flex items-center justify-between p-5 border-b border-solid border-slate-200 rounded-t">
                 <h3 className="text-xl font-semibold dark:text-white">
-                  {viewType === "view" ? "View FAQs" : t("FAQS_EDIT_FAQS")}
+                  {viewType == "add" ? t('FAQS_ADD_FAQS') : helpers.ternaryCondition(viewType == "view" , "View FAQs" , t("FAQS_EDIT_FAQS"))}
                 </h3>
-                <button
+                <button type='button'
                   className=" ml-auto flex items-center justify-center  text-black border-2 rounded-full  h-8 w-8 float-right text-3xl leading-none font-extralight outline-none focus:outline-none"
                   onClick={() => setEditShowModal(false)}
                 >
@@ -85,7 +85,7 @@ const EditFAQ = ({ setEditShowModal, getAllFAQ, item, viewType }) => {
                           whiteSpace: (value) => value.trim() ? true : t('WHITE_SPACES_NOT_ALLOWED')
                         },
                       })}
-                      disabled={viewType === "view" ? true : null}
+                      disabled={helpers.ternaryCondition(viewType === "view",true , null)}
                     />
                     <label
                       htmlFor="title"
@@ -111,7 +111,7 @@ const EditFAQ = ({ setEditShowModal, getAllFAQ, item, viewType }) => {
                           whiteSpace: (value) => value.trim() ? true : t('WHITE_SPACES_NOT_ALLOWED')
                         },
                       })}
-                      disabled={viewType === "view" ? true : null}
+                      disabled={helpers.ternaryCondition(viewType === "view",true , null)}
                     />
                     <label
                       htmlFor="content"
@@ -128,8 +128,7 @@ const EditFAQ = ({ setEditShowModal, getAllFAQ, item, viewType }) => {
                 <button
                   className="text-black bg-[#E1E1E1] font-normal px-12 py-2.5 text-sm outline-none focus:outline-none rounded mr-6  ease-linear transition-all duration-150"
                   type="button"
-                  onClick={() => setEditShowModal(false)}
-                >
+                  onClick={() => setEditShowModal(false)} >
                   {t("CLOSE")}
                 </button>
 
@@ -137,14 +136,14 @@ const EditFAQ = ({ setEditShowModal, getAllFAQ, item, viewType }) => {
                   <div className="spinner-container">
                     <div className="loading-spinner" />
                   </div>
-                </button>, viewType === "view" ? null : (
+                </button>, helpers.ternaryCondition(viewType === "view" , null , (
                   <button
                     className="bg-gradientTo text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150"
                     type="submit"
-                  >
-                    {t("O_EDIT")}
+                    title={helpers.ternaryCondition(viewType == "add" , t("O_ADD") , t("O_EDIT"))}>
+                  {helpers.ternaryCondition(viewType == "add" , t("O_ADD") , t("O_EDIT"))}
                   </button>
-                ))}
+                )))}
               </div>
             </div>
           </form>

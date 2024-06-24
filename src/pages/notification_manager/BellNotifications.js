@@ -6,15 +6,17 @@ import { useTranslation } from 'react-i18next'
 import Pagination from 'pages/Pagination'
 import AuthContext from 'context/AuthContext'
 import helper from 'utils/helpers'
-import { BsArrowUpShort } from 'react-icons/bs'
 import dayjs from 'dayjs'
-
+import PageSizeList from 'components/PageSizeList'
+import ONotificationTableHead from '../../components/reusable/OTableHead'
 const BellNotifications = () => {
   const { updatePageName, logoutUser } = useContext(AuthContext)
   const { t } = useTranslation()
   const [users, setUsers] = useState([])
   const [page, setPage] = useState(1)
   const [pageSize, setPageSize] = useState(10)
+  const [isDelete] = useState(false)
+
   const [filterData] = useState({
     startDate: '',
     endDate: ''
@@ -38,8 +40,8 @@ const BellNotifications = () => {
       const payload = {
         page,
         pageSize,
-        startDate: startDate ? dayjs(startDate).format('YYYY-MM-DD') : null,
-        endDate: endDate ? dayjs(endDate).format('YYYY-MM-DD') : null,
+        startDate: helper.ternaryCondition(startDate, dayjs(startDate).format('YYYY-MM-DD') , null),
+        endDate: helper.ternaryCondition(endDate , dayjs(endDate).format('YYYY-MM-DD') , null),
         sortBy: sort.sortKey,
         sortType: sort.sortType
       }
@@ -91,46 +93,9 @@ const BellNotifications = () => {
                 <th scope='col' className='py-3 px-6'>
                 {t('S.NO')}
                 </th>
-                <th scope='col' className='py-3 px-6'>
-                  <div className='flex items-center'>{t('O_TITLE')}</div>
-                </th>
-                <th scope='col' className='py-3 px-6'>
-                  <div className='flex items-center'>{t('O_MESSAGE')}</div>
-                </th>
-                <th
-                  scope='col'
-                  className='py-3 px-6 cursor-pointer'
-                  onClick={() => {
-                    if (
-                      sort.sortKey === 'createdAt' &&
-                      sort.sortType === 'asc'
-                    ) {
-                      setSort({
-                        sortKey: 'createdAt',
-                        sortType: 'desc'
-                      })
-                    } else {
-                      setSort({
-                        sortKey: 'createdAt',
-                        sortType: 'asc'
-                      })
-                    }
-                  }}
-                >
-                  <div className='flex justify-end'>
-                    <span>{t('O_CREATED_AT')}</span>
-                    <span>
-                      {sort.sortKey === 'createdAt' &&
-                        sort.sortType === 'asc' && (
-                          <BsArrowUpShort className='w-4 h-4' />
-                        )}
-                      {sort.sortKey === 'createdAt' &&
-                        sort.sortType === 'desc' && (
-                          <BsArrowUpShort className='w-4 h-4 rotate-180' />
-                        )}
-                    </span>
-                  </div>
-                </th>
+                <ONotificationTableHead sort={sort} setSort={setSort} name='O_TITLE' fieldName='title' />
+                <ONotificationTableHead sort={sort} setSort={setSort} name='O_MESSAGE' fieldName='message' />
+                <ONotificationTableHead sort={sort} setSort={setSort} name='O_CREATED_AT' fieldName='createdAt' />
               </tr>
             </thead>
             <tbody>
@@ -166,36 +131,19 @@ const BellNotifications = () => {
           </table>
         </div>
       </div>
-
       <div className='flex justify-between'>
-        <div className='flex items-center mb-3 ml-3'>
-          <p className='w-[160px] -space-x-px pt-5 md:pb-5 pr-5 text-gray-500'>
-          {t('PAGE_SIZE')}
-          </p>
+              <PageSizeList dynamicPage={dynamicPage} pageSize={pageSize} />
+              {helper.ternaryCondition(paginationObj?.totalItems , (
+                <Pagination
+                  handlePageClick={handlePageClick}
+                  options={paginationObj}
+                  isDelete={isDelete}
+                  page={page}
+                />
+              ) , null)}
+            </div>
 
-          <select
-            id='countries'
-            type=' password'
-            name='floating_password'
-            className=' w-[100px] block p-2 px-2 w-full text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer'
-            placeholder=''
-            value={pageSize}
-            onChange={e => dynamicPage(e)}
-          >
-            <option value='10'>10</option>
-            <option value='20'>20</option>
-            <option value='50'>50</option>
-            <option value='100'>100</option>
-          </select>
-        </div>
-        {paginationObj?.totalItems !== 0 && (
-          <Pagination
-            handlePageClick={handlePageClick}
-            options={paginationObj}
-            page={page}
-          />
-        )}
-      </div>
+
     </>
   )
 }

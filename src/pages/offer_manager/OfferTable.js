@@ -8,7 +8,7 @@ import OWalletTableHead from '../../components/reusable/OTableHead'
 import { apiPut } from "utils/apiFetch";
 import apiPath from "utils/apiPath";
 import useToastContext from "hooks/useToastContext";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const OfferTable = ({
   subAdmin,
@@ -50,8 +50,8 @@ const OfferTable = ({
   // change status of offer function end
 
 
-const getTableData=(details)=>{
-  return <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-center">
+const getTableData=(details,dataClass)=>{
+  return <td className={`py-2 px-4 border-r dark:border-[#ffffff38] text-center ${dataClass||''}`}>
   {details || 'N/A'}
 </td>
 }
@@ -94,7 +94,7 @@ const getTableData=(details)=>{
                 </th>
 
                 {getTableData(item?.offerId)}
-                {getTableData(item?.code)}
+                {getTableData(item?.code,'font-bold')}
                 {getTableData(item?.maxUserLimit)}
                 {getTableData(item?.limitPerUser)}
                 {getTableData(helpers.formattedAmount(item?.cashBackAmount))}
@@ -139,10 +139,9 @@ const getTableData=(details)=>{
                         </li>
                       )}
                       {(manager?.view || user?.role === "admin") && (<li className="px-2 py-2 hover:text-gradientTo">
-                        <Link to='/offer-manager/view' title={t("O_VIEW")}>
-
+                        <NavLink to='/offer-manager/view' title={t("O_VIEW")} state={item}>
                           <AiFillEye className="cursor-pointer w-5 h-5 text-slate-600" />
-                        </Link>
+                        </NavLink>
                       </li>)}
 
                     </ul>
