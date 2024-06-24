@@ -55,7 +55,7 @@ const EditFAQ = ({ setEditShowModal, getAllFAQ, item, viewType }) => {
             <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none min-w-[502px]">
               <div className="dark:bg-gray-900 flex items-center justify-between p-5 border-b border-solid border-slate-200 rounded-t">
                 <h3 className="text-xl font-semibold dark:text-white">
-                  {viewType == "add" ? t('FAQS_ADD_FAQS') : viewType == "view" ? "View FAQs" : t("FAQS_EDIT_FAQS")}
+                  {viewType == "add" ? t('FAQS_ADD_FAQS') : helpers.ternaryCondition(viewType == "view" , "View FAQs" , t("FAQS_EDIT_FAQS"))}
                 </h3>
                 <button type='button'
                   className=" ml-auto flex items-center justify-center  text-black border-2 rounded-full  h-8 w-8 float-right text-3xl leading-none font-extralight outline-none focus:outline-none"
@@ -85,7 +85,7 @@ const EditFAQ = ({ setEditShowModal, getAllFAQ, item, viewType }) => {
                           whiteSpace: (value) => value.trim() ? true : t('WHITE_SPACES_NOT_ALLOWED')
                         },
                       })}
-                      disabled={viewType === "view" ? true : null}
+                      disabled={helpers.ternaryCondition(viewType === "view",true , null)}
                     />
                     <label
                       htmlFor="title"
@@ -111,7 +111,7 @@ const EditFAQ = ({ setEditShowModal, getAllFAQ, item, viewType }) => {
                           whiteSpace: (value) => value.trim() ? true : t('WHITE_SPACES_NOT_ALLOWED')
                         },
                       })}
-                      disabled={viewType === "view" ? true : null}
+                      disabled={helpers.ternaryCondition(viewType === "view",true , null)}
                     />
                     <label
                       htmlFor="content"
@@ -136,14 +136,14 @@ const EditFAQ = ({ setEditShowModal, getAllFAQ, item, viewType }) => {
                   <div className="spinner-container">
                     <div className="loading-spinner" />
                   </div>
-                </button>, viewType === "view" ? null : (
+                </button>, helpers.ternaryCondition(viewType === "view" , null , (
                   <button
                     className="bg-gradientTo text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150"
                     type="submit"
-                    title={viewType == "add" ? t("O_ADD") : t("O_EDIT")}>
-                    {viewType == "add" ? t("O_ADD") : t("O_EDIT")}
+                    title={helpers.ternaryCondition(viewType == "add" , t("O_ADD") , t("O_EDIT"))}>
+                  {helpers.ternaryCondition(viewType == "add" , t("O_ADD") , t("O_EDIT"))}
                   </button>
-                ))}
+                )))}
               </div>
             </div>
           </form>

@@ -6,10 +6,8 @@ import { useTranslation } from 'react-i18next'
 import Pagination from 'pages/Pagination'
 import AuthContext from 'context/AuthContext'
 import helper from 'utils/helpers'
-import { BsArrowUpShort } from 'react-icons/bs'
 import dayjs from 'dayjs'
 import PageSizeList from 'components/PageSizeList'
-import helpers from 'utils/helpers'
 import ONotificationTableHead from '../../components/reusable/OTableHead'
 const BellNotifications = () => {
   const { updatePageName, logoutUser } = useContext(AuthContext)
@@ -42,8 +40,8 @@ const BellNotifications = () => {
       const payload = {
         page,
         pageSize,
-        startDate: helpers.ternaryCondition(startDate, dayjs(startDate).format('YYYY-MM-DD') , null),
-        endDate: helpers.ternaryCondition(endDate , dayjs(endDate).format('YYYY-MM-DD') , null),
+        startDate: helper.ternaryCondition(startDate, dayjs(startDate).format('YYYY-MM-DD') , null),
+        endDate: helper.ternaryCondition(endDate , dayjs(endDate).format('YYYY-MM-DD') , null),
         sortBy: sort.sortKey,
         sortType: sort.sortType
       }
