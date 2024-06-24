@@ -42,7 +42,7 @@ const getOfferUserValue=(details,detailsClass)=>{
               </tr>
             </thead>
             <tbody>
-              {offerUsers?.map((item, i) => (  console.log('offerUsers',item?.rows),
+              {offerUsers?.map((item, i) => (
                 <tr
                   key={i}
                   className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"

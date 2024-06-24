@@ -9,7 +9,8 @@ import helper from 'utils/helpers'
 import { BsArrowUpShort } from 'react-icons/bs'
 import dayjs from 'dayjs'
 import PageSizeList from 'components/PageSizeList'
-
+import helpers from 'utils/helpers'
+import ONotificationTableHead from '../../components/reusable/OTableHead'
 const BellNotifications = () => {
   const { updatePageName, logoutUser } = useContext(AuthContext)
   const { t } = useTranslation()
@@ -41,8 +42,8 @@ const BellNotifications = () => {
       const payload = {
         page,
         pageSize,
-        startDate: startDate ? dayjs(startDate).format('YYYY-MM-DD') : null,
-        endDate: endDate ? dayjs(endDate).format('YYYY-MM-DD') : null,
+        startDate: helpers.ternaryCondition(startDate, dayjs(startDate).format('YYYY-MM-DD') , null),
+        endDate: helpers.ternaryCondition(endDate , dayjs(endDate).format('YYYY-MM-DD') , null),
         sortBy: sort.sortKey,
         sortType: sort.sortType
       }
@@ -94,46 +95,9 @@ const BellNotifications = () => {
                 <th scope='col' className='py-3 px-6'>
                 {t('S.NO')}
                 </th>
-                <th scope='col' className='py-3 px-6'>
-                  <div className='flex items-center'>{t('O_TITLE')}</div>
-                </th>
-                <th scope='col' className='py-3 px-6'>
-                  <div className='flex items-center'>{t('O_MESSAGE')}</div>
-                </th>
-                <th
-                  scope='col'
-                  className='py-3 px-6 cursor-pointer'
-                  onClick={() => {
-                    if (
-                      sort.sortKey === 'createdAt' &&
-                      sort.sortType === 'asc'
-                    ) {
-                      setSort({
-                        sortKey: 'createdAt',
-                        sortType: 'desc'
-                      })
-                    } else {
-                      setSort({
-                        sortKey: 'createdAt',
-                        sortType: 'asc'
-                      })
-                    }
-                  }}
-                >
-                  <div className='flex justify-end'>
-                    <span>{t('O_CREATED_AT')}</span>
-                    <span>
-                      {sort.sortKey === 'createdAt' &&
-                        sort.sortType === 'asc' && (
-                          <BsArrowUpShort className='w-4 h-4' />
-                        )}
-                      {sort.sortKey === 'createdAt' &&
-                        sort.sortType === 'desc' && (
-                          <BsArrowUpShort className='w-4 h-4 rotate-180' />
-                        )}
-                    </span>
-                  </div>
-                </th>
+                <ONotificationTableHead sort={sort} setSort={setSort} name='O_TITLE' fieldName='title' />
+                <ONotificationTableHead sort={sort} setSort={setSort} name='O_MESSAGE' fieldName='message' />
+                <ONotificationTableHead sort={sort} setSort={setSort} name='O_CREATED_AT' fieldName='createdAt' />
               </tr>
             </thead>
             <tbody>
@@ -171,14 +135,14 @@ const BellNotifications = () => {
       </div>
       <div className='flex justify-between'>
               <PageSizeList dynamicPage={dynamicPage} pageSize={pageSize} />
-              {paginationObj?.totalItems ? (
+              {helper.ternaryCondition(paginationObj?.totalItems , (
                 <Pagination
                   handlePageClick={handlePageClick}
                   options={paginationObj}
                   isDelete={isDelete}
                   page={page}
                 />
-              ) : null}
+              ) , null)}
             </div>
 
 

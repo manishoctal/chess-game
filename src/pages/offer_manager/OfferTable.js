@@ -8,7 +8,7 @@ import OWalletTableHead from '../../components/reusable/OTableHead'
 import { apiPut } from "utils/apiFetch";
 import apiPath from "utils/apiPath";
 import useToastContext from "hooks/useToastContext";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const OfferTable = ({
   subAdmin,
