@@ -7,15 +7,13 @@ import AuthContext from "context/AuthContext";
 import { useTranslation } from "react-i18next";
 import useToastContext from "hooks/useToastContext";
 import helpers from "../../utils/helpers";
-import { BsArrowUpShort } from "react-icons/bs";
-
+import OFaqTableHead from '../../components/reusable/OTableHead'
 const Table = ({
   FAQs,
   getAllFAQ,
   handelEdit,
   paginationObj,
   manager,
-  setModalData,
   pageSize,
   sort, setSort
 }) => {
@@ -67,128 +65,11 @@ const Table = ({
               <th scope="col" className="py-3 px-6">
                 {t("S.NO")}
               </th>
-              <th
-                scope="col"
-                className="py-3 px-6 cursor-pointer"
-                onClick={() => {
-                  if (sort.sortBy === "title" && sort.sortType === "asc") {
-                    setSort({
-                      sortBy: "title",
-                      sortType: "desc",
-                    });
-                  } else {
-                    setSort({
-                      sortBy: "title",
-                      sortType: "asc",
-                    });
-                  }
-                }}
-              >
-                <div className="flex">
-                  <span>{t("FAQS_TITLE")}</span>
-                  <span>
-                    {sort.sortBy === "title" && sort.sortType === "asc" && (
-                      <BsArrowUpShort className="w-4 h-4" />
-                    )}
-                    {sort.sortBy === "title" && sort.sortType === "desc" && (
-                      <BsArrowUpShort className="w-4 h-4 rotate-180" />
-                    )}
-                  </span>
-                </div>
-              </th>
-              <th
-                scope="col"
-                className="py-3 px-6 cursor-pointer"
-                onClick={() => {
-                  if (sort.sortBy === "createdAt" && sort.sortType === "asc") {
-                    setSort({
-                      sortBy: "createdAt",
-                      sortType: "desc",
-                    });
-                  } else {
-                    setSort({
-                      sortBy: "createdAt",
-                      sortType: "asc",
-                    });
-                  }
-                }}
-              >
-                <div className="flex justify-center">
-                  <span>{t("O_CREATED_AT")}</span>
-                  <span>
-                    {sort.sortBy === "createdAt" && sort.sortType === "asc" && (
-                      <BsArrowUpShort className="w-4 h-4" />
-                    )}
-                    {sort.sortBy === "createdAt" && sort.sortType === "desc" && (
-                      <BsArrowUpShort className="w-4 h-4 rotate-180" />
-                    )}
-                  </span>
-                </div>
-              </th>
-
-
-              <th
-                scope="col"
-                className="py-3 px-6 cursor-pointer"
-                onClick={() => {
-                  if (sort.sortBy === "updatedAt" && sort.sortType === "asc") {
-                    setSort({
-                      sortBy: "updatedAt",
-                      sortType: "desc",
-                    });
-                  } else {
-                    setSort({
-                      sortBy: "updatedAt",
-                      sortType: "asc",
-                    });
-                  }
-                }}
-              >
-                <div className="flex justify-center">
-                  <span>{t("O_UPDATED_AT")}</span>
-                  <span>
-                    {sort.sortBy === "updatedAt" && sort.sortType === "asc" && (
-                      <BsArrowUpShort className="w-4 h-4" />
-                    )}
-                    {sort.sortBy === "updatedAt" && sort.sortType === "desc" && (
-                      <BsArrowUpShort className="w-4 h-4 rotate-180" />
-                    )}
-                  </span>
-                </div>
-              </th>
-
-
-
+              <OFaqTableHead sort={sort} setSort={setSort} name='FAQS_TITLE' fieldName='title' classTd={'justify-center'} />
+              <OFaqTableHead sort={sort} setSort={setSort} name='O_CREATED_AT' fieldName='createdAt' classTd={'justify-center'} />
+              <OFaqTableHead sort={sort} setSort={setSort} name='O_UPDATED_AT' fieldName='updatedAt' classTd={'justify-center'} />
               {(manager?.add || user?.role === "admin") && (
-                <th
-                  scope="col"
-                  className="py-3 px-6 cursor-pointer"
-                  onClick={() => {
-                    if (sort.sortBy === "status" && sort.sortType === "asc") {
-                      setSort({
-                        sortBy: "status",
-                        sortType: "desc",
-                      });
-                    } else {
-                      setSort({
-                        sortBy: "status",
-                        sortType: "asc",
-                      });
-                    }
-                  }}
-                >
-                  <div className="flex justify-center">
-                    <span>{t("O_STATUS")}</span>
-                    <span>
-                      {sort.sortBy === "status" && sort.sortType === "asc" && (
-                        <BsArrowUpShort className="w-4 h-4" />
-                      )}
-                      {sort.sortBy === "status" && sort.sortType === "desc" && (
-                        <BsArrowUpShort className="w-4 h-4 rotate-180" />
-                      )}
-                    </span>
-                  </div>
-                </th>
+                <OFaqTableHead sort={sort} setSort={setSort} name='O_STATUS' fieldName='status' classTd={'justify-center'} />
               )}
               <th scope="col" className="py-3 px-6 text-center">
                 {t("O_ACTION")}
@@ -279,7 +160,7 @@ const Table = ({
                           className="px-2 py-2 hover:bg-white hover:text-gradientTo"
                         >
                           <button title={t("DELETE_FAQS")}>
-                          
+
                             <AiFillDelete className="w-5 h-5 text-red-600" />{" "}
                           </button>
                         </li>
