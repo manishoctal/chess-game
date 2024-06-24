@@ -39,7 +39,7 @@ function NotificationManager() {
     sortType: 'desc'
   })
 
-  // get all notification function-
+  // get all notification function start
   const getAllNotifications = async () => {
     try {
       const { startDate, endDate, searchkey } = filterData
@@ -77,6 +77,11 @@ function NotificationManager() {
     }
   }
 
+  useEffect(() => {
+    getAllNotifications()
+  }, [page, filterData, sort, pageSize])
+  // get all notification function end
+
 
   const handlePageClick = event => {
     const newPage = event.selected + 1
@@ -87,9 +92,7 @@ function NotificationManager() {
   const handleCategory = () => {
     setCategoryAdd(!categoryAdd)
   }
-  useEffect(() => {
-    getAllNotifications()
-  }, [page, filterData, sort, pageSize])
+
 
   const handleReset = () => {
     setFilterData({

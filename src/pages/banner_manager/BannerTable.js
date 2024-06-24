@@ -1,16 +1,14 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { AiFillDelete, AiFillEdit, AiFillEye } from "react-icons/ai";
 import { useTranslation } from "react-i18next";
-import { BsArrowUpShort } from "react-icons/bs";
 import AuthContext from "context/AuthContext";
 import { isEmpty, startCase } from "lodash";
-import { useNavigate } from "react-router-dom";
-import TableModal from "./TableModal";
 import helpers from "../../utils/helpers";
 import OImage from "components/reusable/OImage";
+import OBannerTableHead from '../../components/reusable/OTableHead'
 
-const SubTable = ({
-  subAdmin,
+const BannerTable = ({
+  allBanner,
   handelDelete,
   page,
   sort,
@@ -21,10 +19,7 @@ const SubTable = ({
   editViewBanner
 }) => {
   const { t } = useTranslation();
-  const navigate = useNavigate();
   const { user, updatePageName } = useContext(AuthContext);
-  const [modalTable, setModalTable] = useState(false);
-
   useEffect(() => {
     updatePageName(t("SUB_ADMIN_MANAGERS"));
   }, []);
@@ -39,99 +34,16 @@ const SubTable = ({
               <th scope="col" className="py-3 px-6">
                 {t("S.NO")}
               </th>
-              <th
-                scope="col"
-                className="py-3 px-6 cursor-pointer"
-                onClick={() => {
-                  if (sort.sortBy === "bannerId" && sort.sortType === "asc") {
-                    setSort({
-                      sortBy: "bannerId",
-                      sortType: "desc",
-                    });
-                  } else {
-                    setSort({
-                      sortBy: "bannerId",
-                      sortType: "asc",
-                    });
-                  }
-                }}
-              >
-                <div className="flex">
-                  <span>{t("BANNER_ID")}</span>
-                  <span>
-                    {sort.sortBy === "bannerId" && sort.sortType === "asc" && (
-                      <BsArrowUpShort className="w-4 h-4" />
-                    )}
-                    {sort.sortBy === "bannerId" && sort.sortType === "desc" && (
-                      <BsArrowUpShort className="w-4 h-4 rotate-180" />
-                    )}
-                  </span>
-                </div>
-              </th>
 
+              <OBannerTableHead sort={sort} setSort={setSort} name='BANNER_ID' fieldName='bannerId' classTd={'justify-center'}/>
+           
               <th scope="col" className="py-3 px-6 flex justify-center">
                 {t("BANNER_IMAGE")}
               </th>
-              <th
-                scope="col"
-                className="py-3 px-6 cursor-pointer text-right"
-                onClick={() => {
-                  if (sort.sortBy === "createdAt" && sort.sortType === "asc") {
-                    setSort({
-                      sortBy: "createdAt",
-                      sortType: "desc",
-                    });
-                  } else {
-                    setSort({
-                      sortBy: "createdAt",
-                      sortType: "asc",
-                    });
-                  }
-                }}
-              >
-                <div className="flex justify-start">
-                  <span>{t("O_CREATED_AT")} </span>
-                  <span>
-                    {sort.sortBy === "createdAt" && sort.sortType === "asc" && (
-                      <BsArrowUpShort className="w-4 h-4" />
-                    )}
-                    {sort.sortBy === "createdAt" &&
-                      sort.sortType === "desc" && (
-                        <BsArrowUpShort className="w-4 h-4 rotate-180" />
-                      )}
-                  </span>
-                </div>
-              </th>
-              <th
-                scope="col"
-                className="py-3 px-6 cursor-pointer text-right"
-                onClick={() => {
-                  if (sort.sortBy === "updatedAt" && sort.sortType === "asc") {
-                    setSort({
-                      sortBy: "updatedAt",
-                      sortType: "desc",
-                    });
-                  } else {
-                    setSort({
-                      sortBy: "updatedAt",
-                      sortType: "asc",
-                    });
-                  }
-                }}
-              >
-                <div className="flex justify-start">
-                  <span>{t("O_UPDATED_AT")} </span>
-                  <span>
-                    {sort.sortBy === "updatedAt" && sort.sortType === "asc" && (
-                      <BsArrowUpShort className="w-4 h-4" />
-                    )}
-                    {sort.sortBy === "updatedAt" &&
-                      sort.sortType === "desc" && (
-                        <BsArrowUpShort className="w-4 h-4 rotate-180" />
-                      )}
-                  </span>
-                </div>
-              </th>
+              <OBannerTableHead sort={sort} setSort={setSort} name='O_CREATED_AT' fieldName='createdAt' classTd={'justify-center'}/>
+
+              <OBannerTableHead sort={sort} setSort={setSort} name='O_UPDATED_AT' fieldName='updatedAt' classTd={'justify-center'}/>
+
               {(manager?.add || manager?.edit || user?.role === "admin") && (
                 <th scope="col" className="py-3 px-6 text-center">
                   {t("O_STATUS")}
@@ -143,7 +55,7 @@ const SubTable = ({
             </tr>
           </thead>
           <tbody>
-            {subAdmin?.map((item, i) => (
+            {allBanner?.map((item, i) => (
               <tr
                 key={i}
                 className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
@@ -155,7 +67,7 @@ const SubTable = ({
                   {i + 1 + pageSize * (page - 1)}
                 </th>
 
-                <td className="py-2 px-4 border-r dark:border-[#ffffff38]">
+                <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-center">
                   {startCase(item?.bannerId) || 'N/A'}
                 </td>
 
@@ -176,10 +88,10 @@ const SubTable = ({
                     </li>
                   </ul>
                 </td>
-                <td className="py-2 px-4 border-r dark:border-[#ffffff38]">
+                <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-center">
                   {helpers.getDateAndTime(item?.createdAt)}
                 </td>
-                <td className="py-2 px-4 border-r dark:border-[#ffffff38]">
+                <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-center">
                   {helpers.getDateAndTime(item?.updatedAt)}
                 </td>
                 {(manager?.add || manager?.edit || user?.role === "admin") && (
@@ -256,7 +168,7 @@ const SubTable = ({
                 </td>
               </tr>
             ))}
-            {isEmpty(subAdmin) ? (
+            {isEmpty(allBanner) ? (
               <tr className="bg-white border-b w-full text-center dark:bg-gray-800 dark:border-gray-700">
                 <td className="py-4 px-6" colSpan={9}>
                   {t("O_NO_RECORD_FOUND")}
@@ -266,11 +178,8 @@ const SubTable = ({
           </tbody>
         </table>
       </div>
-      {modalTable ? (
-        <TableModal setModalTable={setModalTable} modalTable={modalTable} />
-      ) : null}
     </div>
   );
 };
 
-export default SubTable;
+export default BannerTable;

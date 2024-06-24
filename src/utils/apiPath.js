@@ -50,6 +50,7 @@ const apiPath = {
   approveAndRejectKyc: "/v1/admin/user/kycStatus",
   getEarningManagerGraph: "/v1/admin/earningManagerGraph",
   walletTransactionList: "/v1/admin/transaction/getTransactionList",
+  getAllOffer:'/v1/admin/offer',
 };
 
 export default apiPath;

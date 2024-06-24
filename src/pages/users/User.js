@@ -9,10 +9,8 @@ import ODateRangePicker from "components/shared/datePicker/ODateRangePicker";
 import { useTranslation } from "react-i18next";
 import PageSizeList from "components/PageSizeList";
 import helpers from "utils/helpers";
-import { startCase } from "lodash";
-import { KYCStatusArray } from "utils/constants";
 import { useLocation } from "react-router-dom";
-import SearchWithOption from '../../components/reusable/SearchWithOption'
+import SearchWithOption from '../../components/reusable/SearchableDropdown'
 function User() {
   const { t } = useTranslation();
   const location = useLocation();
@@ -47,9 +45,10 @@ function User() {
     sort_type: "desc",
   });
 
+  // get all user start
   const getAllUser = async () => {
     try {
-      const { category, startDate, endDate, searchkey, isKYCVerified,userId } = filterData;
+      const { category, startDate, endDate, searchkey, isKYCVerified, userId } = filterData;
 
       const payload = {
         page,
@@ -61,7 +60,7 @@ function User() {
         sortKey: sort?.sort_key,
         sortType: sort?.sort_type,
         isKYCVerified,
-        userId:userId||null
+        userId: userId || null
       };
 
       const path = apiPath.getUsers;
@@ -88,6 +87,11 @@ function User() {
     }
   };
 
+  useEffect(() => {
+    getAllUser();
+  }, [page, filterData, sort, pageSize]);
+
+  // get all user end
   const dynamicPage = (e) => {
     setPage(1);
     setPageSize(e.target.value);
@@ -101,9 +105,7 @@ function User() {
     updatePageName(` ${t("VIEW") + " " + t("USER_MANAGER")}`);
   };
 
-  useEffect(() => {
-    getAllUser();
-  }, [page, filterData, sort, pageSize]);
+
 
   useEffect(() => {
     updatePageName(t("O_USERS"));
@@ -124,6 +126,8 @@ function User() {
     setSearchTerm("");
     setPageSize(10);
   };
+
+
   const handleDateChange = (start, end) => {
     setPage(1);
     setFilterData({
@@ -136,10 +140,10 @@ function User() {
   };
 
 
-
-
   const [filteredItems, setFilteredItems] = useState([]);
   const [dropdownVisible, setDropdownVisible] = useState(false);
+
+  // debounce search start
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       setDebouncedSearchTerm(searchTerm?.trim());
@@ -157,19 +161,12 @@ function User() {
     });
     setPage(1);
   };
-  const handleVerify = (e) => {
-    setFilterData({
-      ...filterData,
-      isKYCVerified: e?.target?.value,
-      isFilter: true,
-      isReset: false,
-    });
-    setPage(1);
-  };
-
-  const[isSelected,setIsSelected]=useState(false)
+  const [isSelected, setIsSelected] = useState(false)
+  // debounce search start
 
 
+
+  // search option start
   const handleSearchOption = async (event) => {
     const value = event;
     if (value === '') {
@@ -177,7 +174,7 @@ function User() {
       setDropdownVisible(false);
     } else {
       try {
-       
+
         const payload = {
           keyword: event
         };
@@ -187,21 +184,26 @@ function User() {
           const resultData = result?.data?.results
           setFilteredItems(resultData);
         }
-      
+
       } catch (error) {
         console.error("error ", error);
       }
       setDropdownVisible(true);
     }
   };
+
+  // search option end
+
   useEffect(() => {
     if (!isInitialized) {
       setIsInitialized(true);
-    } else if ((searchTerm || !filterData?.isReset)&&!isSelected) {
+    } else if ((searchTerm || !filterData?.isReset) && !isSelected) {
       handleSearchOption(debouncedSearchTerm)
       setPage(1);
     }
   }, [debouncedSearchTerm]);
+
+  // debounce search end
   const manager = user?.permission?.find((e) => e.manager === "user_manager");
 
   return (
@@ -232,27 +234,6 @@ function User() {
                       <option value="inactive">{t("O_INACTIVE")}</option>
                     </select>
                   </div>
-
-                  {/* <div className="flex items-center mb-3 ml-3">
-                    <select
-                      id="countries"
-                      type=" password"
-                      name="floating_password"
-                      className="block p-2 w-full text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF] focus:outline-none focus:ring-0  peer"
-                      placeholder=" "
-                      value={filterData?.isKYCVerified}
-                      onChange={(e) => handleVerify(e)}
-                    >
-                      <option defaultValue value="">
-                        {t("KYC_STATUS")}
-                      </option>
-                      {KYCStatusArray.map(({ key, value }) => (
-                        <option key={key} value={value}>
-                          {startCase(key)}
-                        </option>
-                      ))}
-                    </select>
-                  </div> */}
 
                   <button
                     type="button"
@@ -298,6 +279,11 @@ function User() {
           </div>
         </div>
       </div>
+
+
+   
+
+
     </div>
   );
 }

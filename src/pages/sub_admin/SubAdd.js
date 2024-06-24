@@ -16,7 +16,7 @@ import helpers from 'utils/helpers'
 import { preventMaxInput } from 'utils/validations'
 const { startCase, capitalize } = require('lodash')
 
-const SubAdd = ({ props }) => {
+const SubAdd = () => {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const location = useLocation()
@@ -26,7 +26,7 @@ const SubAdd = ({ props }) => {
   const {
     register,
     handleSubmit,
-    // watch,
+
     control,
     getValues,
     formState: { errors }
@@ -63,13 +63,13 @@ const SubAdd = ({ props }) => {
     setPermission(current =>
       current.map(obj => {
         if (obj.manager === event.target.name) {
-          if (event.target.id === 'add' || event.target.id === 'edit') {
+          if (helpers.orOperator(event.target.id === 'add', event.target.id === 'edit')) {
             return {
               ...obj,
               [event.target.id]: event.target.checked,
               view: event.target.checked
             }
-          } else if (event.target.id === 'view' && !event.target.checked) {
+          } else if (helpers.andOperator(event.target.id === 'view', !event.target.checked)) {
             return {
               ...obj,
               add: false,
@@ -146,9 +146,7 @@ const SubAdd = ({ props }) => {
   useEffect(() => {
     const permissionData = getValues('permission')
     if (
-      permissionData?.length > 0 &&
-      permissionData[0]?.manager === 'dashboard' &&
-      (item?.type === 'edit' || item?.type === 'view')
+      permissionData?.length > 0 && helpers.andOperator(permissionData[0]?.manager === 'dashboard', (helpers.orOperator(item?.type === 'edit', item?.type === 'view')))
     ) {
       permissionData.shift()
       setPermission(permissionData)
@@ -336,9 +334,7 @@ const SubAdd = ({ props }) => {
                     <th scope='col' className='py-3 px-6 '>
                       {t('SUB_ADMIN_ADD_EDIT')}
                     </th>
-                    {/* <th scope="col" className="py-3 px-6 ">
-                      {t("O_DELETE")}
-                    </th> */}
+
                     <th scope='col' className='py-3 px-6'>
                       <div className='flex items-center justify-between '>
                         {t('O_ALL')}
@@ -401,7 +397,7 @@ const SubAdd = ({ props }) => {
                             id='all'
                             name={data?.manager}
                             onChange={checkAll}
-                            checked={isCheckAll || (data.add && data.view)}
+                            checked={helpers.orOperator(isCheckAll, (helpers.andOperator(data.add, data.view)))}
                             disabled={item?.type === 'view'}
                           />
                         )}
@@ -423,21 +419,23 @@ const SubAdd = ({ props }) => {
           {t('O_BACK')}
         </button>
 
-        {loader ? <button className="bg-gradientTo text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150">
+        {helpers.ternaryCondition(loader, <button className="bg-gradientTo text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150">
           <div className="spinner-container">
             <div className="loading-spinner" />
           </div>
-        </button> : helpers.ternaryCondition(
-          item?.type !== 'view',
-          <button
-            className='bg-gradientTo text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150'
-            type='submit'
-            onClick={handleSubmit(onSubmit)}
-          >
-            {itemType}
-          </button>,
-          null
-        )}
+        </button>,
+          helpers.ternaryCondition(item?.type !== 'view',
+            <button
+              className='bg-gradientTo text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150'
+              type='submit'
+              onClick={handleSubmit(onSubmit)}
+            >
+              {itemType}
+            </button>,
+            null
+          )
+        )
+        }
       </div>
     </>
   )

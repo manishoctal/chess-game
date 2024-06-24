@@ -1,144 +1,31 @@
+const generateManager = (manager, options = {}) => ({
+  manager,
+  add: options.add ?? false,
+  edit: options.edit ?? false,
+  view: options.view ?? false,
+  shownView: options.shownView ?? true,
+  shownAdd: options.shownAdd ?? true,
+  shownAll: options.shownAll ?? true,
+});
+
 const Permission = [
-  {
-    manager: "user_manager",
-    add: false,
-    edit: false,
-    view: false,
-    shownView: true,
-    shownAdd: true,
-    shownAll: true,
-  },
-  {
-    manager: "transaction_manager",
-    add: false,
-    edit: false,
-    view: false,
-    shownView: true,
-    shownAdd: false,
-  },
-  {
-    manager: "subAdmin_manager",
-    add: false,
-    edit: false,
-    view: false,
-    shownView: true,
-    shownAdd: true,
-    shownAll: true,
-  },
+  generateManager("user_manager", { shownAdd: true, shownAll: true }),
+  generateManager("subAdmin_manager", { shownAdd: true, shownAll: true }),
+  generateManager("offer_manager", { shownAdd: true, shownAll: true }), 
+  generateManager("notification_manager", { shownAdd: true, shownAll: true }),
+  generateManager("static_page_management", { shownAdd: true, shownAll: true }),
+  generateManager("banner_manager", { shownAdd: true, shownAll: true }),
+  generateManager("settings", { shownAdd: true, shownAll: true }),
+  generateManager("FAQ", { shownAdd: true, shownAll: true }),
+  generateManager("email_manager", { shownAdd: true, shownAll: true }),
 
-  {
-    manager: "banner_manager",
-    add: false,
-    edit: false,
-    view: false,
-    shownView: true,
-    shownAdd: true,
-    shownAll: true,
-  },
-
-  {
-    manager: "wallet_manager",
-    add: false,
-    edit: false,
-    view: false,
-    shownView: true,
-    shownAdd: true,
-    shownAll: true,
-  },
-  // {
-  //   manager: 'reports_manager',
-  //   add: false,
-  //   edit: false,
-  //   view: false,
-  //   shownView: true,
-  //   shownAdd: true,
-  //   shownAll: true
-  // },
-
-  {
-    manager: "scratch_card_manager",
-    add: false,
-    edit: false,
-    view: false,
-    shownView: true,
-    shownAdd: true,
-    shownAll: true,
-  },
-
-  {
-    manager: "settings",
-    add: false,
-    edit: false,
-    view: false,
-    shownView: true,
-    shownAdd: true,
-    shownAll: true,
-  },
-
-  {
-    manager: "notification_manager",
-    add: false,
-    edit: false,
-    view: false,
-    shownView: true,
-    shownAdd: true,
-    shownAll: true,
-  },
-  {
-    manager: "static_page_management",
-    add: false,
-    edit: false,
-    view: false,
-    shownView: true,
-    shownAdd: true,
-    shownAll: true,
-  },
-  {
-    manager: "FAQ",
-    add: false,
-    edit: false,
-    view: false,
-    shownView: true,
-    shownAdd: true,
-    shownAll: true,
-  },
-
-  {
-    manager: "email_manager",
-    add: false,
-    edit: false,
-    view: false,
-    shownView: true,
-    shownAdd: true,
-    shownAll: true,
-  },
-  {
-    manager: "feedback_manager",
-    add: false,
-    edit: false,
-    view: false,
-    shownView: true,
-    shownAdd: true,
-    shownAll: true,
-  },
-  {
-    manager: "report_manager",
-    add: false,
-    edit: false,
-    view: false,
-    shownView: true,
-    shownAdd: false,
-    shownAll: false,
-  },
-  {
-    manager: "reward_withdrawal_request",
-    add: false,
-    edit: false,
-    view: false,
-    shownView: true,
-    shownAdd: true,
-    shownAll: true,
-  },
 ];
 
 export default Permission;
+
+
+
+
+
+
+

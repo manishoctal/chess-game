@@ -1,22 +1,24 @@
 import { useForm } from "react-hook-form";
-import { apiPost, apiPut } from "../../utils/apiFetch";
+import { apiPut } from "../../utils/apiFetch";
 import apiPath from "../../utils/apiPath";
 import useToastContext from "hooks/useToastContext";
 import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 import helpers from "utils/helpers";
 import OImage from "components/reusable/OImage";
+import ImageUploader from "components/reusable/ImageUploader";
 
 const BannerEdit = ({ setEditShowModal, getAllFAQ, item, viewType }) => {
     const { t } = useTranslation();
     const {
         handleSubmit,
-        formState: { errors },
     } = useForm({ mode: "onChange", shouldFocusError: true, defaultValues: {} });
     const [loader, setLoader] = useState(false)
     const [picture, setPicture] = useState()
     const notification = useToastContext();
     const [imageError, setImageError] = useState('')
+
+    // edit banner function start
     const handleSubmitForm = async (data) => {
         if (!picture?.file) {
             setImageError('Please choose image.')
@@ -26,7 +28,7 @@ const BannerEdit = ({ setEditShowModal, getAllFAQ, item, viewType }) => {
             setLoader(true)
             const path = `${apiPath.bannerEdit}/${item?._id}`
             let formData = new FormData()
-            formData.append('image', picture?.file[0])
+            formData.append('image', picture?.file)
             const result = await apiPut(path, formData);
             if (result?.data?.success === true) {
                 notification.success(result?.data?.message);
@@ -43,11 +45,20 @@ const BannerEdit = ({ setEditShowModal, getAllFAQ, item, viewType }) => {
         }
     };
 
+    // edit banner function end
+
+
+    // change file function start
     const handleFileChange = e => {
-        const url = URL.createObjectURL(e?.target?.files[0])
-        setPicture({ file: e?.target?.files, url: url })
-        setImageError('')
+        if (e) {
+            const url = URL.createObjectURL(e)
+            setPicture({ file: e, url: url })
+            setImageError('')
+        } else {
+            setPicture()
+        }
     }
+    // change file function end
 
     useEffect(() => {
         setPicture({ file: [item?.image], url: item?.image })
@@ -60,7 +71,7 @@ const BannerEdit = ({ setEditShowModal, getAllFAQ, item, viewType }) => {
                         <div className="overflow-hidden border border-white dark:border-[#ffffff38] rounded-lg shadow-lg relative flex flex-col min-w-[502px] bg-white outline-none focus:outline-none">
                             <div className="dark:bg-gray-900 flex items-center justify-between p-5 border-b dark:border-[#ffffff38] border-solid border-slate-200 rounded-t dark:bg-slate-900">
                                 <h3 className="text-xl font-semibold dark:text-white">
-                                    { viewType=='edit'?t("EDIT_BANNER"): t("VIEW_BANNER")}
+                                    {viewType == 'edit' ? t("EDIT_BANNER") : t("VIEW_BANNER")}
                                 </h3>
                                 <button
                                     className=" ml-auto flex items-center justify-center  text-black border-2 rounded-full  h-8 w-8 float-right text-3xl leading-none font-extralight outline-none focus:outline-none"
@@ -76,30 +87,27 @@ const BannerEdit = ({ setEditShowModal, getAllFAQ, item, viewType }) => {
                                     </button>
                                 </button>
                             </div>
-                            {viewType=='edit'&&<div className="flex justify-center mt-5">
-                                <input
-                                    type='file'
-                                    accept='image/png, image/jpg, image/jpeg'
-                                    name='profilePic'
-                                    onChange={handleFileChange}
-                                    style={{ width: '35%' }}
-                                />
-                            </div>}
-                            {imageError && <small className="text-red-500 text-center w-[86%]">{imageError}</small>}
+                            {viewType == 'edit' && <div className="flex justify-center mt-5">
 
-                            <label className="block text-sm font-medium text-gray-900 dark:text-white mt-4 mx-4 ">Banner Image:</label>
-                            <div className="h-[300px] ">
-                                <OImage
-                                    src={
-                                        picture?.url
-                                            ? picture?.url
-                                            : null
-                                    }
-                                    fallbackUrl='/images/user.png'
-                                    className='p-4 h-[300px]  w-[600px]'
-                                    alt=''
-                                />
-                            </div>
+                                <ImageUploader onFileChange={handleFileChange} defaultImage={item?.image} />
+                            </div>}
+                            {helpers.andOperator(imageError, <small className="text-red-500 text-center">{imageError}</small>)}
+
+                            {helpers.andOperator(viewType == 'view', <>
+                                <label className="block text-sm font-medium text-gray-900 dark:text-white mt-4 mx-4 ">Banner Image:</label>
+
+                                <div className="h-[300px] ">
+                                    <OImage
+                                        src={
+                                            picture?.url
+                                                ? picture?.url
+                                                : null
+                                        }
+                                        fallbackUrl='/images/user.png'
+                                        className='p-4 h-[300px]  w-[600px]'
+                                        alt=''
+                                    />
+                                </div> </>)}
                             <div className="dark:border-[#ffffff38] dark:bg-slate-900 flex items-center justify-center p-6 border-t border-solid border-slate-200 rounded-b">
                                 <button
                                     className="text-black bg-[#E1E1E1] font-normal px-12 py-2.5 text-sm outline-none focus:outline-none rounded mr-6  ease-linear transition-all duration-150"

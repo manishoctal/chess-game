@@ -29,6 +29,7 @@ const EditStaticContent = () => {
 const[loading,setLoading]=useState(false)
   const { updatePageName } = useContext(AuthContext);
 
+  // edit static content function start
   const onSubmit = async (data) => {
     try {
       setLoading(true)
@@ -57,6 +58,9 @@ const[loading,setLoading]=useState(false)
       setLoading(false)
     }
   };
+
+    // edit static content function end
+
 
   useEffect(() => {
     updatePageName(t("Edit Static Content"));

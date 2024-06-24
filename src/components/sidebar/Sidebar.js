@@ -4,14 +4,10 @@ import AuthContext from '../../context/AuthContext'
 import Dashboard from '../../assets/images/sidebar_icon1.svg'
 import SubAdmin from '../../assets/images/sub-admin-manager.svg'
 import userManager from '../../assets/images/user-manager.svg'
-import transactionManager from '../../assets/images/transaction-manager.svg'
-import scratchcCard from '../../assets/images/scratchc-card.svg'
 import rewardWithdrawalRequest from '../../assets/images/reward-withdrawal-request.svg'
-import reportManager from '../../assets/images/report-manager.svg'
 import notificationManager from '../../assets/images/Notification-manager.svg'
 import manageStaticContents from '../../assets/images/manage-static-contents.svg'
 import globalSettings from '../../assets/images/global-settings.svg'
-import feedbackManager from '../../assets/images/feedback-manager.svg'
 import faqs from '../../assets/images/faqs.svg'
 import emailManager from '../../assets/images/email-manager.svg'
 import Logout from '../../assets/images/logout.svg'
@@ -107,7 +103,6 @@ const Sidebar = () => {
             src={logoImage}
             className='inline max-w-[187px]'
             alt=''
-          // style={{ filter: 'brightness(0) invert(1)' }}
           />
         </Link>
         <div className='profile text-center'>
@@ -157,74 +152,6 @@ const Sidebar = () => {
             )
           )}
 
-          {/* {andOperator(
-            checkSidebarPermission('transaction_manager'),
-            generateNavLink(
-              '/transactions',
-              'NAV_TRANSACTION_MANAGER',
-              <img
-                src={transactionManager}
-                className='max-w-[18px]'
-                title={t('NAV_TRANSACTION_MANAGER')}
-                alt=''
-              />
-            )
-          )} */}
-
-
-          {/* {andOperator(
-            checkSidebarPermission('scratch_card_manager'),
-            generateNavLink(
-              '/scratch-card-manager',
-              'SCRATCH_CARD_MANAGER',
-              <img
-                src={scratchcCard}
-                className='max-w-[18px]'
-                title={t('SCRATCH_CARD_MANAGER')}
-                alt=''
-              />
-            )
-          )} */}
-          {/* {andOperator(
-            checkSidebarPermission('feedback_manager'),
-            generateNavLink(
-              '/feedback-manager',
-              'FEEDBACK_MANAGER',
-              <img
-                src={feedbackManager}
-                className='max-w-[18px]'
-                title={t('FEEDBACK_MANAGER')}
-                alt=''
-              />
-            )
-          )} */}
-          {/* {andOperator(
-            checkSidebarPermission('report_manager'),
-            generateNavLink(
-              '/report-manager',
-              'REPORT_MANAGER',
-              <img
-                src={reportManager}
-                className='max-w-[18px]'
-                title={t('REPORT_MANAGER')}
-                alt=''
-              />
-            )
-          )} */}
-          {/* {andOperator(
-            checkSidebarPermission('reward_withdrawal_request'),
-            generateNavLink(
-              '/reward-withdrawal-request',
-              'REWARD_WITHDRAWAL_REQUEST',
-              <img
-                src={rewardWithdrawalRequest}
-                className='max-w-[18px]'
-                title={t('REWARD_WITHDRAWAL_REQUEST')}
-                alt=''
-              />
-            )
-          )} */}
-
           {andOperator(
             checkSidebarPermission('banner_manager'),
             generateNavLink(
@@ -240,19 +167,19 @@ const Sidebar = () => {
           )}
 
 
-          {/* {andOperator(
-            checkSidebarPermission('wallet_manager'),
+          {andOperator(
+            checkSidebarPermission('offer_manager'),
             generateNavLink(
-              '/wallet-manager',
-              'WALLET_MANAGER',
+              '/offer-manager',
+              'OFFER_MANAGER',
               <img
                 src={rewardWithdrawalRequest}
-                title={t('WALLET_MANAGER')}
+                title={t('OFFER_MANAGER')}
                 className='max-w-[18px]'
                 alt=''
               />
             )
-          )} */}
+          )}
 
           {andOperator(
             checkSidebarPermission('email_manager'),

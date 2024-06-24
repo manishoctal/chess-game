@@ -6,6 +6,7 @@ import useToastContext from "hooks/useToastContext";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import helpers from "utils/helpers";
+import LoaderButton from "components/reusable/LoaderButton";
 
 const AddFAQ = ({ setShowModal, getAllFAQ }) => {
   const { t } = useTranslation();
@@ -16,6 +17,8 @@ const AddFAQ = ({ setShowModal, getAllFAQ }) => {
   } = useForm({ mode: "onChange", shouldFocusError: true, defaultValues: {} });
   const [loader, setLoader] = useState(false)
   const notification = useToastContext();
+
+  // add faq function start
   const handleSubmitForm = async (data) => {
     try {
       setLoader(true)
@@ -35,6 +38,8 @@ const AddFAQ = ({ setShowModal, getAllFAQ }) => {
 
     }
   };
+
+    // add faq function end
 
   return (
     <>
@@ -137,11 +142,7 @@ const AddFAQ = ({ setShowModal, getAllFAQ }) => {
                   {t("CLOSE")}
                 </button>
 
-                {helpers.ternaryCondition(loader, <button className="bg-gradientTo text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150">
-                  <div className="spinner-container">
-                    <div className="loading-spinner" />
-                  </div>
-                </button>, <button
+                {helpers.ternaryCondition(loader,<LoaderButton/>, <button
                   className="bg-gradientTo text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150"
                   type="submit"
                 >
@@ -157,5 +158,6 @@ const AddFAQ = ({ setShowModal, getAllFAQ }) => {
     </>
   );
 };
+
 
 export default AddFAQ;

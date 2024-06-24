@@ -4,7 +4,8 @@ import { useTranslation } from 'react-i18next'
 import SubAdmin from 'pages/sub_admin/SubAdmin'
 import SubAdd from 'pages/sub_admin/SubAdd'
 import BannerManager from 'pages/banner_manager/Banner'
-import WalletManager from 'pages/wallet_manager/Wallet'
+import OfferManager from 'pages/offer_manager/OfferManager'
+import ViewOfferManager from 'pages/offer_manager/ViewOfferManager'
 import StaticContent from 'pages/static_Contents/StaticContent'
 import AddStaticContent from 'pages/static_Contents/AddStaticContent'
 import EditStaticContent from 'pages/static_Contents/EditStaticContent'
@@ -22,13 +23,7 @@ import Login from 'pages/Login'
 import User from 'pages/users/User'
 import UserView from 'pages/users/UserView'
 import NotificationAdd from 'pages/notification_manager/NotificationAdd'
-import Transaction from 'pages/transection_manager/Transaction'
-import UserWalletHistory from 'pages/users/UserWalletHistory'
-import TransactionDetails from 'pages/users/TransactionDetails'
-import ScratchCardManager from 'pages/scratch_card_manager/ScratchCardManager'
-import SupportManager from 'pages/support_manager/SupportManager'
-import Report from 'pages/reports_manager/Report'
-import RewardWithdrawalRequest from 'pages/reward_withdrawal_request/RewardWithdrawalRequest'
+import AuthorizationRoute from 'utils/AuthorizationRoute'
 
 const UseChange = ({ data }) => {
   const { t } = useTranslation()
@@ -60,7 +55,7 @@ const AdminRoutes = {
     },
     {
       path: '/users',
-      element: <User />,
+      element:<AuthorizationRoute> <User /></AuthorizationRoute>,
       name: (
           <UseChange data='USER_MANAGER' />
       )
@@ -73,46 +68,10 @@ const AdminRoutes = {
           <UseChange data='USER_MANAGER' />
       )
     },
-    {
-      path: '/usersWalletHistory',
-      element: <UserWalletHistory />,
-      name: (
-          <UseChange data='USER_MANAGER' />
-      )
-    },
-    {
-      path: '/users/transactionDetails',
-      element: <TransactionDetails />,
-      name: (
-          <UseChange data='USER_MANAGER' />
-      )
-    },
-    {
-      path: '/transactions',
-      element: <Transaction />,
-      name: (
-          <UseChange data='NAV_TRANSACTION_MANAGER' />
-      )
-    },
-    {
-      path: '/feedback-manager',
-      element: <SupportManager />,
-      name: (
-          <UseChange data='FEEDBACK_MANAGER' />
-      )
-    },
-
-    {
-      path: '/scratch-card-manager',
-      element: <ScratchCardManager />,
-      name: (
-          <UseChange data='SCRATCH_CARD_MANAGER' />
-      )
-    },
-
+    
     {
       path: '/sub-admin-manager/add',
-      element: <SubAdd />,
+      element:<AuthorizationRoute><SubAdd /></AuthorizationRoute>,
       name: (
           <UseChange data='SUB_ADMIN_MANAGERS' />
       )
@@ -120,37 +79,38 @@ const AdminRoutes = {
 
     {
       path: '/banner-manager',
-      element: <BannerManager />,
+      element: <AuthorizationRoute><BannerManager /></AuthorizationRoute>,
       name: (
           <UseChange data='EMAIL_MANAGER' />
       )
     },
 
     {
-      path: '/wallet-manager',
-      element: <WalletManager />,
+      path: '/offer-manager',
+      element: <AuthorizationRoute><OfferManager /></AuthorizationRoute>,
       name: (
-          <UseChange data='WALLET_MANAGER' />
+          <UseChange data='OFFER_MANAGER' />
+      )
+    },
+
+    {
+      path: '/offer-manager/view',
+      element: <AuthorizationRoute><ViewOfferManager /></AuthorizationRoute>,
+      name: (
+          <UseChange data='VIEW_OFFER_MANAGER' />
       )
     },
 
     {
       path: '/email-manager',
-      element: <EmailTemplate />,
-      name: (
-          <UseChange data='EMAIL_MANAGER' />
-      )
-    },
-    {
-      path: '/email-manager/add',
-      element: <AddEditEmail />,
+      element: <AuthorizationRoute><EmailTemplate /></AuthorizationRoute>,
       name: (
           <UseChange data='EMAIL_MANAGER' />
       )
     },
     {
       path: '/email-manager/edit',
-      element: <AddEditEmail />,
+      element:<AuthorizationRoute><AddEditEmail /></AuthorizationRoute>,
       name: (
           <UseChange data='EMAIL_MANAGER' />
       )
@@ -158,28 +118,28 @@ const AdminRoutes = {
 
     {
       path: '/static-content',
-      element: <StaticContent />,
+      element: <AuthorizationRoute><StaticContent /></AuthorizationRoute>,
       name: (
           <UseChange data='NAV_STATIC_CONTENTS' />
       )
     },
     {
       path: '/static-content/add',
-      element: <AddStaticContent />,
+      element: <AuthorizationRoute><AddStaticContent /></AuthorizationRoute>,
       name: (
           <UseChange data='NAV_STATIC_CONTENTS' />
       )
     },
     {
       path: '/static-content/edit',
-      element: <EditStaticContent />,
+      element: <AuthorizationRoute><EditStaticContent /></AuthorizationRoute>,
       name: (
           <UseChange data='NAV_STATIC_CONTENTS' />
       )
     },
     {
       path: '/static-content/view',
-      element: <StaticContentView />,
+      element: <AuthorizationRoute><StaticContentView /></AuthorizationRoute>,
       name: (
           <UseChange data='NAV_STATIC_CONTENTS' />
       )
@@ -187,7 +147,7 @@ const AdminRoutes = {
 
     {
       path: '/notification_manager',
-      element: <NotificationManager />,
+      element:<AuthorizationRoute> <NotificationManager /></AuthorizationRoute>,
       name: (
           <UseChange data='NOTIFICATION_MANAGER' />
       )
@@ -195,39 +155,26 @@ const AdminRoutes = {
 
     {
       path: '/notification_manager/add',
-      element: <NotificationAdd />,
+      element:<AuthorizationRoute> <NotificationAdd /></AuthorizationRoute>,
       name: (
           <UseChange data='NOTIFICATION_MANAGER' />
       )
     },
     {
       path: '/faqs',
-      element: <Faq />,
+      element: <AuthorizationRoute><Faq /></AuthorizationRoute>,
       name: (
           <UseChange data='FAQS' />
       )
     },
     {
       path: '/setting',
-      element: <Settings />,
+      element:<AuthorizationRoute> <Settings /></AuthorizationRoute>,
       name: (
           <UseChange data='SETTINGS' />
       )
     },
-    {
-      path: '/report-manager',
-      element: <Report />,
-      name: (
-          <UseChange data='REPORT_MANAGER' />
-      )
-    },
-    {
-      path: '/reward-withdrawal-request',
-      element: <RewardWithdrawalRequest />,
-      name: (
-          <UseChange data='REWARD_WITHDRAWAL_REQUEST' />
-      )
-    },
+
     {
       path: '/profile',
       element: <Profile />,

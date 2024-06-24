@@ -10,9 +10,6 @@ import AuthContext from 'context/AuthContext'
 import PageSizeList from 'components/PageSizeList'
 import ODateRangePicker from 'components/shared/datePicker/ODateRangePicker'
 import helpers from 'utils/helpers'
-import dayjs from 'dayjs'
-import { filter } from 'lodash'
-
 function Faq() {
   const { t } = useTranslation()
   const [showModal, setShowModal] = useState(false)
@@ -29,7 +26,7 @@ function Faq() {
   const [page, setPage] = useState(1)
   const [pageSize, setPageSize] = useState(10)
   const [item, setItem] = useState('')
-  const [isDelete] = useState(false)
+  const [isDelete,setIsDelete] = useState(false)
   const [sort, setSort] = useState({
     sortBy: 'createdAt',
     sortType: 'desc'
@@ -39,22 +36,32 @@ function Faq() {
   const [filterData, setFilterData] = useState({
     startDate: "",
     endDate: "",
-    status:'',
+    status: '',
     isReset: false,
     isFilter: false,
   });
-  const getAllFAQ = async () => {
+
+// get all faq function start
+  const getAllFAQ = async (data) => {
     try {
+
+      if ( data?.deletePage &&  FAQs?.length <= 1) {
+        setPage(page - 1);
+        setIsDelete(true);
+      } else {
+        setIsDelete(false);
+      }
       const payload = {
         page,
         pageSize: pageSize,
         sortKey: sort.sortBy,
         sortType: sort.sortType,
-        status:filterData?.status||null,
-        startDate:helpers.getFormattedDate(filterData?.startDate),
-        endDate:helpers.getFormattedDate(filterData?.endDate)
+        status: filterData?.status || null,
+        startDate: helpers.getFormattedDate(filterData?.startDate),
+        endDate: helpers.getFormattedDate(filterData?.endDate)
       }
 
+  
       const path = apiPath.getFAQs
       const result = await apiGet(path, payload)
       if (result?.status === 200) {
@@ -75,6 +82,7 @@ function Faq() {
       }
     }
   }
+// get all faq function end
 
   const dynamicPage = e => {
     setPage(1)
@@ -93,7 +101,7 @@ function Faq() {
   }
   useEffect(() => {
     getAllFAQ()
-  }, [page, sort, pageSize,filterData])
+  }, [page, sort, pageSize, filterData])
 
 
 
@@ -115,7 +123,7 @@ function Faq() {
     setFilterData({
       startDate: "",
       endDate: "",
-      status:'',
+      status: '',
       isReset: true,
       isFilter: false,
     });
@@ -142,22 +150,22 @@ function Faq() {
                     <div className="flex items-center lg:pt-0 pt-3 justify-center">
                       <ODateRangePicker handleDateChange={handleDashboardDateChange} isReset={filterData?.isReset} setIsReset={setFilterData} />
                       <div className="flex items-center mb-3 ml-3">
-                    <select
-                      id="countries"
-                      type="password"
-                      name="floating_password"
-                      className="block p-2 w-full text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer"
-                      placeholder=" "
-                      value={filterData?.status}
-                      onChange={statusPage}
-                    >
-                      <option defaultValue value="">
-                        {t("O_ALL")}
-                      </option>
-                      <option value="active">{t("O_ACTIVE")}</option>
-                      <option value="inactive">{t("O_INACTIVE")}</option>
-                    </select>
-                  </div>
+                        <select
+                          id="countries"
+                          type="password"
+                          name="floating_password"
+                          className="block p-2 w-full text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer"
+                          placeholder=" "
+                          value={filterData?.status}
+                          onChange={statusPage}
+                        >
+                          <option defaultValue value="">
+                            {t("O_ALL")}
+                          </option>
+                          <option value="active">{t("O_ACTIVE")}</option>
+                          <option value="inactive">{t("O_INACTIVE")}</option>
+                        </select>
+                      </div>
                       <button
                         type="button"
                         onClick={() => handleResetDashboard()}
