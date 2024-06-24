@@ -9,7 +9,7 @@ import apiPath from "utils/apiPath";
 import { apiPost, apiPut } from "utils/apiFetch";
 import useToastContext from "hooks/useToastContext";
 import LoaderButton from "components/reusable/LoaderButton";
-const AddEditOffer = ({ setEditShowModal, viewType, getAllOfferData, offerDetails }) => {
+const AddEditOffer = ({ setEditShowOfferModal, viewType, getAllOfferData, offerDetails }) => {
     const { t } = useTranslation();
     const [date, setDate] = useState(helpers.ternaryCondition(viewType == 'edit', new Date(offerDetails?.expiryDate), ''));
     const {
@@ -21,7 +21,7 @@ const AddEditOffer = ({ setEditShowModal, viewType, getAllOfferData, offerDetail
         formState: { errors },
     } = useForm({ mode: "onChange", shouldFocusError: true, defaultValues: {} });
     const [loader, setLoader] = useState(false)
-  
+
     // default value for edit code
     useEffect(() => {
         if (offerDetails && viewType == 'edit') {
@@ -52,7 +52,7 @@ const AddEditOffer = ({ setEditShowModal, viewType, getAllOfferData, offerDetail
             if (result?.status === 200) {
                 notification.success(result?.data?.message);
                 getAllOfferData({ statusChange: 1 });
-                setEditShowModal(false)
+                setEditShowOfferModal(false)
                 setLoader(false)
             }
         }
@@ -62,7 +62,7 @@ const AddEditOffer = ({ setEditShowModal, viewType, getAllOfferData, offerDetail
             setLoader(false)
         }
     };
-// submit function end
+    // submit function end
 
     const handleDateChange = (dates) => {
         setValue('expiryDate', dates)
@@ -77,11 +77,11 @@ const AddEditOffer = ({ setEditShowModal, viewType, getAllOfferData, offerDetail
                         <div className="overflow-hidden  dark:border-[#ffffff38] border border-white rounded-lg shadow-lg relative flex flex-col min-w-[552px] bg-white outline-none focus:outline-none">
                             <div className=" flex items-center justify-between p-5 dark:bg-gray-900 border-b dark:border-[#ffffff38] border-solid border-slate-200 rounded-t dark:bg-slate-900">
                                 <h3 className="text-xl font-semibold dark:text-white">
-                                    {viewType == 'add' ? t("ADD_OFFER") : t("EDIT_OFFER")}
+                                    {helpers.ternaryCondition(viewType == 'add', t("ADD_OFFER"), t("EDIT_OFFER"))}
                                 </h3>
                                 <button
                                     className=" ml-auto flex items-center justify-center  text-black border-2 rounded-full  h-8 w-8 float-right text-3xl leading-none font-extralight outline-none focus:outline-none"
-                                    onClick={() => setEditShowModal(false)}
+                                    onClick={() => setEditShowOfferModal(false)}
                                 >
                                     <button type="button"
                                         title={t("CLOSE")}
@@ -255,16 +255,14 @@ const AddEditOffer = ({ setEditShowModal, viewType, getAllOfferData, offerDetail
                                 <button
                                     className="text-black bg-[#E1E1E1] font-normal px-12 py-2.5 text-sm outline-none focus:outline-none rounded mr-6  ease-linear transition-all duration-150"
                                     type="button"
-                                    onClick={() => setEditShowModal(false)}
+                                    onClick={() => setEditShowOfferModal(false)}
                                 >
                                     {t("CLOSE")}
                                 </button>
                                 {helpers.andOperator(viewType !== 'view',
                                     helpers.ternaryCondition(loader,
                                         <LoaderButton />,
-                                        <button
-                                            className="bg-gradientTo text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150"
-                                            type="submit"
+                                        <button className="bg-gradientTo text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150" type="submit"
                                             title={helpers.ternaryCondition(viewType == 'add', t("O_ADD"), t("O_EDIT"))}>{helpers.ternaryCondition(viewType == 'add', t("O_ADD"), t("O_EDIT"))} </button>))}
                             </div>
                         </div>

@@ -34,8 +34,8 @@ const getOfferUserValue=(details,detailsClass)=>{
                 <OWalletTableHead sort={sort} setSort={setSort} name='FULL_NAME' fieldName='fullName' />
                 <OWalletTableHead sort={sort} setSort={setSort} name='USER_NAME' fieldName='userName' />
                 <OWalletTableHead sort={sort} setSort={setSort} name='MOBILE_NUMBER' fieldName='mobile' />
-                <OWalletTableHead sort={sort} setSort={setSort} name='OFFER_CODE' fieldName='offer_code' />
-                <OWalletTableHead sort={sort} setSort={setSort} name='USED_DATE' fieldName='usedDate' />
+                <OWalletTableHead sort={sort} setSort={setSort} name='OFFER_CODE' fieldName='code' />
+                <OWalletTableHead sort={sort} setSort={setSort} name='USED_DATE' fieldName='created_at' />
                 <OWalletTableHead sort={sort} setSort={setSort} name='AMOUNT_ADDED' fieldName='transactionAmount' />
                 <OWalletTableHead sort={sort} setSort={setSort} name='CASH_BONUS' fieldName='cashbackAmount' />
 
@@ -57,8 +57,8 @@ const getOfferUserValue=(details,detailsClass)=>{
                   {getOfferUserValue(startCase(item?.rows?.fullName) || 'N/A')}
                   {getOfferUserValue(item?.rows?.userName ||'N/A')}
                   {getOfferUserValue(item?.rows?.mobile ||'N/A')}
-                  {getOfferUserValue(item?.rows?.offer_code ||'N/A')}
-                  {getOfferUserValue(helpers.getDateAndTime(item?.rows?.usedAt))}
+                  {getOfferUserValue(item?.rows?.offerDetails?.code ||'N/A','font-bold dark')}
+                  {getOfferUserValue(helpers.getDateAndTime(item?.rows?.created_at))}
                   {getOfferUserValue(helpers.formattedAmount(item?.rows?.transactionAmount) ||'N/A','font-bold dark')}
                   {getOfferUserValue(helpers.formattedAmount(item?.rows?.cashbackAmount) ||'N/A','font-bold dark')}
                 </tr>
