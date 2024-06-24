@@ -65,8 +65,7 @@ function User() {
 
       const path = apiPath.getUsers;
       const result = await apiGet(path, payload);
-
-      if (result?.status === 200) {
+      if (result?.data?.success) {
         const response = result?.data?.results;
         setAllUser(response?.docs);
         const resultStatus = result?.data?.success;

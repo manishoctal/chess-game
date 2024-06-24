@@ -69,6 +69,36 @@ const AddEditOffer = ({ setEditShowOfferModal, viewType, getAllOfferData, offerD
         clearErrors('expiryDate')
         setDate(dates);
     };
+
+    const validationRules = {
+        code: {
+            required: { value: true, message: t("PLEASE_ENTER_OFFER_CODE") },
+            min: { value: 1, message: t("MINIMUM_VALUE_MUST_IS_1") },
+        },
+        maxUserLimit: {
+            required: { value: true, message: t("PLEASE_ENTER_USER_LIMIT") },
+            maxLength: { value: 5, message: t("MAX_LIMIT_IS_5_CHARACTERS") },
+            min: { value: 1, message: t("MINIMUM_VALUE_MUST_IS_1") },
+        },
+        limitPerUser: {
+            required: { value: true, message: t("PLEASE_ENTER_RESTRICTED_USER") },
+            maxLength: { value: 5, message: t("MAX_LIMIT_IS_5_CHARACTERS") },
+            min: { value: 1, message: t("MINIMUM_VALUE_MUST_IS_1") },
+        },
+        cashBackAmount: {
+            required: { value: true, message: t("PLEASE_ENTER_CASH_BONUS") },
+            maxLength: { value: 5, message: t("MAX_LIMIT_IS_5_CHARACTERS") },
+            min: { value: 1, message: t("MINIMUM_VALUE_MUST_IS_1") },
+        },
+        addMinimumAmount: {
+            required: { value: true, message: t("PLEASE_ENTER_ADD_UP_TO_AMOUNT") },
+            maxLength: { value: 5, message: t("MAX_LIMIT_IS_5_CHARACTERS") },
+            min: { value: 1, message: t("MINIMUM_VALUE_MUST_IS_1") },
+        },
+        expiryDate: {
+            required: { value: true, message: t("PLEASE_CHOOSE_EXPIRY_DATE") },
+        },
+    };
     return (
         <>
             <div className=" overflow-y-auto justify-center items-center flex overflow-x-hidden  fixed inset-0 z-50 outline-none focus:outline-none">
@@ -94,161 +124,83 @@ const AddEditOffer = ({ setEditShowOfferModal, viewType, getAllOfferData, offerD
                                 </button>
                             </div>
 
-
                             <div className="flex justify-center mt-5">
-                                <div className='px-2 flex justify-center'>
-                                    <OInputField
-                                        wrapperClassName='relative z-0 mb-3 w-[250px] group'
-                                        name='code'
-                                        inputLabel={t('OFFER_CODE')}
-                                        labelType={true}
-                                        placeholder={t('ENTER_OFFER_CODE')}
-                                        register={register("code", {
-                                            required: {
-                                                value: true,
-                                                message: t("PLEASE_ENTER_OFFER_CODE"),
-                                            },
+                                <OfferInputField name="code"
+                                    label="OFFER_CODE"
+                                    type="text"
+                                    placeholder="ENTER_OFFER_CODE"
+                                    maxLength={50}
+                                    validation={validationRules.code}
+                                    errors={errors}
+                                    register={register} />
 
-                                            min: {
-                                                value: 1,
-                                                message: t("MINIMUM_VALUE_MUST_IS_1"),
-                                            },
-                                        })}
-                                        type='text'
-                                        errors={errors}
+                                <OfferInputField
+                                    name="maxUserLimit"
+                                    label="USER_LIMIT"
+                                    type="number"
+                                    placeholder="ENTER_USER_LIMIT"
+                                    maxLength={5}
+                                    validation={validationRules.maxUserLimit}
+                                    errors={errors}
+                                    register={register}
 
-                                    />
-                                </div>
-                                <div className='px-2 flex justify-center'>
-                                    <OInputField
-                                        wrapperClassName='relative z-0 mb-3 w-[250px] group'
-                                        name='maxUserLimit'
-                                        inputLabel={t('USER_LIMIT')}
-                                        placeholder={t('ENTER_USER_LIMIT')}
-                                        register={register("maxUserLimit", {
-                                            required: {
-                                                value: true,
-                                                message: t("PLEASE_ENTER_USER_LIMIT"),
-                                            },
-                                            maxLength: {
-                                                value: 5,
-                                                message: t("MAX_LIMIT_IS_5_CHARACTERS"),
-                                            },
-                                            min: {
-                                                value: 1,
-                                                message: t("MINIMUM_VALUE_MUST_IS_1"),
-                                            },
-                                        })}
-                                        labelType={true}
-                                        type='number'
-                                        errors={errors}
-
-                                    />
-                                </div>
+                                />
                             </div>
 
                             <div className="flex justify-center mt-3">
-                                <div className='px-2 flex justify-center'>
-                                    <OInputField
-                                        wrapperClassName='relative z-0 mb-3 w-[250px] group'
-                                        name='limitPerUser'
-                                        inputLabel={t('RESTRICTED_USES')}
-                                        labelType={true}
-                                        placeholder={t('ENTER_RESTRICTED_USER')}
-                                        register={register("limitPerUser", {
-                                            required: {
-                                                value: true,
-                                                message: t("PLEASE_ENTER_RESTRICTED_USER"),
-                                            },
-                                            maxLength: {
-                                                value: 5,
-                                                message: t("MAX_LIMIT_IS_5_CHARACTERS"),
-                                            },
-                                            min: {
-                                                value: 1,
-                                                message: t("MINIMUM_VALUE_MUST_IS_1"),
-                                            },
-                                        })}
-                                        type='number'
-                                        errors={errors}
+                                <OfferInputField
+                                    name="limitPerUser"
+                                    label="RESTRICTED_USES"
+                                    type="number"
+                                    placeholder="ENTER_RESTRICTED_USER"
+                                    maxLength={5}
+                                    validation={validationRules.limitPerUser}
+                                    errors={errors}
+                                    register={register}
 
-                                    />
-                                </div>
-                                <div className='px-2 flex justify-center'>
-                                    <OInputField
-                                        wrapperClassName='relative z-0 mb-3 w-[250px] group'
-                                        name='cashBackAmount'
-                                        inputLabel={t('CASH_BONUS')}
-                                        placeholder={t('ENTER_CASH_BONUS')}
-                                        register={register("cashBackAmount", {
-                                            required: {
-                                                value: true,
-                                                message: t("PLEASE_ENTER_CASH_BONUS"),
-                                            },
-                                            maxLength: {
-                                                value: 5,
-                                                message: t("MAX_LIMIT_IS_5_CHARACTERS"),
-                                            },
-                                            min: {
-                                                value: 1,
-                                                message: t("MINIMUM_VALUE_MUST_IS_1"),
-                                            },
-                                        })}
-                                        labelType={true}
-                                        type='number'
-                                        errors={errors}
+                                />
+                                <OfferInputField
+                                    name="cashBackAmount"
+                                    label="CASH_BONUS"
+                                    type="number"
+                                    placeholder="ENTER_CASH_BONUS"
+                                    maxLength={5}
+                                    validation={validationRules.cashBackAmount}
+                                    errors={errors}
+                                    register={register}
 
-                                    />
-                                </div>
+                                />
                             </div>
-
                             <div className="flex justify-center mt-3">
-                                <div className='px-2 flex justify-center'>
-                                    <OInputField
-                                        wrapperClassName='relative z-0 mb-3 w-[250px] group'
-                                        name='addMinimumAmount'
-                                        inputLabel={t('ADD_AMOUNT_UP_TO')}
-                                        labelType={true}
-                                        placeholder={t('ENTER_ADD_AMOUNT_UP_TO')}
-                                        register={register("addMinimumAmount", {
-                                            required: {
-                                                value: true,
-                                                message: t("PLEASE_ENTER_ADD_UP_TO_AMOUNT"),
-                                            },
-                                            maxLength: {
-                                                value: 5,
-                                                message: t("MAX_LIMIT_IS_5_CHARACTERS"),
-                                            },
-                                            min: {
-                                                value: 1,
-                                                message: t("MINIMUM_VALUE_MUST_IS_1"),
-                                            },
-                                        })}
-                                        type='number'
-                                        errors={errors}
+                                <OfferInputField
+                                    name="addMinimumAmount"
+                                    label="ADD_AMOUNT_UP_TO"
+                                    type="number"
+                                    placeholder="ENTER_ADD_AMOUNT_UP_TO"
+                                    maxLength={5}
+                                    validation={validationRules.addMinimumAmount}
+                                    errors={errors}
+                                    register={register}
 
-                                    />
-                                </div>
-                                <div className='px-2 flex justify-center'>
-                                    <div className="">
-                                        <label htmlFor="validity" className="font-medium text-sm text-[#000] dark:text-gray-400 block" > {t("EXPIRY_DATE")} <span className="text-red-500">*</span> </label>
-                                        <ODatePicker
-                                            name="validity"
-                                            id="validity"
-                                            value={date}
-                                            handleDateChange={handleDateChange}
-                                            minDate="today"
-                                            placeholder={t("EXPIRY_DATE")}
-                                            inputClass={'relative z-0  !w-[250px] group h-12 mt-1'}
-                                            {...register('expiryDate', { required: t('PLEASE_CHOOSE_EXPIRY_DATE') })}
+                                />
+                                <div className="px-2">
+                                    <label htmlFor="validity" className="font-medium text-sm text-[#000] dark:text-gray-400 block" > {t("EXPIRY_DATE")} <span className="text-red-500">*</span> </label>
+                                    <ODatePicker
+                                        name="validity"
+                                        id="validity"
+                                        value={date}
+                                        handleDateChange={handleDateChange}
+                                        minDate="today"
+                                        placeholder={t("EXPIRY_DATE")}
+                                        inputClass={'relative z-0  !w-[250px] group h-11 mt-1'}
+                                        style={{ height: '45px' }}
+                                        {...register('expiryDate', { required: t('PLEASE_CHOOSE_EXPIRY_DATE') })} />
+
+                                    {errors?.expiryDate && (
+                                        <ErrorMessage
+                                            message={errors?.expiryDate?.message}
                                         />
-
-                                        {errors?.expiryDate && (
-                                            <ErrorMessage
-                                                message={errors?.expiryDate?.message}
-                                            />
-                                        )}
-                                    </div>
+                                    )}
                                 </div>
                             </div>
                             <div className="dark:border-[#ffffff38] dark:bg-slate-900 flex items-center justify-center p-6 border-t border-solid border-slate-200 rounded-b">
@@ -275,3 +227,33 @@ const AddEditOffer = ({ setEditShowOfferModal, viewType, getAllOfferData, offerD
 };
 
 export default AddEditOffer;
+
+const OfferInputField = ({
+    name,
+    label,
+    type,
+    placeholder,
+    maxLength,
+    validation,
+    errors,
+    register,
+    disable = false,
+}) => {
+    const { t } = useTranslation();
+    return (
+        <div className='px-2 flex justify-center'>
+            <OInputField
+                wrapperClassName='relative z-0 mb-3 w-[250px] group'
+                name={name}
+                inputLabel={t(label)}
+                placeholder={t(placeholder)}
+                register={register(name, validation)}
+                type={type}
+                errors={errors}
+                disable={disable}
+                maxLength={maxLength}
+                labelType={true}
+            />
+        </div>
+    );
+};
