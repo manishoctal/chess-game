@@ -23,6 +23,12 @@ const SubTable = ({
     updatePageName(t("SUB_ADMIN_MANAGERS"));
   }, []);
 
+
+  const getDateTable = (dateData) => {
+    return <td className="py-2 px-4 border-r dark:border-[#ffffff38]">
+      {dateData || 'N/A'}
+    </td>
+  }
   return (
     <div className="p-3">
       <div className="overflow-x-auto relative rounded-lg border">
@@ -82,18 +88,13 @@ const SubTable = ({
                 <td className="py-2 px-4 border-r dark:border-[#ffffff38]">
                   {startCase(item?.address) || "N/A"}
                 </td>
-
-                <td className="py-2 px-4 border-r dark:border-[#ffffff38]">
-                  {helpers.getDateAndTime(item?.createdAt)}
-                </td>
-                <td className="py-2 px-4 border-r dark:border-[#ffffff38]">
-                  {helpers.getDateAndTime(item?.updatedAt)}
-                </td>
+                {getDateTable(helpers.getDateAndTime(item?.createdAt)||'N/A')}
+                {getDateTable(helpers.getDateAndTime(item?.updatedAt)||'N/A')}
                 {(manager?.add || manager?.edit || user?.role === "admin") && (
                   <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-center">
                     <label
                       className="inline-flex relative items-center cursor-pointer"
-                      title={`${item?.status === "active" ? "Active" : "Inactive"
+                      title={`${helpers.ternaryCondition(item?.status === "active", "Active", "Inactive")
                         }`}
                     >
                       <input
@@ -102,8 +103,7 @@ const SubTable = ({
                         checked={item?.status === "active"}
                         onChange={(e) =>
                           helpers.alertFunction(
-                            `${t("ARE_YOU_SURE_YOU_WANT_TO")} ${e.target.checked ? "active" : "inactive"
-                            } '${item.name}'?`,
+                            `${t("ARE_YOU_SURE_YOU_WANT_TO")} ${helpers.ternaryCondition(e.target.checked, "active", "inactive")} '${item.name}'?`,
                             item,
                             handelStatusChange
                           )
@@ -125,7 +125,7 @@ const SubTable = ({
                         className="px-2 py-2 hover:text-gradientTo"
                       >
                         <a title={t("O_VIEW")}>
-                          {" "}
+
                           <AiFillEye className="cursor-pointer w-5 h-5 text-slate-600" />
                         </a>
                       </li>
@@ -139,7 +139,7 @@ const SubTable = ({
                           className="px-2 py-2 hover:text-gradientTo"
                         >
                           <a title={t("O_EDIT")}>
-                            {" "}
+
                             <AiFillEdit className="cursor-pointer w-5 h-5 text-slate-600" />
                           </a>
                         </li>
