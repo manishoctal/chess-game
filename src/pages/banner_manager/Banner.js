@@ -180,6 +180,9 @@ function Banner() {
     }
   }, [debouncedSearchTerm])
 
+  useEffect(() => {
+    updatePageName(t('BANNER_MANAGER'))
+  }, [])
 
   const handleReset = () => {
     setFilterData({
@@ -217,9 +220,6 @@ function Banner() {
 
   // debounce search end
 
-  useEffect(() => {
-    updatePageName(t('BANNER_MANAGER'))
-  }, [])
 
 
 

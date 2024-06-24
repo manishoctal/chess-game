@@ -154,8 +154,6 @@ function ViewOfferManager() {
     }, [])
 
 
-
-
     const editViewBanner = async (type, data) => {
         setEditView(type)
         setItem(data)
