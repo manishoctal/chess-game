@@ -15,6 +15,7 @@ const Table = ({
   handelEdit,
   paginationObj,
   manager,
+  setModalData,
   pageSize,
   sort, setSort
 }) => {
@@ -278,7 +279,7 @@ const Table = ({
                           className="px-2 py-2 hover:bg-white hover:text-gradientTo"
                         >
                           <button title={t("DELETE_FAQS")}>
-                            {" "}
+                          
                             <AiFillDelete className="w-5 h-5 text-red-600" />{" "}
                           </button>
                         </li>

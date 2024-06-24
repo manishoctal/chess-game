@@ -2,8 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { apiGet } from '../../utils/apiFetch'
 import apiPath from '../../utils/apiPath'
 import Table from './Table'
-import AddFAQ from './AddFAQ'
-import EditFAQ from './EditFAQ'
+import AddEditFAQ from './EditFAQ'
 import Pagination from '../Pagination'
 import { useTranslation } from 'react-i18next'
 import AuthContext from 'context/AuthContext'
@@ -12,7 +11,6 @@ import ODateRangePicker from 'components/shared/datePicker/ODateRangePicker'
 import helpers from 'utils/helpers'
 function Faq() {
   const { t } = useTranslation()
-  const [showModal, setShowModal] = useState(false)
   const [paginationObj, setPaginationObj] = useState({
     page: 1,
     pageCount: 1,
@@ -31,7 +29,6 @@ function Faq() {
     sortBy: 'createdAt',
     sortType: 'desc'
   })
-
 
   const [filterData, setFilterData] = useState({
     startDate: "",
@@ -182,7 +179,7 @@ function Faq() {
                       <button
                         title={t('ADD_FAQS')}
                         className='bg-gradientTo flex text-sm px-8 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue whitespace-nowrap'
-                        onClick={() => setShowModal(true)}
+                        onClick={() => {  setItem(''); setEditShowModal(true);setEditView('add')}}
                       >
                         + {t('ADD_FAQS')}
                       </button>
@@ -217,12 +214,8 @@ function Faq() {
           </div>
         </div>
       </div>
-
-      {showModal && (
-        <AddFAQ setShowModal={setShowModal} getAllFAQ={getAllFAQ} />
-      )}
       {editShowModal && (
-        <EditFAQ
+        <AddEditFAQ
           setEditShowModal={setEditShowModal}
           getAllFAQ={getAllFAQ}
           item={item}

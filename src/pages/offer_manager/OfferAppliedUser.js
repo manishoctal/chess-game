@@ -35,7 +35,7 @@ const getOfferUserValue=(details,detailsClass)=>{
                 <OWalletTableHead sort={sort} setSort={setSort} name='USER_NAME' fieldName='userName' />
                 <OWalletTableHead sort={sort} setSort={setSort} name='MOBILE_NUMBER' fieldName='mobile' />
                 <OWalletTableHead sort={sort} setSort={setSort} name='OFFER_CODE' fieldName='code' />
-                <OWalletTableHead sort={sort} setSort={setSort} name='USED_DATE' fieldName='created_at' />
+                <OWalletTableHead sort={sort} setSort={setSort} name='USED_DATE' fieldName='createdAt' />
                 <OWalletTableHead sort={sort} setSort={setSort} name='AMOUNT_ADDED' fieldName='transactionAmount' />
                 <OWalletTableHead sort={sort} setSort={setSort} name='CASH_BONUS' fieldName='cashbackAmount' />
 
@@ -53,14 +53,14 @@ const getOfferUserValue=(details,detailsClass)=>{
                   >
                     {i + 1 + pageSize * (page - 1)}
                   </th>
-                  {getOfferUserValue(item?.rows?.userId)}
-                  {getOfferUserValue(startCase(item?.rows?.fullName) || 'N/A')}
-                  {getOfferUserValue(item?.rows?.userName ||'N/A')}
-                  {getOfferUserValue(item?.rows?.mobile ||'N/A')}
-                  {getOfferUserValue(item?.rows?.offerDetails?.code ||'N/A','font-bold')}
-                  {getOfferUserValue(helpers.getDateAndTime(item?.rows?.created_at))}
-                  {getOfferUserValue(helpers.formattedAmount(item?.rows?.transactionAmount) ||'N/A','font-bold')}
-                  {getOfferUserValue(helpers.formattedAmount(item?.rows?.cashbackAmount) ||'N/A','font-bold')}
+                  {getOfferUserValue(item?.userDetail?.userId)}
+                  {getOfferUserValue(startCase(item?.userDetail?.fullName) || 'N/A')}
+                  {getOfferUserValue(item?.userDetail?.userName ||'N/A')}
+                  {getOfferUserValue(item?.userDetail?.mobile ||'N/A')}
+                  {getOfferUserValue(item?.offerDetails?.code ||'N/A','font-bold')}
+                  {getOfferUserValue(helpers.getDateAndTime(item?.createdAt))}
+                  {getOfferUserValue(helpers.formattedAmount(item?.transactionAmount) ||'N/A','font-bold')}
+                  {getOfferUserValue(helpers.formattedAmount(item?.cashbackAmount) ||'N/A','font-bold')}
                 </tr>
               ))}
               {isEmpty(offerUsers) ? (

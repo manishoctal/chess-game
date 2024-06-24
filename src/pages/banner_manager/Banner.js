@@ -19,7 +19,7 @@ function Banner() {
   const { t } = useTranslation()
   const notification = useToastContext()
   const { user, updatePageName } = useContext(AuthContext)
-  const [showModal, setShowModal] = useState(false)
+  const [showModal, setAddShowModal] = useState(false)
   const [page, setPage] = useState(1)
   const [pageSize, setPageSize] = useState(10)
   const [isDelete, setIsDelete] = useState(false)
@@ -277,7 +277,7 @@ function Banner() {
                     title={t('ADD_BANNER')}
                     type='button'
                     className='bg-gradientTo flex text-sm px-8 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue whitespace-nowrap'
-                    onClick={() => setShowModal(true)}
+                    onClick={() => setAddShowModal(true)}
                   >
                     + {t('ADD_BANNER')}
                   </button>
@@ -314,7 +314,7 @@ function Banner() {
 
 
       {showModal && (
-        <BannerAdd setShowModal={setShowModal} getAllFAQ={getAllBanner} />
+        <BannerAdd setAddShowModal={setAddShowModal} getAllFAQ={getAllBanner} />
       )}
       {editShowModal && (
         <EditBanner
