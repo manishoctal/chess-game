@@ -238,7 +238,7 @@ const onViewWalletBalance=(e)=>{
                 <th scope="col" className="py-3 px-6">
                   <div className="text-left">{t("COUNTRY_CODE")}</div>
                 </th>
-                <OUserTableHead sort={sort} setSort={setSort} name='O_MOBILE_NUMBER' fieldName='mobile'/>
+                <OUserTableHead sort={sort} setSort={setSort} name='O_MOBILE' fieldName='mobile'/>
                 <OUserTableHead sort={sort} setSort={setSort} name='INVITE_CODE' fieldName='inviteCode'/>
                 <OUserTableHead sort={sort} setSort={setSort} name='JOINED_DATE' fieldName='createdAt'/>
                 <th scope="col" className="py-3 px-6 text-left">

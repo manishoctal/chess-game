@@ -37,7 +37,7 @@ const StaticContent = () => {
     isFilter: false
   })
   const [sort, setSort] = useState({
-    sortBy: 'createdAt',
+    sortBy: 'updatedAt',
     sortType: 'desc'
   })
 
