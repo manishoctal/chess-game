@@ -71,9 +71,9 @@ function Faq() {
         setFAQS(response?.docs)
         setPaginationObj({
           ...paginationObj,
-          pageCount: resultStatus ? response?.totalPages : null,
-          perPageItem: resultStatus ? response?.docs.length : null,
-          totalItems: resultStatus ? response?.totalDocs : null
+          pageCount: helpers.ternaryCondition(resultStatus , response?.totalPages , null),
+          perPageItem: helpers.ternaryCondition(resultStatus , response?.docs?.length , null),
+          totalItems: helpers.ternaryCondition(resultStatus , response?.totalDocs ,null)
         })
       }
     } catch (error) {

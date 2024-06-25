@@ -146,7 +146,7 @@ function User() {
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       setDebouncedSearchTerm(searchTerm?.trim());
-    }, 500);
+    }, 200);
     return () => {
       clearTimeout(timeoutId);
     };
@@ -175,11 +175,11 @@ function User() {
       try {
 
         const payload = {
-          keyword: event
+          keyword: event?.toLowerCase()
         };
         const path = apiPath.searchUsers;
         const result = await apiGet(path, payload);
-        if (result?.status === 200) {
+        if (result?.data?.success) {
           const resultData = result?.data?.results
           setFilteredItems(resultData);
         }

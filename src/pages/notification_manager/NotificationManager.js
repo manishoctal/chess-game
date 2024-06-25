@@ -40,7 +40,7 @@ function NotificationManager() {
     isFilter: false
   })
   const [sort, setSort] = useState({
-    sortKey: 'createdAt',
+    sortBy: 'createdAt',
     sortType: 'desc'
   })
 
@@ -55,7 +55,7 @@ function NotificationManager() {
         startDate: startDate ? dayjs(startDate).format('YYYY-MM-DD') : null,
         endDate: endDate ? dayjs(endDate).format('YYYY-MM-DD') : null,
         keyword: searchkey||null,
-        sortBy: sort.sortKey,
+        sortBy: sort.sortBy,
         sortType: sort.sortType
       }
 

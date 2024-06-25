@@ -250,11 +250,11 @@ function Home() {
   useEffect(() => {
     if (startDate && endDate && selectedButton) {
       // graph api call function ====
-      // handleGraphApiCall(startDate, endDate, selectedButton, "first");
+      handleGraphApiCall(startDate, endDate, selectedButton, "first");
     }
     if (graphTwoDropdownValue && graphTwoEndDate && graphTwoStartData) {
        // graph api call function ====
-      // handleGraphApiCall(graphTwoStartData, graphTwoEndDate, graphTwoDropdownValue, "second");
+      handleGraphApiCall(graphTwoStartData, graphTwoEndDate, graphTwoDropdownValue, "second");
     }
   }, [
     startDate, endDate, selectedButton, graphTwoStartData, graphTwoEndDate, graphTwoDropdownValue,
