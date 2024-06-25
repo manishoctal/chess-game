@@ -4,7 +4,6 @@ import helpers from 'utils/helpers';
 function SearchableDropdown({ searchTerm, setSearchTerm, setFilteredItems,placeholder, setDropdownVisible,filterData, dropdownVisible, filteredItems, setIsSelected,setFilterData }) {
 //  option click function start
     const handleItemClick = (item) => {
-        console.log('item',item)
         setSearchTerm(`${item?.name}`);
         setFilteredItems([]);
         setDropdownVisible(false);
@@ -80,13 +79,13 @@ function SearchableDropdown({ searchTerm, setSearchTerm, setFilteredItems,placeh
                     className="block w-full p-2 outline-none text-sm text-gray-900 2xl:min-w-[250px] xl:min-w-[300px] rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 2xl:min-w-[350px] xl:min-w-[300px]  2xl:min-w-[250px] xl:min-w-[300px]"
                 />
                 {dropdownVisible && (
-                    <ul className="border border-t-0 p-2 absolute bg-white w-full z-10 max-h-40 overflow-auto">
+                    <ul className="border border-t-0 absolute bg-white w-full z-10 max-h-80 overflow-auto">
                         {filteredItems?.length > 0 ? (
                             filteredItems?.map((item, index) => (
                                 <li key={index} className={`p-2 cursor-pointer hover:bg-gray-200 ${highlightedIndex === index ? 'highlighted bg-gray-300' : ''}`}
-                                 onClick={() => {handleItemClick(item)}}><small>{item?.name} ({item?.email + ',' + item?.mobile})</small></li> ))
+                                 onClick={() => {handleItemClick(item)}} ><small>{item?.name} ({item?.email + ',' + item?.mobile})</small></li> ))
                         ) : (
-                            <li className="p-1 text-gray-500"><small>No results found</small></li>
+                            <li className="p-2 text-gray-500 px-2"><small>No results found</small></li>
                         )}
                     </ul>
                 )}
