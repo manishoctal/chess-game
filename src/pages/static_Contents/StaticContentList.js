@@ -4,8 +4,8 @@ import dayjs from 'dayjs'
 import { useContext, useEffect } from 'react'
 import { isEmpty } from 'lodash'
 import AuthContext from 'context/AuthContext'
-import { BsArrowUpShort } from 'react-icons/bs'
 import { Link, NavLink } from 'react-router-dom'
+import OStaticTableHead from '../../components/reusable/OTableHead'
 
 const StaticContentList = ({
   countryList,
@@ -32,43 +32,9 @@ const StaticContentList = ({
                 <th scope='col' className='py-3 px-6'>
                   {t('S.NO')}
                 </th>
-                <th scope='col' className='py-3 px-6'>
-                  {t('Title')}
-                </th>
-                <th
-                  scope='col'
-                  className='py-3 px-6 cursor-pointer'
-                  onClick={() => {
-                    if (
-                      sort.sortBy === 'createdAt' &&
-                      sort.sortType === 'asc'
-                    ) {
-                      setSort({
-                        sortBy: 'createdAt',
-                        sortType: 'desc'
-                      })
-                    } else {
-                      setSort({
-                        sortBy: 'createdAt',
-                        sortType: 'asc'
-                      })
-                    }
-                  }}
-                >
-                  <div className='flex justify-start'>
-                    <span>{t('O_UPDATED_AT')}</span>
-                    <span>
-                      {sort.sortBy === 'createdAt' &&
-                        sort.sortType === 'asc' && (
-                          <BsArrowUpShort className='w-4 h-4' />
-                        )}
-                      {sort.sortBy === 'createdAt' &&
-                        sort.sortType === 'desc' && (
-                          <BsArrowUpShort className='w-4 h-4 rotate-180' />
-                        )}
-                    </span>
-                  </div>
-                </th>
+
+                <OStaticTableHead sort={sort} setSort={setSort} name='Title' fieldName='title' />
+                <OStaticTableHead sort={sort} setSort={setSort} name='O_UPDATED_AT' fieldName='updatedAt' />
                 {(manager?.add || user?.role === 'admin') && (
                   <th scope='col' className='py-3 px-6 text-center  '>
                     {t('O_ACTION')}

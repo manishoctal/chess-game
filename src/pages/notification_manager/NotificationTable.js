@@ -1,8 +1,7 @@
 import { isEmpty, startCase } from "lodash";
 import { useTranslation } from "react-i18next";
-import { BsArrowUpShort } from "react-icons/bs";
 import helpers from "utils/helpers";
-
+import ONotificationTableHead from '../../components/reusable/OTableHead'
 const NotificationTable = ({
   notifications,
   paginationObj,
@@ -21,49 +20,12 @@ const NotificationTable = ({
               <th scope="col" className="py-3 px-6">
                 {t("S.NO")}
               </th>
-              <th scope="col" className="py-3 px-6">
-                {t("O_TITLE")}
-              </th>
-
-              <th scope="col" className="py-3 px-6">
-                {t("O_MESSAGE")}
-              </th>
-
+              <ONotificationTableHead sort={sort} setSort={setSort} name='O_TITLE' fieldName='title' classTd={'justify-center'} />
+              <ONotificationTableHead sort={sort} setSort={setSort} name='O_MESSAGE' fieldName='description' classTd={'justify-center'}  />
               <th scope="col" className="py-3 px-6">
                 {t("TYPE")}
               </th>
-
-              <th
-                scope="col"
-                className="py-3 px-6 cursor-pointer"
-                onClick={() => {
-                  if (sort.sortKey === "createdAt" && sort.sortType === "asc") {
-                    setSort({
-                      sortKey: "createdAt",
-                      sortType: "desc",
-                    });
-                  } else {
-                    setSort({
-                      sortKey: "createdAt",
-                      sortType: "asc",
-                    });
-                  }
-                }}
-              >
-                <div className="flex justify-end">
-                  <span>{t("O_CREATED_AT")}</span>
-                  <span>
-                    {sort.sortKey === "createdAt" &&
-                      sort.sortType === "asc" && (
-                        <BsArrowUpShort className="w-4 h-4" />
-                      )}
-                    {sort.sortKey === "createdAt" &&
-                      sort.sortType === "desc" && (
-                        <BsArrowUpShort className="w-4 h-4 rotate-180" />
-                      )}
-                  </span>
-                </div>
-              </th>
+              <ONotificationTableHead sort={sort} setSort={setSort} name='O_CREATED_AT' fieldName='createdAt' classTd={'justify-center'} />
             </tr>
           </thead>
           <tbody>
@@ -79,18 +41,17 @@ const NotificationTable = ({
                   >
                     {i + 1 + pageSize * (paginationObj?.page - 1)}
                   </th>
-                  <td className="py-4 px-6 border-r">
+                  <td className="py-4 px-6 border-r text-center">
                     {startCase(item?.title) || "N/A"}
                   </td>
 
-                  <td className="py-4 px-6 border-r">
-                    {item?.description || "N/A"}{" "}
+                  <td className="py-4 px-6 border-r text-center">
+                    {item?.description || "N/A"}
                   </td>
-
-                  <td className="py-4 px-6 border-r">
+                  <td className="py-4 px-6 border-r ">
                     {startCase(item?.sendTo) || "N/A"}
                   </td>
-                  <td className="py-4 px-6 border-r text-right">
+                  <td className="py-4 px-6 border-r text-center">
                     {helpers.getDateAndTime(item?.createdAt)}
                   </td>
                 </tr>

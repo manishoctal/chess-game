@@ -62,7 +62,7 @@ const Table = ({
         <table className="w-full text-xs text-left text-[#A5A5A5] dark:text-gray-400 ">
           <thead className="text-xs text-gray-900 border border-[#E1E6EE]  bg-[#E1E6EE] dark:bg-gray-700 dark:text-gray-400">
             <tr>
-              <th scope="col" className="py-3 px-6">
+              <th scope="col" className="py-3 px-6 text-center">
                 {t("S.NO")}
               </th>
               <OFaqTableHead sort={sort} setSort={setSort} name='FAQS_TITLE' fieldName='title' classTd={'justify-center'} />
@@ -84,11 +84,11 @@ const Table = ({
               >
                 <th
                   scope="row"
-                  className="py-2 px-4 border-r dark:border-[#ffffff38] font-medium text-gray-900  dark:text-white"
+                  className="py-2 px-4 border-r dark:border-[#ffffff38] font-medium text-gray-900  dark:text-white text-center"
                 >
                   {i + 1 + pageSize * (paginationObj?.page - 1)}
-                </th>
-                <td className="py-2 px-4 border-r dark:border-[#ffffff38]">
+                </th> 
+                <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-center">
                   {startCase(item?.title) || "N/A"}
                 </td>
                 <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-center">
@@ -130,7 +130,7 @@ const Table = ({
                           className="px-2 py-2  hover:text-gradientTo"
                         >
                           <button title={t("FAQS_EDIT_FAQS")}>
-                            {" "}
+                           
                             <AiFillEye className="w-5 h-5 text-slate-600" />
                           </button>
                         </li>
@@ -141,7 +141,7 @@ const Table = ({
                           className="px-2 py-2  hover:text-gradientTo"
                         >
                           <button title={t("FAQS_EDIT_FAQS")}>
-                            {" "}
+                            
                             <AiFillEdit className="w-5 h-5 text-slate-600" />
                           </button>
                         </li>

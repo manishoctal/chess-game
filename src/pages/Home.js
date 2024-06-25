@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import "chartjs-adapter-date-fns";
 import { BiMoneyWithdraw } from "react-icons/bi";
-import { FaUserTie, FaRegQuestionCircle,FaAddressCard  } from "react-icons/fa";
+import { FaUserTie, FaRegQuestionCircle, FaAddressCard } from "react-icons/fa";
 import { AiOutlineStock } from "react-icons/ai";
 import { GiProfit } from "react-icons/gi";
 
@@ -249,23 +249,15 @@ function Home() {
 
   useEffect(() => {
     if (startDate && endDate && selectedButton) {
+      // graph api call function ====
       handleGraphApiCall(startDate, endDate, selectedButton, "first");
     }
     if (graphTwoDropdownValue && graphTwoEndDate && graphTwoStartData) {
-      handleGraphApiCall(
-        graphTwoStartData,
-        graphTwoEndDate,
-        graphTwoDropdownValue,
-        "second"
-      );
+       // graph api call function ====
+      handleGraphApiCall(graphTwoStartData, graphTwoEndDate, graphTwoDropdownValue, "second");
     }
   }, [
-    startDate,
-    endDate,
-    selectedButton,
-    graphTwoStartData,
-    graphTwoEndDate,
-    graphTwoDropdownValue,
+    startDate, endDate, selectedButton, graphTwoStartData, graphTwoEndDate, graphTwoDropdownValue,
   ]);
 
   const handleActiveForFirst = (start, end) => {
@@ -325,7 +317,7 @@ function Home() {
         ),
         type: dropValue,
       };
-      const path = pathObj.getEarningManagerGraph;
+      const path = '';
       const result = await apiGet(path, payload);
       if (result?.data?.success) {
         const newCategories = result?.data?.results?.xAxis;
@@ -447,7 +439,7 @@ function Home() {
               </span>
             </h3>
             <span className="text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-30px] p-3 border z-10 bg-white">
-              <FaAddressCard size={30}/>
+              <FaAddressCard size={30} />
             </span>
           </div>
           <div className="text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border">
@@ -459,7 +451,7 @@ function Home() {
               </span>
             </h3>
             <span className="text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-30px] p-3 border z-10 bg-white">
-              <AiOutlineStock size={30}/>
+              <AiOutlineStock size={30} />
             </span>
           </div>
 
@@ -472,7 +464,7 @@ function Home() {
               </span>
             </h3>
             <span className="text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-30px] p-3 border z-10 bg-white">
-             
+
               <FaRegQuestionCircle size={30} />
 
             </span>
@@ -487,7 +479,7 @@ function Home() {
               </span>
             </h3>
             <span className="text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-30px] p-3 border z-10 bg-white">
-            
+
               <GiProfit size={30} />
             </span>
           </div>
