@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { apiPut } from "../../utils/apiFetch";
 import apiPath from "../../utils/apiPath";
-import { isEmpty } from "lodash";
+import { isEmpty, startCase } from "lodash";
 import useToastContext from "hooks/useToastContext";
 import { AiFillEdit, AiFillEye, AiFillWallet } from "react-icons/ai";
 import { useTranslation } from "react-i18next";
@@ -88,7 +88,7 @@ const Table = ({
     );
   };
   const getDisplayName = (userDetail) => {
-    return `${userDetail?.firstName} ${userDetail?.lastName ?? ""}`;
+    return startCase(userDetail?.fullName)||'N/A';
   };
 
   const getDisplayUserId = (userDetail) => {
