@@ -34,18 +34,14 @@ const BannerTable = ({
               <th scope="col" className="py-3 px-6">
                 {t("S.NO")}
               </th>
-
-              <OBannerTableHead sort={sort} setSort={setSort} name='BANNER_ID' fieldName='bannerId' classTd={'justify-center'}/>
-           
+              <OBannerTableHead sort={sort} setSort={setSort} name='BANNER_ID' fieldName='bannerId' classTd={'justify-center'} />
               <th scope="col" className="py-3 px-6 flex justify-center">
                 {t("BANNER_IMAGE")}
               </th>
-              <OBannerTableHead sort={sort} setSort={setSort} name='O_CREATED_AT' fieldName='createdAt' classTd={'justify-center'}/>
-              <OBannerTableHead sort={sort} setSort={setSort} name='O_UPDATED_AT' fieldName='updatedAt' classTd={'justify-center'}/>
+              <OBannerTableHead sort={sort} setSort={setSort} name='O_CREATED_AT' fieldName='createdAt' classTd={'justify-center'} />
+              <OBannerTableHead sort={sort} setSort={setSort} name='O_UPDATED_AT' fieldName='updatedAt' classTd={'justify-center'} />
               {(manager?.add || manager?.edit || user?.role === "admin") && (
-                <th scope="col" className="py-3 px-6 text-center">
-                  {t("O_STATUS")}
-                </th>
+                  <OBannerTableHead sort={sort} setSort={setSort} name='O_STATUS' fieldName='status' classTd={'justify-center'} />
               )}
               <th scope="col" className="py-3 px-6 text-center">
                 {t("O_ACTION")}
@@ -71,7 +67,7 @@ const BannerTable = ({
 
                 <td className="py-2 px-4 border-r dark:border-[#ffffff38]  flex justify-center">
                   <ul>
-                    <li onClick={() => { editViewBanner('view', item) }} style={{cursor:'pointer'}}>
+                    <li onClick={() => { editViewBanner('view', item) }} style={{ cursor: 'pointer' }}>
                       <OImage
                         src={
                           item?.image

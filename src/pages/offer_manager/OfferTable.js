@@ -74,7 +74,7 @@ const getTableData=(details,dataClass)=>{
               <OWalletTableHead sort={sort} setSort={setSort} name='EXPIRY_DATE' fieldName='expiryDate'  classTd={'justify-center'}/>
               <OWalletTableHead sort={sort} setSort={setSort} name='O_CREATED_AT' fieldName='createdAt'  classTd={'justify-center'}/>
               <OWalletTableHead sort={sort} setSort={setSort} name='O_UPDATED_AT' fieldName='updatedAt'  classTd={'justify-center'}/>
-              <OWalletTableHead sort={sort} setSort={setSort} name='O_STATUS' fieldName='winningAmountBalance' classTd={'justify-center'} />
+              <OWalletTableHead sort={sort} setSort={setSort} name='O_STATUS' fieldName='status' classTd={'justify-center'} />
               <th scope="col" className="py-3 px-6 text-center">
                 {t("O_ACTION")}
               </th>

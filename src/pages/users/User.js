@@ -171,6 +171,7 @@ function User() {
     if (value === '') {
       setFilteredItems([]);
       setDropdownVisible(false);
+      setFilterData({...filterData, userId: ''});
     } else {
       try {
 

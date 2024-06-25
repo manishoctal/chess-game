@@ -5,8 +5,8 @@ import AuthContext from 'context/AuthContext'
 import { isEmpty } from 'lodash'
 import helper from '../../utils/helpers'
 import { Link } from 'react-router-dom'
-import { BsArrowUpShort } from 'react-icons/bs'
 import { AiFillEdit } from 'react-icons/ai'
+import OEmailTableHead from '../../components/reusable/OTableHead'
 
 const Table = ({
   emailTemplate,
@@ -26,39 +26,12 @@ const Table = ({
           <thead className='text-xs text-gray-900 border border-[#E1E6EE] bg-[#E1E6EE] dark:bg-gray-700 dark:text-gray-400 dark:border-[#ffffff38]'>
             <tr>
               <th scope='col' className='py-3 px-6'> {t('S.NO')}</th>
-              <th scope='col' className='py-3 px-6'> {t('EMAIL_TEMPLATE_NAME')}</th>
-              <th scope='col' className='py-3 px-6'> {t('O_SUBJECT')}</th>
-              <th scope='col' className='py-3 px-6 cursor-pointer' onClick={() => {
-                  if (sort.sortBy === 'createdAt' && sort.sortType === 'asc') {
-                    setSort({
-                      sortBy: 'createdAt',
-                      sortType: 'desc'
-                    })
-                  } else {
-                    setSort({
-                      sortBy: 'createdAt',
-                      sortType: 'asc'
-                    })
-                  }
-                }}
-              >
-                <div className='flex justify-start'>
-                  <span>{t('O_UPDATED_AT')}</span>
-                  <span>
-                    {sort.sortBy === 'createdAt' && sort.sortType === 'asc' && (
-                      <BsArrowUpShort className='w-4 h-4' />
-                    )}
-                    {sort.sortBy === 'createdAt' &&
-                      sort.sortType === 'desc' && (
-                        <BsArrowUpShort className='w-4 h-4 rotate-180' />
-                      )}
-                  </span>
-                </div>
-              </th>
-
+              <OEmailTableHead sort={sort} setSort={setSort} name='EMAIL_TEMPLATE_NAME' fieldName='title' />
+              <OEmailTableHead sort={sort} setSort={setSort} name='O_SUBJECT' fieldName='subject' />
+              <OEmailTableHead sort={sort} setSort={setSort} name='O_UPDATED_AT' fieldName='updatedAt' />
               {(manager?.add || user?.role === 'admin') && (
                 <>
-                  <th scope='col' className='py-3 px-6'>{t('O_STATUS')}</th>
+                  <OEmailTableHead sort={sort} setSort={setSort} name='O_STATUS' fieldName='status' />
                   <th scope='col' className='py-3 px-6 text-center'>{t('O_ACTION')}</th>
                 </>
               )}
@@ -91,9 +64,8 @@ const Table = ({
                     <td className='py-2 px-4 border-r dark:border-[#ffffff38] text-center'>
                       <label
                         className='inline-flex relative items-center cursor-pointer'
-                        title={`${
-                          item?.status === 'active' ? 'Active' : 'Inactive'
-                        }`}
+                        title={`${item?.status === 'active' ? 'Active' : 'Inactive'
+                          }`}
                       >
                         <input
                           type='checkbox'
@@ -101,8 +73,7 @@ const Table = ({
                           checked={item?.status === 'active'}
                           onChange={e =>
                             helper.alertFunction(
-                              `${t('ARE_YOU_SURE_YOU_WANT_TO')} ${
-                                e.target.checked ? 'active' : 'inactive'
+                              `${t('ARE_YOU_SURE_YOU_WANT_TO')} ${e.target.checked ? 'active' : 'inactive'
                               } '${item.title}'?`,
                               item,
                               handelStatusChange
@@ -121,7 +92,7 @@ const Table = ({
                               state={{ item, type: 'edit' }}
                             >
                               <div className=''>
-                              <AiFillEdit className="cursor-pointer w-5 h-5 text-slate-600" />
+                                <AiFillEdit className="cursor-pointer w-5 h-5 text-slate-600" />
                               </div>
                             </Link>
                           </td>

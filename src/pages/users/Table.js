@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { apiPut } from "../../utils/apiFetch";
 import apiPath from "../../utils/apiPath";
-import { isEmpty } from "lodash";
+import { isEmpty, startCase } from "lodash";
 import useToastContext from "hooks/useToastContext";
 import { AiFillEdit, AiFillEye, AiFillWallet } from "react-icons/ai";
 import { useTranslation } from "react-i18next";
@@ -88,7 +88,7 @@ const Table = ({
     );
   };
   const getDisplayName = (userDetail) => {
-    return `${userDetail?.firstName} ${userDetail?.lastName ?? ""}`;
+    return startCase(userDetail?.fullName)||'N/A';
   };
 
   const getDisplayUserId = (userDetail) => {
@@ -238,7 +238,7 @@ const onViewWalletBalance=(e)=>{
                 <th scope="col" className="py-3 px-6">
                   <div className="text-left">{t("COUNTRY_CODE")}</div>
                 </th>
-                <OUserTableHead sort={sort} setSort={setSort} name='O_MOBILE_NUMBER' fieldName='mobile'/>
+                <OUserTableHead sort={sort} setSort={setSort} name='O_MOBILE' fieldName='mobile'/>
                 <OUserTableHead sort={sort} setSort={setSort} name='INVITE_CODE' fieldName='inviteCode'/>
                 <OUserTableHead sort={sort} setSort={setSort} name='JOINED_DATE' fieldName='createdAt'/>
                 <th scope="col" className="py-3 px-6 text-left">
