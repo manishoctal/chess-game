@@ -10,6 +10,7 @@ import { useTranslation } from 'react-i18next'
 import NotificationAdd from './NotificationAdd'
 import PageSizeList from 'components/PageSizeList'
 import helpers from 'utils/helpers'
+import OSearch from 'components/reusable/OSearch'
 
 function NotificationManager() {
   const { t } = useTranslation()
@@ -21,6 +22,10 @@ function NotificationManager() {
     pageCount: 1,
     pageRangeDisplayed: 10
   })
+
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('')
+  const [isInitialized, setIsInitialized] = useState(false)
+  const [searchTerm, setSearchTerm] = useState('')
   const [categoryAdd, setCategoryAdd] = useState(false)
   const [notifications, setAllNotifications] = useState([])
   const [page, setPage] = useState(1)
@@ -49,7 +54,7 @@ function NotificationManager() {
         pageSize,
         startDate: startDate ? dayjs(startDate).format('YYYY-MM-DD') : null,
         endDate: endDate ? dayjs(endDate).format('YYYY-MM-DD') : null,
-        keyword: searchkey,
+        keyword: searchkey||null,
         sortBy: sort.sortKey,
         sortType: sort.sortType
       }
@@ -89,9 +94,36 @@ function NotificationManager() {
   }
 
 
+
+  // debounce search start
+  useEffect(() => {
+    if (!isInitialized) {
+      setIsInitialized(true)
+    } else if (searchTerm || !filterData?.isReset) {
+      setFilterData({
+        ...filterData,
+        isReset: false,
+        searchkey: debouncedSearchTerm || '',
+        isFilter: !!debouncedSearchTerm
+      })
+      setPage(1)
+    }
+  }, [debouncedSearchTerm])
+
   const handleCategory = () => {
     setCategoryAdd(!categoryAdd)
   }
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      setDebouncedSearchTerm(searchTerm)
+    }, 500)
+    return () => {
+      clearTimeout(timeoutId)
+    }
+  }, [searchTerm])
+
+  // debounce search end
 
 
   const handleReset = () => {
@@ -103,6 +135,7 @@ function NotificationManager() {
       isReset: true,
       isFilter: false
     })
+    setSearchTerm('')
     setPage(1)
   }
 
@@ -129,6 +162,9 @@ function NotificationManager() {
             <form className='border-b border-b-[#E3E3E3] 2xl:flex gap-2 px-4 py-3'>
               <div className='col-span-2 flex flex-wrap  items-center'>
                 <div className='flex items-center lg:pt-0 pt-3 flex-wrap justify-center mb-2 2xl:mb-0'>
+                  <div className='relative flex items-center mb-3'>
+                    <OSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm} placeholder={t('SEARCH_BY_TITLE')} />
+                  </div>
                   <ODateRangePicker
                     handleDateChange={handleDateChange}
                     isReset={filterData?.isReset}

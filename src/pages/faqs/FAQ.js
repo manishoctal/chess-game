@@ -9,6 +9,7 @@ import AuthContext from 'context/AuthContext'
 import PageSizeList from 'components/PageSizeList'
 import ODateRangePicker from 'components/shared/datePicker/ODateRangePicker'
 import helpers from 'utils/helpers'
+import OSearch from 'components/reusable/OSearch'
 function Faq() {
   const { t } = useTranslation()
   const [paginationObj, setPaginationObj] = useState({
@@ -24,12 +25,14 @@ function Faq() {
   const [page, setPage] = useState(1)
   const [pageSize, setPageSize] = useState(10)
   const [item, setItem] = useState('')
-  const [isDelete,setIsDelete] = useState(false)
+  const [isDelete, setIsDelete] = useState(false)
   const [sort, setSort] = useState({
     sortBy: 'createdAt',
     sortType: 'desc'
   })
-
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('')
+  const [isInitialized, setIsInitialized] = useState(false)
+  const [searchTerm, setSearchTerm] = useState('')
   const [filterData, setFilterData] = useState({
     startDate: "",
     endDate: "",
@@ -38,11 +41,11 @@ function Faq() {
     isFilter: false,
   });
 
-// get all faq function start
+  // get all faq function start
   const getAllFAQ = async (data) => {
     try {
 
-      if ( data?.deletePage &&  FAQs?.length <= 1) {
+      if (data?.deletePage && FAQs?.length <= 1) {
         setPage(page - 1);
         setIsDelete(true);
       } else {
@@ -52,13 +55,14 @@ function Faq() {
         page,
         pageSize: pageSize,
         sortKey: sort.sortBy,
+        keyword:filterData?.searchKey||null,
         sortType: sort.sortType,
         status: filterData?.status || null,
         startDate: helpers.getFormattedDate(filterData?.startDate),
         endDate: helpers.getFormattedDate(filterData?.endDate)
       }
 
-  
+
       const path = apiPath.getFAQs
       const result = await apiGet(path, payload)
       if (result?.status === 200) {
@@ -79,7 +83,7 @@ function Faq() {
       }
     }
   }
-// get all faq function end
+  // get all faq function end
 
   const dynamicPage = e => {
     setPage(1)
@@ -124,7 +128,27 @@ function Faq() {
       isReset: true,
       isFilter: false,
     });
+    setSearchTerm('')
   };
+
+
+
+
+  // debounce search start
+  useEffect(() => {
+    if (!isInitialized) {
+      setIsInitialized(true)
+    } else if (searchTerm || !filterData?.isReset) {
+      setFilterData({
+        ...filterData,
+        isReset: false,
+        searchKey: debouncedSearchTerm || '',
+        isFilter: !!debouncedSearchTerm
+      })
+      setPage(1)
+    }
+  }, [debouncedSearchTerm])
+
   const statusPage = (e) => {
     setFilterData({
       ...filterData,
@@ -134,6 +158,18 @@ function Faq() {
     });
     setPage(1);
   };
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      setDebouncedSearchTerm(searchTerm)
+    }, 500)
+    return () => {
+      clearTimeout(timeoutId)
+    }
+  }, [searchTerm])
+
+  // debounce search end
+
 
   return (
     <div>
@@ -145,6 +181,9 @@ function Faq() {
                 <div className='flex mt-2 justify-between'>
                   <div className="flex flex-wrap items-center mt-3">
                     <div className="flex items-center lg:pt-0 pt-3 justify-center">
+                      <div className='relative flex items-center mb-3'>
+                        <OSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm} placeholder={t('SEARCH_BY_TITLE')} />
+                      </div>
                       <ODateRangePicker handleDateChange={handleDashboardDateChange} isReset={filterData?.isReset} setIsReset={setFilterData} />
                       <div className="flex items-center mb-3 ml-3">
                         <select
@@ -179,7 +218,7 @@ function Faq() {
                       <button
                         title={t('ADD_FAQS')}
                         className='bg-gradientTo flex text-sm px-8 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue whitespace-nowrap'
-                        onClick={() => {  setItem(''); setEditShowModal(true);setEditView('add')}}
+                        onClick={() => { setItem(''); setEditShowModal(true); setEditView('add') }}
                       >
                         + {t('ADD_FAQS')}
                       </button>
