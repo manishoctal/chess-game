@@ -8,8 +8,8 @@ import AuthContext from 'context/AuthContext'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { Buffer } from 'buffer'
-import OSearch from 'components/reusable/OSearch'
-import ODateRangePicker from 'components/shared/datePicker/ODateRangePicker'
+import OSearchStatic from 'components/reusable/OSearch'
+import ODateRangePickerStatic from 'components/shared/datePicker/ODateRangePicker'
 import helpers from 'utils/helpers'
 import useToastContext from 'hooks/useToastContext'
 
@@ -133,7 +133,7 @@ const StaticContent = () => {
   // get all static content end
 
 
-  const handleReset = () => {
+  const handleResetAll = () => {
     setFilterData({
       status: '',
       startDate: '',
@@ -209,15 +209,15 @@ const handelStatusChangeStatic = async details => {
   return (
     <div className='bg-[#F9F9F9] dark:bg-slate-900'>
       <div className='px-3 py-4'>
-        <div className='bg-white border border-[#E9EDF9] rounded-lg dark:bg-slate-800 dark:border-[#ffffff38]'>
+        <div className='bg-white border border-[#E9EDF9]  dark:border-[#ffffff38] rounded-lg dark:bg-slate-800'>
           <form className='border-b border-b-[#E3E3E3] 2xl:flex gap-2 px-4 py-3'>
             <div className='col-span-2 flex flex-wrap  items-center mb-2 2xl:mb-0'>
               <div className='flex items-center lg:pt-0 pt-3 flex-wrap '>
                 <div className='relative flex items-center mb-3'>
-                  <OSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm} placeholder={t('SEARCH_BY_TITLE')} />
+                  <OSearchStatic searchTerm={searchTerm} setSearchTerm={setSearchTerm} placeholder={t('SEARCH_BY_TITLE')} />
 
                 </div>
-                <ODateRangePicker
+                <ODateRangePickerStatic
                     handleDateChange={handleDateChange}
                     isReset={filterData?.isReset}
                     setIsReset={setFilterData}
@@ -242,13 +242,12 @@ const handelStatusChangeStatic = async details => {
 
                   <button
                     type='button'
-                    onClick={handleReset}
+                    onClick={handleResetAll}
                     title={t('O_RESET')}
                     className='bg-gradientTo text-sm px-8 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2'
                   >
                     {t('O_RESET')}
                   </button>
-
               </div>
             </div>
 
