@@ -91,6 +91,8 @@ const ChangePassword = () => {
                     name="oldPassword"
                     id="oldPassword"
                     autoFocus
+                    placeholder={t('ENTER_OLD_PASSWORD')}
+
                     autocomplete="new-password"
                     inputLabel={
                       <>
@@ -137,6 +139,7 @@ const ChangePassword = () => {
                     type={icon2 ? "password" : "text"}
                     name="newPassword"
                     id="newPassword"
+                    placeholder={t('ENTER_NEW_PASSWORD')}
                     errors={errors}
                     inputLabel={
                       <>
@@ -177,6 +180,8 @@ const ChangePassword = () => {
                     type={icon3 ? "password" : "text"}
                     name="confirm_password"
                     id="confirm_password"
+                    placeholder={t('ENTER_CONFIRM_PASSWORD')}
+
                     errors={errors}
                     inputLabel={
                       <>

@@ -665,7 +665,19 @@
   "VIEW_OFFER_MANAGER":"View Offer Manager",
   "MAX_LIMIT_IS_5_CHARACTERS":"Max limit is 5 characters.",
   "EDIT_OFFER":"Edit Offer",
-  "USED_DATE":"Used Date"
+  "USED_DATE":"Used Date",
+  "ENTER_CONFIRM_PASSWORD":"Enter Confirm Password",
+  "ENTER_NEW_PASSWORD":"Enter New Password",
+  "ENTER_OLD_PASSWORD":"Enter Old Password",
+  "ENTER_LAST_NAME":"Enter Last Name",
+  "ENTER_EMAIL_ID":"Enter Email ID",
+  "ENTER_FIRST_NAME":"Enter First Name",
+  "ENTER_ADDRESS":"Enter Address",
+  "ENTER_TITLE":"Enter Title",
+  "ROLE_ASSIGNED":"Role Assigned"
+
+
+
 
 
 

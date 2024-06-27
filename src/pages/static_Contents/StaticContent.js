@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { apiGet } from '../../utils/apiFetch'
+import { apiGet, apiPut } from '../../utils/apiFetch'
 import apiPath from '../../utils/apiPath'
 import dayjs from 'dayjs'
 import StaticContentView from './StaticContentView'
@@ -9,8 +9,12 @@ import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { Buffer } from 'buffer'
 import OSearch from 'components/reusable/OSearch'
+import ODateRangePicker from 'components/shared/datePicker/ODateRangePicker'
+import helpers from 'utils/helpers'
+import useToastContext from 'hooks/useToastContext'
 
 const StaticContent = () => {
+  const notification = useToastContext()
   const { user, updatePageName } = useContext(AuthContext)
   const navigate = useNavigate()
   const ternaryCondition = (condition, first, second) => {
@@ -68,7 +72,27 @@ const StaticContent = () => {
   }
   // view content function end
 
+
+  const staticStatusPage = e => {
+    setPage(1)
+    setFilterData({ ...filterData, status: e.target.value, isFilter: true })
+  }
   // get all static content start
+
+
+  const handleDateChange = (start, end) => {
+    setPage(1)
+    setFilterData({
+      ...filterData,
+      startDate: start,
+      endDate: end,
+      isFilter: true
+    })
+  }
+
+
+ 
+
 
   const getStaticContent = async () => {
     try {
@@ -89,7 +113,7 @@ const StaticContent = () => {
           null
         ),
         keyword: searchkey?.trim(),
-        sortBy: sort.sortBy,
+        sortKey: sort.sortBy,
         sortType: sort.sortType
       }
       const path = apiPath.getStaticContent
@@ -107,6 +131,21 @@ const StaticContent = () => {
   }, [page, filterData, sort])
 
   // get all static content end
+
+
+  const handleReset = () => {
+    setFilterData({
+      status: '',
+      startDate: '',
+      searchKey: '',
+      endDate: '',
+      isReset: true,
+      isFilter: false
+    })
+    setPage(1)
+    setSearchTerm('')
+    
+  }
 
   // debounce search function start
 
@@ -143,6 +182,30 @@ const StaticContent = () => {
     return condition && text
   }
 
+
+
+//  status change start
+
+
+const handelStatusChangeStatic = async details => {
+  try {
+    const payload = {
+      status: details?.status === 'inactive' ? 'active' : 'inactive',
+      type: 'staticContent'
+    }
+    const path = `${apiPath.changeStatus}/${details?._id}`
+    const result = await apiPut(path, payload)
+    if (result?.status === 200) {
+      notification.success(result?.data?.message)
+      getStaticContent()
+    }
+  } catch (error) {
+    console.error('error in get all users list==>>>>', error.message)
+  }
+}
+
+
+
   return (
     <div className='bg-[#F9F9F9] dark:bg-slate-900'>
       <div className='px-3 py-4'>
@@ -154,6 +217,37 @@ const StaticContent = () => {
                   <OSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm} placeholder={t('SEARCH_BY_TITLE')} />
 
                 </div>
+                <ODateRangePicker
+                    handleDateChange={handleDateChange}
+                    isReset={filterData?.isReset}
+                    setIsReset={setFilterData}
+                  />
+                  {helpers.andOperator((manager?.add || manager?.edit || user?.role === 'admin'), <div className='flex items-center mb-3 ml-3'>
+                    <select
+                      id='status'
+                      type=' status'
+                      name='status'
+                      className='block p-2 w-full text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer'
+                      placeholder=' '
+                      value={filterData?.status}
+                      onChange={e => staticStatusPage(e)}
+                    >
+                      <option defaultValue value=''>
+                        {t('O_ALL')}
+                      </option>
+                      <option value='active'>{t('O_ACTIVE')}</option>
+                      <option value='inactive'>{t('O_INACTIVE')}</option>
+                    </select>
+                  </div>)}
+
+                  <button
+                    type='button'
+                    onClick={handleReset}
+                    title={t('O_RESET')}
+                    className='bg-gradientTo text-sm px-8 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2'
+                  >
+                    {t('O_RESET')}
+                  </button>
 
               </div>
             </div>
@@ -167,6 +261,7 @@ const StaticContent = () => {
             handleView={handleView}
             currentItem={currentItem}
             countryView={countryView}
+            handelStatusChange= {handelStatusChangeStatic}
             setSort={setSort}
             sort={sort}
             manager={manager}

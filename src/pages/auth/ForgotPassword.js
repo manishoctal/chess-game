@@ -92,12 +92,12 @@ function ForgotPassword() {
                 to="/login"
                 className="ml-auto hover:underline text-sm font-medium dark:text-white"
               >
-                {" "}
+               
                 {t("FORGOT_PASSWORD_BACK_TO")}{" "}
                 <span className=" text-[#6236FF] hover:text-[#9D36FF]">
-                  {" "}
+                 
                   {t("FORGOT_PASSWORD_LOGIN")}{" "}
-                </span>{" "}
+                </span>
               </Link>
             </div>
           </form>

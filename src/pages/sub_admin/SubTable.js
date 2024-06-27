@@ -88,8 +88,8 @@ const SubTable = ({
                 <td className="py-2 px-4 border-r dark:border-[#ffffff38]">
                   {startCase(item?.address) || "N/A"}
                 </td>
-                {getDateTable(helpers.getDateAndTime(item?.createdAt)||'N/A')}
-                {getDateTable(helpers.getDateAndTime(item?.updatedAt)||'N/A')}
+                {getDateTable(helpers.getDateAndTime(item?.createdAt) || 'N/A')}
+                {getDateTable(helpers.getDateAndTime(item?.updatedAt) || 'N/A')}
                 {(manager?.add || manager?.edit || user?.role === "admin") && (
                   <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-center">
                     <label

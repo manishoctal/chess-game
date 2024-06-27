@@ -147,6 +147,7 @@ const NotificationAdd = ({ getAllNotifications, handleCategory }) => {
                     <OInputField
                       wrapperClassName=""
                       name="title"
+                      placeholder={t('ENTER_TITLE')}
                       inputLabel={
                         <>
                           {t("O_TITLE")}

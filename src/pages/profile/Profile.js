@@ -144,6 +144,7 @@ const Profile = () => {
                   <OInputField
                     wrapperClassName='relative z-0 mb-6 w-full group'
                     name='firstName'
+                    placeholder={t('ENTER_FIRST_NAME')}
                     inputLabel={
                       <>
                         {t('ADMIN_FIRST_NAME')}
@@ -167,6 +168,8 @@ const Profile = () => {
                   <OInputField
                     wrapperClassName='relative z-0 mb-6 w-full group'
                     name='lastName'
+                    placeholder={t('ENTER_LAST_NAME')}
+
                     inputLabel={
                       <>
                         {t('ADMIN_LAST_NAME')}
@@ -187,6 +190,8 @@ const Profile = () => {
                     wrapperClassName='relative z-0  mb-6 w-full group'
                     type='text'
                     name='email'
+                    placeholder={t('ENTER_EMAIL_ID')}
+
                     id='email'
                     value={codeValue.toLowerCase()}
                     inputLabel={

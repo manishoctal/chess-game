@@ -195,7 +195,8 @@ const SubAdd = () => {
     label,
     maxLength,
     validation,
-    disable
+    disable,
+    placeholder
   ) => (
     <OInputField
       wrapperClassName='relative z-0 mb-6 w-full group'
@@ -209,6 +210,7 @@ const SubAdd = () => {
       type='text'
       autoFocus={autoFocus}
       maxLength={maxLength}
+      placeholder={placeholder||''}
       onInput={e => preventMaxInput(e, maxLength)}
       register={register(name, validation)}
       errors={errors}
@@ -228,7 +230,9 @@ const SubAdd = () => {
                   t('O_FIRST_NAME'),
                   15,
                   formValidation['subAdminName'],
-                  item?.type === 'view'
+                  item?.type === 'view',
+                  t('ENTER_FIRST_NAME')
+
                 )}
               </div>
               <div className='px-2'>
@@ -238,7 +242,8 @@ const SubAdd = () => {
                   t('O_LAST_NAME'),
                   15,
                   formValidation['subAdminLastName'],
-                  item?.type === 'view'
+                  item?.type === 'view',
+                  t('ENTER_LAST_NAME')
                 )}
               </div>
 
@@ -249,7 +254,9 @@ const SubAdd = () => {
                   t('O_EMAIL_ID'),
                   50,
                   formValidation['email'],
-                  item?.type === 'view'
+                  (item?.type === 'view'||item?.type === 'edit'),
+                  t('ENTER_EMAIL_ID')
+
                 )}
               </div>
 
@@ -311,6 +318,8 @@ const SubAdd = () => {
                   wrapperClassName='relative z-0 mb-6 w-full group'
                   name='address'
                   inputLabel={t('ADDRESS')}
+                  placeholder={t('ENTER_ADDRESS')}
+
                   labelType={true}
                   type='textarea'
                   register={register('address', formValidation.address)}
