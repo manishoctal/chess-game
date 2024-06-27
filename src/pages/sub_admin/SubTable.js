@@ -39,7 +39,7 @@ const SubTable = ({
                 {t("S.NO")}
               </th>
               <OSubadminTableHead sort={sort} setSort={setSort} name='SUB_ADMIN_ID' fieldName='adminId' />
-              <OSubadminTableHead sort={sort} setSort={setSort} name='O_NAME' fieldName='name' />
+              <OSubadminTableHead sort={sort} setSort={setSort} name='FULL_NAME' fieldName='name' />
               <OSubadminTableHead sort={sort} setSort={setSort} name='O_EMAIL_ID' fieldName='email' />
               <th scope="col" className="py-3 px-6">
                 {t("O_COUNTRY_CODE")}
@@ -76,7 +76,7 @@ const SubTable = ({
                 <td className="py-2 px-4 border-r dark:border-[#ffffff38]">
                   {startCase(item?.firstName + " " + item?.lastName)}
                 </td>
-                <td className="py-2 px-4 border-r dark:border-[#ffffff38]">
+                <td className="py-2 px-4 border-r dark:border-[#ffffff38] font-bold text-slate-900">
                   {item?.email || "N/A"}
                 </td>
                 <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-center">
