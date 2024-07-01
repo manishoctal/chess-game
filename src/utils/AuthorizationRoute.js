@@ -13,6 +13,7 @@ function AuthorizationRoute (props) {
       return false
     }
     const localPermissions = [...user?.permission]
+
     if (user?.permission.length === 0) {
       return true
     }

@@ -20,6 +20,7 @@ function OfferManager() {
   const [isDelete] = useState(false)
   const [editView, setEditView] = useState()
   const manager = user?.permission?.find(e => e.manager === 'offer_manager') ?? {}
+
   const [subAdmin, setSubAdmin] = useState()
   const [page, setPage] = useState(1)
 
