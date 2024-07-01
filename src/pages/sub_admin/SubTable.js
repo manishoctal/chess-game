@@ -31,12 +31,10 @@ const SubTable = ({
   }
 
 
-const getRoleAssigned =(e)=>{
-  const prmissionAssigned=e?.permission
-  const viewTrueCount = prmissionAssigned?.filter(manager => manager.view)?.length;
-return viewTrueCount
-
-}
+  const getRoleAssigned = (e) => {
+    const prmissionAssigned = e?.permission
+    return prmissionAssigned?.filter(pManager => pManager.view)?.length;
+  }
 
   return (
     <div className="p-3">
