@@ -95,12 +95,6 @@ const SubAdd = () => {
       setLoader(true)
       let path = apiPath.getSubAdmin
       let result
-      const myObj = {
-        manager: 'dashboard',
-        add: true,
-        edit: true,
-        view: true
-      }
       if (item?.type === 'edit') {
         const permission = JSON.stringify([...permissionJons])
         const editSendData = {
@@ -112,7 +106,7 @@ const SubAdd = () => {
         path = apiPath.editSubAdmin + '/' + item?.item?._id
         result = await apiPut(path, editSendData)
       } else {
-        const permission = JSON.stringify([myObj, ...permissionJons])
+        const permission = JSON.stringify([...permissionJons])
         const sendData = {
           ...myData,
           permission,
@@ -142,17 +136,7 @@ const SubAdd = () => {
       updatePageName(t('VIEW_SUB_ADMIN'))
     }
   }, [])
-
-  useEffect(() => {
-    const permissionData = getValues('permission')
-    if (
-      permissionData?.length > 0 && helpers.andOperator(permissionData[0]?.manager === 'dashboard', (helpers.orOperator(item?.type === 'edit', item?.type === 'view')))
-    ) {
-      permissionData.shift()
-      setPermission(permissionData)
-    }
-  }, [])
-
+  
   const checkAll = event => {
     setPermission(current =>
       current.map(obj => {
@@ -387,7 +371,7 @@ const SubAdd = () => {
                       </td>
                       <td className='py-2 px-4 border-r dark:border-[#ffffff38] '>
                         {helpers.andOperator(
-                          data?.shownAdd,
+                          data?.shownAdd&&data?.manager!=='dashboard',
                           <input
                             type='checkbox'
                             name={data?.manager}
@@ -400,7 +384,7 @@ const SubAdd = () => {
                       </td>
                       <td className='py-2 px-4 border-r dark:border-[#ffffff38] '>
                         {helpers.andOperator(
-                          data?.shownAll,
+                          data?.shownAll&&data?.manager!=='dashboard',
                           <input
                             type='checkbox'
                             id='all'
