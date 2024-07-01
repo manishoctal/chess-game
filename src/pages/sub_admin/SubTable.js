@@ -45,9 +45,9 @@ const SubTable = ({
               <th scope="col" className="py-3 px-6">
                 {t("S.NO")}
               </th>
-              <OSubadminTableHead sort={sort} setSort={setSort} name='SUB_ADMIN_ID' fieldName='adminId' />
-              <OSubadminTableHead sort={sort} setSort={setSort} name='FULL_NAME' fieldName='name' />
-              <OSubadminTableHead sort={sort} setSort={setSort} name='O_EMAIL_ID' fieldName='email' />
+              <OSubadminTableHead sort={sort}   fieldName='adminId' setSort={setSort} name='SUB_ADMIN_ID' />
+              <OSubadminTableHead  name='FULL_NAME' fieldName='name' sort={sort} setSort={setSort} />
+              <OSubadminTableHead name='O_EMAIL_ID' sort={sort} setSort={setSort}  fieldName='email' />
               <th scope="col" className="py-3 px-6">
                 {t("O_COUNTRY_CODE")}
               </th>
@@ -57,7 +57,7 @@ const SubTable = ({
                 {t("ROLE_ASSIGNED")}
               </th>
               <OSubadminTableHead sort={sort} setSort={setSort} name='O_CREATED_AT' fieldName='createdAt' />
-              <OSubadminTableHead sort={sort} setSort={setSort} name='O_UPDATED_AT' fieldName='updatedAt' />
+              <OSubadminTableHead sort={sort} name='O_UPDATED_AT' setSort={setSort}  fieldName='updatedAt' />
               {(manager?.add || manager?.edit || user?.role === "admin") && (
                 <OSubadminTableHead sort={sort} setSort={setSort} name='O_STATUS' fieldName='status' />
               )}
