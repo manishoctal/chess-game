@@ -29,6 +29,15 @@ const SubTable = ({
       {dateData || 'N/A'}
     </td>
   }
+
+
+const getRoleAssigned =(e)=>{
+  const prmissionAssigned=e?.permission
+  const viewTrueCount = prmissionAssigned?.filter(manager => manager.view)?.length;
+return viewTrueCount
+
+}
+
   return (
     <div className="p-3">
       <div className="overflow-x-auto relative rounded-lg border">
@@ -46,6 +55,9 @@ const SubTable = ({
               </th>
               <OSubadminTableHead sort={sort} setSort={setSort} name='O_MOBILE' fieldName='mobile' />
               <OSubadminTableHead sort={sort} setSort={setSort} name='ADDRESS' fieldName='address' />
+              <th scope="col" className="py-3 px-6 text-center">
+                {t("ROLE_ASSIGNED")}
+              </th>
               <OSubadminTableHead sort={sort} setSort={setSort} name='O_CREATED_AT' fieldName='createdAt' />
               <OSubadminTableHead sort={sort} setSort={setSort} name='O_UPDATED_AT' fieldName='updatedAt' />
               {(manager?.add || manager?.edit || user?.role === "admin") && (
@@ -88,6 +100,11 @@ const SubTable = ({
                 <td className="py-2 px-4 border-r dark:border-[#ffffff38]">
                   {startCase(item?.address) || "N/A"}
                 </td>
+
+                <td className="py-2 px-4 border-r dark:border-[#ffffff38] w-10 font-bold text-slate-600 text-center">
+                  {getRoleAssigned(item)}
+                </td>
+
                 {getDateTable(helpers.getDateAndTime(item?.createdAt) || 'N/A')}
                 {getDateTable(helpers.getDateAndTime(item?.updatedAt) || 'N/A')}
                 {(manager?.add || manager?.edit || user?.role === "admin") && (

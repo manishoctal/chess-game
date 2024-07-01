@@ -11,6 +11,7 @@ import OTextArea from "components/reusable/OTextArea";
 import DynamicLabel from "utils/DynamicLabel";
 import Select from "react-select";
 import ErrorMessage from "components/ErrorMessage";
+import helpers from "utils/helpers";
 const NotificationAdd = ({ getAllNotifications, handleCategory }) => {
   const [loading, setLoading] = useState(false);
   const [notificationUserError, setNotificationUserError] = useState(false);
@@ -54,7 +55,7 @@ const NotificationAdd = ({ getAllNotifications, handleCategory }) => {
       const obj = {
         ...data,
         sendTo: availableFor,
-        user:availableFor!=='all'?selectedUsers?.value:null
+        user:helpers.ternaryCondition(availableFor!=='all',selectedUsers?.value,null)
       };
 
       const res = await apiPost(apiPath.notifications, { ...obj });
