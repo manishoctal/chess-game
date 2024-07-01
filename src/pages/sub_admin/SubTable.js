@@ -96,11 +96,11 @@ const SubTable = ({
                 <td className="py-2 px-4 border-r dark:border-[#ffffff38]">
                   {startCase(item?.firstName + " " + item?.lastName)}
                 </td>
-                <td className="py-2 px-3 border-r dark:border-[#ffffff38] text-center font-bold text-slate-900">
-                  <span>
-                    {item?.email?.length > 10 ? `${item?.email?.substring(0, 10)}...` : item?.email?.substring(0, 10) || "N/A"}
+                <td className="py-2 px-3 border-r dark:border-[#ffffff38] text-center">
+                  <span className="font-bold text-slate-900">
+                    {helpers.ternaryCondition(item?.email?.length > 10 , `${item?.email?.substring(0, 10)}...` , item?.email?.substring(0, 10) || "N/A")}
                     {item?.email?.length > 10 && (
-                      <button onClick={() => handleShowMoreClick(item)} className="text-[11px] text-slate-600 mx-1 cursor-pointer">{t('VIEW_MORE')}</button>
+                      <button onClick={() => handleShowMoreClick(item)} className="text-[11px] mx-1 cursor-pointer">{t('VIEW_MORE')}</button>
                     )}
                   </span>
                   {showMore && item?._id === showId?._id && (
@@ -110,7 +110,7 @@ const SubTable = ({
                         setShowMore(false);
                       }}
                       type="O_EMAIL"
-                      item={item?._id === showId?._id && showId?.email}
+                      item={helpers.andOperator(item?._id === showId?._id,showId?.email)}
                     />
                   )}
                 </td>
