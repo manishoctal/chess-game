@@ -21,10 +21,8 @@ const NotificationTable = ({
                 {t("S.NO")}
               </th>
               <ONotificationTableHead sort={sort} setSort={setSort} name='O_TITLE' fieldName='title' classTd={'justify-center'} />
-              <ONotificationTableHead sort={sort} setSort={setSort} name='O_MESSAGE' fieldName='description' classTd={'justify-center'}  />
-              <th scope="col" className="py-3 px-6">
-                {t("TYPE")}
-              </th>
+              <ONotificationTableHead sort={sort} setSort={setSort} name='O_MESSAGE' fieldName='description' classTd={'justify-center'} />
+              <ONotificationTableHead sort={sort} setSort={setSort} name='TYPE' fieldName='userData.firstName' classTd={'justify-center'} />
               <ONotificationTableHead sort={sort} setSort={setSort} name='O_CREATED_AT' fieldName='createdAt' classTd={'justify-center'} />
             </tr>
           </thead>
@@ -46,10 +44,10 @@ const NotificationTable = ({
                   </td>
 
                   <td className="py-4 px-6 border-r text-center">
-                    {item?.description || "N/A"}
+                    {startCase(item?.description) || "N/A"}
                   </td>
-                  <td className="py-4 px-6 border-r ">
-                    {startCase(item?.sendTo) || "N/A"}
+                  <td className="py-4 px-6 border-r w-60 text-center">
+                    {helpers.ternaryCondition(item?.sendTo == 'all', 'All Users', startCase(item?.sendTo)) || "N/A"} {item?.sendTo !== 'all' && !isEmpty(item?.userData) && <span className="font-bold text-slate-600">({item?.userData?.firstName + ' ' + item?.userData?.lastName || ''})</span>}
                   </td>
                   <td className="py-4 px-6 border-r text-center">
                     {helpers.getDateAndTime(item?.createdAt)}

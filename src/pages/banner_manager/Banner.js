@@ -105,7 +105,7 @@ function Banner() {
   }
 
 
-  
+
   // banner status change function start
 
   const handelStatusChange = async details => {
@@ -146,7 +146,7 @@ function Banner() {
   // banner delete change function end
 
 
- 
+
 
 
   const statusPage = e => {

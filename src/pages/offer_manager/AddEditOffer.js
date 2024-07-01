@@ -34,8 +34,13 @@ const AddEditOffer = ({ setEditShowOfferModal, viewType, getAllOfferData, offerD
                 maxUserLimit: offerDetails?.maxUserLimit
             })
             const dateFormate = new Date(offerDetails?.expiryDate);
+            const today = new Date();
+            const dateToCheck = new Date(offerDetails?.expiryDate);
+            if(dateToCheck < today){
+                setValue('expiryDate','')
+                return
+            }
             setDate(dateFormate)
-
         }
     }, [offerDetails])
 

@@ -29,6 +29,13 @@ const SubTable = ({
       {dateData || 'N/A'}
     </td>
   }
+
+
+  const getRoleAssigned = (e) => {
+    const prmissionAssigned = e?.permission
+    return prmissionAssigned?.filter(pManager => pManager.view)?.length;
+  }
+
   return (
     <div className="p-3">
       <div className="overflow-x-auto relative rounded-lg border">
@@ -38,16 +45,19 @@ const SubTable = ({
               <th scope="col" className="py-3 px-6">
                 {t("S.NO")}
               </th>
-              <OSubadminTableHead sort={sort} setSort={setSort} name='SUB_ADMIN_ID' fieldName='adminId' />
-              <OSubadminTableHead sort={sort} setSort={setSort} name='FULL_NAME' fieldName='name' />
-              <OSubadminTableHead sort={sort} setSort={setSort} name='O_EMAIL_ID' fieldName='email' />
+              <OSubadminTableHead sort={sort}   fieldName='adminId' setSort={setSort} name='SUB_ADMIN_ID' />
+              <OSubadminTableHead  name='FULL_NAME' fieldName='name' sort={sort} setSort={setSort} />
+              <OSubadminTableHead name='O_EMAIL_ID' sort={sort} setSort={setSort}  fieldName='email' />
               <th scope="col" className="py-3 px-6">
                 {t("O_COUNTRY_CODE")}
               </th>
               <OSubadminTableHead sort={sort} setSort={setSort} name='O_MOBILE' fieldName='mobile' />
               <OSubadminTableHead sort={sort} setSort={setSort} name='ADDRESS' fieldName='address' />
+              <th scope="col" className="py-3 px-6 text-center">
+                {t("ROLE_ASSIGNED")}
+              </th>
               <OSubadminTableHead sort={sort} setSort={setSort} name='O_CREATED_AT' fieldName='createdAt' />
-              <OSubadminTableHead sort={sort} setSort={setSort} name='O_UPDATED_AT' fieldName='updatedAt' />
+              <OSubadminTableHead sort={sort} name='O_UPDATED_AT' setSort={setSort}  fieldName='updatedAt' />
               {(manager?.add || manager?.edit || user?.role === "admin") && (
                 <OSubadminTableHead sort={sort} setSort={setSort} name='O_STATUS' fieldName='status' />
               )}
@@ -88,8 +98,13 @@ const SubTable = ({
                 <td className="py-2 px-4 border-r dark:border-[#ffffff38]">
                   {startCase(item?.address) || "N/A"}
                 </td>
-                {getDateTable(helpers.getDateAndTime(item?.createdAt)||'N/A')}
-                {getDateTable(helpers.getDateAndTime(item?.updatedAt)||'N/A')}
+
+                <td className="py-2 px-4 border-r dark:border-[#ffffff38] w-10 font-bold text-slate-600 text-center">
+                  {getRoleAssigned(item)}
+                </td>
+
+                {getDateTable(helpers.getDateAndTime(item?.createdAt) || 'N/A')}
+                {getDateTable(helpers.getDateAndTime(item?.updatedAt) || 'N/A')}
                 {(manager?.add || manager?.edit || user?.role === "admin") && (
                   <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-center">
                     <label
