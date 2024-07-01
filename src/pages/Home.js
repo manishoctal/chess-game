@@ -4,7 +4,6 @@ import { BiMoneyWithdraw } from "react-icons/bi";
 import { FaUserTie, FaRegQuestionCircle, FaAddressCard } from "react-icons/fa";
 import { AiOutlineStock } from "react-icons/ai";
 import { GiProfit } from "react-icons/gi";
-
 import { apiGet } from "utils/apiFetch";
 import pathObj from "utils/apiPath";
 import earning from "assets/images/earning.jpg";
@@ -33,6 +32,7 @@ import {
 } from "@mui/material/styles";
 import useToastContext from "hooks/useToastContext";
 import { Link } from "react-router-dom";
+import { startCase } from "lodash";
 
 ChartJS.register(
   CategoryScale,
@@ -106,7 +106,7 @@ export const lineGraphData2 = {
 
 function Home() {
   const { t } = useTranslation();
-  const { logoutUser } = useContext(AuthContext);
+  const { logoutUser, user } = useContext(AuthContext);
   const [selectedButton, setSelectedButton] = useState("day");
   const [dashboardDetails, setDashboardDetails] = useState({});
   const [startDate, setStartDate] = useState(
@@ -167,6 +167,8 @@ function Home() {
   const [chartDataTwo, setChartDataTwo] = useState(getDefaultChartData());
   const [isReset, setIsReset] = useState(false);
   const notification = useToastContext();
+
+  const manager = user?.permission?.find(e => e.manager === 'dashboard') ?? {}
 
   const handleDateChange = (start, end, type) => {
     if (type === "first") {
@@ -253,7 +255,7 @@ function Home() {
       handleGraphApiCall(startDate, endDate, selectedButton, "first");
     }
     if (graphTwoDropdownValue && graphTwoEndDate && graphTwoStartData) {
-       // graph api call function ====
+      // graph api call function ====
       handleGraphApiCall(graphTwoStartData, graphTwoEndDate, graphTwoDropdownValue, "second");
     }
   }, [
@@ -399,6 +401,19 @@ function Home() {
     );
   };
 
+  if (helpers.andOperator(user?.role == "subAdmin", !manager?.view)) {
+    return <div className="flex justify-center items-center" style={{ height: '700px' }}>
+      <div className="text-center">
+        <div className="text-[26px]" style={{ fontWeight: 500 }}>
+          <h3>Welcome! {`${startCase(user?.firstName)} ${startCase(user?.lastName)}`} You Are Not Authorize To View This Page</h3>
+        </div>
+        <div className="text-[20px] mt-1" style={{ fontWeight: 400 }}>
+          <p>Sorry for the inconvenience.</p>
+        </div>
+
+      </div>
+    </div>
+  }
   return (
     <>
       <div className="py-4 px-4 md:px-8 dark:bg-slate-900">

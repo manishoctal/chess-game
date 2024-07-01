@@ -9,6 +9,7 @@ const generateManager = (manager, options = {}) => ({
 });
 
 const Permission = [
+  generateManager("dashboard", { shownAdd: true, shownAll: true }),
   generateManager("user_manager", { shownAdd: true, shownAll: true }),
   generateManager("subAdmin_manager", { shownAdd: true, shownAll: true }),
   generateManager("offer_manager", { shownAdd: true, shownAll: true }), 
