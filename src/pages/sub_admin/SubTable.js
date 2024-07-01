@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import { AiFillEdit, AiFillEye } from "react-icons/ai";
 import { useTranslation } from "react-i18next";
 import AuthContext from "context/AuthContext";
@@ -6,7 +6,6 @@ import { isEmpty, startCase } from "lodash";
 import { useNavigate } from "react-router-dom";
 import helpers from "../../utils/helpers";
 import OSubadminTableHead from '../../components/reusable/OTableHead'
-import ShowMore from '../../components/reusable/OViewMore'
 const SubTable = ({
   subAdmin,
   page,
@@ -38,14 +37,6 @@ const SubTable = ({
   }
 
 
-  const [showMore, setShowMore] = useState(false);
-  const [showId, setShowId] = useState("");
-
-  const handleShowMoreClick = (item) => {
-    setShowMore(true);
-    setShowId(item);
-  };
-
   return (
     <div className="p-3">
       <div className="overflow-x-auto relative rounded-lg border">
@@ -55,12 +46,10 @@ const SubTable = ({
               <th scope="col" className="py-3 px-6">
                 {t("S.NO")}
               </th>
-              <OSubadminTableHead sort={sort} fieldName='adminId' setSort={setSort} name='SUB_ADMIN_ID' />
+              <OSubadminTableHead sort={sort} fieldName='adminId' setSort={setSort} name='O_ID' />
               <OSubadminTableHead name='FULL_NAME' fieldName='name' sort={sort} setSort={setSort} />
               <OSubadminTableHead name='O_EMAIL_ID' sort={sort} setSort={setSort} fieldName='email' />
-              <th scope="col" className="py-3 px-6">
-                {t("O_COUNTRY_CODE")}
-              </th>
+             
               <OSubadminTableHead sort={sort} setSort={setSort} name='O_MOBILE' fieldName='mobile' />
               <OSubadminTableHead sort={sort} setSort={setSort} name='ADDRESS' fieldName='address' />
               <th scope="col" className="py-3 px-6 text-center">
@@ -96,27 +85,11 @@ const SubTable = ({
                 <td className="py-2 px-4 border-r dark:border-[#ffffff38]">
                   {startCase(item?.firstName + " " + item?.lastName)}
                 </td>
-                <td className="py-2 px-3 border-r dark:border-[#ffffff38] text-center">
-                  <span className="font-bold text-slate-900">
-                    {helpers.ternaryCondition(item?.email?.length > 10 , `${item?.email?.substring(0, 10)}...` , item?.email?.substring(0, 10) || "N/A")}
-                    {item?.email?.length > 10 && (
-                      <button onClick={() => handleShowMoreClick(item)} className="text-[11px] mx-1 cursor-pointer">{t('VIEW_MORE')}</button>
-                    )}
-                  </span>
-                  {showMore && item?._id === showId?._id && (
-                    <ShowMore
-                      onClose={() => {
-                        setShowId("");
-                        setShowMore(false);
-                      }}
-                      type="O_EMAIL"
-                      item={helpers.andOperator(item?._id === showId?._id,showId?.email)}
-                    />
-                  )}
+
+                <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-slate-900 font-bold">
+                  {item?.email||'N/A'}
                 </td>
-                <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-center">
-                  {item?.countryCode && '+' + item?.countryCode || "N/A"}
-                </td>
+              
                 <td className="py-2 px-4 border-r dark:border-[#ffffff38]">
                   {item?.mobile || "N/A"}
                 </td>
@@ -124,7 +97,7 @@ const SubTable = ({
                   {startCase(item?.address) || "N/A"}
                 </td>
 
-                <td className="py-2 px-4 border-r dark:border-[#ffffff38] w-10 font-bold text-slate-600 text-center">
+                <td className="py-2 px-4 border-r dark:border-[#ffffff38]  font-bold text-slate-600 text-center">
                   {getRoleAssigned(item)}
                 </td>
 
