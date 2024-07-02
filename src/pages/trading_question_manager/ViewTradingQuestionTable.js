@@ -2,7 +2,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { isEmpty, startCase } from "lodash";
 import helpers from "../../utils/helpers";
-import OWalletTableHead from '../../components/reusable/OTableHead'
+import OViewTradingTableHead from '../../components/reusable/OTableHead'
 
 const ViewTradingQuestionTable = ({
   viewTradingData,
@@ -14,7 +14,7 @@ const ViewTradingQuestionTable = ({
   const { t } = useTranslation();
   // change status of offer function start
 
-  const getOfferUserValue = (details, detailsClass) => {
+  const getViewTradingValue = (details, detailsClass) => {
     return <td className={`py-2 px-4 border-r dark:border-[#ffffff38] ${detailsClass || ''}`}>
       {details || 'N/A'}
     </td>
@@ -30,11 +30,11 @@ const ViewTradingQuestionTable = ({
               <th scope="col" className="py-3 px-6">
                 {t("S.NO")}
               </th>
-              <OWalletTableHead sort={sort} setSort={setSort} name='QUESTIONS_NAME' fieldName='questions' />
-              <OWalletTableHead sort={sort} setSort={setSort} name='O_CREATED_AT' fieldName='createdAt' />
-              <OWalletTableHead sort={sort} setSort={setSort} name='YES_COUNT' fieldName='yesSelected' />
-              <OWalletTableHead sort={sort} setSort={setSort} name='NO_COUNT' fieldName='noSelected' />
-              <OWalletTableHead sort={sort} setSort={setSort} name='O_STATUS' fieldName='status' />
+              <OViewTradingTableHead sort={sort} setSort={setSort} name='QUESTIONS_NAME' fieldName='questions' />
+              <OViewTradingTableHead sort={sort} setSort={setSort} name='O_CREATED_AT' fieldName='createdAt' />
+              <OViewTradingTableHead sort={sort} setSort={setSort} name='YES_COUNT' fieldName='yesSelected' />
+              <OViewTradingTableHead sort={sort} setSort={setSort} name='NO_COUNT' fieldName='noSelected' />
+              <OViewTradingTableHead sort={sort} setSort={setSort} name='O_STATUS' fieldName='status' />
               <th scope="col" className="py-3 px-6">
                 {t("MARK_ANSWER")}
               </th>
@@ -58,14 +58,14 @@ const ViewTradingQuestionTable = ({
                 >
                   {i + 1 + pageSize * (page - 1)}
                 </th>
-                {getOfferUserValue(item?.userDetail?.userId)}
-                {getOfferUserValue(startCase(item?.userDetail?.fullName) || 'N/A')}
-                {getOfferUserValue(item?.userDetail?.userName || 'N/A')}
-                {getOfferUserValue(item?.userDetail?.mobile || 'N/A')}
-                {getOfferUserValue(item?.offerDetails?.code || 'N/A', 'font-bold')}
-                {getOfferUserValue(helpers.getDateAndTime(item?.createdAt))}
-                {getOfferUserValue(helpers.formattedAmount(item?.transactionAmount) || 'N/A', 'font-bold')}
-                {getOfferUserValue(helpers.formattedAmount(item?.cashbackAmount) || 'N/A', 'font-bold')}
+                {getViewTradingValue(item?.userDetail?.userId)}
+                {getViewTradingValue(startCase(item?.userDetail?.fullName) || 'N/A')}
+                {getViewTradingValue(item?.userDetail?.userName || 'N/A')}
+                {getViewTradingValue(item?.userDetail?.mobile || 'N/A')}
+                {getViewTradingValue(item?.offerDetails?.code || 'N/A', 'font-bold')}
+                {getViewTradingValue(helpers.getDateAndTime(item?.createdAt))}
+                {getViewTradingValue(helpers.formattedAmount(item?.transactionAmount) || 'N/A', 'font-bold')}
+                {getViewTradingValue(helpers.formattedAmount(item?.cashbackAmount) || 'N/A', 'font-bold')}
               </tr>
             ))}
             {isEmpty(viewTradingData) ? (
