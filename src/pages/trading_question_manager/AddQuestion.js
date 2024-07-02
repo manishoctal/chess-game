@@ -2,14 +2,13 @@ import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import helpers from "utils/helpers";
-import OInputField from "components/reusable/OInputField";
 import ODatePicker from "components/shared/datePicker/ODatePicker";
 import ErrorMessage from "components/ErrorMessage";
 import apiPath from "utils/apiPath";
 import { apiPost, apiPut } from "utils/apiFetch";
 import useToastContext from "hooks/useToastContext";
 import LoaderButton from "components/reusable/LoaderButton";
-const AddQuestion = ({ setEditShowTradingModal, viewType, offerDetails ,ViewallTradingQuestionsList}) => {
+const AddQuestion = ({ setEditShowTradingModal, viewType, offerDetails, ViewallTradingQuestionsList }) => {
     const { t } = useTranslation();
     const [date, setDate] = useState(helpers.ternaryCondition(viewType == 'edit', new Date(offerDetails?.expiryDate), ''));
     const {
@@ -17,13 +16,13 @@ const AddQuestion = ({ setEditShowTradingModal, viewType, offerDetails ,ViewallT
         register,
         setValue,
         clearErrors,
-        
+
         formState: { errors },
     } = useForm({ mode: "onChange", shouldFocusError: true, defaultValues: {} });
     const [loader, setLoader] = useState(false)
 
     // default value for edit code
-   
+
 
     const notification = useToastContext();
 
@@ -56,34 +55,7 @@ const AddQuestion = ({ setEditShowTradingModal, viewType, offerDetails ,ViewallT
         setDate(dates);
     };
 
-    const validationRulesQuestion = {
-        code: {
-            required: { value: true, message: t("PLEASE_ENTER_OFFER_CODE") },
-            min: { value: 1, message: t("MINIMUM_VALUE_MUST_IS_1") },
-        },
-        maxUserLimit: {
-            required: { value: true, message: t("PLEASE_ENTER_USER_LIMIT") },
-            maxLength: { value: 5, message: t("MAX_LIMIT_IS_5_CHARACTERS") },
-            min: { value: 1, message: t("MINIMUM_VALUE_MUST_IS_1") },
-        },
-        limitPerUser: {
-            required: { value: true, message: t("PLEASE_ENTER_RESTRICTED_USER") },
-            maxLength: { value: 5, message: t("MAX_LIMIT_IS_5_CHARACTERS") },
-            min: { value: 1, message: t("MINIMUM_VALUE_MUST_IS_1") },
-        },
-        cashBackAmount: {
-            required: { value: true, message: t("PLEASE_ENTER_CASH_BONUS") },
-            maxLength: { value: 5, message: t("MAX_LIMIT_IS_5_CHARACTERS") },
-            min: { value: 1, message: t("MINIMUM_VALUE_MUST_IS_1") },
-        },
-        addMinimumAmount: {
-            maxLength: { value: 5, message: t("MAX_LIMIT_IS_5_CHARACTERS") },
-            min: { value: 1, message: t("MINIMUM_VALUE_MUST_IS_1") },
-        },
-        expiryDate: {
-            required: { value: true, message: t("PLEASE_CHOOSE_EXPIRY_DATE") },
-        },
-    };
+
     return (
         <>
             <div className=" overflow-y-auto justify-center items-center flex overflow-x-hidden  fixed inset-0 z-50 outline-none focus:outline-none">
@@ -109,71 +81,7 @@ const AddQuestion = ({ setEditShowTradingModal, viewType, offerDetails ,ViewallT
                                 </button>
                             </div>
 
-                            <div className="flex justify-center mt-5">
-                                <TradingQuestionInputField name="code"
-                                    label="OFFER_CODE"
-                                    type="text"
-                                    placeholder="ENTER_OFFER_CODE"
-                                    maxLength={50}
-                                    validation={validationRulesQuestion.code}
-                                    errors={errors}
-                                    labelType={true}
-                                    register={register} />
-
-                                <TradingQuestionInputField
-                                    name="maxUserLimit"
-                                    label="USER_LIMIT"
-                                    type="number"
-                                    placeholder="ENTER_USER_LIMIT"
-                                    maxLength={5}
-                                    validation={validationRulesQuestion.maxUserLimit}
-                                    errors={errors}
-                                    labelType={true}
-                                    register={register}
-
-                                />
-                            </div>
-
                             <div className="flex justify-center mt-3">
-                                <TradingQuestionInputField
-                                    name="limitPerUser"
-                                    label="RESTRICTED_USES"
-                                    type="number"
-                                    placeholder="ENTER_RESTRICTED_USER"
-                                    maxLength={5}
-                                    validation={validationRulesQuestion.limitPerUser}
-                                    errors={errors}
-                                    labelType={true}
-
-                                    register={register}
-
-                                />
-                                <TradingQuestionInputField
-                                    name="cashBackAmount"
-                                    label="CASH_BONUS"
-                                    type="number"
-                                    placeholder="ENTER_CASH_BONUS"
-                                    maxLength={5}
-                                    validation={validationRulesQuestion.cashBackAmount}
-                                    errors={errors}
-                                    labelType={true}
-                                    register={register}
-
-                                />
-                            </div>
-                            <div className="flex justify-center mt-3">
-                                <TradingQuestionInputField
-                                    name="addMinimumAmount"
-                                    label="ADD_AMOUNT_UP_TO"
-                                    type="number"
-                                    placeholder="ENTER_ADD_AMOUNT_UP_TO"
-                                    maxLength={5}
-                                    labelType={false}
-                                    validation={validationRulesQuestion.addMinimumAmount}
-                                    errors={errors}
-                                    register={register}
-
-                                />
                                 <div className="px-2">
                                     <label htmlFor="validity" className="font-medium text-sm text-[#000] dark:text-gray-400 block" > {t("EXPIRY_DATE")} <span className="text-red-500">*</span> </label>
                                     <ODatePicker
@@ -202,11 +110,11 @@ const AddQuestion = ({ setEditShowTradingModal, viewType, offerDetails ,ViewallT
                                 >
                                     {t("CLOSE")}
                                 </button>
-                                {helpers.andOperator(viewType !== 'view',
-                                    helpers.ternaryCondition(loader,
-                                        <LoaderButton />,
-                                        <button className="bg-gradientTo text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150" type="submit"
-                                            title={helpers.ternaryCondition(viewType == 'add', t("O_ADD"), t("O_EDIT"))}>{helpers.ternaryCondition(viewType == 'add', t("O_ADD"), t("O_EDIT"))} </button>))}
+
+                                {helpers.ternaryCondition(loader,
+                                    <LoaderButton />,
+                                    <button className="bg-gradientTo text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150" type="submit"
+                                        title={t("O_ADD")}>{t("O_ADD")} </button>)}
                             </div>
                         </div>
                     </div>
@@ -219,33 +127,3 @@ const AddQuestion = ({ setEditShowTradingModal, viewType, offerDetails ,ViewallT
 
 export default AddQuestion;
 
-const TradingQuestionInputField = ({
-    name,
-    label,
-    type,
-    placeholder,
-    maxLength,
-    validation,
-    errors,
-    register,
-    labelType,
-    disable = false,
-}) => {
-    const { t } = useTranslation();
-    return (
-        <div className='px-2 flex justify-center'>
-            <OInputField
-                wrapperClassName='relative z-0 mb-3 w-[250px] group'
-                name={name}
-                inputLabel={t(label)}
-                placeholder={t(placeholder)}
-                register={register(name, validation)}
-                type={type}
-                errors={errors}
-                disable={disable}
-                maxLength={maxLength}
-                labelType={labelType}
-            />
-        </div>
-    );
-};
