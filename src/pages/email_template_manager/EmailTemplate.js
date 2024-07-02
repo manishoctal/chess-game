@@ -5,9 +5,6 @@ import Table from "./Table";
 import dayjs from "dayjs";
 import AuthContext from "context/AuthContext";
 import useToastContext from "hooks/useToastContext";
-import OSearch from "components/reusable/OSearch";
-import { useTranslation } from "react-i18next";
-
 function EmailTemplate() {
   const notification = useToastContext();
   const { user } = useContext(AuthContext);
@@ -16,11 +13,7 @@ function EmailTemplate() {
   const [emailTemplate, setEmailTemplate] = useState([]);
   const [page, setPage] = useState(1);
   const [pageSize] = useState(10);
-  const { t } = useTranslation()
-  const [searchTerm, setSearchTerm] = useState("");
-  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
-  const [isInitialized, setIsInitialized] = useState(false);
-  const [filterData, setFilterData] = useState({
+  const [filterData] = useState({
     category: "",
     searchkey: "",
     startDate: "",
@@ -94,55 +87,13 @@ function EmailTemplate() {
     }
   };
 
-
   // change status of email template end
-
-
-
-
-
-// debounce search start
-  useEffect(() => {
-    if (!isInitialized) {
-      setIsInitialized(true);
-    } else if (searchTerm || !filterData?.isReset) {
-      setFilterData({
-        ...filterData,
-        isReset: false,
-        searchkey: debouncedSearchTerm || "",
-        isFilter: !!debouncedSearchTerm,
-      });
-      setPage(1);
-    }
-  }, [debouncedSearchTerm]);
-
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      setDebouncedSearchTerm(searchTerm);
-    }, 500);
-    return () => {
-      clearTimeout(timeoutId);
-    };
-  }, [searchTerm]);
-
-  // debounce search end
-
   return (
     <div>
       <div className="bg-[#F9F9F9] dark:bg-slate-900">
         <div className="px-3 py-4">
-          <div className="bg-white border border-[#E9EDF9] rounded-lg dark:bg-slate-800 dark:border-[#ffffff38]">
-            <form className="border-b border-b-[#E3E3E3] 2xl:flex gap-2 px-4 py-3">
-              <div className="col-span-2 flex flex-wrap  items-center">
-                <div className="flex items-center lg:pt-0 pt-3 flex-wrap justify-center mb-2 2xl:mb-0">
-                  <div className="relative flex items-center mb-3">
-                    <OSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm} placeholder={t("EMAIL_TEMPLATE_NAME")} />
-                  </div>
-
-                </div>
-              </div>
-
-            </form>
+          <div className="bg-white border border-[#E9EDF9] rounded-lg dark:bg-slate-800 dark:border-[#ffffff38] mt-5">
+           
             <Table
               emailTemplate={emailTemplate}
               allEmailTemplate={allEmailTemplate}

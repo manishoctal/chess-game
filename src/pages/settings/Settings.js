@@ -25,6 +25,7 @@ const Settings = () => {
     register,
     handleSubmit,
     reset,
+    watch,
     formState: { isDirty, errors },
   } = useForm({
     mode: "onBlur",
@@ -197,7 +198,10 @@ const Settings = () => {
                       value: 1,
                       message: t(t("MINIMUM_VALUE_MUST_IS_1")),
                     },
+                    valueAsNumber: true,
+                    validate:(value)=>{ return value < watch('maxWithdrawalLimit') || t("MIN_VALUE_MUST_BE_LESS_THAN_MAX_VALUE");}
                   })}
+
                   placeholder=" "
                 />
                 <ErrorMessage
@@ -228,6 +232,7 @@ const Settings = () => {
                       value: 1,
                       message: t(t("MINIMUM_VALUE_MUST_IS_1")),
                     },
+                    valueAsNumber: true
                   })}
                   placeholder=" "
                 />

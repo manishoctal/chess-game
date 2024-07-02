@@ -696,7 +696,8 @@
   "YES_COUNT":"Yes (selected count)",
   "NO_COUNT":"No (selected count)",
   "MARK_ANSWER":"Mark Answer",
-  "POLL_STATUS":"Poll Status"
+  "POLL_STATUS":"Poll Status",
+  "MIN_VALUE_MUST_BE_LESS_THAN_MAX_VALUE":"Min withdraw limit must be less than max withdraw limit."
 
 
 
