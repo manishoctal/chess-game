@@ -110,7 +110,7 @@ function ViewTradingQuestionManager() {
 
     // get view trading question list end
 
-    const handlePageClick = event => {
+    const handlePageClickTrading = event => {
         const newPage = event.selected + 1
         setPage(newPage)
     }
@@ -132,7 +132,13 @@ function ViewTradingQuestionManager() {
         }
     }, [debouncedSearchTerm])
 
-    const handleDateChange = (start, end) => {
+
+    useEffect(() => {
+        updatePageName(t('VIEW_TRADING_QUESTION_MANAGER'))
+    }, [])
+
+
+    const handleDateChangeViewTrading = (start, end) => {
         setPage(1)
         setFilterData({
             ...filterData,
@@ -153,9 +159,7 @@ function ViewTradingQuestionManager() {
 
     // debounce search end
 
-    useEffect(() => {
-        updatePageName(t('VIEW_TRADING_QUESTION_MANAGER'))
-    }, [])
+   
 
 
     const AddTradingQuestion = async () => {
@@ -218,7 +222,7 @@ function ViewTradingQuestionManager() {
                                         <OSearchViewTradingQuestion searchTerm={searchTerm} setSearchTerm={setSearchTerm} placeholder={t('SEARCH_BY_MATCH_ID_MATCH_NAME')} />
                                     </div>
                                     <ODateRangePickerViewTrading
-                                        handleDateChange={handleDateChange}
+                                        handleDateChange={handleDateChangeViewTrading}
                                         isReset={filterData?.isReset}
                                         setIsReset={setFilterData} />
 
@@ -271,7 +275,7 @@ function ViewTradingQuestionManager() {
                             <PageSizeListViewTrading dynamicPage={dynamicPage} pageSize={pageSize} />
                             {viewTradingPaginationObj?.totalItems ? (
                                 <PaginationViewTrading
-                                    handlePageClick={handlePageClick}
+                                    handlePageClick={handlePageClickTrading}
                                     options={viewTradingPaginationObj}
                                     isDelete={isDelete}
                                     page={page} />
