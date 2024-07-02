@@ -7,7 +7,7 @@ export const permissionsMap = {
   email_manager: "/email-manager",
   FAQ: "/faqs",
   banner_manager:'/banner-manager',
-  wallet_manager:'/wallet-manager',
+  trading_question_manager:'/trading-question-manager',
   notification_manager:'/notification_manager',
   offer_manager:'/offer-manager'
 };

@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import helpers from "utils/helpers";
 import OInputField from "components/reusable/OInputField";
 import ODatePicker from "components/shared/datePicker/ODatePicker";
@@ -9,7 +9,7 @@ import apiPath from "utils/apiPath";
 import { apiPost, apiPut } from "utils/apiFetch";
 import useToastContext from "hooks/useToastContext";
 import LoaderButton from "components/reusable/LoaderButton";
-const AddEditOffer = ({ setEditShowOfferModal, viewType, getAllOfferData, offerDetails }) => {
+const AddQuestion = ({ setEditShowTradingModal, viewType, offerDetails ,ViewallTradingQuestionsList}) => {
     const { t } = useTranslation();
     const [date, setDate] = useState(helpers.ternaryCondition(viewType == 'edit', new Date(offerDetails?.expiryDate), ''));
     const {
@@ -17,38 +17,19 @@ const AddEditOffer = ({ setEditShowOfferModal, viewType, getAllOfferData, offerD
         register,
         setValue,
         clearErrors,
-        reset,
+        
         formState: { errors },
     } = useForm({ mode: "onChange", shouldFocusError: true, defaultValues: {} });
     const [loader, setLoader] = useState(false)
 
     // default value for edit code
-    useEffect(() => {
-        if (offerDetails && viewType == 'edit') {
-            reset({
-                addMinimumAmount: offerDetails?.addMinimumAmount,
-                cashBackAmount: offerDetails?.cashBackAmount,
-                code: offerDetails?.code,
-                expiryDate: offerDetails?.expiryDate,
-                limitPerUser: offerDetails?.limitPerUser,
-                maxUserLimit: offerDetails?.maxUserLimit
-            })
-            const dateFormate = new Date(offerDetails?.expiryDate);
-            const today = new Date();
-            const dateToCheck = new Date(offerDetails?.expiryDate);
-            if(dateToCheck < today){
-                setValue('expiryDate','')
-                return
-            }
-            setDate(dateFormate)
-        }
-    }, [offerDetails])
+   
 
     const notification = useToastContext();
 
 
     // submit function start
-    const handleSubmitAddOfferForm = async (e) => {
+    const handleSubmitAddQuestionForm = async (e) => {
         try {
             setLoader(true)
             const path = helpers.ternaryCondition(viewType == 'add', apiPath.getAllOffer, apiPath.getAllOffer + '/' + offerDetails?._id);
@@ -56,8 +37,8 @@ const AddEditOffer = ({ setEditShowOfferModal, viewType, getAllOfferData, offerD
             const result = await apiFunction(path, e);
             if (result?.status === 200) {
                 notification.success(result?.data?.message);
-                getAllOfferData({ statusChange: 1 });
-                setEditShowOfferModal(false)
+                ViewallTradingQuestionsList({ statusChange: 1 });
+                setEditShowTradingModal(false)
                 setLoader(false)
             }
         }
@@ -106,7 +87,7 @@ const AddEditOffer = ({ setEditShowOfferModal, viewType, getAllOfferData, offerD
     return (
         <>
             <div className=" overflow-y-auto justify-center items-center flex overflow-x-hidden  fixed inset-0 z-50 outline-none focus:outline-none">
-                <form onSubmit={handleSubmit(handleSubmitAddOfferForm)} method="post">
+                <form onSubmit={handleSubmit(handleSubmitAddQuestionForm)} method="post">
                     <div className="relative w-auto my-6 mx-auto max-w-3xl">
                         <div className="overflow-hidden  dark:border-[#ffffff38] border border-white rounded-lg shadow-lg relative flex flex-col min-w-[552px] bg-white outline-none focus:outline-none">
                             <div className=" flex items-center justify-between p-5 dark:bg-gray-900 border-b dark:border-[#ffffff38] border-solid border-slate-200 rounded-t dark:bg-slate-900">
@@ -115,7 +96,7 @@ const AddEditOffer = ({ setEditShowOfferModal, viewType, getAllOfferData, offerD
                                 </h3>
                                 <button
                                     className=" ml-auto flex items-center justify-center  text-black border-2 rounded-full  h-8 w-8 float-right text-3xl leading-none font-extralight outline-none focus:outline-none"
-                                    onClick={() => setEditShowOfferModal(false)}
+                                    onClick={() => setEditShowTradingModal(false)}
                                 >
                                     <button type="button"
                                         title={t("CLOSE")}
@@ -129,7 +110,7 @@ const AddEditOffer = ({ setEditShowOfferModal, viewType, getAllOfferData, offerD
                             </div>
 
                             <div className="flex justify-center mt-5">
-                                <OfferInputField name="code"
+                                <TradingQuestionInputField name="code"
                                     label="OFFER_CODE"
                                     type="text"
                                     placeholder="ENTER_OFFER_CODE"
@@ -139,7 +120,7 @@ const AddEditOffer = ({ setEditShowOfferModal, viewType, getAllOfferData, offerD
                                     labelType={true}
                                     register={register} />
 
-                                <OfferInputField
+                                <TradingQuestionInputField
                                     name="maxUserLimit"
                                     label="USER_LIMIT"
                                     type="number"
@@ -154,7 +135,7 @@ const AddEditOffer = ({ setEditShowOfferModal, viewType, getAllOfferData, offerD
                             </div>
 
                             <div className="flex justify-center mt-3">
-                                <OfferInputField
+                                <TradingQuestionInputField
                                     name="limitPerUser"
                                     label="RESTRICTED_USES"
                                     type="number"
@@ -167,7 +148,7 @@ const AddEditOffer = ({ setEditShowOfferModal, viewType, getAllOfferData, offerD
                                     register={register}
 
                                 />
-                                <OfferInputField
+                                <TradingQuestionInputField
                                     name="cashBackAmount"
                                     label="CASH_BONUS"
                                     type="number"
@@ -181,7 +162,7 @@ const AddEditOffer = ({ setEditShowOfferModal, viewType, getAllOfferData, offerD
                                 />
                             </div>
                             <div className="flex justify-center mt-3">
-                                <OfferInputField
+                                <TradingQuestionInputField
                                     name="addMinimumAmount"
                                     label="ADD_AMOUNT_UP_TO"
                                     type="number"
@@ -217,7 +198,7 @@ const AddEditOffer = ({ setEditShowOfferModal, viewType, getAllOfferData, offerD
                                 <button
                                     className="text-black bg-[#E1E1E1] font-normal px-12 py-2.5 text-sm outline-none focus:outline-none rounded mr-6  ease-linear transition-all duration-150"
                                     type="button"
-                                    onClick={() => setEditShowOfferModal(false)}
+                                    onClick={() => setEditShowTradingModal(false)}
                                 >
                                     {t("CLOSE")}
                                 </button>
@@ -236,9 +217,9 @@ const AddEditOffer = ({ setEditShowOfferModal, viewType, getAllOfferData, offerD
     );
 };
 
-export default AddEditOffer;
+export default AddQuestion;
 
-const OfferInputField = ({
+const TradingQuestionInputField = ({
     name,
     label,
     type,

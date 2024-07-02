@@ -182,6 +182,20 @@ const Sidebar = () => {
           )}
 
           {andOperator(
+            checkSidebarPermission('trading_question_manager'),
+            generateNavLink(
+              '/trading-question-manager',
+              'TRADING_QUESTION_MANAGER',
+              <img
+                src={rewardWithdrawalRequest}
+                title={t('TRADING_QUESTION_MANAGER')}
+                className='max-w-[18px]'
+                alt=''
+              />
+            )
+          )}
+
+          {andOperator(
             checkSidebarPermission('email_manager'),
             generateNavLink(
               '/email-manager',

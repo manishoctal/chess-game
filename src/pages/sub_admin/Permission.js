@@ -13,6 +13,7 @@ const Permission = [
   generateManager("user_manager", { shownAdd: true, shownAll: true }),
   generateManager("subAdmin_manager", { shownAdd: true, shownAll: true }),
   generateManager("offer_manager", { shownAdd: true, shownAll: true }), 
+  generateManager("trading_question_manager", { shownAdd: true, shownAll: true }), 
   generateManager("notification_manager", { shownAdd: true, shownAll: true }),
   generateManager("static_page_management", { shownAdd: true, shownAll: true }),
   generateManager("banner_manager", { shownAdd: true, shownAll: true }),
