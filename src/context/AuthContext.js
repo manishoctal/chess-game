@@ -58,7 +58,6 @@ export const AuthProvider = ({ children }) => {
       apiPath.loginUser,
       pick(body, ['email', 'password'])
     )
-
     if (status === 200) {
       if (data.success) {
         if (
@@ -71,6 +70,7 @@ export const AuthProvider = ({ children }) => {
           localStorage.setItem('refresh_token', refresh_token)
           setUser(jwtDecode(token))
           navigate('/change-password')
+          notification.success(data?.message)
         } else {
           const token = data?.results?.token || null
           const refreshToken = data?.results?.refresh_token || null
@@ -81,6 +81,8 @@ export const AuthProvider = ({ children }) => {
           setUser(jwtDecode(token))
           window.localStorage.setItem('pass', myCipher(body.password))
           navigate('/dashboard')
+          notification.success(data?.message)
+
         }
       } else {
         notification.error(data.message)

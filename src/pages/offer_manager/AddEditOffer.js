@@ -96,7 +96,6 @@ const AddEditOffer = ({ setEditShowOfferModal, viewType, getAllOfferData, offerD
             min: { value: 1, message: t("MINIMUM_VALUE_MUST_IS_1") },
         },
         addMinimumAmount: {
-            required: { value: true, message: t("PLEASE_ENTER_ADD_UP_TO_AMOUNT") },
             maxLength: { value: 5, message: t("MAX_LIMIT_IS_5_CHARACTERS") },
             min: { value: 1, message: t("MINIMUM_VALUE_MUST_IS_1") },
         },
@@ -137,6 +136,7 @@ const AddEditOffer = ({ setEditShowOfferModal, viewType, getAllOfferData, offerD
                                     maxLength={50}
                                     validation={validationRules.code}
                                     errors={errors}
+                                    labelType={true}
                                     register={register} />
 
                                 <OfferInputField
@@ -147,6 +147,7 @@ const AddEditOffer = ({ setEditShowOfferModal, viewType, getAllOfferData, offerD
                                     maxLength={5}
                                     validation={validationRules.maxUserLimit}
                                     errors={errors}
+                                    labelType={true}
                                     register={register}
 
                                 />
@@ -161,6 +162,8 @@ const AddEditOffer = ({ setEditShowOfferModal, viewType, getAllOfferData, offerD
                                     maxLength={5}
                                     validation={validationRules.limitPerUser}
                                     errors={errors}
+                                    labelType={true}
+
                                     register={register}
 
                                 />
@@ -172,6 +175,7 @@ const AddEditOffer = ({ setEditShowOfferModal, viewType, getAllOfferData, offerD
                                     maxLength={5}
                                     validation={validationRules.cashBackAmount}
                                     errors={errors}
+                                    labelType={true}
                                     register={register}
 
                                 />
@@ -183,6 +187,7 @@ const AddEditOffer = ({ setEditShowOfferModal, viewType, getAllOfferData, offerD
                                     type="number"
                                     placeholder="ENTER_ADD_AMOUNT_UP_TO"
                                     maxLength={5}
+                                    labelType={false}
                                     validation={validationRules.addMinimumAmount}
                                     errors={errors}
                                     register={register}
@@ -242,6 +247,7 @@ const OfferInputField = ({
     validation,
     errors,
     register,
+    labelType,
     disable = false,
 }) => {
     const { t } = useTranslation();
@@ -257,7 +263,7 @@ const OfferInputField = ({
                 errors={errors}
                 disable={disable}
                 maxLength={maxLength}
-                labelType={true}
+                labelType={labelType}
             />
         </div>
     );

@@ -265,8 +265,8 @@ const SubAdd = () => {
                             ?.length,
                           value?.length
                         )
-                      if (inputValue?.length < 8) {
-                        return 'Mobile no. must be 8 digit'
+                      if (inputValue?.length < 10) {
+                        return 'Mobile no. must be 10 digit'
                       } else if (inputValue?.length > 12) {
                         return 'Mobile no. should be not exceed 12 digits'
                       }

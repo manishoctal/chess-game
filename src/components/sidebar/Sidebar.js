@@ -84,6 +84,26 @@ const Sidebar = () => {
     return condition && text
   }
 
+  const SidebarNavItem = ({ permission, path, label, imgSrc }) => {
+    const navLink = generateNavLink(
+      path,
+      label,
+      <img
+        src={imgSrc}
+        className="max-w-[18px]"
+        title={t(label)}
+        alt=""
+      />
+    );
+  
+    if (permission) {
+      return andOperator(checkSidebarPermission(permission), navLink);
+    }
+  
+    return navLink;
+  };
+
+
   if (!user) {
     <></>
   }
@@ -113,141 +133,71 @@ const Sidebar = () => {
         </div>
 
         <nav className='pt-4 pb-5 flex flex-col justify-center font-normal text-xs overflow-y-auto'>
-          {generateNavLink(
-            '/dashboard',
-            'NAV_DASHBOARD',
-            <img
-              src={Dashboard}
-              title={t('NAV_DASHBOARD')}
-              className='max-w-[18px]'
-              alt=''
-            />
-          )}
-
-          {andOperator(
-            checkSidebarPermission('subAdmin_manager'),
-            generateNavLink(
-              '/sub-admin-manager',
-              'SUB_ADMIN_MANAGERS',
-              <img
-                src={SubAdmin}
-                className='max-w-[18px]'
-                title={t('SUB_ADMIN_MANAGERS')}
-                alt=''
-              />
-            )
-          )}
-
-          {andOperator(
-            checkSidebarPermission('user_manager'),
-            generateNavLink(
-              '/users',
-              'USER_MANAGER',
-              <img
-                src={userManager}
-                className='max-w-[18px]'
-                title={t('USER_MANAGER')}
-                alt=''
-              />
-            )
-          )}
-
-          {andOperator(
-            checkSidebarPermission('banner_manager'),
-            generateNavLink(
-              '/banner-manager',
-              'BANNER_MANAGER',
-              <img
-                src={rewardWithdrawalRequest}
-                title={t('BANNER_MANAGER')}
-                className='max-w-[18px]'
-                alt=''
-              />
-            )
-          )}
-
-
-          {andOperator(
-            checkSidebarPermission('offer_manager'),
-            generateNavLink(
-              '/offer-manager',
-              'OFFER_MANAGER',
-              <img
-                src={rewardWithdrawalRequest}
-                title={t('OFFER_MANAGER')}
-                className='max-w-[18px]'
-                alt=''
-              />
-            )
-          )}
-
-          {andOperator(
-            checkSidebarPermission('email_manager'),
-            generateNavLink(
-              '/email-manager',
-              'EMAIL_MANAGER',
-              <img
-                src={emailManager}
-                className='max-w-[18px]'
-                title={t('EMAIL_MANAGER')}
-                alt=''
-              />
-            )
-          )}
-
-          {andOperator(
-            checkSidebarPermission('notification_manager'),
-            generateNavLink(
-              '/notification_manager',
-              'NOTIFICATION_MANAGER',
-              <img
-                src={notificationManager}
-                className='max-w-[18px]'
-                title={t('NOTIFICATION_MANAGER')}
-                alt=''
-              />
-            )
-          )}
-
-          {andOperator(
-            checkSidebarPermission('static_page_management'),
-            generateNavLink(
-              '/static-content',
-              'NAV_STATIC_CONTENTS',
-              <img
-                src={manageStaticContents}
-                className='max-w-[18px]'
-                title={t('NAV_STATIC_CONTENTS')}
-                alt=''
-              />
-            )
-          )}
-          {checkSidebarPermission('FAQ') &&
-            generateNavLink(
-              '/faqs',
-              'NAV_FAQS',
-              <img
-                src={faqs}
-                className='max-w-[18px]'
-                title={t('NAV_FAQS')}
-                alt=''
-              />
-            )}
-
-          {andOperator(
-            checkSidebarPermission('settings'),
-            generateNavLink(
-              '/setting',
-              'SETTINGS',
-              <img
-                src={globalSettings}
-                className='max-w-[18px]'
-                title={t('SETTINGS')}
-                alt=''
-              />
-            )
-          )}
-
+        <SidebarNavItem
+        path="/dashboard"
+        label="NAV_DASHBOARD"
+        imgSrc={Dashboard}
+      />
+      <SidebarNavItem
+        permission="subAdmin_manager"
+        path="/sub-admin-manager"
+        label="SUB_ADMIN_MANAGERS"
+        imgSrc={SubAdmin}
+      />
+      <SidebarNavItem
+        permission="user_manager"
+        path="/users"
+        label="USER_MANAGER"
+        imgSrc={userManager}
+      />
+      <SidebarNavItem
+        permission="banner_manager"
+        path="/banner-manager"
+        label="BANNER_MANAGER"
+        imgSrc={rewardWithdrawalRequest}
+      />
+      <SidebarNavItem
+        permission="offer_manager"
+        path="/offer-manager"
+        label="OFFER_MANAGER"
+        imgSrc={rewardWithdrawalRequest}
+      />
+      <SidebarNavItem
+        permission="trading_question_manager"
+        path="/trading-question-manager"
+        label="TRADING_QUESTION_MANAGER"
+        imgSrc={rewardWithdrawalRequest}
+      />
+      <SidebarNavItem
+        permission="email_manager"
+        path="/email-manager"
+        label="EMAIL_MANAGER"
+        imgSrc={emailManager}
+      />
+      <SidebarNavItem
+        permission="notification_manager"
+        path="/notification_manager"
+        label="NOTIFICATION_MANAGER"
+        imgSrc={notificationManager}
+      />
+      <SidebarNavItem
+        permission="static_page_management"
+        path="/static-content"
+        label="NAV_STATIC_CONTENTS"
+        imgSrc={manageStaticContents}
+      />
+      <SidebarNavItem
+        permission="FAQ"
+        path="/faqs"
+        label="NAV_FAQS"
+        imgSrc={faqs}
+      />
+      <SidebarNavItem
+        permission="settings"
+        path="/setting"
+        label="SETTINGS"
+        imgSrc={globalSettings}
+      />
           <Link
             onClick={handleLogout}
             className='flex items-center px-4 lg:px-7 py-4 hover:bg-sideBarNavActiveColor hover:text-gradientTo'
@@ -269,3 +219,6 @@ const Sidebar = () => {
 }
 
 export default Sidebar
+
+
+

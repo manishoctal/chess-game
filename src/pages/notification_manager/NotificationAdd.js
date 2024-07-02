@@ -224,7 +224,6 @@ const NotificationAdd = ({ getAllNotifications, handleCategory }) => {
                           type={false}
                         />
                         <Select
-                          // isMulti
                           wrapperClassName="relative z-0 mb-2 w-full group"
                           name="language"
                           inputValue={searchTerm}

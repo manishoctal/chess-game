@@ -24,7 +24,8 @@ import User from 'pages/users/User'
 import UserView from 'pages/users/UserView'
 import NotificationAdd from 'pages/notification_manager/NotificationAdd'
 import AuthorizationRoute from 'utils/AuthorizationRoute'
-
+import TradingQuestionManager from 'pages/trading_question_manager/TradingQuestionManager'
+import ViewTradingQuestionManager from 'pages/trading_question_manager/ViewTradingQuestionManager'
 const UseChange = ({ data }) => {
   const { t } = useTranslation()
   return t(data)
@@ -100,6 +101,24 @@ const AdminRoutes = {
           <UseChange data='VIEW_OFFER_MANAGER' />
       )
     },
+
+
+    {
+      path: '/trading-question-manager',
+      element: <AuthorizationRoute><TradingQuestionManager /></AuthorizationRoute>,
+      name: (
+          <UseChange data='TRADING_QUESTION_MANAGER' />
+      )
+    },
+
+    {
+      path: '/trading-question-manager/view',
+      element: <AuthorizationRoute><ViewTradingQuestionManager /></AuthorizationRoute>,
+      name: (
+          <UseChange data='VIEW_TRADING_QUESTION_MANAGER' />
+      )
+    },
+
 
     {
       path: '/email-manager',

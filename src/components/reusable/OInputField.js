@@ -92,7 +92,7 @@ const OInputField = props => {
           <div className={wrapperClassName || 'relative z-0 mb-6 w-full group'}>
             <select
               id={name}
-              className='block py-4 px-3 w-full text-sm text-gray-900 bg-transparent border-2 rounded-lg border-[#DFDFDF] appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0  peer'
+              className={`block py-4 px-3 w-full text-sm text-gray-900 bg-transparent border-2 rounded-lg border-[#DFDFDF] appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0  peer`}
               placeholder=' '
               {...register}
               {...rest}

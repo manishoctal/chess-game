@@ -677,7 +677,27 @@
   "ROLE_ASSIGNED":"Role Assigned",
   "VIEW_MORE":"View More",
   "O_ID":"ID",
-  "DIAL_CODE":"Dial Code"
+  "DIAL_CODE":"Dial Code",
+  "TRADING_QUESTION_MANAGER":"Trading Question Manager",
+  "SEARCH_BY_MATCH_ID_MATCH_NAME":"Match ID , Match Name",
+  "SELECT_FORMAT_TYPE":"Select Format Type",
+  "MATCH_ID":"Match ID",
+  "MATCH_NAME":"Match Name",
+  "FORMAT_TYPE":"Format Type",
+  "STATUS_OF_MATCHES":"Status Of Matches",
+  "STATUS_OF_MATCH":"Status Of Match",
+  "START_DATE":"Start Date",
+  "END_DATE":"End Date",
+  "QUESTIONS":"Questions(count)",
+  "VIEW_TRADING_QUESTION_MANAGER":"View Trading Questions Manager",
+  "ADD_QUESTIONS":"Add Questions",
+  "SEARCH_FORMAT_TYPE":"Search Format Type",
+  "QUESTIONS_NAME":"Questions",
+  "YES_COUNT":"Yes (selected count)",
+  "NO_COUNT":"No (selected count)",
+  "MARK_ANSWER":"Mark Answer",
+  "POLL_STATUS":"Poll Status",
+  "MIN_VALUE_MUST_BE_LESS_THAN_MAX_VALUE":"Min withdraw limit must be less than max withdraw limit."
 
 
 
