@@ -96,7 +96,7 @@ function TradingQuestionManager() {
   })
 
 
-  const statusPage = (e) => {
+  const statusPageTrading = (e) => {
     setFilterData({
       ...filterData,
       category: e.target.value,
@@ -170,7 +170,7 @@ function TradingQuestionManager() {
     setPageSize(10)
   }
 
-  const handleDateChange = (start, end) => {
+  const handleDateChangeTradingQuestion = (start, end) => {
 
     setPage(1)
     setFilterData({
@@ -266,7 +266,7 @@ function TradingQuestionManager() {
                     <OSearchTradingQuestion searchTerm={searchTerm} setSearchTerm={setSearchTerm} placeholder={t('SEARCH_BY_MATCH_ID_MATCH_NAME')} />
                   </div>
                   <ODateRangePicker
-                    handleDateChange={handleDateChange}
+                    handleDateChange={handleDateChangeTradingQuestion}
                     isReset={filterData?.isReset}
                     setIsReset={setFilterData}
                     filterData={filterData}
@@ -279,7 +279,7 @@ function TradingQuestionManager() {
                       className="block p-2 w-full text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer"
                       placeholder=" "
                       value={filterData?.category}
-                      onChange={statusPage}
+                      onChange={statusPageTrading}
                     >
                       <option defaultValue value="">
                         {t("O_ALL")}
