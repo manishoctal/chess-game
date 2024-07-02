@@ -50,13 +50,13 @@ const AddQuestion = ({ setEditShowTradingModal, viewType, offerDetails ,ViewallT
     };
     // submit function end
 
-    const handleDateChange = (dates) => {
+    const handleDateChangeExpiry = (dates) => {
         setValue('expiryDate', dates)
         clearErrors('expiryDate')
         setDate(dates);
     };
 
-    const validationRules = {
+    const validationRulesQuestion = {
         code: {
             required: { value: true, message: t("PLEASE_ENTER_OFFER_CODE") },
             min: { value: 1, message: t("MINIMUM_VALUE_MUST_IS_1") },
@@ -115,7 +115,7 @@ const AddQuestion = ({ setEditShowTradingModal, viewType, offerDetails ,ViewallT
                                     type="text"
                                     placeholder="ENTER_OFFER_CODE"
                                     maxLength={50}
-                                    validation={validationRules.code}
+                                    validation={validationRulesQuestion.code}
                                     errors={errors}
                                     labelType={true}
                                     register={register} />
@@ -126,7 +126,7 @@ const AddQuestion = ({ setEditShowTradingModal, viewType, offerDetails ,ViewallT
                                     type="number"
                                     placeholder="ENTER_USER_LIMIT"
                                     maxLength={5}
-                                    validation={validationRules.maxUserLimit}
+                                    validation={validationRulesQuestion.maxUserLimit}
                                     errors={errors}
                                     labelType={true}
                                     register={register}
@@ -141,7 +141,7 @@ const AddQuestion = ({ setEditShowTradingModal, viewType, offerDetails ,ViewallT
                                     type="number"
                                     placeholder="ENTER_RESTRICTED_USER"
                                     maxLength={5}
-                                    validation={validationRules.limitPerUser}
+                                    validation={validationRulesQuestion.limitPerUser}
                                     errors={errors}
                                     labelType={true}
 
@@ -154,7 +154,7 @@ const AddQuestion = ({ setEditShowTradingModal, viewType, offerDetails ,ViewallT
                                     type="number"
                                     placeholder="ENTER_CASH_BONUS"
                                     maxLength={5}
-                                    validation={validationRules.cashBackAmount}
+                                    validation={validationRulesQuestion.cashBackAmount}
                                     errors={errors}
                                     labelType={true}
                                     register={register}
@@ -169,7 +169,7 @@ const AddQuestion = ({ setEditShowTradingModal, viewType, offerDetails ,ViewallT
                                     placeholder="ENTER_ADD_AMOUNT_UP_TO"
                                     maxLength={5}
                                     labelType={false}
-                                    validation={validationRules.addMinimumAmount}
+                                    validation={validationRulesQuestion.addMinimumAmount}
                                     errors={errors}
                                     register={register}
 
@@ -180,7 +180,7 @@ const AddQuestion = ({ setEditShowTradingModal, viewType, offerDetails ,ViewallT
                                         name="validity"
                                         id="validity"
                                         value={date}
-                                        handleDateChange={handleDateChange}
+                                        handleDateChange={handleDateChangeExpiry}
                                         minDate="today"
                                         placeholder={t("EXPIRY_DATE")}
                                         inputClass={'relative z-0  !w-[250px] group h-11 mt-1'}
