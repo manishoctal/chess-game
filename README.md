@@ -1,4 +1,4 @@
-# Admin Panel development
+# Admin Panel
 
 
 ## Install dependencies:
