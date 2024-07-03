@@ -46,7 +46,7 @@ const AddQuestion = ({ setEditShowTradingModal }) => {
     // default value for edit code
     // submit function start
     const handleSubmitAddQuestionForm = async (e) => {
-
+console.log('e',e)
     };
     // submit function end
 
