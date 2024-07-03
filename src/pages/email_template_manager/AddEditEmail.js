@@ -119,6 +119,7 @@ let submitButton = isLoading ? (
     label={
       labelName
     }
+    title={labelName}
     type='submit'
     loading={isLoading}
   />
@@ -188,6 +189,7 @@ let submitButton = isLoading ? (
             <button
               className='text-black bg-[#E1E1E1] font-normal px-12 py-2.5 text-sm outline-none focus:outline-none rounded mr-6  ease-linear transition-all duration-150'
               type='button'
+              title={t('O_BACK')}
             >
               {t('O_BACK')}
             </button>

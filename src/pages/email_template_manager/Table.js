@@ -90,6 +90,7 @@ const Table = ({
                             <Link
                               to='/email-manager/edit'
                               state={{ item, type: 'edit' }}
+                              title={t('O_EDIT')}
                             >
                               <div className=''>
                                 <AiFillEdit className="cursor-pointer w-5 h-5 text-slate-600" />

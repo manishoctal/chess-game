@@ -52,7 +52,7 @@ export const AuthProvider = ({ children }) => {
       text.split('').map(textToChars).map(applySaltToChar).map(byteHex).join('')
   }
   const myCipher = cipher('mySecretSalt')
-  const loginUser = async body => {
+  const loginUser = async (body,setLoginError) => {
     document.getElementById('loader').classList.remove('hidden')
     const { status, data } = await apiPost(
       apiPath.loginUser,
@@ -84,8 +84,10 @@ export const AuthProvider = ({ children }) => {
           notification.success(data?.message)
 
         }
+        setLoginError(false)
       } else {
         notification.error(data.message)
+        setLoginError(true)
       }
     }
     document.getElementById('loader').classList.add('hidden')
@@ -120,6 +122,8 @@ export const AuthProvider = ({ children }) => {
     window?.localStorage.removeItem('token')
     window?.localStorage.removeItem('refresh_token')
     navigate('/login')
+    notification.success('Logout Successfully.')
+
   }
 
   const filterUpdate = data => {

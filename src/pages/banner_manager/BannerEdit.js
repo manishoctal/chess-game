@@ -65,10 +65,10 @@ const BannerEdit = ({ setEditShowModal, getAllFAQ, item, viewType }) => {
     }, [])
     return (
         <>
-            <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+            <div className="justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
                 <form onSubmit={handleSubmit(handleSubmitForm)} method="post">
-                    <div className="relative w-auto my-6 mx-auto max-w-3xl">
-                        <div className="overflow-hidden border border-white dark:border-[#ffffff38] rounded-lg shadow-lg relative flex flex-col min-w-[502px] bg-white outline-none focus:outline-none">
+                    <div className="relative w-auto my-6 mx-auto max-w-lg">
+                        <div className="overflow-hidden border border-white dark:border-[#ffffff38] rounded-lg shadow-lg relative flex flex-col  bg-white outline-none focus:outline-none">
                             <div className="dark:bg-gray-900 flex items-center justify-between p-5 border-b dark:border-[#ffffff38] border-solid border-slate-200 rounded-t dark:bg-slate-900">
                                 <h3 className="text-xl font-semibold dark:text-white">
                                     {viewType == 'edit' ? t("EDIT_BANNER") : t("VIEW_BANNER")}
@@ -112,6 +112,7 @@ const BannerEdit = ({ setEditShowModal, getAllFAQ, item, viewType }) => {
                                 <button
                                     className="text-black bg-[#E1E1E1] font-normal px-12 py-2.5 text-sm outline-none focus:outline-none rounded mr-6  ease-linear transition-all duration-150"
                                     type="button"
+                                    title={t("CLOSE")}
                                     onClick={() => setEditShowModal(false)}
                                 >
                                     {t("CLOSE")}
@@ -123,6 +124,7 @@ const BannerEdit = ({ setEditShowModal, getAllFAQ, item, viewType }) => {
                                 </button>, <button
                                     className="bg-gradientTo text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150"
                                     type="submit"
+                                    title={t("O_EDIT")}
                                 >
                                     {t("O_EDIT")}
                                 </button>)}

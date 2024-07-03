@@ -140,6 +140,31 @@ const OInputField = props => {
         </>
       )
 
+
+      case 'checkbox':
+        return (
+          <>
+            <div className={wrapperClassName || ''}>
+              {inputLabel&&<label
+                htmlFor={name}
+                className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'
+              >
+                {inputLabel}
+                {labelType && <span className='text-red-500'>*</span>}
+              </label>}
+              <input
+                type={type}
+                id={name}
+                {...register}
+                {...rest}
+                disabled={disable}
+              />
+  
+              <ErrorMessage message={errors?.[name]?.message} />
+            </div>
+          </>
+        )
+
     default:
       return <div>Please provide some input props.</div>
   }
