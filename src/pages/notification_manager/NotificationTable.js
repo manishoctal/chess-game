@@ -47,7 +47,7 @@ const NotificationTable = ({
                     {startCase(item?.description) || "N/A"}
                   </td>
                   <td className="py-4 px-6 border-r w-60 text-center">
-                    {helpers.ternaryCondition(item?.sendTo == 'all', 'All Users', startCase(item?.sendTo)) || "N/A"} {item?.sendTo !== 'all' && !isEmpty(item?.userData) && <span className="font-bold text-slate-600">({item?.userData?.firstName + ' ' + item?.userData?.lastName || ''})</span>}
+                    {helpers.ternaryCondition(item?.sendTo == 'all', 'All Users', startCase(item?.sendTo)) || "N/A"} {item?.sendTo !== 'all' && !isEmpty(item?.userData) && <span className="font-bold text-slate-600">({startCase(item?.userData?.firstName||'N/A') + ' ' + startCase(item?.userData?.lastName) || ''})</span>}
                   </td>
                   <td className="py-4 px-6 border-r text-center">
                     {helpers.getDateAndTime(item?.createdAt)}

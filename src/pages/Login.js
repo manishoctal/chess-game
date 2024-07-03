@@ -45,9 +45,15 @@ function Login() {
     }
   }, []);
 
-
+  const [isLoginError, setLoginError] = useState(false)
+  useEffect(() => {
+    if (isLoginError) {
+      setMessage("");
+      setCaptchaInput('')
+    }
+  }, [isLoginError])
   // login function start
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     if (!captchaInput) {
       setMessage("Please enter CAPTCHA value");
       setMessageClass("text-red-600");
@@ -69,11 +75,14 @@ function Login() {
     }
     setMessage("CAPTCHA validation successful!");
     setMessageClass("text-green-600");
-    loginUser(data);
+    setLoginError(false)
+    await loginUser(data, setLoginError);
+
+
   };
 
 
-    // login function end
+  // login function end
 
   useEffect(() => {
     if (user !== null) {
@@ -191,7 +200,7 @@ function Login() {
                 />
               </div>
               <div className="mt-2">
-                <Captcha onChange={setGeneratedCaptcha} />
+                <Captcha onChange={setGeneratedCaptcha} isLoginError={isLoginError}/>
               </div>
             </div>
             <div className="mb-3">

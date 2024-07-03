@@ -50,7 +50,7 @@ export default function ImageUploader({ onFileChange ,defaultImage}) {
                     onDragLeave={(e) => e.currentTarget.classList.remove('border-blue-500')}
                     onDrop={handleDrop}
                 >
-                    <p className="text-gray-500">{t('DRAG_AND_DROP_IMAGE')}</p>
+                    <p className="text-gray-500 text-center">{t('DRAG_AND_DROP_IMAGE')}</p>
                     <input
                         id="fileInput"
                         type="file"

@@ -154,8 +154,8 @@ function Home() {
     },
     series: [
       {
-        name: "Earning",
-        data: [],
+        name: "User Registered",
+        data: [12,23,45,66,76,87,89,53,67,2,45,78,342,67,234,77,53,173,53,46,43,56,34],
       },
     ],
   });

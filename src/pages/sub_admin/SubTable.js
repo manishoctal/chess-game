@@ -90,10 +90,10 @@ const SubTable = ({
                   {item?.email||'N/A'}
                 </td>
               
-                <td className="py-2 px-4 border-r dark:border-[#ffffff38]">
+                <td className="py-2 px-4 border-r dark:border-[#ffffff38] font-bold">
                   {item?.mobile || "N/A"}
                 </td>
-                <td className="py-2 px-4 border-r dark:border-[#ffffff38]">
+                <td className="py-2 px-4 border-r dark:border-[#ffffff38] w-[190px]">
                   {startCase(item?.address) || "N/A"}
                 </td>
 

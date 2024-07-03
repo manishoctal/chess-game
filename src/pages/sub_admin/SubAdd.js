@@ -407,6 +407,7 @@ const SubAdd = () => {
         <button
           className='text-black bg-[#E1E1E1] font-normal px-12 py-2.5 text-sm outline-none focus:outline-none rounded mr-6  ease-linear transition-all duration-150'
           type='button'
+          title={t('O_BACK')}
           onClick={() => navigate('/sub-admin-manager')}
         >
           {t('O_BACK')}
@@ -421,6 +422,7 @@ const SubAdd = () => {
             <button
               className='bg-gradientTo text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150'
               type='submit'
+              title={t(itemType)}
               onClick={handleSubmit(onSubmit)}
             >
               {itemType}
