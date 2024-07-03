@@ -46,7 +46,7 @@ const AddQuestion = ({ setEditShowTradingModal }) => {
     // default value for edit code
     // submit function start
     const handleSubmitAddQuestionForm = async (e) => {
-console.log('e',e)
+        console.log('e', e)
     };
     // submit function end
 
@@ -332,26 +332,28 @@ console.log('e',e)
                                         <div className="px-2">
                                             <p className="font-medium text-sm text-[#000] dark:text-gray-400 block mb-1"><span className='font-bold'>{i + 1}.</span> Match Outcome</p>
                                             <div className="mb-4">
-                                                <div className="mb-2">
-                                                    <input
+                                                <div className="mb-2 gap-2 flex">
+
+                                                    <OInputField
                                                         type="checkbox"
-                                                        className="mr-2"
+                                                        name="outcomes"
                                                         id='outcomes'
                                                     />
                                                     <label htmlFor='outcomes'>Was the match decided by the Duckworth-Lewis method? </label>
                                                 </div>
-                                                <div className="mb-2">
-                                                    <input
+                                                <div className="mb-2 flex gap-2">
+                                                    <OInputField
                                                         type="checkbox"
-                                                        className="mr-2"
+                                                        name="outcomes1"
                                                         id='outcomes1'
                                                     />
                                                     <label htmlFor='outcomes1'>Did the match end in a tie? </label>
                                                 </div>
-                                                <div className="mb-2">
-                                                    <input
+                                                <div className="mb-2 flex gap-2">
+
+                                                    <OInputField
                                                         type="checkbox"
-                                                        className="mr-2"
+                                                        name="outcomes2"
                                                         id='outcomes2'
                                                     />
                                                     <label htmlFor='outcomes2'>Did the match go to a Super Over? </label>
@@ -363,20 +365,21 @@ console.log('e',e)
                                     {data?.value == 'injuriesSubstitutions' && <div className="flex items-center mb-3 ml-3 mt-3">
                                         <div className="px-2">
                                             <p className="font-medium text-sm text-[#000] dark:text-gray-400 block mb-1"><span className='font-bold'>{i + 1}.</span> Injuries and Substitutions</p>
-                                            <div className="mb-4">
-                                                <div className="mb-2">
-                                                    <input
+                                            <div className="mb-4 mt-2">
+                                                <div className="mb-2 flex gap-2">
+
+                                                    <OInputField
                                                         type="checkbox"
-                                                        className="mr-2"
+                                                        name="injuries1"
                                                         id='injuries1'
                                                     />
                                                     <label htmlFor='injuries1'>Was any player substituted due to injury? </label>
                                                 </div>
-                                                <div className="mb-2">
-                                                    <input
+                                                <div className="mb-2 flex gap-2">
+                                                    <OInputField
                                                         type="checkbox"
-                                                        className="mr-2"
-                                                        id='injuries2'
+                                                        name="injuries2"
+                                                        id="injuries2"
                                                     />
                                                     <label htmlFor='injuries2'>Did a concussion substitute come into play during the match? </label>
                                                 </div>
@@ -387,20 +390,20 @@ console.log('e',e)
                                     {data?.value == 'umpiringRules' && <div className="flex items-center mb-3 ml-3 mt-3">
                                         <div className="px-2">
                                             <p className="font-medium text-sm text-[#000] dark:text-gray-400 block mb-1"><span className='font-bold'>{i + 1}.</span> Umpiring and Rules</p>
-                                            <div className="mb-4">
-                                                <div className="mb-2">
-                                                    <input
+                                            <div className="mb-4 mt-2">
+                                                <div className="mb-2 flex gap-2">
+                                                    <OInputField
                                                         type="checkbox"
-                                                        className="mr-2"
-                                                        id='rules1'
+                                                        name="rules1"
+                                                        id="rules1"
                                                     />
                                                     <label htmlFor='rules1'>Was there a no-ball called for overstepping? </label>
                                                 </div>
-                                                <div className="mb-2">
-                                                    <input
+                                                <div className="mb-2 flex gap-2">
+                                                    <OInputField
                                                         type="checkbox"
-                                                        className="mr-2"
-                                                        id='rules2'
+                                                        name="rules2"
+                                                        id="rules2"
                                                     />
                                                     <label htmlFor='rules2'>Did any player receive a penalty for dissent or misconduct? </label>
                                                 </div>
@@ -423,7 +426,6 @@ console.log('e',e)
                                                 {t('SET_QUESTION_MANUALLY')}
                                             </>
                                         }
-
                                         wrapperClassName="relative z-0  w-full group"
                                         placeholder={t('ENTER_QUESTION')}
                                         maxLength={500}
