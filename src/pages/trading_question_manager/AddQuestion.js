@@ -1,11 +1,8 @@
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import React, { useState } from "react";
 import helpers from "utils/helpers";
 import ErrorMessage from "components/ErrorMessage";
-import apiPath from "utils/apiPath";
-import { apiPost, apiPut } from "utils/apiFetch";
-import useToastContext from "hooks/useToastContext";
 import LoaderButton from "components/reusable/LoaderButton";
 import Select from "react-select";
 import OInputField from "components/reusable/OInputField";
@@ -17,8 +14,8 @@ const AddQuestion = ({ setEditShowTradingModal }) => {
         register,
         formState: { errors },
     } = useForm({ mode: "onChange", shouldFocusError: true, defaultValues: {} });
-    const[selectedQuestionType,setSelectedQuestiontype]=useState([])
-    const[questionType,setQuestiontype]=useState([
+    const [selectedQuestionType, setSelectedQuestiontype] = useState([])
+    const [questionType] = useState([
         {
             "label": "Team performance",
             "value": "teamPerformance"
@@ -42,16 +39,11 @@ const AddQuestion = ({ setEditShowTradingModal }) => {
         {
             "label": "Injuries and Substitutions",
             "value": "injuriesSubstitutions"
-        },{ "label": "Umpiring and Rules", "value": "umpiringRules"}
+        }, { "label": "Umpiring and Rules", "value": "umpiringRules" }
     ])
-    const [loader, setLoader] = useState(false)
-    const [checkedStates, setCheckedStates] = useState([false, false, false]);
+    const [loader] = useState(false)
 
     // default value for edit code
-
-    const notification = useToastContext();
-
-
     // submit function start
     const handleSubmitAddQuestionForm = async (e) => {
 
@@ -73,13 +65,13 @@ const AddQuestion = ({ setEditShowTradingModal }) => {
 
         menu: (provided) => ({
             ...provided,
-            zIndex: 9999, 
-            position: 'absolute', 
-          }),
-          menuPortal: (base) => ({
+            zIndex: 9999,
+            position: 'absolute',
+        }),
+        menuPortal: (base) => ({
             ...base,
-            zIndex: 9999, 
-          }),
+            zIndex: 9999,
+        }),
 
     };
 
@@ -113,7 +105,7 @@ const AddQuestion = ({ setEditShowTradingModal }) => {
                                 <div className="px-2">
                                     <label htmlFor="formatType" className="font-medium text-sm text-[#000] dark:text-gray-400 block mb-1" > {t("QUESTION_TYPE")} </label>
                                     <Select
-                                    isMulti
+                                        isMulti
                                         className='border-1 rounded-lg border-[#DFDFDF]'
                                         name="formatType"
                                         placeholder={
@@ -122,336 +114,334 @@ const AddQuestion = ({ setEditShowTradingModal }) => {
                                             </span>
                                         }
                                         options={questionType}
-                                        onChange={(e) => {setSelectedQuestiontype(e) }}
+                                        onChange={(e) => { setSelectedQuestiontype(e) }}
                                         styles={customStyles}
                                         menuPortalTarget={document.body}
                                     />
                                 </div>
 
                             </div>
-                            {selectedQuestionType&&selectedQuestionType?.map((data,i)=>{return<>
-                                {data?.value=='teamPerformance'&&
-                            <div className="flex items-center mb-3 ml-3 mt-3">
-                                <div className="px-2">
-                                    <p className="font-medium text-sm text-[#000] dark:text-gray-400 block mb-1"><span className='font-bold'>{i+1}.</span> Team Performance</p>
-                                    <div className="mb-4">
-                                        <div className="mb-2">
-                                            <input
-                                                type="checkbox"
-                                                className="mr-2"
-                                                 id='team'
-                                            />
-                                            <label htmlFor='team'>Did </label>
-                                            <select className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer">
-                                                <option value="">Select Team</option>
-                                                <option value="teamA">Team A</option>
-                                                <option value="teamB">Team B</option>
-                                            </select>
-                                            <select className="mx-1 p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer">
-                                                <option value="wins">Wins</option>
-                                                <option value="loses">Loses</option>
-                                            </select>
-                                            <label htmlFor='team'> the match? </label>
-                                        </div>
-                                        <div className="mb-2">
+                            {selectedQuestionType && selectedQuestionType?.map((data, i) => {
+                                return <>
+                                    {data?.value == 'teamPerformance' &&
+                                        <div className="flex items-center mb-3 ml-3 mt-3">
+                                            <div className="px-2">
+                                                <p className="font-medium text-sm text-[#000] dark:text-gray-400 block mb-1"><span className='font-bold'>{i + 1}.</span> Team Performance</p>
+                                                <div className="mb-4">
+                                                    <div className="mb-2">
+                                                        <input
+                                                            type="checkbox"
+                                                            className="mr-2"
+                                                            id='team'
+                                                        />
+                                                        <label htmlFor='team'>Did </label>
+                                                        <select className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer">
+                                                            <option value="">Select Team</option>
+                                                            <option value="teamA">Team A</option>
+                                                            <option value="teamB">Team B</option>
+                                                        </select>
+                                                        <select className="mx-1 p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer">
+                                                            <option value="wins">Wins</option>
+                                                            <option value="loses">Loses</option>
+                                                        </select>
+                                                        <label htmlFor='team'> the match? </label>
+                                                    </div>
+                                                    <div className="mb-2">
 
-                                            <input
-                                                type="checkbox"
-                                                className="mr-2"
-                                                 id='team1'
-                                            />
-                                            <label htmlFor='team1'>Did </label>
-                                            <select className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer">
-                                                <option value="">Select Team</option>
-                                                <option value="teamA">Team A</option>
-                                                <option value="teamB">Team B</option>
-                                            </select>
-                                            <label htmlFor='team1'> score more than </label>
-                                            <input
-                                                type="number"
-                                                className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer w-[90px]"
-                                                placeholder="Set run"
-                                            />
-                                            <label htmlFor='team1'> runs? </label>
-                                            <input type="number" className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer" placeholder="Threshold value of run" />
-                                        </div>
-                                        <div className="mb-2">
-                                            <input
-                                                type="checkbox"
-                                                className="mr-2"
-                                                id='team2'
-                                            />
-                                            <label  htmlFor='team2'>Did </label>
-                                            <select className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer">
-                                                <option value="">Select Team</option>
-                                                <option value="teamA">Team A</option>
-                                                <option value="teamB">Team B</option>
-                                            </select>
-                                            <label htmlFor='team2'> lose more than </label>
-                                            <input
-                                                type="number"
-                                                className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg w-[90px] border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer"
-                                                placeholder="Set wickets"
-                                            />
-                                            <label htmlFor='team2'> wickets in their innings? </label>
-                                            <input type="number" placeholder="Threshold value of wicket" className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg  border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>}
-
-                            {data?.value=='teamPlayer'&& <div className="flex items-center mb-3 ml-3 mt-3">
-                                <div className="px-2">
-                                    <p className="font-medium text-sm text-[#000] dark:text-gray-400 block mb-1"><span className='font-bold'>{i+1}.</span> Player performance</p>
-                                    <div className="mb-4">
-                                        <div className="mb-2">
-                                            <input
-                                                type="checkbox"
-                                                className="mr-2"
-                                                 id='player'
-                                            />
-                                            <label htmlFor='player'>Did </label>
-                                            <select className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0 peer">
-                                                <option value="">Select Player X</option>
-                                                <option value="teamA">Player A</option>
-                                                <option value="teamB">Player B</option>
-                                            </select>
-                                            <label  htmlFor='player'> score a century? </label>
-                                            <input type="number" className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0 mx-1 peer" placeholder="Threshold value" />
-                                        </div>
-                                        <div className="mb-2">
-                                            <input
-                                                type="checkbox"
-                                                className="mr-2"
-                                                id='player1'
-                                            />
-                                            <label  htmlFor='player1'>Did </label>
-                                            <select className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer">
-                                                <option value="">Select Player Y</option>
-                                                <option value="teamA">Player A</option>
-                                                <option value="teamB">Player B</option>
-                                            </select>
-                                            <label htmlFor='player1'> take </label>
-                                            <input
-                                                type="number"
-                                                className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer w-[90px]"
-
-                                                placeholder="Set wicket"
-                                            />
-                                            <label htmlFor='player1'> or more wickets in the match? </label>
-                                            <input type="number" className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer" placeholder="Threshold value of wicket" />
-                                        </div>
-                                        <div className="mb-2">
-                                            <input
-                                                type="checkbox"
-                                                className="mr-2"
-                                                  id='player2'
-                                            />
-                                            <label htmlFor='player2'>Did </label>
-                                            <select className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer">
-                                                <option value="">Select Player Z</option>
-                                                <option value="teamA">Player A</option>
-                                                <option value="teamB">Player B</option>
-                                            </select>
-                                            <label htmlFor='player2'> hit more than </label>
-                                            <input
-                                                type="number"
-                                                className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg w-[90px] border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer"
-                                                placeholder="Set sixes"
-                                            />
-                                            <label htmlFor='player2'> sixes? </label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>}
-
-                            {data?.value=='specificEvents'&&<div className="flex items-center mb-3 ml-3 mt-3">
-                                <div className="px-2">
-                                    <p className="font-medium text-sm text-[#000] dark:text-gray-400 block mb-1"><span className='font-bold'>{i+1}.</span> Specific Events</p>
-                                    <div className="mb-4">
-                                        <div className="mb-2">
-                                            <input
-                                                type="checkbox"
-                                                className="mr-2"
-                                                id='Specific'
-                                            />
-                                            <label htmlFor='Specific'>Was there a hat-trick taken in the match? </label>
-                                             </div>
-                                        <div className="mb-2">
-                                            <input
-                                                type="checkbox"
-                                                className="mr-2"
-                                                id='Specific1'
-                                            />
-                                            <label htmlFor='Specific1'>Did </label>
-                                            <select className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer">
-                                                <option value="">Select Team</option>
-                                                <option value="teamA">Team A</option>
-                                                <option value="teamB">Team B</option>
-                                            </select>
-                                            <label htmlFor='Specific1'> win the toss and choose to bat first? </label>
-                                        </div>
-                                        <div className="mb-2">
-                                            <input
-                                                type="checkbox"
-                                                className="mr-2"
-                                                 id='Specific2'
-                                            />
-                                            <label htmlFor='Specific2'>Was there a rain interruption during the match? </label>
-                                              </div>
-                                    </div>
-                                </div>
-                            </div>}
-
-                            {data?.value=='technicalDecisions'&& <div className="flex items-center mb-3 ml-3 mt-3">
-                                <div className="px-2">
-                                    <p className="font-medium text-sm text-[#000] dark:text-gray-400 block mb-1"><span className='font-bold'>{i+1}.</span> Technical Decisions</p>
-                                    <div className="mb-4">
-                                        <div className="mb-2">
-                                            <input
-                                                type="checkbox"
-                                                className="mr-2"
-                                                id='decisions'
-                                            />
-                                            <label htmlFor='decisions'>Was there a DRS (Decision Review System) review during the match? </label>
-                                        </div>
-                                        <div className="mb-2">
-                                            <input
-                                                type="checkbox"
-                                                className="mr-2"
-                                                 id='decisions1'
-                                            />
-                                            <label htmlFor='decisions1'>Did the third umpire overturn an on-field decision? </label>
-                                             </div>
-                                        <div className="mb-2">
-                                            <input
-                                                type="checkbox"
-                                                className="mr-2"
-                                                  id='decisions2'
-                                            />
-                                            <label htmlFor='decisions2'>Was any player given out for obstructing the field? </label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>}
-
-                            {data?.value=='matchOutcomes'&& <div className="flex items-center mb-3 ml-3 mt-3">
-                                <div className="px-2">
-                                    <p className="font-medium text-sm text-[#000] dark:text-gray-400 block mb-1"><span className='font-bold'>{i+1}.</span> Match Outcome</p>
-                                    <div className="mb-4">
-                                        <div className="mb-2">
-                                            <input
-                                                type="checkbox"
-                                                className="mr-2"
-                                                id='outcomes'
-                                            />
-                                            <label htmlFor='outcomes'>Was the match decided by the Duckworth-Lewis method? </label>
-                                        </div>
-                                        <div className="mb-2">
-                                            <input
-                                                type="checkbox"
-                                                className="mr-2"
-                                                id='outcomes1'
-                                            />
-                                            <label htmlFor='outcomes1'>Did the match end in a tie? </label>
-                                           </div>
-                                        <div className="mb-2">
-                                            <input
-                                                type="checkbox"
-                                                className="mr-2"
-                                                id='outcomes2'
-                                            />
-                                            <label htmlFor='outcomes2'>Did the match go to a Super Over? </label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>}
-
-                            {data?.value=='injuriesSubstitutions'&& <div className="flex items-center mb-3 ml-3 mt-3">
-                                <div className="px-2">
-                                    <p className="font-medium text-sm text-[#000] dark:text-gray-400 block mb-1"><span className='font-bold'>{i+1}.</span> Injuries and Substitutions</p>
-                                    <div className="mb-4">
-                                        <div className="mb-2">
-                                            <input
-                                                type="checkbox"
-                                                className="mr-2"
-                                                id='injuries1'
-                                            />
-                                            <label htmlFor='injuries1'>Was any player substituted due to injury? </label>
-                                        </div>
-                                        <div className="mb-2">
-                                            <input
-                                                type="checkbox"
-                                                className="mr-2"
-                                                 id='injuries2'
-                                            />
-                                            <label htmlFor='injuries2'>Did a concussion substitute come into play during the match? </label>
+                                                        <input
+                                                            type="checkbox"
+                                                            className="mr-2"
+                                                            id='team1'
+                                                        />
+                                                        <label htmlFor='team1'>Did </label>
+                                                        <select className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer">
+                                                            <option value="">Select Team</option>
+                                                            <option value="teamA">Team A</option>
+                                                            <option value="teamB">Team B</option>
+                                                        </select>
+                                                        <label htmlFor='team1'> score more than </label>
+                                                        <input
+                                                            type="number"
+                                                            className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer w-[90px]"
+                                                            placeholder="Set run"
+                                                        />
+                                                        <label htmlFor='team1'> runs? </label>
+                                                        <input type="number" className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer" placeholder="Threshold value of run" />
+                                                    </div>
+                                                    <div className="mb-2">
+                                                        <input
+                                                            type="checkbox"
+                                                            className="mr-2"
+                                                            id='team2'
+                                                        />
+                                                        <label htmlFor='team2'>Did </label>
+                                                        <select className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer">
+                                                            <option value="">Select Team</option>
+                                                            <option value="teamA">Team A</option>
+                                                            <option value="teamB">Team B</option>
+                                                        </select>
+                                                        <label htmlFor='team2'> lose more than </label>
+                                                        <input
+                                                            type="number"
+                                                            className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg w-[90px] border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer"
+                                                            placeholder="Set wickets"
+                                                        />
+                                                        <label htmlFor='team2'> wickets in their innings? </label>
+                                                        <input type="number" placeholder="Threshold value of wicket" className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg  border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer" />
+                                                    </div>
+                                                </div>
                                             </div>
-                                    </div>
-                                </div>
-                            </div>}
+                                        </div>}
 
-                            {data?.value=='umpiringRules'&&<div className="flex items-center mb-3 ml-3 mt-3">
-                                <div className="px-2">
-                                    <p className="font-medium text-sm text-[#000] dark:text-gray-400 block mb-1"><span className='font-bold'>{i+1}.</span> Umpiring and Rules</p>
-                                    <div className="mb-4">
-                                        <div className="mb-2">
-                                            <input
-                                                type="checkbox"
-                                                className="mr-2"
-                                                id='rules1'
-                                            />
-                                            <label htmlFor='rules1'>Was there a no-ball called for overstepping? </label>
+                                    {data?.value == 'teamPlayer' && <div className="flex items-center mb-3 ml-3 mt-3">
+                                        <div className="px-2">
+                                            <p className="font-medium text-sm text-[#000] dark:text-gray-400 block mb-1"><span className='font-bold'>{i + 1}.</span> Player performance</p>
+                                            <div className="mb-4">
+                                                <div className="mb-2">
+                                                    <input
+                                                        type="checkbox"
+                                                        className="mr-2"
+                                                        id='player'
+                                                    />
+                                                    <label htmlFor='player'>Did </label>
+                                                    <select className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0 peer">
+                                                        <option value="">Select Player X</option>
+                                                        <option value="teamA">Player A</option>
+                                                        <option value="teamB">Player B</option>
+                                                    </select>
+                                                    <label htmlFor='player'> score a century? </label>
+                                                    <input type="number" className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0 mx-1 peer" placeholder="Threshold value" />
+                                                </div>
+                                                <div className="mb-2">
+                                                    <input
+                                                        type="checkbox"
+                                                        className="mr-2"
+                                                        id='player1'
+                                                    />
+                                                    <label htmlFor='player1'>Did </label>
+                                                    <select className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer">
+                                                        <option value="">Select Player Y</option>
+                                                        <option value="teamA">Player A</option>
+                                                        <option value="teamB">Player B</option>
+                                                    </select>
+                                                    <label htmlFor='player1'> take </label>
+                                                    <input
+                                                        type="number"
+                                                        className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer w-[90px]"
+
+                                                        placeholder="Set wicket"
+                                                    />
+                                                    <label htmlFor='player1'> or more wickets in the match? </label>
+                                                    <input type="number" className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer" placeholder="Threshold value of wicket" />
+                                                </div>
+                                                <div className="mb-2">
+                                                    <input
+                                                        type="checkbox"
+                                                        className="mr-2"
+                                                        id='player2'
+                                                    />
+                                                    <label htmlFor='player2'>Did </label>
+                                                    <select className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer">
+                                                        <option value="">Select Player Z</option>
+                                                        <option value="teamA">Player A</option>
+                                                        <option value="teamB">Player B</option>
+                                                    </select>
+                                                    <label htmlFor='player2'> hit more than </label>
+                                                    <input
+                                                        type="number"
+                                                        className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg w-[90px] border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer"
+                                                        placeholder="Set sixes"
+                                                    />
+                                                    <label htmlFor='player2'> sixes? </label>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div className="mb-2">
-                                            <input
-                                                type="checkbox"
-                                                className="mr-2"
-                                                id='rules2'
-                                            />
-                                            <label htmlFor='rules2'>Did any player receive a penalty for dissent or misconduct? </label>
-                                           </div>
-                                    </div>
-                                </div>
+                                    </div>}
+
+                                    {data?.value == 'specificEvents' && <div className="flex items-center mb-3 ml-3 mt-3">
+                                        <div className="px-2">
+                                            <p className="font-medium text-sm text-[#000] dark:text-gray-400 block mb-1"><span className='font-bold'>{i + 1}.</span> Specific Events</p>
+                                            <div className="mb-4">
+                                                <div className="mb-2">
+                                                    <input
+                                                        type="checkbox"
+                                                        className="mr-2"
+                                                        id='Specific'
+                                                    />
+                                                    <label htmlFor='Specific'>Was there a hat-trick taken in the match? </label>
+                                                </div>
+                                                <div className="mb-2">
+                                                    <input
+                                                        type="checkbox"
+                                                        className="mr-2"
+                                                        id='Specific1'
+                                                    />
+                                                    <label htmlFor='Specific1'>Did </label>
+                                                    <select className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer">
+                                                        <option value="">Select Team</option>
+                                                        <option value="teamA">Team A</option>
+                                                        <option value="teamB">Team B</option>
+                                                    </select>
+                                                    <label htmlFor='Specific1'> win the toss and choose to bat first? </label>
+                                                </div>
+                                                <div className="mb-2">
+                                                    <input
+                                                        type="checkbox"
+                                                        className="mr-2"
+                                                        id='Specific2'
+                                                    />
+                                                    <label htmlFor='Specific2'>Was there a rain interruption during the match? </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>}
+
+                                    {data?.value == 'technicalDecisions' && <div className="flex items-center mb-3 ml-3 mt-3">
+                                        <div className="px-2">
+                                            <p className="font-medium text-sm text-[#000] dark:text-gray-400 block mb-1"><span className='font-bold'>{i + 1}.</span> Technical Decisions</p>
+                                            <div className="mb-4">
+                                                <div className="mb-2">
+                                                    <input
+                                                        type="checkbox"
+                                                        className="mr-2"
+                                                        id='decisions'
+                                                    />
+                                                    <label htmlFor='decisions'>Was there a DRS (Decision Review System) review during the match? </label>
+                                                </div>
+                                                <div className="mb-2">
+                                                    <input
+                                                        type="checkbox"
+                                                        className="mr-2"
+                                                        id='decisions1'
+                                                    />
+                                                    <label htmlFor='decisions1'>Did the third umpire overturn an on-field decision? </label>
+                                                </div>
+                                                <div className="mb-2">
+                                                    <input
+                                                        type="checkbox"
+                                                        className="mr-2"
+                                                        id='decisions2'
+                                                    />
+                                                    <label htmlFor='decisions2'>Was any player given out for obstructing the field? </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>}
+
+                                    {data?.value == 'matchOutcomes' && <div className="flex items-center mb-3 ml-3 mt-3">
+                                        <div className="px-2">
+                                            <p className="font-medium text-sm text-[#000] dark:text-gray-400 block mb-1"><span className='font-bold'>{i + 1}.</span> Match Outcome</p>
+                                            <div className="mb-4">
+                                                <div className="mb-2">
+                                                    <input
+                                                        type="checkbox"
+                                                        className="mr-2"
+                                                        id='outcomes'
+                                                    />
+                                                    <label htmlFor='outcomes'>Was the match decided by the Duckworth-Lewis method? </label>
+                                                </div>
+                                                <div className="mb-2">
+                                                    <input
+                                                        type="checkbox"
+                                                        className="mr-2"
+                                                        id='outcomes1'
+                                                    />
+                                                    <label htmlFor='outcomes1'>Did the match end in a tie? </label>
+                                                </div>
+                                                <div className="mb-2">
+                                                    <input
+                                                        type="checkbox"
+                                                        className="mr-2"
+                                                        id='outcomes2'
+                                                    />
+                                                    <label htmlFor='outcomes2'>Did the match go to a Super Over? </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>}
+
+                                    {data?.value == 'injuriesSubstitutions' && <div className="flex items-center mb-3 ml-3 mt-3">
+                                        <div className="px-2">
+                                            <p className="font-medium text-sm text-[#000] dark:text-gray-400 block mb-1"><span className='font-bold'>{i + 1}.</span> Injuries and Substitutions</p>
+                                            <div className="mb-4">
+                                                <div className="mb-2">
+                                                    <input
+                                                        type="checkbox"
+                                                        className="mr-2"
+                                                        id='injuries1'
+                                                    />
+                                                    <label htmlFor='injuries1'>Was any player substituted due to injury? </label>
+                                                </div>
+                                                <div className="mb-2">
+                                                    <input
+                                                        type="checkbox"
+                                                        className="mr-2"
+                                                        id='injuries2'
+                                                    />
+                                                    <label htmlFor='injuries2'>Did a concussion substitute come into play during the match? </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>}
+
+                                    {data?.value == 'umpiringRules' && <div className="flex items-center mb-3 ml-3 mt-3">
+                                        <div className="px-2">
+                                            <p className="font-medium text-sm text-[#000] dark:text-gray-400 block mb-1"><span className='font-bold'>{i + 1}.</span> Umpiring and Rules</p>
+                                            <div className="mb-4">
+                                                <div className="mb-2">
+                                                    <input
+                                                        type="checkbox"
+                                                        className="mr-2"
+                                                        id='rules1'
+                                                    />
+                                                    <label htmlFor='rules1'>Was there a no-ball called for overstepping? </label>
+                                                </div>
+                                                <div className="mb-2">
+                                                    <input
+                                                        type="checkbox"
+                                                        className="mr-2"
+                                                        id='rules2'
+                                                    />
+                                                    <label htmlFor='rules2'>Did any player receive a penalty for dissent or misconduct? </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>}
+                                </>
+                            })}
+                            {selectedQuestionType?.length === 0 && <div className='flex justify-center h-[50px]'>
+                                <span style={{ fontSize: '14px' }}>No Question Type Selected.</span>
                             </div>}
-                            </>})}
-                            
+                            <div className="px-6 border-t py-3">
+                                <div className="relative z-0 mb-6 w-[70%] ">
+                                    <OInputField
+                                        type="text"
+                                        name="title"
+                                        id="title"
+                                        inputLabel={
+                                            <>
+                                                {t('SET_QUESTION_MANUALLY')}
+                                            </>
+                                        }
 
-                  {selectedQuestionType?.length===0&&<div className='flex justify-center h-[50px]'>
-                  <span style={{fontSize:'14px'}}>No Question Type Selected.</span>
-                  </div>}
-                            
+                                        wrapperClassName="relative z-0  w-full group"
+                                        placeholder={t('ENTER_QUESTION')}
+                                        maxLength={500}
+                                        register={register("manualQuestion", {
+                                            minLength: {
+                                                value: 2,
+                                                message: t('MINIMUM_LENGTH_MUST_BE_2'),
+                                            },
+                                            maxLength: {
+                                                value: 500,
+                                                message: "Minimum length must be 500.",
+                                            },
 
-                  <div className="px-6 border-t py-3">
-                  <div className="relative z-0 mb-6 w-[70%] ">
-                        <OInputField
-                          type="text"
-                          name="title"
-                          id="title"
-                          inputLabel={
-                            <>
-                              {t('SET_QUESTION_MANUALLY')}
-                            </>
-                          }
-                          
-                          wrapperClassName="relative z-0  w-full group"
-                          placeholder={t('ENTER_QUESTION')}
-                          maxLength={500}
-                          register={register("manualQuestion", {
-                            minLength: {
-                              value: 2,
-                              message: t('MINIMUM_LENGTH_MUST_BE_2'),
-                            },
-                            maxLength: {
-                              value: 500,
-                              message: "Minimum length must be 500.",
-                            },
-                           
-                          })}
-                        />
-                        <ErrorMessage message={errors?.manualQuestion?.message} />
-                      </div> 
-                       </div>
+                                        })}
+                                    />
+                                    <ErrorMessage message={errors?.manualQuestion?.message} />
+                                </div>
+                            </div>
 
 
                             <div className="dark:border-[#ffffff38] dark:bg-slate-900 flex items-center justify-center p-6 border-t border-solid border-slate-200 rounded-b">

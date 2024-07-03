@@ -50,8 +50,6 @@ function Login() {
     if (isLoginError) {
       setMessage("");
       setCaptchaInput('')
-    } else {
-
     }
   }, [isLoginError])
   // login function start
