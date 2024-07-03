@@ -94,11 +94,12 @@ const BannerAdd = ({ setAddShowModal, getAllFAQ }) => {
                 <button
                   className="text-black bg-[#E1E1E1] font-normal px-12 py-2.5 text-sm outline-none focus:outline-none rounded mr-6  ease-linear transition-all duration-150"
                   type="button"
+                  title={t("CLOSE")}
                   onClick={() => setAddShowModal(false)}> {t("CLOSE")}</button>
 
                 {helpers.ternaryCondition(loader, <LoaderButton/>, <button
                   className="bg-gradientTo text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150"
-                  type="submit">{t("O_ADD")}</button>)}
+                  type="submit" title={t("O_ADD")}>{t("O_ADD")}</button>)}
 
               </div>
             </div>

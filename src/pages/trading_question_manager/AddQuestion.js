@@ -67,11 +67,16 @@ const AddQuestion = ({ setEditShowTradingModal }) => {
             ...provided,
             zIndex: 9999,
             position: 'absolute',
+            
         }),
         menuPortal: (base) => ({
             ...base,
             zIndex: 9999,
         }),
+        control: (provided) => ({
+            ...provided,
+            width: selectedQuestionType?.length<2?320:'', 
+          }),
 
     };
 
@@ -331,7 +336,7 @@ const AddQuestion = ({ setEditShowTradingModal }) => {
                                     {data?.value == 'matchOutcomes' && <div className="flex items-center mb-3 ml-3 mt-3">
                                         <div className="px-2">
                                             <p className="font-medium text-sm text-[#000] dark:text-gray-400 block mb-1"><span className='font-bold'>{i + 1}.</span> Match Outcome</p>
-                                            <div className="mb-4">
+                                            <div className="mb-4 mt-2">
                                                 <div className="mb-2 gap-2 flex">
 
                                                     <OInputField
