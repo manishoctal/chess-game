@@ -109,7 +109,7 @@ const AddEditOffer = ({ setEditShowOfferModal, viewType, getAllOfferData, offerD
                 <form onSubmit={handleSubmit(handleSubmitAddOfferForm)} method="post">
                     <div className="relative w-auto my-6 mx-auto max-w-3xl">
                         <div className="overflow-hidden  dark:border-[#ffffff38] border border-white rounded-lg shadow-lg relative flex flex-col min-w-[552px] bg-white outline-none focus:outline-none">
-                            <div className=" flex items-center justify-between p-5 dark:bg-gray-900 border-b dark:border-[#ffffff38] border-solid border-slate-200 rounded-t dark:bg-slate-900">
+                            <div className="flex items-center justify-between p-5 dark:bg-gray-900 border-b dark:border-[#ffffff38] border-solid border-slate-200 rounded-t dark:bg-slate-900">
                                 <h3 className="text-xl font-semibold dark:text-white">
                                     {helpers.ternaryCondition(viewType == 'add', t("ADD_OFFER"), t("EDIT_OFFER"))}
                                 </h3>

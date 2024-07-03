@@ -65,10 +65,10 @@ const BannerEdit = ({ setEditShowModal, getAllFAQ, item, viewType }) => {
     }, [])
     return (
         <>
-            <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+            <div className="justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
                 <form onSubmit={handleSubmit(handleSubmitForm)} method="post">
-                    <div className="relative w-auto my-6 mx-auto max-w-3xl">
-                        <div className="overflow-hidden border border-white dark:border-[#ffffff38] rounded-lg shadow-lg relative flex flex-col min-w-[502px] bg-white outline-none focus:outline-none">
+                    <div className="relative w-auto my-6 mx-auto max-w-lg">
+                        <div className="overflow-hidden border border-white dark:border-[#ffffff38] rounded-lg shadow-lg relative flex flex-col  bg-white outline-none focus:outline-none">
                             <div className="dark:bg-gray-900 flex items-center justify-between p-5 border-b dark:border-[#ffffff38] border-solid border-slate-200 rounded-t dark:bg-slate-900">
                                 <h3 className="text-xl font-semibold dark:text-white">
                                     {viewType == 'edit' ? t("EDIT_BANNER") : t("VIEW_BANNER")}

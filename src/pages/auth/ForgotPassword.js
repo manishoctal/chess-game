@@ -9,8 +9,7 @@ import OButton from "components/reusable/OButton";
 import { validationRules } from "utils/constants";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import logoImage from "../../assets/images/logo-color.svg";
-
+import logoImage from "../../assets/images/login-logo.png";
 function ForgotPassword() {
   const { t } = useTranslation();
   const notification = useToastContext();
@@ -50,7 +49,7 @@ function ForgotPassword() {
             onSubmit={handleSubmit(onSubmit)}
             method="post"
           >
-            <img src={logoImage} alt="" className="m-auto py-2" />
+            <img src={logoImage} alt="logoImage" className="m-auto py-2 max-w-[267px]" style={{ filter: ` brightness(1) invert(1)` }} />
             <h1 className="text-center text-[40px] font-bold mb-6 dark:text-white">
               {t("FORGOT_PASSWORD")}
             </h1>

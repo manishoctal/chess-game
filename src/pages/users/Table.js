@@ -206,7 +206,6 @@ const onViewWalletBalance=(e)=>{
           {renderTableCell(getDisplayName(item), "bg-white py-4 px-4 border-r border  dark:border-[#ffffff38]")}
           {renderTableCell(helpers.ternaryCondition(item?.userName, item?.userName, "N/A"), "bg-white border py-2 px-4 border-r  dark:border-[#ffffff38] font-bold ")}
           {renderTableCell(helpers.ternaryCondition(item?.email, item?.email, "N/A"), "bg-white py-2 px-4 border-r border  dark:border-[#ffffff38] font-bold text-slate-900")}
-          {renderTableCell(helpers.ternaryCondition(item?.countryCode, item?.countryCode?.includes('+') ? item?.countryCode : '+' + item?.countryCode, "N/A"), "bg-white border py-2 px-4 border-r  dark:border-[#ffffff38] text-center font-bold")}
           {renderTableCell(helpers.ternaryCondition(item?.mobile, item?.mobile, "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold")}
           {renderUserTypeSpecificCells(item)}
           {renderCommonTableCells(item)}
@@ -234,10 +233,7 @@ const onViewWalletBalance=(e)=>{
                 <OUserTableHead sort={sort} setSort={setSort} name='USER_ID' fieldName='userId' />
                 <OUserTableHead sort={sort} setSort={setSort} name='FULL_NAME' fieldName='fullName' />
                 <OUserTableHead sort={sort} setSort={setSort} name='USER_NAME' fieldName='userName' />
-                <OUserTableHead sort={sort} setSort={setSort} name='O_EMAIL_ID' fieldName='email' />   
-                <th scope="col" className="py-3 px-6">
-                  <div className="text-left">{t("COUNTRY_CODE")}</div>
-                </th>
+                <OUserTableHead sort={sort} setSort={setSort} name='O_EMAIL_ID' fieldName='email' /> 
                 <OUserTableHead sort={sort} setSort={setSort} name='O_MOBILE' fieldName='mobile'/>
                 <OUserTableHead sort={sort} setSort={setSort} name='INVITE_CODE' fieldName='inviteCode'/>
                 <OUserTableHead sort={sort} setSort={setSort} name='JOINED_DATE' fieldName='createdAt'/>

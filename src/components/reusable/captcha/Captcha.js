@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { IoIosRefresh } from "react-icons/io";
 
-const Captcha = ({ onChange }) => {
+const Captcha = ({ onChange,isLoginError }) => {
   const canvasRef = useRef(null);
   const captchaTextRef = useRef('');
 
@@ -35,7 +35,7 @@ const Captcha = ({ onChange }) => {
   };
   useEffect(() => {
     generateCaptcha();
-  }, []);
+  }, [isLoginError]);
 
   const handleClick = () => {
     setIsRotating(true);
