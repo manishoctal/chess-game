@@ -386,8 +386,8 @@ const AddQuestion = ({ setEditShowTradingModal }) => {
                                                         </div>
                                                         <label htmlFor='team2'> wickets in their innings? </label>
                                                         <div>
-                                                            <input type="number" disabled={!teamPerformance?.index3} {...register('teamPerformance.questions.2.threshold', { required: teamPerformance?.index3 || false, })} placeholder="Threshold Value Of Wicket" className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg  border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer" />
-                                                            {errors?.teamPerformance?.questions[2]?.threshold && <div className="text-[12px] text-red-500">Please enter threshold value.</div>}
+                                                            <input type="number" disabled={!teamPerformance?.index3} {...register('teamPerformance.questions.2.threshold', { required:  helpers.orOperator(teamPerformance?.index3 , false) })} placeholder="Threshold Value Of Wicket" className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg  border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer" />
+                                                            { helpers.orOperator(errors?.teamPerformance?.questions[2]?.threshold , <div className="text-[12px] text-red-500">Please enter threshold value.</div>)}
 
                                                         </div>
                                                     </div>
