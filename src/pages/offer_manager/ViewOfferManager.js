@@ -58,7 +58,6 @@ function ViewOfferManager() {
     const ViewallOfferList = async () => {
         try {
             const { category, startDate, endDate, searchKey } = filterData
-
             const payloadData = {
                 page,
                 pageSize: pageSize,
@@ -161,6 +160,36 @@ function ViewOfferManager() {
     }, [])
 
 
+    // Download csv function start 
+
+    const onCsvDownload = async () => {
+        try {
+            const { category, startDate, endDate, searchKey } = filterData
+            const payloadCsv = {
+                page,
+                pageSize: pageSize,
+                status: category,
+                startDate: startDate ? helpers.getFormattedDate(startDate) : null,
+                endDate: endDate ? helpers.getFormattedDate(endDate) : null,
+                keyword: searchKey,
+                sortBy: sort.sortBy,
+                sortType: sort.sortType
+            }
+
+            const path = apiPath.downloadCsv
+            const result = await apiGet(path, payloadCsv)
+            if (result?.data?.success) {
+                helpers.downloadFile(result?.data?.results?.file_path)
+            }
+        } catch (error) {
+            console.error('error in get all sub admin list==>>>>', error.message)
+        }
+
+    }
+
+    // Download csv function end 
+
+
     const editViewBanner = async (type, data) => {
         setEditView(type)
         setItem(data)
@@ -205,7 +234,7 @@ function ViewOfferManager() {
                                     {getTableData(helpers.formattedAmount(state?.cashBackAmount) || 'N/A')}
                                     {getTableData(helpers?.getDateAndTime(state?.expiryDate))}
                                     {getTableData(helpers?.getDateAndTime(state?.createdAt))}
-                                    {getTableData(startCase(state?.status), helpers.ternaryCondition(state?.status=='active','text-green-600','text-red-600'))}
+                                    {getTableData(startCase(state?.status), helpers.ternaryCondition(state?.status == 'active', 'text-green-600', 'text-red-600'))}
                                 </tr>
                             </tbody>
                         </table>
@@ -236,6 +265,7 @@ function ViewOfferManager() {
                                 type='button'
                                 title={t('EXPORT_CSV')}
                                 className='bg-gradientTo text-sm px-8 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2'
+                                onClick={onCsvDownload}
                             >
                                 {t('EXPORT_CSV')}
                             </button>
@@ -247,7 +277,7 @@ function ViewOfferManager() {
                             setSort={setSort}
                             sort={sort}
                             manager={manager}
-                            pageSize={pageSize}/>
+                            pageSize={pageSize} />
                         <div className='flex justify-between'>
                             <PageSizeList dynamicPage={dynamicPage} pageSize={pageSize} />
                             {viewPaginationObj?.totalItems ? (
@@ -255,7 +285,7 @@ function ViewOfferManager() {
                                     handlePageClick={handlePageClick}
                                     options={viewPaginationObj}
                                     isDelete={isDelete}
-                                    page={page}/>
+                                    page={page} />
                             ) : null}
                         </div>
                     </div>
@@ -266,7 +296,7 @@ function ViewOfferManager() {
                     setEditShowModal={setEditShowModal}
                     getAllFAQ={ViewallOfferList}
                     item={item}
-                    viewType={editView}/>
+                    viewType={editView} />
             )}
         </div>
     )
