@@ -51,7 +51,9 @@ const AddQuestion = ({ setEditShowTradingModal }) => {
         }, { "label": "Umpiring and Rules", "value": "umpiringRules" }
     ])
     const [loader] = useState(false)
-    useEffect(() => {
+
+    const checkAllAccess = () => {
+
         if (selectedQuestionType?.length == 0) {
             setTeamPerformance({ index1: false, index2: false, index3: false })
             setPlayerPerformance({ index1: false, index2: false, index3: false })
@@ -172,6 +174,12 @@ const AddQuestion = ({ setEditShowTradingModal }) => {
             }
         }
 
+    }
+
+    useEffect(() => {
+
+        checkAllAccess()
+
     }, [selectedQuestionType])
 
     function checkValueExists(valueToCheck) {
@@ -209,7 +217,7 @@ const AddQuestion = ({ setEditShowTradingModal }) => {
         }
 
 
-        console.log('formattedData',formattedData)
+        console.log('formattedData', formattedData)
 
     };
     // submit function end
@@ -311,12 +319,12 @@ const AddQuestion = ({ setEditShowTradingModal }) => {
                                                             {errors?.teamPerformance?.questions[0]?.teamId && <div className="text-[12px] text-red-500">Please select team.</div>}
                                                         </div>
                                                         <div>
-                                                            <select disabled={!teamPerformance?.index1} {...register('teamPerformance.questions.0.win_loss', { required:  helpers.orOperator(teamPerformance?.index1 , false) })} className="mx-1 p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer">
+                                                            <select disabled={!teamPerformance?.index1} {...register('teamPerformance.questions.0.win_loss', { required: helpers.orOperator(teamPerformance?.index1, false) })} className="mx-1 p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer">
                                                                 <option value="">Select Win/Lose</option>
                                                                 <option value="wins">Wins</option>
                                                                 <option value="loses">Loses</option>
                                                             </select>
-                                                            { helpers.andOperator(errors?.teamPerformance?.questions[0]?.win_loss, <div className="text-[12px] text-red-500">Please select win/lose.</div>)}
+                                                            {helpers.andOperator(errors?.teamPerformance?.questions[0]?.win_loss, <div className="text-[12px] text-red-500">Please select win/lose.</div>)}
                                                         </div>
                                                         <label htmlFor='team'> the match? </label>
                                                     </div>
@@ -330,29 +338,29 @@ const AddQuestion = ({ setEditShowTradingModal }) => {
                                                         />
                                                         <label htmlFor='team1'>Did </label>
                                                         <div>
-                                                            <select disabled={!teamPerformance?.index2} {...register('teamPerformance.questions.1.teamId', { required: helpers.orOperator( teamPerformance?.index2 , false) })} className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer">
+                                                            <select disabled={!teamPerformance?.index2} {...register('teamPerformance.questions.1.teamId', { required: helpers.orOperator(teamPerformance?.index2, false) })} className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer">
                                                                 <option value="">Select Team</option>
                                                                 <option value="teamA">Team A</option>
                                                                 <option value="teamB">Team B</option>
                                                             </select>
-                                                            { helpers.andOperator(errors?.teamPerformance?.questions[1]?.teamId, <div className="text-[12px] text-red-500">Please select team.</div>)}
+                                                            {helpers.andOperator(errors?.teamPerformance?.questions[1]?.teamId, <div className="text-[12px] text-red-500">Please select team.</div>)}
                                                         </div>
                                                         <label htmlFor='team1'> score more than </label>
                                                         <div>
                                                             <input
                                                                 type="number"
-                                                                {...register('teamPerformance.questions.1.score', { required: helpers.orOperator( teamPerformance?.index2 , false) })}
+                                                                {...register('teamPerformance.questions.1.score', { required: helpers.orOperator(teamPerformance?.index2, false) })}
                                                                 className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer w-[90px]"
                                                                 placeholder="Set Run"
                                                                 disabled={!teamPerformance?.index2}
 
                                                             />
-                                                            { helpers.andOperator(errors?.teamPerformance?.questions[1]?.score, <div className="text-[12px] text-red-500">Please enter run.</div>)}
+                                                            {helpers.andOperator(errors?.teamPerformance?.questions[1]?.score, <div className="text-[12px] text-red-500">Please enter run.</div>)}
                                                         </div>
                                                         <label htmlFor='team1'> runs? </label>
                                                         <div>
-                                                            <input type="number" disabled={!teamPerformance?.index2}  {...register('teamPerformance.questions.1.threshold', { required:  helpers.orOperator(teamPerformance?.index2, false) })} className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer" placeholder="Threshold Value Of Run" />
-                                                            { helpers.andOperator(errors?.teamPerformance?.questions[1]?.threshold, <div className="text-[12px] text-red-500">Please enter threshold value.</div>)}
+                                                            <input type="number" disabled={!teamPerformance?.index2}  {...register('teamPerformance.questions.1.threshold', { required: helpers.orOperator(teamPerformance?.index2, false) })} className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer" placeholder="Threshold Value Of Run" />
+                                                            {helpers.andOperator(errors?.teamPerformance?.questions[1]?.threshold, <div className="text-[12px] text-red-500">Please enter threshold value.</div>)}
                                                         </div>
                                                     </div>
                                                     <div className="mb-2 gap-2 flex">
@@ -366,28 +374,28 @@ const AddQuestion = ({ setEditShowTradingModal }) => {
                                                         />
                                                         <label htmlFor='team2'>Did </label>
                                                         <div>
-                                                            <select disabled={!teamPerformance?.index3} {...register('teamPerformance.questions.2.teamId', { required: helpers.orOperator(teamPerformance?.index3 , false) })} className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer">
+                                                            <select disabled={!teamPerformance?.index3} {...register('teamPerformance.questions.2.teamId', { required: helpers.orOperator(teamPerformance?.index3, false) })} className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer">
                                                                 <option value="">Select Team</option>
                                                                 <option value="teamA">Team A</option>
                                                                 <option value="teamB">Team B</option>
                                                             </select>
-                                                            { helpers.andOperator(errors?.teamPerformance?.questions[2]?.teamId , <div className="text-[12px] text-red-500">Please select team.</div>)}
+                                                            {helpers.andOperator(errors?.teamPerformance?.questions[2]?.teamId, <div className="text-[12px] text-red-500">Please select team.</div>)}
                                                         </div>
                                                         <label htmlFor='team2'> lose more than </label>
                                                         <div>
                                                             <input
                                                                 type="number"
                                                                 disabled={!teamPerformance?.index3}
-                                                                {...register('teamPerformance.questions.2.wickets', { required:  helpers.orOperator(teamPerformance?.index3, false) })}
+                                                                {...register('teamPerformance.questions.2.wickets', { required: helpers.orOperator(teamPerformance?.index3, false) })}
                                                                 className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg w-[90px] border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer"
                                                                 placeholder="Set Wickets"
                                                             />
-                                                            { helpers.andOperator(errors?.teamPerformance?.questions[2]?.wickets, <div className="text-[12px] text-red-500">Please enter wicket.</div>)}
+                                                            {helpers.andOperator(errors?.teamPerformance?.questions[2]?.wickets, <div className="text-[12px] text-red-500">Please enter wicket.</div>)}
                                                         </div>
                                                         <label htmlFor='team2'> wickets in their innings? </label>
                                                         <div>
-                                                            <input type="number" disabled={!teamPerformance?.index3} {...register('teamPerformance.questions.2.threshold', { required:  helpers.orOperator(teamPerformance?.index3 , false) })} placeholder="Threshold Value Of Wicket" className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg  border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer" />
-                                                            { helpers.orOperator(errors?.teamPerformance?.questions[2]?.threshold , <div className="text-[12px] text-red-500">Please enter threshold value.</div>)}
+                                                            <input type="number" disabled={!teamPerformance?.index3} {...register('teamPerformance.questions.2.threshold', { required: helpers.orOperator(teamPerformance?.index3, false) })} placeholder="Threshold Value Of Wicket" className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg  border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer" />
+                                                            {helpers.orOperator(errors?.teamPerformance?.questions[2]?.threshold, <div className="text-[12px] text-red-500">Please enter threshold value.</div>)}
 
                                                         </div>
                                                     </div>
@@ -410,17 +418,17 @@ const AddQuestion = ({ setEditShowTradingModal }) => {
                                                     />
                                                     <label htmlFor='player'>Did </label>
                                                     <div>
-                                                        <select disabled={!playerPerformance?.index1} {...register('playerPerformance.questions.0.playerId', { required: helpers.orOperator( playerPerformance?.index1 , false) })} className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0 peer">
+                                                        <select disabled={!playerPerformance?.index1} {...register('playerPerformance.questions.0.playerId', { required: helpers.orOperator(playerPerformance?.index1, false) })} className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0 peer">
                                                             <option value="">Select Player X</option>
                                                             <option value="teamA">Player A</option>
                                                             <option value="teamB">Player B</option>
                                                         </select>
-                                                        { helpers.andOperator(errors?.playerPerformance?.questions[0]?.playerId, <div className="text-[12px] text-red-500">Please select player.</div>)}
+                                                        {helpers.andOperator(errors?.playerPerformance?.questions[0]?.playerId, <div className="text-[12px] text-red-500">Please select player.</div>)}
                                                     </div>
                                                     <label htmlFor='player'> score a century? </label>
                                                     <div>
-                                                        <input type="number" disabled={!playerPerformance?.index1} {...register('playerPerformance.questions.0.threshold', { required:  helpers.orOperator(playerPerformance?.index1 , false) })} className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0 mx-1 peer" placeholder="Threshold Value" />
-                                                        { helpers.andOperator(errors?.playerPerformance?.questions[0]?.threshold, <div className="text-[12px] text-red-500">Please enter threshold value.</div>)}
+                                                        <input type="number" disabled={!playerPerformance?.index1} {...register('playerPerformance.questions.0.threshold', { required: helpers.orOperator(playerPerformance?.index1, false) })} className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0 mx-1 peer" placeholder="Threshold Value" />
+                                                        {helpers.andOperator(errors?.playerPerformance?.questions[0]?.threshold, <div className="text-[12px] text-red-500">Please enter threshold value.</div>)}
                                                     </div>
                                                 </div>
                                                 <div className="mb-2 flex gap-2">
@@ -439,18 +447,18 @@ const AddQuestion = ({ setEditShowTradingModal }) => {
                                                             <option value="teamA">Player A</option>
                                                             <option value="teamB">Player B</option>
                                                         </select>
-                                                        { helpers.andOperator(errors?.playerPerformance?.questions[1]?.playerId , <div className="text-[12px] text-red-500">Please select player.</div>)}
+                                                        {helpers.andOperator(errors?.playerPerformance?.questions[1]?.playerId, <div className="text-[12px] text-red-500">Please select player.</div>)}
                                                     </div>
                                                     <label htmlFor='player1'> take </label>
                                                     <div>
                                                         <input
                                                             type="number"
                                                             disabled={!playerPerformance?.index2}
-                                                            {...register('playerPerformance.questions.1.wicket', { required:  helpers.orOperator(playerPerformance?.index2, false) })}
+                                                            {...register('playerPerformance.questions.1.wicket', { required: helpers.orOperator(playerPerformance?.index2, false) })}
                                                             className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer w-[90px]"
                                                             placeholder="Set Wicket"
                                                         />
-                                                        { helpers.andOperator(errors?.playerPerformance?.questions[1]?.wicket , <div className="text-[12px] text-red-500">Wicket is required.</div>)}
+                                                        {helpers.andOperator(errors?.playerPerformance?.questions[1]?.wicket, <div className="text-[12px] text-red-500">Wicket is required.</div>)}
 
                                                     </div>
                                                     <label htmlFor='player1'> or more wickets in the match? </label>
@@ -498,7 +506,7 @@ const AddQuestion = ({ setEditShowTradingModal }) => {
                                         </div>
                                     </div>)}
 
-                                    {helpers.andOperator(data?.value == 'specificEvents' , <div className="flex items-center mb-3 ml-3 mt-3">
+                                    {helpers.andOperator(data?.value == 'specificEvents', <div className="flex items-center mb-3 ml-3 mt-3">
                                         <div className="px-2">
                                             <p className="font-medium text-sm text-[#000] dark:text-gray-400 block mb-1"><span className='font-bold'>{i + 1}.</span> Specific Events</p>
                                             <div className="mb-4 mt-2">
@@ -549,7 +557,7 @@ const AddQuestion = ({ setEditShowTradingModal }) => {
                                         </div>
                                     </div>)}
 
-                                    {helpers.andOperator(data?.value == 'technicalDecisions' , <div className="flex items-center mb-3 ml-3 mt-3">
+                                    {helpers.andOperator(data?.value == 'technicalDecisions', <div className="flex items-center mb-3 ml-3 mt-3">
                                         <div className="px-2">
                                             <p className="font-medium text-sm text-[#000] dark:text-gray-400 block mb-1"><span className='font-bold'>{i + 1}.</span> Technical Decisions</p>
                                             <div className="mb-4 mt-2">
@@ -590,7 +598,7 @@ const AddQuestion = ({ setEditShowTradingModal }) => {
                                         </div>
                                     </div>)}
 
-                                    {helpers.andOperator(data?.value == 'matchOutcomes' , <div className="flex items-center mb-3 ml-3 mt-3">
+                                    {helpers.andOperator(data?.value == 'matchOutcomes', <div className="flex items-center mb-3 ml-3 mt-3">
                                         <div className="px-2">
                                             <p className="font-medium text-sm text-[#000] dark:text-gray-400 block mb-1"><span className='font-bold'>{i + 1}.</span> Match Outcome</p>
                                             <div className="mb-4 mt-2">
@@ -659,7 +667,7 @@ const AddQuestion = ({ setEditShowTradingModal }) => {
                                         </div>
                                     </div>)}
 
-                                    {helpers.andOperator(data?.value == 'umpiringRules' , <div className="flex items-center mb-3 ml-3 mt-3">
+                                    {helpers.andOperator(data?.value == 'umpiringRules', <div className="flex items-center mb-3 ml-3 mt-3">
                                         <div className="px-2">
                                             <p className="font-medium text-sm text-[#000] dark:text-gray-400 block mb-1"><span className='font-bold'>{i + 1}.</span> Umpiring and Rules</p>
                                             <div className="mb-4 mt-2">
@@ -688,7 +696,7 @@ const AddQuestion = ({ setEditShowTradingModal }) => {
                                     </div>)}
                                 </>
                             })}
-                            {helpers.andOperator(selectedQuestionType?.length === 0 , <div className='flex justify-center h-[50px]'>
+                            {helpers.andOperator(selectedQuestionType?.length === 0, <div className='flex justify-center h-[50px]'>
                                 <span style={{ fontSize: '14px' }}>No Question Type Selected.</span>
                             </div>)}
                             <div className="px-6 border-t py-3">
