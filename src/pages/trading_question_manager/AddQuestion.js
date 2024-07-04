@@ -107,79 +107,78 @@ const AddQuestion = ({ setEditShowTradingModal }) => {
             setValue('injuryAndSubs.questions.1.slug', '')
             setValue('umpiringRules.questions.0.slug', '')
             setValue('umpiringRules.questions.1.slug', '')
-
-        } else {
-            if (!checkValueExists("teamPerformance")) {
-                setTeamPerformance({ index1: false, index2: false, index3: false })
-                setValue('teamPerformance.questions.0.slug', '')
-                setValue('teamPerformance.questions.1.slug', '')
-                setValue('teamPerformance.questions.2.slug', '')
-
-                setValue('teamPerformance.questions.0.teamId', '')
-                setValue('teamPerformance.questions.0.win_loss', '')
-
-                setValue('teamPerformance.questions.1.teamId', '')
-                setValue('teamPerformance.questions.1.score', '')
-                setValue('teamPerformance.questions.1.threshold', '')
-
-                setValue('teamPerformance.questions.2.teamId', '')
-                setValue('teamPerformance.questions.2.wickets', '')
-                setValue('teamPerformance.questions.2.threshold', '')
-            }
-            if (!checkValueExists("playerPerformance")) {
-                setPlayerPerformance({ index1: false, index2: false, index3: false })
-                setValue('playerPerformance.questions.0.slug', '')
-                setValue('playerPerformance.questions.1.slug', '')
-                setValue('playerPerformance.questions.2.slug', '')
-
-                setValue('playerPerformance.questions.0.playerId', '')
-                setValue('playerPerformance.questions.0.threshold', '')
-
-
-                setValue('playerPerformance.questions.1.playerId', '')
-                setValue('playerPerformance.questions.1.wicket', '')
-                setValue('playerPerformance.questions.1.threshold', '')
-
-                setValue('playerPerformance.questions.2.playerId', '')
-                setValue('playerPerformance.questions.2.sixes', '')
-            }
-            if (!checkValueExists("specificEvents")) {
-                setSPecificEvent({ index1: false, index2: false, index3: false })
-                setValue('specificEvent.questions.0.slug', '')
-                setValue('specificEvent.questions.1.slug', '')
-                setValue('specificEvent.questions.2.slug', '')
-                setValue('specificEvent.questions.1.teamId', '')
-            }
-            if (!checkValueExists("technicalDecisions")) {
-                setTechnicalDecision({ index1: false, index2: false, index3: false })
-                setValue('technicalDecision.questions.0.slug', '')
-                setValue('technicalDecision.questions.1.slug', '')
-                setValue('technicalDecision.questions.2.slug', '')
-            }
-            if (!checkValueExists("matchOutcomes")) {
-                setMatchOutcome({ index1: false, index2: false, index3: false })
-                setValue('matchOutcome.questions.0.slug', '')
-                setValue('matchOutcome.questions.1.slug', '')
-                setValue('matchOutcome.questions.2.slug', '')
-            }
-            if (!checkValueExists("injuriesSubstitutions")) {
-                setInjuryAndSubs({ index1: false, index2: false })
-                setValue('injuryAndSubs.questions.0.slug', '')
-                setValue('injuryAndSubs.questions.1.slug', '')
-            }
-            if (!checkValueExists("umpiringRules")) {
-                setUmpiringRules({ index1: false, index2: false })
-                setValue('umpiringRules.questions.0.slug', '')
-                setValue('umpiringRules.questions.1.slug', '')
-            }
+            return
         }
+
+        if (!checkValueExists("teamPerformance")) {
+            setTeamPerformance({ index1: false, index2: false, index3: false })
+            setValue('teamPerformance.questions.0.slug', '')
+            setValue('teamPerformance.questions.1.slug', '')
+            setValue('teamPerformance.questions.2.slug', '')
+
+            setValue('teamPerformance.questions.0.teamId', '')
+            setValue('teamPerformance.questions.0.win_loss', '')
+
+            setValue('teamPerformance.questions.1.teamId', '')
+            setValue('teamPerformance.questions.1.score', '')
+            setValue('teamPerformance.questions.1.threshold', '')
+
+            setValue('teamPerformance.questions.2.teamId', '')
+            setValue('teamPerformance.questions.2.wickets', '')
+            setValue('teamPerformance.questions.2.threshold', '')
+        }
+        if (!checkValueExists("playerPerformance")) {
+            setPlayerPerformance({ index1: false, index2: false, index3: false })
+            setValue('playerPerformance.questions.0.slug', '')
+            setValue('playerPerformance.questions.1.slug', '')
+            setValue('playerPerformance.questions.2.slug', '')
+
+            setValue('playerPerformance.questions.0.playerId', '')
+            setValue('playerPerformance.questions.0.threshold', '')
+
+
+            setValue('playerPerformance.questions.1.playerId', '')
+            setValue('playerPerformance.questions.1.wicket', '')
+            setValue('playerPerformance.questions.1.threshold', '')
+
+            setValue('playerPerformance.questions.2.playerId', '')
+            setValue('playerPerformance.questions.2.sixes', '')
+        }
+        if (!checkValueExists("specificEvents")) {
+            setSPecificEvent({ index1: false, index2: false, index3: false })
+            setValue('specificEvent.questions.0.slug', '')
+            setValue('specificEvent.questions.1.slug', '')
+            setValue('specificEvent.questions.2.slug', '')
+            setValue('specificEvent.questions.1.teamId', '')
+        }
+        if (!checkValueExists("technicalDecisions")) {
+            setTechnicalDecision({ index1: false, index2: false, index3: false })
+            setValue('technicalDecision.questions.0.slug', '')
+            setValue('technicalDecision.questions.1.slug', '')
+            setValue('technicalDecision.questions.2.slug', '')
+        }
+        if (!checkValueExists("matchOutcomes")) {
+            setMatchOutcome({ index1: false, index2: false, index3: false })
+            setValue('matchOutcome.questions.0.slug', '')
+            setValue('matchOutcome.questions.1.slug', '')
+            setValue('matchOutcome.questions.2.slug', '')
+        }
+        if (!checkValueExists("injuriesSubstitutions")) {
+            setInjuryAndSubs({ index1: false, index2: false })
+            setValue('injuryAndSubs.questions.0.slug', '')
+            setValue('injuryAndSubs.questions.1.slug', '')
+        }
+        if (!checkValueExists("umpiringRules")) {
+            setUmpiringRules({ index1: false, index2: false })
+            setValue('umpiringRules.questions.0.slug', '')
+            setValue('umpiringRules.questions.1.slug', '')
+        }
+
 
     }
 
     useEffect(() => {
-
         checkAllAccess()
-
     }, [selectedQuestionType])
 
     function checkValueExists(valueToCheck) {
@@ -395,7 +394,7 @@ const AddQuestion = ({ setEditShowTradingModal }) => {
                                                         <label htmlFor='team2'> wickets in their innings? </label>
                                                         <div>
                                                             <input type="number" disabled={!teamPerformance?.index3} {...register('teamPerformance.questions.2.threshold', { required: helpers.orOperator(teamPerformance?.index3, false) })} placeholder="Threshold Value Of Wicket" className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg  border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer" />
-                                                            {helpers.orOperator(errors?.teamPerformance?.questions[2]?.threshold, <div className="text-[12px] text-red-500">Please enter threshold value.</div>)}
+                                                            {helpers.andOperator(errors?.teamPerformance?.questions[2]?.threshold, <div className="text-[12px] text-red-500">Please enter threshold value.</div>)}
 
                                                         </div>
                                                     </div>
