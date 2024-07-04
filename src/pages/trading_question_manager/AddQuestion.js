@@ -410,17 +410,17 @@ const AddQuestion = ({ setEditShowTradingModal }) => {
                                                     />
                                                     <label htmlFor='player'>Did </label>
                                                     <div>
-                                                        <select disabled={!playerPerformance?.index1} {...register('playerPerformance.questions.0.playerId', { required: playerPerformance?.index1 || false, })} className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0 peer">
+                                                        <select disabled={!playerPerformance?.index1} {...register('playerPerformance.questions.0.playerId', { required: helpers.orOperator( playerPerformance?.index1 , false) })} className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0 peer">
                                                             <option value="">Select Player X</option>
                                                             <option value="teamA">Player A</option>
                                                             <option value="teamB">Player B</option>
                                                         </select>
-                                                        {errors?.playerPerformance?.questions[0]?.playerId && <div className="text-[12px] text-red-500">Please select player.</div>}
+                                                        { helpers.andOperator(errors?.playerPerformance?.questions[0]?.playerId, <div className="text-[12px] text-red-500">Please select player.</div>)}
                                                     </div>
                                                     <label htmlFor='player'> score a century? </label>
                                                     <div>
-                                                        <input type="number" disabled={!playerPerformance?.index1} {...register('playerPerformance.questions.0.threshold', { required: playerPerformance?.index1 || false, })} className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0 mx-1 peer" placeholder="Threshold Value" />
-                                                        {errors?.playerPerformance?.questions[0]?.threshold && <div className="text-[12px] text-red-500">Please enter threshold value.</div>}
+                                                        <input type="number" disabled={!playerPerformance?.index1} {...register('playerPerformance.questions.0.threshold', { required:  helpers.orOperator(playerPerformance?.index1 , false) })} className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0 mx-1 peer" placeholder="Threshold Value" />
+                                                        { helpers.andOperator(errors?.playerPerformance?.questions[0]?.threshold, <div className="text-[12px] text-red-500">Please enter threshold value.</div>)}
                                                     </div>
                                                 </div>
                                                 <div className="mb-2 flex gap-2">
@@ -439,18 +439,18 @@ const AddQuestion = ({ setEditShowTradingModal }) => {
                                                             <option value="teamA">Player A</option>
                                                             <option value="teamB">Player B</option>
                                                         </select>
-                                                        {errors?.playerPerformance?.questions[1]?.playerId && <div className="text-[12px] text-red-500">Please select player.</div>}
+                                                        { helpers.andOperator(errors?.playerPerformance?.questions[1]?.playerId , <div className="text-[12px] text-red-500">Please select player.</div>)}
                                                     </div>
                                                     <label htmlFor='player1'> take </label>
                                                     <div>
                                                         <input
                                                             type="number"
                                                             disabled={!playerPerformance?.index2}
-                                                            {...register('playerPerformance.questions.1.wicket', { required: playerPerformance?.index2 || false, })}
+                                                            {...register('playerPerformance.questions.1.wicket', { required:  helpers.orOperator(playerPerformance?.index2, false) })}
                                                             className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer w-[90px]"
                                                             placeholder="Set Wicket"
                                                         />
-                                                        {errors?.playerPerformance?.questions[1]?.wicket && <div className="text-[12px] text-red-500">Wicket is required.</div>}
+                                                        { helpers.andOperator(errors?.playerPerformance?.questions[1]?.wicket , <div className="text-[12px] text-red-500">Wicket is required.</div>)}
 
                                                     </div>
                                                     <label htmlFor='player1'> or more wickets in the match? </label>
