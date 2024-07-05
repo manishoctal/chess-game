@@ -22,6 +22,9 @@ const SubAdd = () => {
   const location = useLocation()
   const inputRef = useRef(null)
   const [loader, setLoader] = useState(false)
+  const { user, updatePageName } = useContext(AuthContext)
+  const manager =
+    user?.permission?.find(e => e.manager === 'subAdmin_manager') ?? {}
   const item = location.state
   const {
     register,
@@ -46,22 +49,28 @@ const SubAdd = () => {
       permission: item?.item?.permission
     }
   })
+
+  useEffect(()=>{
+    if((helpers.andOperator(item?.type!=='edit',item?.type!=='view'))&& helpers.andOperator(!manager?.add,user?.role!=='admin')){
+      navigate('/sub-admin-manager')
+    }
+  },[location,manager])
+
+  
   const notification = useToastContext()
   const [permissionJons, setPermission] = useState(
     helpers.ternaryCondition(item?.type, getValues('permission'), Permission)
   )
   const formValidation = FormValidation()
 
-  const { updatePageName } = useContext(AuthContext)
   const [countryCode] = useState('in')
   const [isSelectAll, setIsSelectAll] = useState(false)
   const [isCheckAll, setIsCheckAll] = useState(false)
 
   const onChange = event => {
-
-
     if (!event.target.checked) {
       setIsSelectAll(false)
+      setIsCheckAll(false)
     }
 
 
