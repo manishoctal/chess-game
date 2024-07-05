@@ -13,6 +13,7 @@ import AddQuestion from './AddQuestion'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import helpers from 'utils/helpers'
 import { startCase } from 'lodash'
+import { FaCircleArrowLeft } from "react-icons/fa6";
 
 function ViewTradingQuestionManager() {
     const { t } = useTranslation()
@@ -32,7 +33,40 @@ function ViewTradingQuestionManager() {
         }
     }, [state])
     const manager = user?.permission?.find(e => e.manager === 'trading_question_manager') ?? {}
-    const [viewTradingData, setViewTradingData] = useState()
+    const [viewTradingData, setViewTradingData] = useState({ "docs": [
+        {
+          "_id": "668392ad2eb7b8e01a396484",
+          "questions": "Virat Kohli will score 200 runs?",
+          "yesSelected": 12,
+          "noSelected": 3,
+          "poll":{'yes':4.5,'no':6.5},
+          "createdAt": "2024-07-02T05:39:57.233Z",
+          "resultAnnounced":'no',
+          "status": "active",
+          "__v": 0
+        },
+        {
+            "_id": "668392ad2eb7b8e01a396484",
+            "questions": "Rohit Sharma will score 260 runs?",
+            "yesSelected": 17,
+            "noSelected": 13,
+            "poll":{'yes':4.5,'no':6.5},
+            "createdAt": "2024-07-02T05:39:57.233Z",
+            "resultAnnounced":'yes',
+            "status": "active",
+            "__v": 0
+          },
+  
+      ],
+      "totalDocs": 1,
+      "limit": 10,
+      "page": 1,
+      "totalPages": 1,
+      "pagingCounter": 1,
+      "hasPrevPage": false,
+      "hasNextPage": true,
+      "prevPage": null,
+      "nextPage": 2})
     const [page, setPage] = useState(1)
     const [filterData, setFilterData] = useState({
         status: '',
@@ -56,7 +90,7 @@ function ViewTradingQuestionManager() {
         try {
             const { category, startDate, endDate, searchKey } = filterData
 
-            const payloadData = {
+            const payloadTrading = {
                 page,
                 pageSize: pageSize,
                 status: category,
@@ -68,16 +102,16 @@ function ViewTradingQuestionManager() {
             }
 
             const path = apiPath.getOfferUsers + '/' + state?._id
-            const result = await apiGet(path, payloadData)
-            const response = result?.data?.results
+            const result = await apiGet(path, payloadTrading)
+            const responseTrading = result?.data?.results
             const resultStatus = result?.data?.success
-            setViewTradingData(response)
+            setViewTradingData(responseTrading)
             setPaginationViewTradingObj({
                 ...viewTradingPaginationObj,
-                page: resultStatus ? response.page : null,
-                pageCount: resultStatus ? response.totalPages : null,
-                perPageItem: resultStatus ? response?.docs.length : null,
-                totalItems: resultStatus ? response.totalDocs : null
+                page: resultStatus ? responseTrading.page : null,
+                pageCount: resultStatus ? responseTrading.totalPages : null,
+                perPageItem: resultStatus ? responseTrading?.docs.length : null,
+                totalItems: resultStatus ? responseTrading.totalDocs : null
             })
         } catch (error) {
             console.error('error in get all sub admin list==>>>>', error.message)
@@ -105,7 +139,6 @@ function ViewTradingQuestionManager() {
 
     useEffect(() => {
         // api call function
-        ViewallTradingQuestionsList()
     }, [filterData, page, sort, pageSize])
 
     // get view trading question list end
@@ -175,24 +208,27 @@ function ViewTradingQuestionManager() {
         setPage(1);
     };
 
+    const getTableHeaderViewTrading = (name) => {
+        return <th className='text-center py-3 px-6'>{t(name)}</th>
+    }
+
     const getTableDataViewTrading = (details, inputClass) => {
         return <td className={`py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-semibold ${inputClass || ''}`}>
             {details || 'N/A'}
         </td>
     }
 
-    const getTableHeaderViewTrading = (name) => {
-        return <th className='text-center py-3 px-6'>{t(name)}</th>
-    }
+ 
     return (
         <div>
-            <div className='bg-[#F9F9F9] dark:bg-slate-900'>
+            <div className='dark:bg-slate-900 bg-[#F9F9F9]'>
                 <div className='px-3 py-4'>
-                    <Link aria-current="page" className="mb-5 ml-4 block active" to='/trading-question-manager'><svg stroke="currentColor" fill="currentColor" strokeWidth={0} viewBox="0 0 512 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path fill="none" strokeLinecap="square" strokeMiterlimit={10} strokeWidth={48} d="M244 400L100 256l144-144M120 256h292" /></svg></Link>
-
+                    <Link aria-current="page" className="block active mb-5 ml-4 " to='/trading-question-manager'>
+                    <FaCircleArrowLeft size={27} />
+                    </Link>
                     <div className='m-5'>
-                        <table className="w-full text-xs text-left text-[#A5A5A5] dark:text-gray-400 ">
-                            <thead className="text-xs text-gray-900 border border-[#E1E6EE] bg-[#E1E6EE] dark:bg-gray-700 dark:text-gray-400 dark:border-[#ffffff38]">
+                        <table className="text-left text-[#A5A5A5] w-full text-xs dark:text-gray-400 ">
+                            <thead className="bg-[#E1E6EE] dark:bg-gray-700 dark:text-gray-400 text-xs text-gray-900 border border-[#E1E6EE]  dark:border-[#ffffff38]">
                                 <tr>
                                     {getTableHeaderViewTrading('MATCH_NAME')}
                                     {getTableHeaderViewTrading('FORMAT_TYPE')}
@@ -255,14 +291,14 @@ function ViewTradingQuestionManager() {
                                 </div>
                             </div>
 
-                            <button
+                            {(manager?.add || manager?.edit || user?.role === "admin") && (<button
                                 type='button'
                                 title={t('ADD_QUESTIONS')}
                                 onClick={AddTradingQuestion}
                                 className='bg-gradientTo text-sm px-8 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2'
                             >
                                 {t('ADD_QUESTIONS')}
-                            </button>
+                            </button>)}
                         </form>
                         <ViewTradingQuestionTable
                             viewTradingData={viewTradingData?.docs}
@@ -288,7 +324,7 @@ function ViewTradingQuestionManager() {
                 <AddQuestion
                     setEditShowTradingModal={setEditShowModal}
                     ViewallTradingQuestionsList={ViewallTradingQuestionsList}
-
+                    stateData={state}
                 />
             )}
         </div>

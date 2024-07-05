@@ -13,6 +13,7 @@ import AddEditOffer from './AddEditOffer'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import helpers from 'utils/helpers'
 import { startCase } from 'lodash'
+import { FaCircleArrowLeft } from 'react-icons/fa6'
 
 function ViewOfferManager() {
     const { t } = useTranslation()
@@ -209,8 +210,9 @@ function ViewOfferManager() {
         <div>
             <div className='bg-[#F9F9F9] dark:bg-slate-900'>
                 <div className='px-3 py-4'>
-                    <Link aria-current="page" className="mb-5 ml-4 block active" to='/offer-manager'><svg stroke="currentColor" fill="currentColor" strokeWidth={0} viewBox="0 0 512 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path fill="none" strokeLinecap="square" strokeMiterlimit={10} strokeWidth={48} d="M244 400L100 256l144-144M120 256h292" /></svg></Link>
-
+                    <Link aria-current="page" className="mb-5 ml-4 block active" to='/offer-manager'>
+                    <FaCircleArrowLeft size={27} />
+                    </Link>
                     <div className='m-5'>
                         <table className="w-full text-xs text-left text-[#A5A5A5] dark:text-gray-400 ">
                             <thead className="text-xs text-gray-900 border border-[#E1E6EE] bg-[#E1E6EE] dark:bg-gray-700 dark:text-gray-400 dark:border-[#ffffff38]">
