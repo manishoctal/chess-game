@@ -20,7 +20,7 @@ const ViewTradingQuestionTable = ({
   pageSize,
 }) => {
   const { t } = useTranslation();
-  // change status of offer function start
+  
   const { user } = useContext(AuthContext)
   const notification = useToastContext();
   const [announceModal, setAnnounceResultModal] = useState(false)
