@@ -1,4 +1,4 @@
-const apiPath = {
+const apiPath = Object.freeze({
   loginUser: "/v1/admin/login",
   getUsers: "/v1/admin/user",
   getUserDetails:'/v1/admin/user/details',
@@ -53,6 +53,6 @@ const apiPath = {
   getAllOffer:'/v1/admin/offer',
   getOfferUsers:'/v1/admin/offer/get-offer-users',
   downloadCsv:'/v1/admin/offer/csv-download'
-};
+});
 
 export default apiPath;
