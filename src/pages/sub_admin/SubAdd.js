@@ -22,6 +22,9 @@ const SubAdd = () => {
   const location = useLocation()
   const inputRef = useRef(null)
   const [loader, setLoader] = useState(false)
+  const { user, updatePageName } = useContext(AuthContext)
+  const manager =
+    user?.permission?.find(e => e.manager === 'subAdmin_manager') ?? {}
   const item = location.state
   const {
     register,
@@ -46,20 +49,31 @@ const SubAdd = () => {
       permission: item?.item?.permission
     }
   })
+
+  useEffect(()=>{
+    if((helpers.andOperator(item?.type!=='edit',item?.type!=='view'))&& helpers.andOperator(!manager?.add,user?.role!=='admin')){
+      navigate('/sub-admin-manager')
+    }
+  },[location,manager])
+
+  
   const notification = useToastContext()
   const [permissionJons, setPermission] = useState(
     helpers.ternaryCondition(item?.type, getValues('permission'), Permission)
   )
   const formValidation = FormValidation()
 
-  const { updatePageName } = useContext(AuthContext)
   const [countryCode] = useState('in')
   const [isSelectAll, setIsSelectAll] = useState(false)
   const [isCheckAll, setIsCheckAll] = useState(false)
+
   const onChange = event => {
     if (!event.target.checked) {
       setIsSelectAll(false)
+      setIsCheckAll(false)
     }
+
+
     setPermission(current =>
       current.map(obj => {
         if (obj.manager === event.target.name) {
@@ -83,6 +97,15 @@ const SubAdd = () => {
       })
     )
   }
+
+
+
+  useEffect(() => {
+    const allAddAndViewTrue = permissionJons.every(managerName => helpers.ternaryCondition(managerName?.manager !== 'dashboard', managerName.add === true && managerName.view === true, managerName.view === true));
+    if (allAddAndViewTrue) {
+      setIsSelectAll(true)
+    }
+  }, [permissionJons,])
 
   const onSubmit = async data => {
     data.mobile = data?.mobile?.substring(
@@ -136,7 +159,7 @@ const SubAdd = () => {
       updatePageName(t('VIEW_SUB_ADMIN'))
     }
   }, [])
-  
+
   const checkAll = event => {
     setPermission(current =>
       current.map(obj => {
@@ -151,6 +174,12 @@ const SubAdd = () => {
         return obj
       })
     )
+    const allAddAndViewTrue = permissionJons.every(managerName => helpers.ternaryCondition(managerName?.manager !== 'dashboard', managerName.add === true && managerName.view === true, managerName.view === true));
+    if (allAddAndViewTrue) {
+      setIsSelectAll(event.target.checked)
+      setIsCheckAll(event.target.checked)
+    }
+
   }
 
   const selectAll = event => {
@@ -194,7 +223,7 @@ const SubAdd = () => {
       type='text'
       autoFocus={autoFocus}
       maxLength={maxLength}
-      placeholder={placeholder||''}
+      placeholder={placeholder || ''}
       onInput={e => preventMaxInput(e, maxLength)}
       register={register(name, validation)}
       errors={errors}
@@ -238,7 +267,7 @@ const SubAdd = () => {
                   t('O_EMAIL_ID'),
                   50,
                   formValidation['email'],
-                  (item?.type === 'view'||item?.type === 'edit'),
+                  (item?.type === 'view' || item?.type === 'edit'),
                   t('ENTER_EMAIL_ID')
 
                 )}
@@ -371,7 +400,7 @@ const SubAdd = () => {
                       </td>
                       <td className='py-2 px-4 border-r dark:border-[#ffffff38] '>
                         {helpers.andOperator(
-                          data?.shownAdd&&data?.manager!=='dashboard',
+                          data?.shownAdd && data?.manager !== 'dashboard',
                           <input
                             type='checkbox'
                             name={data?.manager}
@@ -384,7 +413,7 @@ const SubAdd = () => {
                       </td>
                       <td className='py-2 px-4 border-r dark:border-[#ffffff38] '>
                         {helpers.andOperator(
-                          data?.shownAll&&data?.manager!=='dashboard',
+                          data?.shownAll && data?.manager !== 'dashboard',
                           <input
                             type='checkbox'
                             id='all'

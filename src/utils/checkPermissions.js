@@ -1,4 +1,4 @@
-export const permissionsMap = {
+export const permissionsMap = Object.freeze({
   dashboard: "/dashboard",
   user_manager: "/users",
   subAdmin_manager: "/sub-admin-manager",
@@ -10,4 +10,4 @@ export const permissionsMap = {
   trading_question_manager:'/trading-question-manager',
   notification_manager:'/notification_manager',
   offer_manager:'/offer-manager'
-};
+});

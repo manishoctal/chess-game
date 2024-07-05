@@ -95,11 +95,11 @@ const Sidebar = () => {
         alt=""
       />
     );
-  
+
     if (permission) {
       return andOperator(checkSidebarPermission(permission), navLink);
     }
-  
+
     return navLink;
   };
 
@@ -133,71 +133,71 @@ const Sidebar = () => {
         </div>
 
         <nav className='pt-4 pb-5 flex flex-col justify-center font-normal text-xs overflow-y-auto'>
-        <SidebarNavItem
-        path="/dashboard"
-        label="NAV_DASHBOARD"
-        imgSrc={Dashboard}
-      />
-      <SidebarNavItem
-        permission="subAdmin_manager"
-        path="/sub-admin-manager"
-        label="SUB_ADMIN_MANAGERS"
-        imgSrc={SubAdmin}
-      />
-      <SidebarNavItem
-        permission="user_manager"
-        path="/users"
-        label="USER_MANAGER"
-        imgSrc={userManager}
-      />
-      <SidebarNavItem
-        permission="banner_manager"
-        path="/banner-manager"
-        label="BANNER_MANAGER"
-        imgSrc={rewardWithdrawalRequest}
-      />
-      <SidebarNavItem
-        permission="offer_manager"
-        path="/offer-manager"
-        label="OFFER_MANAGER"
-        imgSrc={rewardWithdrawalRequest}
-      />
-      <SidebarNavItem
-        permission="trading_question_manager"
-        path="/trading-question-manager"
-        label="TRADING_QUESTION_MANAGER"
-        imgSrc={rewardWithdrawalRequest}
-      />
-      <SidebarNavItem
-        permission="email_manager"
-        path="/email-manager"
-        label="EMAIL_MANAGER"
-        imgSrc={emailManager}
-      />
-      <SidebarNavItem
-        permission="notification_manager"
-        path="/notification_manager"
-        label="NOTIFICATION_MANAGER"
-        imgSrc={notificationManager}
-      />
-      <SidebarNavItem
-        permission="static_page_management"
-        path="/static-content"
-        label="NAV_STATIC_CONTENTS"
-        imgSrc={manageStaticContents}
-      />
-      <SidebarNavItem
-        permission="FAQ"
-        path="/faqs"
-        label="NAV_FAQS"
-        imgSrc={faqs}
-      />
-      <SidebarNavItem
-        permission="settings"
-        path="/setting"
-        label="SETTINGS"
-        imgSrc={globalSettings}
-      />
+          <SidebarNavItem
+            path="/dashboard"
+            label="NAV_DASHBOARD"
+            imgSrc={Dashboard}
+          />
+          <SidebarNavItem
+            permission="subAdmin_manager"
+            path="/sub-admin-manager"
+            label="SUB_ADMIN_MANAGERS"
+            imgSrc={SubAdmin}
+          />
+          <SidebarNavItem
+            permission="user_manager"
+            path="/users"
+            label="USER_MANAGER"
+            imgSrc={userManager}
+          />
+          <SidebarNavItem
+            permission="banner_manager"
+            path="/banner-manager"
+            label="BANNER_MANAGER"
+            imgSrc={rewardWithdrawalRequest}
+          />
+          <SidebarNavItem
+            permission="offer_manager"
+            path="/offer-manager"
+            label="OFFER_MANAGER"
+            imgSrc={rewardWithdrawalRequest}
+          />
+          <SidebarNavItem
+            permission="trading_question_manager"
+            path="/trading-question-manager"
+            label="TRADING_QUESTION_MANAGER"
+            imgSrc={rewardWithdrawalRequest}
+          />
+          <SidebarNavItem
+            permission="email_manager"
+            path="/email-manager"
+            label="EMAIL_MANAGER"
+            imgSrc={emailManager}
+          />
+          <SidebarNavItem
+            permission="notification_manager"
+            path="/notification_manager"
+            label="NOTIFICATION_MANAGER"
+            imgSrc={notificationManager}
+          />
+          <SidebarNavItem
+            permission="static_page_management"
+            path="/static-content"
+            label="NAV_STATIC_CONTENTS"
+            imgSrc={manageStaticContents}
+          />
+          <SidebarNavItem
+            permission="FAQ"
+            path="/faqs"
+            label="NAV_FAQS"
+            imgSrc={faqs}
+          />
+          <SidebarNavItem
+            permission="settings"
+            path="/setting"
+            label="SETTINGS"
+            imgSrc={globalSettings}
+          />
           <Link
             onClick={handleLogout}
             className='flex items-center px-4 lg:px-7 py-4 hover:bg-sideBarNavActiveColor hover:text-gradientTo'

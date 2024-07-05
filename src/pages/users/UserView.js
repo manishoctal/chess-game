@@ -21,6 +21,7 @@ import { apiGet, apiPut } from "utils/apiFetch";
 import ShowImage from "./ShowImage";
 import bonusIcon from "../../assets/icons/icon/bonus.svg";
 import AuthContext from "context/AuthContext";
+import { FaCircleArrowLeft } from "react-icons/fa6";
 
 const UserView = () => {
   const { t } = useTranslation();
@@ -171,7 +172,8 @@ useEffect(()=>{
           <IoArrowBackSharp />
         </Link>,
         <NavLink to="/users" state={{ userType: item?.userType }} className="mb-5 ml-4 block">
-          <IoArrowBackSharp />
+          <FaCircleArrowLeft size={27} />
+
         </NavLink>
       )}
       {helpers.andOperator(

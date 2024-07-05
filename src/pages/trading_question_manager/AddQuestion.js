@@ -6,7 +6,8 @@ import ErrorMessage from "components/ErrorMessage";
 import LoaderButton from "components/reusable/LoaderButton";
 import Select from "react-select";
 import OInputField from "components/reusable/OInputField";
-const AddQuestion = ({ setEditShowTradingModal }) => {
+import { startCase } from "lodash";
+const AddQuestion = ({ setEditShowTradingModal, stateData }) => {
     const { t } = useTranslation();
     const {
         handleSubmit,
@@ -54,6 +55,7 @@ const AddQuestion = ({ setEditShowTradingModal }) => {
 
     const checkAllAccess = () => {
 
+        // check if no question is selected
         if (selectedQuestionType?.length == 0) {
             setTeamPerformance({ index1: false, index2: false, index3: false })
             setPlayerPerformance({ index1: false, index2: false, index3: false })
@@ -110,6 +112,7 @@ const AddQuestion = ({ setEditShowTradingModal }) => {
             return
         }
 
+        // check if any particular question is not selected
         if (!checkValueExists("teamPerformance")) {
             setTeamPerformance({ index1: false, index2: false, index3: false })
             setValue('teamPerformance.questions.0.slug', '')
@@ -173,8 +176,6 @@ const AddQuestion = ({ setEditShowTradingModal }) => {
             setValue('umpiringRules.questions.0.slug', '')
             setValue('umpiringRules.questions.1.slug', '')
         }
-
-
     }
 
     useEffect(() => {
@@ -184,7 +185,8 @@ const AddQuestion = ({ setEditShowTradingModal }) => {
     function checkValueExists(valueToCheck) {
         return selectedQuestionType?.some(item => item?.value === valueToCheck);
     }
-    // default value for edit code
+
+
     // submit function start
     const handleSubmitAddQuestionForm = async (e) => {
 
@@ -214,7 +216,6 @@ const AddQuestion = ({ setEditShowTradingModal }) => {
         if (e?.manualQuestion) {
             formattedData?.push({ category: 'manualQuestion', questions: [{ slug: 'manual_question', question: e?.manualQuestion }] })
         }
-
 
         console.log('formattedData', formattedData)
 
@@ -250,6 +251,21 @@ const AddQuestion = ({ setEditShowTradingModal }) => {
         }),
 
     };
+
+
+    // for view match details
+    const getTableDataViewQuestion = (details, inputClass) => {
+        return <td className={`py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-semibold ${inputClass || ''}`}>
+            {details || 'N/A'}
+        </td>
+    }
+
+    const getTableHeaderAddQuestion = (name) => {
+        return <th className='text-center py-3 px-6'>{t(name)}</th>
+
+    }
+
+
     return (
         <>
             <div className=" overflow-y-auto justify-center items-center overflow-x-hidden  fixed inset-0 z-50 outline-none focus:outline-none">
@@ -271,6 +287,26 @@ const AddQuestion = ({ setEditShowTradingModal }) => {
                                         <span className=" text-[#B8BBBF]  text-4xl ">×</span>
                                     </button>
                                 </button>
+                            </div>
+
+
+                            <div className='m-5'>
+                                <table className="w-full text-xs text-left text-[#A5A5A5] dark:text-gray-400 ">
+                                    <thead className="text-xs text-gray-900 border border-[#E1E6EE] bg-[#E1E6EE] dark:bg-gray-700 dark:text-gray-400 dark:border-[#ffffff38]">
+                                        <tr>
+                                            {getTableHeaderAddQuestion('MATCH_NAME')}
+                                            {getTableHeaderAddQuestion('FORMAT_TYPE')}
+                                            {getTableHeaderAddQuestion('STATUS_OF_MATCH')}
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                            {getTableDataViewQuestion(startCase(stateData?.matchName) || 'N/A')}
+                                            {getTableDataViewQuestion(startCase(stateData?.formatType) || 'N/A')}
+                                            {getTableDataViewQuestion(startCase(stateData?.matchStatus), helpers.ternaryCondition(stateData?.matchStatus == 'live', 'text-green-600', 'text-blue-600'))}
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
 
                             <div className="flex items-center mb-3 ml-3 mt-3">
@@ -462,9 +498,9 @@ const AddQuestion = ({ setEditShowTradingModal }) => {
                                                     </div>
                                                     <label htmlFor='player1'> or more wickets in the match? </label>
                                                     <div>
-                                                        <input type="number" disabled={!playerPerformance?.index2} {...register('playerPerformance.questions.1.threshold', { required: playerPerformance?.index2 || false, })} className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer" placeholder="Threshold value of wicket" />
+                                                        <input type="number" disabled={!playerPerformance?.index2} {...register('playerPerformance.questions.1.threshold', { required: helpers.orOperator(playerPerformance?.index2, false) })} className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer" placeholder="Threshold value of wicket" />
 
-                                                        {errors?.playerPerformance?.questions[1]?.threshold && <div className="text-[12px] text-red-500">Please enter threshold value.</div>}
+                                                        {helpers.andOperator(errors?.playerPerformance?.questions[1]?.threshold, <div className="text-[12px] text-red-500">Please enter threshold value.</div>)}
 
                                                     </div>
                                                 </div>
@@ -480,12 +516,12 @@ const AddQuestion = ({ setEditShowTradingModal }) => {
                                                     />
                                                     <label htmlFor='player2'>Did </label>
                                                     <div>
-                                                        <select disabled={!playerPerformance?.index3} {...register('playerPerformance.questions.2.playerId', { required: playerPerformance?.index3 || false, })} className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer">
+                                                        <select disabled={!playerPerformance?.index3} {...register('playerPerformance.questions.2.playerId', { required: helpers.orOperator(playerPerformance?.index3, false) })} className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer">
                                                             <option value="">Select Player Z</option>
                                                             <option value="teamA">Player A</option>
                                                             <option value="teamB">Player B</option>
                                                         </select>
-                                                        {errors?.playerPerformance?.questions[2]?.playerId && <div className="text-[12px] text-red-500">Please select player.</div>}
+                                                        {helpers.andOperator(errors?.playerPerformance?.questions[2]?.playerId, <div className="text-[12px] text-red-500">Please select player.</div>)}
                                                     </div>
                                                     <label htmlFor='player2'> hit more than </label>
                                                     <div className="mt-">
@@ -496,7 +532,7 @@ const AddQuestion = ({ setEditShowTradingModal }) => {
                                                             className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg w-[90px] border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer"
                                                             placeholder="Set Sixes"
                                                         />
-                                                        {errors?.playerPerformance?.questions[2]?.sixes && <div className="text-[12px] text-red-500">Sixes are required.</div>}
+                                                        {helpers.andOperator(errors?.playerPerformance?.questions[2]?.sixes, <div className="text-[12px] text-red-500">Sixes are required.</div>)}
 
                                                     </div>
                                                     <label htmlFor='player2'> sixes? </label>
@@ -532,12 +568,12 @@ const AddQuestion = ({ setEditShowTradingModal }) => {
                                                     <label htmlFor='Specific1'>Did </label>
                                                     <div>
 
-                                                        <select disabled={!specificEvent?.index2}  {...register('specificEvent.questions.1.teamId', { required: specificEvent?.index2 || false, })} className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer">
+                                                        <select disabled={!specificEvent?.index2}  {...register('specificEvent.questions.1.teamId', { required: helpers.orOperator(specificEvent?.index2, false) })} className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer">
                                                             <option value="">Select Team</option>
                                                             <option value="teamA">Team A</option>
                                                             <option value="teamB">Team B</option>
                                                         </select>
-                                                        {errors?.specificEvent?.questions[1]?.teamId && <div className="text-[12px] text-red-500">Please select team.</div>}
+                                                        {helpers.andOperator(errors?.specificEvent?.questions[1]?.teamId, <div className="text-[12px] text-red-500">Please select team.</div>)}
                                                     </div>
                                                     <label htmlFor='Specific1'> win the toss and choose to bat first? </label>
                                                 </div>

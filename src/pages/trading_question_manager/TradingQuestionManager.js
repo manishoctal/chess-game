@@ -45,8 +45,8 @@ function TradingQuestionManager() {
       {
         "_id": "668392ad2eb7b8e01a396484",
         "matchId": "wwwe",
-        "matchName": "sdds",
-        "formatType": "asds",
+        "matchName": "Ind vs Aus",
+        "formatType": "T20I",
         "matchStatus": "live",
         "startDate": "2024-07-02T05:39:57.233Z",
         "endDate": "2024-07-02T05:40:06.056Z",
@@ -111,7 +111,7 @@ function TradingQuestionManager() {
     try {
       const { category, startDate, endDate, searchKey } = filterData
 
-      const payload = {
+      const questionPayload = {
         page,
         pageSize: pageSize,
         status: category,
@@ -123,16 +123,16 @@ function TradingQuestionManager() {
       }
 
       const path = apiPath.getAllOffer
-      const result = await apiGet(path, payload)
-      const response = result?.data?.results
+      const result = await apiGet(path, questionPayload)
+      const responseData = result?.data?.results
       const resultStatus = result?.data?.success
-      setTradingData(response)
+      setTradingData(responseData)
       setPaginationTradingObj({
         ...paginationTradingObj,
-        page: resultStatus ? response.page : null,
-        pageCount: resultStatus ? response.totalPages : null,
-        perPageItem: resultStatus ? response?.docs.length : null,
-        totalItems: resultStatus ? response.totalDocs : null
+        page: resultStatus ? responseData.page : null,
+        pageCount: resultStatus ? responseData.totalPages : null,
+        perPageItem: resultStatus ? responseData?.docs.length : null,
+        totalItems: resultStatus ? responseData.totalDocs : null
       })
     } catch (error) {
       console.error('error in get all sub admin list==>>>>', error.message)
@@ -182,9 +182,7 @@ function TradingQuestionManager() {
   }
 
 
-  useEffect(() => {
-    updatePageName(t('TRADING_QUESTION_MANAGER'))
-  }, [])
+
 
   // debounce search start
   useEffect(() => {
@@ -201,6 +199,10 @@ function TradingQuestionManager() {
     }
   }, [debouncedSearchTerm])
 
+  useEffect(() => {
+    updatePageName(t('TRADING_QUESTION_MANAGER'))
+  }, [])
+  
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       setDebouncedSearchTerm(searchTerm)

@@ -37,7 +37,8 @@ const StaticContentList = ({
 
                 <OStaticTableHead sort={sort} setSort={setSort} name='Title' fieldName='title' />
                 <OStaticTableHead sort={sort} setSort={setSort} name='O_UPDATED_AT' fieldName='updatedAt' />
-                <OStaticTableHead sort={sort} setSort={setSort} name='O_STATUS' fieldName='status' />
+                {(manager?.add || manager?.edit || user?.role === "admin") && (
+                <OStaticTableHead sort={sort} setSort={setSort} name='O_STATUS' fieldName='status' />)}
                 {(manager?.add || user?.role === 'admin') && (
                   <th scope='col' className='py-3 px-6 text-center  '>
                     {t('O_ACTION')}
@@ -66,29 +67,29 @@ const StaticContentList = ({
                     </td>
 
                     {(manager?.add || manager?.edit || user?.role === "admin") && (
-                  <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-center">
-                    <label
-                      className="inline-flex relative items-center cursor-pointer"
-                      title={`${item?.status === "active" ? "Active" : "Inactive"
-                        }`}
-                    >
-                      <input
-                        type="checkbox"
-                        className="sr-only peer"
-                        checked={item?.status === "active"}
-                        onChange={(e) =>
-                          helpers.alertFunction(
-                            `${t("ARE_YOU_SURE_YOU_WANT_TO")} ${e.target.checked ? "active" : "inactive"
-                            } '${item?.title}'?`,
-                            item,
-                            handelStatusChange
-                          )
-                        }
-                      />
-                      <div className="w-10 h-5 bg-gray-200 rounded-full peer peer-focus:ring-0 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-gradientTo" />
-                    </label>
-                  </td>
-                )}
+                      <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-center">
+                        <label
+                          className="inline-flex relative items-center cursor-pointer"
+                          title={`${item?.status === "active" ? "Active" : "Inactive"
+                            }`}
+                        >
+                          <input
+                            type="checkbox"
+                            className="sr-only peer"
+                            checked={item?.status === "active"}
+                            onChange={(e) =>
+                              helpers.alertFunction(
+                                `${t("ARE_YOU_SURE_YOU_WANT_TO")} ${e.target.checked ? "active" : "inactive"
+                                } '${item?.title}'?`,
+                                item,
+                                handelStatusChange
+                              )
+                            }
+                          />
+                          <div className="w-10 h-5 bg-gray-200 rounded-full peer peer-focus:ring-0 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-gradientTo" />
+                        </label>
+                      </td>
+                    )}
 
                     {(manager?.add || user?.role === 'admin') && (
                       <td className='py-2 px-4 border-l '>
