@@ -101,7 +101,7 @@ const SubAdd = () => {
 
 
   useEffect(() => {
-    const allAddAndViewTrue = permissionJons.every(manager => helpers.ternaryCondition(manager?.manager !== 'dashboard', manager.add === true && manager.view === true, manager.view === true));
+    const allAddAndViewTrue = permissionJons.every(managerName => helpers.ternaryCondition(managerName?.manager !== 'dashboard', managerName.add === true && managerName.view === true, managerName.view === true));
     if (allAddAndViewTrue) {
       setIsSelectAll(true)
     }
@@ -174,7 +174,7 @@ const SubAdd = () => {
         return obj
       })
     )
-    const allAddAndViewTrue = permissionJons.every(manager => helpers.ternaryCondition(manager?.manager !== 'dashboard', manager.add === true && manager.view === true, manager.view === true));
+    const allAddAndViewTrue = permissionJons.every(managerName => helpers.ternaryCondition(managerName?.manager !== 'dashboard', managerName.add === true && managerName.view === true, managerName.view === true));
     if (allAddAndViewTrue) {
       setIsSelectAll(event.target.checked)
       setIsCheckAll(event.target.checked)
