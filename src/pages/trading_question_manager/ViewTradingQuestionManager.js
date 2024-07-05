@@ -32,7 +32,28 @@ function ViewTradingQuestionManager() {
         }
     }, [state])
     const manager = user?.permission?.find(e => e.manager === 'trading_question_manager') ?? {}
-    const [viewTradingData, setViewTradingData] = useState()
+    const [viewTradingData, setViewTradingData] = useState({ "docs": [
+        {
+          "_id": "668392ad2eb7b8e01a396484",
+          "questions": "Virat Kohli will score 200 runs?",
+          "yesSelected": 12,
+          "noSelected": 3,
+          "poll":{'yes':4.5,'no':6.5},
+          "createdAt": "2024-07-02T05:39:57.233Z",
+          "status": "active",
+          "__v": 0
+        },
+  
+      ],
+      "totalDocs": 1,
+      "limit": 10,
+      "page": 1,
+      "totalPages": 1,
+      "pagingCounter": 1,
+      "hasPrevPage": false,
+      "hasNextPage": true,
+      "prevPage": null,
+      "nextPage": 2})
     const [page, setPage] = useState(1)
     const [filterData, setFilterData] = useState({
         status: '',
@@ -105,7 +126,6 @@ function ViewTradingQuestionManager() {
 
     useEffect(() => {
         // api call function
-        ViewallTradingQuestionsList()
     }, [filterData, page, sort, pageSize])
 
     // get view trading question list end
@@ -288,7 +308,7 @@ function ViewTradingQuestionManager() {
                 <AddQuestion
                     setEditShowTradingModal={setEditShowModal}
                     ViewallTradingQuestionsList={ViewallTradingQuestionsList}
-
+                    stateData={state}
                 />
             )}
         </div>

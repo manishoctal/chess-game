@@ -45,8 +45,8 @@ function TradingQuestionManager() {
       {
         "_id": "668392ad2eb7b8e01a396484",
         "matchId": "wwwe",
-        "matchName": "sdds",
-        "formatType": "asds",
+        "matchName": "Ind vs Aus",
+        "formatType": "T20I",
         "matchStatus": "live",
         "startDate": "2024-07-02T05:39:57.233Z",
         "endDate": "2024-07-02T05:40:06.056Z",

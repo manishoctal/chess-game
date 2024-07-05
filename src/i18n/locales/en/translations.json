@@ -701,7 +701,13 @@
   "SELECT_QUESTION_TYPE":"Select Question Type",
   "QUESTION_TYPE":"Question Type",
   "SET_QUESTION_MANUALLY":"Set Question Manually",
-  "ENTER_QUESTION":"Enter Question"
+  "ENTER_QUESTION":"Enter Question",
+  "ANNOUNCE_RESULT":"Announce Result",
+  "O_YES":"Yes",
+  "O_NO":"No",
+  "O_QUESTION":"Question",
+  "SELECT_ANSWER":"Select Answer",
+  "O_ANNOUNCE_RESULT":"Announce Result"
 
 
 
