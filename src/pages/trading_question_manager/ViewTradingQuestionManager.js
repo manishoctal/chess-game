@@ -40,9 +40,21 @@ function ViewTradingQuestionManager() {
           "noSelected": 3,
           "poll":{'yes':4.5,'no':6.5},
           "createdAt": "2024-07-02T05:39:57.233Z",
+          "resultAnnounced":'no',
           "status": "active",
           "__v": 0
         },
+        {
+            "_id": "668392ad2eb7b8e01a396484",
+            "questions": "Rohit Sharma will score 260 runs?",
+            "yesSelected": 17,
+            "noSelected": 13,
+            "poll":{'yes':4.5,'no':6.5},
+            "createdAt": "2024-07-02T05:39:57.233Z",
+            "resultAnnounced":'yes',
+            "status": "active",
+            "__v": 0
+          },
   
       ],
       "totalDocs": 1,
@@ -275,14 +287,14 @@ function ViewTradingQuestionManager() {
                                 </div>
                             </div>
 
-                            <button
+                            {(manager?.add || manager?.edit || user?.role === "admin") && (<button
                                 type='button'
                                 title={t('ADD_QUESTIONS')}
                                 onClick={AddTradingQuestion}
                                 className='bg-gradientTo text-sm px-8 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2'
                             >
                                 {t('ADD_QUESTIONS')}
-                            </button>
+                            </button>)}
                         </form>
                         <ViewTradingQuestionTable
                             viewTradingData={viewTradingData?.docs}

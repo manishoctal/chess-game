@@ -707,7 +707,8 @@
   "O_NO":"No",
   "O_QUESTION":"Question",
   "SELECT_ANSWER":"Select Answer",
-  "O_ANNOUNCE_RESULT":"Announce Result"
+  "O_ANNOUNCE_RESULT":"Announce Result",
+  "RESULT_ANNOUNCED":"Announced"
 
 
 

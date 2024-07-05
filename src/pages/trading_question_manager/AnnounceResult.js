@@ -14,8 +14,8 @@ const AnnounceResult = ({ setAnnounceResultModal, toAnnounceData }) => {
 
 
     // submit function start
-    const handleSubmitAddQuestionForm = async (e) => {
-
+    const handleAnnounceResult = async (e) => {
+console.log('e',e)
 
     };
     // submit function end
@@ -29,7 +29,7 @@ const AnnounceResult = ({ setAnnounceResultModal, toAnnounceData }) => {
     return (
         <>
             <div className=" overflow-y-auto justify-center items-center overflow-x-hidden  fixed inset-0 z-50 outline-none focus:outline-none">
-                <form onSubmit={handleSubmit(handleSubmitAddQuestionForm)} method="post">
+                <form onSubmit={handleSubmit(handleAnnounceResult)} method="post">
                     <div className="relative w-auto my-6 mx-auto max-w-lg">
                         <div className="overflow-hidden  dark:border-[#ffffff38] border border-white rounded-lg shadow-lg relative flex flex-col  bg-white outline-none focus:outline-none">
                             <div className=" flex items-center justify-between p-5 dark:bg-gray-900 border-b dark:border-[#ffffff38] border-solid border-slate-200 rounded-t dark:bg-slate-900">
@@ -84,8 +84,7 @@ const AnnounceResult = ({ setAnnounceResultModal, toAnnounceData }) => {
                                     title={t("CLOSE")}
                                     className="text-black bg-[#E1E1E1] font-normal px-12 py-2.5 text-sm outline-none focus:outline-none rounded mr-6  ease-linear transition-all duration-150"
                                     type="button"
-                                    onClick={() => setAnnounceResultModal(false)}
-                                >
+                                    onClick={() => setAnnounceResultModal(false)}>
                                     {t("CLOSE")}
                                 </button>
                                 {helpers.ternaryCondition(loader,
