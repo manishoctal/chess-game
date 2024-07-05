@@ -13,6 +13,7 @@ import AddQuestion from './AddQuestion'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import helpers from 'utils/helpers'
 import { startCase } from 'lodash'
+import { FaCircleArrowLeft } from "react-icons/fa6";
 
 function ViewTradingQuestionManager() {
     const { t } = useTranslation()
@@ -222,8 +223,9 @@ function ViewTradingQuestionManager() {
         <div>
             <div className='dark:bg-slate-900 bg-[#F9F9F9]'>
                 <div className='px-3 py-4'>
-                    <Link aria-current="page" className="block active mb-5 ml-4 " to='/trading-question-manager'><svg stroke="currentColor" fill="currentColor" strokeWidth={0} viewBox="0 0 512 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path fill="none" strokeLinecap="square" strokeMiterlimit={10} strokeWidth={48} d="M244 400L100 256l144-144M120 256h292" /></svg></Link>
-
+                    <Link aria-current="page" className="block active mb-5 ml-4 " to='/trading-question-manager'>
+                    <FaCircleArrowLeft size={27} />
+                    </Link>
                     <div className='m-5'>
                         <table className="text-left text-[#A5A5A5] w-full text-xs dark:text-gray-400 ">
                             <thead className="bg-[#E1E6EE] dark:bg-gray-700 dark:text-gray-400 text-xs text-gray-900 border border-[#E1E6EE]  dark:border-[#ffffff38]">
