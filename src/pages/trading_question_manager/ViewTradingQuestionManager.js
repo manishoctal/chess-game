@@ -12,7 +12,7 @@ import OSearchViewTradingQuestion from 'components/reusable/OSearch'
 import AddQuestion from './AddQuestion'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import helpers from 'utils/helpers'
-import { startCase } from 'lodash'
+import { isEmpty, startCase } from 'lodash'
 import { FaCircleArrowLeft } from "react-icons/fa6";
 
 function ViewTradingQuestionManager() {
@@ -27,8 +27,9 @@ function ViewTradingQuestionManager() {
         sortBy: 'createdAt',
         sortType: 'desc'
     })
+
     useEffect(() => {
-        if (!state?._id) {
+        if (isEmpty(state)) {
             router('/trading-question-manager')
         }
     }, [state])
@@ -244,12 +245,12 @@ function ViewTradingQuestionManager() {
                             </thead>
                             <tbody>
                                 <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                    {getTableDataViewTrading(startCase(state?.matchName) || 'N/A')}
+                                    {getTableDataViewTrading(startCase(`${state?.localTeamShortName} Vs ${state?.visitorTeamShortName}`) || 'N/A')}
                                     {getTableDataViewTrading(startCase(state?.formatType) || 'N/A')}
                                     {getTableDataViewTrading(helpers?.getDateAndTime(state?.startDate))}
                                     {getTableDataViewTrading(helpers?.getDateAndTime(state?.endDate))}
                                     {getTableDataViewTrading(state?.questionsCount || 'N/A')}
-                                    {getTableDataViewTrading(startCase(state?.matchStatus), helpers.ternaryCondition(state?.matchStatus == 'live', 'text-green-600', 'text-blue-600'))}
+                                    {getTableDataViewTrading(startCase(state?.matchStatus), helpers.ternaryCondition(state?.matchStatus == 'live', 'text-blue-600', helpers.ternaryCondition(state?.matchStatus == 'Not Started','text-yellow-400','text-green-600') ))}
                                 </tr>
                             </tbody>
                         </table>

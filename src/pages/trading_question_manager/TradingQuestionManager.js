@@ -95,7 +95,8 @@ function TradingQuestionManager() {
         endDate: endDate ? dayjs(endDate).format('YYYY-MM-DD') : null,
         keyword: searchKey,
         sortBy: sort.sortBy,
-        sortType: sort.sortType
+        sortType: sort.sortType,
+        
       }
 
       const path = apiPath.getMatchList
