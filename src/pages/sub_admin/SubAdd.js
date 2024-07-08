@@ -7,13 +7,14 @@ import Permission from './Permission'
 import { useTranslation } from 'react-i18next'
 import OInputField from 'components/reusable/OInputField'
 import FormValidation from 'utils/formValidation'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import AuthContext from 'context/AuthContext'
 import PhoneInput from 'react-phone-input-2'
 import ErrorMessage from 'components/ErrorMessage'
 import DynamicLabel from 'utils/DynamicLabel'
 import helpers from 'utils/helpers'
 import { preventMaxInput } from 'utils/validations'
+import { FaCircleArrowLeft } from 'react-icons/fa6'
 const { startCase, capitalize } = require('lodash')
 
 const SubAdd = () => {
@@ -50,13 +51,13 @@ const SubAdd = () => {
     }
   })
 
-  useEffect(()=>{
-    if((helpers.andOperator(item?.type!=='edit',item?.type!=='view'))&& helpers.andOperator(!manager?.add,user?.role!=='admin')){
+  useEffect(() => {
+    if ((helpers.andOperator(item?.type !== 'edit', item?.type !== 'view')) && helpers.andOperator(!manager?.add, user?.role !== 'admin')) {
       navigate('/sub-admin-manager')
     }
-  },[location,manager])
+  }, [location, manager])
 
-  
+
   const notification = useToastContext()
   const [permissionJons, setPermission] = useState(
     helpers.ternaryCondition(item?.type, getValues('permission'), Permission)
@@ -232,7 +233,14 @@ const SubAdd = () => {
   )
   return (
     <>
+
+
       <div className='relative p-6 flex-auto'>
+        <div className='flex active mb-5 ml-4 '>
+          <Link aria-current="page" className="" to={-1}>
+            <FaCircleArrowLeft size={27} />
+          </Link>
+        </div>
         <div className=''>
           <div className=''>
             <div className='grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'>

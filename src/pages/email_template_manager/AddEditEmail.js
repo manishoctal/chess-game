@@ -12,7 +12,7 @@ import { Link } from 'react-router-dom'
 import ReactQuill from 'react-quill'
 import { useLocation, useNavigate } from 'react-router'
 
-export default function AddEditEmail () {
+export default function AddEditEmail() {
   const { t } = useTranslation()
   const location = useLocation()
   const navigate = useNavigate()
@@ -109,25 +109,27 @@ export default function AddEditEmail () {
       </div>
     )
   }
-let labelName=location?.pathname === '/email-manager/edit' ? 'Edit' : 'Add'
-let submitButton = isLoading ? (
-  <div className='spinner-container bg-LightBlue text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150'>
-    <div className='loading-spinner' />
-  </div>
-) : (
-  <OButton
-    label={
-      labelName
-    }
-    title={labelName}
-    type='submit'
-    loading={isLoading}
-  />
-)
+  let labelName = location?.pathname === '/email-manager/edit' ? 'Edit' : 'Add'
+  let submitButton = isLoading ? (
+    <div className='spinner-container bg-LightBlue text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150'>
+      <div className='loading-spinner' />
+    </div>
+  ) : (
+    <OButton
+      label={
+        labelName
+      }
+      title={labelName}
+      type='submit'
+      loading={isLoading}
+    />
+  )
   return (
     <form onSubmit={handleSubmit(handleSubmitForm)} method='post'>
+     
       <div className='outer-boarder'>
-        <div className='headerForm  bg-[#2f2f31]'>
+        
+        <div className='headerForm  bg-[#2f2f31] '>
           {type === 'edit' ? 'Edit' : 'View'} {t('AN_EMAIL_TEMPLATE')}
         </div>
         <div className='relative p-6  pb-0 flex-auto'>

@@ -66,7 +66,7 @@ const getTableDataTrading=(details,dataClass)=>{
                 {t("S.NO")}
               </th>
               <OTradingTableHead sort={sort} setSort={setSort} name='MATCH_ID' fieldName='matchId' classTd={'justify-center'}/>
-              <OTradingTableHead sort={sort} setSort={setSort} name='MATCH_NAME' fieldName='matchName'  classTd={'justify-center'}/>
+              <OTradingTableHead sort={sort} setSort={setSort} name='MATCH_NAME' fieldName='localTeamShortName'  classTd={'justify-center'}/>
               <OTradingTableHead sort={sort} setSort={setSort} name='FORMAT_TYPE' fieldName='formatType'  classTd={'justify-center'}/>
               <OTradingTableHead sort={sort} setSort={setSort} name='STATUS_OF_MATCHES' fieldName='matchStatus' classTd={'justify-center'} />
               <OTradingTableHead sort={sort} setSort={setSort} name='START_DATE' fieldName='startDate' classTd={'justify-center'} />
@@ -92,9 +92,9 @@ const getTableDataTrading=(details,dataClass)=>{
                 </th>
 
                 {getTableDataTrading(item?.matchId)}
-                {getTableDataTrading(startCase(item?.matchName)||'N/A','font-bold')}
+                {getTableDataTrading(startCase(`${item?.localTeamShortName} Vs ${item?.visitorTeamShortName}`)||'N/A','font-bold')}
                 {getTableDataTrading(startCase(item?.formatType)||'N/A')}
-                {getTableDataTrading(startCase(item?.matchStatus)||'N/A')}
+                {getTableDataTrading(startCase(item?.matchStatus)||'N/A', helpers.ternaryCondition(item?.matchStatus=='Not Started','text-yellow-400','text-green-400'))}
                 {getTableDataTrading(helpers.getDateAndTime(item?.startDate))}
                 {getTableDataTrading(helpers.getDateAndTime(item?.endDate))}
                 {getTableDataTrading(item?.questionsCount||'N/A')}

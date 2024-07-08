@@ -10,6 +10,7 @@ import AuthContext from 'context/AuthContext'
 import TradingPageSizeList from 'components/PageSizeList'
 import Select from "react-select";
 import OSearchTradingQuestion from 'components/reusable/OSearch'
+import { startCase } from 'lodash'
 function TradingQuestionManager() {
   const { t } = useTranslation()
   const { user, updatePageName } = useContext(AuthContext)
@@ -40,32 +41,7 @@ function TradingQuestionManager() {
   };
 
 
-  const [tradingData, setTradingData] = useState({
-    "docs": [
-      {
-        "_id": "668392ad2eb7b8e01a396484",
-        "matchId": "wwwe",
-        "matchName": "Ind vs Aus",
-        "formatType": "T20I",
-        "matchStatus": "live",
-        "startDate": "2024-07-02T05:39:57.233Z",
-        "endDate": "2024-07-02T05:40:06.056Z",
-        "questionsCount": 12,
-        "status": "active",
-        "__v": 0
-      },
-
-    ],
-    "totalDocs": 1,
-    "limit": 10,
-    "page": 1,
-    "totalPages": 1,
-    "pagingCounter": 1,
-    "hasPrevPage": false,
-    "hasNextPage": true,
-    "prevPage": null,
-    "nextPage": 2
-  })
+  const [tradingData, setTradingData] = useState({})
   const [page, setPage] = useState(1)
   const [paginationTradingObj, setPaginationTradingObj] = useState({
     page: 1,
@@ -119,10 +95,11 @@ function TradingQuestionManager() {
         endDate: endDate ? dayjs(endDate).format('YYYY-MM-DD') : null,
         keyword: searchKey,
         sortBy: sort.sortBy,
-        sortType: sort.sortType
+        sortType: sort.sortType,
+        
       }
 
-      const path = apiPath.getAllOffer
+      const path = apiPath.getMatchList
       const result = await apiGet(path, questionPayload)
       const responseData = result?.data?.results
       const resultStatus = result?.data?.success
@@ -141,6 +118,7 @@ function TradingQuestionManager() {
 
   useEffect(() => {
     // api call function
+    allTradingQuestionList()
   }, [filterData, page, sort, pageSize])
 
   // get all trading question list end
@@ -232,12 +210,11 @@ function TradingQuestionManager() {
       const payload = {
         keyword: event
       };
-      const path = apiPath.searchUsers;
+      const path = apiPath.getFormatList;
       const result = await apiGet(path, payload);
       if (result?.data?.success) {
-        const formattedOption = result?.data?.results?.map((res) => { return ({ label: `${res?.name + ',' + '(' + res?.email + ')'}`, value: res?._id }) })
+        const formattedOption =[{label:startCase(result?.data?.results?.odi)},{label:startCase(result?.data?.results?.t20)},{label:startCase(result?.data?.results?.test)}]
         setFormatSuggestion(formattedOption)
-
       }
 
     } catch (error) {

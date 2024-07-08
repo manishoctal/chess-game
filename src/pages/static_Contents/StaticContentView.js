@@ -1,10 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { startCase } from "lodash";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import AuthContext from "context/AuthContext";
 import helpers from "utils/helpers";
 import { Buffer } from 'buffer'
+import { FaCircleArrowLeft } from "react-icons/fa6";
 const StaticContentView = () => {
   const { t } = useTranslation();
   const location = useLocation();
@@ -30,6 +31,11 @@ const StaticContentView = () => {
   return (
     <>
       <div>
+      <div className='flex active px-8 py-4'>
+        <Link aria-current="page" className="" to={-1}>
+          <FaCircleArrowLeft size={27} />
+        </Link>
+      </div>
         <div className="bg-[#F9F9F9]">
           <div className="px-3 py-4">
             <div className="bg-white border border-[#E9EDF9] rounded-lg">
