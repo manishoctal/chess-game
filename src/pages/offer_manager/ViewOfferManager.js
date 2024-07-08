@@ -210,9 +210,11 @@ function ViewOfferManager() {
         <div>
             <div className='bg-[#F9F9F9] dark:bg-slate-900'>
                 <div className='px-3 py-4'>
-                    <Link aria-current="page" className="mb-5 ml-4 block active" to='/offer-manager'>
-                    <FaCircleArrowLeft size={27} />
-                    </Link>
+                    <div className='flex active mb-5 ml-4 '>
+                        <Link aria-current="page" className="" to={-1}>
+                            <FaCircleArrowLeft size={27} />
+                        </Link>
+                    </div>
                     <div className='m-5'>
                         <table className="w-full text-xs text-left text-[#A5A5A5] dark:text-gray-400 ">
                             <thead className="text-xs text-gray-900 border border-[#E1E6EE] bg-[#E1E6EE] dark:bg-gray-700 dark:text-gray-400 dark:border-[#ffffff38]">

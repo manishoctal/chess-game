@@ -70,11 +70,11 @@ console.log('e',e)
                             <div className="px-6 flex justify-center">
                                 <div className="relative z-0 mb-6 w-[80%]">
                                     <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{t('SELECT_ANSWER')}</label>
-                                    <button title={t('O_YES')} onClick={() => handleButtonClick('yes')} className={`text-[14px] border-gray-500 px-[50px] py-2 rounded-lg items-center border border-transparent text-white ${helpers.ternaryCondition(selectedButton === 'yes', 'bg-green-600  font-semibold', 'text-[#000000] font-semibold')}`}>
+                                    <button title={t('O_YES')} onClick={() => handleButtonClick('yes')} className={`text-[14px] border-gray-500 px-[50px] py-2 rounded-lg items-center border border  ${helpers.ternaryCondition(selectedButton === 'yes', 'bg-green-600  font-semibold text-white', 'text-[#000000] font-semibold')}`}>
                                         {t('O_YES')}
                                     </button>
 
-                                    <button title={t('O_NO')} onClick={() => handleButtonClick('no')} className={`text-[14px] border-gray-500 px-[50px] py-2 mx-2 rounded-lg items-center border border-transparent text-white ${helpers.ternaryCondition(selectedButton === 'no', 'bg-green-600  font-semibold', 'text-[#000000] font-semibold')}`}>
+                                    <button title={t('O_NO')} onClick={() => handleButtonClick('no')} className={`text-[14px] border-gray-500 px-[50px] py-2 mx-2 rounded-lg items-center border border  ${helpers.ternaryCondition(selectedButton === 'no', 'bg-green-600  font-semibold text-white', 'text-[#000000] font-semibold')}`}>
                                         {t('O_NO')}
                                     </button>
                                 </div>

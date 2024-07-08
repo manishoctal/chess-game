@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import useToastContext from "hooks/useToastContext";
 import { useForm } from "react-hook-form";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { apiPut } from "../../utils/apiFetch";
 import apiPath from "../../utils/apiPath";
 import { useTranslation } from "react-i18next";
@@ -10,6 +10,7 @@ import formValidation from "utils/formValidation";
 import AuthContext from "context/AuthContext";
 import ReactQuill from "react-quill"; 
 import helpers from "utils/helpers";
+import { FaCircleArrowLeft } from "react-icons/fa6";
 
 const EditStaticContent = () => {
   const { t } = useTranslation();
@@ -72,6 +73,11 @@ const[loading,setLoading]=useState(false)
   return (
     <>
       <div>
+      <div className='flex active px-8 py-4'>
+        <Link aria-current="page" className="" to={-1}>
+          <FaCircleArrowLeft size={27} />
+        </Link>
+      </div>
         <div className="bg-[#F9F9F9] dark:bg-slate-900">
           <div className="px-3 py-4">
             <div className="bg-white border border-[#E9EDF9] rounded-lg dark:bg-slate-800 dark:border-[#ffffff38]">

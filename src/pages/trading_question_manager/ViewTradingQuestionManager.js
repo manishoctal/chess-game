@@ -33,40 +33,42 @@ function ViewTradingQuestionManager() {
         }
     }, [state])
     const manager = user?.permission?.find(e => e.manager === 'trading_question_manager') ?? {}
-    const [viewTradingData, setViewTradingData] = useState({ "docs": [
-        {
-          "_id": "668392ad2eb7b8e01a396484",
-          "questions": "Virat Kohli will score 200 runs?",
-          "yesSelected": 12,
-          "noSelected": 3,
-          "poll":{'yes':4.5,'no':6.5},
-          "createdAt": "2024-07-02T05:39:57.233Z",
-          "resultAnnounced":'no',
-          "status": "active",
-          "__v": 0
-        },
-        {
-            "_id": "668392ad2eb7b8e01a396484",
-            "questions": "Rohit Sharma will score 260 runs?",
-            "yesSelected": 17,
-            "noSelected": 13,
-            "poll":{'yes':4.5,'no':6.5},
-            "createdAt": "2024-07-02T05:39:57.233Z",
-            "resultAnnounced":'yes',
-            "status": "active",
-            "__v": 0
-          },
-  
-      ],
-      "totalDocs": 1,
-      "limit": 10,
-      "page": 1,
-      "totalPages": 1,
-      "pagingCounter": 1,
-      "hasPrevPage": false,
-      "hasNextPage": true,
-      "prevPage": null,
-      "nextPage": 2})
+    const [viewTradingData, setViewTradingData] = useState({
+        "docs": [
+            {
+                "_id": "668392ad2eb7b8e01a396484",
+                "questions": "Virat Kohli will score 200 runs?",
+                "yesSelected": 12,
+                "noSelected": 3,
+                "poll": { 'yes': 4.5, 'no': 6.5 },
+                "createdAt": "2024-07-02T05:39:57.233Z",
+                "resultAnnounced": 'no',
+                "status": "active",
+                "__v": 0
+            },
+            {
+                "_id": "668392ad2eb7b8e01a396484",
+                "questions": "Rohit Sharma will score 260 runs?",
+                "yesSelected": 17,
+                "noSelected": 13,
+                "poll": { 'yes': 4.5, 'no': 6.5 },
+                "createdAt": "2024-07-02T05:39:57.233Z",
+                "resultAnnounced": 'yes',
+                "status": "active",
+                "__v": 0
+            },
+
+        ],
+        "totalDocs": 1,
+        "limit": 10,
+        "page": 1,
+        "totalPages": 1,
+        "pagingCounter": 1,
+        "hasPrevPage": false,
+        "hasNextPage": true,
+        "prevPage": null,
+        "nextPage": 2
+    })
     const [page, setPage] = useState(1)
     const [filterData, setFilterData] = useState({
         status: '',
@@ -192,7 +194,7 @@ function ViewTradingQuestionManager() {
 
     // debounce search end
 
-   
+
 
 
     const AddTradingQuestion = async () => {
@@ -218,14 +220,16 @@ function ViewTradingQuestionManager() {
         </td>
     }
 
- 
+
     return (
         <div>
             <div className='dark:bg-slate-900 bg-[#F9F9F9]'>
                 <div className='px-3 py-4'>
-                    <Link aria-current="page" className="block active mb-5 ml-4 " to='/trading-question-manager'>
-                    <FaCircleArrowLeft size={27} />
-                    </Link>
+                    <div className='flex active mb-5 ml-4 '>
+                        <Link aria-current="page" className="" to={-1}>
+                            <FaCircleArrowLeft size={27} />
+                        </Link>
+                    </div>
                     <div className='m-5'>
                         <table className="text-left text-[#A5A5A5] w-full text-xs dark:text-gray-400 ">
                             <thead className="bg-[#E1E6EE] dark:bg-gray-700 dark:text-gray-400 text-xs text-gray-900 border border-[#E1E6EE]  dark:border-[#ffffff38]">
