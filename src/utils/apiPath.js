@@ -52,7 +52,10 @@ const apiPath = Object.freeze({
   walletTransactionList: "/v1/admin/transaction/getTransactionList",
   getAllOffer:'/v1/admin/offer',
   getOfferUsers:'/v1/admin/offer/get-offer-users',
-  downloadCsv:'/v1/admin/offer/csv-download'
+  downloadCsv:'/v1/admin/offer/csv-download',
+  getFormatList:'/v1/admin/questions/getMatchFormatType',
+  getMatchList:'/v1/admin/questions/getMatchesList'
+
 });
 
 export default apiPath;
