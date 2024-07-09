@@ -238,7 +238,6 @@ function ViewTradingQuestionManager() {
                                     {getTableHeaderViewTrading('MATCH_NAME')}
                                     {getTableHeaderViewTrading('FORMAT_TYPE')}
                                     {getTableHeaderViewTrading('START_DATE')}
-                                    {getTableHeaderViewTrading('END_DATE')}
                                     {getTableHeaderViewTrading('QUESTIONS')}
                                     {getTableHeaderViewTrading('STATUS_OF_MATCH')}
                                 </tr>
@@ -248,9 +247,8 @@ function ViewTradingQuestionManager() {
                                     {getTableDataViewTrading(startCase(`${state?.localTeamShortName} Vs ${state?.visitorTeamShortName}`) || 'N/A')}
                                     {getTableDataViewTrading(startCase(state?.formatType) || 'N/A')}
                                     {getTableDataViewTrading(helpers?.getDateAndTime(state?.startDate))}
-                                    {getTableDataViewTrading(helpers?.getDateAndTime(state?.endDate))}
                                     {getTableDataViewTrading(state?.questionsCount || 'N/A')}
-                                    {getTableDataViewTrading(startCase(state?.matchStatus), helpers.ternaryCondition(state?.matchStatus == 'live', 'text-blue-600', helpers.ternaryCondition(state?.matchStatus == 'Not Started','text-yellow-400','text-green-600') ))}
+                                    {getTableDataViewTrading(startCase(state?.matchStatus), helpers.getMatchStatus(state?.matchStatus))}
                                 </tr>
                             </tbody>
                         </table>
