@@ -2,7 +2,7 @@ import OImage from "components/reusable/OImage";
 import dayjs from "dayjs";
 import React, { useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useLocation, Link, useNavigate, NavLink } from "react-router-dom";
+import { useLocation, Link, useNavigate } from "react-router-dom";
 import defaultImage from "../../assets/images/No-image-found.jpg";
 import checkIcon from "../../assets/images/check.png";
 import { startCase } from "lodash";
@@ -173,10 +173,10 @@ const UserView = () => {
     </div>
   )
 
-  const StockCardInfo = ({ label, value }) => (
+  const StockCardInfo = ({ label1, value1 }) => (
     <div>
-      <label className="block text-sm font-medium text-gray-900 dark:text-white px-2 mb-1">{label}</label>
-      <span className="block text-sm font-medium text-gray-900 dark:text-white px-2 text-center">{value}</span>
+      <label className="block text-sm font-medium text-gray-900 dark:text-white px-2 mb-1">{label1}</label>
+      <span className="block text-sm font-medium text-gray-900 dark:text-white px-2 text-center">{value1}</span>
     </div>
   )
 
