@@ -157,7 +157,7 @@ function SubAdmin () {
     }
   }, [debouncedSearchTerm])
 
-  const statusPage = e => {
+  const adminStatusPage = e => {
     setPage(1)
     setFilterData({ ...filterData, category: e.target.value, isFilter: true })
   }
@@ -200,7 +200,7 @@ function SubAdmin () {
                       className='block p-2 w-full text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer'
                       placeholder=' '
                       value={filterData?.category}
-                      onChange={e => statusPage(e)}
+                      onChange={e => adminStatusPage(e)}
                     >
                       <option defaultValue value=''>
                         {t('O_ALL')}
