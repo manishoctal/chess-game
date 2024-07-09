@@ -47,9 +47,9 @@ const helpers = {
     });
   },
 
-getFormattedDate:(date,format)=>{
-  return date?dayjs(date).format(format||'YYYY-MM-DD'):null
-},
+  getFormattedDate: (date, format) => {
+    return date ? dayjs(date).format(format || 'YYYY-MM-DD') : null
+  },
 
   marketStatus: (s) => {
     let status;
@@ -256,6 +256,22 @@ getFormattedDate:(date,format)=>{
     }
     return result;
   },
+
+
+  getMatchStatus: (status) => {
+    switch (status) {
+      case 'live':
+        return 'text-blue-600';
+      case 'Not Started':
+        return 'text-yellow-400';
+      case 'Finished':
+        return 'text-green-600';
+      case 'Cancelled':
+        return 'text-red-600';
+
+    }
+  }
+
 };
 
 export default helpers;

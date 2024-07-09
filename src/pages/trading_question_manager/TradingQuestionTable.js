@@ -62,7 +62,7 @@ const getTableDataTrading=(details,dataClass)=>{
         <table className="w-full text-xs text-left text-[#A5A5A5] dark:text-gray-400 ">
           <thead className="text-xs text-gray-900 border border-[#E1E6EE] bg-[#E1E6EE] dark:bg-gray-700 dark:text-gray-400 dark:border-[#ffffff38]">
             <tr>
-              <th scope="col" className="py-3 px-6">
+              <th scope="col" className="py-3 px-6 text-center">
                 {t("S.NO")}
               </th>
               <OTradingTableHead sort={sort} setSort={setSort} name='MATCH_ID' fieldName='matchId' classTd={'justify-center'}/>
@@ -70,7 +70,6 @@ const getTableDataTrading=(details,dataClass)=>{
               <OTradingTableHead sort={sort} setSort={setSort} name='FORMAT_TYPE' fieldName='formatType'  classTd={'justify-center'}/>
               <OTradingTableHead sort={sort} setSort={setSort} name='STATUS_OF_MATCHES' fieldName='matchStatus' classTd={'justify-center'} />
               <OTradingTableHead sort={sort} setSort={setSort} name='START_DATE' fieldName='startDate' classTd={'justify-center'} />
-              <OTradingTableHead sort={sort} setSort={setSort} name='END_DATE' fieldName='endDate'  classTd={'justify-center'}/>
               <OTradingTableHead sort={sort} setSort={setSort} name='QUESTIONS' fieldName='questionsCount'  classTd={'justify-center'}/>
               {(manager?.add || manager?.edit || user?.role === "admin") && (<OTradingTableHead sort={sort} setSort={setSort} name='O_STATUS' fieldName='status' classTd={'justify-center'} />)}
               {(manager?.view || user?.role === "admin") && (<th scope="col" className="py-3 px-6 text-center">
@@ -86,19 +85,18 @@ const getTableDataTrading=(details,dataClass)=>{
               >
                 <th
                   scope="row"
-                  className="py-2 px-4 border-r dark:border-[#ffffff38] font-medium text-gray-900  dark:text-white"
+                  className="py-2 px-4 border-r dark:border-[#ffffff38] font-medium text-gray-900  dark:text-white text-center"
                 >
                   {i + 1 + pageSize * (page - 1)}
                 </th>
 
                 {getTableDataTrading(item?.matchId)}
                 {getTableDataTrading(startCase(`${item?.localTeamShortName} Vs ${item?.visitorTeamShortName}`)||'N/A','font-bold')}
-                {getTableDataTrading(startCase(item?.formatType)||'N/A')}
-                {getTableDataTrading(startCase(item?.matchStatus)||'N/A', helpers.ternaryCondition(item?.matchStatus=='Not Started','text-yellow-400','text-green-400'))}
+                {getTableDataTrading(item?.formatType?.toUpperCase()||'N/A')}
+                {getTableDataTrading(startCase(item?.matchStatus)||'N/A', helpers.getMatchStatus(item?.matchStatus))}
                 {getTableDataTrading(helpers.getDateAndTime(item?.startDate))}
-                {getTableDataTrading(helpers.getDateAndTime(item?.endDate))}
-                {getTableDataTrading(item?.questionsCount||'N/A')}
-                {(manager?.add || manager?.edit || user?.role === "admin") && (<td className="py-2 px-4 border-r dark:border-[#ffffff38]">
+                {getTableDataTrading(item?.questionsCount||'N/A','font-bold')}
+                {(manager?.add || manager?.edit || user?.role === "admin") && (<td className="py-2 px-4 border-r dark:border-[#ffffff38] text-center">
                   <label
                     className="inline-flex relative items-center cursor-pointer"
                     title={startCase(item?.status)}

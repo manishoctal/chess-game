@@ -10,7 +10,6 @@ import AuthContext from 'context/AuthContext'
 import TradingPageSizeList from 'components/PageSizeList'
 import Select from "react-select";
 import OSearchTradingQuestion from 'components/reusable/OSearch'
-import { startCase } from 'lodash'
 function TradingQuestionManager() {
   const { t } = useTranslation()
   const { user, updatePageName } = useContext(AuthContext)
@@ -56,7 +55,6 @@ function TradingQuestionManager() {
   const [isInitialized1, setIsInitialized1] = useState(false)
   const [searchTerm1, setSearchTerm1] = useState('')
   const [formatSuggestion, setFormatSuggestion] = useState([])
-
   const [filterData, setFilterData] = useState({
     category: '',
     formatType: '',
@@ -67,7 +65,7 @@ function TradingQuestionManager() {
     isFilter: false
   })
   const [sort, setSort] = useState({
-    sortBy: 'createdAt',
+    sortBy: 'startDate',
     sortType: 'desc'
   })
 
@@ -82,6 +80,11 @@ function TradingQuestionManager() {
     setPage(1);
   };
 
+function toStartCase(str) {
+  return str?.replace(/\w\S*/g, (txt) => {
+      return txt?.charAt(0)?.toUpperCase() + txt?.substr(1)?.toLowerCase();
+  });
+}
   // get all trading question list start
   const allTradingQuestionList = async () => {
     try {
@@ -94,25 +97,28 @@ function TradingQuestionManager() {
         startDate: startDate ? dayjs(startDate).format('YYYY-MM-DD') : null,
         endDate: endDate ? dayjs(endDate).format('YYYY-MM-DD') : null,
         keyword: searchKey,
-        sortBy: sort.sortBy,
+        sortKey: sort.sortBy,
         sortType: sort.sortType,
+        formatType:toStartCase(filterData?.formatType?.value)||null
         
       }
 
       const path = apiPath.getMatchList
       const result = await apiGet(path, questionPayload)
       const responseData = result?.data?.results
-      const resultStatus = result?.data?.success
+      const resultStatus = result?.data?.success  
+      if(resultStatus){
       setTradingData(responseData)
       setPaginationTradingObj({
         ...paginationTradingObj,
-        page: resultStatus ? responseData.page : null,
-        pageCount: resultStatus ? responseData.totalPages : null,
-        perPageItem: resultStatus ? responseData?.docs.length : null,
-        totalItems: resultStatus ? responseData.totalDocs : null
+        page: resultStatus ? responseData?.page : null,
+        pageCount: resultStatus ? responseData?.totalPages : null,
+        perPageItem: resultStatus ? responseData?.docs?.length : null,
+        totalItems: resultStatus ? responseData?.totalDocs : null
       })
+    }
     } catch (error) {
-      console.error('error in get all sub admin list==>>>>', error.message)
+      console.error('error in get all trading question list==>>>>', error.message)
     }
   }
 
@@ -146,6 +152,7 @@ function TradingQuestionManager() {
     setPage(1)
     setSearchTerm('')
     setPageSize(10)
+    setFormatSuggestion([])
   }
 
   const handleDateChangeTradingQuestion = (start, end) => {
@@ -213,7 +220,7 @@ function TradingQuestionManager() {
       const path = apiPath.getFormatList;
       const result = await apiGet(path, payload);
       if (result?.data?.success) {
-        const formattedOption =[{label:startCase(result?.data?.results?.odi)},{label:startCase(result?.data?.results?.t20)},{label:startCase(result?.data?.results?.test)}]
+        const formattedOption =[{label:result?.data?.results?.odi?.toUpperCase(),value:result?.data?.results?.odi},{label:result?.data?.results?.t20?.toUpperCase(),value:result?.data?.results?.t20},{label:result?.data?.results?.test?.toUpperCase(),value:result?.data?.results?.test}]
         setFormatSuggestion(formattedOption)
       }
 
