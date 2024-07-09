@@ -468,9 +468,9 @@ const UserView = () => {
                           </div>
 
                           <div className="flex justify-between">
-                            <StockCardInfo label={t('STOCK_BOUGHT')} value={helpers.formattedAmount(100)} />
-                            <StockCardInfo label={t('STOCK_SOLD')} value={helpers.formattedAmount(100)} />
-                            <StockCardInfo label={t('STOCK_HOLD')} value={helpers.formattedAmount(100)} />
+                            <StockCardInfo label1={t('STOCK_BOUGHT')} value1={helpers.formattedAmount(100)} />
+                            <StockCardInfo label1={t('STOCK_SOLD')} value1={helpers.formattedAmount(100)} />
+                            <StockCardInfo label1={t('STOCK_HOLD')} value1={helpers.formattedAmount(100)} />
                           </div>
                         </figure>
                       </div>
