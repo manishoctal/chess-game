@@ -173,6 +173,13 @@ const UserView = () => {
     </div>
   )
 
+  const StockCardInfo = ({ label, value }) => (
+    <div>
+      <label className="block text-sm font-medium text-gray-900 dark:text-white px-2 mb-1">{label}</label>
+      <span className="block text-sm font-medium text-gray-900 dark:text-white px-2 text-center">{value}</span>
+    </div>
+  )
+
 
   return (
     <div className="p-5 dark:bg-slate-900">
@@ -455,15 +462,15 @@ const UserView = () => {
                           <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white p-2 mt-3">{t('PLAYER_STOCK')}</label>
 
                           <div className="flex justify-between mb-9">
-                            <PlayerCardInfo label={t('O_INVESTMENT')} value={helpers.formattedAmount(100)} />
-                            <PlayerCardInfo label={t('TOTAL_SELLING_STOCK')} value={helpers.formattedAmount(100)} />
-                            <PlayerCardInfo label={t('RETURN_SELLING_STOCK')} value={helpers.formattedAmount(100)} />
+                            <StockCardInfo label={t('O_INVESTMENT')} value={helpers.formattedAmount(100)} />
+                            <StockCardInfo label={t('TOTAL_SELLING_STOCK')} value={helpers.formattedAmount(100)} />
+                            <StockCardInfo label={t('RETURN_SELLING_STOCK')} value={helpers.formattedAmount(100)} />
                           </div>
 
                           <div className="flex justify-between">
-                            <PlayerCardInfo label={t('STOCK_BOUGHT')} value={helpers.formattedAmount(100)} />
-                            <PlayerCardInfo label={t('STOCK_SOLD')} value={helpers.formattedAmount(100)} />
-                            <PlayerCardInfo label={t('STOCK_HOLD')} value={helpers.formattedAmount(100)} />
+                            <StockCardInfo label={t('STOCK_BOUGHT')} value={helpers.formattedAmount(100)} />
+                            <StockCardInfo label={t('STOCK_SOLD')} value={helpers.formattedAmount(100)} />
+                            <StockCardInfo label={t('STOCK_HOLD')} value={helpers.formattedAmount(100)} />
                           </div>
                         </figure>
                       </div>
