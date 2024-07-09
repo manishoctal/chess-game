@@ -164,6 +164,16 @@ const UserView = () => {
     setWalletBox(false);
   };
 
+
+
+  const PlayerCardInfo = ({ label, value }) => (
+    <div>
+      <label className="block text-sm font-medium text-gray-900 dark:text-white px-2 mb-1">{label}</label>
+      <span className="block text-sm font-medium text-gray-900 dark:text-white px-2 text-center">{value}</span>
+    </div>
+  )
+
+
   return (
     <div className="p-5 dark:bg-slate-900">
       {helpers.ternaryCondition(
@@ -421,81 +431,42 @@ const UserView = () => {
                   <div className="flex items-center">
                     <figcaption className="w-[calc(100%_-_41px)]">
                       <span className="block text-[#5C5C5C] font-bold mb-4">{t("O_PORTFOLIO")}</span>
+
                       <div className="relative mt-4">
                         <figure className="inline-block overflow-hidden border mb-3 w-90 h-[210px] w-[480px]">
                           <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white p-2 mt-3">{t('PLAYER_CARD')}</label>
+
                           <div className="flex justify-between mb-9">
-                            <div>
-                              <label className="block text-sm font-medium text-gray-900 dark:text-white px-2 mb-1">{t('O_INVESTMENT')}</label>
-                              <span className="block text-sm font-medium text-gray-900 dark:text-white px-2 text-center">{helpers.formattedAmount(100)}</span>
-                            </div>
-                            <div>
-                              <label className="block text-sm font-medium text-gray-900 dark:text-white px-2 mb-1">{t('TOTAL_SELLING_CARD')}</label>
-                              <span className="block text-sm font-medium text-gray-900 dark:text-white px-2 text-center">{helpers.formattedAmount(100)}</span>
-                            </div>
-                            <div>
-                              <label className="block text-sm font-medium text-gray-900 dark:text-white px-2 mb-1">{t('RETURN_SELLING_CARD')}</label>
-                              <span className="block text-sm font-medium text-gray-900 dark:text-white px-2 text-center">{helpers.formattedAmount(100)}</span>
-                            </div>
+                            <PlayerCardInfo label={t('O_INVESTMENT')} value={helpers.formattedAmount(100)} />
+                            <PlayerCardInfo label={t('TOTAL_SELLING_CARD')} value={helpers.formattedAmount(100)} />
+                            <PlayerCardInfo label={t('RETURN_SELLING_CARD')} value={helpers.formattedAmount(100)} />
                           </div>
 
                           <div className="flex justify-between">
-                            <div>
-                              <label className="block text-sm font-medium text-gray-900 dark:text-white px-2 mb-1">{t('CARD_BOUGHT')}</label>
-                              <span className="block text-sm font-medium text-gray-900 dark:text-white px-2 text-center">{helpers.formattedAmount(100)}</span>
-                            </div>
-                            <div>
-                              <label className="block text-sm font-medium text-gray-900 dark:text-white px-2 mb-1">{t('CARD_SOLD')}</label>
-                              <span className="block text-sm font-medium text-gray-900 dark:text-white px-2 text-center">{helpers.formattedAmount(100)}</span>
-                            </div>
-                            <div>
-                              <label className="block text-sm font-medium text-gray-900 dark:text-white px-2 mb-1">{t('CARD_HOLD')}</label>
-                              <span className="block text-sm font-medium text-gray-900 dark:text-white px-2 text-center">{helpers.formattedAmount(100)}</span>
-                            </div>
+                            <PlayerCardInfo label={t('CARD_BOUGHT')} value={helpers.formattedAmount(100)} />
+                            <PlayerCardInfo label={t('CARD_SOLD')} value={helpers.formattedAmount(100)} />
+                            <PlayerCardInfo label={t('CARD_HOLD')} value={helpers.formattedAmount(100)} />
                           </div>
                         </figure>
                       </div>
-
-
 
                       <div className="relative mt-4">
                         <figure className="inline-block overflow-hidden border mb-3 w-90 h-[210px] w-[480px]">
                           <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white p-2 mt-3">{t('PLAYER_STOCK')}</label>
+
                           <div className="flex justify-between mb-9">
-                            <div>
-                              <label className="block text-sm font-medium text-gray-900 dark:text-white px-2 mb-1">{t('O_INVESTMENT')}</label>
-                              <span className="block text-sm font-medium text-gray-900 dark:text-white px-2 text-center">{helpers.formattedAmount(100)}</span>
-                            </div>
-                            <div>
-                              <label className="block text-sm font-medium text-gray-900 dark:text-white px-2 mb-1">{t('TOTAL_SELLING_STOCK')}</label>
-                              <span className="block text-sm font-medium text-gray-900 dark:text-white px-2 text-center">{helpers.formattedAmount(100)}</span>
-                            </div>
-                            <div>
-                              <label className="block text-sm font-medium text-gray-900 dark:text-white px-2 mb-1">{t('RETURN_SELLING_STOCK')}</label>
-                              <span className="block text-sm font-medium text-gray-900 dark:text-white px-2 text-center">{helpers.formattedAmount(100)}</span>
-                            </div>
+                            <PlayerCardInfo label={t('O_INVESTMENT')} value={helpers.formattedAmount(100)} />
+                            <PlayerCardInfo label={t('TOTAL_SELLING_STOCK')} value={helpers.formattedAmount(100)} />
+                            <PlayerCardInfo label={t('RETURN_SELLING_STOCK')} value={helpers.formattedAmount(100)} />
                           </div>
 
                           <div className="flex justify-between">
-                            <div>
-                              <label className="block text-sm font-medium text-gray-900 dark:text-white px-2 mb-1">{t('STOCK_BOUGHT')}</label>
-                              <span className="block text-sm font-medium text-gray-900 dark:text-white px-2 text-center">{helpers.formattedAmount(100)}</span>
-                            </div>
-                            <div>
-                              <label className="block text-sm font-medium text-gray-900 dark:text-white px-2 mb-1">{t('STOCK_SOLD')}</label>
-                              <span className="block text-sm font-medium text-gray-900 dark:text-white px-2 text-center">{helpers.formattedAmount(100)}</span>
-                            </div>
-                            <div>
-                              <label className="block text-sm font-medium text-gray-900 dark:text-white px-2 mb-1">{t('STOCK_HOLD')}</label>
-                              <span className="block text-sm font-medium text-gray-900 dark:text-white px-2 text-center">{helpers.formattedAmount(100)}</span>
-                            </div>
-
+                            <PlayerCardInfo label={t('STOCK_BOUGHT')} value={helpers.formattedAmount(100)} />
+                            <PlayerCardInfo label={t('STOCK_SOLD')} value={helpers.formattedAmount(100)} />
+                            <PlayerCardInfo label={t('STOCK_HOLD')} value={helpers.formattedAmount(100)} />
                           </div>
                         </figure>
                       </div>
-
-
-
                     </figcaption>
                   </div>
                 </li>
