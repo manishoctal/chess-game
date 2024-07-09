@@ -40,32 +40,7 @@ function TradingQuestionManager() {
   };
 
 
-  const [tradingData, setTradingData] = useState({
-    "docs": [
-      {
-        "_id": "668392ad2eb7b8e01a396484",
-        "matchId": "wwwe",
-        "matchName": "Ind vs Aus",
-        "formatType": "T20I",
-        "matchStatus": "live",
-        "startDate": "2024-07-02T05:39:57.233Z",
-        "endDate": "2024-07-02T05:40:06.056Z",
-        "questionsCount": 12,
-        "status": "active",
-        "__v": 0
-      },
-
-    ],
-    "totalDocs": 1,
-    "limit": 10,
-    "page": 1,
-    "totalPages": 1,
-    "pagingCounter": 1,
-    "hasPrevPage": false,
-    "hasNextPage": true,
-    "prevPage": null,
-    "nextPage": 2
-  })
+  const [tradingData, setTradingData] = useState({})
   const [page, setPage] = useState(1)
   const [paginationTradingObj, setPaginationTradingObj] = useState({
     page: 1,
@@ -80,7 +55,6 @@ function TradingQuestionManager() {
   const [isInitialized1, setIsInitialized1] = useState(false)
   const [searchTerm1, setSearchTerm1] = useState('')
   const [formatSuggestion, setFormatSuggestion] = useState([])
-
   const [filterData, setFilterData] = useState({
     category: '',
     formatType: '',
@@ -91,7 +65,7 @@ function TradingQuestionManager() {
     isFilter: false
   })
   const [sort, setSort] = useState({
-    sortBy: 'createdAt',
+    sortBy: 'startDate',
     sortType: 'desc'
   })
 
@@ -106,6 +80,11 @@ function TradingQuestionManager() {
     setPage(1);
   };
 
+function toStartCase(str) {
+  return str?.replace(/\w\S*/g, (txt) => {
+      return txt?.charAt(0)?.toUpperCase() + txt?.substr(1)?.toLowerCase();
+  });
+}
   // get all trading question list start
   const allTradingQuestionList = async () => {
     try {
@@ -118,29 +97,34 @@ function TradingQuestionManager() {
         startDate: startDate ? dayjs(startDate).format('YYYY-MM-DD') : null,
         endDate: endDate ? dayjs(endDate).format('YYYY-MM-DD') : null,
         keyword: searchKey,
-        sortBy: sort.sortBy,
-        sortType: sort.sortType
+        sortKey: sort.sortBy,
+        sortType: sort.sortType,
+        formatType:toStartCase(filterData?.formatType?.value)||null
+        
       }
 
-      const path = apiPath.getAllOffer
+      const path = apiPath.getMatchList
       const result = await apiGet(path, questionPayload)
       const responseData = result?.data?.results
-      const resultStatus = result?.data?.success
+      const resultStatus = result?.data?.success  
+      if(resultStatus){
       setTradingData(responseData)
       setPaginationTradingObj({
         ...paginationTradingObj,
-        page: resultStatus ? responseData.page : null,
-        pageCount: resultStatus ? responseData.totalPages : null,
-        perPageItem: resultStatus ? responseData?.docs.length : null,
-        totalItems: resultStatus ? responseData.totalDocs : null
+        page: resultStatus ? responseData?.page : null,
+        pageCount: resultStatus ? responseData?.totalPages : null,
+        perPageItem: resultStatus ? responseData?.docs?.length : null,
+        totalItems: resultStatus ? responseData?.totalDocs : null
       })
+    }
     } catch (error) {
-      console.error('error in get all sub admin list==>>>>', error.message)
+      console.error('error in get all trading question list==>>>>', error.message)
     }
   }
 
   useEffect(() => {
     // api call function
+    allTradingQuestionList()
   }, [filterData, page, sort, pageSize])
 
   // get all trading question list end
@@ -168,6 +152,7 @@ function TradingQuestionManager() {
     setPage(1)
     setSearchTerm('')
     setPageSize(10)
+    setFormatSuggestion([])
   }
 
   const handleDateChangeTradingQuestion = (start, end) => {
@@ -232,12 +217,11 @@ function TradingQuestionManager() {
       const payload = {
         keyword: event
       };
-      const path = apiPath.searchUsers;
+      const path = apiPath.getFormatList;
       const result = await apiGet(path, payload);
       if (result?.data?.success) {
-        const formattedOption = result?.data?.results?.map((res) => { return ({ label: `${res?.name + ',' + '(' + res?.email + ')'}`, value: res?._id }) })
+        const formattedOption =[{label:result?.data?.results?.odi?.toUpperCase(),value:result?.data?.results?.odi},{label:result?.data?.results?.t20?.toUpperCase(),value:result?.data?.results?.t20},{label:result?.data?.results?.test?.toUpperCase(),value:result?.data?.results?.test}]
         setFormatSuggestion(formattedOption)
-
       }
 
     } catch (error) {

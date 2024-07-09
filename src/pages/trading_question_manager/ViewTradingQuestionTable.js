@@ -125,12 +125,12 @@ const ViewTradingQuestionTable = ({
                     <GrAnnounce size={17} />
                   </button>, <span className="text-green-600 font-bold">{t("RESULT_ANNOUNCED")}</span>)}
                 </td>)}
-                <td className={`py-2 px-4 border-r dark:border-[#ffffff38] `}>
-                  <button title={t('O_YES')} className=" text-[10px] border-gray-500 px-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-gray-100">
+                <td className={`py-2 px-4 border-r dark:border-[#ffffff38]`}>
+                  <button title={t('O_YES')} className=" text-[10px] border-gray-500 px-3 py-2 rounded-lg items-center border text-white hover:bg-gray-100">
                     <span className="text-[#000000] font-semibold">{t('O_YES')} {helpers.orOperator(item?.poll?.yes, 'N/A')}</span>
                   </button>
 
-                  <button title={t('O_NO')} className=" text-[10px] border-gray-500 px-3 mx-2 py-2 rounded-lg items-center border border-transparent text-white hover:bg-gray-100">
+                  <button title={t('O_NO')} className=" text-[10px] border-gray-500 px-3 mx-2 py-2 rounded-lg items-center border text-white hover:bg-gray-100">
                     <span className="text-[#000000] font-semibold">{t('O_NO')} {helpers.orOperator(item?.poll?.no, 'N/A')}</span>
                   </button>
                 </td>

@@ -2,7 +2,7 @@ import OImage from "components/reusable/OImage";
 import dayjs from "dayjs";
 import React, { useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useLocation, Link, useNavigate, NavLink } from "react-router-dom";
+import { useLocation, Link, useNavigate } from "react-router-dom";
 import defaultImage from "../../assets/images/No-image-found.jpg";
 import checkIcon from "../../assets/images/check.png";
 import { startCase } from "lodash";
@@ -27,7 +27,7 @@ const UserView = () => {
   const { t } = useTranslation();
   const { logoutUser } = useContext(AuthContext);
   const location = useLocation();
-  const [item,setItems] = useState();
+  const [item, setItems] = useState();
   const navigate = useNavigate();
   const notification = useToastContext();
   const [kycSection, setKycSection] = useState(null);
@@ -36,32 +36,32 @@ const UserView = () => {
 
 
 
-const getUserDetails=async()=>{
-  try {
-    const payload = {
-      userId:location?.state?._id||null
-    };
-    const path = apiPath.getUserDetails;
-    const result = await apiGet(path, payload);
-    if (result?.data?.success) {
-     setItems(result?.data?.results)
-    }
-  } catch (error) {
-    console.error("error ", error);
-    if (error.response.status === 401 || error.response.status === 409) {
-      logoutUser();
+  const getUserDetails = async () => {
+    try {
+      const payload = {
+        userId: location?.state?._id || null
+      };
+      const path = apiPath.getUserDetails;
+      const result = await apiGet(path, payload);
+      if (result?.data?.success) {
+        setItems(result?.data?.results)
+      }
+    } catch (error) {
+      console.error("error ", error);
+      if (error.response.status === 401 || error.response.status === 409) {
+        logoutUser();
+      }
     }
   }
-}
 
 
-useEffect(()=>{
-  if(location?.state){
-    getUserDetails()
-  }else{
-    navigate('/users')
-  }
-},[location])
+  useEffect(() => {
+    if (location?.state) {
+      getUserDetails()
+    } else {
+      navigate('/users')
+    }
+  }, [location])
   const approveAndReject = async (data) => {
     try {
       const payload = {
@@ -164,6 +164,23 @@ useEffect(()=>{
     setWalletBox(false);
   };
 
+
+
+  const PlayerCardInfo = ({ label, value }) => (
+    <div>
+      <label className="block text-sm font-medium text-gray-900 dark:text-white px-2 mb-1">{label}</label>
+      <span className="block text-sm font-medium text-gray-900 dark:text-white px-2 text-center">{value}</span>
+    </div>
+  )
+
+  const StockCardInfo = ({ label1, value1 }) => (
+    <div>
+      <label className="block text-sm font-medium text-gray-900 dark:text-white px-2 mb-1">{label1}</label>
+      <span className="block text-sm font-medium text-gray-900 dark:text-white px-2 text-center">{value1}</span>
+    </div>
+  )
+
+
   return (
     <div className="p-5 dark:bg-slate-900">
       {helpers.ternaryCondition(
@@ -171,10 +188,11 @@ useEffect(()=>{
         <Link className="mb-5 ml-4 block" onClick={handleBack}>
           <IoArrowBackSharp />
         </Link>,
-        <NavLink to="/users" state={{ userType: item?.userType }} className="mb-5 ml-4 block">
-          <FaCircleArrowLeft size={27} />
-
-        </NavLink>
+        <div className='flex active mb-5 ml-4 '>
+          <Link aria-current="page" className="" to={-1}>
+            <FaCircleArrowLeft size={27} />
+          </Link>
+        </div>
       )}
       {helpers.andOperator(
         item?.userType === "tourist",
@@ -274,7 +292,7 @@ useEffect(()=>{
                 </figure>
                 <figcaption className="w-[calc(100%_-_41px)]">
                   <span className="block text-[#5 C5C5C]">{t("O_MOBILE_NUMBER")}</span>
-                  <strong>{ item?.mobile?  helpers.ternaryCondition(item?.countryCode?.includes('+'),`${item?.countryCode} ${item?.mobile}`,`+${item?.countryCode} ${item?.mobile}`):'N/A'}</strong>
+                  <strong>{item?.mobile ? helpers.ternaryCondition(item?.countryCode?.includes('+'), `${item?.countryCode} ${item?.mobile}`, `+${item?.countryCode} ${item?.mobile}`) : 'N/A'}</strong>
                 </figcaption>
               </div>
             </div>
@@ -286,7 +304,7 @@ useEffect(()=>{
                 <img src={balanceIcon} alt="" />
               </figure>
               <figcaption className="text-white">
-                <span className="block">{helpers.formattedAmount(item?.totalAmount)||0}</span>
+                <span className="block">{helpers.formattedAmount(item?.totalAmount) || 0}</span>
                 <span className="text-sm">{t("AVAILABLE_BALANCE")}</span>
               </figcaption>
             </div>
@@ -420,81 +438,42 @@ useEffect(()=>{
                   <div className="flex items-center">
                     <figcaption className="w-[calc(100%_-_41px)]">
                       <span className="block text-[#5C5C5C] font-bold mb-4">{t("O_PORTFOLIO")}</span>
+
                       <div className="relative mt-4">
                         <figure className="inline-block overflow-hidden border mb-3 w-90 h-[210px] w-[480px]">
                           <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white p-2 mt-3">{t('PLAYER_CARD')}</label>
+
                           <div className="flex justify-between mb-9">
-                            <div>
-                              <label className="block text-sm font-medium text-gray-900 dark:text-white px-2 mb-1">{t('O_INVESTMENT')}</label>
-                              <span className="block text-sm font-medium text-gray-900 dark:text-white px-2 text-center">{helpers.formattedAmount(100)}</span>
-                            </div>
-                            <div>
-                              <label className="block text-sm font-medium text-gray-900 dark:text-white px-2 mb-1">{t('TOTAL_SELLING_CARD')}</label>
-                              <span className="block text-sm font-medium text-gray-900 dark:text-white px-2 text-center">{helpers.formattedAmount(100)}</span>
-                            </div>
-                            <div>
-                              <label className="block text-sm font-medium text-gray-900 dark:text-white px-2 mb-1">{t('RETURN_SELLING_CARD')}</label>
-                              <span className="block text-sm font-medium text-gray-900 dark:text-white px-2 text-center">{helpers.formattedAmount(100)}</span>
-                            </div>
+                            <PlayerCardInfo label={t('O_INVESTMENT')} value={helpers.formattedAmount(100)} />
+                            <PlayerCardInfo label={t('TOTAL_SELLING_CARD')} value={helpers.formattedAmount(100)} />
+                            <PlayerCardInfo label={t('RETURN_SELLING_CARD')} value={helpers.formattedAmount(100)} />
                           </div>
 
                           <div className="flex justify-between">
-                            <div>
-                              <label className="block text-sm font-medium text-gray-900 dark:text-white px-2 mb-1">{t('CARD_BOUGHT')}</label>
-                              <span className="block text-sm font-medium text-gray-900 dark:text-white px-2 text-center">{helpers.formattedAmount(100)}</span>
-                            </div>
-                            <div>
-                              <label className="block text-sm font-medium text-gray-900 dark:text-white px-2 mb-1">{t('CARD_SOLD')}</label>
-                              <span className="block text-sm font-medium text-gray-900 dark:text-white px-2 text-center">{helpers.formattedAmount(100)}</span>
-                            </div>
-                            <div>
-                              <label className="block text-sm font-medium text-gray-900 dark:text-white px-2 mb-1">{t('CARD_HOLD')}</label>
-                              <span className="block text-sm font-medium text-gray-900 dark:text-white px-2 text-center">{helpers.formattedAmount(100)}</span>
-                            </div>
+                            <PlayerCardInfo label={t('CARD_BOUGHT')} value={helpers.formattedAmount(100)} />
+                            <PlayerCardInfo label={t('CARD_SOLD')} value={helpers.formattedAmount(100)} />
+                            <PlayerCardInfo label={t('CARD_HOLD')} value={helpers.formattedAmount(100)} />
                           </div>
                         </figure>
                       </div>
-
-
 
                       <div className="relative mt-4">
                         <figure className="inline-block overflow-hidden border mb-3 w-90 h-[210px] w-[480px]">
                           <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white p-2 mt-3">{t('PLAYER_STOCK')}</label>
+
                           <div className="flex justify-between mb-9">
-                          <div>
-                              <label className="block text-sm font-medium text-gray-900 dark:text-white px-2 mb-1">{t('O_INVESTMENT')}</label>
-                              <span className="block text-sm font-medium text-gray-900 dark:text-white px-2 text-center">{helpers.formattedAmount(100)}</span>
-                            </div>
-                            <div>
-                              <label className="block text-sm font-medium text-gray-900 dark:text-white px-2 mb-1">{t('TOTAL_SELLING_STOCK')}</label>
-                              <span className="block text-sm font-medium text-gray-900 dark:text-white px-2 text-center">{helpers.formattedAmount(100)}</span>
-                            </div>
-                            <div>
-                              <label className="block text-sm font-medium text-gray-900 dark:text-white px-2 mb-1">{t('RETURN_SELLING_STOCK')}</label>
-                              <span className="block text-sm font-medium text-gray-900 dark:text-white px-2 text-center">{helpers.formattedAmount(100)}</span>
-                            </div>
+                            <StockCardInfo label1={t('O_INVESTMENT')} value1={helpers.formattedAmount(100)} />
+                            <StockCardInfo label1={t('TOTAL_SELLING_STOCK')} value1={helpers.formattedAmount(100)} />
+                            <StockCardInfo label1={t('RETURN_SELLING_STOCK')} value1={helpers.formattedAmount(100)} />
                           </div>
 
                           <div className="flex justify-between">
-                            <div>
-                              <label className="block text-sm font-medium text-gray-900 dark:text-white px-2 mb-1">{t('STOCK_BOUGHT')}</label>
-                              <span className="block text-sm font-medium text-gray-900 dark:text-white px-2 text-center">{helpers.formattedAmount(100)}</span>
-                            </div>
-                            <div>
-                              <label className="block text-sm font-medium text-gray-900 dark:text-white px-2 mb-1">{t('STOCK_SOLD')}</label>
-                              <span className="block text-sm font-medium text-gray-900 dark:text-white px-2 text-center">{helpers.formattedAmount(100)}</span>
-                            </div>
-                            <div>
-                              <label className="block text-sm font-medium text-gray-900 dark:text-white px-2 mb-1">{t('STOCK_HOLD')}</label>
-                              <span className="block text-sm font-medium text-gray-900 dark:text-white px-2 text-center">{helpers.formattedAmount(100)}</span>
-                            </div>
-                    
+                            <StockCardInfo label1={t('STOCK_BOUGHT')} value1={helpers.formattedAmount(100)} />
+                            <StockCardInfo label1={t('STOCK_SOLD')} value1={helpers.formattedAmount(100)} />
+                            <StockCardInfo label1={t('STOCK_HOLD')} value1={helpers.formattedAmount(100)} />
                           </div>
                         </figure>
                       </div>
-
-
-
                     </figcaption>
                   </div>
                 </li>

@@ -7,6 +7,7 @@ import LoaderButton from "components/reusable/LoaderButton";
 import Select from "react-select";
 import OInputField from "components/reusable/OInputField";
 import { startCase } from "lodash";
+import { preventMaxInput } from "utils/validations";
 const AddQuestion = ({ setEditShowTradingModal, stateData }) => {
     const { t } = useTranslation();
     const {
@@ -69,7 +70,7 @@ const AddQuestion = ({ setEditShowTradingModal, stateData }) => {
             setValue('teamPerformance.questions.2.slug', '')
 
             setValue('teamPerformance.questions.0.teamId', '')
-            setValue('teamPerformance.questions.0.win_loss', '')
+            setValue('teamPerformance.questions.0.winLoss', '')
 
             setValue('teamPerformance.questions.1.teamId', '')
             setValue('teamPerformance.questions.1.score', '')
@@ -120,7 +121,7 @@ const AddQuestion = ({ setEditShowTradingModal, stateData }) => {
             setValue('teamPerformance.questions.2.slug', '')
 
             setValue('teamPerformance.questions.0.teamId', '')
-            setValue('teamPerformance.questions.0.win_loss', '')
+            setValue('teamPerformance.questions.0.winLoss', '')
 
             setValue('teamPerformance.questions.1.teamId', '')
             setValue('teamPerformance.questions.1.score', '')
@@ -195,12 +196,20 @@ const AddQuestion = ({ setEditShowTradingModal, stateData }) => {
 
             Object.keys(data).forEach(key => {
                 if (helpers.andOperator(Array.isArray(data[key]?.questions), data[key]?.questions?.length > 0)) {
-                    const category = key?.replace(/([a-z])([A-Z])/g, '$1_$2').toLowerCase();
+                    const category = key?.replace(/([a-z])([A-Z])/g, '$1_$2').toUpperCase();
                     const questions = data[key]?.questions?.filter(question => question?.slug).map(question => {
-                        return {
-                            ...question,
-                            team_id: question?.teamId,
-                        };
+                        if (question?.teamId) {
+                            return {
+                                ...question,
+                                slug: question?.slug?.toUpperCase(),
+                                teamId: question?.teamId,
+                            };
+                        } else {
+                            return {
+                                ...question,
+                                slug: question?.slug?.toUpperCase(),
+                            };
+                        }
                     });
                     result.push({
                         category,
@@ -214,7 +223,7 @@ const AddQuestion = ({ setEditShowTradingModal, stateData }) => {
         const transformedData = transformData(e);
         const formattedData = transformedData?.filter(item => item.questions.length > 0)
         if (e?.manualQuestion) {
-            formattedData?.push({ category: 'manualQuestion', questions: [{ slug: 'manual_question', question: e?.manualQuestion }] })
+            formattedData?.push({ category: 'MANUAL_QUESTION', questions: [{ slug: 'MANUAL_QUESTION', question: e?.manualQuestion }] })
         }
 
         console.log('formattedData', formattedData)
@@ -301,9 +310,9 @@ const AddQuestion = ({ setEditShowTradingModal, stateData }) => {
                                     </thead>
                                     <tbody>
                                         <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                            {getTableDataViewQuestion(startCase(stateData?.matchName) || 'N/A')}
+                                            {getTableDataViewQuestion(startCase(`${stateData?.localTeamShortName} Vs ${stateData?.visitorTeamShortName}`) || 'N/A')}
                                             {getTableDataViewQuestion(startCase(stateData?.formatType) || 'N/A')}
-                                            {getTableDataViewQuestion(startCase(stateData?.matchStatus), helpers.ternaryCondition(stateData?.matchStatus == 'live', 'text-green-600', 'text-blue-600'))}
+                                            {getTableDataViewQuestion(startCase(stateData?.matchStatus),helpers.getMatchStatus(stateData?.matchStatus))}
                                         </tr>
                                     </tbody>
                                 </table>
@@ -354,12 +363,12 @@ const AddQuestion = ({ setEditShowTradingModal, stateData }) => {
                                                             {errors?.teamPerformance?.questions[0]?.teamId && <div className="text-[12px] text-red-500">Please select team.</div>}
                                                         </div>
                                                         <div>
-                                                            <select disabled={!teamPerformance?.index1} {...register('teamPerformance.questions.0.win_loss', { required: helpers.orOperator(teamPerformance?.index1, false) })} className="mx-1 p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer">
+                                                            <select disabled={!teamPerformance?.index1} {...register('teamPerformance.questions.0.winLoss', { required: helpers.orOperator(teamPerformance?.index1, false) })} className="mx-1 p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer">
                                                                 <option value="">Select Win/Lose</option>
                                                                 <option value="wins">Wins</option>
-                                                                <option value="loses">Loses</option>
+                                                                <option value="loses">Loss</option>
                                                             </select>
-                                                            {helpers.andOperator(errors?.teamPerformance?.questions[0]?.win_loss, <div className="text-[12px] text-red-500">Please select win/lose.</div>)}
+                                                            {helpers.andOperator(errors?.teamPerformance?.questions[0]?.winLoss, <div className="text-[12px] text-red-500">Please select win/lose.</div>)}
                                                         </div>
                                                         <label htmlFor='team'> the match? </label>
                                                     </div>
@@ -738,8 +747,8 @@ const AddQuestion = ({ setEditShowTradingModal, stateData }) => {
                                 <div className="relative z-0 mb-6 w-[70%] ">
                                     <OInputField
                                         type="text"
-                                        name="title"
-                                        id="title"
+                                        name="manualQuestion"
+                                        id="manualQuestion"
                                         inputLabel={
                                             <>
                                                 {t('SET_QUESTION_MANUALLY')}
@@ -747,16 +756,18 @@ const AddQuestion = ({ setEditShowTradingModal, stateData }) => {
                                         }
                                         wrapperClassName="relative z-0  w-full group"
                                         placeholder={t('ENTER_QUESTION')}
-                                        maxLength={500}
+                                        maxLength={100}
+                                        onInput={e => preventMaxInput(e, 100)}
                                         register={register("manualQuestion", {
                                             minLength: {
                                                 value: 2,
                                                 message: t('MINIMUM_LENGTH_MUST_BE_2'),
                                             },
                                             maxLength: {
-                                                value: 500,
-                                                message: "Minimum length must be 500.",
+                                                value: 100,
+                                                message: "Minimum length must be 100.",
                                             },
+
 
                                         })}
                                     />
