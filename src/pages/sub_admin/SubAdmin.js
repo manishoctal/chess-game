@@ -142,10 +142,6 @@ function SubAdmin () {
       isFilter: true
     })
   }
-  const statusPage = e => {
-    setPage(1)
-    setFilterData({ ...filterData, category: e.target.value, isFilter: true })
-  }
 
   useEffect(() => {
     if (!isInitialized) {
@@ -160,6 +156,12 @@ function SubAdmin () {
       setPage(1)
     }
   }, [debouncedSearchTerm])
+
+  const statusPage = e => {
+    setPage(1)
+    setFilterData({ ...filterData, category: e.target.value, isFilter: true })
+  }
+
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
