@@ -462,9 +462,9 @@ const UserView = () => {
                           <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white p-2 mt-3">{t('PLAYER_STOCK')}</label>
 
                           <div className="flex justify-between mb-9">
-                            <StockCardInfo label={t('O_INVESTMENT')} value={helpers.formattedAmount(100)} />
-                            <StockCardInfo label={t('TOTAL_SELLING_STOCK')} value={helpers.formattedAmount(100)} />
-                            <StockCardInfo label={t('RETURN_SELLING_STOCK')} value={helpers.formattedAmount(100)} />
+                            <StockCardInfo label1={t('O_INVESTMENT')} value1={helpers.formattedAmount(100)} />
+                            <StockCardInfo label1={t('TOTAL_SELLING_STOCK')} value1={helpers.formattedAmount(100)} />
+                            <StockCardInfo label1={t('RETURN_SELLING_STOCK')} value1={helpers.formattedAmount(100)} />
                           </div>
 
                           <div className="flex justify-between">
