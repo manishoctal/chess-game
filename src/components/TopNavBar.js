@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import OImage from "./reusable/OImage";
 import { t } from "i18next";
 import Swal from "sweetalert2";
+import { TbLogout2,TbPasswordUser } from "react-icons/tb";
+import { LiaUserEditSolid } from "react-icons/lia";
 
 const TopNavBar = () => {
   const {
@@ -35,9 +37,8 @@ const TopNavBar = () => {
     <div className="linHeader border-b py-4 px-4 md:px-8 dark:bg-slate-900">
       <header className="bg-white items-center flex dark:bg-slate-900">
         <div
-          className={`mr-4 dark:text-white z-50 ${
-            sidebarStatus === "open" ? "showToggleMenu" : ""
-          }`}
+          className={`mr-4 dark:text-white z-50 ${sidebarStatus === "open" ? "showToggleMenu" : ""
+            }`}
           onClick={() => handleSidebar()}
         >
           <svg
@@ -98,11 +99,9 @@ const TopNavBar = () => {
                   {({ active }) => (
                     <Link
                       to="/profile"
-                      className={`${
-                        active ? "bg-gradientTo text-white" : "text-gray-900"
-                      } group flex w-full items-center  px-6 py-2 text-sm`}
-                    >
-                      Edit profile
+                      className={`${active ? "bg-gradientTo text-white" : "text-gray-900"} group flex w-full items-center  px-4 py-2 text-sm gap-2`}>
+                   <LiaUserEditSolid size={20}/>
+                    Edit profile
                     </Link>
                   )}
                 </Menu.Item>
@@ -110,10 +109,8 @@ const TopNavBar = () => {
                   {({ active }) => (
                     <Link
                       to="/change-password"
-                      className={`${
-                        active ? "bg-gradientTo text-white" : "text-gray-900"
-                      } group flex w-full items-center  px-6 py-2 text-sm`}
-                    >
+                      className={`${active ? "bg-gradientTo text-white" : "text-gray-900"} group flex w-full items-center  px-4 py-2 text-sm gap-2`}>
+                      <TbPasswordUser size={20} />
                       Change password
                     </Link>
                   )}
@@ -124,11 +121,9 @@ const TopNavBar = () => {
                   {({ active }) => (
                     <button
                       onClick={handleLogout}
-                      className={`${
-                        active ? "bg-gradientTo text-white" : "text-gray-900"
-                      } group flex w-full items-center  px-6 py-2 text-sm`}
-                    >
-                      Logout
+                      className={`${active ? "bg-gradientTo text-white" : "text-gray-900"} group flex w-full items-center  px-4 py-2 text-sm gap-2`}>
+                      <TbLogout2 size={20} />
+                     Logout
                     </button>
                   )}
                 </Menu.Item>

@@ -33,8 +33,9 @@ const TradingQuestionTable = ({
           "active",
           "inactive"
         ),
-        type: "offer",
+        type: "match",
       };
+      
       const path = `${apiPath.changeStatus}/${item?._id}`;
       const result = await apiPut(path, payload);
       if (result?.status === 200) {
@@ -47,7 +48,6 @@ const TradingQuestionTable = ({
     }
   };
   // change status of offer function end
-
 
 const getTableDataTrading=(details,dataClass)=>{
   return <td className={`py-2 px-4 border-r dark:border-[#ffffff38] text-center ${dataClass||''}`}>
@@ -89,12 +89,11 @@ const getTableDataTrading=(details,dataClass)=>{
                 >
                   {i + 1 + pageSize * (page - 1)}
                 </th>
-
                 {getTableDataTrading(item?.matchId)}
-                {getTableDataTrading(startCase(`${item?.localTeamShortName} Vs ${item?.visitorTeamShortName}`)||'N/A','font-bold')}
+                {getTableDataTrading(startCase(item?.matchName)||'N/A','font-bold')}
                 {getTableDataTrading(item?.formatType?.toUpperCase()||'N/A')}
                 {getTableDataTrading(startCase(item?.matchStatus)||'N/A', helpers.getMatchStatus(item?.matchStatus))}
-                {getTableDataTrading(helpers.getDateAndTime(item?.startDate))}
+                {getTableDataTrading(helpers.matchDateFormat(item?.startDate))}
                 {getTableDataTrading(item?.questionsCount||'N/A','font-bold')}
                 {(manager?.add || manager?.edit || user?.role === "admin") && (<td className="py-2 px-4 border-r dark:border-[#ffffff38] text-center">
                   <label

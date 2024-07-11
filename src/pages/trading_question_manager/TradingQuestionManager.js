@@ -10,13 +10,12 @@ import AuthContext from 'context/AuthContext'
 import TradingPageSizeList from 'components/PageSizeList'
 import Select from "react-select";
 import OSearchTradingQuestion from 'components/reusable/OSearch'
-function TradingQuestionManager() {
+  function TradingQuestionManager() {
   const { t } = useTranslation()
   const { user, updatePageName } = useContext(AuthContext)
   const [pageSize, setPageSize] = useState(10)
   const [isDelete] = useState(false)
   const manager = user?.permission?.find(e => e.manager === 'trading_question_manager') ?? {}
-
   const customStyles = {
     option: (provided) => ({
       ...provided,
@@ -38,7 +37,6 @@ function TradingQuestionManager() {
     }),
 
   };
-
 
   const [tradingData, setTradingData] = useState({})
   const [page, setPage] = useState(1)
@@ -80,11 +78,11 @@ function TradingQuestionManager() {
     setPage(1);
   };
 
-function toStartCase(str) {
-  return str?.replace(/\w\S*/g, (txt) => {
+  function toStartCase(str) {
+    return str?.replace(/\w\S*/g, (txt) => {
       return txt?.charAt(0)?.toUpperCase() + txt?.substr(1)?.toLowerCase();
-  });
-}
+    });
+  }
   // get all trading question list start
   const allTradingQuestionList = async () => {
     try {
@@ -96,27 +94,27 @@ function toStartCase(str) {
         status: category,
         startDate: startDate ? dayjs(startDate).format('YYYY-MM-DD') : null,
         endDate: endDate ? dayjs(endDate).format('YYYY-MM-DD') : null,
-        keyword: searchKey,
+        keyword: searchKey?.trim(),
         sortKey: sort.sortBy,
         sortType: sort.sortType,
-        formatType:toStartCase(filterData?.formatType?.value)||null
-        
+        formatType: toStartCase(filterData?.formatType?.value) || null
+
       }
 
       const path = apiPath.getMatchList
       const result = await apiGet(path, questionPayload)
       const responseData = result?.data?.results
-      const resultStatus = result?.data?.success  
-      if(resultStatus){
-      setTradingData(responseData)
-      setPaginationTradingObj({
-        ...paginationTradingObj,
-        page: resultStatus ? responseData?.page : null,
-        pageCount: resultStatus ? responseData?.totalPages : null,
-        perPageItem: resultStatus ? responseData?.docs?.length : null,
-        totalItems: resultStatus ? responseData?.totalDocs : null
-      })
-    }
+      const resultStatus = result?.data?.success
+      if (resultStatus) {
+        setTradingData(responseData)
+        setPaginationTradingObj({
+          ...paginationTradingObj,
+          page: resultStatus ? responseData?.page : null,
+          pageCount: resultStatus ? responseData?.totalPages : null,
+          perPageItem: resultStatus ? responseData?.docs?.length : null,
+          totalItems: resultStatus ? responseData?.totalDocs : null
+        })
+      }
     } catch (error) {
       console.error('error in get all trading question list==>>>>', error.message)
     }
@@ -182,12 +180,13 @@ function toStartCase(str) {
       })
       setPage(1)
     }
+    
   }, [debouncedSearchTerm])
 
   useEffect(() => {
     updatePageName(t('TRADING_QUESTION_MANAGER'))
   }, [])
-  
+
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       setDebouncedSearchTerm(searchTerm)
@@ -220,7 +219,7 @@ function toStartCase(str) {
       const path = apiPath.getFormatList;
       const result = await apiGet(path, payload);
       if (result?.data?.success) {
-        const formattedOption =[{label:result?.data?.results?.odi?.toUpperCase(),value:result?.data?.results?.odi},{label:result?.data?.results?.t20?.toUpperCase(),value:result?.data?.results?.t20},{label:result?.data?.results?.test?.toUpperCase(),value:result?.data?.results?.test}]
+        const formattedOption = [{ label: result?.data?.results?.odi?.toUpperCase(), value: result?.data?.results?.odi }, { label: result?.data?.results?.t20?.toUpperCase(), value: result?.data?.results?.t20 }, { label: result?.data?.results?.test?.toUpperCase(), value: result?.data?.results?.test }]
         setFormatSuggestion(formattedOption)
       }
 
