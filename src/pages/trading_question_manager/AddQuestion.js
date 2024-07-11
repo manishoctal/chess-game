@@ -273,8 +273,6 @@ const AddQuestion = ({ setEditShowTradingModal, stateData }) => {
         return <th className='text-center py-3 px-6'>{t(name)}</th>
 
     }
-
-
     return (
         <>
             <div className=" overflow-y-auto justify-center items-center overflow-x-hidden  fixed inset-0 z-50 outline-none focus:outline-none">
@@ -289,16 +287,14 @@ const AddQuestion = ({ setEditShowTradingModal, stateData }) => {
                                     className=" ml-auto flex items-center justify-center  text-black border-2 rounded-full  h-8 w-8 float-right text-3xl leading-none font-extralight outline-none focus:outline-none"
                                     onClick={() => setEditShowTradingModal(false)}
                                 >
-                                    <button type="button"
+                                    <span type="button"
                                         title={t("CLOSE")}
                                         className="hover:text-blue-700 transition duration-150 ease-in-out"
                                         data-bs-toggle="tooltip" >
                                         <span className=" text-[#B8BBBF]  text-4xl ">×</span>
-                                    </button>
+                                    </span>
                                 </button>
                             </div>
-
-
                             <div className='m-5'>
                                 <table className="w-full text-xs text-left text-[#A5A5A5] dark:text-gray-400 ">
                                     <thead className="text-xs text-gray-900 border border-[#E1E6EE] bg-[#E1E6EE] dark:bg-gray-700 dark:text-gray-400 dark:border-[#ffffff38]">
