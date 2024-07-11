@@ -270,6 +270,11 @@ const helpers = {
         return 'text-red-600';
 
     }
+  },
+
+  turboConsole:(message,data)=>{
+    return console.log(
+      `%c ${message||''}, ${data||''}`,"color: white; font-size: 16px; background: red" );
   }
 
 };
