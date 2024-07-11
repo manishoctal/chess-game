@@ -5,8 +5,7 @@ import { Link } from "react-router-dom";
 import OImage from "./reusable/OImage";
 import { t } from "i18next";
 import Swal from "sweetalert2";
-import { TbLogout2 } from "react-icons/tb";
-import { TbPasswordUser } from "react-icons/tb";
+import { TbLogout2,TbPasswordUser } from "react-icons/tb";
 import { LiaUserEditSolid } from "react-icons/lia";
 
 const TopNavBar = () => {
