@@ -244,7 +244,7 @@ function ViewTradingQuestionManager() {
                             </thead>
                             <tbody>
                                 <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                    {getTableDataViewTrading(startCase(`${state?.localTeamShortName} Vs ${state?.visitorTeamShortName}`) || 'N/A')}
+                                    {getTableDataViewTrading(startCase(state?.matchName) || 'N/A')}
                                     {getTableDataViewTrading(startCase(state?.formatType) || 'N/A')}
                                     {getTableDataViewTrading(helpers?.getDateAndTime(state?.startDate))}
                                     {getTableDataViewTrading(state?.questionsCount || 'N/A')}

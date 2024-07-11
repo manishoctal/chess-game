@@ -310,7 +310,7 @@ const AddQuestion = ({ setEditShowTradingModal, stateData }) => {
                                     </thead>
                                     <tbody>
                                         <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                            {getTableDataViewQuestion(startCase(`${stateData?.localTeamShortName} Vs ${stateData?.visitorTeamShortName}`) || 'N/A')}
+                                            {getTableDataViewQuestion(startCase(stateData?.matchName) || 'N/A')}
                                             {getTableDataViewQuestion(startCase(stateData?.formatType) || 'N/A')}
                                             {getTableDataViewQuestion(startCase(stateData?.matchStatus),helpers.getMatchStatus(stateData?.matchStatus))}
                                         </tr>

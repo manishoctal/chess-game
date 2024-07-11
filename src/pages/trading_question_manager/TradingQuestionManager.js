@@ -94,7 +94,7 @@ import OSearchTradingQuestion from 'components/reusable/OSearch'
         status: category,
         startDate: startDate ? dayjs(startDate).format('YYYY-MM-DD') : null,
         endDate: endDate ? dayjs(endDate).format('YYYY-MM-DD') : null,
-        keyword: searchKey,
+        keyword: searchKey?.trim(),
         sortKey: sort.sortBy,
         sortType: sort.sortType,
         formatType: toStartCase(filterData?.formatType?.value) || null
