@@ -6,7 +6,7 @@ import ErrorMessage from "components/ErrorMessage";
 import LoaderButton from "components/reusable/LoaderButton";
 import Select from "react-select";
 import OInputField from "components/reusable/OInputField";
-import { startCase } from "lodash";
+import { isEmpty, startCase } from "lodash";
 import { preventMaxInput } from "utils/validations";
 const AddQuestion = ({ setEditShowTradingModal, stateData }) => {
     const { t } = useTranslation();
@@ -69,14 +69,14 @@ const AddQuestion = ({ setEditShowTradingModal, stateData }) => {
             setValue('teamPerformance.questions.1.slug', '')
             setValue('teamPerformance.questions.2.slug', '')
 
-            setValue('teamPerformance.questions.0.teamId', '')
+            setValue('teamPerformance.questions.0.team', '')
             setValue('teamPerformance.questions.0.winLoss', '')
 
-            setValue('teamPerformance.questions.1.teamId', '')
+            setValue('teamPerformance.questions.1.team', '')
             setValue('teamPerformance.questions.1.score', '')
             setValue('teamPerformance.questions.1.threshold', '')
 
-            setValue('teamPerformance.questions.2.teamId', '')
+            setValue('teamPerformance.questions.2.team', '')
             setValue('teamPerformance.questions.2.wickets', '')
             setValue('teamPerformance.questions.2.threshold', '')
 
@@ -97,7 +97,7 @@ const AddQuestion = ({ setEditShowTradingModal, stateData }) => {
 
             setValue('specificEvent.questions.0.slug', '')
             setValue('specificEvent.questions.1.slug', '')
-            setValue('specificEvent.questions.1.teamId', '')
+            setValue('specificEvent.questions.1.team', '')
 
             setValue('specificEvent.questions.2.slug', '')
             setValue('technicalDecision.questions.0.slug', '')
@@ -120,14 +120,14 @@ const AddQuestion = ({ setEditShowTradingModal, stateData }) => {
             setValue('teamPerformance.questions.1.slug', '')
             setValue('teamPerformance.questions.2.slug', '')
 
-            setValue('teamPerformance.questions.0.teamId', '')
+            setValue('teamPerformance.questions.0.team', '')
             setValue('teamPerformance.questions.0.winLoss', '')
 
-            setValue('teamPerformance.questions.1.teamId', '')
+            setValue('teamPerformance.questions.1.team', '')
             setValue('teamPerformance.questions.1.score', '')
             setValue('teamPerformance.questions.1.threshold', '')
 
-            setValue('teamPerformance.questions.2.teamId', '')
+            setValue('teamPerformance.questions.2.team', '')
             setValue('teamPerformance.questions.2.wickets', '')
             setValue('teamPerformance.questions.2.threshold', '')
         }
@@ -153,7 +153,7 @@ const AddQuestion = ({ setEditShowTradingModal, stateData }) => {
             setValue('specificEvent.questions.0.slug', '')
             setValue('specificEvent.questions.1.slug', '')
             setValue('specificEvent.questions.2.slug', '')
-            setValue('specificEvent.questions.1.teamId', '')
+            setValue('specificEvent.questions.1.team', '')
         }
         if (!checkValueExists("technicalDecisions")) {
             setTechnicalDecision({ index1: false, index2: false, index3: false })
@@ -198,11 +198,11 @@ const AddQuestion = ({ setEditShowTradingModal, stateData }) => {
                 if (helpers.andOperator(Array.isArray(data[key]?.questions), data[key]?.questions?.length > 0)) {
                     const category = key?.replace(/([a-z])([A-Z])/g, '$1_$2').toUpperCase();
                     const questions = data[key]?.questions?.filter(question => question?.slug).map(question => {
-                        if (question?.teamId) {
+                        if (!isEmpty(question?.team)) {
                             return {
                                 ...question,
                                 slug: question?.slug?.toUpperCase(),
-                                teamId: question?.teamId,
+                                team: JSON.parse(question?.team),
                             };
                         } else {
                             return {
@@ -355,18 +355,18 @@ const AddQuestion = ({ setEditShowTradingModal, stateData }) => {
                                                         />
                                                         <label htmlFor='team'>Did </label>
                                                         <div>
-                                                            <select disabled={!teamPerformance?.index1} {...register('teamPerformance.questions.0.teamId', { required: helpers.orOperator(teamPerformance?.index1, false), })} className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer">
+                                                            <select disabled={!teamPerformance?.index1} {...register('teamPerformance.questions.0.team', { required: helpers.orOperator(teamPerformance?.index1, false), })} className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer">
                                                                 <option value="">Select Team</option>
-                                                                <option value="teamA">Team A</option>
-                                                                <option value="teamB">Team B</option>
+                                                                <option value={JSON.stringify({teamName:helpers.orOperator (stateData?.localTeam,'N/A'),teamId:helpers.orOperator (stateData?.localTeamId,'N/A')})}>{helpers.orOperator (stateData?.localTeam,'N/A')}</option>
+                                                                <option value={JSON.stringify({teamName:helpers.orOperator (stateData?.visitorTeam,'N/A'),teamId:helpers.orOperator (stateData?.visitorTeamId,'N/A')})}>{helpers.orOperator (stateData?.visitorTeam,'N/A')}</option>
                                                             </select>
-                                                            {errors?.teamPerformance?.questions[0]?.teamId && <div className="text-[12px] text-red-500">Please select team.</div>}
+                                                            {errors?.teamPerformance?.questions[0]?.team && <div className="text-[12px] text-red-500">Please select team.</div>}
                                                         </div>
                                                         <div>
                                                             <select disabled={!teamPerformance?.index1} {...register('teamPerformance.questions.0.winLoss', { required: helpers.orOperator(teamPerformance?.index1, false) })} className="mx-1 p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer">
                                                                 <option value="">Select Win/Lose</option>
-                                                                <option value="wins">Wins</option>
-                                                                <option value="loses">Loss</option>
+                                                                <option value="win">Win</option>
+                                                                <option value="loss">Loss</option>
                                                             </select>
                                                             {helpers.andOperator(errors?.teamPerformance?.questions[0]?.winLoss, <div className="text-[12px] text-red-500">Please select win/lose.</div>)}
                                                         </div>
@@ -382,12 +382,12 @@ const AddQuestion = ({ setEditShowTradingModal, stateData }) => {
                                                         />
                                                         <label htmlFor='team1'>Did </label>
                                                         <div>
-                                                            <select disabled={!teamPerformance?.index2} {...register('teamPerformance.questions.1.teamId', { required: helpers.orOperator(teamPerformance?.index2, false) })} className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer">
+                                                            <select disabled={!teamPerformance?.index2} {...register('teamPerformance.questions.1.team', { required: helpers.orOperator(teamPerformance?.index2, false) })} className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer">
                                                                 <option value="">Select Team</option>
-                                                                <option value="teamA">Team A</option>
-                                                                <option value="teamB">Team B</option>
+                                                                <option value={JSON.stringify({teamName:helpers.orOperator (stateData?.localTeam,'N/A'),teamId:helpers.orOperator (stateData?.localTeamId,'N/A')})}>{helpers.orOperator (stateData?.localTeam,'N/A')}</option>
+                                                                <option value={JSON.stringify({teamName:helpers.orOperator (stateData?.visitorTeam,'N/A'),teamId:helpers.orOperator (stateData?.visitorTeamId,'N/A')})}>{helpers.orOperator (stateData?.visitorTeam,'N/A')}</option>
                                                             </select>
-                                                            {helpers.andOperator(errors?.teamPerformance?.questions[1]?.teamId, <div className="text-[12px] text-red-500">Please select team.</div>)}
+                                                            {helpers.andOperator(errors?.teamPerformance?.questions[1]?.team, <div className="text-[12px] text-red-500">Please select team.</div>)}
                                                         </div>
                                                         <label htmlFor='team1'> score more than </label>
                                                         <div>
@@ -418,12 +418,12 @@ const AddQuestion = ({ setEditShowTradingModal, stateData }) => {
                                                         />
                                                         <label htmlFor='team2'>Did </label>
                                                         <div>
-                                                            <select disabled={!teamPerformance?.index3} {...register('teamPerformance.questions.2.teamId', { required: helpers.orOperator(teamPerformance?.index3, false) })} className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer">
+                                                            <select disabled={!teamPerformance?.index3} {...register('teamPerformance.questions.2.team', { required: helpers.orOperator(teamPerformance?.index3, false) })} className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer">
                                                                 <option value="">Select Team</option>
-                                                                <option value="teamA">Team A</option>
-                                                                <option value="teamB">Team B</option>
+                                                                <option value={JSON.stringify({teamName:helpers.orOperator (stateData?.localTeam,'N/A'),teamId:helpers.orOperator (stateData?.localTeamId,'N/A')})}>{helpers.orOperator (stateData?.localTeam,'N/A')}</option>
+                                                                <option value={JSON.stringify({teamName:helpers.orOperator (stateData?.visitorTeam,'N/A'),teamId:helpers.orOperator (stateData?.visitorTeamId,'N/A')})}>{helpers.orOperator (stateData?.visitorTeam,'N/A')}</option>
                                                             </select>
-                                                            {helpers.andOperator(errors?.teamPerformance?.questions[2]?.teamId, <div className="text-[12px] text-red-500">Please select team.</div>)}
+                                                            {helpers.andOperator(errors?.teamPerformance?.questions[2]?.team, <div className="text-[12px] text-red-500">Please select team.</div>)}
                                                         </div>
                                                         <label htmlFor='team2'> lose more than </label>
                                                         <div>
@@ -577,12 +577,12 @@ const AddQuestion = ({ setEditShowTradingModal, stateData }) => {
                                                     <label htmlFor='Specific1'>Did </label>
                                                     <div>
 
-                                                        <select disabled={!specificEvent?.index2}  {...register('specificEvent.questions.1.teamId', { required: helpers.orOperator(specificEvent?.index2, false) })} className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer">
+                                                        <select disabled={!specificEvent?.index2}  {...register('specificEvent.questions.1.team', { required: helpers.orOperator(specificEvent?.index2, false) })} className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer">
                                                             <option value="">Select Team</option>
-                                                            <option value="teamA">Team A</option>
-                                                            <option value="teamB">Team B</option>
+                                                            <option value={JSON.stringify({teamName:helpers.orOperator (stateData?.localTeam,'N/A'),teamId:helpers.orOperator (stateData?.localTeamId,'N/A')})}>{helpers.orOperator (stateData?.localTeam,'N/A')}</option>
+                                                            <option value={JSON.stringify({teamName:helpers.orOperator (stateData?.visitorTeam,'N/A'),teamId:helpers.orOperator (stateData?.visitorTeamId,'N/A')})}>{helpers.orOperator (stateData?.visitorTeam,'N/A')}</option>
                                                         </select>
-                                                        {helpers.andOperator(errors?.specificEvent?.questions[1]?.teamId, <div className="text-[12px] text-red-500">Please select team.</div>)}
+                                                        {helpers.andOperator(errors?.specificEvent?.questions[1]?.team, <div className="text-[12px] text-red-500">Please select team.</div>)}
                                                     </div>
                                                     <label htmlFor='Specific1'> win the toss and choose to bat first? </label>
                                                 </div>
