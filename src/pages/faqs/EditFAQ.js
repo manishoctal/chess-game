@@ -6,6 +6,7 @@ import useToastContext from "hooks/useToastContext";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import helpers from "utils/helpers";
+import { FaEdit } from "react-icons/fa";
 
 const EditFAQ = ({ setEditShowModal, getAllFAQ, item, viewType }) => {
   const { t } = useTranslation();
@@ -139,10 +140,10 @@ const EditFAQ = ({ setEditShowModal, getAllFAQ, item, viewType }) => {
                   </div>
                 </button>, helpers.ternaryCondition(viewType === "view" , null , (
                   <button
-                    className="bg-gradientTo text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150"
+                    className="bg-gradientTo text-white active:bg-emerald-600 font-normal text-sm px-6 flex gap-2 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150"
                     type="submit"
                     title={helpers.ternaryCondition(viewType == "add" , t("O_ADD") , t("O_EDIT"))}>
-                  {helpers.ternaryCondition(viewType == "add" , t("O_ADD") , t("O_EDIT"))}
+                  {helpers.ternaryCondition(viewType == "add" , t("O_ADD") , <><FaEdit size={16} />{t("O_EDIT")}</>)}
                   </button>
                 )))}
               </div>

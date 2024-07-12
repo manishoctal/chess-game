@@ -9,6 +9,7 @@ import apiPath from "utils/apiPath";
 import { apiPost, apiPut } from "utils/apiFetch";
 import useToastContext from "hooks/useToastContext";
 import LoaderButton from "components/reusable/LoaderButton";
+import { FaEdit } from "react-icons/fa";
 const AddEditOffer = ({ setEditShowOfferModal, viewType, getAllOfferData, offerDetails }) => {
     const { t } = useTranslation();
     const [date, setDate] = useState(helpers.ternaryCondition(viewType == 'edit', new Date(offerDetails?.expiryDate), ''));
@@ -36,8 +37,8 @@ const AddEditOffer = ({ setEditShowOfferModal, viewType, getAllOfferData, offerD
             const dateFormate = new Date(offerDetails?.expiryDate);
             const today = new Date();
             const dateToCheck = new Date(offerDetails?.expiryDate);
-            if(dateToCheck < today){
-                setValue('expiryDate','')
+            if (dateToCheck < today) {
+                setValue('expiryDate', '')
                 return
             }
             setDate(dateFormate)
@@ -225,8 +226,8 @@ const AddEditOffer = ({ setEditShowOfferModal, viewType, getAllOfferData, offerD
                                 {helpers.andOperator(viewType !== 'view',
                                     helpers.ternaryCondition(loader,
                                         <LoaderButton />,
-                                        <button className="bg-gradientTo text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150" type="submit"
-                                            title={helpers.ternaryCondition(viewType == 'add', t("O_ADD"), t("O_EDIT"))}>{helpers.ternaryCondition(viewType == 'add', t("O_ADD"), t("O_EDIT"))} </button>))}
+                                        <button className="bg-gradientTo flex gap-2 text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150" type="submit"
+                                            title={helpers.ternaryCondition(viewType == 'add', t("O_ADD"), t("O_EDIT"))}>{helpers.ternaryCondition(viewType == 'add', t("O_ADD"), (<><FaEdit size={16} />{t("O_EDIT")}</>))} </button>))}
                             </div>
                         </div>
                     </div>

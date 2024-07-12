@@ -10,6 +10,8 @@ import PageSizeList from 'components/PageSizeList'
 import ODateRangePicker from 'components/shared/datePicker/ODateRangePicker'
 import helpers from 'utils/helpers'
 import OSearch from 'components/reusable/OSearch'
+import { BiReset } from 'react-icons/bi'
+import { IoIosAdd } from 'react-icons/io'
 function Faq() {
   const { t } = useTranslation()
   const [paginationObj, setPaginationObj] = useState({
@@ -55,7 +57,7 @@ function Faq() {
         page,
         pageSize: pageSize,
         sortKey: sort.sortBy,
-        keyword:filterData?.searchKey||null,
+        keyword:helpers.normalizeSpaces(filterData?.searchKey)||null,
         sortType: sort.sortType,
         status: filterData?.status || null,
         startDate: helpers.getFormattedDate(filterData?.startDate),
@@ -176,10 +178,10 @@ function Faq() {
       <div className='bg-[#F9F9F9] dark:bg-slate-900'>
         <div className='px-3 py-4'>
           <div className='bg-white border border-[#E9EDF9] rounded-lg dark:bg-slate-800 dark:border-[#ffffff38]'>
-            <div className=' border-b-[#E3E3E3] gap-2 px-4 py-4'>
+            <div className='border-b border-b-[#E3E3E3]  gap-2 px-4 py-3'>
               <div className='2xl:ml-auto xl:ml-0 lg:pt-0 pt-2'>
-                <div className='flex mt-2 justify-between'>
-                  <div className="flex flex-wrap items-center mt-3">
+                <div className='mt-2'>
+                  <div className="flex justify-between">
                     <div className="flex items-center lg:pt-0 pt-3 justify-center">
                       <div className='relative flex items-center mb-3'>
                         <OSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm} placeholder={t('SEARCH_BY_TITLE')} />
@@ -205,25 +207,25 @@ function Faq() {
                       <button
                         type="button"
                         onClick={() => handleResetDashboard()}
-                        className="bg-gradientTo text-sm px-8 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2"
+                        className="bg-gradientTo text-sm px-6 flex gap-2 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2"
                         title={t("O_RESET")}
                       >
-                        {t("O_RESET")}
+                        <BiReset size={18} /> {t("O_RESET")}
                       </button>
                     </div>
-                  </div>
-
-                  <div>
+                    <div className=''>
                     {(manager?.add || user?.role === 'admin') && (
                       <button
                         title={t('ADD_FAQS')}
-                        className='bg-gradientTo flex text-sm px-8 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue whitespace-nowrap'
+                        className='bg-gradientTo mb-0 flex text-sm px-6 flex gap-2 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue whitespace-nowrap'
                         onClick={() => { setItem(''); setEditShowModal(true); setEditView('add') }}
                       >
-                        + {t('ADD_FAQS')}
+                       <IoIosAdd size={18} /> {t('ADD_FAQS')}
                       </button>
                     )}
                   </div>
+                  </div>
+
                 </div>
               </div>
             </div>

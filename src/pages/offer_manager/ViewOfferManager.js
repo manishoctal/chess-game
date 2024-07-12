@@ -14,6 +14,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import helpers from 'utils/helpers'
 import { startCase } from 'lodash'
 import { FaCircleArrowLeft } from 'react-icons/fa6'
+import { BiSolidFileExport,BiReset  } from "react-icons/bi";
 
 function ViewOfferManager() {
     const { t } = useTranslation()
@@ -65,7 +66,7 @@ function ViewOfferManager() {
                 status: category,
                 startDate: startDate ? dayjs(startDate).format('YYYY-MM-DD') : null,
                 endDate: endDate ? dayjs(endDate).format('YYYY-MM-DD') : null,
-                keyword: searchKey,
+                keyword: helpers.normalizeSpaces(searchKey)||null,
                 sortBy: sort.sortBy,
                 sortType: sort.sortType
             }
@@ -258,8 +259,9 @@ function ViewOfferManager() {
                                         type='button'
                                         onClick={handleReset}
                                         title={t('O_RESET')}
-                                        className='bg-gradientTo text-sm px-8 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2'
+                                        className='bg-gradientTo flex gap-2 text-sm px-6 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2'
                                     >
+                                        <BiReset size={18}/>
                                         {t('O_RESET')}
                                     </button>
                                 </div>
@@ -268,9 +270,10 @@ function ViewOfferManager() {
                             <button
                                 type='button'
                                 title={t('EXPORT_CSV')}
-                                className='bg-gradientTo text-sm px-8 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2'
+                                className='bg-gradientTo text-sm flex gap-2 px-8 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto '
                                 onClick={onCsvDownload}
                             >
+                                <BiSolidFileExport size={18} />
                                 {t('EXPORT_CSV')}
                             </button>
                         </form>

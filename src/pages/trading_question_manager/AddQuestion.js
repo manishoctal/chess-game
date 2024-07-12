@@ -8,11 +8,17 @@ import Select from "react-select";
 import OInputField from "components/reusable/OInputField";
 import { isEmpty, startCase } from "lodash";
 import { preventMaxInput } from "utils/validations";
-const AddQuestion = ({ setEditShowTradingModal, stateData }) => {
+import apiPath from "utils/apiPath";
+import { apiPost } from "utils/apiFetch";
+import useToastContext from "hooks/useToastContext";
+const AddQuestion = ({ setEditShowTradingModal, stateData,ViewallTradingQuestionsList }) => {
     const { t } = useTranslation();
+    const notification = useToastContext();
+
     const {
         handleSubmit,
         register,
+        watch,
         setValue,
         formState: { errors },
     } = useForm({ mode: "onChange", shouldFocusError: true, defaultValues: {} });
@@ -24,7 +30,7 @@ const AddQuestion = ({ setEditShowTradingModal, stateData }) => {
     const [matchOutcome, setMatchOutcome] = useState({ index1: false, index2: false, index3: false })
     const [injuryAndSubs, setInjuryAndSubs] = useState({ index1: false, index2: false })
     const [umpiringRules, setUmpiringRules] = useState({ index1: false, index2: false })
-
+    const [addLoader, setAddLoader] = useState(false)
 
     const [questionType] = useState([
         {
@@ -52,7 +58,6 @@ const AddQuestion = ({ setEditShowTradingModal, stateData }) => {
             "value": "injuriesSubstitutions"
         }, { "label": "Umpiring and Rules", "value": "umpiringRules" }
     ])
-    const [loader] = useState(false)
 
     const checkAllAccess = () => {
 
@@ -190,7 +195,7 @@ const AddQuestion = ({ setEditShowTradingModal, stateData }) => {
 
     // submit function start
     const handleSubmitAddQuestionForm = async (e) => {
-
+        console.time()
         function transformData(data) {
             const result = [];
 
@@ -226,8 +231,35 @@ const AddQuestion = ({ setEditShowTradingModal, stateData }) => {
             formattedData?.push({ category: 'MANUAL_QUESTION', questions: [{ slug: 'MANUAL_QUESTION', question: e?.manualQuestion }] })
         }
 
-        console.log('formattedData', formattedData)
+        if(!formattedData?.length&&!e?.manualQuestion){
+            notification.error('Please select question type or enter question manually.');
+            console.log('formattedData', e)
 
+            return
+        }
+        try {
+            const payloadQuestion={
+                seriesId: helpers.orOperator(stateData?.seriesId,''),
+                matchId: helpers.orOperator(stateData?.matchId,''),
+                questionArray:formattedData
+            }
+            setAddLoader(true)
+            const path = apiPath?.addQuestions
+            const result = await apiPost(path, payloadQuestion);
+            if (result?.data?.success) {
+                ViewallTradingQuestionsList()
+              notification.success(result?.data?.message);
+              
+              setEditShowTradingModal(false);
+              
+            }
+        } catch (error) {
+            console.error("error in get add question==>>>>", error.message);
+        } finally {
+            setAddLoader(false)
+        }
+
+        console.timeEnd()
     };
     // submit function end
 
@@ -308,7 +340,7 @@ const AddQuestion = ({ setEditShowTradingModal, stateData }) => {
                                         <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                             {getTableDataViewQuestion(startCase(stateData?.matchName) || 'N/A')}
                                             {getTableDataViewQuestion(startCase(stateData?.formatType) || 'N/A')}
-                                            {getTableDataViewQuestion(startCase(stateData?.matchStatus),helpers.getMatchStatus(stateData?.matchStatus))}
+                                            {getTableDataViewQuestion(startCase(stateData?.matchStatus), helpers.getMatchStatus(stateData?.matchStatus))}
                                         </tr>
                                     </tbody>
                                 </table>
@@ -353,8 +385,8 @@ const AddQuestion = ({ setEditShowTradingModal, stateData }) => {
                                                         <div>
                                                             <select disabled={!teamPerformance?.index1} {...register('teamPerformance.questions.0.team', { required: helpers.orOperator(teamPerformance?.index1, false), })} className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer">
                                                                 <option value="">Select Team</option>
-                                                                <option value={JSON.stringify({teamName:helpers.orOperator (stateData?.localTeam,'N/A'),teamId:helpers.orOperator (stateData?.localTeamId,'N/A')})}>{helpers.orOperator (stateData?.localTeam,'N/A')}</option>
-                                                                <option value={JSON.stringify({teamName:helpers.orOperator (stateData?.visitorTeam,'N/A'),teamId:helpers.orOperator (stateData?.visitorTeamId,'N/A')})}>{helpers.orOperator (stateData?.visitorTeam,'N/A')}</option>
+                                                                <option value={JSON.stringify({ teamName: helpers.orOperator(stateData?.localTeam, 'N/A'), teamId: helpers.orOperator(stateData?.localTeamId, 'N/A') })}>{helpers.orOperator(stateData?.localTeam, 'N/A')}</option>
+                                                                <option value={JSON.stringify({ teamName: helpers.orOperator(stateData?.visitorTeam, 'N/A'), teamId: helpers.orOperator(stateData?.visitorTeamId, 'N/A') })}>{helpers.orOperator(stateData?.visitorTeam, 'N/A')}</option>
                                                             </select>
                                                             {errors?.teamPerformance?.questions[0]?.team && <div className="text-[12px] text-red-500">Please select team.</div>}
                                                         </div>
@@ -380,8 +412,8 @@ const AddQuestion = ({ setEditShowTradingModal, stateData }) => {
                                                         <div>
                                                             <select disabled={!teamPerformance?.index2} {...register('teamPerformance.questions.1.team', { required: helpers.orOperator(teamPerformance?.index2, false) })} className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer">
                                                                 <option value="">Select Team</option>
-                                                                <option value={JSON.stringify({teamName:helpers.orOperator (stateData?.localTeam,'N/A'),teamId:helpers.orOperator (stateData?.localTeamId,'N/A')})}>{helpers.orOperator (stateData?.localTeam,'N/A')}</option>
-                                                                <option value={JSON.stringify({teamName:helpers.orOperator (stateData?.visitorTeam,'N/A'),teamId:helpers.orOperator (stateData?.visitorTeamId,'N/A')})}>{helpers.orOperator (stateData?.visitorTeam,'N/A')}</option>
+                                                                <option value={JSON.stringify({ teamName: helpers.orOperator(stateData?.localTeam, 'N/A'), teamId: helpers.orOperator(stateData?.localTeamId, 'N/A') })}>{helpers.orOperator(stateData?.localTeam, 'N/A')}</option>
+                                                                <option value={JSON.stringify({ teamName: helpers.orOperator(stateData?.visitorTeam, 'N/A'), teamId: helpers.orOperator(stateData?.visitorTeamId, 'N/A') })}>{helpers.orOperator(stateData?.visitorTeam, 'N/A')}</option>
                                                             </select>
                                                             {helpers.andOperator(errors?.teamPerformance?.questions[1]?.team, <div className="text-[12px] text-red-500">Please select team.</div>)}
                                                         </div>
@@ -389,7 +421,7 @@ const AddQuestion = ({ setEditShowTradingModal, stateData }) => {
                                                         <div>
                                                             <input
                                                                 type="number"
-                                                                {...register('teamPerformance.questions.1.score', { required: helpers.orOperator(teamPerformance?.index2, false) })}
+                                                                {...register('teamPerformance.questions.1.score', { required: helpers.orOperator(teamPerformance?.index2, false), valueAsNumber: true })}
                                                                 className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer w-[90px]"
                                                                 placeholder="Set Run"
                                                                 disabled={!teamPerformance?.index2}
@@ -399,8 +431,14 @@ const AddQuestion = ({ setEditShowTradingModal, stateData }) => {
                                                         </div>
                                                         <label htmlFor='team1'> runs? </label>
                                                         <div>
-                                                            <input type="number" disabled={!teamPerformance?.index2}  {...register('teamPerformance.questions.1.threshold', { required: helpers.orOperator(teamPerformance?.index2, false) })} className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer" placeholder="Threshold Value Of Run" />
-                                                            {helpers.andOperator(errors?.teamPerformance?.questions[1]?.threshold, <div className="text-[12px] text-red-500">Please enter threshold value.</div>)}
+                                                            <input type="number" disabled={!teamPerformance?.index2}  {...register('teamPerformance.questions.1.threshold', {
+                                                                required: helpers.orOperator(teamPerformance?.index2, false),
+                                                                valueAsNumber: true, validate: (value) => {
+                                                                    if (!teamPerformance?.index2) { return true; }
+                                                                    return value < watch('teamPerformance.questions.1.score') || t("Threshold value must be less than runs.")
+                                                                }
+                                                            })} className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer" placeholder="Threshold Value Of Run" />
+                                                            {helpers.andOperator(errors?.teamPerformance?.questions[1]?.threshold, <div className="text-[12px] text-red-500"> {helpers.orOperator(errors?.teamPerformance?.questions[1]?.threshold?.message, 'Please enter threshold value.')}</div>)}
                                                         </div>
                                                     </div>
                                                     <div className="mb-2 gap-2 flex">
@@ -416,8 +454,8 @@ const AddQuestion = ({ setEditShowTradingModal, stateData }) => {
                                                         <div>
                                                             <select disabled={!teamPerformance?.index3} {...register('teamPerformance.questions.2.team', { required: helpers.orOperator(teamPerformance?.index3, false) })} className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer">
                                                                 <option value="">Select Team</option>
-                                                                <option value={JSON.stringify({teamName:helpers.orOperator (stateData?.localTeam,'N/A'),teamId:helpers.orOperator (stateData?.localTeamId,'N/A')})}>{helpers.orOperator (stateData?.localTeam,'N/A')}</option>
-                                                                <option value={JSON.stringify({teamName:helpers.orOperator (stateData?.visitorTeam,'N/A'),teamId:helpers.orOperator (stateData?.visitorTeamId,'N/A')})}>{helpers.orOperator (stateData?.visitorTeam,'N/A')}</option>
+                                                                <option value={JSON.stringify({ teamName: helpers.orOperator(stateData?.localTeam, 'N/A'), teamId: helpers.orOperator(stateData?.localTeamId, 'N/A') })}>{helpers.orOperator(stateData?.localTeam, 'N/A')}</option>
+                                                                <option value={JSON.stringify({ teamName: helpers.orOperator(stateData?.visitorTeam, 'N/A'), teamId: helpers.orOperator(stateData?.visitorTeamId, 'N/A') })}>{helpers.orOperator(stateData?.visitorTeam, 'N/A')}</option>
                                                             </select>
                                                             {helpers.andOperator(errors?.teamPerformance?.questions[2]?.team, <div className="text-[12px] text-red-500">Please select team.</div>)}
                                                         </div>
@@ -434,8 +472,11 @@ const AddQuestion = ({ setEditShowTradingModal, stateData }) => {
                                                         </div>
                                                         <label htmlFor='team2'> wickets in their innings? </label>
                                                         <div>
-                                                            <input type="number" disabled={!teamPerformance?.index3} {...register('teamPerformance.questions.2.threshold', { required: helpers.orOperator(teamPerformance?.index3, false) })} placeholder="Threshold Value Of Wicket" className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg  border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer" />
-                                                            {helpers.andOperator(errors?.teamPerformance?.questions[2]?.threshold, <div className="text-[12px] text-red-500">Please enter threshold value.</div>)}
+                                                            <input type="number" disabled={!teamPerformance?.index3} {...register('teamPerformance.questions.2.threshold', {
+                                                                required: helpers.orOperator(teamPerformance?.index3, false),
+                                                                valueAsNumber: true, validate: (value) => { if (!teamPerformance?.index3) { return true; } return value < watch('teamPerformance.questions.2.wickets') || t("Threshold value must be less than wickets.") }
+                                                            })} placeholder="Threshold Value Of Wicket" className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg  border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer" />
+                                                            {helpers.andOperator(errors?.teamPerformance?.questions[2]?.threshold, <div className="text-[12px] text-red-500">{helpers.orOperator(errors?.teamPerformance?.questions[2]?.threshold?.message, 'Please enter threshold value.')}</div>)}
 
                                                         </div>
                                                     </div>
@@ -467,8 +508,12 @@ const AddQuestion = ({ setEditShowTradingModal, stateData }) => {
                                                     </div>
                                                     <label htmlFor='player'> score a century? </label>
                                                     <div>
-                                                        <input type="number" disabled={!playerPerformance?.index1} {...register('playerPerformance.questions.0.threshold', { required: helpers.orOperator(playerPerformance?.index1, false) })} className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0 mx-1 peer" placeholder="Threshold Value" />
-                                                        {helpers.andOperator(errors?.playerPerformance?.questions[0]?.threshold, <div className="text-[12px] text-red-500">Please enter threshold value.</div>)}
+                                                        <input type="number" disabled={!playerPerformance?.index1} {...register('playerPerformance.questions.0.threshold', {
+                                                            required: helpers.orOperator(playerPerformance?.index1, false),
+                                                            valueAsNumber: true, validate: (value) => { if (!playerPerformance?.index1) { return true; } return value < 100 || t("Threshold value must be less than century.") }
+
+                                                        })} className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0 mx-1 peer" placeholder="Threshold Value" />
+                                                        {helpers.andOperator(errors?.playerPerformance?.questions[0]?.threshold, <div className="text-[12px] text-red-500">{helpers.orOperator(errors?.playerPerformance?.questions[0]?.threshold?.message, 'Please enter threshold value.')}</div>)}
                                                     </div>
                                                 </div>
                                                 <div className="mb-2 flex gap-2">
@@ -494,7 +539,7 @@ const AddQuestion = ({ setEditShowTradingModal, stateData }) => {
                                                         <input
                                                             type="number"
                                                             disabled={!playerPerformance?.index2}
-                                                            {...register('playerPerformance.questions.1.wicket', { required: helpers.orOperator(playerPerformance?.index2, false) })}
+                                                            {...register('playerPerformance.questions.1.wicket', { required: helpers.orOperator(playerPerformance?.index2, false), valueAsNumber: true })}
                                                             className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer w-[90px]"
                                                             placeholder="Set Wicket"
                                                         />
@@ -503,9 +548,12 @@ const AddQuestion = ({ setEditShowTradingModal, stateData }) => {
                                                     </div>
                                                     <label htmlFor='player1'> or more wickets in the match? </label>
                                                     <div>
-                                                        <input type="number" disabled={!playerPerformance?.index2} {...register('playerPerformance.questions.1.threshold', { required: helpers.orOperator(playerPerformance?.index2, false) })} className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer" placeholder="Threshold value of wicket" />
+                                                        <input type="number" disabled={!playerPerformance?.index2} {...register('playerPerformance.questions.1.threshold', {
+                                                            required: helpers.orOperator(playerPerformance?.index2, false),
+                                                            valueAsNumber: true, validate: (value) => { if (!playerPerformance?.index2) { return true; } return value < watch('playerPerformance.questions.1.wicket') || t("Threshold value must be less than wickets.") }
+                                                        })} className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer" placeholder="Threshold value of wicket" />
 
-                                                        {helpers.andOperator(errors?.playerPerformance?.questions[1]?.threshold, <div className="text-[12px] text-red-500">Please enter threshold value.</div>)}
+                                                        {helpers.andOperator(errors?.playerPerformance?.questions[1]?.threshold, <div className="text-[12px] text-red-500">{helpers.orOperator(errors?.playerPerformance?.questions[1]?.threshold?.message, 'Please enter threshold value.')}</div>)}
 
                                                     </div>
                                                 </div>
@@ -533,7 +581,7 @@ const AddQuestion = ({ setEditShowTradingModal, stateData }) => {
                                                         <input
                                                             type="number"
                                                             disabled={!playerPerformance?.index3}
-                                                            {...register('playerPerformance.questions.2.sixes', { required: playerPerformance?.index3 || false, })}
+                                                            {...register('playerPerformance.questions.2.sixes', { required: playerPerformance?.index3 || false, valueAsNumber: true })}
                                                             className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg w-[90px] border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer"
                                                             placeholder="Set Sixes"
                                                         />
@@ -575,8 +623,8 @@ const AddQuestion = ({ setEditShowTradingModal, stateData }) => {
 
                                                         <select disabled={!specificEvent?.index2}  {...register('specificEvent.questions.1.team', { required: helpers.orOperator(specificEvent?.index2, false) })} className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer">
                                                             <option value="">Select Team</option>
-                                                            <option value={JSON.stringify({teamName:helpers.orOperator (stateData?.localTeam,'N/A'),teamId:helpers.orOperator (stateData?.localTeamId,'N/A')})}>{helpers.orOperator (stateData?.localTeam,'N/A')}</option>
-                                                            <option value={JSON.stringify({teamName:helpers.orOperator (stateData?.visitorTeam,'N/A'),teamId:helpers.orOperator (stateData?.visitorTeamId,'N/A')})}>{helpers.orOperator (stateData?.visitorTeam,'N/A')}</option>
+                                                            <option value={JSON.stringify({ teamName: helpers.orOperator(stateData?.localTeam, 'N/A'), teamId: helpers.orOperator(stateData?.localTeamId, 'N/A') })}>{helpers.orOperator(stateData?.localTeam, 'N/A')}</option>
+                                                            <option value={JSON.stringify({ teamName: helpers.orOperator(stateData?.visitorTeam, 'N/A'), teamId: helpers.orOperator(stateData?.visitorTeamId, 'N/A') })}>{helpers.orOperator(stateData?.visitorTeam, 'N/A')}</option>
                                                         </select>
                                                         {helpers.andOperator(errors?.specificEvent?.questions[1]?.team, <div className="text-[12px] text-red-500">Please select team.</div>)}
                                                     </div>
@@ -781,7 +829,7 @@ const AddQuestion = ({ setEditShowTradingModal, stateData }) => {
                                 >
                                     {t("CLOSE")}
                                 </button>
-                                {helpers.ternaryCondition(loader,
+                                {helpers.ternaryCondition(addLoader,
                                     <LoaderButton />,
                                     <button className="bg-gradientTo text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150" type="submit"
                                         title={t("O_ADD")}>{t("O_ADD")} </button>)}

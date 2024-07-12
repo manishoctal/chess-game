@@ -75,9 +75,8 @@ const BannerTable = ({
                             : null
                         }
                         fallbackUrl='/images/user.png'
-                        className='w-14 h-14'
+                        className='w-16 h-10'
                         alt=''
-                        style={{ borderRadius: '50%' }}
                       />
                     </li>
                   </ul>
