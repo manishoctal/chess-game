@@ -57,7 +57,7 @@ function Faq() {
         page,
         pageSize: pageSize,
         sortKey: sort.sortBy,
-        keyword:filterData?.searchKey||null,
+        keyword:helpers.normalizeSpaces(filterData?.searchKey)||null,
         sortType: sort.sortType,
         status: filterData?.status || null,
         startDate: helpers.getFormattedDate(filterData?.startDate),

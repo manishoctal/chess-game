@@ -61,12 +61,13 @@ function ViewTradingQuestionManager() {
             const { status, startDate, endDate, searchKey } = filterData
 
             const payloadTrading = {
+                matchId:state?.matchId,
                 page,
                 pageSize: pageSize,
                 status: status,
                 startDate: startDate ? dayjs(startDate).format('YYYY-MM-DD') : null,
                 endDate: endDate ? dayjs(endDate).format('YYYY-MM-DD') : null,
-                keyword: searchKey?.trim(),
+                keyword: helpers.normalizeSpaces(searchKey),
                 sortBy: sort.sortBy,
                 sortType: sort.sortType
             }

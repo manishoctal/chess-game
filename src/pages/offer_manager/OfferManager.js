@@ -12,6 +12,7 @@ import OSearch from 'components/reusable/OSearch'
 import AddEditOffer from './AddEditOffer'
 import { BiReset } from 'react-icons/bi'
 import { IoIosAdd } from 'react-icons/io'
+import helpers from 'utils/helpers'
 
 
 function OfferManager() {
@@ -70,7 +71,7 @@ function OfferManager() {
         status: category,
         startDate: startDate ? dayjs(startDate).format('YYYY-MM-DD') : null,
         endDate: endDate ? dayjs(endDate).format('YYYY-MM-DD') : null,
-        keyword: searchKey,
+        keyword: helpers.normalizeSpaces(searchKey)||null,
         sortBy: sort.sortBy,
         sortType: sort.sortType
       }

@@ -56,7 +56,7 @@ function NotificationManager() {
         pageSize,
         startDate: startDate ? dayjs(startDate).format('YYYY-MM-DD') : null,
         endDate: endDate ? dayjs(endDate).format('YYYY-MM-DD') : null,
-        keyword: searchkey||null,
+        keyword: helpers.normalizeSpaces(searchkey)||null,
         sortBy: sort.sortBy,
         sortType: sort.sortType
       }

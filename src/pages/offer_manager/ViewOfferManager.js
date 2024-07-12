@@ -66,7 +66,7 @@ function ViewOfferManager() {
                 status: category,
                 startDate: startDate ? dayjs(startDate).format('YYYY-MM-DD') : null,
                 endDate: endDate ? dayjs(endDate).format('YYYY-MM-DD') : null,
-                keyword: searchKey,
+                keyword: helpers.normalizeSpaces(searchKey)||null,
                 sortBy: sort.sortBy,
                 sortType: sort.sortType
             }

@@ -11,6 +11,7 @@ import TradingPageSizeList from 'components/PageSizeList'
 import Select from "react-select";
 import OSearchTradingQuestion from 'components/reusable/OSearch'
 import { BiReset } from 'react-icons/bi'
+import helpers from 'utils/helpers'
   function TradingQuestionManager() {
   const { t } = useTranslation()
   const { user, updatePageName } = useContext(AuthContext)
@@ -95,7 +96,7 @@ import { BiReset } from 'react-icons/bi'
         status: category,
         startDate: startDate ? dayjs(startDate).format('YYYY-MM-DD') : null,
         endDate: endDate ? dayjs(endDate).format('YYYY-MM-DD') : null,
-        keyword: searchKey?.trim(),
+        keyword:helpers.normalizeSpaces(searchKey),
         sortKey: sort.sortBy,
         sortType: sort.sortType,
         formatType: toStartCase(filterData?.formatType?.value) || null

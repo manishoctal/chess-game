@@ -68,7 +68,7 @@ function Banner() {
         status: category,
         startDate: startDate ? dayjs(startDate).format('YYYY-MM-DD') : null,
         endDate: endDate ? dayjs(endDate).format('YYYY-MM-DD') : null,
-        keyword: searchKey,
+        keyword: helpers.normalizeSpaces(searchKey)||null,
         sortBy: sort.sortBy,
         sortType: sort.sortType
       }
@@ -273,6 +273,7 @@ function Banner() {
                   </button>
 
                 </div>
+               
               </div>
 
               <div className='flex items-center justify-end px-4 ms-auto mb-3'>
@@ -287,7 +288,9 @@ function Banner() {
                   </button>
                 )}
               </div>
+             
             </form>
+            
             <SubTable
               allBanner={bannerData?.docs}
               allbannerData={getAllBanner}

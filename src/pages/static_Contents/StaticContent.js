@@ -97,7 +97,7 @@ const StaticContent = () => {
           dayjs(endDate).format('YYYY-MM-DD'),
           null
         ),
-        keyword: searchkey?.trim(),
+        keyword: helpers.normalizeSpaces(searchkey),
         sortKey: sort.sortBy,
         sortType: sort.sortType
       }
