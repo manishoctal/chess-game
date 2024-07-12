@@ -13,6 +13,8 @@ import OSearch from 'components/reusable/OSearch'
 import BannerAdd from './BannerAdd'
 import EditBanner from './BannerEdit'
 import helpers from 'utils/helpers'
+import { BiReset } from 'react-icons/bi'
+import { IoIosAdd } from 'react-icons/io'
 
 
 function Banner() {
@@ -264,10 +266,12 @@ function Banner() {
                     type='button'
                     onClick={handleReset}
                     title={t('O_RESET')}
-                    className='bg-gradientTo text-sm px-8 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2'
+                    className='bg-gradientTo flex gap-2 text-sm px-6 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2'
                   >
+                    <BiReset size={18} />
                     {t('O_RESET')}
                   </button>
+
                 </div>
               </div>
 
@@ -276,10 +280,10 @@ function Banner() {
                   <button
                     title={t('ADD_BANNER')}
                     type='button'
-                    className='bg-gradientTo flex text-sm px-8 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue whitespace-nowrap'
+                    className='bg-gradientTo flex text-sm px-6 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue whitespace-nowrap'
                     onClick={() => setAddShowModal(true)}
                   >
-                    + {t('ADD_BANNER')}
+                    <IoIosAdd size={18} /> {t('ADD_BANNER')}
                   </button>
                 )}
               </div>

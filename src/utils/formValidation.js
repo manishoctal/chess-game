@@ -190,6 +190,53 @@ const FormValidation = () => {
           value.trim() ? true : t("WHITE_SPACES_NOT_ALLOWED"),
       },
     },
+
+
+    metaTitle: {
+      required: t("PLEASE_ENTER_META_TITLE"),
+      minLength: {
+        value: 2,
+        message: "Meta title should contains at least 2 characters.",
+      },
+      maxLength: {
+        value: 100,
+        message: "Meta title should not exceed 100 characters.",
+      },
+      validate: {
+        whiteSpace: (value) =>
+          value.trim() ? true : t("WHITE_SPACES_NOT_ALLOWED"),
+      },
+    },
+    metaKeyword: {
+      required: t("PLEASE_ENTER_META_KEYWORD"),
+      minLength: {
+        value: 2,
+        message: "Meta keyword should contains at least 2 characters.",
+      },
+      maxLength: {
+        value: 100,
+        message: "Meta keyword should not exceed 100 characters.",
+      },
+      validate: {
+        whiteSpace: (value) =>
+          value.trim() ? true : t("WHITE_SPACES_NOT_ALLOWED"),
+      },
+    },
+    metaDescription: {
+      required: t("PLEASE_ENTER_META_DESCRIPTION"),
+      minLength: {
+        value: 2,
+        message: "Meta description should contains at least 2 characters.",
+      },
+      maxLength: {
+        value: 100,
+        message: "Meta description should not exceed 100 characters.",
+      },
+      validate: {
+        whiteSpace: (value) =>
+          value.trim() ? true : t("WHITE_SPACES_NOT_ALLOWED"),
+      },
+    },
     address: {
       required: "Please enter address.",
       minLength: {

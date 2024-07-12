@@ -10,6 +10,8 @@ import AuthContext from 'context/AuthContext'
 import PageSizeList from 'components/PageSizeList'
 import OSearch from 'components/reusable/OSearch'
 import AddEditOffer from './AddEditOffer'
+import { BiReset } from 'react-icons/bi'
+import { IoIosAdd } from 'react-icons/io'
 
 
 function OfferManager() {
@@ -122,7 +124,7 @@ function OfferManager() {
   }
 
   const handleDateChange = (start, end) => {
-   
+
     setPage(1)
     setFilterData({
       ...filterData,
@@ -165,7 +167,7 @@ function OfferManager() {
 
 
 
-// add edit modal start
+  // add edit modal start
   const [item, setItem] = useState()
   const editViewBanner = async (type, data) => {
     setEditView(type)
@@ -173,7 +175,7 @@ function OfferManager() {
     setEditShowOfferModal(true)
   }
 
-// add edit modal end
+  // add edit modal end
 
   return (
     <div>
@@ -216,9 +218,9 @@ function OfferManager() {
                     type='button'
                     onClick={handleReset}
                     title={t('O_RESET')}
-                    className='bg-gradientTo text-sm px-8 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2'
+                    className='bg-gradientTo text-sm px-6 flex gap-2 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2'
                   >
-                    {t('O_RESET')}
+                    <BiReset size={18} /> {t('O_RESET')}
                   </button>
                 </div>
               </div>
@@ -226,10 +228,10 @@ function OfferManager() {
               {(manager?.add || user?.role === "admin") && (<button
                 type='button'
                 title={t('ADD_OFFER')}
-                onClick={()=>{setEditShowOfferModal(true);setEditView('add')}}
-                className='bg-gradientTo text-sm px-8 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2'
+                onClick={() => { setEditShowOfferModal(true); setEditView('add') }}
+                className='bg-gradientTo text-sm px-6 flex gap-2 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2'
               >
-               + {t('ADD_OFFER')}
+                <IoIosAdd size={18} /> {t('ADD_OFFER')}
               </button>)}
             </form>
 

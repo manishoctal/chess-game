@@ -38,7 +38,7 @@ export default function ImageUploader({ onFileChange ,defaultImage}) {
         <div className="w-full max-w-lg mx-auto mt-3 p-6 bg-white rounded-lg shadow-lg">
             <div className="mb-4">
                 <label className="block text-gray-700 text-sm font-bold mb-2">
-                    Upload Banner Image
+                    Upload Banner Image (16:9 Aspect Ratio)
                 </label>
                 <div
                     className="flex items-center justify-center w-full h-48 bg-gray-50 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer"

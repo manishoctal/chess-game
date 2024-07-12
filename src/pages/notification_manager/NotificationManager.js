@@ -11,6 +11,8 @@ import NotificationAdd from './NotificationAdd'
 import PageSizeList from 'components/PageSizeList'
 import helpers from 'utils/helpers'
 import OSearch from 'components/reusable/OSearch'
+import { BiReset } from 'react-icons/bi'
+import { IoIosAdd } from 'react-icons/io'
 
 function NotificationManager() {
   const { t } = useTranslation()
@@ -174,9 +176,9 @@ function NotificationManager() {
                     type='button'
                     onClick={handleReset}
                     title={t('O_RESET')}
-                    className='bg-gradientTo text-sm px-8 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2'
+                    className='bg-gradientTo text-sm px-6 flex gap-2 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2'
                   >
-                    {t('O_RESET')}
+                      <BiReset size={18} />{t('O_RESET')}
                   </button>
                 </div>
               </div>
@@ -193,10 +195,10 @@ function NotificationManager() {
                     <button
                       title={t('SEND_NOTIFICATION')}
                       type='button'
-                      className='bg-gradientTo flex text-sm px-8 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue whitespace-nowrap'
+                      className='bg-gradientTo flex text-sm px-6 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue whitespace-nowrap'
                       onClick={() => handleCategory()}
                     >
-                      + {t('SEND_NOTIFICATION')}
+                      <IoIosAdd size={18} />{t('SEND_NOTIFICATION')}
                     </button>
                   )}
                 </div>

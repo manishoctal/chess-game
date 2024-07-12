@@ -11,12 +11,14 @@ import OButton from 'components/reusable/OButton'
 import { Link } from 'react-router-dom'
 import ReactQuill from 'react-quill'
 import { useLocation, useNavigate } from 'react-router'
+import { FaEdit } from 'react-icons/fa'
 
 export default function AddEditEmail() {
   const { t } = useTranslation()
   const location = useLocation()
   const navigate = useNavigate()
   const editItem = location?.state?.item
+  console.log("🚀 ~ AddEditEmail ~ editItem:", editItem);
   const type = location?.state?.type
   const notification = useToastContext()
   const [isLoading, setIsLoading] = useState(false)
@@ -116,8 +118,9 @@ export default function AddEditEmail() {
     </div>
   ) : (
     <OButton
+      extraClasses={'!px-6 '}
       label={
-        labelName
+        <><FaEdit size={15} className='mr-2' /> {labelName}</>
       }
       title={labelName}
       type='submit'
@@ -126,9 +129,9 @@ export default function AddEditEmail() {
   )
   return (
     <form onSubmit={handleSubmit(handleSubmitForm)} method='post'>
-     
+
       <div className='outer-boarder'>
-        
+
         <div className='headerForm  bg-[#2f2f31] '>
           {type === 'edit' ? 'Edit' : 'View'} {t('AN_EMAIL_TEMPLATE')}
         </div>
@@ -145,11 +148,13 @@ export default function AddEditEmail() {
                 }
                 type='text'
                 autoFocus
+                style={{ cursor: 'not-allowed' }}
+
                 maxLength={500}
                 onInput={e => preventMaxInput(e, 500)}
                 register={register('title', formValidation.title)}
                 errors={errors}
-                disable={type === 'view'}
+                disable
               />
             </div>
             <div className='md:py-4 sm:py-3 px-2'>
@@ -184,7 +189,10 @@ export default function AddEditEmail() {
           defaultValue={editItem?.keyword}
           placeholder='Write something...'
           readOnly={type === 'view'}
+
         />
+
+
 
         <div className='flex items-center justify-center p-3 mt-3 border bg-[#cbd5e13a]  rounded-b'>
           <Link to='/email-manager'>

@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import helpers from "utils/helpers";
 import OImage from "components/reusable/OImage";
 import ImageUploader from "components/reusable/ImageUploader";
+import { FaEdit } from "react-icons/fa";
 
 const BannerEdit = ({ setEditShowModal, getAllFAQ, item, viewType }) => {
     const { t } = useTranslation();
@@ -94,7 +95,7 @@ const BannerEdit = ({ setEditShowModal, getAllFAQ, item, viewType }) => {
                             {helpers.andOperator(imageError, <small className="text-red-500 text-center">{imageError}</small>)}
 
                             {helpers.andOperator(viewType == 'view', <>
-                                <label className="block text-sm font-medium text-gray-900 dark:text-white mt-4 mx-4 ">Banner Image:</label>
+                                <label className="block text-sm font-medium text-gray-900 dark:text-white mt-4 mx-4 ">Banner Image (16:9 Aspect Ratio):</label>
 
                                 <div className="h-[300px] ">
                                     <OImage
@@ -122,11 +123,12 @@ const BannerEdit = ({ setEditShowModal, getAllFAQ, item, viewType }) => {
                                         <div className="loading-spinner" />
                                     </div>
                                 </button>, <button
-                                    className="bg-gradientTo text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150"
+                                    className="bg-gradientTo flex gap-2  text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150"
                                     type="submit"
                                     title={t("O_EDIT")}
                                 >
-                                    {t("O_EDIT")}
+                                   <FaEdit size={16} />
+                                   {t("O_EDIT")}
                                 </button>)}
 
                             </div>

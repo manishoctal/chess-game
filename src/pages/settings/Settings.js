@@ -16,6 +16,7 @@ import FormValidation from "utils/formValidation";
 import { preventMaxInput } from "utils/validations";
 import helpers from "utils/helpers";
 import DepositAmount from "./DepositAmount";
+import { GrUpdate } from "react-icons/gr";
 
 const Settings = () => {
   const { logoutUser, user, updatePageName } = useContext(AuthContext);
@@ -578,7 +579,7 @@ const Settings = () => {
         <div className="text-center mt-4 ">
           <OButton
             disabled={!isDirty}
-            label={<>{t("O_UPDATE")}</>}
+            label={<><GrUpdate size={16} className="mr-2"/>{t("O_UPDATE")}</>}
             type="submit"
             onClick={handleSubmit(handleSubmitForm)}
             loading={settingChangeLoading}

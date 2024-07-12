@@ -14,6 +14,8 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import helpers from 'utils/helpers'
 import { isEmpty, startCase } from 'lodash'
 import { FaCircleArrowLeft } from "react-icons/fa6";
+import { BiReset } from 'react-icons/bi'
+import { IoIosAdd } from 'react-icons/io'
 
 function ViewTradingQuestionManager() {
     const { t } = useTranslation()
@@ -287,9 +289,9 @@ function ViewTradingQuestionManager() {
                                         type='button'
                                         onClick={handleReset}
                                         title={t('O_RESET')}
-                                        className='bg-gradientTo text-sm px-8 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2'
+                                        className='bg-gradientTo text-sm px-6 flex gap-2 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2'
                                     >
-                                        {t('O_RESET')}
+                                         <BiReset size={18} /> {t('O_RESET')}
                                     </button>
                                 </div>
                             </div>
@@ -298,9 +300,9 @@ function ViewTradingQuestionManager() {
                                 type='button'
                                 title={t('ADD_QUESTIONS')}
                                 onClick={AddTradingQuestion}
-                                className='bg-gradientTo text-sm px-8 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2'
+                                className='bg-gradientTo text-sm px-6 flex gap-2 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2'
                             >
-                                {t('ADD_QUESTIONS')}
+                               <IoIosAdd />{t('ADD_QUESTIONS')}
                             </button>)}
                         </form>
                         <ViewTradingQuestionTable

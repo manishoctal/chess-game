@@ -11,8 +11,10 @@ import { useNavigate } from 'react-router-dom'
 import useToastContext from 'hooks/useToastContext'
 import PageSizeList from 'components/PageSizeList'
 import OSearch from 'components/reusable/OSearch'
+import { BiReset } from 'react-icons/bi'
+import { IoIosAdd } from "react-icons/io";
 
-function SubAdmin () {
+function SubAdmin() {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const notification = useToastContext()
@@ -184,7 +186,7 @@ function SubAdmin () {
               <div className='col-span-2 flex flex-wrap  items-center'>
                 <div className='flex items-center lg:pt-0 pt-3 flex-wrap justify-center mb-2 2xl:mb-0'>
                   <div className='relative flex items-center mb-3'>
-                  <OSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm} placeholder={t('EMAIL_USERNAME_MOBILE_NUMBER')}/>
+                    <OSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm} placeholder={t('EMAIL_USERNAME_MOBILE_NUMBER')} />
                   </div>
 
                   <ODateRangePicker
@@ -214,8 +216,9 @@ function SubAdmin () {
                     type='button'
                     onClick={handleReset}
                     title={t('O_RESET')}
-                    className='bg-gradientTo text-sm px-8 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2'
+                    className='bg-gradientTo flex gap-2 text-sm px-6 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2'
                   >
+                    <BiReset size={18} />
                     {t('O_RESET')}
                   </button>
                 </div>
@@ -225,10 +228,11 @@ function SubAdmin () {
                   <button
                     title={t('ADD_SUB_ADMIN')}
                     type='button'
-                    className='bg-gradientTo flex text-sm px-8 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue whitespace-nowrap'
+                    className='bg-gradientTo flex text-sm px-6 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue whitespace-nowrap'
                     onClick={() => navigate('/sub-admin-manager/add')}
                   >
-                    + {t('ADD_SUB_ADMIN')}
+                   <IoIosAdd size={18}/>
+                   {t('ADD_SUB_ADMIN')}
                   </button>
                 )}
               </div>
@@ -246,7 +250,7 @@ function SubAdmin () {
             />
 
             <div className='flex justify-between'>
-            <PageSizeList  dynamicPage={dynamicPage} pageSize={pageSize}/>
+              <PageSizeList dynamicPage={dynamicPage} pageSize={pageSize} />
               {paginationObj?.totalItems ? (
                 <Pagination
                   handlePageClick={handlePageClick}

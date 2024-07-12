@@ -568,7 +568,7 @@
   "SEARCH_BY_BANNER_ID":"Banner ID",
   "ADD_BANNER":"Add Banner",
   "BANNER_ID":"Banner ID",
-  "BANNER_IMAGE":"Banner Image",
+  "BANNER_IMAGE":"Banner Image (16:9 Aspect Ratio)",
   "VIEW_BANNER":"View Banner",
   "EDIT_BANNER":"Edit Banner",
   "PLEASE_ENTER_MAXIMUM_WITHDRAWAL_AMOUNT_TO_BANK":"Please enter maximum withdraw amount.",
@@ -708,7 +708,12 @@
   "O_QUESTION":"Question",
   "SELECT_ANSWER":"Select Answer",
   "O_ANNOUNCE_RESULT":"Announce Result",
-  "RESULT_ANNOUNCED":"Announced"
+  "RESULT_ANNOUNCED":"Announced",
+  "META_DESCRIPTION":"Meta Description",
+  "PLEASE_ENTER_META_TITLE":"Please enter meta title",
+    "PLEASE_ENTER_META_KEYWORD":"Please enter meta keyword",
+      "PLEASE_ENTER_META_DESCRIPTION":"Please enter meta description",
+      "O_ANNOUNCE_RESULT_BUTTON":"Announce"
 
 
 
