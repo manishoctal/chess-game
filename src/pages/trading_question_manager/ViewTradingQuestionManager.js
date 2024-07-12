@@ -280,7 +280,9 @@ function ViewTradingQuestionManager() {
                             setSort={setSort}
                             sort={sort}
                             manager={manager}
-                            pageSize={pageSize} />
+                            pageSize={pageSize}
+                            ViewallTradingQuestionsList={ViewallTradingQuestionsList}
+                            />
                         <div className='flex justify-between'>
                             <PageSizeListViewTrading dynamicPage={dynamicPage} pageSize={pageSize} />
                             {viewTradingPaginationObj?.totalItems ? (

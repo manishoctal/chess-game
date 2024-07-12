@@ -18,6 +18,7 @@ const ViewTradingQuestionTable = ({
   setSort,
   manager,
   pageSize,
+  ViewallTradingQuestionsList
 }) => {
   const { t } = useTranslation();
   
@@ -40,12 +41,14 @@ const ViewTradingQuestionTable = ({
           "active",
           "inactive"
         ),
-        type: "offer",
+        type: "question",
       };
       const path = `${apiPath.changeStatus}/${item?._id}`;
       const result = await apiPut(path, payload);
       if (result?.status === 200) {
+        ViewallTradingQuestionsList()
         notification.success(result.data.message);
+
       }
 
     } catch (error) {
