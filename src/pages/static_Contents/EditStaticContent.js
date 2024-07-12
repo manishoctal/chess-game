@@ -17,11 +17,9 @@ const EditStaticContent = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
-  console.log("🚀 ~ EditStaticContent ~ location:", location);
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors },
   } = useForm({
     mode: "onChange",
@@ -77,9 +75,7 @@ const EditStaticContent = () => {
     updatePageName(t("Edit Static Content"));
   }, []);
 
-  useEffect(() => {
-    // reset(location?.state);
-  }, []);
+
   return (
     <>
   <form onSubmit={handleSubmit(onSubmit)}>

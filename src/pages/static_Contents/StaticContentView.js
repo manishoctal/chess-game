@@ -39,12 +39,12 @@ const StaticContentView = () => {
         <div className="bg-[#F9F9F9]">
           <div className="px-3 py-4">
             <div className="bg-white border border-[#E9EDF9] rounded-lg">
-              <div className=" border-b-[#E3E3E3] grid 2xl:grid-cols-3 xl:grid-cols-2 lg:grid lg:grid-cols-1 gap-2 px-4 ">
-                <div className="col-span-3 flex flex-wrap  items-center" />
+              <div className="2xl:grid-cols-3 xl:grid-cols-2 border-b-[#E3E3E3] grid  lg:grid lg:grid-cols-1 gap-2 px-4 ">
+                <div className="col-span-3 items-center flex flex-wrap " />
               </div>
-              <div className="relative p-6 flex-auto">
+              <div className="p-6 flex-auto relative ">
                 <div className="grid grid-cols-3">
-                  <div className="sm:py-4 sm:px-2 py-8 px-7 col-span-1">
+                  <div className="py-8 px-7 sm:py-4 sm:px-2  col-span-1">
                     <div className="relative z-0 w-full group">
                       <strong>Title:</strong>
                       <h6>{location?.state?.title || "N/A"}</h6>
