@@ -109,7 +109,7 @@ function OfferManager() {
     setPageSize(e.target.value)
   }
 
-  const handleReset = () => {
+  const handleOfferReset = () => {
     setFilterData({
       category: '',
       startDate: '',
@@ -216,7 +216,7 @@ function OfferManager() {
 
                   <button
                     type='button'
-                    onClick={handleReset}
+                    onClick={handleOfferReset}
                     title={t('O_RESET')}
                     className='bg-gradientTo text-sm px-6 flex gap-2 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2'
                   >
