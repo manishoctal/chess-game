@@ -12,13 +12,14 @@ import { Link } from 'react-router-dom'
 import ReactQuill from 'react-quill'
 import { useLocation, useNavigate } from 'react-router'
 import { FaEdit } from 'react-icons/fa'
+import helpers from 'utils/helpers'
+import { startCase } from 'lodash'
 
 export default function AddEditEmail() {
   const { t } = useTranslation()
   const location = useLocation()
   const navigate = useNavigate()
   const editItem = location?.state?.item
-  console.log("🚀 ~ AddEditEmail ~ editItem:", editItem);
   const type = location?.state?.type
   const notification = useToastContext()
   const [isLoading, setIsLoading] = useState(false)
@@ -183,16 +184,26 @@ export default function AddEditEmail() {
           placeholder='Write something...'
           readOnly={type === 'view'}
         />
-        <QuillEditor
-          name='keyword'
-          controlField={control}
-          defaultValue={editItem?.keyword}
-          placeholder='Write something...'
-          readOnly={type === 'view'}
 
-        />
+        {helpers.ternaryCondition(editItem?.keywordList?.length, <div className="md:py-5 sm:px-2 sm:py-3 md:px-7 px-2">
+          <div className="">
+            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"></label>
+            <b className='text-sm'>{t('O_KEYWORD')}:</b>
+            <div className="grid grid-cols-3 gap-5 mt-3">
+              {editItem?.keywordList?.map((info, i) => {
+                return (
+                  <div className="bg-gray-200 border  w-full cursor-pointer rounded-sm w-1/2 grid grid-cols-12 bg-white  p-3 gap-2 items-center" key={i}>
+                    <div className="col-span-11">
+                      <p className="text-black-600 font-semibold">{helpers.orOperator(info?.title, 'N/A')}</p>
+                      <p className="text-sm text-gray-800 font-light">{helpers.orOperator(startCase(info?.description), 'N/A')}</p>
+                    </div>
+                  </div>
+                )
+              })}
 
-
+            </div>
+          </div>
+        </div>, '')}
 
         <div className='flex items-center justify-center p-3 mt-3 border bg-[#cbd5e13a]  rounded-b'>
           <Link to='/email-manager'>

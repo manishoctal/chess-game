@@ -11,7 +11,7 @@ import { preventMaxInput } from "utils/validations";
 import apiPath from "utils/apiPath";
 import { apiPost } from "utils/apiFetch";
 import useToastContext from "hooks/useToastContext";
-const AddQuestion = ({ setEditShowTradingModal, stateData }) => {
+const AddQuestion = ({ setEditShowTradingModal, stateData,ViewallTradingQuestionsList }) => {
     const { t } = useTranslation();
     const notification = useToastContext();
 
@@ -247,8 +247,11 @@ const AddQuestion = ({ setEditShowTradingModal, stateData }) => {
             const path = apiPath?.addQuestions
             const result = await apiPost(path, payloadQuestion);
             if (result?.data?.success) {
+                ViewallTradingQuestionsList()
               notification.success(result?.data?.message);
+              
               setEditShowTradingModal(false);
+              
             }
         } catch (error) {
             console.error("error in get add question==>>>>", error.message);

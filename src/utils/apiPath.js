@@ -55,7 +55,8 @@ const apiPath = Object.freeze({
   downloadCsv:'/v1/admin/offer/csv-download',
   getFormatList:'/v1/admin/questions/getMatchFormatType',
   getMatchList:'/v1/admin/questions/getMatchesList',
-  addQuestions:'/v1/admin/questions'
+  addQuestions:'/v1/admin/questions',
+  tradingQuestionList:'/v1/admin/questions'
 
 });
 

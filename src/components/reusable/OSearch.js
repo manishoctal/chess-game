@@ -33,7 +33,7 @@ function OSearch({ searchTerm, setSearchTerm, placeholder,inputClass }) {
         value={searchTerm}
         title=""
         required
-        onChange={(e) => setSearchTerm(e.target.value)}
+        onChange={(e) => setSearchTerm(e?.target?.value)}
       />
     </>
   )

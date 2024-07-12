@@ -36,42 +36,7 @@ function ViewTradingQuestionManager() {
         }
     }, [state])
     const manager = user?.permission?.find(e => e.manager === 'trading_question_manager') ?? {}
-    const [viewTradingData, setViewTradingData] = useState({
-        "docs": [
-            {
-                "_id": "668392ad2eb7b8e01a396484",
-                "questions": "Virat Kohli will score 200 runs?",
-                "yesSelected": 12,
-                "noSelected": 3,
-                "poll": { 'yes': 4.5, 'no': 6.5 },
-                "createdAt": "2024-07-02T05:39:57.233Z",
-                "resultAnnounced": 'no',
-                "status": "active",
-                "__v": 0
-            },
-            {
-                "_id": "668392ad2eb7b8e01a396484",
-                "questions": "Rohit Sharma will score 260 runs?",
-                "yesSelected": 17,
-                "noSelected": 13,
-                "poll": { 'yes': 4.5, 'no': 6.5 },
-                "createdAt": "2024-07-02T05:39:57.233Z",
-                "resultAnnounced": 'yes',
-                "status": "active",
-                "__v": 0
-            },
-
-        ],
-        "totalDocs": 1,
-        "limit": 10,
-        "page": 1,
-        "totalPages": 1,
-        "pagingCounter": 1,
-        "hasPrevPage": false,
-        "hasNextPage": true,
-        "prevPage": null,
-        "nextPage": 2
-    })
+    const [viewTradingData, setViewTradingData] = useState()
     const [page, setPage] = useState(1)
     const [filterData, setFilterData] = useState({
         status: '',
@@ -93,23 +58,24 @@ function ViewTradingQuestionManager() {
     // get all view trading question start
     const ViewallTradingQuestionsList = async () => {
         try {
-            const { category, startDate, endDate, searchKey } = filterData
+            const { status, startDate, endDate, searchKey } = filterData
 
             const payloadTrading = {
                 page,
                 pageSize: pageSize,
-                status: category,
+                status: status,
                 startDate: startDate ? dayjs(startDate).format('YYYY-MM-DD') : null,
                 endDate: endDate ? dayjs(endDate).format('YYYY-MM-DD') : null,
-                keyword: searchKey,
+                keyword: searchKey?.trim(),
                 sortBy: sort.sortBy,
                 sortType: sort.sortType
             }
 
-            const path = apiPath.getOfferUsers + '/' + state?._id
+            const path = apiPath.tradingQuestionList
             const result = await apiGet(path, payloadTrading)
             const responseTrading = result?.data?.results
             const resultStatus = result?.data?.success
+            if(resultStatus){
             setViewTradingData(responseTrading)
             setPaginationViewTradingObj({
                 ...viewTradingPaginationObj,
@@ -118,6 +84,7 @@ function ViewTradingQuestionManager() {
                 perPageItem: resultStatus ? responseTrading?.docs.length : null,
                 totalItems: resultStatus ? responseTrading.totalDocs : null
             })
+        }
         } catch (error) {
             console.error('error in get all sub admin list==>>>>', error.message)
         }
@@ -144,6 +111,7 @@ function ViewTradingQuestionManager() {
 
     useEffect(() => {
         // api call function
+        ViewallTradingQuestionsList()
     }, [filterData, page, sort, pageSize])
 
     // get view trading question list end
@@ -291,7 +259,7 @@ function ViewTradingQuestionManager() {
                                         title={t('O_RESET')}
                                         className='bg-gradientTo text-sm px-6 flex gap-2 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2'
                                     >
-                                         <BiReset size={18} /> {t('O_RESET')}
+                                        <BiReset size={18} /> {t('O_RESET')}
                                     </button>
                                 </div>
                             </div>
@@ -302,7 +270,7 @@ function ViewTradingQuestionManager() {
                                 onClick={AddTradingQuestion}
                                 className='bg-gradientTo text-sm px-6 flex gap-2 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2'
                             >
-                               <IoIosAdd />{t('ADD_QUESTIONS')}
+                                <IoIosAdd />{t('ADD_QUESTIONS')}
                             </button>)}
                         </form>
                         <ViewTradingQuestionTable
