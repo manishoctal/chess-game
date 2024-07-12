@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import helpers from "utils/helpers";
 import LoaderButton from "components/reusable/LoaderButton";
 import OInputField from "components/reusable/OInputField";
+import { GrAnnounce } from "react-icons/gr";
 
 const AnnounceResult = ({ setAnnounceResultModal, toAnnounceData }) => {
     const { t } = useTranslation();
@@ -89,8 +90,8 @@ console.log('e',e)
                                 </button>
                                 {helpers.ternaryCondition(loader,
                                     <LoaderButton />,
-                                    <button className="bg-gradientTo text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150" type="submit"
-                                        title={t("O_ANNOUNCE_RESULT")}>{t("O_ANNOUNCE_RESULT")} </button>)}
+                                    <button className="bg-gradientTo text-white active:bg-emerald-600 font-normal text-sm px-5 flex gap-2 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150" type="submit"
+                                        title={t("O_ANNOUNCE_RESULT")}> <GrAnnounce  size={18}/>{t("O_ANNOUNCE_RESULT_BUTTON")} </button>)}
                             </div>
                         </div>
                     </div>

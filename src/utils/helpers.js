@@ -31,24 +31,24 @@ const helpers = {
 
 
 
-   matchDateFormat:(dateString)=> {
-    if(dateString){
-    const date = new Date(dateString);
-    const day = String(date.getUTCDate()).padStart(2, '0');
-    const month = String(date.getUTCMonth() + 1).padStart(2, '0'); 
-    const year = String(date.getUTCFullYear()).slice(-4); 
-    
-    let hours = date.getUTCHours();
-    const minutes = String(date.getUTCMinutes()).padStart(2, '0');
+  matchDateFormat: (dateString) => {
+    if (dateString) {
+      const date = new Date(dateString);
+      const day = String(date.getUTCDate()).padStart(2, '0');
+      const month = String(date.getUTCMonth() + 1).padStart(2, '0');
+      const year = String(date.getUTCFullYear()).slice(-4);
 
-    const ampm = hours >= 12 ? 'PM' : 'AM';
-    hours = hours % 12;
-    hours = hours ? hours : 12; 
-    const strHours = String(hours).padStart(2, '0');
+      let hours = date.getUTCHours();
+      const minutes = String(date.getUTCMinutes()).padStart(2, '0');
 
-    return `${day}-${month}-${year} ${strHours}:${minutes} ${ampm}`;
-  }
-},
+      const ampm = hours >= 12 ? 'PM' : 'AM';
+      hours = hours % 12;
+      hours = hours ? hours : 12;
+      const strHours = String(hours).padStart(2, '0');
+
+      return `${day}-${month}-${year} ${strHours}:${minutes} ${ampm}`;
+    }
+  },
 
 
   msgDateFormat: (date, timeZone) => {
@@ -294,9 +294,12 @@ const helpers = {
     }
   },
 
-  turboConsole:(message,data)=>{
+  turboConsole: (message, data) => {
     return console.log(
-      `%c ${message||''}, ${data||''}`,"color: white; font-size: 16px; background: red" );
+      `%c ${message || ''}, ${data || ''}`, "color: white; font-size: 16px; background: red");
+  },
+  normalizeSpaces: (str) => {
+    return str?.replace(/\s+/g, ' ')?.trim();
   }
 
 };

@@ -11,6 +11,7 @@ import PageSizeList from "components/PageSizeList";
 import helpers from "utils/helpers";
 import { useLocation } from "react-router-dom";
 import SearchWithOption from '../../components/reusable/SearchableDropdown'
+import { BiReset } from "react-icons/bi";
 function User() {
   const { t } = useTranslation();
   const location = useLocation();
@@ -234,15 +235,16 @@ function User() {
                       <option value="inactive">{t("O_INACTIVE")}</option>
                     </select>
                   </div>
-
                   <button
-                    type="button"
+                    type='button'
                     onClick={() => handleReset()}
-                    className="bg-gradientTo text-sm px-8 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2"
-                    title={t("O_RESET")}
+                    title={t('O_RESET')}
+                    className='bg-gradientTo flex gap-2 text-sm px-6 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2'
                   >
-                    {t("O_RESET")}
+                    <BiReset size={18} />
+                    {t('O_RESET')}
                   </button>
+
                 </div>
               </div>
               <div className="flex items-center md:justify-end px-4">

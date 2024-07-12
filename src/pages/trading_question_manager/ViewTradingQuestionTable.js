@@ -18,6 +18,7 @@ const ViewTradingQuestionTable = ({
   setSort,
   manager,
   pageSize,
+  ViewallTradingQuestionsList
 }) => {
   const { t } = useTranslation();
   
@@ -40,16 +41,18 @@ const ViewTradingQuestionTable = ({
           "active",
           "inactive"
         ),
-        type: "offer",
+        type: "question",
       };
       const path = `${apiPath.changeStatus}/${item?._id}`;
       const result = await apiPut(path, payload);
       if (result?.status === 200) {
+        ViewallTradingQuestionsList()
         notification.success(result.data.message);
+
       }
 
     } catch (error) {
-      console.error("error in get all users list==>>>>", error.message);
+      console.error("error in get status change list==>>>>", error.message);
     }
   };
 
@@ -63,16 +66,19 @@ const ViewTradingQuestionTable = ({
               <th scope="col" className="py-3 px-6">
                 {t("S.NO")}
               </th>
-              <OViewTradingTableHead sort={sort} setSort={setSort} name='QUESTIONS_NAME' fieldName='questions' />
-              <OViewTradingTableHead sort={sort} setSort={setSort} name='O_CREATED_AT' fieldName='createdAt' />
-              <OViewTradingTableHead sort={sort} setSort={setSort} name='YES_COUNT' fieldName='yesSelected' />
-              <OViewTradingTableHead sort={sort} setSort={setSort} name='NO_COUNT' fieldName='noSelected' />
+              <OViewTradingTableHead sort={sort} setSort={setSort} name='QUESTIONS_NAME' fieldName='questionObj.questionText' />
+              <OViewTradingTableHead sort={sort} setSort={setSort} name='O_CREATED_AT' fieldName='createdAt'  classTd={'justify-center'}/>
+              <OViewTradingTableHead sort={sort} setSort={setSort} name='YES_COUNT' fieldName='optionACount'  classTd={'justify-center'}/>
+              <OViewTradingTableHead sort={sort} setSort={setSort} name='NO_COUNT' fieldName='optionBCount'  classTd={'justify-center'}/>
               {(manager?.add || manager?.edit || user?.role === "admin") && (
-                <OViewTradingTableHead sort={sort} setSort={setSort} name='O_STATUS' fieldName='status' />)}
-              {(manager?.add || manager?.edit || user?.role === "admin") && (<th scope="col" className="py-3 px-6 text-center">
-                {t("MARK_ANSWER")}
-              </th>)}
-              <th scope="col" className="py-3 px-6">
+                <OViewTradingTableHead sort={sort} setSort={setSort} name='O_STATUS' fieldName='status'  classTd={'justify-center'}/>)}
+              {(manager?.add || manager?.edit || user?.role === "admin") && (
+             <OViewTradingTableHead sort={sort} setSort={setSort} name='MARK_ANSWER' fieldName='announceStatus' classTd={'justify-center'} />    
+              //   <th scope="col" className="py-3 px-6 text-center">
+              //   {t("MARK_ANSWER")}
+              // </th>
+            )}
+              <th scope="col" className="py-3 px-6 text-center">
                 {t("POLL_STATUS")}
               </th>
               {(manager?.view || user?.role === "admin") && (<th scope="col" className="py-3 px-6">
@@ -92,10 +98,10 @@ const ViewTradingQuestionTable = ({
                 >
                   {i + 1 + pageSize * (page - 1)}
                 </th>
-                {getViewTradingValue(startCase(item?.questions) || 'N/A', 'font-bold')}
+                {getViewTradingValue(startCase(item?.questionObj?.questionText) || 'N/A', 'font-bold')}
                 {getViewTradingValue(helpers.getDateAndTime(item?.createdAt))}
-                {getViewTradingValue(item?.yesSelected || 'N/A', 'font-bold')}
-                {getViewTradingValue(item?.noSelected || 'N/A', 'font-bold')}
+                {getViewTradingValue(item?.optionACount?.toString() || 'N/A', 'font-bold text-center')}
+                {getViewTradingValue(item?.optionBCount || 'N/A', 'font-bold text-center')}
                 {(manager?.add || manager?.edit || user?.role === "admin") && (<td className="py-2 px-4 border-r dark:border-[#ffffff38] text-center">
                   <label
                     className="inline-flex relative items-center cursor-pointer"
@@ -121,17 +127,17 @@ const ViewTradingQuestionTable = ({
                   </label>
                 </td>)}
                 {(manager?.add || manager?.edit || user?.role === "admin") && (<td className={`py-2 px-4 text-center border-r dark:border-[#ffffff38]`}>
-                  {helpers.ternaryCondition(item?.resultAnnounced == 'no', <button title={t('ANNOUNCE_RESULT')} onClick={() => { setAnnounceResultModal(true); setAnnounceData(item) }} className="bg-gradientTo text-[10px] px-2 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue">
+                  {helpers.ternaryCondition(!item?.announceStatus, <button title={t('ANNOUNCE_RESULT')} onClick={() => { setAnnounceResultModal(true); setAnnounceData(item) }} className="bg-gradientTo text-[10px] px-2 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue">
                     <GrAnnounce size={17} />
                   </button>, <span className="text-green-600 font-bold">{t("RESULT_ANNOUNCED")}</span>)}
                 </td>)}
-                <td className={`py-2 px-4 border-r dark:border-[#ffffff38]`}>
-                  <button title={t('O_YES')} className=" text-[10px] border-gray-500 px-3 py-2 rounded-lg items-center border text-white hover:bg-gray-100">
-                    <span className="text-[#000000] font-semibold">{t('O_YES')} {helpers.orOperator(item?.poll?.yes, 'N/A')}</span>
+                <td className={`py-2 px-4 border-r dark:border-[#ffffff38] text-center`}>
+                  <button title={startCase(item?.optionA)} className=" text-[10px] border-gray-500 px-3 py-2 rounded-lg items-center border text-white hover:bg-gray-100">
+                    <span className="text-[#000000] font-semibold">{startCase(item?.optionA)} {helpers.orOperator(item?.pollAStatus, 0)}</span>
                   </button>
 
-                  <button title={t('O_NO')} className=" text-[10px] border-gray-500 px-3 mx-2 py-2 rounded-lg items-center border text-white hover:bg-gray-100">
-                    <span className="text-[#000000] font-semibold">{t('O_NO')} {helpers.orOperator(item?.poll?.no, 'N/A')}</span>
+                  <button title={startCase(item?.optionB)} className=" text-[10px] border-gray-500 px-3 mx-2 py-2 rounded-lg items-center border text-white hover:bg-gray-100">
+                    <span className="text-[#000000] font-semibold">{t('O_NO')} {helpers.orOperator(item?.pollBStatus, 0)}</span>
                   </button>
                 </td>
                 {(manager?.view || user?.role === "admin") && (<td className="py-2 px-4 border-l">

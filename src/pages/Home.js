@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import "chartjs-adapter-date-fns";
-import { BiMoneyWithdraw } from "react-icons/bi";
+import { BiMoneyWithdraw, BiReset } from "react-icons/bi";
 import { FaUserTie, FaRegQuestionCircle, FaAddressCard } from "react-icons/fa";
 import { AiOutlineStock } from "react-icons/ai";
 import { GiProfit } from "react-icons/gi";
@@ -425,10 +425,10 @@ function Home() {
             <button
               type="button"
               onClick={() => handleResetDashboard()}
-              className="bg-gradientTo text-sm px-8 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2"
+              className="bg-gradientTo text-sm px-6 flex gap-2 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2"
               title={t("O_RESET")}
             >
-              {t("O_RESET")}
+             <BiReset size={18} /> {t("O_RESET")}
             </button>
           </div>
         </div>
@@ -588,9 +588,9 @@ function Home() {
           <button
             type="button"
             onClick={handleReset}
-            className="bg-gradientTo text-sm px-8 mb-3 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2"
+            className="bg-gradientTo text-sm px-6 flex gap-2 mb-3 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2"
           >
-            {t("O_RESET")}
+             <BiReset size={18} /> {t("O_RESET")}
           </button>
         </div>
         <div className="dark:bg-gray-900 dark:border sale_report grid grid-cols-1 gap-5 mb-7 bg-white p-4">

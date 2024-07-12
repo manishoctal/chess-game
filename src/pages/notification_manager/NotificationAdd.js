@@ -12,6 +12,7 @@ import DynamicLabel from "utils/DynamicLabel";
 import Select from "react-select";
 import ErrorMessage from "components/ErrorMessage";
 import helpers from "utils/helpers";
+import { IoSendSharp } from "react-icons/io5";
 const NotificationAdd = ({ getAllNotifications, handleCategory }) => {
   const [loading, setLoading] = useState(false);
   const [notificationUserError, setNotificationUserError] = useState(false);
@@ -262,7 +263,8 @@ const NotificationAdd = ({ getAllNotifications, handleCategory }) => {
                   {t("O_BACK")}
                 </button>
                 <OButton
-                  label={<>{t("O_SEND")}</>}
+                extraClasses={'!px-6'}
+                  label={<><IoSendSharp size={16} className="mr-2" />{t("O_SEND")}</>}
                   type="submit"
                   onClick={handleSubmit(onSubmit)}
                   loading={loading}

@@ -11,6 +11,7 @@ import { Buffer } from 'buffer'
 import OSearchStatic from 'components/reusable/OSearch'
 import helpers from 'utils/helpers'
 import useToastContext from 'hooks/useToastContext'
+import { BiReset } from 'react-icons/bi'
 
 const StaticContent = () => {
   const notification = useToastContext()
@@ -96,7 +97,7 @@ const StaticContent = () => {
           dayjs(endDate).format('YYYY-MM-DD'),
           null
         ),
-        keyword: searchkey?.trim(),
+        keyword: helpers.normalizeSpaces(searchkey),
         sortKey: sort.sortBy,
         sortType: sort.sortType
       }
@@ -219,9 +220,9 @@ const StaticContent = () => {
                   type='button'
                   onClick={handleResetAll}
                   title={t('O_RESET')}
-                  className='bg-gradientTo text-sm px-8 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2'
+                  className='bg-gradientTo text-sm px-5 flex gap-2 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto'
                 >
-                  {t('O_RESET')}
+                   <BiReset size={18} />{t('O_RESET')}
                 </button>
               </div>
             </div>
