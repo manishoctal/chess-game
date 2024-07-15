@@ -168,6 +168,14 @@ const Sidebar = () => {
             label="TRADING_QUESTION_MANAGER"
             imgSrc={rewardWithdrawalRequest}
           />
+
+          <SidebarNavItem
+            permission="player_card_manager"
+            path="/player-card-manager"
+            label="PLAYER_CARD_MANAGER"
+            imgSrc={rewardWithdrawalRequest}
+          />
+
           <SidebarNavItem
             permission="email_manager"
             path="/email-manager"

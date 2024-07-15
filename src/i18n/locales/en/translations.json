@@ -713,5 +713,18 @@
   "PLEASE_ENTER_META_DESCRIPTION": "Please enter meta description",
   "O_ANNOUNCE_RESULT_BUTTON": "Announce",
   "O_KEYWORD": "Keyword",
-  "DRAG_ROW":"Drag Row"
+  "DRAG_ROW":"Drag Row",
+  "SEARCH_BY_PLAYER_NAME_PLAYER_ROLE":"Player Name , Player Role",
+  "PLAYER_CARD_MANAGER":"Player Card Manager",
+  "PLAYER_RANKING":"Player Ranking",
+  "PLAYER_TEAM":"Player Team",
+  "AVAILABLE_CARD":"Available Card",
+  "PLAYER_NAME":"Player Name",
+  "PLAYER_PRICE":"Player Price",
+  "PLAYER_IMAGE":"Player Image",
+  "PLAYER_ROLE":"Player Role",
+  "TOTAL_CARDS":"Total Cards",
+  "RANKING":"Ranking",
+  "PLAYERS_TEAM":"Player Teams"
+
 }

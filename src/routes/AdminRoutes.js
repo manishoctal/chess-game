@@ -26,6 +26,7 @@ import NotificationAdd from 'pages/notification_manager/NotificationAdd'
 import AuthorizationRoute from 'utils/AuthorizationRoute'
 import TradingQuestionManager from 'pages/trading_question_manager/TradingQuestionManager'
 import ViewTradingQuestionManager from 'pages/trading_question_manager/ViewTradingQuestionManager'
+import PlayerCardManager from 'pages/player_card_manager/PlayerCardManager'
 const UseChange = ({ data }) => {
   const { t } = useTranslation()
   return t(data)
@@ -116,6 +117,16 @@ const AdminRoutes = {
       element: <AuthorizationRoute><ViewTradingQuestionManager /></AuthorizationRoute>,
       name: (
           <UseChange data='VIEW_TRADING_QUESTION_MANAGER' />
+      )
+    },
+
+
+    
+    {
+      path: '/player-card-manager',
+      element: <AuthorizationRoute><PlayerCardManager /></AuthorizationRoute>,
+      name: (
+          <UseChange data='PLAYER_CARD_MANAGER' />
       )
     },
 
