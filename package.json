@@ -34,6 +34,7 @@
     "react": "^18.2.0",
     "react-apexcharts": "^1.4.1",
     "react-avatar-editor": "^13.0.0",
+    "react-beautiful-dnd": "11.0.4",
     "react-chartjs-2": "^5.2.0",
     "react-copy-to-clipboard": "^5.1.0",
     "react-countup": "^6.4.0",

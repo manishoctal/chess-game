@@ -70,7 +70,12 @@ function Faq() {
       if (result?.status === 200) {
         const response = result?.data?.results
         const resultStatus = result?.data?.success
-        setFAQS(response?.docs)
+
+        const dragIdResponse = response?.docs.map((element, index) => {
+          return { ...element, id: `${index}` }
+        })
+        setFAQS(dragIdResponse)
+
         setPaginationObj({
           ...paginationObj,
           pageCount: helpers.ternaryCondition(resultStatus , response?.totalPages , null),
@@ -239,6 +244,7 @@ function Faq() {
               manager={manager}
               paginationObj={paginationObj}
               pageSize={pageSize}
+              setFAQS={setFAQS}
             />
 
             <div className='flex justify-between'>

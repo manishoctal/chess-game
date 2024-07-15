@@ -712,5 +712,6 @@
   "PLEASE_ENTER_META_KEYWORD": "Please enter meta keyword",
   "PLEASE_ENTER_META_DESCRIPTION": "Please enter meta description",
   "O_ANNOUNCE_RESULT_BUTTON": "Announce",
-  "O_KEYWORD": "Keyword"
+  "O_KEYWORD": "Keyword",
+  "DRAG_ROW":"Drag Row"
 }
