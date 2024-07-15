@@ -68,7 +68,7 @@ function Banner() {
         status: category,
         startDate: startDate ? dayjs(startDate).format('YYYY-MM-DD') : null,
         endDate: endDate ? dayjs(endDate).format('YYYY-MM-DD') : null,
-        keyword: helpers.normalizeSpaces(searchKey)||null,
+        keyword: helpers.normalizeSpaces(searchKey) || null,
         sortBy: sort.sortBy,
         sortType: sort.sortType
       }
@@ -273,7 +273,7 @@ function Banner() {
                   </button>
 
                 </div>
-               
+
               </div>
 
               <div className='flex items-center justify-end px-4 ms-auto mb-3'>
@@ -288,9 +288,15 @@ function Banner() {
                   </button>
                 )}
               </div>
-             
+
             </form>
-            
+            <div className='flex justify-end'>
+            <div className="bg-gray-100 p-2 rounded-md shadow-md w-[25%]">
+              <p className="text-sm text-gray-700 flex">
+                <span className='text-red-500 font-semibold'>Disclaimer:</span> <marquee className="font-semibold">Only 5 banners can be activated at a time.</marquee>
+              </p>
+            </div>
+            </div>
             <SubTable
               allBanner={bannerData?.docs}
               allbannerData={getAllBanner}
