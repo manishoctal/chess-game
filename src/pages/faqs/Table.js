@@ -64,11 +64,11 @@ const Table = ({
     const sequence = payload?.map(element => {
       return {
         _id: element._id,
-        sequence: element.sequence,
-        title: element.title
+        sequence: element?.sequence,
+        title: element?.title
       }
     })
-    const result = await apiPost(apiPath.updateSequence, {
+   await apiPost(apiPath.updateSequence, {
       sequence: sequence
     })
   }
@@ -141,7 +141,7 @@ const Table = ({
                             {i + 1 + pageSize * (paginationObj?.page - 1)}
                           </th>
                           <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-center">
-                            {startCase(item?.title) || "N/A"}
+                            {helpers.orOperator(startCase(item?.title), "N/A")}
                           </td>
                           <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-center">
                             {helpers.getDateAndTime(item?.createdAt)}
@@ -187,7 +187,7 @@ const Table = ({
                                     </button>
                                   </li>
                                 )}
-                                {(manager?.add || user?.role === "admin") && (
+                                {helpers.andOperator((manager?.add || user?.role === "admin"), (
                                   <li
                                     onClick={() => handelEdit(item, "edit")}
                                     className="px-2 py-2  hover:text-gradientTo"
@@ -197,9 +197,9 @@ const Table = ({
                                       <AiFillEdit className="w-5 h-5 text-slate-600" />
                                     </button>
                                   </li>
-                                )}
+                                ))}
 
-                                {(manager?.delete || user?.role === "admin") && (
+                                {helpers.andOperator((manager?.delete || user?.role === "admin") , (
                                   <li
                                     onClick={(e) =>
                                       helpers.alertFunction(
@@ -216,7 +216,7 @@ const Table = ({
                                       <AiFillDelete className="w-5 h-5 text-red-600" />{" "}
                                     </button>
                                   </li>
-                                )}
+                                ))}
                               </ul>
                             </div>
                           </td>
