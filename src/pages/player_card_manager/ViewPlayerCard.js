@@ -13,6 +13,7 @@ import { BiReset, BiSolidFileExport } from 'react-icons/bi'
 import helpers from 'utils/helpers'
 import OReactSelect from 'components/reusable/OReactSelect'
 import EditLimitModal from './EditLimitModal'
+import OBack from 'components/reusable/OBack'
 
 function ViewPlayerCard() {
     const { t } = useTranslation()
@@ -249,6 +250,7 @@ function ViewPlayerCard() {
     return (
         <div>
             <div className='bg-[#F9F9F9] dark:bg-slate-900'>
+                <OBack/>
                 <div className='px-3 py-4'>
                     <div className='bg-white border border-[#E9EDF9] rounded-lg dark:bg-slate-800 dark:border-[#ffffff38]'>
                         <form className='border-b border-b-[#E3E3E3] 2xl:flex gap-2 px-4 py-3 justify-between'>
