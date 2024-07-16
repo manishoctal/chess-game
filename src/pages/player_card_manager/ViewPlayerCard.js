@@ -22,7 +22,28 @@ function ViewPlayerCard() {
     const [isDelete] = useState(false)
     const manager = user?.permission?.find(e => e.manager === 'player_card_manager') ?? {}
 
-    const [viewPlayerCard, setViewPlayerCard] = useState()
+    const [viewPlayerCard, setViewPlayerCard] = useState({
+       "docs": [
+        {
+          "_id": "66863648efe47221462a5896",
+          "email": "abc@gmail.com",
+          "userName": 'abhi',
+          "orderId": 233,
+          "userId": 12,
+          "orderType": 'buy',
+          "playerCardDetails": "virat kohli",
+          "status": "saled",
+          "createdAt": "2024-07-04T05:42:32.049Z",
+          "currentPrice": 100,
+          "profitLoss": 110,
+          "transactionFee":20,
+          "boughtPrice":80,
+          "totalAmount":120,
+          "quantity":30,
+          "__v": 0
+        },
+        
+      ]})
     const [page, setPage] = useState(1)
 
     const [paginationCardObj, setPaginationCardObj] = useState({
@@ -85,7 +106,6 @@ function ViewPlayerCard() {
 
     useEffect(() => {
         // api call function
-        viewAllPlayerCard()
     }, [filterData, page, sort, pageSize])
 
     // get all wallet list end

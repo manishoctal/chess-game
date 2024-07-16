@@ -20,7 +20,29 @@ function PlayerCardManager() {
     const [isDelete] = useState(false)
     const manager = user?.permission?.find(e => e.manager === 'player_card_manager') ?? {}
 
-    const [playerCard, setPlayerCard] = useState()
+    const [playerCard, setPlayerCard] = useState({'docs':[
+        {
+          "_id": "66863648efe47221462a5896",
+          "email": "abc@gmail.com",
+          "userName": 'abhi',
+          "": 233,
+          "availableCard": 12,
+          "formatType": 'T20I',
+          "playerName": "virat kohli",
+          "status": "saled",
+          "createdAt": "2024-07-04T05:42:32.049Z",
+          "gender": 'male',
+          "playerPrice": 110,
+          "playerImage":'dfdf',
+          "playerRole":'batsman',
+          "totalCards":1020,
+          "ranking":1,
+          "playersTeam":'RCB',
+          "__v": 0
+        },
+        
+      ]
+      })
     const [page, setPage] = useState(1)
 
     const [paginationCardObj, setPaginationCardObj] = useState({
@@ -84,7 +106,6 @@ function PlayerCardManager() {
 
     useEffect(() => {
         // api call function
-        getAllPlayerCard()
     }, [filterData, page, sort, pageSize])
 
     // get all wallet list end

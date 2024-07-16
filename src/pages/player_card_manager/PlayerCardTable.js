@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { AiFillEye } from "react-icons/ai";
 import { useTranslation } from "react-i18next";
 import AuthContext from "context/AuthContext";
-import { isEmpty } from "lodash";
+import { isEmpty, startCase } from "lodash";
 import helpers from "../../utils/helpers";
 import OPlayerCardTableHead from '../../components/reusable/OTableHead'
 import { NavLink } from "react-router-dom";
@@ -35,16 +35,18 @@ const PlayerCardTable = ({
                             <th scope="col" className="py-3 px-6">
                                 {t("S.NO")}
                             </th>
-                            <OPlayerCardTableHead sort={sort} setSort={setSort} name='FORMAT_TYPE' fieldName='offerId' classTd={'justify-center'} />
-                            <OPlayerCardTableHead sort={sort} setSort={setSort} name='AVAILABLE_CARD' fieldName='code' classTd={'justify-center'} />
-                            <OPlayerCardTableHead sort={sort} setSort={setSort} name='PLAYER_NAME' fieldName='maxUserLimit' classTd={'justify-center'} />
-                            <OPlayerCardTableHead sort={sort} setSort={setSort} name='GENDER' fieldName='limitPerUser' classTd={'justify-center'} />
-                            <OPlayerCardTableHead sort={sort} setSort={setSort} name='PLAYER_PRICE' fieldName='cashBackAmount' classTd={'justify-center'} />
-                            <OPlayerCardTableHead sort={sort} setSort={setSort} name='PLAYER_IMAGE' fieldName='expiryDate' classTd={'justify-center'} />
-                            <OPlayerCardTableHead sort={sort} setSort={setSort} name='PLAYER_ROLE' fieldName='createdAt' classTd={'justify-center'} />
-                            <OPlayerCardTableHead sort={sort} setSort={setSort} name='TOTAL_CARDS' fieldName='updatedAt' classTd={'justify-center'} />
-                            <OPlayerCardTableHead sort={sort} setSort={setSort} name='RANKING' fieldName='status' classTd={'justify-center'} />
-                            <OPlayerCardTableHead sort={sort} setSort={setSort} name='PLAYERS_TEAM' fieldName='status' classTd={'justify-center'} />
+                            <OPlayerCardTableHead sort={sort} setSort={setSort} name='FORMAT_TYPE' fieldName='formatType' classTd={'justify-center'} />
+                            <OPlayerCardTableHead sort={sort} setSort={setSort} name='AVAILABLE_CARD' fieldName='availableCard' classTd={'justify-center'} />
+                            <OPlayerCardTableHead sort={sort} setSort={setSort} name='PLAYER_NAME' fieldName='playerName' classTd={'justify-center'} />
+                            <OPlayerCardTableHead sort={sort} setSort={setSort} name='GENDER' fieldName='gender' classTd={'justify-center'} />
+                            <OPlayerCardTableHead sort={sort} setSort={setSort} name='PLAYER_PRICE' fieldName='playerPrice' classTd={'justify-center'} />
+                            <th scope="col" className="py-3 px-6 text-center">
+                                {t("PLAYER_IMAGE")}
+                            </th>
+                            <OPlayerCardTableHead sort={sort} setSort={setSort} name='PLAYER_ROLE' fieldName='playerRole' classTd={'justify-center'} />
+                            <OPlayerCardTableHead sort={sort} setSort={setSort} name='TOTAL_CARDS' fieldName='totalCards' classTd={'justify-center'} />
+                            <OPlayerCardTableHead sort={sort} setSort={setSort} name='RANKING' fieldName='ranking' classTd={'justify-center'} />
+                            <OPlayerCardTableHead sort={sort} setSort={setSort} name='PLAYERS_TEAM' fieldName='playersTeam' classTd={'justify-center'} />
 
                             <th scope="col" className="py-3 px-6 text-center">
                                 {t("O_ACTION")}
@@ -64,16 +66,19 @@ const PlayerCardTable = ({
                                     {i + 1 + pageSize * (page - 1)}
                                 </th>
 
-                                {getTableDataPlayerCard(item?.offerId)}
-                                {getTableDataPlayerCard(item?.code, 'font-bold')}
-                                {getTableDataPlayerCard(item?.maxUserLimit)}
-                                {getTableDataPlayerCard(item?.limitPerUser)}
-                                {getTableDataPlayerCard(helpers.formattedAmount(item?.cashBackAmount))}
-                                {getTableDataPlayerCard(helpers.getDateAndTime(item?.expiryDate))}
-                                {getTableDataPlayerCard(helpers.getDateAndTime(item?.createdAt))}
-                                {getTableDataPlayerCard(helpers.getDateAndTime(item?.updatedAt))}
-                                {getTableDataPlayerCard(helpers.getDateAndTime(item?.updatedAt))}
-                                {getTableDataPlayerCard(helpers.getDateAndTime(item?.updatedAt))}
+                                {getTableDataPlayerCard(item?.formatType)}
+                                {getTableDataPlayerCard(item?.availableCard, 'font-bold')}
+                                {getTableDataPlayerCard(startCase(item?.playerName||'N/A'))}
+                                {getTableDataPlayerCard(startCase(item?.gender||'N/A'))}
+                                {getTableDataPlayerCard(helpers.formattedAmount(item?.playerPrice))}
+                                   <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-center ">
+                                    <img src=''/>
+                                   </td>
+                                   {getTableDataPlayerCard(startCase(item?.playerRole||'N/A'))}
+                                   {getTableDataPlayerCard(item?.totalCards)}
+                                   {getTableDataPlayerCard(item?.ranking)}
+                                   {getTableDataPlayerCard(startCase(item?.playersTeam||'N/A'))}
+            
                                 <td className="py-2 px-4 border-l">
                                     <div className="">
                                         <ul className="flex justify-center">

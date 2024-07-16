@@ -734,6 +734,13 @@
   "PROFIT_LOSS":"Profit/Loss",
   "TRANSACTION_FEE":"Transaction Fee",
   "BOUGHT_PRICE":"Bought Price",
-  "TOTAL_AMOUNT":"Total Amount"
+  "TOTAL_AMOUNT":"Total Amount",
+  "EDIT_CARD_LIMIT_IN_MARKET":"Edit Card Limit In Market",
+  "TOTAL_CARDS_IN_MARKET":"Total Cards In Market",
+  "SET_LIMIT_OF_THE_CARD":"Set Limit Of The Card",
+  "ENTER_TOTAL_CARD":"Enter Total Card",
+  "ENTER_LIMIT":"Enter Limit",
+  "PLEASE_ENTER_TOTAL_CARD_IN_MARKET":"Please enter total card in market.",
+  "PLEASE_ENTER_CARD_LIMIT":"Please enter card limit."
 
 }

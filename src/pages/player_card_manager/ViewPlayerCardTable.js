@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { AiFillEdit } from "react-icons/ai";
 import { useTranslation } from "react-i18next";
 import AuthContext from "context/AuthContext";
-import { isEmpty } from "lodash";
+import { isEmpty, startCase } from "lodash";
 import helpers from "../../utils/helpers";
 import OViewPlayerCardTableHead from '../../components/reusable/OTableHead'
 
@@ -34,19 +34,19 @@ const ViewPlayerCardTable = ({
                             <th scope="col" className="py-3 px-6">
                                 {t("S.NO")}
                             </th>
-                            <OViewPlayerCardTableHead sort={sort} setSort={setSort} name='ORDER_ID' fieldName='orderId' classTd={'justify-center'} />
+                            <OViewPlayerCardTableHead sort={sort} setSort={setSort} name='ORDER_ID' fieldName='orderId' classTd={'justify-center w-20'} />
                             <OViewPlayerCardTableHead sort={sort} setSort={setSort} name='DATE' fieldName='date' classTd={'justify-center'} />
-                            <OViewPlayerCardTableHead sort={sort} setSort={setSort} name='USER_ID' fieldName='userId' classTd={'justify-center'} />
-                            <OViewPlayerCardTableHead sort={sort} setSort={setSort} name='USER_NAME' fieldName='userName' classTd={'justify-center'} />
+                            <OViewPlayerCardTableHead sort={sort} setSort={setSort} name='USER_ID' fieldName='userId' classTd={'justify-center w-20'} />
+                            <OViewPlayerCardTableHead sort={sort} setSort={setSort} name='USER_NAME' fieldName='userName' classTd={'justify-center w-40'} />
                             <OViewPlayerCardTableHead sort={sort} setSort={setSort} name='O_EMAIL' fieldName='email' classTd={'justify-center'} />
-                            <OViewPlayerCardTableHead sort={sort} setSort={setSort} name='ORDER_TYPE' fieldName='orderType' classTd={'justify-center'} />
-                            <OViewPlayerCardTableHead sort={sort} setSort={setSort} name='PLAYER_CARD_DETAILS' fieldName='playerCardDetails' classTd={'justify-center'} />
-                            <OViewPlayerCardTableHead sort={sort} setSort={setSort} name='CURRENT_PRICE' fieldName='currentPrice' classTd={'justify-center'} />
+                            <OViewPlayerCardTableHead sort={sort} setSort={setSort} name='ORDER_TYPE' fieldName='orderType' classTd={'justify-center w-40'} />
+                            <OViewPlayerCardTableHead sort={sort} setSort={setSort} name='PLAYER_CARD_DETAILS' fieldName='playerCardDetails' classTd={'justify-center w-40'} />
+                            <OViewPlayerCardTableHead sort={sort} setSort={setSort} name='CURRENT_PRICE' fieldName='currentPrice' classTd={'justify-center w-40'} />
                             <OViewPlayerCardTableHead sort={sort} setSort={setSort} name='PROFIT_LOSS' fieldName='profitLoss' classTd={'justify-center'} />
-                            <OViewPlayerCardTableHead sort={sort} setSort={setSort} name='TRANSACTION_FEE' fieldName='transactionFee' classTd={'justify-center'} />
-                            <OViewPlayerCardTableHead sort={sort} setSort={setSort} name='BOUGHT_PRICE' fieldName='boughtPrice' classTd={'justify-center'} />
+                            <OViewPlayerCardTableHead sort={sort} setSort={setSort} name='TRANSACTION_FEE' fieldName='transactionFee' classTd={'justify-center w-40'} />
+                            <OViewPlayerCardTableHead sort={sort} setSort={setSort} name='BOUGHT_PRICE' fieldName='boughtPrice' classTd={'justify-center w-40'} />
                             <OViewPlayerCardTableHead sort={sort} setSort={setSort} name='QUANTITY' fieldName='quantity' classTd={'justify-center'} />
-                            <OViewPlayerCardTableHead sort={sort} setSort={setSort} name='TOTAL_AMOUNT' fieldName='totalAmount' classTd={'justify-center'} />
+                            <OViewPlayerCardTableHead sort={sort} setSort={setSort} name='TOTAL_AMOUNT' fieldName='totalAmount' classTd={'justify-center w-40'} />
                             <OViewPlayerCardTableHead sort={sort} setSort={setSort} name='O_STATUS' fieldName='status' classTd={'justify-center'} />
 
                             <th scope="col" className="py-3 px-6 text-center">
@@ -67,20 +67,20 @@ const ViewPlayerCardTable = ({
                                     {i + 1 + pageSize * (page - 1)}
                                 </th>
 
-                                {getTableDataPlayerView(item?.offerId)}
-                                {getTableDataPlayerView(item?.code, 'font-bold')}
-                                {getTableDataPlayerView(item?.maxUserLimit)}
-                                {getTableDataPlayerView(item?.limitPerUser)}
-                                {getTableDataPlayerView(helpers.formattedAmount(item?.cashBackAmount))}
-                                {getTableDataPlayerView(helpers.getDateAndTime(item?.expiryDate))}
-                                {getTableDataPlayerView(helpers.getDateAndTime(item?.createdAt))}
-                                {getTableDataPlayerView(helpers.getDateAndTime(item?.updatedAt))}
-                                {getTableDataPlayerView(helpers.getDateAndTime(item?.updatedAt))}
-                                {getTableDataPlayerView(helpers.getDateAndTime(item?.updatedAt))}
-                                {getTableDataPlayerView(helpers.getDateAndTime(item?.updatedAt))}
-                                {getTableDataPlayerView(helpers.getDateAndTime(item?.updatedAt))}
-                                {getTableDataPlayerView(helpers.getDateAndTime(item?.updatedAt))}
-                                {getTableDataPlayerView(helpers.getDateAndTime(item?.updatedAt))}
+                                {getTableDataPlayerView(item?.orderId)}
+                                {getTableDataPlayerView(item?.createdAt, 'font-bold')}
+                                {getTableDataPlayerView(item?.userId)}
+                                {getTableDataPlayerView(startCase(item?.userName||'N/A'))}
+                                {getTableDataPlayerView(item?.email)}
+                                {getTableDataPlayerView(item?.orderType)}
+                                {getTableDataPlayerView(startCase(item?.playerCardDetails||'N/A'))}
+                                {getTableDataPlayerView(helpers.formattedAmount(item?.currentPrice))}
+                                {getTableDataPlayerView(helpers.formattedAmount(item?.profitLoss))}
+                                {getTableDataPlayerView(helpers.formattedAmount(item?.transactionFee))}
+                                {getTableDataPlayerView(helpers.formattedAmount(item?.boughtPrice))}
+                                {getTableDataPlayerView(item?.quantity)}
+                                {getTableDataPlayerView(helpers.formattedAmount(item?.totalAmount))}
+                                {getTableDataPlayerView(startCase(item?.status))}
                                 <td className="py-2 px-4 border-l">
                                     <div className="">
                                         <ul className="flex justify-center">
