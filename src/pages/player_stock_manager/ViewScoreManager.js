@@ -105,7 +105,7 @@ function ViewScoreManager() {
         setPage(newPage)
     }
 
-    
+
     useEffect(() => {
         // api call function
     }, [filterData, page, sort, pageSize])
@@ -165,18 +165,10 @@ function ViewScoreManager() {
         updatePageName(t('VIEW_PLAYER_STOCK_MANAGER'))
     }, [])
 
-    useEffect(() => {
-        const timeoutId = setTimeout(() => {
-            setdebouncedSearchTermViewStock(searchTerm)
-        }, 500)
-        return () => {
-            clearTimeout(timeoutId)
-        }
-    }, [searchTerm])
 
     // debounce search end
 
-    const customStylesStock = {
+    const customStylesViewStock = {
         option: (provided) => ({
             ...provided,
             fontSize: '13px',
@@ -197,6 +189,18 @@ function ViewScoreManager() {
         }),
 
     };
+
+
+    
+    useEffect(() => {
+        const timeoutId = setTimeout(() => {
+            setdebouncedSearchTermViewStock(searchTerm)
+        }, 500)
+        return () => {
+            clearTimeout(timeoutId)
+        }
+    }, [searchTerm])
+
 
     const [orderType] = useState([])
 
@@ -253,7 +257,7 @@ function ViewScoreManager() {
                                             <span className='text-[14px]'>
                                                 {t("ORDER_TYPE")}
                                             </span>
-                                        } value={filterData?.orderType} style={customStylesStock} />
+                                        } value={filterData?.orderType} style={customStylesViewStock} />
 
                                     <button
                                         type='button'
