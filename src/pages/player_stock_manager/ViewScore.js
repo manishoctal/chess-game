@@ -15,7 +15,7 @@ const ViewScore = ({ setShowScoreModal, scoreData }) => {
         return <th className='text-center py-3 px-6'>{t(name)}</th>
 
     }
-    
+
     return (
         <>
             <div className=" overflow-y-auto justify-center items-center overflow-x-hidden  fixed inset-0 z-50 outline-none focus:outline-none">
@@ -40,6 +40,7 @@ const ViewScore = ({ setShowScoreModal, scoreData }) => {
                             </div>
                             <div className='m-5'>
                                 <label className="block mb-2 text-sm  font-medium text-gray-900 dark:text-white font-semibold">{t('Player_STOCK_DETAILS')} :</label>
+                                <div className="overflow-x-auto relative rounded-lg border">
                                 <table className="w-full text-xs text-left text-[#A5A5A5] dark:text-gray-400 ">
                                     <thead className="text-xs text-gray-900 border border-[#E1E6EE] bg-[#E1E6EE] dark:bg-gray-700 dark:text-gray-400 dark:border-[#ffffff38]">
                                         <tr>
@@ -61,9 +62,11 @@ const ViewScore = ({ setShowScoreModal, scoreData }) => {
                                         </tr>
                                     </tbody>
                                 </table>
+                                </div>
                             </div>
                             <div className='m-5'>
                                 <label className="block mb-2 text-sm  font-medium text-gray-900 dark:text-white font-semibold">{t('PLAYER_SCORE')} :</label>
+                                <div className="overflow-x-auto relative rounded-lg border">
                                 <table className="w-full text-xs text-left text-[#A5A5A5] dark:text-gray-400 ">
                                     <thead className="text-xs text-gray-900 border border-[#E1E6EE] bg-[#E1E6EE] dark:bg-gray-700 dark:text-gray-400 dark:border-[#ffffff38]">
                                         <tr>
@@ -80,6 +83,7 @@ const ViewScore = ({ setShowScoreModal, scoreData }) => {
                                             )})}
                                     </tbody>
                                 </table>
+                                </div>
                             </div>
 
                             <div className="dark:border-[#ffffff38] dark:bg-slate-900 flex items-center justify-center p-6 border-t border-solid border-slate-200 rounded-b">

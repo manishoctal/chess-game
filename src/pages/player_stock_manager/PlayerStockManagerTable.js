@@ -64,7 +64,7 @@ const PlayerStockManagerTable = ({
                 <table className="w-full text-xs text-left text-[#A5A5A5] dark:text-gray-400 ">
                     <thead className="text-xs text-gray-900 border border-[#E1E6EE] bg-[#E1E6EE] dark:bg-gray-700 dark:text-gray-400 dark:border-[#ffffff38]">
                         <tr>
-                            <th scope="col" className="py-3 px-6">
+                            <th scope="col" className="py-3 px-6 text-center">
                                 {t("S.NO")}
                             </th>
                             <OPlayerStockTableHead sort={sort} setSort={setSort} name='PLAYER_ID' fieldName='playerId' classTd={'justify-center'} />
@@ -94,7 +94,7 @@ const PlayerStockManagerTable = ({
                             >
                                 <th
                                     scope="row"
-                                    className="py-2 px-4 border-r dark:border-[#ffffff38] font-medium text-gray-900  dark:text-white"
+                                    className="py-2 px-4 border-r dark:border-[#ffffff38] font-medium text-gray-900  dark:text-white text-center"
                                 >
                                     {i + 1 + pageSize * (page - 1)}
                                 </th>
@@ -138,7 +138,14 @@ const PlayerStockManagerTable = ({
                                         <div className="w-10 h-5 bg-gray-200 rounded-full peer peer-focus:ring-0 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-gradientTo" />
                                     </label>
                                 </td>))}
-                                <OViewDataStock manager={manager} item={item} link={'/player-stock-manager/view'} />
+
+                                <td className="py-2 border-l px-4">
+                                    <div className="">
+                                        <ul className="justify-center flex">
+                                            <OViewDataStock manager={manager} item={item} link={'/player-stock-manager/view'} />
+                                        </ul>
+                                    </div>
+                                </td>
                             </tr>
                         ))}
                         {isEmpty(playerStock) ? (

@@ -1,60 +1,55 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { apiGet } from '../../utils/apiFetch'
 import apiPath from '../../utils/apiPath'
-import ViewPlayerCardTable from './ViewPlayerCardTable'
+import ViewPlayerStockTable from './ViewStockManagerTable'
 import PaginationCard from '../Pagination'
 import dayjs from 'dayjs'
-import ODateRangePickerView from 'components/shared/datePicker/ODateRangePicker'
+import ODateRangePickerViewStock from 'components/shared/datePicker/ODateRangePicker'
 import { useTranslation } from 'react-i18next'
 import AuthContext from 'context/AuthContext'
-import PageSizeViewCard from 'components/PageSizeList'
-import OSearchViewCard from 'components/reusable/OSearch'
-import { BiReset, BiSolidFileExport } from 'react-icons/bi'
+import PageSizeListViewStock from 'components/PageSizeList'
+import OSearchStock from 'components/reusable/OSearch'
+import { BiReset } from 'react-icons/bi'
 import helpers from 'utils/helpers'
-import OReactSelect from 'components/reusable/OReactSelect'
-import EditLimitModal from './EditLimitModal'
+import OReactSelectViewStock from 'components/reusable/OReactSelect'
+import { FaFileDownload } from 'react-icons/fa'
 
-function ViewPlayerCard() {
+function PlayerStockManager() {
     const { t } = useTranslation()
     const { user, updatePageName } = useContext(AuthContext)
-    const [editShowLimitModal, setEditShowLimitModal] = useState(false)
     const [pageSize, setPageSize] = useState(10)
     const [isDelete] = useState(false)
-    const manager = user?.permission?.find(e => e.manager === 'player_card_manager') ?? {}
-
-    const [viewPlayerCard, setViewPlayerCard] = useState({
-       "docs": [
-        {
-          "_id": "66863648efe47221462a5896",
-          "email": "abc@gmail.com",
-          "userName": 'abhi',
-          "orderId": 233,
-          "userId": 12,
-          "orderType": 'buy',
-          "playerCardDetails": "virat kohli",
-          "status": "saled",
-          "createdAt": "2024-07-04T05:42:32.049Z",
-          "currentPrice": 100,
-          "profitLoss": 110,
-          "transactionFee":20,
-          "boughtPrice":80,
-          "totalAmount":120,
-          "quantity":30,
-          "__v": 0
-        },
-        
-      ]})
+    const manager = user?.permission?.find(e => e.manager === 'player_stock_manager') ?? {}
+    const [playerStock, setPlayerStock] = useState({
+        'docs': [
+            {
+                "_id": "66863648efe47221462a5896",
+                "orderId": 45,
+                "email": 'abc@yopmail.com',
+                "playerStockPrice": 120,
+                "currentPlayerStockPrice": 130,
+                "shareCount": 30,
+                "totalAmount": 400,
+                "totalProfitLoss": 100,
+                "playerName": "virat kohli",
+                "userName": 'vk01',
+                "status": "active",
+                "createdAt": "2024-07-04T05:42:32.049Z",
+                "orderType": "sell",
+                "__v": 0
+            },
+        ]
+    })
     const [page, setPage] = useState(1)
 
-    const [paginationCardObj, setPaginationCardObj] = useState({
+    const [paginationStockObj, setPaginationStockObj] = useState({
         page: 1,
         pageCount: 1,
         pageRangeDisplayed: 10
     })
-    const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('')
+    const [debouncedSearchTermViewStock, setdebouncedSearchTermViewStock] = useState('')
     const [isInitialized, setIsInitialized] = useState(false)
     const [searchTerm, setSearchTerm] = useState('')
-
     const [filterData, setFilterData] = useState({
         category: '',
         orderType: '',
@@ -70,13 +65,12 @@ function ViewPlayerCard() {
     })
 
 
-
     // get all offer list start
-    const viewAllPlayerCard = async () => {
+    const viewAllplayerStock = async () => {
         try {
             const { category, startDate, endDate, searchKey } = filterData
 
-            const payloadViewCard = {
+            const payloadStock = {
                 page,
                 pageSize: pageSize,
                 status: category,
@@ -88,19 +82,19 @@ function ViewPlayerCard() {
             }
 
             const path = apiPath.getAllOffer
-            const result = await apiGet(path, payloadViewCard)
+            const result = await apiGet(path, payloadStock)
             const response = result?.data?.results
             const resultStatus = result?.data?.success
-            setViewPlayerCard(response)
-            setPaginationCardObj({
-                ...paginationCardObj,
+            setPlayerStock(response)
+            setPaginationStockObj({
+                ...paginationStockObj,
                 page: resultStatus ? response.page : null,
                 pageCount: resultStatus ? response.totalPages : null,
                 perPageItem: resultStatus ? response?.docs.length : null,
                 totalItems: resultStatus ? response.totalDocs : null
             })
         } catch (error) {
-            console.error('error in get view player list==>>>>', error.message)
+            console.error('error in get all sub admin list==>>>>', error.message)
         }
     }
 
@@ -110,17 +104,17 @@ function ViewPlayerCard() {
 
     // get all wallet list end
 
-    const handlePageClickView = event => {
+    const handlePageClickStock = event => {
         const newPage = event.selected + 1
         setPage(newPage)
     }
 
-    const dynamicPage = e => {
+    const dynamicPageStock = e => {
         setPage(1)
         setPageSize(e.target.value)
     }
 
-    const handleViewCardReset = () => {
+    const handleViewStockReset = () => {
         setFilterData({
             category: '',
             orderType: '',
@@ -135,28 +129,8 @@ function ViewPlayerCard() {
         setPageSize(10)
     }
 
-    // debounce search start
 
-    useEffect(() => {
-        if (!isInitialized) {
-            setIsInitialized(true)
-        } else if (searchTerm || !filterData?.isReset) {
-            setFilterData({
-                ...filterData,
-                isReset: false,
-                searchKey: debouncedSearchTerm || '',
-                isFilter: !!debouncedSearchTerm
-            })
-            setPage(1)
-        }
-    }, [debouncedSearchTerm])
-
-    useEffect(() => {
-        updatePageName(t('VIEW_PLAYER_CARD_MANAGER'))
-    }, [])
-
-    const handleDateChangeCard = (start, end) => {
-
+    const handleDateChangeViewStock = (start, end) => {
         setPage(1)
         setFilterData({
             ...filterData,
@@ -166,9 +140,31 @@ function ViewPlayerCard() {
         })
     }
 
+
+
+
+    // debounce search start
+    useEffect(() => {
+        if (!isInitialized) {
+            setIsInitialized(true)
+        } else if (searchTerm || !filterData?.isReset) {
+            setFilterData({
+                ...filterData,
+                isReset: false,
+                searchKey: debouncedSearchTermViewStock || '',
+                isFilter: !!debouncedSearchTermViewStock
+            })
+            setPage(1)
+        }
+    }, [debouncedSearchTermViewStock])
+
+    useEffect(() => {
+        updatePageName(t('VIEW_PLAYER_STOCK_MANAGER'))
+    }, [])
+
     useEffect(() => {
         const timeoutId = setTimeout(() => {
-            setDebouncedSearchTerm(searchTerm)
+            setdebouncedSearchTermViewStock(searchTerm)
         }, 500)
         return () => {
             clearTimeout(timeoutId)
@@ -177,19 +173,7 @@ function ViewPlayerCard() {
 
     // debounce search end
 
-
-
-    // add edit modal start
-    const [cardLimitEdit, setCardLimitEdit] = useState()
-    const editCardLimit = async (data) => {
-        setCardLimitEdit(data)
-        setEditShowLimitModal(true)
-    }
-
-    // add edit modal end
-
-
-    const customStyles = {
+    const customStylesStock = {
         option: (provided) => ({
             ...provided,
             fontSize: '13px',
@@ -211,17 +195,15 @@ function ViewPlayerCard() {
 
     };
 
-    const [formatData] = useState([{ label: 'Purchase', value: 'purchase' }, { label: 'Sell', value: 'sell' }])
-
-
+    const [orderType] = useState([])
 
 
     // Download csv function start 
 
-    const onCsvDownloadPlayer = async () => {
+    const onDownLoadStatement = async () => {
         try {
             const { category, startDate, endDate, searchKey } = filterData
-            const payloadPlayerCsv = {
+            const payloadStock = {
                 page,
                 pageSize: pageSize,
                 status: category,
@@ -232,7 +214,7 @@ function ViewPlayerCard() {
                 sortType: sort.sortType
             }
             const path = apiPath.downloadCsv
-            const result = await apiGet(path, payloadPlayerCsv)
+            const result = await apiGet(path, payloadStock)
             if (result?.data?.success) {
                 helpers.downloadFile(result?.data?.results?.file_path)
             }
@@ -245,7 +227,6 @@ function ViewPlayerCard() {
     // Download csv function end 
 
 
-
     return (
         <div>
             <div className='bg-[#F9F9F9] dark:bg-slate-900'>
@@ -255,26 +236,25 @@ function ViewPlayerCard() {
                             <div className='col-span-2 flex flex-wrap  items-center'>
                                 <div className='flex items-center lg:pt-0 pt-3 flex-wrap justify-center mb-2 2xl:mb-0'>
                                     <div className='relative flex items-center mb-3'>
-                                        <OSearchViewCard searchTerm={searchTerm} setSearchTerm={setSearchTerm} placeholder={t('SEARCH_BY_USER_ID_USER_NAME')} />
+                                        <OSearchStock searchTerm={searchTerm} setSearchTerm={setSearchTerm} placeholder={t('SEARCH_BY_ORDER_ID_USER_NAME_EMAIL')} />
                                     </div>
-
-                                    <ODateRangePickerView
-                                        handleDateChange={handleDateChangeCard}
+                                    <ODateRangePickerViewStock
+                                        handleDateChange={handleDateChangeViewStock}
                                         isReset={filterData?.isReset}
                                         setIsReset={setFilterData}
                                         filterData={filterData}
                                     />
 
-                                    <OReactSelect name='orderType' onChange={(e) => { setFilterData({ ...filterData, orderType: e }) }} options={formatData}
+                                    <OReactSelectViewStock name='orderType' onChange={(e) => { setFilterData({ ...filterData, orderType: e }) }} options={orderType}
                                         placeholder={
                                             <span className='text-[14px]'>
                                                 {t("ORDER_TYPE")}
                                             </span>
-                                        } value={filterData?.orderType} style={customStyles} />
+                                        } value={filterData?.orderType} style={customStylesStock} />
 
                                     <button
                                         type='button'
-                                        onClick={handleViewCardReset}
+                                        onClick={handleViewStockReset}
                                         title={t('O_RESET')}
                                         className='bg-gradientTo text-sm px-6 flex gap-2 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2'
                                     >
@@ -284,33 +264,31 @@ function ViewPlayerCard() {
                             </div>
                             <button
                                 type='button'
-                                title={t('EXPORT_CSV')}
-                                className='bg-gradientTo text-sm flex gap-2 px-6 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto '
-                                onClick={onCsvDownloadPlayer}
+                                title={t('DOWNLOAD_STATEMENT')}
+                                className='bg-gradientTo text-sm flex gap-2 px-5 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto '
+                                onClick={onDownLoadStatement}
                             >
-                                <BiSolidFileExport size={18} />
-                                {t('EXPORT_CSV')}
+                                <FaFileDownload size={17} />
+                                {t('DOWNLOAD_STATEMENT')}
                             </button>
-
                         </form>
 
-                        <ViewPlayerCardTable
-                            playerCardView={viewPlayerCard?.docs}
-                            viewAllPlayerCard={viewAllPlayerCard}
-                            editCardLimit={editCardLimit}
+                        <ViewPlayerStockTable
+                            playerStock={playerStock?.docs}
                             page={page}
                             setSort={setSort}
                             sort={sort}
                             manager={manager}
                             pageSize={pageSize}
+
                         />
 
                         <div className='flex justify-between'>
-                            <PageSizeViewCard dynamicPage={dynamicPage} pageSize={pageSize} />
-                            {paginationCardObj?.totalItems ? (
+                            <PageSizeListViewStock dynamicPage={dynamicPageStock} pageSize={pageSize} />
+                            {paginationStockObj?.totalItems ? (
                                 <PaginationCard
-                                    handlePageClick={handlePageClickView}
-                                    options={paginationCardObj}
+                                    handlePageClick={handlePageClickStock}
+                                    options={paginationStockObj}
                                     isDelete={isDelete}
                                     page={page}
                                 />
@@ -319,15 +297,9 @@ function ViewPlayerCard() {
                     </div>
                 </div>
             </div>
-            {editShowLimitModal && (
-                <EditLimitModal
-                    setEditShowLimitModal={setEditShowLimitModal}
-                    cardLimitEdit={cardLimitEdit}
-                    viewAllPlayerCard={viewAllPlayerCard}
-                />
-            )}
+
         </div>
     )
 }
 
-export default ViewPlayerCard
+export default PlayerStockManager

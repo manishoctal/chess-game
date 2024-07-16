@@ -29,6 +29,7 @@ import ViewTradingQuestionManager from 'pages/trading_question_manager/ViewTradi
 import PlayerCardManager from 'pages/player_card_manager/PlayerCardManager'
 import ViewPlayerCardManager from 'pages/player_card_manager/ViewPlayerCard'
 import PlayerStockManager from 'pages/player_stock_manager/PlayerStockManager'
+import ViewPlayerStockManager from 'pages/player_stock_manager/ViewScoreManager'
 const UseChange = ({ data }) => {
   const { t } = useTranslation()
   return t(data)
@@ -146,6 +147,14 @@ const AdminRoutes = {
       element: <AuthorizationRoute><PlayerStockManager /></AuthorizationRoute>,
       name: (
           <UseChange data='PLAYER_STOCK_MANAGER' />
+      )
+    },
+
+    {
+      path: '/player-stock-manager/view',
+      element: <AuthorizationRoute><ViewPlayerStockManager /></AuthorizationRoute>,
+      name: (
+          <UseChange data='VIEW_PLAYER_STOCK_MANAGER' />
       )
     },
 

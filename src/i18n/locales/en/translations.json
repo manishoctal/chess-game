@@ -751,6 +751,12 @@
   "Player_STOCK_DETAILS":"Player Stock Details",
   "PLAYER_SCORE":"Last 10 Score & Matches",
   "O_MATCHES":"Matches",
-  "O_SCORE":"Score"
+  "O_SCORE":"Score",
+  "SEARCH_BY_ORDER_ID_USER_NAME_EMAIL":"Order , ID User Name , Email",
+  "VIEW_PLAYER_STOCK_MANAGER":"View Player Stock Manager",
+  "CURRENT_PLAYER_STOCK_PRICE":"Current Player Stock Price",
+  "TOTAL_PROFIT_LOSS":"Total Profit/Loss",
+  "NUMBER_OF_SHARES":"No. Of Shares",
+  "DOWNLOAD_STATEMENT":"Download Statement"
 
 }

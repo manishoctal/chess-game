@@ -6,7 +6,7 @@ import { isEmpty, startCase } from "lodash";
 import helpers from "../../utils/helpers";
 import OPlayerCardTableHead from '../../components/reusable/OTableHead'
 import { NavLink } from "react-router-dom";
-
+import OViewDataCard from "components/reusable/OViewData";
 const PlayerCardTable = ({
     playerCard,
     page,
@@ -14,7 +14,7 @@ const PlayerCardTable = ({
     setSort,
     manager,
     pageSize,
-    
+
 }) => {
     const { t } = useTranslation();
     const { user } = useContext(AuthContext);
@@ -68,26 +68,21 @@ const PlayerCardTable = ({
 
                                 {getTableDataPlayerCard(item?.formatType)}
                                 {getTableDataPlayerCard(item?.availableCard, 'font-bold')}
-                                {getTableDataPlayerCard(startCase(item?.playerName||'N/A'))}
-                                {getTableDataPlayerCard(startCase(item?.gender||'N/A'))}
+                                {getTableDataPlayerCard(startCase(item?.playerName || 'N/A'))}
+                                {getTableDataPlayerCard(startCase(item?.gender || 'N/A'))}
                                 {getTableDataPlayerCard(helpers.formattedAmount(item?.playerPrice))}
-                                   <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-center ">
-                                    <img src=''/>
-                                   </td>
-                                   {getTableDataPlayerCard(startCase(item?.playerRole||'N/A'))}
-                                   {getTableDataPlayerCard(item?.totalCards)}
-                                   {getTableDataPlayerCard(item?.ranking)}
-                                   {getTableDataPlayerCard(startCase(item?.playersTeam||'N/A'))}
-            
-                                <td className="py-2 px-4 border-l">
+                                <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-center ">
+                                    <img src='' />
+                                </td>
+                                {getTableDataPlayerCard(startCase(item?.playerRole || 'N/A'))}
+                                {getTableDataPlayerCard(item?.totalCards)}
+                                {getTableDataPlayerCard(item?.ranking)}
+                                {getTableDataPlayerCard(startCase(item?.playersTeam || 'N/A'))}
+
+                                <td className="py-2 border-l px-4">
                                     <div className="">
-                                        <ul className="flex justify-center">
-                                           
-                                            {helpers.andOperator((helpers?.orOperator(manager?.view, user?.role === "admin")), (<li className="px-2 py-2 hover:text-gradientTo">
-                                                <NavLink to='/player-card-manager/view' title={t("O_VIEW")} state={item}>
-                                                    <AiFillEye className="cursor-pointer w-5 h-5 text-slate-600" />
-                                                </NavLink>
-                                            </li>))}
+                                        <ul className="justify-center flex">
+                                            <OViewDataCard manager={manager} item={item} link={'/player-card-manager/view'} />
 
                                         </ul>
                                     </div>
