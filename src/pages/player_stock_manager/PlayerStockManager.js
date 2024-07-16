@@ -46,7 +46,7 @@ function PlayerStockManager() {
         pageCount: 1,
         pageRangeDisplayed: 10
     })
-    const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('')
+    const [debouncedSearchTermStock, setdebouncedSearchTermStock] = useState('')
     const [isInitialized, setIsInitialized] = useState(false)
     const [searchTerm, setSearchTerm] = useState('')
     const [filterData, setFilterData] = useState({
@@ -153,20 +153,20 @@ function PlayerStockManager() {
             setFilterData({
                 ...filterData,
                 isReset: false,
-                searchKey: debouncedSearchTerm || '',
-                isFilter: !!debouncedSearchTerm
+                searchKey: debouncedSearchTermStock || '',
+                isFilter: !!debouncedSearchTermStock
             })
             setPage(1)
         }
-    }, [debouncedSearchTerm])
+    }, [debouncedSearchTermStock])
     
     useEffect(() => {
         updatePageName(t('PLAYER_STOCK_MANAGER'))
     }, [])
-    
+
     useEffect(() => {
         const timeoutId = setTimeout(() => {
-            setDebouncedSearchTerm(searchTerm)
+            setdebouncedSearchTermStock(searchTerm)
         }, 500)
         return () => {
             clearTimeout(timeoutId)
