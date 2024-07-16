@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import AuthContext from "context/AuthContext";
 import { isEmpty } from "lodash";
 import helpers from "../../utils/helpers";
-import OPlayerCardTableHead from '../../components/reusable/OTableHead'
+import OViewPlayerCardTableHead from '../../components/reusable/OTableHead'
 
 const ViewPlayerCardTable = ({
     playerCardView,
@@ -34,20 +34,20 @@ const ViewPlayerCardTable = ({
                             <th scope="col" className="py-3 px-6">
                                 {t("S.NO")}
                             </th>
-                            <OPlayerCardTableHead sort={sort} setSort={setSort} name='ORDER_ID' fieldName='orderId' classTd={'justify-center'} />
-                            <OPlayerCardTableHead sort={sort} setSort={setSort} name='DATE' fieldName='date' classTd={'justify-center'} />
-                            <OPlayerCardTableHead sort={sort} setSort={setSort} name='USER_ID' fieldName='userId' classTd={'justify-center'} />
-                            <OPlayerCardTableHead sort={sort} setSort={setSort} name='USER_NAME' fieldName='userName' classTd={'justify-center'} />
-                            <OPlayerCardTableHead sort={sort} setSort={setSort} name='O_EMAIL' fieldName='email' classTd={'justify-center'} />
-                            <OPlayerCardTableHead sort={sort} setSort={setSort} name='ORDER_TYPE' fieldName='orderType' classTd={'justify-center'} />
-                            <OPlayerCardTableHead sort={sort} setSort={setSort} name='PLAYER_CARD_DETAILS' fieldName='playerCardDetails' classTd={'justify-center'} />
-                            <OPlayerCardTableHead sort={sort} setSort={setSort} name='CURRENT_PRICE' fieldName='currentPrice' classTd={'justify-center'} />
-                            <OPlayerCardTableHead sort={sort} setSort={setSort} name='PROFIT_LOSS' fieldName='profitLoss' classTd={'justify-center'} />
-                            <OPlayerCardTableHead sort={sort} setSort={setSort} name='TRANSACTION_FEE' fieldName='transactionFee' classTd={'justify-center'} />
-                            <OPlayerCardTableHead sort={sort} setSort={setSort} name='BOUGHT_PRICE' fieldName='boughtPrice' classTd={'justify-center'} />
-                            <OPlayerCardTableHead sort={sort} setSort={setSort} name='QUANTITY' fieldName='quantity' classTd={'justify-center'} />
-                            <OPlayerCardTableHead sort={sort} setSort={setSort} name='TOTAL_AMOUNT' fieldName='totalAmount' classTd={'justify-center'} />
-                            <OPlayerCardTableHead sort={sort} setSort={setSort} name='O_STATUS' fieldName='status' classTd={'justify-center'} />
+                            <OViewPlayerCardTableHead sort={sort} setSort={setSort} name='ORDER_ID' fieldName='orderId' classTd={'justify-center'} />
+                            <OViewPlayerCardTableHead sort={sort} setSort={setSort} name='DATE' fieldName='date' classTd={'justify-center'} />
+                            <OViewPlayerCardTableHead sort={sort} setSort={setSort} name='USER_ID' fieldName='userId' classTd={'justify-center'} />
+                            <OViewPlayerCardTableHead sort={sort} setSort={setSort} name='USER_NAME' fieldName='userName' classTd={'justify-center'} />
+                            <OViewPlayerCardTableHead sort={sort} setSort={setSort} name='O_EMAIL' fieldName='email' classTd={'justify-center'} />
+                            <OViewPlayerCardTableHead sort={sort} setSort={setSort} name='ORDER_TYPE' fieldName='orderType' classTd={'justify-center'} />
+                            <OViewPlayerCardTableHead sort={sort} setSort={setSort} name='PLAYER_CARD_DETAILS' fieldName='playerCardDetails' classTd={'justify-center'} />
+                            <OViewPlayerCardTableHead sort={sort} setSort={setSort} name='CURRENT_PRICE' fieldName='currentPrice' classTd={'justify-center'} />
+                            <OViewPlayerCardTableHead sort={sort} setSort={setSort} name='PROFIT_LOSS' fieldName='profitLoss' classTd={'justify-center'} />
+                            <OViewPlayerCardTableHead sort={sort} setSort={setSort} name='TRANSACTION_FEE' fieldName='transactionFee' classTd={'justify-center'} />
+                            <OViewPlayerCardTableHead sort={sort} setSort={setSort} name='BOUGHT_PRICE' fieldName='boughtPrice' classTd={'justify-center'} />
+                            <OViewPlayerCardTableHead sort={sort} setSort={setSort} name='QUANTITY' fieldName='quantity' classTd={'justify-center'} />
+                            <OViewPlayerCardTableHead sort={sort} setSort={setSort} name='TOTAL_AMOUNT' fieldName='totalAmount' classTd={'justify-center'} />
+                            <OViewPlayerCardTableHead sort={sort} setSort={setSort} name='O_STATUS' fieldName='status' classTd={'justify-center'} />
 
                             <th scope="col" className="py-3 px-6 text-center">
                                 {t("O_ACTION")}

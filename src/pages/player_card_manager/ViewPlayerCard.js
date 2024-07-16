@@ -55,7 +55,7 @@ function ViewPlayerCard() {
         try {
             const { category, startDate, endDate, searchKey } = filterData
 
-            const payloadCard = {
+            const payloadViewCard = {
                 page,
                 pageSize: pageSize,
                 status: category,
@@ -67,7 +67,7 @@ function ViewPlayerCard() {
             }
 
             const path = apiPath.getAllOffer
-            const result = await apiGet(path, payloadCard)
+            const result = await apiGet(path, payloadViewCard)
             const response = result?.data?.results
             const resultStatus = result?.data?.success
             setViewPlayerCard(response)
