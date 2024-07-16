@@ -1,16 +1,15 @@
 import React, { useContext, useState } from "react";
-import { AiFillEye } from "react-icons/ai";
 import { useTranslation } from "react-i18next";
 import AuthContext from "context/AuthContext";
 import { isEmpty, startCase } from "lodash";
 import helpers from "../../utils/helpers";
 import OPlayerStockTableHead from '../../components/reusable/OTableHead'
-import { NavLink } from "react-router-dom";
 import apiPath from "utils/apiPath";
 import { apiPut } from "utils/apiFetch";
 import useToastContext from "hooks/useToastContext";
 import { GrScorecard } from "react-icons/gr";
 import ViewScore from './ViewScore'
+import OViewDataStock from "components/reusable/OViewData";
 const PlayerStockManagerTable = ({
     playerStock,
     page,
@@ -139,17 +138,7 @@ const PlayerStockManagerTable = ({
                                         <div className="w-10 h-5 bg-gray-200 rounded-full peer peer-focus:ring-0 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-gradientTo" />
                                     </label>
                                 </td>))}
-                                <td className="py-2 border-l px-4">
-                                    <div className="">
-                                        <ul className="justify-center flex">
-                                            {helpers.andOperator((helpers?.orOperator(manager?.view, user?.role === "admin")), (<li className="px-2 hover:text-gradientTo py-2 ">
-                                                <NavLink to='/player-stock-manager/view' title={t("O_VIEW")} state={item}>
-                                                    <AiFillEye className="cursor-pointer w-5 h-5 text-slate-600" />
-                                                </NavLink>
-                                            </li>))}
-                                        </ul>
-                                    </div>
-                                </td>
+                                <OViewDataStock manager={manager} item={item} link={'/player-stock-manager/view'} />
                             </tr>
                         ))}
                         {isEmpty(playerStock) ? (
