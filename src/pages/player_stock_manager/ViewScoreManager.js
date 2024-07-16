@@ -14,7 +14,7 @@ import helpers from 'utils/helpers'
 import OReactSelectViewStock from 'components/reusable/OReactSelect'
 import { FaFileDownload } from 'react-icons/fa'
 
-function PlayerStockManager() {
+function ViewScoreManager() {
     const { t } = useTranslation()
     const { user, updatePageName } = useContext(AuthContext)
     const [pageSize, setPageSize] = useState(10)
@@ -280,6 +280,7 @@ function PlayerStockManager() {
                             sort={sort}
                             manager={manager}
                             pageSize={pageSize}
+                            viewAllplayerStock={viewAllplayerStock}
 
                         />
 
@@ -302,4 +303,4 @@ function PlayerStockManager() {
     )
 }
 
-export default PlayerStockManager
+export default ViewScoreManager

@@ -1,11 +1,8 @@
-import React, { useContext } from "react";
-import { AiFillEye } from "react-icons/ai";
+import React from "react";
 import { useTranslation } from "react-i18next";
-import AuthContext from "context/AuthContext";
 import { isEmpty, startCase } from "lodash";
 import helpers from "../../utils/helpers";
 import OPlayerCardTableHead from '../../components/reusable/OTableHead'
-import { NavLink } from "react-router-dom";
 import OViewDataCard from "components/reusable/OViewData";
 const PlayerCardTable = ({
     playerCard,
@@ -17,7 +14,6 @@ const PlayerCardTable = ({
 
 }) => {
     const { t } = useTranslation();
-    const { user } = useContext(AuthContext);
 
     const getTableDataPlayerCard = (details, dataClass) => {
         return <td className={`py-2 px-4 border-r dark:border-[#ffffff38] text-center ${dataClass || ''}`}>
