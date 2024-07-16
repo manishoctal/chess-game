@@ -70,7 +70,7 @@ function ViewScoreManager() {
         try {
             const { category, startDate, endDate, searchKey } = filterData
 
-            const payloadStock = {
+            const payloadViewStock = {
                 page,
                 pageSize: pageSize,
                 status: category,
@@ -82,7 +82,7 @@ function ViewScoreManager() {
             }
 
             const path = apiPath.getAllOffer
-            const result = await apiGet(path, payloadStock)
+            const result = await apiGet(path, payloadViewStock)
             const response = result?.data?.results
             const resultStatus = result?.data?.success
             setPlayerStock(response)
@@ -98,16 +98,19 @@ function ViewScoreManager() {
         }
     }
 
+
+
+    const handlePageClickViewStock = event => {
+        const newPage = event.selected + 1
+        setPage(newPage)
+    }
+
+    
     useEffect(() => {
         // api call function
     }, [filterData, page, sort, pageSize])
 
     // get all wallet list end
-
-    const handlePageClickStock = event => {
-        const newPage = event.selected + 1
-        setPage(newPage)
-    }
 
     const dynamicPageStock = e => {
         setPage(1)
@@ -288,7 +291,7 @@ function ViewScoreManager() {
                             <PageSizeListViewStock dynamicPage={dynamicPageStock} pageSize={pageSize} />
                             {paginationStockObj?.totalItems ? (
                                 <PaginationCard
-                                    handlePageClick={handlePageClickStock}
+                                    handlePageClick={handlePageClickViewStock}
                                     options={paginationStockObj}
                                     isDelete={isDelete}
                                     page={page}
