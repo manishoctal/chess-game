@@ -1,26 +1,28 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { apiGet } from '../../utils/apiFetch'
 import apiPath from '../../utils/apiPath'
-import PlayerCardTable from './PlayerCardTable'
+import ViewPlayerCardTable from './ViewPlayerCardTable'
 import PaginationCard from '../Pagination'
 import dayjs from 'dayjs'
-import ODateRangePickerCard from 'components/shared/datePicker/ODateRangePicker'
+import ODateRangePickerView from 'components/shared/datePicker/ODateRangePicker'
 import { useTranslation } from 'react-i18next'
 import AuthContext from 'context/AuthContext'
-import PageSizeListCard from 'components/PageSizeList'
-import OSearchCard from 'components/reusable/OSearch'
-import { BiReset } from 'react-icons/bi'
+import PageSizeViewCard from 'components/PageSizeList'
+import OSearchViewCard from 'components/reusable/OSearch'
+import { BiReset, BiSolidFileExport } from 'react-icons/bi'
 import helpers from 'utils/helpers'
 import OReactSelect from 'components/reusable/OReactSelect'
+import EditLimitModal from './EditLimitModal'
 
-function PlayerCardManager() {
+function ViewPlayerCard() {
     const { t } = useTranslation()
     const { user, updatePageName } = useContext(AuthContext)
+    const [editShowLimitModal, setEditShowLimitModal] = useState(false)
     const [pageSize, setPageSize] = useState(10)
     const [isDelete] = useState(false)
     const manager = user?.permission?.find(e => e.manager === 'player_card_manager') ?? {}
 
-    const [playerCard, setPlayerCard] = useState()
+    const [viewPlayerCard, setViewPlayerCard] = useState()
     const [page, setPage] = useState(1)
 
     const [paginationCardObj, setPaginationCardObj] = useState({
@@ -34,7 +36,7 @@ function PlayerCardManager() {
 
     const [filterData, setFilterData] = useState({
         category: '',
-        formatType: '',
+        orderType: '',
         searchKey: '',
         startDate: '',
         endDate: '',
@@ -47,10 +49,9 @@ function PlayerCardManager() {
     })
 
 
-    
 
     // get all offer list start
-    const getAllPlayerCard = async () => {
+    const viewAllPlayerCard = async () => {
         try {
             const { category, startDate, endDate, searchKey } = filterData
 
@@ -69,7 +70,7 @@ function PlayerCardManager() {
             const result = await apiGet(path, payloadCard)
             const response = result?.data?.results
             const resultStatus = result?.data?.success
-            setPlayerCard(response)
+            setViewPlayerCard(response)
             setPaginationCardObj({
                 ...paginationCardObj,
                 page: resultStatus ? response.page : null,
@@ -78,18 +79,18 @@ function PlayerCardManager() {
                 totalItems: resultStatus ? response.totalDocs : null
             })
         } catch (error) {
-            console.error('error in get all sub admin list==>>>>', error.message)
+            console.error('error in get view player list==>>>>', error.message)
         }
     }
 
     useEffect(() => {
         // api call function
-        getAllPlayerCard()
+        viewAllPlayerCard()
     }, [filterData, page, sort, pageSize])
 
     // get all wallet list end
 
-    const handlePageClick = event => {
+    const handlePageClickView = event => {
         const newPage = event.selected + 1
         setPage(newPage)
     }
@@ -99,10 +100,10 @@ function PlayerCardManager() {
         setPageSize(e.target.value)
     }
 
-    const handleCardReset = () => {
+    const handleViewCardReset = () => {
         setFilterData({
             category: '',
-            formatType: '',
+            orderType: '',
             startDate: '',
             searchKey: '',
             endDate: '',
@@ -114,6 +115,7 @@ function PlayerCardManager() {
         setPageSize(10)
     }
 
+    // debounce search start
 
     useEffect(() => {
         if (!isInitialized) {
@@ -129,6 +131,9 @@ function PlayerCardManager() {
         }
     }, [debouncedSearchTerm])
 
+    useEffect(() => {
+        updatePageName(t('VIEW_PLAYER_CARD_MANAGER'))
+    }, [])
 
     const handleDateChangeCard = (start, end) => {
 
@@ -141,14 +146,6 @@ function PlayerCardManager() {
         })
     }
 
-
-    useEffect(() => {
-        updatePageName(t('PLAYER_CARD_MANAGER'))
-    }, [])
-
-    // debounce search start
-
-
     useEffect(() => {
         const timeoutId = setTimeout(() => {
             setDebouncedSearchTerm(searchTerm)
@@ -159,6 +156,18 @@ function PlayerCardManager() {
     }, [searchTerm])
 
     // debounce search end
+
+
+
+    // add edit modal start
+    const [cardLimitEdit, setCardLimitEdit] = useState()
+    const editCardLimit = async (data) => {
+        setCardLimitEdit(data)
+        setEditShowLimitModal(true)
+    }
+
+    // add edit modal end
+
 
     const customStyles = {
         option: (provided) => ({
@@ -182,28 +191,38 @@ function PlayerCardManager() {
 
     };
 
-    const [formatData, setFormatData] = useState([])
-    // get format list start
-    const handleFormatOption = async (event) => {
+    const [formatData] = useState([{ label: 'Purchase', value: 'purchase' }, { label: 'Sell', value: 'sell' }])
+
+
+
+
+    // Download csv function start 
+
+    const onCsvDownloadPlayer = async () => {
         try {
-            const payload = {
-                keyword: event
-            };
-            const path = apiPath.getFormatList;
-            const result = await apiGet(path, payload);
-            if (result?.data?.success) {
-                const formattedOption = [{ label: result?.data?.results?.odi?.toUpperCase(), value: result?.data?.results?.odi }, { label: result?.data?.results?.t20?.toUpperCase(), value: result?.data?.results?.t20 }, { label: result?.data?.results?.test?.toUpperCase(), value: result?.data?.results?.test }]
-                setFormatData(formattedOption)
+            const { category, startDate, endDate, searchKey } = filterData
+            const payloadPlayerCsv = {
+                page,
+                pageSize: pageSize,
+                status: category,
+                startDate: startDate ? helpers.getFormattedDate(startDate) : null,
+                endDate: endDate ? helpers.getFormattedDate(endDate) : null,
+                keyword: searchKey,
+                sortBy: sort.sortBy,
+                sortType: sort.sortType
             }
-
+            const path = apiPath.downloadCsv
+            const result = await apiGet(path, payloadPlayerCsv)
+            if (result?.data?.success) {
+                helpers.downloadFile(result?.data?.results?.file_path)
+            }
         } catch (error) {
-            console.error("error ", error);
+            console.error('error in  export  csv list==>>>>', error.message)
         }
-    };
 
-    useEffect(() => {
-        handleFormatOption()
-    }, [])
+    }
+
+    // Download csv function end 
 
 
 
@@ -216,42 +235,26 @@ function PlayerCardManager() {
                             <div className='col-span-2 flex flex-wrap  items-center'>
                                 <div className='flex items-center lg:pt-0 pt-3 flex-wrap justify-center mb-2 2xl:mb-0'>
                                     <div className='relative flex items-center mb-3'>
-                                        <OSearchCard searchTerm={searchTerm} setSearchTerm={setSearchTerm} placeholder={t('SEARCH_BY_PLAYER_NAME_PLAYER_ROLE')} />
+                                        <OSearchViewCard searchTerm={searchTerm} setSearchTerm={setSearchTerm} placeholder={t('SEARCH_BY_USER_ID_USER_NAME')} />
                                     </div>
 
-                                    <ODateRangePickerCard
+                                    <ODateRangePickerView
                                         handleDateChange={handleDateChangeCard}
                                         isReset={filterData?.isReset}
                                         setIsReset={setFilterData}
                                         filterData={filterData}
                                     />
 
-                                    <OReactSelect name='formatType' onChange={(e) => { setFilterData({ ...filterData, formatType: e }) }} options={formatData}
+                                    <OReactSelect name='orderType' onChange={(e) => { setFilterData({ ...filterData, orderType: e }) }} options={formatData}
                                         placeholder={
                                             <span className='text-[14px]'>
-                                                {t("FORMAT_TYPE")}
+                                                {t("ORDER_TYPE")}
                                             </span>
-                                        } value={filterData?.formatType} style={customStyles} />
-
-
-
-                                    <OReactSelect name='playerRanking' onChange={(e) => { setFilterData({ ...filterData, playerRanking: e }) }} options={formatData}
-                                        placeholder={
-                                            <span className='text-[14px]'>
-                                                {t("PLAYER_RANKING")}
-                                            </span>
-                                        } value={filterData?.playerRanking} style={customStyles} />
-
-                                    <OReactSelect name='playerTeam' onChange={(e) => { setFilterData({ ...filterData, playerTeam: e }) }} options={formatData}
-                                        placeholder={
-                                            <span className='text-[14px]'>
-                                                {t("PLAYER_TEAM")}
-                                            </span>
-                                        } value={filterData?.playerTeam} style={customStyles} />
+                                        } value={filterData?.orderType} style={customStyles} />
 
                                     <button
                                         type='button'
-                                        onClick={handleCardReset}
+                                        onClick={handleViewCardReset}
                                         title={t('O_RESET')}
                                         className='bg-gradientTo text-sm px-6 flex gap-2 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2'
                                     >
@@ -259,13 +262,22 @@ function PlayerCardManager() {
                                     </button>
                                 </div>
                             </div>
-
+                            <button
+                                type='button'
+                                title={t('EXPORT_CSV')}
+                                className='bg-gradientTo text-sm flex gap-2 px-8 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto '
+                                onClick={onCsvDownloadPlayer}
+                            >
+                                <BiSolidFileExport size={18} />
+                                {t('EXPORT_CSV')}
+                            </button>
 
                         </form>
 
-                        <PlayerCardTable
-                            playerCard={playerCard?.docs}
-                            getAllPlayerCard={getAllPlayerCard}
+                        <ViewPlayerCardTable
+                            playerCardView={viewPlayerCard?.docs}
+                            viewAllPlayerCard={viewAllPlayerCard}
+                            editCardLimit={editCardLimit}
                             page={page}
                             setSort={setSort}
                             sort={sort}
@@ -274,10 +286,10 @@ function PlayerCardManager() {
                         />
 
                         <div className='flex justify-between'>
-                            <PageSizeListCard dynamicPage={dynamicPage} pageSize={pageSize} />
+                            <PageSizeViewCard dynamicPage={dynamicPage} pageSize={pageSize} />
                             {paginationCardObj?.totalItems ? (
                                 <PaginationCard
-                                    handlePageClick={handlePageClick}
+                                    handlePageClick={handlePageClickView}
                                     options={paginationCardObj}
                                     isDelete={isDelete}
                                     page={page}
@@ -287,9 +299,15 @@ function PlayerCardManager() {
                     </div>
                 </div>
             </div>
-           
+            {editShowLimitModal && (
+                <EditLimitModal
+                    setEditShowLimitModal={setEditShowLimitModal}
+                    cardLimitEdit={cardLimitEdit}
+                    viewAllPlayerCard={viewAllPlayerCard}
+                />
+            )}
         </div>
     )
 }
 
-export default PlayerCardManager
+export default ViewPlayerCard

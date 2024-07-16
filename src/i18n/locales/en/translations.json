@@ -725,6 +725,15 @@
   "PLAYER_ROLE":"Player Role",
   "TOTAL_CARDS":"Total Cards",
   "RANKING":"Ranking",
-  "PLAYERS_TEAM":"Player Teams"
+  "PLAYERS_TEAM":"Player Teams",
+  "VIEW_PLAYER_CARD_MANAGER":"View Player Card Manager",
+  "SEARCH_BY_USER_ID_USER_NAME":"User ID , User Name , Email",
+  "ORDER_TYPE":"Order Type",
+  "PLAYER_CARD_DETAILS":"Player Card Details",
+  "CURRENT_PRICE":"Current Price",
+  "PROFIT_LOSS":"Profit/Loss",
+  "TRANSACTION_FEE":"Transaction Fee",
+  "BOUGHT_PRICE":"Bought Price",
+  "TOTAL_AMOUNT":"Total Amount"
 
 }

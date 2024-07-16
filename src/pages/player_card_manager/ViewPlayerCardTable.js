@@ -1,0 +1,116 @@
+import React, { useContext } from "react";
+import { AiFillEdit } from "react-icons/ai";
+import { useTranslation } from "react-i18next";
+import AuthContext from "context/AuthContext";
+import { isEmpty } from "lodash";
+import helpers from "../../utils/helpers";
+import OPlayerCardTableHead from '../../components/reusable/OTableHead'
+
+const ViewPlayerCardTable = ({
+    playerCardView,
+    page,
+    sort,
+    setSort,
+    manager,
+    pageSize,
+    editCardLimit
+}) => {
+    const { t } = useTranslation();
+    const { user } = useContext(AuthContext);
+
+    const getTableDataPlayerView = (details, dataClass) => {
+        return <td className={`py-2 px-4 border-r dark:border-[#ffffff38] text-center ${dataClass || ''}`}>
+            {details || 'N/A'}
+        </td>
+    }
+
+
+    return (
+        <div className="p-3">
+            <div className="overflow-x-auto relative rounded-lg border">
+                <table className="w-full text-xs text-left text-[#A5A5A5] dark:text-gray-400 ">
+                    <thead className="text-xs text-gray-900 border border-[#E1E6EE] bg-[#E1E6EE] dark:bg-gray-700 dark:text-gray-400 dark:border-[#ffffff38]">
+                        <tr>
+                            <th scope="col" className="py-3 px-6">
+                                {t("S.NO")}
+                            </th>
+                            <OPlayerCardTableHead sort={sort} setSort={setSort} name='ORDER_ID' fieldName='orderId' classTd={'justify-center'} />
+                            <OPlayerCardTableHead sort={sort} setSort={setSort} name='DATE' fieldName='date' classTd={'justify-center'} />
+                            <OPlayerCardTableHead sort={sort} setSort={setSort} name='USER_ID' fieldName='userId' classTd={'justify-center'} />
+                            <OPlayerCardTableHead sort={sort} setSort={setSort} name='USER_NAME' fieldName='userName' classTd={'justify-center'} />
+                            <OPlayerCardTableHead sort={sort} setSort={setSort} name='O_EMAIL' fieldName='email' classTd={'justify-center'} />
+                            <OPlayerCardTableHead sort={sort} setSort={setSort} name='ORDER_TYPE' fieldName='orderType' classTd={'justify-center'} />
+                            <OPlayerCardTableHead sort={sort} setSort={setSort} name='PLAYER_CARD_DETAILS' fieldName='playerCardDetails' classTd={'justify-center'} />
+                            <OPlayerCardTableHead sort={sort} setSort={setSort} name='CURRENT_PRICE' fieldName='currentPrice' classTd={'justify-center'} />
+                            <OPlayerCardTableHead sort={sort} setSort={setSort} name='PROFIT_LOSS' fieldName='profitLoss' classTd={'justify-center'} />
+                            <OPlayerCardTableHead sort={sort} setSort={setSort} name='TRANSACTION_FEE' fieldName='transactionFee' classTd={'justify-center'} />
+                            <OPlayerCardTableHead sort={sort} setSort={setSort} name='BOUGHT_PRICE' fieldName='boughtPrice' classTd={'justify-center'} />
+                            <OPlayerCardTableHead sort={sort} setSort={setSort} name='QUANTITY' fieldName='quantity' classTd={'justify-center'} />
+                            <OPlayerCardTableHead sort={sort} setSort={setSort} name='TOTAL_AMOUNT' fieldName='totalAmount' classTd={'justify-center'} />
+                            <OPlayerCardTableHead sort={sort} setSort={setSort} name='O_STATUS' fieldName='status' classTd={'justify-center'} />
+
+                            <th scope="col" className="py-3 px-6 text-center">
+                                {t("O_ACTION")}
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {playerCardView?.map((item, i) => (
+                            <tr
+                                key={i}
+                                className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+                            >
+                                <th
+                                    scope="row"
+                                    className="py-2 px-4 border-r dark:border-[#ffffff38] font-medium text-gray-900  dark:text-white"
+                                >
+                                    {i + 1 + pageSize * (page - 1)}
+                                </th>
+
+                                {getTableDataPlayerView(item?.offerId)}
+                                {getTableDataPlayerView(item?.code, 'font-bold')}
+                                {getTableDataPlayerView(item?.maxUserLimit)}
+                                {getTableDataPlayerView(item?.limitPerUser)}
+                                {getTableDataPlayerView(helpers.formattedAmount(item?.cashBackAmount))}
+                                {getTableDataPlayerView(helpers.getDateAndTime(item?.expiryDate))}
+                                {getTableDataPlayerView(helpers.getDateAndTime(item?.createdAt))}
+                                {getTableDataPlayerView(helpers.getDateAndTime(item?.updatedAt))}
+                                {getTableDataPlayerView(helpers.getDateAndTime(item?.updatedAt))}
+                                {getTableDataPlayerView(helpers.getDateAndTime(item?.updatedAt))}
+                                {getTableDataPlayerView(helpers.getDateAndTime(item?.updatedAt))}
+                                {getTableDataPlayerView(helpers.getDateAndTime(item?.updatedAt))}
+                                {getTableDataPlayerView(helpers.getDateAndTime(item?.updatedAt))}
+                                {getTableDataPlayerView(helpers.getDateAndTime(item?.updatedAt))}
+                                <td className="py-2 px-4 border-l">
+                                    <div className="">
+                                        <ul className="flex justify-center">
+                                            {helpers.andOperator((helpers?.orOperator(manager?.add, user?.role === "admin")), (
+                                                <li
+                                                    onClick={() => { editCardLimit(item) }}
+                                                    className="px-2 py-2 hover:text-gradientTo" >
+                                                    <a title={t("O_EDIT")}>
+                                                        <AiFillEdit className="cursor-pointer w-5 h-5 text-slate-600" />
+                                                    </a>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                        ))}
+                        {isEmpty(playerCardView) ? (
+                            <tr className="bg-white border-b w-full text-center dark:bg-gray-800 dark:border-gray-700">
+                                <td className="py-4 px-6" colSpan={9}>
+                                    {t("O_NO_RECORD_FOUND")}
+                                </td>
+                            </tr>
+                        ) : null}
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    );
+};
+
+export default ViewPlayerCardTable;

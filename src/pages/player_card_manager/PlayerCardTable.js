@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { AiFillEdit, AiFillEye } from "react-icons/ai";
+import { AiFillEye } from "react-icons/ai";
 import { useTranslation } from "react-i18next";
 import AuthContext from "context/AuthContext";
 import { isEmpty } from "lodash";
@@ -14,7 +14,7 @@ const PlayerCardTable = ({
     setSort,
     manager,
     pageSize,
-    editCardLimit
+    
 }) => {
     const { t } = useTranslation();
     const { user } = useContext(AuthContext);
@@ -77,17 +77,9 @@ const PlayerCardTable = ({
                                 <td className="py-2 px-4 border-l">
                                     <div className="">
                                         <ul className="flex justify-center">
-                                            {helpers.andOperator((helpers?.orOperator(manager?.add , user?.role === "admin")) , (
-                                                <li
-                                                    onClick={() => { editCardLimit(item) }}
-                                                    className="px-2 py-2 hover:text-gradientTo" >
-                                                    <a title={t("O_EDIT")}>
-                                                        <AiFillEdit className="cursor-pointer w-5 h-5 text-slate-600" />
-                                                    </a>
-                                                </li>
-                                            ))}
-                                            {helpers.andOperator((helpers?.orOperator(manager?.view , user?.role === "admin")), (<li className="px-2 py-2 hover:text-gradientTo">
-                                                <NavLink to='/' title={t("O_VIEW")} state={item}>
+                                           
+                                            {helpers.andOperator((helpers?.orOperator(manager?.view, user?.role === "admin")), (<li className="px-2 py-2 hover:text-gradientTo">
+                                                <NavLink to='/player-card-manager/view' title={t("O_VIEW")} state={item}>
                                                     <AiFillEye className="cursor-pointer w-5 h-5 text-slate-600" />
                                                 </NavLink>
                                             </li>))}

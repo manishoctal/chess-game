@@ -27,6 +27,7 @@ import AuthorizationRoute from 'utils/AuthorizationRoute'
 import TradingQuestionManager from 'pages/trading_question_manager/TradingQuestionManager'
 import ViewTradingQuestionManager from 'pages/trading_question_manager/ViewTradingQuestionManager'
 import PlayerCardManager from 'pages/player_card_manager/PlayerCardManager'
+import ViewPlayerCardManager from 'pages/player_card_manager/ViewPlayerCard'
 const UseChange = ({ data }) => {
   const { t } = useTranslation()
   return t(data)
@@ -127,6 +128,15 @@ const AdminRoutes = {
       element: <AuthorizationRoute><PlayerCardManager /></AuthorizationRoute>,
       name: (
           <UseChange data='PLAYER_CARD_MANAGER' />
+      )
+    },
+
+
+    {
+      path: '/player-card-manager/view',
+      element: <AuthorizationRoute><ViewPlayerCardManager /></AuthorizationRoute>,
+      name: (
+          <UseChange data='VIEW_PLAYER_CARD_MANAGER' />
       )
     },
 
