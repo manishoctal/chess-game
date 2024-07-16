@@ -129,19 +129,7 @@ function PlayerStockManager() {
     }
 
 
-    useEffect(() => {
-        if (!isInitialized) {
-            setIsInitialized(true)
-        } else if (searchTerm || !filterData?.isReset) {
-            setFilterData({
-                ...filterData,
-                isReset: false,
-                searchKey: debouncedSearchTerm || '',
-                isFilter: !!debouncedSearchTerm
-            })
-            setPage(1)
-        }
-    }, [debouncedSearchTerm])
+
 
 
     const handleDateChangeStock = (start, end) => {
@@ -155,13 +143,27 @@ function PlayerStockManager() {
     }
 
 
+   
+
+    // debounce search start
+    useEffect(() => {
+        if (!isInitialized) {
+            setIsInitialized(true)
+        } else if (searchTerm || !filterData?.isReset) {
+            setFilterData({
+                ...filterData,
+                isReset: false,
+                searchKey: debouncedSearchTerm || '',
+                isFilter: !!debouncedSearchTerm
+            })
+            setPage(1)
+        }
+    }, [debouncedSearchTerm])
+    
     useEffect(() => {
         updatePageName(t('PLAYER_STOCK_MANAGER'))
     }, [])
-
-    // debounce search start
-
-
+    
     useEffect(() => {
         const timeoutId = setTimeout(() => {
             setDebouncedSearchTerm(searchTerm)
@@ -173,7 +175,7 @@ function PlayerStockManager() {
 
     // debounce search end
 
-    const customStyles = {
+    const customStylesStock = {
         option: (provided) => ({
             ...provided,
             fontSize: '13px',
@@ -243,7 +245,7 @@ function PlayerStockManager() {
                                             <span className='text-[14px]'>
                                                 {t("PLAYER_ROLE")}
                                             </span>
-                                        } value={filterData?.playerRole} style={customStyles} />
+                                        } value={filterData?.playerRole} style={customStylesStock} />
 
                                     <button
                                         type='button'
