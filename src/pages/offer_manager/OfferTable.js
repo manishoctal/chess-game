@@ -74,7 +74,7 @@ const getTableData=(details,dataClass)=>{
               <OWalletTableHead sort={sort} setSort={setSort} name='EXPIRY_DATE' fieldName='expiryDate'  classTd={'justify-center'}/>
               <OWalletTableHead sort={sort} setSort={setSort} name='O_CREATED_AT' fieldName='createdAt'  classTd={'justify-center'}/>
               <OWalletTableHead sort={sort} setSort={setSort} name='O_UPDATED_AT' fieldName='updatedAt'  classTd={'justify-center'}/>
-              <OWalletTableHead sort={sort} setSort={setSort} name='O_STATUS' fieldName='status' classTd={'justify-center'} />
+              {helpers.andOperator((manager?.add || manager?.edit || user?.role === "admin") ,( <OWalletTableHead sort={sort} setSort={setSort} name='O_STATUS' fieldName='status' classTd={'justify-center'} />))}
               <th scope="col" className="py-3 px-6 text-center">
                 {t("O_ACTION")}
               </th>
@@ -101,7 +101,7 @@ const getTableData=(details,dataClass)=>{
                 {getTableData(helpers.getDateAndTime(item?.expiryDate))}
                 {getTableData(helpers.getDateAndTime(item?.createdAt))}
                  {getTableData(helpers.getDateAndTime(item?.updatedAt))}
-                <td className="py-2 px-4 border-r dark:border-[#ffffff38]">
+                 {helpers.andOperator((manager?.add || manager?.edit || user?.role === "admin") ,( <td className="py-2 px-4 border-r dark:border-[#ffffff38]">
                   <label
                     className="inline-flex relative items-center cursor-pointer"
                     title={startCase(item?.status)}
@@ -124,7 +124,7 @@ const getTableData=(details,dataClass)=>{
                     />
                     <div className="w-10 h-5 bg-gray-200 rounded-full peer peer-focus:ring-0 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-gradientTo" />
                   </label>
-                </td>
+                </td>))}
                 <td className="py-2 px-4 border-l">
                   <div className="">
                     <ul className="flex justify-center">
