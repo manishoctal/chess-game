@@ -12,6 +12,7 @@ import OSearchCard from 'components/reusable/OSearch'
 import { BiReset } from 'react-icons/bi'
 import helpers from 'utils/helpers'
 import OReactSelect from 'components/reusable/OReactSelect'
+import EditLimitModal from './EditLimitModal'
 
 function PlayerCardManager() {
     const { t } = useTranslation()
@@ -19,6 +20,7 @@ function PlayerCardManager() {
     const [pageSize, setPageSize] = useState(10)
     const [isDelete] = useState(false)
     const manager = user?.permission?.find(e => e.manager === 'player_card_manager') ?? {}
+    const [editShowLimitModal, setEditShowLimitModal] = useState(false)
 
     const [playerCard, setPlayerCard] = useState({'docs':[
         {
@@ -226,7 +228,14 @@ function PlayerCardManager() {
         handleFormatOption()
     }, [])
 
+    // add edit modal start
+    const [cardLimitEdit, setCardLimitEdit] = useState()
+    const editCardLimit = async (data) => {
+        setCardLimitEdit(data)
+        setEditShowLimitModal(true)
+    }
 
+    // add edit modal end
 
     return (
         <div>
@@ -287,6 +296,7 @@ function PlayerCardManager() {
                         <PlayerCardTable
                             playerCard={playerCard?.docs}
                             getAllPlayerCard={getAllPlayerCard}
+                            editCardLimit={editCardLimit}
                             page={page}
                             setSort={setSort}
                             sort={sort}
@@ -308,7 +318,13 @@ function PlayerCardManager() {
                     </div>
                 </div>
             </div>
-           
+            {editShowLimitModal && (
+                <EditLimitModal
+                    setEditShowLimitModal={setEditShowLimitModal}
+                    cardLimitEdit={cardLimitEdit}
+                    getAllPlayerCard={getAllPlayerCard}
+                />
+            )}
         </div>
     )
 }

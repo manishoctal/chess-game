@@ -1,7 +1,5 @@
-import React, { useContext } from "react";
-import { AiFillEdit } from "react-icons/ai";
+import React from "react";
 import { useTranslation } from "react-i18next";
-import AuthContext from "context/AuthContext";
 import { isEmpty, startCase } from "lodash";
 import helpers from "../../utils/helpers";
 import OViewPlayerCardTableHead from '../../components/reusable/OTableHead'
@@ -11,13 +9,9 @@ const ViewPlayerCardTable = ({
     page,
     sort,
     setSort,
-    manager,
     pageSize,
-    editCardLimit
 }) => {
     const { t } = useTranslation();
-    const { user } = useContext(AuthContext);
-
     const getTableDataPlayerView = (details, dataClass) => {
         return <td className={`py-2 px-4 border-r dark:border-[#ffffff38] text-center ${dataClass || ''}`}>
             {details || 'N/A'}
@@ -48,10 +42,6 @@ const ViewPlayerCardTable = ({
                             <OViewPlayerCardTableHead sort={sort} setSort={setSort} name='QUANTITY' fieldName='quantity' classTd={'justify-center'} />
                             <OViewPlayerCardTableHead sort={sort} setSort={setSort} name='TOTAL_AMOUNT' fieldName='totalAmount' classTd={'justify-center w-40'} />
                             <OViewPlayerCardTableHead sort={sort} setSort={setSort} name='O_STATUS' fieldName='status' classTd={'justify-center'} />
-
-                            <th scope="col" className="py-3 px-6 text-center">
-                                {t("O_ACTION")}
-                            </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -81,21 +71,7 @@ const ViewPlayerCardTable = ({
                                 {getTableDataPlayerView(item?.quantity)}
                                 {getTableDataPlayerView(helpers.formattedAmount(item?.totalAmount))}
                                 {getTableDataPlayerView(startCase(item?.status))}
-                                <td className="py-2 px-4 border-l">
-                                    <div className="">
-                                        <ul className="flex justify-center">
-                                            {helpers.andOperator((helpers?.orOperator(manager?.add, user?.role === "admin")), (
-                                                <li
-                                                    onClick={() => { editCardLimit(item) }}
-                                                    className="px-2 py-2 hover:text-gradientTo" >
-                                                    <a title={t("O_EDIT")}>
-                                                        <AiFillEdit className="cursor-pointer w-5 h-5 text-slate-600" />
-                                                    </a>
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </div>
-                                </td>
+                                
                             </tr>
                         ))}
                         {isEmpty(playerCardView) ? (

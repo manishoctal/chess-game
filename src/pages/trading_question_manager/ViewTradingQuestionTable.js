@@ -21,7 +21,7 @@ const ViewTradingQuestionTable = ({
   ViewallTradingQuestionsList
 }) => {
   const { t } = useTranslation();
-  
+
   const { user } = useContext(AuthContext)
   const notification = useToastContext();
   const [announceModal, setAnnounceResultModal] = useState(false)
@@ -67,17 +67,13 @@ const ViewTradingQuestionTable = ({
                 {t("S.NO")}
               </th>
               <OViewTradingTableHead sort={sort} setSort={setSort} name='QUESTIONS_NAME' fieldName='questionObj.questionText' />
-              <OViewTradingTableHead sort={sort} setSort={setSort} name='O_CREATED_AT' fieldName='createdAt'  classTd={'justify-center'}/>
-              <OViewTradingTableHead sort={sort} setSort={setSort} name='YES_COUNT' fieldName='optionACount'  classTd={'justify-center'}/>
-              <OViewTradingTableHead sort={sort} setSort={setSort} name='NO_COUNT' fieldName='optionBCount'  classTd={'justify-center'}/>
+              <OViewTradingTableHead sort={sort} setSort={setSort} name='O_CREATED_AT' fieldName='createdAt' classTd={'justify-center'} />
+              <OViewTradingTableHead sort={sort} setSort={setSort} name='YES_COUNT' fieldName='optionACount' classTd={'justify-center'} />
+              <OViewTradingTableHead sort={sort} setSort={setSort} name='NO_COUNT' fieldName='optionBCount' classTd={'justify-center'} />
               {(manager?.add || manager?.edit || user?.role === "admin") && (
-                <OViewTradingTableHead sort={sort} setSort={setSort} name='O_STATUS' fieldName='status'  classTd={'justify-center'}/>)}
+                <OViewTradingTableHead sort={sort} setSort={setSort} name='O_STATUS' fieldName='status' classTd={'justify-center'} />)}
               {(manager?.add || manager?.edit || user?.role === "admin") && (
-             <OViewTradingTableHead sort={sort} setSort={setSort} name='MARK_ANSWER' fieldName='announceStatus' classTd={'justify-center'} />    
-              //   <th scope="col" className="py-3 px-6 text-center">
-              //   {t("MARK_ANSWER")}
-              // </th>
-            )}
+                <OViewTradingTableHead sort={sort} setSort={setSort} name='MARK_ANSWER' fieldName='announceStatus' classTd={'justify-center'} />)}
               <th scope="col" className="py-3 px-6 text-center">
                 {t("POLL_STATUS")}
               </th>
@@ -132,6 +128,7 @@ const ViewTradingQuestionTable = ({
                   </button>, <span className="text-green-600 font-bold">{t("RESULT_ANNOUNCED")}</span>)}
                 </td>)}
                 <td className={`py-2 px-4 border-r dark:border-[#ffffff38] text-center`}>
+                <div className="flex flex-col md:flex-row justify-center items-center">
                   <button title={startCase(item?.optionA)} className=" text-[10px] border-gray-500 px-3 py-2 rounded-lg items-center border text-white hover:bg-gray-100">
                     <span className="text-[#000000] font-semibold">{startCase(item?.optionA)} {helpers.orOperator(item?.pollAStatus, 0)}</span>
                   </button>
@@ -139,11 +136,12 @@ const ViewTradingQuestionTable = ({
                   <button title={startCase(item?.optionB)} className=" text-[10px] border-gray-500 px-3 mx-2 py-2 rounded-lg items-center border text-white hover:bg-gray-100">
                     <span className="text-[#000000] font-semibold">{t('O_NO')} {helpers.orOperator(item?.pollBStatus, 0)}</span>
                   </button>
+                  </div>
                 </td>
                 {(manager?.view || user?.role === "admin") && (<td className="py-2 px-4 border-l">
                   <div className="">
                     <ul className="flex justify-center">
-                     <li className="px-2 py-2 hover:text-gradientTo">
+                      <li className="px-2 py-2 hover:text-gradientTo">
                         <NavLink to='/trading-question-manager/view' title={t("O_VIEW")} state={item}>
                           <AiFillEye className="cursor-pointer w-5 h-5 text-slate-600" />
                         </NavLink>

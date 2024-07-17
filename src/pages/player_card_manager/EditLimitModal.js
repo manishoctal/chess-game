@@ -45,29 +45,25 @@ const EditLimitModal = ({ setEditShowLimitModal, cardLimitEdit, getAllPlayerCard
                                     {t("EDIT_CARD_LIMIT_IN_MARKET")}
                                 </h3>
                                 <button
+                                    title={t("CLOSE")}
                                     className=" ml-auto flex items-center justify-center  text-black border-2 rounded-full  h-8 w-8 float-right text-3xl leading-none font-extralight outline-none focus:outline-none"
-                                    onClick={() => setEditShowLimitModal(false)}
-                                >
-                                    <button type="button"
-                                        title={t("CLOSE")}
-                                        className="hover:text-blue-700 transition duration-150 ease-in-out"
-                                        data-bs-toggle="tooltip" >
-                                        <span className=" text-[#B8BBBF]  text-4xl ">×</span>
-                                    </button>
+                                    onClick={() => setEditShowLimitModal(false)}>
+                                    <span className=" text-[#B8BBBF]  text-4xl ">×</span>
                                 </button>
                             </div>
-                            <div className="m-2">
-                                <div className="px-6 py-3">
-                                    <div className="relative z-0 mb-2 flex gap-4">
-                                        <label className="block mb-2 text-sm font-medium w-20  text-gray-900 dark:text-white">{t('TOTAL_CARDS_IN_MARKET')}</label>
-                                        <div>
+
+                            <div className="m-4 p-4 bg-white shadow-md rounded-lg">
+                                <div className="mb-4">
+                                    <div className="flex flex-col md:flex-row items-center mb-2">
+                                        <label className="block mb-1 md:mb-0 md:w-40 text-sm font-medium text-gray-900 dark:text-white">
+                                            {t('TOTAL_CARDS_IN_MARKET')}
+                                        </label>
+                                        <div className="flex-grow">
                                             <OInputField
                                                 type="text"
-
                                                 name="cardInMarket"
                                                 id="cardInMarket"
-
-                                                wrapperClassName="relative z-0 w-60 group flex"
+                                                wrapperClassName="relative z-0 w-full group"
                                                 placeholder={t('ENTER_TOTAL_CARD')}
                                                 register={register("cardInMarket", {
                                                     required: {
@@ -83,24 +79,23 @@ const EditLimitModal = ({ setEditShowLimitModal, cardLimitEdit, getAllPlayerCard
                                                         message: t("MINIMUM_VALUE_MUST_IS_1"),
                                                     },
                                                 })}
-
                                             />
-                                            <ErrorMessage
-                                                message={errors?.cardInMarket?.message}
-                                            />
+                                            <ErrorMessage message={errors?.cardInMarket?.message} />
                                         </div>
                                     </div>
                                 </div>
 
-                                <div className="px-6 py-3">
-                                    <div className="relative z-0 mb-3 flex gap-4">
-                                        <label className="block mb-2 text-sm w-20 font-medium text-gray-900 dark:text-white">{t('SET_LIMIT_OF_THE_CARD')}</label>
-                                        <div>
+                                <div className="mb-4">
+                                    <div className="flex flex-col md:flex-row items-center mb-2">
+                                        <label className="block mb-1 md:mb-0 md:w-40 text-sm font-medium text-gray-900 dark:text-white">
+                                            {t('SET_LIMIT_OF_THE_CARD')}
+                                        </label>
+                                        <div className="flex-grow">
                                             <OInputField
                                                 placeholder={t('ENTER_LIMIT')}
                                                 type="number"
                                                 maxLength={40}
-                                                wrapperClassName="relative z-0  w-60 group flex"
+                                                wrapperClassName="relative z-0 w-full group"
                                                 id="cardLimit"
                                                 register={register("cardLimit", {
                                                     required: {
@@ -116,16 +111,13 @@ const EditLimitModal = ({ setEditShowLimitModal, cardLimitEdit, getAllPlayerCard
                                                         message: t("MINIMUM_VALUE_MUST_IS_1"),
                                                     },
                                                 })}
-
                                             />
-                                            <ErrorMessage
-                                                message={errors?.cardLimit?.message}
-                                            />
+                                            <ErrorMessage message={errors?.cardLimit?.message} />
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
+
                             <div className="dark:border-[#ffffff38] dark:bg-slate-900 flex items-center justify-center p-6 border-t border-solid border-slate-200 rounded-b">
                                 <button
                                     title={t("CLOSE")}
