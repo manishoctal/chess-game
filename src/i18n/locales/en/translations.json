@@ -425,7 +425,7 @@
   "PLEASE_ENTER_NEGATIVE_AMOUNT_MAXIMUM_LIMIT": "Please enter negative amount maximum limit.",
   "PLEASE_ENTER_MAXIMUM_TRANSFER_MONEY_LIMIT": "Please enter maximum transfer money limit.",
   "PLEASE_ENTER_SIGN_UP_BONUS": "Please enter sign up bonus.",
-  "PLEASE_ENTER_SIGN_UP_BONUS_FOR_LOCAL": "Please enter sign up bonus for local",
+  "PLEASE_ENTER_SIGN_UP_BONUS_FOR_LOCAL": "Please enter sign up bonus.",
   "PLEASE_ENTER_SIGN_UP_BONUS_TOURIST": "Please enter sign up bonus for tourist",
   "ONLY_DIGITS_ARE_ALLOWED": "Only digits are allowed.",
   "PLEASE_ENTER_UPC_CODE_REFERRAL_AMOUNT": "Please enter upc code referral amount.",
@@ -757,6 +757,13 @@
   "CURRENT_PLAYER_STOCK_PRICE":"Current Player Stock Price",
   "TOTAL_PROFIT_LOSS":"Total Profit/Loss",
   "NUMBER_OF_SHARES":"No. Of Shares",
-  "DOWNLOAD_STATEMENT":"Download Statement"
+  "DOWNLOAD_STATEMENT":"Download Statement",
+  "SEARCH_BY_QUESTION":"Question",
+  "MAXIMUM_SHARE_FOR_TRADE":"Maximum Share For Trade",
+  "MINIMUM_SHARE_FOR_TRADE":"Minimum Share For Trade",
+  "PLEASE_ENTER_MAXIMUM_SHARE_FOR_TRADE":"Please enter maximum share sor trade.",
+  "PLEASE_ENTER_MINIMUM_SHARE_FOR_TRADE":"Please enter minimum share sor trade.",
+  "MIN_SHARE_FOR_TRADE_MUST_BE_LESS":"Minimum share for trade must be less than maximum share."
+
 
 }

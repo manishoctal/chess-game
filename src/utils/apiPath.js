@@ -25,6 +25,7 @@ const apiPath = Object.freeze({
   notificationToggle: "/v1/admin/notification-toggle",
   changeContentStatus: "/v1/admin/static-content/change-status",
   getFAQs: "/v1/admin/faq",
+  reOrderFaq:'/v1/admin/faq/reOrderFAQ',
   searchUsers:'/v1/admin/user/search',
   bannerAdd:'/v1/admin/banner',
   changeFAQStatus: "/v1/admin/faqs/status",

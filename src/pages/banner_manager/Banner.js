@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { apiDelete, apiGet, apiPut } from '../../utils/apiFetch'
 import apiPath from '../../utils/apiPath'
 import SubTable from './BannerTable'

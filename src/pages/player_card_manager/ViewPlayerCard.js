@@ -12,13 +12,11 @@ import OSearchViewCard from 'components/reusable/OSearch'
 import { BiReset, BiSolidFileExport } from 'react-icons/bi'
 import helpers from 'utils/helpers'
 import OReactSelect from 'components/reusable/OReactSelect'
-import EditLimitModal from './EditLimitModal'
 import OBack from 'components/reusable/OBack'
 
 function ViewPlayerCard() {
     const { t } = useTranslation()
     const { user, updatePageName } = useContext(AuthContext)
-    const [editShowLimitModal, setEditShowLimitModal] = useState(false)
     const [pageSize, setPageSize] = useState(10)
     const [isDelete] = useState(false)
     const manager = user?.permission?.find(e => e.manager === 'player_card_manager') ?? {}
@@ -179,18 +177,7 @@ function ViewPlayerCard() {
     // debounce search end
 
 
-
-    // add edit modal start
-    const [cardLimitEdit, setCardLimitEdit] = useState()
-    const editCardLimit = async (data) => {
-        setCardLimitEdit(data)
-        setEditShowLimitModal(true)
-    }
-
-    // add edit modal end
-
-
-    const customStyles = {
+    const customStylesViewCard = {
         option: (provided) => ({
             ...provided,
             fontSize: '13px',
@@ -272,7 +259,7 @@ function ViewPlayerCard() {
                                             <span className='text-[14px]'>
                                                 {t("ORDER_TYPE")}
                                             </span>
-                                        } value={filterData?.orderType} style={customStyles} />
+                                        } value={filterData?.orderType} style={customStylesViewCard} />
 
                                     <button
                                         type='button'
@@ -299,7 +286,6 @@ function ViewPlayerCard() {
                         <ViewPlayerCardTable
                             playerCardView={viewPlayerCard?.docs}
                             viewAllPlayerCard={viewAllPlayerCard}
-                            editCardLimit={editCardLimit}
                             page={page}
                             setSort={setSort}
                             sort={sort}
@@ -321,13 +307,7 @@ function ViewPlayerCard() {
                     </div>
                 </div>
             </div>
-            {editShowLimitModal && (
-                <EditLimitModal
-                    setEditShowLimitModal={setEditShowLimitModal}
-                    cardLimitEdit={cardLimitEdit}
-                    viewAllPlayerCard={viewAllPlayerCard}
-                />
-            )}
+           
         </div>
     )
 }

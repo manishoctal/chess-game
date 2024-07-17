@@ -229,7 +229,7 @@ function ViewTradingQuestionManager() {
                             <div className='col-span-2 flex flex-wrap  items-center'>
                                 <div className='flex items-center lg:pt-0 pt-3 flex-wrap justify-center mb-2 2xl:mb-0'>
                                     <div className='relative flex items-center mb-3'>
-                                        <OSearchViewTradingQuestion searchTerm={searchTerm} setSearchTerm={setSearchTerm} placeholder={t('SEARCH_BY_MATCH_ID_MATCH_NAME')} />
+                                        <OSearchViewTradingQuestion searchTerm={searchTerm} setSearchTerm={setSearchTerm} placeholder={t('SEARCH_BY_QUESTION')} />
                                     </div>
                                     <ODateRangePickerViewTrading
                                         handleDateChange={handleDateChangeViewTrading}

@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useTranslation } from "react-i18next";
 import { isEmpty, startCase } from "lodash";
 import helpers from "../../utils/helpers";
 import OPlayerCardTableHead from '../../components/reusable/OTableHead'
 import OViewDataCard from "components/reusable/OViewData";
+import { AiFillEdit } from "react-icons/ai";
+import AuthContext from "context/AuthContext";
 const PlayerCardTable = ({
     playerCard,
     page,
@@ -11,9 +13,11 @@ const PlayerCardTable = ({
     setSort,
     manager,
     pageSize,
+    editCardLimit
 
 }) => {
     const { t } = useTranslation();
+    const { user } = useContext(AuthContext)
 
     const getTableDataPlayerCard = (details, dataClass) => {
         return <td className={`py-2 px-4 border-r dark:border-[#ffffff38] text-center ${dataClass || ''}`}>
@@ -78,6 +82,17 @@ const PlayerCardTable = ({
                                 <td className="py-2 border-l px-4">
                                     <div className="">
                                         <ul className="justify-center flex">
+
+                                            {helpers.andOperator((helpers?.orOperator(manager?.add, user?.role === "admin")), (
+                                                <li
+                                                    onClick={() => { editCardLimit(item) }}
+                                                    className="px-2 py-2 hover:text-gradientTo" >
+                                                    <a title={t("O_EDIT")}>
+                                                        <AiFillEdit className="cursor-pointer w-5 h-5 text-slate-600" />
+                                                    </a>
+                                                </li>
+                                            ))}
+
                                             <OViewDataCard manager={manager} item={item} link={'/player-card-manager/view'} />
 
                                         </ul>

@@ -94,6 +94,97 @@ const Settings = () => {
     updatePageName(t("SETTINGS"));
   }, []);
 
+  const validationFields = {
+
+    minWithdrawalLimit: {
+      required: { value: true, message: t("PLEASE_ENTER_MINIMUM_WITHDRAWAL_AMOUNT_TO_BANK"), },
+      maxLength: { value: 40, message: t("MAX_LIMIT_IS_40_CHARACTERS"), },
+      min: { value: 1, message: t("MINIMUM_VALUE_MUST_IS_1"), },
+      valueAsNumber: true,
+      validate: (value) => value < watch('maxWithdrawalLimit') || t("MIN_VALUE_MUST_BE_LESS_THAN_MAX_VALUE"),
+    },
+
+    maxWithdrawalLimit: {
+      required: { value: true, message: t("PLEASE_ENTER_MAXIMUM_WITHDRAWAL_AMOUNT_TO_BANK"), },
+      maxLength: { value: 40, message: t("MAX_LIMIT_IS_40_CHARACTERS"), },
+      min: { value: 1, message: t("MINIMUM_VALUE_MUST_IS_1"), },
+      valueAsNumber: true,
+    },
+    referralAmount: {
+      required: { value: true, message: t("PLEASE_ENTER_REFERRAL_AMOUNT"), },
+      maxLength: { value: 40, message: t("MAX_LIMIT_IS_40_CHARACTERS"), },
+      min: { value: 1, message: t("MINIMUM_VALUE_MUST_IS_1"), },
+    },
+    signupBonus: {
+      required: { value: true, message: t("PLEASE_ENTER_SIGN_UP_BONUS_FOR_LOCAL"), },
+      maxLength: { value: 40, message: t("MAX_LIMIT_IS_40_CHARACTERS"), },
+      min: { value: 1, message: t("MINIMUM_VALUE_MUST_IS_1"), },
+    },
+
+    playerCardPlatfromFee: {
+      required: { value: true, message: t("PLEASE_ENTER_PLAYER_CARD_PLATFORM_FEE"), },
+      maxLength: { value: 40, message: t("MAX_LIMIT_IS_40_CHARACTERS"), },
+      min: { value: 1, message: t("MINIMUM_VALUE_MUST_IS_1"), },
+    },
+
+    stockPlatfromFee: {
+      required: { value: true, message: t("PLEASE_ENTER_STOCK_PLATFORM_FEE"), },
+      pattern: { value: /^\d+$/, message: t("ONLY_DIGITS_ARE_ALLOWED"), },
+      maxLength: { value: 40, message: t("MAX_LIMIT_IS_40_CHARACTERS"), },
+      min: { value: 1, message: t("MINIMUM_VALUE_MUST_IS_1"), },
+    },
+    questionTradePlatformKey: {
+      required: { value: true, message: t("PLEASE_ENTER_QUESTION_TRADE_FEE"), },
+      maxLength: { value: 40, message: t("MAX_LIMIT_IS_40_CHARACTERS"), },
+      min: { value: 1, message: t("MINIMUM_VALUE_MUST_IS_1"), },
+    },
+    numberOfPlayerStocks: {
+      required: { value: true, message: t("PLEASE_ENTER_NUMBER_OF_PLAYER_STOCK"), },
+      maxLength: { value: 40, message: t("MAX_LIMIT_IS_40_CHARACTERS"), },
+      min: { value: 1, message: t("MINIMUM_VALUE_MUST_IS_1"), },
+    },
+    numberOfPlayerCards: {
+      required: { value: true, message: t("PLEASE_ENTER_NUMBER_OF_PLAYER_CARD"), },
+      maxLength: { value: 40, message: t("MAX_LIMIT_IS_40 CHARACTERS"), },
+      min: { value: 1, message: t("MINIMUM_VALUE_MUST_IS_1"), },
+    },
+    penaltyStockPercentage: {
+      required: { value: true, message: t("PLEASE_ENTER_PENALTY_OF_STOCK_PERCENTAGE"), },
+      maxLength: { value: 3, message: t("MAX_LIMIT_IS_3_CHARACTERS"), },
+      min: { value: 1, message: t("MINIMUM_VALUE_MUST_IS_1"), },
+    },
+    maximumStockPurchase: {
+      required: { value: true, message: t("PLEASE_ENTER_MAXIMUM_STOCK_CAN_PURCHASE"), },
+      maxLength: { value: 3, message: t("MAX_LIMIT_IS_3_CHARACTERS"), },
+      min: { value: 1, message: t("MINIMUM_VALUE_MUST_IS_1"), },
+    },
+    maximumCardPurchase: {
+      required: { value: true, message: t("PLEASE_ENTER_MAXIMUM_CARD_CAN_PURCHASE"), },
+      maxLength: { value: 3, message: t("MAX_LIMIT_IS_3 CHARACTERS"), },
+      min: { value: 1, message: t("MINIMUM_VALUE_MUST_IS_1"), },
+    },
+    tds: {
+      required: { value: true, message: t("PLEASE_ENTER_TDS"), },
+      maxLength: { value: 3, message: t("MAX_LIMIT_IS_3_CHARACTERS"), },
+      min: { value: 1, message: t("MINIMUM_VALUE_MUST_IS_1"), },
+    },
+    maximumSharesForTrade: {
+      required: { value: true, message: t("PLEASE_ENTER_MAXIMUM_SHARE_FOR_TRADE"), },
+      maxLength: { value: 3, message: t("MAX_LIMIT_IS_3 CHARACTERS"), },
+      min: { value: 1, message: t("MINIMUM_VALUE_MUST_IS_1"), },
+      valueAsNumber: true,
+    },
+    minimumSharesForTrade: {
+      required: { value: true, message: t("PLEASE_ENTER_MINIMUM_SHARE_FOR_TRADE"), },
+      maxLength: { value: 3, message: t("MAX_LIMIT_IS_3 CHARACTERS"), },
+      min: { value: 1, message: t("MINIMUM_VALUE_MUST_IS_1"), },
+      valueAsNumber: true,
+      validate: (value) => value < watch('maximumSharesForTrade') || t("MIN_SHARE_FOR_TRADE_MUST_BE_LESS"),
+    }
+  }
+
+
+
   return (
     <section className="">
       <form>
@@ -176,400 +267,140 @@ const Settings = () => {
                 />
                 <ErrorMessage message={errors?.adminEmail?.message} />
               </div>
-              <div className="relative z-0 mb-6 w-full group">
-                <OInputField
-                  wrapperClassName="relative z-0  w-full group"
-                  type="number"
-                  maxLength={40}
-                  disable={manager?.add === false}
-                  inputLabel={<>{t("MIN_WITHDRAWAL_AMOUNT_TO_BANK")}</>}
-                  id="minWithdrawalLimit"
-                  register={register("minWithdrawalLimit", {
-                    required: {
-                      value: true,
-                      message: t(
-                        "PLEASE_ENTER_MINIMUM_WITHDRAWAL_AMOUNT_TO_BANK"
-                      ),
-                    },
-                    maxLength: {
-                      value: 40,
-                      message: t("MAX_LIMIT_IS_40_CHARACTERS"),
-                    },
-                    min: {
-                      value: 1,
-                      message: t(t("MINIMUM_VALUE_MUST_IS_1")),
-                    },
-                    valueAsNumber: true,
-                    validate:(value)=>{ return value < watch('maxWithdrawalLimit') || t("MIN_VALUE_MUST_BE_LESS_THAN_MAX_VALUE");}
-                  })}
+              <ReusableInputField
+                label={t("MIN_WITHDRAWAL_AMOUNT_TO_BANK")}
+                id="minWithdrawalLimit"
+                register={register}
+                errors={errors}
+                manager={manager}
+                validationRules={validationFields?.minWithdrawalLimit}
+              />
 
-                  placeholder=" "
-                />
-                <ErrorMessage
-                  message={errors?.minWithdrawalLimit?.message}
-                />
-              </div>
+              <ReusableInputField
+                label={t("Max_WITHDRAWAL_AMOUNT_TO_BANK")}
+                id="maxWithdrawalLimit"
+                register={register}
+                errors={errors}
+                manager={manager}
+                validationRules={validationFields?.maxWithdrawalLimit}
+              />
 
-              <div className="relative z-0 mb-6 w-full group">
-                <OInputField
-                  wrapperClassName="relative z-0  w-full group"
-                  type="number"
-                  maxLength={40}
-                  disable={manager?.add === false}
-                  inputLabel={<>{t("Max_WITHDRAWAL_AMOUNT_TO_BANK")}</>}
-                  id="maxWithdrawalLimit"
-                  register={register("maxWithdrawalLimit", {
-                    required: {
-                      value: true,
-                      message: t(
-                        "PLEASE_ENTER_MAXIMUM_WITHDRAWAL_AMOUNT_TO_BANK"
-                      ),
-                    },
-                    maxLength: {
-                      value: 40,
-                      message: t("MAX_LIMIT_IS_40_CHARACTERS"),
-                    },
-                    min: {
-                      value: 1,
-                      message: t(t("MINIMUM_VALUE_MUST_IS_1")),
-                    },
-                    valueAsNumber: true
-                  })}
-                  placeholder=" "
-                />
-                <ErrorMessage
-                  message={errors?.maxWithdrawalLimit?.message}
-                />
-              </div>
+              <ReusableInputField
+                label={t("REFERRAL_BONUS_FOR_TOURIST")}
+                id="referralAmount"
+                register={register}
+                manager={manager}
+                errors={errors}
+                validationRules={validationFields?.referralAmount}
+              />
 
-              <div className="relative z-0 mb-6 w-full group">
-                <OInputField
-                  type="number"
-                  wrapperClassName="relative z-0  w-full group"
-                  disable={manager?.add === false}
-                  inputLabel={<>{t("REFERRAL_BONUS_FOR_TOURIST")}</>}
-                  maxLength={40}
-                  id="referralAmount"
-                  register={register("referralAmount", {
-                    required: {
-                      value: true,
-                      message: t("PLEASE_ENTER_REFERRAL_AMOUNT"),
-                    },
-                    maxLength: {
-                      value: 40,
-                      message: t("MAX_LIMIT_IS_40_CHARACTERS"),
-                    },
-                    min: {
-                      value: 1,
-                      message: t("MINIMUM_VALUE_MUST_IS_1"),
-                    },
-                  })}
-                  placeholder=" "
-                />
-                <ErrorMessage message={errors?.referralAmount?.message} />
-              </div>
+              <ReusableInputField
+                label={t("SIGN_UP_BONUS_FOR_LOCAL")}
+                id="signupBonus"
+                register={register}
+                manager={manager}
+                errors={errors}
+                validationRules={validationFields.signupBonus}
+              />
 
+              <ReusableInputField
+                label={t("PLATFORM_FEE")}
+                id="playerCardPlatfromFee"
+                register={register}
+                manager={manager}
+                errors={errors}
+                validationRules={validationFields?.playerCardPlatfromFee}
+              />
 
+              <ReusableInputField
+                label={t("PLATFORM_FEE_STOCK_PERCENTAGE")}
+                id="stockPlatfromFee"
+                register={register}
+                errors={errors}
+                manager={manager}
+                validationRules={validationFields?.stockPlatfromFee}
+              />
 
-              <div className="mb-4  w-full">
-                <OInputField
-                  type="number"
-                  id="signupBonus"
-                  maxLength={40}
-                  wrapperClassName="relative z-0  w-full group"
-                  disable={manager?.add === false}
-                  inputLabel={<>{t("SIGN_UP_BONUS_FOR_LOCAL")}</>}
-                  register={register("signupBonus", {
-                    required: {
-                      value: true,
-                      message: t("PLEASE_ENTER_SIGN_UP_BONUS_FOR_LOCAL"),
-                    },
-                    maxLength: {
-                      value: 40,
-                      message: t("MAX_LIMIT_IS_40_CHARACTERS"),
-                    },
-                    min: {
-                      value: 1,
-                      message: t("MINIMUM_VALUE_MUST_IS_1"),
-                    },
-                  })}
-                  placeholder=" "
-                />
-                <ErrorMessage message={errors?.signupBonus?.message} />
-              </div>
+              <ReusableInputField
+                label={t("PLATFORM_FEE_QUESTION_TRADE")}
+                id="questionTradePlatformKey"
+                register={register}
+                errors={errors}
+                manager={manager}
+                validationRules={validationFields?.questionTradePlatformKey}
+              />
 
-              <div className="relative z-0 mb-6 w-full group">
-                <OInputField
-                  type="number"
-                  disable={manager?.add === false}
-                  wrapperClassName="relative z-0  w-full group"
-                  inputLabel={<>{t("PLATFORM_FEE")}</>}
-                  maxLength={40}
-                  id="playerCardPlatfromFee"
-                  register={register("playerCardPlatfromFee", {
-                    required: {
-                      value: true,
-                      message: t("PLEASE_ENTER_PLAYER_CARD_PLATFORM_FEE"),
-                    },
-                    maxLength: {
-                      value: 40,
-                      message: t("MAX_LIMIT_IS_40_CHARACTERS"),
-                    },
-                    min: {
-                      value: 1,
-                      message: t("MINIMUM_VALUE_MUST_IS_1"),
-                    },
-                  })}
-                  placeholder=" "
-                />
-                <ErrorMessage message={errors?.playerCardPlatfromFee?.message} />
-              </div>
-              <div className="w-full">
-                <OInputField
-                  type="number"
-                  maxLength={40}
-                  inputLabel={<>{t("PLATFORM_FEE_STOCK_PERCENTAGE")}</>}
-                  wrapperClassName="relative z-0  w-full group"
-                  name="stockPlatfromFee"
-                  disable={manager?.add === false}
-                  register={register("stockPlatfromFee", {
-                    required: {
-                      value: true,
-                      message: t("PLEASE_ENTER_STOCK_PLATFORM_FEE"),
-                    },
-                    pattern: {
-                      value: /^\d+$/,
-                      message: t("ONLY_DIGITS_ARE_ALLOWED"),
-                    },
-                    maxLength: {
-                      value: 40,
-                      message: t("MAX_LIMIT_IS_40_CHARACTERS"),
-                    },
-                    min: {
-                      value: 1,
-                      message: t("MINIMUM_VALUE_MUST_IS_1"),
-                    },
-                  })}
-                  placeholder=""
-                />
+              <ReusableInputField
+                label={t("NUMBER_OF_PLAYER_STOCK")}
+                id="numberOfPlayerStocks"
+                register={register}
+                errors={errors}
+                manager={manager}
+                validationRules={validationFields?.numberOfPlayerStocks}
+              />
 
-                <ErrorMessage
-                  message={errors?.stockPlatfromFee?.message}
-                />
-              </div>
+              <ReusableInputField
+                label={t("NUMBER_OF_PLAYER_CARD")}
+                id="numberOfPlayerCards"
+                register={register}
+                manager={manager}
+                errors={errors}
+                validationRules={validationFields?.numberOfPlayerCards}
+              />
 
+              <ReusableInputField
+                label={t("PENALTY_OF_PERCENTAGE")}
+                id="penaltyStockPercentage"
+                register={register}
+                manager={manager}
+                errors={errors}
+                validationRules={validationFields?.penaltyStockPercentage}
+              />
 
+              <ReusableInputField
+                label={t("MAXIMUM_STOCK_USER_CAN_PURCHASE")}
+                id="maximumStockPurchase"
+                register={register}
+                manager={manager}
+                errors={errors}
+                validationRules={validationFields?.maximumStockPurchase}
+              />
 
-              <div className="mb-4  w-full">
-                <OInputField
-                  type="number"
-                  id="questionTradePlatformKey"
-                  maxLength={40}
-                  wrapperClassName="relative z-0  w-full group"
-                  disable={manager?.add === false}
-                  inputLabel={<>{t("PLATFORM_FEE_QUESTION_TRADE")}</>}
-                  register={register("questionTradePlatformKey", {
-                    required: {
-                      value: true,
-                      message: t("PLEASE_ENTER_QUESTION_TRADE_FEE"),
-                    },
-                    maxLength: {
-                      value: 40,
-                      message: t("MAX_LIMIT_IS_40_CHARACTERS"),
-                    },
-                    min: {
-                      value: 1,
-                      message: t("MINIMUM_VALUE_MUST_IS_1"),
-                    },
-                  })}
-                  placeholder=" "
-                />
-                <ErrorMessage
-                  message={errors?.questionTradePlatformKey?.message}
-                />
-              </div>
+              <ReusableInputField
+                label={t("MAXIMUM_CARD_USER_CAN_PURCHASE")}
+                id="maximumCardPurchase"
+                register={register}
+                errors={errors}
+                manager={manager}
+                validationRules={validationFields?.maximumCardPurchase}
+              />
 
-              <div className="w-full">
-                <OInputField
-                  inputLabel={<>{t("NUMBER_OF_PLAYER_STOCK")}</>}
-                  wrapperClassName="relative z-0  w-full group"
-                  type="number"
-                  id="payment"
-                  disable={manager?.add === false}
-                  maxLength={40}
-                  register={register("numberOfPlayerStocks", {
-                    required: {
-                      value: true,
-                      message: t("PLEASE_ENTER_NUMBER_OF_PLAYER_STOCK"),
-                    },
-                    maxLength: {
-                      value: 40,
-                      message: t("MAX_LIMIT_IS_40_CHARACTERS"),
-                    },
-                    min: {
-                      value: 1,
-                      message: t("MINIMUM_VALUE_MUST_IS_1"),
-                    },
-                  })}
-                  placeholder=" "
-                />
-                <ErrorMessage
-                  message={errors?.numberOfPlayerStocks?.message}
-                />
-              </div>
+              <ReusableInputField
+                label={t("TDS_IN_PERCENTAGE")}
+                id="tds"
+                manager={manager}
+                register={register}
+                errors={errors}
+                validationRules={validationFields?.tds}
+              />
 
+              <ReusableInputField
+                label={t("MAXIMUM_SHARE_FOR_TRADE")}
+                id="maximumSharesForTrade"
+                register={register}
+                errors={errors}
+                manager={manager}
+                validationRules={validationFields?.maximumSharesForTrade}
+              />
 
-              <div className="w-full">
-                <OInputField
-                  inputLabel={<>{t("NUMBER_OF_PLAYER_CARD")}</>}
-                  wrapperClassName="relative z-0  w-full group"
-                  type="number"
-                  id="payment"
-                  disable={manager?.add === false}
-                  maxLength={40}
-                  register={register("numberOfPlayerCards", {
-                    required: {
-                      value: true,
-                      message: t("PLEASE_ENTER_NUMBER_OF_PLAYER_CARD"),
-                    },
-                    maxLength: {
-                      value: 40,
-                      message: t("MAX_LIMIT_IS_40_CHARACTERS"),
-                    },
-                    min: {
-                      value: 1,
-                      message: t("MINIMUM_VALUE_MUST_IS_1"),
-                    },
-                  })}
-                  placeholder=" "
-                />
-                <ErrorMessage
-                  message={errors?.numberOfPlayerCards?.message}
-                />
-              </div>
-
-              <div className="w-full">
-                <OInputField
-                  wrapperClassName="relative z-0  w-full group"
-                  type="number"
-                  inputLabel={<>{t("PENALTY_OF_PERCENTAGE")}</>}
-                  maxLength={40}
-                  disable={manager?.add === false}
-                  id="payment"
-                  register={register("penaltyStockPercentage", {
-                    required: {
-                      value: true,
-                      message: t("PLEASE_ENTER_PENALTY_OF_STOCK_PERCENTAGE"),
-                    },
-                    maxLength: {
-                      value: 3,
-                      message: t("MAX_LIMIT_IS_3_CHARACTERS"),
-                    },
-                    min: {
-                      value: 1,
-                      message: t("MINIMUM_VALUE_MUST_IS_1"),
-                    },
-                  })}
-                  placeholder=" "
-                />
-                <ErrorMessage
-                  message={errors?.penaltyStockPercentage?.message}
-                />
-              </div>
-
-
-              <div className="w-full mb-4">
-                <OInputField
-                  wrapperClassName="relative z-0  w-full group"
-                  type="number"
-                  inputLabel={<>{t("MAXIMUM_STOCK_USER_CAN_PURCHASE")}</>}
-                  maxLength={40}
-                  disable={manager?.add === false}
-                  id="payment"
-                  register={register("maximumStockPurchase", {
-                    required: {
-                      value: true,
-                      message: t("PLEASE_ENTER_MAXIMUM_STOCK_CAN_PURCHASE"),
-                    },
-                    maxLength: {
-                      value: 3,
-                      message: t("MAX_LIMIT_IS_3_CHARACTERS"),
-                    },
-                    min: {
-                      value: 1,
-                      message: t("MINIMUM_VALUE_MUST_IS_1"),
-                    },
-                  })}
-                  placeholder=" "
-                />
-                <ErrorMessage
-                  message={errors?.maximumStockPurchase?.message}
-                />
-              </div>
-
-
-
-              <div className="w-full mb-4">
-                <OInputField
-                  wrapperClassName="relative z-0  w-full group"
-                  type="number"
-                  inputLabel={<>{t("MAXIMUM_CARD_USER_CAN_PURCHASE")}</>}
-                  maxLength={40}
-                  disable={manager?.add === false}
-                  id="payment"
-                  register={register("maximumCardPurchase", {
-                    required: {
-                      value: true,
-                      message: t("PLEASE_ENTER_MAXIMUM_CARD_CAN_PURCHASE"),
-                    },
-                    maxLength: {
-                      value: 3,
-                      message: t("MAX_LIMIT_IS_3_CHARACTERS"),
-                    },
-                    min: {
-                      value: 1,
-                      message: t("MINIMUM_VALUE_MUST_IS_1"),
-                    },
-                  })}
-                  placeholder=" "
-                />
-                <ErrorMessage
-                  message={errors?.maximumCardPurchase?.message}
-                />
-              </div>
-
-
-              <div className="w-full mb-4">
-                <OInputField
-                  wrapperClassName="relative z-0  w-full group"
-                  type="number"
-                  inputLabel={<>{t("TDS_IN_PERCENTAGE")}</>}
-                  maxLength={40}
-                  disable={manager?.add === false}
-                  id="payment"
-                  register={register("tds", {
-                    required: {
-                      value: true,
-                      message: t("PLEASE_ENTER_TDS"),
-                    },
-                    maxLength: {
-                      value: 3,
-                      message: t("MAX_LIMIT_IS_3_CHARACTERS"),
-                    },
-                    min: {
-                      value: 1,
-                      message: t("MINIMUM_VALUE_MUST_IS_1"),
-                    },
-                  })}
-                  placeholder=" "
-                />
-                <ErrorMessage
-                  message={errors?.tds?.message}
-                />
-              </div>
-
-
-
+              <ReusableInputField
+                label={t("MINIMUM_SHARE_FOR_TRADE")}
+                id="minimumSharesForTrade"
+                register={register}
+                errors={errors}
+                manager={manager}
+                validationRules={validationFields?.minimumSharesForTrade}
+              />
 
             </main>
           </div>
@@ -579,7 +410,7 @@ const Settings = () => {
         <div className="text-center mt-4 ">
           <OButton
             disabled={!isDirty}
-            label={<><GrUpdate size={16} className="mr-2"/>{t("O_UPDATE")}</>}
+            label={<><GrUpdate size={16} className="mr-2" />{t("O_UPDATE")}</>}
             type="submit"
             onClick={handleSubmit(handleSubmitForm)}
             loading={settingChangeLoading}
@@ -603,3 +434,19 @@ const Settings = () => {
 };
 
 export default Settings;
+
+const ReusableInputField = ({ label, id, register, errors, validationRules, manager }) => (
+  <div className="relative z-0 mb-6 w-full group">
+    <OInputField
+      type="number"
+      wrapperClassName="relative z-0  w-full group"
+      maxLength={40}
+      disable={manager?.add === false}
+      inputLabel={<>{label}</>}
+      id={id}
+      register={register(id, validationRules)}
+      placeholder=" "
+    />
+    <ErrorMessage message={errors?.[id]?.message} />
+  </div>
+);
