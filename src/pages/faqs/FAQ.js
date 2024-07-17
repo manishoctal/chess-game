@@ -125,7 +125,6 @@ function Faq() {
     });
   };
 
-
   const handleResetDashboard = () => {
     setPage(1)
     setFilterData({
@@ -176,7 +175,6 @@ function Faq() {
   }, [searchTerm])
 
   // debounce search end
-
 
   return (
     <div>

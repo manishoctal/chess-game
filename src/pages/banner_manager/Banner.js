@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { apiDelete, apiGet, apiPut } from '../../utils/apiFetch'
 import apiPath from '../../utils/apiPath'
 import SubTable from './BannerTable'
@@ -18,6 +18,7 @@ import { IoIosAdd } from 'react-icons/io'
 
 
 function Banner() {
+
   const { t } = useTranslation()
   const notification = useToastContext()
   const { user, updatePageName } = useContext(AuthContext)
@@ -147,17 +148,10 @@ function Banner() {
 
   // banner delete change function end
 
-
-
-
-
   const statusPage = e => {
     setPage(1)
     setFilterData({ ...filterData, category: e.target.value, isFilter: true })
   }
-
-
-
 
   const [item, setItem] = useState()
   const editViewBanner = async (type, data) => {
@@ -222,11 +216,6 @@ function Banner() {
 
   // debounce search end
 
-
-
-
-
-
   return (
     <div>
       <div className='bg-[#F9F9F9] dark:bg-slate-900'>
@@ -288,14 +277,13 @@ function Banner() {
                   </button>
                 )}
               </div>
-
             </form>
             <div className='flex justify-end'>
-            <div className="bg-gray-100 p-2 rounded-md shadow-md w-[25%]">
-              <p className="text-sm text-gray-700 flex">
-                <span className='text-red-500 font-semibold'>Disclaimer:</span> <marquee className="font-semibold">Only 5 banners can be activated at a time.</marquee>
-              </p>
-            </div>
+              <div className="bg-gray-100 p-2 rounded-md shadow-md w-[25%]">
+                <p className="text-sm text-gray-700 flex">
+                  <span className='text-red-500 font-semibold mr-1'>Disclaimer:</span> <marquee className="font-semibold" behavior="slide" direction="left" loop="1">Only 5 banners can be activated at a time.</marquee>
+                </p>
+              </div>
             </div>
             <SubTable
               allBanner={bannerData?.docs}

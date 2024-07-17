@@ -175,6 +175,12 @@ const Sidebar = () => {
             label="PLAYER_CARD_MANAGER"
             imgSrc={rewardWithdrawalRequest}
           />
+           <SidebarNavItem
+            permission="player_stock_manager"
+            path="/player-stock-manager"
+            label="PLAYER_STOCK_MANAGER"
+            imgSrc={rewardWithdrawalRequest}
+          />
 
           <SidebarNavItem
             permission="email_manager"

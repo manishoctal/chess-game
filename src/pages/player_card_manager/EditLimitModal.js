@@ -4,20 +4,31 @@ import React, { useState } from "react";
 import helpers from "utils/helpers";
 import LoaderButton from "components/reusable/LoaderButton";
 import OInputField from "components/reusable/OInputField";
-import { GrAnnounce } from "react-icons/gr";
+import { FaEdit } from "react-icons/fa";
+import ErrorMessage from "components/ErrorMessage";
 
-const EditLimitModal = ({ setEditShowLimitModal, cardLimitEdit,getAllPlayerCard }) => {
-    console.log("🚀 ~ EditLimitModal ~ cardLimitEdit,getAllPlayerCard:", cardLimitEdit,getAllPlayerCard);
+const EditLimitModal = ({ setEditShowLimitModal, cardLimitEdit, getAllPlayerCard }) => {
+    console.log("🚀 ~ EditLimitModal ~ cardLimitEdit,getAllPlayerCard:", cardLimitEdit, getAllPlayerCard);
     const { t } = useTranslation();
+
+
+
     const {
-        handleSubmit, } = useForm({ mode: "onChange", shouldFocusError: true, defaultValues: {} });
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm({
+        mode: "onBlur",
+        shouldFocusError: true,
+    });
+
 
     const [loader] = useState(false)
 
 
     // submit function start
     const handleUpdateLimit = async (e) => {
-    console.log("🚀 ~ handleUpdateLimit ~ e:", e);
+        console.log("🚀 ~ handleUpdateLimit ~ e:", e);
 
     };
     // submit function end
@@ -45,25 +56,76 @@ const EditLimitModal = ({ setEditShowLimitModal, cardLimitEdit,getAllPlayerCard 
                                     </button>
                                 </button>
                             </div>
-                            <div className="px-6  py-3">
-                                <div className="relative z-0 mb-6">
-                                    <OInputField
-                                        type="text"
-                                        name="title"
-                                        id="title"
-                                        disable={true}
-                                        inputLabel={
-                                            <>
-                                                {t('O_QUESTION')}
-                                            </>
-                                        }
-                                        wrapperClassName="relative z-0  w-full group"
-                                        placeholder={t('ENTER_QUESTION')}
+                            <div className="m-2">
+                                <div className="px-6 py-3">
+                                    <div className="relative z-0 mb-2 flex gap-4">
+                                        <label className="block mb-2 text-sm font-medium w-20  text-gray-900 dark:text-white">{t('TOTAL_CARDS_IN_MARKET')}</label>
+                                        <div>
+                                            <OInputField
+                                                type="text"
 
-                                    />
+                                                name="cardInMarket"
+                                                id="cardInMarket"
+
+                                                wrapperClassName="relative z-0 w-60 group flex"
+                                                placeholder={t('ENTER_TOTAL_CARD')}
+                                                register={register("cardInMarket", {
+                                                    required: {
+                                                        value: true,
+                                                        message: t("PLEASE_ENTER_TOTAL_CARD_IN_MARKET"),
+                                                    },
+                                                    maxLength: {
+                                                        value: 3,
+                                                        message: t("MAX_LIMIT_IS_3_CHARACTERS"),
+                                                    },
+                                                    min: {
+                                                        value: 1,
+                                                        message: t("MINIMUM_VALUE_MUST_IS_1"),
+                                                    },
+                                                })}
+
+                                            />
+                                            <ErrorMessage
+                                                message={errors?.cardInMarket?.message}
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="px-6 py-3">
+                                    <div className="relative z-0 mb-3 flex gap-4">
+                                        <label className="block mb-2 text-sm w-20 font-medium text-gray-900 dark:text-white">{t('SET_LIMIT_OF_THE_CARD')}</label>
+                                        <div>
+                                            <OInputField
+                                                placeholder={t('ENTER_LIMIT')}
+                                                type="number"
+                                                maxLength={40}
+                                                wrapperClassName="relative z-0  w-60 group flex"
+                                                id="cardLimit"
+                                                register={register("cardLimit", {
+                                                    required: {
+                                                        value: true,
+                                                        message: t("PLEASE_ENTER_CARD_LIMIT"),
+                                                    },
+                                                    maxLength: {
+                                                        value: 3,
+                                                        message: t("MAX_LIMIT_IS_3_CHARACTERS"),
+                                                    },
+                                                    min: {
+                                                        value: 1,
+                                                        message: t("MINIMUM_VALUE_MUST_IS_1"),
+                                                    },
+                                                })}
+
+                                            />
+                                            <ErrorMessage
+                                                message={errors?.cardLimit?.message}
+                                            />
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
-                           
                             <div className="dark:border-[#ffffff38] dark:bg-slate-900 flex items-center justify-center p-6 border-t border-solid border-slate-200 rounded-b">
                                 <button
                                     title={t("CLOSE")}
@@ -74,8 +136,8 @@ const EditLimitModal = ({ setEditShowLimitModal, cardLimitEdit,getAllPlayerCard 
                                 </button>
                                 {helpers.ternaryCondition(loader,
                                     <LoaderButton />,
-                                    <button className="bg-gradientTo text-white active:bg-emerald-600 font-normal text-sm px-5 flex gap-2 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150" type="submit"
-                                        title={t("O_EDIT")}> <GrAnnounce  size={18}/>{t("O_EDIT")} </button>)}
+                                    <button className="bg-gradientTo text-white active:bg-emerald-600 font-normal text-sm px-8 flex gap-2 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150" type="submit"
+                                        title={t("O_EDIT")}> <FaEdit size={16} />{t("O_EDIT")} </button>)}
                             </div>
                         </div>
                     </div>

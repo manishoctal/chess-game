@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { apiPut, apiDelete, apiPost } from "../../utils/apiFetch";
 import apiPath from "../../utils/apiPath";
 import { isEmpty, startCase } from "lodash";
@@ -68,7 +68,7 @@ const Table = ({
         title: element?.title
       }
     })
-   await apiPost(apiPath.updateSequence, {
+    await apiPost(apiPath.updateSequence, {
       sequence: sequence
     })
   }
@@ -85,6 +85,12 @@ const Table = ({
     setFAQS(updatedSequence)
     sequenceSort(updatedSequence)
   }
+  const [firstId, setFirstId] = useState()
+  useEffect(() => {
+    if (FAQs?.length > 0) {
+      setFirstId(FAQs[0]?.id)
+    }
+  }, [FAQs])
 
   return (
     <div className="p-3">
@@ -111,7 +117,7 @@ const Table = ({
                 </th>
               </tr>
             </thead>
-            <Droppable droppableId={'droppable-id'}>
+            <Droppable droppableId={firstId}>
               {(provided) => (
                 <tbody ref={provided?.innerRef} {...provided?.droppableProps}>
                   {FAQs?.map((item, i) => (
@@ -199,7 +205,7 @@ const Table = ({
                                   </li>
                                 ))}
 
-                                {helpers.andOperator((manager?.delete || user?.role === "admin") , (
+                                {helpers.andOperator((manager?.delete || user?.role === "admin"), (
                                   <li
                                     onClick={(e) =>
                                       helpers.alertFunction(
@@ -242,6 +248,8 @@ const Table = ({
             </Droppable>
           </table>
         </DragDropContext>
+
+
       </div>
     </div>
   );
