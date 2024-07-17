@@ -95,200 +95,89 @@ const Settings = () => {
   }, []);
 
   const validationFields = {
-  
+
     minWithdrawalLimit: {
       required: { value: true, message: t("PLEASE_ENTER_MINIMUM_WITHDRAWAL_AMOUNT_TO_BANK"), },
-      maxLength: {value: 40,message: t("MAX_LIMIT_IS_40_CHARACTERS"), },
-      min: { value: 1,message: t("MINIMUM_VALUE_MUST_IS_1"),},
+      maxLength: { value: 40, message: t("MAX_LIMIT_IS_40_CHARACTERS"), },
+      min: { value: 1, message: t("MINIMUM_VALUE_MUST_IS_1"), },
       valueAsNumber: true,
       validate: (value) => value < watch('maxWithdrawalLimit') || t("MIN_VALUE_MUST_BE_LESS_THAN_MAX_VALUE"),
     },
 
     maxWithdrawalLimit: {
-      required: { value: true,message: t("PLEASE_ENTER_MAXIMUM_WITHDRAWAL_AMOUNT_TO_BANK"), },
-      maxLength: {value: 40,message: t("MAX_LIMIT_IS_40_CHARACTERS"), },
-      min: {value: 1,message: t("MINIMUM_VALUE_MUST_IS_1"),},
+      required: { value: true, message: t("PLEASE_ENTER_MAXIMUM_WITHDRAWAL_AMOUNT_TO_BANK"), },
+      maxLength: { value: 40, message: t("MAX_LIMIT_IS_40_CHARACTERS"), },
+      min: { value: 1, message: t("MINIMUM_VALUE_MUST_IS_1"), },
       valueAsNumber: true,
     },
     referralAmount: {
-      required: {  value: true,message: t("PLEASE_ENTER_REFERRAL_AMOUNT"), },
-      maxLength: {value: 40,message: t("MAX_LIMIT_IS_40_CHARACTERS"),},
-      min: { value: 1, message: t("MINIMUM_VALUE_MUST_IS_1"),},
+      required: { value: true, message: t("PLEASE_ENTER_REFERRAL_AMOUNT"), },
+      maxLength: { value: 40, message: t("MAX_LIMIT_IS_40_CHARACTERS"), },
+      min: { value: 1, message: t("MINIMUM_VALUE_MUST_IS_1"), },
     },
     signupBonus: {
-      required: {
-        value: true,
-        message: t("PLEASE_ENTER_SIGN_UP_BONUS_FOR_LOCAL"),
-      },
-      maxLength: {
-        value: 40,
-        message: t("MAX_LIMIT_IS_40_CHARACTERS"),
-      },
-      min: {
-        value: 1,
-        message: t("MINIMUM_VALUE_MUST_IS_1"),
-      },
+      required: { value: true, message: t("PLEASE_ENTER_SIGN_UP_BONUS_FOR_LOCAL"), },
+      maxLength: { value: 40, message: t("MAX_LIMIT_IS_40_CHARACTERS"), },
+      min: { value: 1, message: t("MINIMUM_VALUE_MUST_IS_1"), },
     },
 
-    playerCardPlatfromFee:{
-      required: {
-        value: true,
-        message: t("PLEASE_ENTER_PLAYER_CARD_PLATFORM_FEE"),
-      },
-      maxLength: {
-        value: 40,
-        message: t("MAX_LIMIT_IS_40_CHARACTERS"),
-      },
-      min: {
-        value: 1,
-        message: t("MINIMUM_VALUE_MUST_IS_1"),
-      },
+    playerCardPlatfromFee: {
+      required: { value: true, message: t("PLEASE_ENTER_PLAYER_CARD_PLATFORM_FEE"), },
+      maxLength: { value: 40, message: t("MAX_LIMIT_IS_40_CHARACTERS"), },
+      min: { value: 1, message: t("MINIMUM_VALUE_MUST_IS_1"), },
     },
 
-    stockPlatfromFee:{
-      required: {
-        value: true,
-        message: t("PLEASE_ENTER_STOCK_PLATFORM_FEE"),
-      },
-      pattern: {
-        value: /^\d+$/,
-        message: t("ONLY_DIGITS_ARE_ALLOWED"),
-      },
-      maxLength: {
-        value: 40,
-        message: t("MAX_LIMIT_IS_40_CHARACTERS"),
-      },
-      min: {
-        value: 1,
-        message: t("MINIMUM_VALUE_MUST_IS_1"),
-      },
+    stockPlatfromFee: {
+      required: { value: true, message: t("PLEASE_ENTER_STOCK_PLATFORM_FEE"), },
+      pattern: { value: /^\d+$/, message: t("ONLY_DIGITS_ARE_ALLOWED"), },
+      maxLength: { value: 40, message: t("MAX_LIMIT_IS_40_CHARACTERS"), },
+      min: { value: 1, message: t("MINIMUM_VALUE_MUST_IS_1"), },
     },
-    questionTradePlatformKey:{
-      required: {
-        value: true,
-        message: t("PLEASE_ENTER_QUESTION_TRADE_FEE"),
-      },
-      maxLength: {
-        value: 40,
-        message: t("MAX_LIMIT_IS_40_CHARACTERS"),
-      },
-      min: {
-        value: 1,
-        message: t("MINIMUM_VALUE_MUST_IS_1"),
-      },
+    questionTradePlatformKey: {
+      required: { value: true, message: t("PLEASE_ENTER_QUESTION_TRADE_FEE"), },
+      maxLength: { value: 40, message: t("MAX_LIMIT_IS_40_CHARACTERS"), },
+      min: { value: 1, message: t("MINIMUM_VALUE_MUST_IS_1"), },
     },
-    numberOfPlayerStocks:{
-      required: {
-        value: true,
-        message: t("PLEASE_ENTER_NUMBER_OF_PLAYER_STOCK"),
-      },
-      maxLength: {
-        value: 40,
-        message: t("MAX_LIMIT_IS_40_CHARACTERS"),
-      },
-      min: {
-        value: 1,
-        message: t("MINIMUM_VALUE_MUST_IS_1"),
-      },
+    numberOfPlayerStocks: {
+      required: { value: true, message: t("PLEASE_ENTER_NUMBER_OF_PLAYER_STOCK"), },
+      maxLength: { value: 40, message: t("MAX_LIMIT_IS_40_CHARACTERS"), },
+      min: { value: 1, message: t("MINIMUM_VALUE_MUST_IS_1"), },
     },
     numberOfPlayerCards: {
-      required: {
-        value: true,
-        message: t("PLEASE_ENTER_NUMBER_OF_PLAYER_CARD"),
-      },
-      maxLength: {
-        value: 40,
-        message: t("MAX_LIMIT_IS_40 CHARACTERS"),
-      },
-      min: {
-        value: 1,
-        message: t("MINIMUM_VALUE_MUST_IS_1"),
-      },
+      required: { value: true, message: t("PLEASE_ENTER_NUMBER_OF_PLAYER_CARD"), },
+      maxLength: { value: 40, message: t("MAX_LIMIT_IS_40 CHARACTERS"), },
+      min: { value: 1, message: t("MINIMUM_VALUE_MUST_IS_1"), },
     },
     penaltyStockPercentage: {
-      required: {
-        value: true,
-        message: t("PLEASE_ENTER_PENALTY_OF_STOCK_PERCENTAGE"),
-      },
-      maxLength: {
-        value: 3,
-        message: t("MAX_LIMIT_IS_3_CHARACTERS"),
-      },
-      min: {
-        value: 1,
-        message: t("MINIMUM_VALUE_MUST_IS_1"),
-      },
+      required: { value: true, message: t("PLEASE_ENTER_PENALTY_OF_STOCK_PERCENTAGE"), },
+      maxLength: { value: 3, message: t("MAX_LIMIT_IS_3_CHARACTERS"), },
+      min: { value: 1, message: t("MINIMUM_VALUE_MUST_IS_1"), },
     },
     maximumStockPurchase: {
-      required: {
-        value: true,
-        message: t("PLEASE_ENTER_MAXIMUM_STOCK_CAN_PURCHASE"),
-      },
-      maxLength: {
-        value: 3,
-        message: t("MAX_LIMIT_IS_3_CHARACTERS"),
-      },
-      min: {
-        value: 1,
-        message: t("MINIMUM_VALUE_MUST_IS_1"),
-      },
+      required: { value: true, message: t("PLEASE_ENTER_MAXIMUM_STOCK_CAN_PURCHASE"), },
+      maxLength: { value: 3, message: t("MAX_LIMIT_IS_3_CHARACTERS"), },
+      min: { value: 1, message: t("MINIMUM_VALUE_MUST_IS_1"), },
     },
     maximumCardPurchase: {
-      required: {
-        value: true,
-        message: t("PLEASE_ENTER_MAXIMUM_CARD_CAN_PURCHASE"),
-      },
-      maxLength: {
-        value: 3,
-        message: t("MAX_LIMIT_IS_3 CHARACTERS"),
-      },
-      min: {
-        value: 1,
-        message: t("MINIMUM_VALUE_MUST_IS_1"),
-      },
+      required: { value: true, message: t("PLEASE_ENTER_MAXIMUM_CARD_CAN_PURCHASE"), },
+      maxLength: { value: 3, message: t("MAX_LIMIT_IS_3 CHARACTERS"), },
+      min: { value: 1, message: t("MINIMUM_VALUE_MUST_IS_1"), },
     },
     tds: {
-      required: {
-        value: true,
-        message: t("PLEASE_ENTER_TDS"),
-      },
-      maxLength: {
-        value: 3,
-        message: t("MAX_LIMIT_IS_3_CHARACTERS"),
-      },
-      min: {
-        value: 1,
-        message: t("MINIMUM_VALUE_MUST_IS_1"),
-      },
+      required: { value: true, message: t("PLEASE_ENTER_TDS"), },
+      maxLength: { value: 3, message: t("MAX_LIMIT_IS_3_CHARACTERS"), },
+      min: { value: 1, message: t("MINIMUM_VALUE_MUST_IS_1"), },
     },
     maximumSharesForTrade: {
-      required: {
-        value: true,
-        message: t("PLEASE_ENTER_MAXIMUM_SHARE_FOR_TRADE"),
-      },
-      maxLength: {
-        value: 3,
-        message: t("MAX_LIMIT_IS_3 CHARACTERS"),
-      },
-      min: {
-        value: 1,
-        message: t("MINIMUM_VALUE_MUST_IS_1"),
-      },
+      required: { value: true, message: t("PLEASE_ENTER_MAXIMUM_SHARE_FOR_TRADE"), },
+      maxLength: { value: 3, message: t("MAX_LIMIT_IS_3 CHARACTERS"), },
+      min: { value: 1, message: t("MINIMUM_VALUE_MUST_IS_1"), },
       valueAsNumber: true,
     },
-    minimumSharesForTrade:{
-      required: {
-        value: true,
-        message: t("PLEASE_ENTER_MINIMUM_SHARE_FOR_TRADE"),
-      },
-      maxLength: {
-        value: 3,
-        message: t("MAX_LIMIT_IS_3 CHARACTERS"),
-      },
-      min: {
-        value: 1,
-        message: t("MINIMUM_VALUE_MUST_IS_1"),
-      },
+    minimumSharesForTrade: {
+      required: { value: true, message: t("PLEASE_ENTER_MINIMUM_SHARE_FOR_TRADE"), },
+      maxLength: { value: 3, message: t("MAX_LIMIT_IS_3 CHARACTERS"), },
+      min: { value: 1, message: t("MINIMUM_VALUE_MUST_IS_1"), },
       valueAsNumber: true,
       validate: (value) => value < watch('maximumSharesForTrade') || t("MIN_SHARE_FOR_TRADE_MUST_BE_LESS"),
     }
