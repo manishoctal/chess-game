@@ -177,7 +177,7 @@ function ViewPlayerCard() {
     // debounce search end
 
 
-    const customStyles = {
+    const customStylesViewCard = {
         option: (provided) => ({
             ...provided,
             fontSize: '13px',
@@ -259,7 +259,7 @@ function ViewPlayerCard() {
                                             <span className='text-[14px]'>
                                                 {t("ORDER_TYPE")}
                                             </span>
-                                        } value={filterData?.orderType} style={customStyles} />
+                                        } value={filterData?.orderType} style={customStylesViewCard} />
 
                                     <button
                                         type='button'
