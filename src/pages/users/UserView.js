@@ -439,17 +439,19 @@ const UserView = () => {
                     <figcaption className="w-[calc(100%_-_41px)]">
                       <span className="block text-[#5C5C5C] font-bold mb-4">{t("O_PORTFOLIO")}</span>
 
-                      <div className="relative mt-4">
-                        <figure className="inline-block overflow-hidden border mb-3 w-90 h-[210px] w-[480px]">
-                          <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white p-2 mt-3">{t('PLAYER_CARD')}</label>
+                      <div className="relative mt-4 ">
+                        <figure className="inline-block overflow-hidden border mb-3 w-full sm:max-w-[300px] md:max-w-[400px] lg:max-w-[480px] h-auto p-2 w-[480px] overflow-x-auto relative rounded-lg border">
+                          <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white p-2 mt-3">
+                            {t('PLAYER_CARD')}
+                          </label>
 
-                          <div className="flex justify-between mb-9">
+                          <div className="flex flex-col md:flex-row justify-between mb-4">
                             <PlayerCardInfo label={t('O_INVESTMENT')} value={helpers.formattedAmount(100)} />
                             <PlayerCardInfo label={t('TOTAL_SELLING_CARD')} value={helpers.formattedAmount(100)} />
                             <PlayerCardInfo label={t('RETURN_SELLING_CARD')} value={helpers.formattedAmount(100)} />
                           </div>
 
-                          <div className="flex justify-between">
+                          <div className="flex flex-col md:flex-row justify-between">
                             <PlayerCardInfo label={t('CARD_BOUGHT')} value={helpers.formattedAmount(100)} />
                             <PlayerCardInfo label={t('CARD_SOLD')} value={helpers.formattedAmount(100)} />
                             <PlayerCardInfo label={t('CARD_HOLD')} value={helpers.formattedAmount(100)} />
@@ -458,7 +460,7 @@ const UserView = () => {
                       </div>
 
                       <div className="relative mt-4">
-                        <figure className="inline-block overflow-hidden border mb-3 w-90 h-[210px] w-[480px]">
+                        <figure className="inline-block overflow-hidden border mb-3 w-full sm:max-w-[300px] md:max-w-[400px] lg:max-w-[480px] h-auto p-2 w-[480px] overflow-x-auto relative rounded-lg border">
                           <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white p-2 mt-3">{t('PLAYER_STOCK')}</label>
 
                           <div className="flex justify-between mb-9">
@@ -474,12 +476,17 @@ const UserView = () => {
                           </div>
                         </figure>
                       </div>
+
                     </figcaption>
                   </div>
                 </li>
               </div>
             </ul>
           </div>
+
+
+
+
 
         </div>
       </div>
