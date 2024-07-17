@@ -145,7 +145,153 @@ const Settings = () => {
       },
     },
 
-    
+    stockPlatfromFee:{
+      required: {
+        value: true,
+        message: t("PLEASE_ENTER_STOCK_PLATFORM_FEE"),
+      },
+      pattern: {
+        value: /^\d+$/,
+        message: t("ONLY_DIGITS_ARE_ALLOWED"),
+      },
+      maxLength: {
+        value: 40,
+        message: t("MAX_LIMIT_IS_40_CHARACTERS"),
+      },
+      min: {
+        value: 1,
+        message: t("MINIMUM_VALUE_MUST_IS_1"),
+      },
+    },
+    questionTradePlatformKey:{
+      required: {
+        value: true,
+        message: t("PLEASE_ENTER_QUESTION_TRADE_FEE"),
+      },
+      maxLength: {
+        value: 40,
+        message: t("MAX_LIMIT_IS_40_CHARACTERS"),
+      },
+      min: {
+        value: 1,
+        message: t("MINIMUM_VALUE_MUST_IS_1"),
+      },
+    },
+    numberOfPlayerStocks:{
+      required: {
+        value: true,
+        message: t("PLEASE_ENTER_NUMBER_OF_PLAYER_STOCK"),
+      },
+      maxLength: {
+        value: 40,
+        message: t("MAX_LIMIT_IS_40_CHARACTERS"),
+      },
+      min: {
+        value: 1,
+        message: t("MINIMUM_VALUE_MUST_IS_1"),
+      },
+    },
+    numberOfPlayerCards: {
+      required: {
+        value: true,
+        message: t("PLEASE_ENTER_NUMBER_OF_PLAYER_CARD"),
+      },
+      maxLength: {
+        value: 40,
+        message: t("MAX_LIMIT_IS_40 CHARACTERS"),
+      },
+      min: {
+        value: 1,
+        message: t("MINIMUM_VALUE_MUST_IS_1"),
+      },
+    },
+    penaltyStockPercentage: {
+      required: {
+        value: true,
+        message: t("PLEASE_ENTER_PENALTY_OF_STOCK_PERCENTAGE"),
+      },
+      maxLength: {
+        value: 3,
+        message: t("MAX_LIMIT_IS_3_CHARACTERS"),
+      },
+      min: {
+        value: 1,
+        message: t("MINIMUM_VALUE_MUST_IS_1"),
+      },
+    },
+    maximumStockPurchase: {
+      required: {
+        value: true,
+        message: t("PLEASE_ENTER_MAXIMUM_STOCK_CAN_PURCHASE"),
+      },
+      maxLength: {
+        value: 3,
+        message: t("MAX_LIMIT_IS_3_CHARACTERS"),
+      },
+      min: {
+        value: 1,
+        message: t("MINIMUM_VALUE_MUST_IS_1"),
+      },
+    },
+    maximumCardPurchase: {
+      required: {
+        value: true,
+        message: t("PLEASE_ENTER_MAXIMUM_CARD_CAN_PURCHASE"),
+      },
+      maxLength: {
+        value: 3,
+        message: t("MAX_LIMIT_IS_3 CHARACTERS"),
+      },
+      min: {
+        value: 1,
+        message: t("MINIMUM_VALUE_MUST_IS_1"),
+      },
+    },
+    tds: {
+      required: {
+        value: true,
+        message: t("PLEASE_ENTER_TDS"),
+      },
+      maxLength: {
+        value: 3,
+        message: t("MAX_LIMIT_IS_3_CHARACTERS"),
+      },
+      min: {
+        value: 1,
+        message: t("MINIMUM_VALUE_MUST_IS_1"),
+      },
+    },
+    maximumSharesForTrade: {
+      required: {
+        value: true,
+        message: t("PLEASE_ENTER_MAXIMUM_SHARE_FOR_TRADE"),
+      },
+      maxLength: {
+        value: 3,
+        message: t("MAX_LIMIT_IS_3 CHARACTERS"),
+      },
+      min: {
+        value: 1,
+        message: t("MINIMUM_VALUE_MUST_IS_1"),
+      },
+      valueAsNumber: true,
+    },
+    minimumSharesForTrade:{
+      required: {
+        value: true,
+        message: t("PLEASE_ENTER_MINIMUM_SHARE_FOR_TRADE"),
+      },
+      maxLength: {
+        value: 3,
+        message: t("MAX_LIMIT_IS_3 CHARACTERS"),
+      },
+      min: {
+        value: 1,
+        message: t("MINIMUM_VALUE_MUST_IS_1"),
+      },
+      valueAsNumber: true,
+      validate: (value) => value < watch('maximumSharesForTrade') || t("MIN_SHARE_FOR_TRADE_MUST_BE_LESS"),
+    }
   }
 
 
@@ -274,7 +420,7 @@ const Settings = () => {
                 register={register}
                 manager={manager}
                 errors={errors}
-                validationRules={validationFields}
+                validationRules={validationFields?.playerCardPlatfromFee}
               />
 
               <ReusableInputField
@@ -283,24 +429,7 @@ const Settings = () => {
                 register={register}
                 errors={errors}
                 manager={manager}
-                validationRules={{
-                  required: {
-                    value: true,
-                    message: t("PLEASE_ENTER_STOCK_PLATFORM_FEE"),
-                  },
-                  pattern: {
-                    value: /^\d+$/,
-                    message: t("ONLY_DIGITS_ARE_ALLOWED"),
-                  },
-                  maxLength: {
-                    value: 40,
-                    message: t("MAX_LIMIT_IS_40_CHARACTERS"),
-                  },
-                  min: {
-                    value: 1,
-                    message: t("MINIMUM_VALUE_MUST_IS_1"),
-                  },
-                }}
+                validationRules={validationFields?.stockPlatfromFee}
               />
 
               <ReusableInputField
@@ -309,20 +438,7 @@ const Settings = () => {
                 register={register}
                 errors={errors}
                 manager={manager}
-                validationRules={{
-                  required: {
-                    value: true,
-                    message: t("PLEASE_ENTER_QUESTION_TRADE_FEE"),
-                  },
-                  maxLength: {
-                    value: 40,
-                    message: t("MAX_LIMIT_IS_40_CHARACTERS"),
-                  },
-                  min: {
-                    value: 1,
-                    message: t("MINIMUM_VALUE_MUST_IS_1"),
-                  },
-                }}
+                validationRules={validationFields?.questionTradePlatformKey}
               />
 
               <ReusableInputField
@@ -331,20 +447,7 @@ const Settings = () => {
                 register={register}
                 errors={errors}
                 manager={manager}
-                validationRules={{
-                  required: {
-                    value: true,
-                    message: t("PLEASE_ENTER_NUMBER_OF_PLAYER_STOCK"),
-                  },
-                  maxLength: {
-                    value: 40,
-                    message: t("MAX_LIMIT_IS_40_CHARACTERS"),
-                  },
-                  min: {
-                    value: 1,
-                    message: t("MINIMUM_VALUE_MUST_IS_1"),
-                  },
-                }}
+                validationRules={validationFields?.numberOfPlayerStocks}
               />
 
               <ReusableInputField
@@ -353,20 +456,7 @@ const Settings = () => {
                 register={register}
                 manager={manager}
                 errors={errors}
-                validationRules={{
-                  required: {
-                    value: true,
-                    message: t("PLEASE_ENTER_NUMBER_OF_PLAYER_CARD"),
-                  },
-                  maxLength: {
-                    value: 40,
-                    message: t("MAX_LIMIT_IS_40 CHARACTERS"),
-                  },
-                  min: {
-                    value: 1,
-                    message: t("MINIMUM_VALUE_MUST_IS_1"),
-                  },
-                }}
+                validationRules={validationFields?.numberOfPlayerCards}
               />
 
               <ReusableInputField
@@ -375,20 +465,7 @@ const Settings = () => {
                 register={register}
                 manager={manager}
                 errors={errors}
-                validationRules={{
-                  required: {
-                    value: true,
-                    message: t("PLEASE_ENTER_PENALTY_OF_STOCK_PERCENTAGE"),
-                  },
-                  maxLength: {
-                    value: 3,
-                    message: t("MAX_LIMIT_IS_3_CHARACTERS"),
-                  },
-                  min: {
-                    value: 1,
-                    message: t("MINIMUM_VALUE_MUST_IS_1"),
-                  },
-                }}
+                validationRules={validationFields?.penaltyStockPercentage}
               />
 
               <ReusableInputField
@@ -397,20 +474,7 @@ const Settings = () => {
                 register={register}
                 manager={manager}
                 errors={errors}
-                validationRules={{
-                  required: {
-                    value: true,
-                    message: t("PLEASE_ENTER_MAXIMUM_STOCK_CAN_PURCHASE"),
-                  },
-                  maxLength: {
-                    value: 3,
-                    message: t("MAX_LIMIT_IS_3_CHARACTERS"),
-                  },
-                  min: {
-                    value: 1,
-                    message: t("MINIMUM_VALUE_MUST_IS_1"),
-                  },
-                }}
+                validationRules={validationFields?.maximumStockPurchase}
               />
 
               <ReusableInputField
@@ -419,20 +483,7 @@ const Settings = () => {
                 register={register}
                 errors={errors}
                 manager={manager}
-                validationRules={{
-                  required: {
-                    value: true,
-                    message: t("PLEASE_ENTER_MAXIMUM_CARD_CAN_PURCHASE"),
-                  },
-                  maxLength: {
-                    value: 3,
-                    message: t("MAX_LIMIT_IS_3 CHARACTERS"),
-                  },
-                  min: {
-                    value: 1,
-                    message: t("MINIMUM_VALUE_MUST_IS_1"),
-                  },
-                }}
+                validationRules={validationFields?.maximumCardPurchase}
               />
 
               <ReusableInputField
@@ -441,20 +492,7 @@ const Settings = () => {
                 manager={manager}
                 register={register}
                 errors={errors}
-                validationRules={{
-                  required: {
-                    value: true,
-                    message: t("PLEASE_ENTER_TDS"),
-                  },
-                  maxLength: {
-                    value: 3,
-                    message: t("MAX_LIMIT_IS_3_CHARACTERS"),
-                  },
-                  min: {
-                    value: 1,
-                    message: t("MINIMUM_VALUE_MUST_IS_1"),
-                  },
-                }}
+                validationRules={validationFields?.tds}
               />
 
               <ReusableInputField
@@ -463,21 +501,7 @@ const Settings = () => {
                 register={register}
                 errors={errors}
                 manager={manager}
-                validationRules={{
-                  required: {
-                    value: true,
-                    message: t("PLEASE_ENTER_MAXIMUM_SHARE_FOR_TRADE"),
-                  },
-                  maxLength: {
-                    value: 3,
-                    message: t("MAX_LIMIT_IS_3 CHARACTERS"),
-                  },
-                  min: {
-                    value: 1,
-                    message: t("MINIMUM_VALUE_MUST_IS_1"),
-                  },
-                  valueAsNumber: true,
-                }}
+                validationRules={validationFields?.maximumSharesForTrade}
               />
 
               <ReusableInputField
@@ -486,22 +510,7 @@ const Settings = () => {
                 register={register}
                 errors={errors}
                 manager={manager}
-                validationRules={{
-                  required: {
-                    value: true,
-                    message: t("PLEASE_ENTER_MINIMUM_SHARE_FOR_TRADE"),
-                  },
-                  maxLength: {
-                    value: 3,
-                    message: t("MAX_LIMIT_IS_3 CHARACTERS"),
-                  },
-                  min: {
-                    value: 1,
-                    message: t("MINIMUM_VALUE_MUST_IS_1"),
-                  },
-                  valueAsNumber: true,
-                  validate: (value) => value < watch('maximumSharesForTrade') || t("MIN_SHARE_FOR_TRADE_MUST_BE_LESS"),
-                }}
+                validationRules={validationFields?.minimumSharesForTrade}
               />
 
             </main>
