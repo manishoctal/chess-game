@@ -19,7 +19,6 @@ function PlayerStockManager() {
     const [pageSize, setPageSize] = useState(10)
     const [isDelete] = useState(false)
     const manager = user?.permission?.find(e => e.manager === 'player_stock_manager') ?? {}
-
     const [playerStock, setPlayerStock] = useState({
         'docs': [
             {
@@ -129,9 +128,6 @@ function PlayerStockManager() {
     }
 
 
-
-
-
     const handleDateChangeStock = (start, end) => {
         setPage(1)
         setFilterData({
@@ -142,8 +138,6 @@ function PlayerStockManager() {
         })
     }
 
-
-   
 
     // debounce search start
     useEffect(() => {
