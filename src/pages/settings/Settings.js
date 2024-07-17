@@ -97,6 +97,290 @@ const Settings = () => {
 
 
 
+
+  const inputFieldConfigurations = [
+    {
+      label: t("MIN_WITHDRAWAL_AMOUNT_TO_BANK"),
+      id: "minWithdrawalLimit",
+      validationRules: {
+        required: {
+          value: true,
+          message: t("PLEASE_ENTER_MINIMUM_WITHDRAWAL_AMOUNT_TO_BANK"),
+        },
+        maxLength: {
+          value: 40,
+          message: t("MAX_LIMIT_IS_40_CHARACTERS"),
+        },
+        min: {
+          value: 1,
+          message: t("MINIMUM_VALUE_MUST_IS_1"),
+        },
+        valueAsNumber: true,
+        validate: (value) => value < watch('maxWithdrawalLimit') || t("MIN_VALUE_MUST_BE_LESS_THAN_MAX_VALUE"),
+      },
+    },
+    {
+      label: t("Max_WITHDRAWAL_AMOUNT_TO_BANK"),
+      id: "maxWithdrawalLimit",
+      validationRules: {
+        required: {
+          value: true,
+          message: t("PLEASE_ENTER_MAXIMUM_WITHDRAWAL_AMOUNT_TO_BANK"),
+        },
+        maxLength: {
+          value: 40,
+          message: t("MAX_LIMIT_IS_40_CHARACTERS"),
+        },
+        min: {
+          value: 1,
+          message: t("MINIMUM_VALUE_MUST_IS_1"),
+        },
+        valueAsNumber: true,
+      },
+    },
+    {
+      label: t("REFERRAL_BONUS_FOR_TOURIST"),
+      id: "referralAmount",
+      validationRules: {
+        required: {
+          value: true,
+          message: t("PLEASE_ENTER_REFERRAL_AMOUNT"),
+        },
+        maxLength: {
+          value: 40,
+          message: t("MAX_LIMIT_IS_40_CHARACTERS"),
+        },
+        min: {
+          value: 1,
+          message: t("MINIMUM_VALUE_MUST_IS_1"),
+        },
+      },
+    },
+    {
+      label: t("SIGN_UP_BONUS_FOR_LOCAL"),
+      id: "signupBonus",
+      validationRules: {
+        required: {
+          value: true,
+          message: t("PLEASE_ENTER_SIGN_UP_BONUS_FOR_LOCAL"),
+        },
+        maxLength: {
+          value: 40,
+          message: t("MAX_LIMIT_IS_40_CHARACTERS"),
+        },
+        min: {
+          value: 1,
+          message: t("MINIMUM_VALUE_MUST_IS_1"),
+        },
+      },
+    },
+    {
+      label: t("PLATFORM_FEE"),
+      id: "playerCardPlatfromFee",
+      validationRules: {
+        required: {
+          value: true,
+          message: t("PLEASE_ENTER_PLAYER_CARD_PLATFORM_FEE"),
+        },
+        maxLength: {
+          value: 40,
+          message: t("MAX_LIMIT_IS_40_CHARACTERS"),
+        },
+        min: {
+          value: 1,
+          message: t("MINIMUM_VALUE_MUST_IS_1"),
+        },
+      },
+    },
+    {
+      label: t("PLATFORM_FEE_STOCK_PERCENTAGE"),
+      id: "stockPlatfromFee",
+      validationRules: {
+        required: {
+          value: true,
+          message: t("PLEASE_ENTER_STOCK_PLATFORM_FEE"),
+        },
+        pattern: {
+          value: /^\d+$/,
+          message: t("ONLY_DIGITS_ARE_ALLOWED"),
+        },
+        maxLength: {
+          value: 40,
+          message: t("MAX_LIMIT_IS_40_CHARACTERS"),
+        },
+        min: {
+          value: 1,
+          message: t("MINIMUM_VALUE_MUST_IS_1"),
+        },
+      },
+    },
+    {
+      label: t("PLATFORM_FEE_QUESTION_TRADE"),
+      id: "questionTradePlatformKey",
+      validationRules: {
+        required: {
+          value: true,
+          message: t("PLEASE_ENTER_QUESTION_TRADE_FEE"),
+        },
+        maxLength: {
+          value: 40,
+          message: t("MAX_LIMIT_IS_40_CHARACTERS"),
+        },
+        min: {
+          value: 1,
+          message: t("MINIMUM_VALUE_MUST_IS_1"),
+        },
+      },
+    },
+    {
+      label: t("NUMBER_OF_PLAYER_STOCK"),
+      id: "numberOfPlayerStocks",
+      validationRules: {
+        required: {
+          value: true,
+          message: t("PLEASE_ENTER_NUMBER_OF_PLAYER_STOCK"),
+        },
+        maxLength: {
+          value: 40,
+          message: t("MAX_LIMIT_IS_40_CHARACTERS"),
+        },
+        min: {
+          value: 1,
+          message: t("MINIMUM_VALUE_MUST_IS_1"),
+        },
+      },
+    },
+    {
+      label: t("NUMBER_OF_PLAYER_CARD"),
+      id: "numberOfPlayerCards",
+      validationRules: {
+        required: {
+          value: true,
+          message: t("PLEASE_ENTER_NUMBER_OF_PLAYER_CARD"),
+        },
+        maxLength: {
+          value: 40,
+          message: t("MAX_LIMIT_IS_40 CHARACTERS"),
+        },
+        min: {
+          value: 1,
+          message: t("MINIMUM_VALUE_MUST_IS_1"),
+        },
+      },
+    },
+    {
+      label: t("PENALTY_OF_PERCENTAGE"),
+      id: "penaltyStockPercentage",
+      validationRules: {
+        required: {
+          value: true,
+          message: t("PLEASE_ENTER_PENALTY_OF_STOCK_PERCENTAGE"),
+        },
+        maxLength: {
+          value: 3,
+          message: t("MAX_LIMIT_IS_3_CHARACTERS"),
+        },
+        min: {
+          value: 1,
+          message: t("MINIMUM_VALUE_MUST_IS_1"),
+        },
+      },
+    },
+    {
+      label: t("MAXIMUM_STOCK_USER_CAN_PURCHASE"),
+      id: "maximumStockPurchase",
+      validationRules: {
+        required: {
+          value: true,
+          message: t("PLEASE_ENTER_MAXIMUM_STOCK_CAN_PURCHASE"),
+        },
+        maxLength: {
+          value: 3,
+          message: t("MAX_LIMIT_IS_3_CHARACTERS"),
+        },
+        min: {
+          value: 1,
+          message: t("MINIMUM_VALUE_MUST_IS_1"),
+        },
+      },
+    },
+    {
+      label: t("MAXIMUM_CARD_USER_CAN_PURCHASE"),
+      id: "maximumCardPurchase",
+      validationRules: {
+        required: {
+          value: true,
+          message: t("PLEASE_ENTER_MAXIMUM_CARD_CAN_PURCHASE"),
+        },
+        maxLength: {
+          value: 3,
+          message: t("MAX_LIMIT_IS_3 CHARACTERS"),
+        },
+        min: {
+          value: 1,
+          message: t("MINIMUM_VALUE_MUST_IS_1"),
+        },
+      },
+    },
+    {
+      label: t("TDS_IN_PERCENTAGE"),
+      id: "tds",
+      validationRules: {
+        required: {
+          value: true,
+          message: t("PLEASE_ENTER_TDS"),
+        },
+        maxLength: {
+          value: 3,
+          message: t("MAX_LIMIT_IS_3_CHARACTERS"),
+        },
+        min: {
+          value: 1,
+          message: t("MINIMUM_VALUE_MUST_IS_1"),
+        },
+      },
+    },
+    {
+      label: t("MAXIMUM_SHARE_FOR_TRADE"),
+      id: "maximumSharesForTrade",
+      validationRules: {
+        required: {
+          value: true,
+          message: t("PLEASE_ENTER_MAXIMUM_SHARE_FOR_TRADE"),
+        },
+        maxLength: {
+          value: 3,
+          message: t("MAX_LIMIT_IS_3 CHARACTERS"),
+        },
+        min: {
+          value: 1,
+          message: t("MINIMUM_VALUE_MUST_IS_1"),
+        },
+        valueAsNumber: true,
+      },
+    },
+    {
+      label: t("MINIMUM_SHARE_FOR_TRADE"),
+      id: "minimumSharesForTrade",
+      validationRules: {
+        required: {
+          value: true,
+          message: t("PLEASE_ENTER_MINIMUM_SHARE_FOR_TRADE"),
+        },
+        maxLength: {
+          value: 3,
+          message: t("MAX_LIMIT_IS_3 CHARACTERS"),
+        },
+        min: {
+          value: 1,
+          message: t("MINIMUM_VALUE_MUST_IS_1"),
+        },
+        valueAsNumber: true,
+        validate: (value) => value < watch('maximumSharesForTrade') || t("MIN_SHARE_FOR_TRADE_MUST_BE_LESS"),
+      },
+    },
+  ];
+
   return (
     <section className="">
       <form>
@@ -179,345 +463,18 @@ const Settings = () => {
                 />
                 <ErrorMessage message={errors?.adminEmail?.message} />
               </div>
-              <ReusableInputField
-                label={t("MIN_WITHDRAWAL_AMOUNT_TO_BANK")}
-                id="minWithdrawalLimit"
-                register={register}
-                errors={errors}
-                manager={manager}
-                validationRules={{
-                  required: {
-                    value: true,
-                    message: t("PLEASE_ENTER_MINIMUM_WITHDRAWAL_AMOUNT_TO_BANK"),
-                  },
-                  maxLength: {
-                    value: 40,
-                    message: t("MAX_LIMIT_IS_40_CHARACTERS"),
-                  },
-                  min: {
-                    value: 1,
-                    message: t("MINIMUM_VALUE_MUST_IS_1"),
-                  },
-                  valueAsNumber: true,
-                  validate: (value) => value < watch('maxWithdrawalLimit') || t("MIN_VALUE_MUST_BE_LESS_THAN_MAX_VALUE"),
-                }}
-              />
-
-              <ReusableInputField
-                label={t("Max_WITHDRAWAL_AMOUNT_TO_BANK")}
-                id="maxWithdrawalLimit"
-                register={register}
-                errors={errors}
-                manager={manager}
-                validationRules={{
-                  required: {
-                    value: true,
-                    message: t("PLEASE_ENTER_MAXIMUM_WITHDRAWAL_AMOUNT_TO_BANK"),
-                  },
-                  maxLength: {
-                    value: 40,
-                    message: t("MAX_LIMIT_IS_40_CHARACTERS"),
-                  },
-                  min: {
-                    value: 1,
-                    message: t("MINIMUM_VALUE_MUST_IS_1"),
-                  },
-                  valueAsNumber: true,
-                }}
-              />
-
-              <ReusableInputField
-                label={t("REFERRAL_BONUS_FOR_TOURIST")}
-                id="referralAmount"
-                register={register}
-                manager={manager}
-                errors={errors}
-                validationRules={{
-                  required: {
-                    value: true,
-                    message: t("PLEASE_ENTER_REFERRAL_AMOUNT"),
-                  },
-                  maxLength: {
-                    value: 40,
-                    message: t("MAX_LIMIT_IS_40_CHARACTERS"),
-                  },
-                  min: {
-                    value: 1,
-                    message: t("MINIMUM_VALUE_MUST_IS_1"),
-                  },
-                }}
-              />
-
-              <ReusableInputField
-                label={t("SIGN_UP_BONUS_FOR_LOCAL")}
-                id="signupBonus"
-                register={register}
-                manager={manager}
-                errors={errors}
-                validationRules={{
-                  required: {
-                    value: true,
-                    message: t("PLEASE_ENTER_SIGN_UP_BONUS_FOR_LOCAL"),
-                  },
-                  maxLength: {
-                    value: 40,
-                    message: t("MAX_LIMIT_IS_40_CHARACTERS"),
-                  },
-                  min: {
-                    value: 1,
-                    message: t("MINIMUM_VALUE_MUST_IS_1"),
-                  },
-                }}
-              />
-
-              <ReusableInputField
-                label={t("PLATFORM_FEE")}
-                id="playerCardPlatfromFee"
-                register={register}
-                manager={manager}
-                errors={errors}
-                validationRules={{
-                  required: {
-                    value: true,
-                    message: t("PLEASE_ENTER_PLAYER_CARD_PLATFORM_FEE"),
-                  },
-                  maxLength: {
-                    value: 40,
-                    message: t("MAX_LIMIT_IS_40_CHARACTERS"),
-                  },
-                  min: {
-                    value: 1,
-                    message: t("MINIMUM_VALUE_MUST_IS_1"),
-                  },
-                }}
-              />
-
-              <ReusableInputField
-                label={t("PLATFORM_FEE_STOCK_PERCENTAGE")}
-                id="stockPlatfromFee"
-                register={register}
-                errors={errors}
-                manager={manager}
-                validationRules={{
-                  required: {
-                    value: true,
-                    message: t("PLEASE_ENTER_STOCK_PLATFORM_FEE"),
-                  },
-                  pattern: {
-                    value: /^\d+$/,
-                    message: t("ONLY_DIGITS_ARE_ALLOWED"),
-                  },
-                  maxLength: {
-                    value: 40,
-                    message: t("MAX_LIMIT_IS_40_CHARACTERS"),
-                  },
-                  min: {
-                    value: 1,
-                    message: t("MINIMUM_VALUE_MUST_IS_1"),
-                  },
-                }}
-              />
-
-              <ReusableInputField
-                label={t("PLATFORM_FEE_QUESTION_TRADE")}
-                id="questionTradePlatformKey"
-                register={register}
-                errors={errors}
-                manager={manager}
-                validationRules={{
-                  required: {
-                    value: true,
-                    message: t("PLEASE_ENTER_QUESTION_TRADE_FEE"),
-                  },
-                  maxLength: {
-                    value: 40,
-                    message: t("MAX_LIMIT_IS_40_CHARACTERS"),
-                  },
-                  min: {
-                    value: 1,
-                    message: t("MINIMUM_VALUE_MUST_IS_1"),
-                  },
-                }}
-              />
-
-              <ReusableInputField
-                label={t("NUMBER_OF_PLAYER_STOCK")}
-                id="numberOfPlayerStocks"
-                register={register}
-                errors={errors}
-                manager={manager}
-                validationRules={{
-                  required: {
-                    value: true,
-                    message: t("PLEASE_ENTER_NUMBER_OF_PLAYER_STOCK"),
-                  },
-                  maxLength: {
-                    value: 40,
-                    message: t("MAX_LIMIT_IS_40_CHARACTERS"),
-                  },
-                  min: {
-                    value: 1,
-                    message: t("MINIMUM_VALUE_MUST_IS_1"),
-                  },
-                }}
-              />
-
-              <ReusableInputField
-                label={t("NUMBER_OF_PLAYER_CARD")}
-                id="numberOfPlayerCards"
-                register={register}
-                manager={manager}
-                errors={errors}
-                validationRules={{
-                  required: {
-                    value: true,
-                    message: t("PLEASE_ENTER_NUMBER_OF_PLAYER_CARD"),
-                  },
-                  maxLength: {
-                    value: 40,
-                    message: t("MAX_LIMIT_IS_40 CHARACTERS"),
-                  },
-                  min: {
-                    value: 1,
-                    message: t("MINIMUM_VALUE_MUST_IS_1"),
-                  },
-                }}
-              />
-
-              <ReusableInputField
-                label={t("PENALTY_OF_PERCENTAGE")}
-                id="penaltyStockPercentage"
-                register={register}
-                manager={manager}
-                errors={errors}
-                validationRules={{
-                  required: {
-                    value: true,
-                    message: t("PLEASE_ENTER_PENALTY_OF_STOCK_PERCENTAGE"),
-                  },
-                  maxLength: {
-                    value: 3,
-                    message: t("MAX_LIMIT_IS_3_CHARACTERS"),
-                  },
-                  min: {
-                    value: 1,
-                    message: t("MINIMUM_VALUE_MUST_IS_1"),
-                  },
-                }}
-              />
-
-              <ReusableInputField
-                label={t("MAXIMUM_STOCK_USER_CAN_PURCHASE")}
-                id="maximumStockPurchase"
-                register={register}
-                manager={manager}
-                errors={errors}
-                validationRules={{
-                  required: {
-                    value: true,
-                    message: t("PLEASE_ENTER_MAXIMUM_STOCK_CAN_PURCHASE"),
-                  },
-                  maxLength: {
-                    value: 3,
-                    message: t("MAX_LIMIT_IS_3_CHARACTERS"),
-                  },
-                  min: {
-                    value: 1,
-                    message: t("MINIMUM_VALUE_MUST_IS_1"),
-                  },
-                }}
-              />
-
-              <ReusableInputField
-                label={t("MAXIMUM_CARD_USER_CAN_PURCHASE")}
-                id="maximumCardPurchase"
-                register={register}
-                errors={errors}
-                manager={manager}
-                validationRules={{
-                  required: {
-                    value: true,
-                    message: t("PLEASE_ENTER_MAXIMUM_CARD_CAN_PURCHASE"),
-                  },
-                  maxLength: {
-                    value: 3,
-                    message: t("MAX_LIMIT_IS_3 CHARACTERS"),
-                  },
-                  min: {
-                    value: 1,
-                    message: t("MINIMUM_VALUE_MUST_IS_1"),
-                  },
-                }}
-              />
-
-              <ReusableInputField
-                label={t("TDS_IN_PERCENTAGE")}
-                id="tds"
-                manager={manager}
-                register={register}
-                errors={errors}
-                validationRules={{
-                  required: {
-                    value: true,
-                    message: t("PLEASE_ENTER_TDS"),
-                  },
-                  maxLength: {
-                    value: 3,
-                    message: t("MAX_LIMIT_IS_3_CHARACTERS"),
-                  },
-                  min: {
-                    value: 1,
-                    message: t("MINIMUM_VALUE_MUST_IS_1"),
-                  },
-                }}
-              />
-
-              <ReusableInputField
-                label={t("MAXIMUM_SHARE_FOR_TRADE")}
-                id="maximumSharesForTrade"
-                register={register}
-                errors={errors}
-                manager={manager}
-                validationRules={{
-                  required: {
-                    value: true,
-                    message: t("PLEASE_ENTER_MAXIMUM_SHARE_FOR_TRADE"),
-                  },
-                  maxLength: {
-                    value: 3,
-                    message: t("MAX_LIMIT_IS_3 CHARACTERS"),
-                  },
-                  min: {
-                    value: 1,
-                    message: t("MINIMUM_VALUE_MUST_IS_1"),
-                  },
-                  valueAsNumber: true,
-                }}
-              />
-
-              <ReusableInputField
-                label={t("MINIMUM_SHARE_FOR_TRADE")}
-                id="minimumSharesForTrade"
-                register={register}
-                errors={errors}
-                manager={manager}
-                validationRules={{
-                  required: {
-                    value: true,
-                    message: t("PLEASE_ENTER_MINIMUM_SHARE_FOR_TRADE"),
-                  },
-                  maxLength: {
-                    value: 3,
-                    message: t("MAX_LIMIT_IS_3 CHARACTERS"),
-                  },
-                  min: {
-                    value: 1,
-                    message: t("MINIMUM_VALUE_MUST_IS_1"),
-                  },
-                  valueAsNumber: true,
-                  validate: (value) => value < watch('maximumSharesForTrade') || t("MIN_SHARE_FOR_TRADE_MUST_BE_LESS"),
-                }}
-              />
+            
+              {inputFieldConfigurations.map((config) => (
+                <ReusableInputField
+                  key={config.id}
+                  label={config.label}
+                  id={config.id}
+                  register={register}
+                  errors={errors}
+                  manager={manager}
+                  validationRules={config.validationRules}
+                />
+              ))}
 
             </main>
           </div>
@@ -552,7 +509,7 @@ const Settings = () => {
 
 export default Settings;
 
-const ReusableInputField = ({ label, id, register, errors, validationRules,manager }) => (
+const ReusableInputField = ({ label, id, register, errors, validationRules, manager }) => (
   <div className="relative z-0 mb-6 w-full group">
     <OInputField
       type="number"
