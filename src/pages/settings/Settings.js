@@ -94,6 +94,59 @@ const Settings = () => {
     updatePageName(t("SETTINGS"));
   }, []);
 
+  const validationFields = {
+  
+    minWithdrawalLimit: {
+      required: { value: true, message: t("PLEASE_ENTER_MINIMUM_WITHDRAWAL_AMOUNT_TO_BANK"), },
+      maxLength: {value: 40,message: t("MAX_LIMIT_IS_40_CHARACTERS"), },
+      min: { value: 1,message: t("MINIMUM_VALUE_MUST_IS_1"),},
+      valueAsNumber: true,
+      validate: (value) => value < watch('maxWithdrawalLimit') || t("MIN_VALUE_MUST_BE_LESS_THAN_MAX_VALUE"),
+    },
+
+    maxWithdrawalLimit: {
+      required: { value: true,message: t("PLEASE_ENTER_MAXIMUM_WITHDRAWAL_AMOUNT_TO_BANK"), },
+      maxLength: {value: 40,message: t("MAX_LIMIT_IS_40_CHARACTERS"), },
+      min: {value: 1,message: t("MINIMUM_VALUE_MUST_IS_1"),},
+      valueAsNumber: true,
+    },
+    referralAmount: {
+      required: {  value: true,message: t("PLEASE_ENTER_REFERRAL_AMOUNT"), },
+      maxLength: {value: 40,message: t("MAX_LIMIT_IS_40_CHARACTERS"),},
+      min: { value: 1, message: t("MINIMUM_VALUE_MUST_IS_1"),},
+    },
+    signupBonus: {
+      required: {
+        value: true,
+        message: t("PLEASE_ENTER_SIGN_UP_BONUS_FOR_LOCAL"),
+      },
+      maxLength: {
+        value: 40,
+        message: t("MAX_LIMIT_IS_40_CHARACTERS"),
+      },
+      min: {
+        value: 1,
+        message: t("MINIMUM_VALUE_MUST_IS_1"),
+      },
+    },
+
+    playerCardPlatfromFee:{
+      required: {
+        value: true,
+        message: t("PLEASE_ENTER_PLAYER_CARD_PLATFORM_FEE"),
+      },
+      maxLength: {
+        value: 40,
+        message: t("MAX_LIMIT_IS_40_CHARACTERS"),
+      },
+      min: {
+        value: 1,
+        message: t("MINIMUM_VALUE_MUST_IS_1"),
+      },
+    },
+
+    
+  }
 
 
 
@@ -185,22 +238,7 @@ const Settings = () => {
                 register={register}
                 errors={errors}
                 manager={manager}
-                validationRules={{
-                  required: {
-                    value: true,
-                    message: t("PLEASE_ENTER_MINIMUM_WITHDRAWAL_AMOUNT_TO_BANK"),
-                  },
-                  maxLength: {
-                    value: 40,
-                    message: t("MAX_LIMIT_IS_40_CHARACTERS"),
-                  },
-                  min: {
-                    value: 1,
-                    message: t("MINIMUM_VALUE_MUST_IS_1"),
-                  },
-                  valueAsNumber: true,
-                  validate: (value) => value < watch('maxWithdrawalLimit') || t("MIN_VALUE_MUST_BE_LESS_THAN_MAX_VALUE"),
-                }}
+                validationRules={validationFields?.minWithdrawalLimit}
               />
 
               <ReusableInputField
@@ -209,21 +247,7 @@ const Settings = () => {
                 register={register}
                 errors={errors}
                 manager={manager}
-                validationRules={{
-                  required: {
-                    value: true,
-                    message: t("PLEASE_ENTER_MAXIMUM_WITHDRAWAL_AMOUNT_TO_BANK"),
-                  },
-                  maxLength: {
-                    value: 40,
-                    message: t("MAX_LIMIT_IS_40_CHARACTERS"),
-                  },
-                  min: {
-                    value: 1,
-                    message: t("MINIMUM_VALUE_MUST_IS_1"),
-                  },
-                  valueAsNumber: true,
-                }}
+                validationRules={validationFields?.maxWithdrawalLimit}
               />
 
               <ReusableInputField
@@ -232,20 +256,7 @@ const Settings = () => {
                 register={register}
                 manager={manager}
                 errors={errors}
-                validationRules={{
-                  required: {
-                    value: true,
-                    message: t("PLEASE_ENTER_REFERRAL_AMOUNT"),
-                  },
-                  maxLength: {
-                    value: 40,
-                    message: t("MAX_LIMIT_IS_40_CHARACTERS"),
-                  },
-                  min: {
-                    value: 1,
-                    message: t("MINIMUM_VALUE_MUST_IS_1"),
-                  },
-                }}
+                validationRules={validationFields?.referralAmount}
               />
 
               <ReusableInputField
@@ -254,20 +265,7 @@ const Settings = () => {
                 register={register}
                 manager={manager}
                 errors={errors}
-                validationRules={{
-                  required: {
-                    value: true,
-                    message: t("PLEASE_ENTER_SIGN_UP_BONUS_FOR_LOCAL"),
-                  },
-                  maxLength: {
-                    value: 40,
-                    message: t("MAX_LIMIT_IS_40_CHARACTERS"),
-                  },
-                  min: {
-                    value: 1,
-                    message: t("MINIMUM_VALUE_MUST_IS_1"),
-                  },
-                }}
+                validationRules={validationFields.signupBonus}
               />
 
               <ReusableInputField
@@ -276,20 +274,7 @@ const Settings = () => {
                 register={register}
                 manager={manager}
                 errors={errors}
-                validationRules={{
-                  required: {
-                    value: true,
-                    message: t("PLEASE_ENTER_PLAYER_CARD_PLATFORM_FEE"),
-                  },
-                  maxLength: {
-                    value: 40,
-                    message: t("MAX_LIMIT_IS_40_CHARACTERS"),
-                  },
-                  min: {
-                    value: 1,
-                    message: t("MINIMUM_VALUE_MUST_IS_1"),
-                  },
-                }}
+                validationRules={validationFields}
               />
 
               <ReusableInputField
