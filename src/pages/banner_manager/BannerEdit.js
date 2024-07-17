@@ -96,7 +96,7 @@ const BannerEdit = ({ setEditShowModal, getAllFAQ, item, viewType }) => {
 
                             {helpers.andOperator(viewType == 'view', <>
                                 <label className="block text-sm font-medium text-gray-900 dark:text-white mt-4 mx-4 ">Banner Image (16:9 Aspect Ratio):</label>
-                                <div className="h-[300px] ">
+                                <div className="h-[300px] flex justify-center">
                                     <OImage
                                         src={
                                             picture?.url

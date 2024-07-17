@@ -18,7 +18,8 @@ const Table = ({
   paginationObj,
   manager,
   pageSize,
-  sort, setSort,
+  sort,
+  setSort,
   setFAQS
 }) => {
   const { t } = useTranslation();
@@ -68,9 +69,19 @@ const Table = ({
         title: element?.title
       }
     })
-    await apiPost(apiPath.updateSequence, {
-      sequence: sequence
-    })
+
+    try {
+      const reOrderResult = await apiPost(apiPath.reOrderFaq, {
+        sequence: sequence
+      })
+      if (reOrderResult?.data?.success) {
+        notification.success(reOrderResult?.data?.message);
+        getAllFAQ();
+      }
+    } catch (error) {
+      console.error("error in get all FAQs list==>>>>", error.message);
+    }
+
   }
 
   const onDragEnd = result => {
@@ -106,7 +117,7 @@ const Table = ({
                 <th scope="col" className="py-3 px-6 text-center">
                   {t("S.NO")}
                 </th>
-                <OFaqTableHead sort={sort} setSort={setSort} name='FAQS_TITLE' fieldName='title' classTd={'justify-center'} />
+                <OFaqTableHead sort={sort} setSort={setSort} name='FAQS_TITLE' fieldName='title' classTd={'justify-center '} />
                 <OFaqTableHead sort={sort} setSort={setSort} name='O_CREATED_AT' fieldName='createdAt' classTd={'justify-center'} />
                 <OFaqTableHead sort={sort} setSort={setSort} name='O_UPDATED_AT' fieldName='updatedAt' classTd={'justify-center'} />
                 {(manager?.add || user?.role === "admin") && (

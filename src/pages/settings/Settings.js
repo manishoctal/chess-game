@@ -568,8 +568,67 @@ const Settings = () => {
                 />
               </div>
 
+              <div className="w-full mb-4">
+                <OInputField
+                  wrapperClassName="relative z-0  w-full group"
+                  type="number"
+                  inputLabel={<>{t("MAXIMUM_SHARE_FOR_TRADE")}</>}
+                  maxLength={40}
+                  disable={manager?.add === false}
+                  id="payment"
+                  register={register("maximumSharesForTrade", {
+                    required: {
+                      value: true,
+                      message: t("PLEASE_ENTER_MAXIMUM_SHARE_FOR_TRADE"),
+                    },
+                    maxLength: {
+                      value: 3,
+                      message: t("MAX_LIMIT_IS_3_CHARACTERS"),
+                    },
 
+                    min: {
+                      value: 1,
+                      message: t("MINIMUM_VALUE_MUST_IS_1"),
+                    },
+                    valueAsNumber: true,
+                  })}
+                  placeholder=" "
+                />
+                <ErrorMessage
+                  message={errors?.maximumSharesForTrade?.message}
+                />
+              </div>
 
+              <div className="w-full mb-4">
+                <OInputField
+                  wrapperClassName="relative z-0  w-full group"
+                  type="number"
+                  inputLabel={<>{t("MINIMUM_SHARE_FOR_TRADE")}</>}
+                  maxLength={40}
+                  disable={manager?.add === false}
+                  id="payment"
+                  register={register("minimumSharesForTrade", {
+                    required: {
+                      value: true,
+                      message: t("PLEASE_ENTER_MINIMUM_SHARE_FOR_TRADE"),
+                    },
+                    maxLength: {
+                      value: 3,
+                      message: t("MAX_LIMIT_IS_3_CHARACTERS"),
+                    },
+                    min: {
+                      value: 1,
+                      message: t("MINIMUM_VALUE_MUST_IS_1"),
+                    },
+                    valueAsNumber: true,
+                    validate:(value)=>{ return value < watch('maximumSharesForTrade') || t("MIN_SHARE_FOR_TRADE_MUST_BE_LESS");}
+                  })}
+                  placeholder=" "
+                />
+                <ErrorMessage
+                  message={errors?.minimumSharesForTrade?.message}
+                />
+              </div>
 
             </main>
           </div>
