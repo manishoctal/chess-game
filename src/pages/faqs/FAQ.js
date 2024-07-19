@@ -57,7 +57,7 @@ function Faq() {
         page,
         pageSize: pageSize,
         sortKey: sort.sortBy,
-        keyword:helpers.normalizeSpaces(filterData?.searchKey)||null,
+        keyword: helpers.normalizeSpaces(filterData?.searchKey) || null,
         sortType: sort.sortType,
         status: filterData?.status || null,
         startDate: helpers.getFormattedDate(filterData?.startDate),
@@ -78,9 +78,9 @@ function Faq() {
 
         setPaginationObj({
           ...paginationObj,
-          pageCount: helpers.ternaryCondition(resultStatus , response?.totalPages , null),
-          perPageItem: helpers.ternaryCondition(resultStatus , response?.docs?.length , null),
-          totalItems: helpers.ternaryCondition(resultStatus , response?.totalDocs ,null)
+          pageCount: helpers.ternaryCondition(resultStatus, response?.totalPages, null),
+          perPageItem: helpers.ternaryCondition(resultStatus, response?.docs?.length, null),
+          totalItems: helpers.ternaryCondition(resultStatus, response?.totalDocs, null)
         })
       }
     } catch (error) {
@@ -217,16 +217,16 @@ function Faq() {
                       </button>
                     </div>
                     <div className=''>
-                    {(manager?.add || user?.role === 'admin') && (
-                      <button
-                        title={t('ADD_FAQS')}
-                        className='bg-gradientTo mb-0 flex text-sm px-6 flex gap-2 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue whitespace-nowrap'
-                        onClick={() => { setItem(''); setEditShowModal(true); setEditView('add') }}
-                      >
-                       <IoIosAdd size={18} /> {t('ADD_FAQS')}
-                      </button>
-                    )}
-                  </div>
+                      {(manager?.add || user?.role === 'admin') && (
+                        <button
+                          title={t('ADD_FAQS')}
+                          className='bg-gradientTo mb-0 flex text-sm px-4 flex gap-2 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue whitespace-nowrap'
+                          onClick={() => { setItem(''); setEditShowModal(true); setEditView('add') }}
+                        >
+                          <IoIosAdd size={20} /> {t('ADD_FAQS')}
+                        </button>
+                      )}
+                    </div>
                   </div>
 
                 </div>

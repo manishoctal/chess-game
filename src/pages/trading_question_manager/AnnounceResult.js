@@ -10,10 +10,7 @@ const AnnounceResult = ({ setAnnounceResultModal, toAnnounceData }) => {
     const { t } = useTranslation();
     const {
         handleSubmit, } = useForm({ mode: "onChange", shouldFocusError: true, defaultValues: {} });
-
     const [loader] = useState(false)
-
-
     // submit function start
     const handleAnnounceResult = async (e) => {
 console.log('e',e)
@@ -55,7 +52,7 @@ console.log('e',e)
                                         type="text"
                                         name="title"
                                         id="title"
-                                        value={toAnnounceData?.questions}
+                                        value={toAnnounceData?.questionObj?.questionText }
                                         disable={true}
                                         inputLabel={
                                             <>

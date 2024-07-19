@@ -10,6 +10,7 @@ import { apiPost, apiPut } from "utils/apiFetch";
 import useToastContext from "hooks/useToastContext";
 import LoaderButton from "components/reusable/LoaderButton";
 import { FaEdit } from "react-icons/fa";
+import { IoIosAddCircleOutline } from "react-icons/io";
 const AddEditOffer = ({ setEditShowOfferModal, viewType, getAllOfferData, offerDetails }) => {
     const { t } = useTranslation();
     const [date, setDate] = useState(helpers.ternaryCondition(viewType == 'edit', new Date(offerDetails?.expiryDate), ''));
@@ -227,7 +228,7 @@ const AddEditOffer = ({ setEditShowOfferModal, viewType, getAllOfferData, offerD
                                     helpers.ternaryCondition(loader,
                                         <LoaderButton />,
                                         <button className="bg-gradientTo flex gap-2 text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150" type="submit"
-                                            title={helpers.ternaryCondition(viewType == 'add', t("O_ADD"), t("O_EDIT"))}>{helpers.ternaryCondition(viewType == 'add', t("O_ADD"), (<><FaEdit size={16} />{t("O_EDIT")}</>))} </button>))}
+                                            title={helpers.ternaryCondition(viewType == 'add', t("O_ADD"), t("O_EDIT"))}>{helpers.ternaryCondition(viewType == 'add',<> <IoIosAddCircleOutline size={18}/>{t("O_ADD")}</>, (<><FaEdit size={16} />{t("O_EDIT")}</>))} </button>))}
                             </div>
                         </div>
                     </div>

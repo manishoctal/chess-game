@@ -123,9 +123,9 @@ const ViewTradingQuestionTable = ({
                   </label>
                 </td>)}
                 {(manager?.add || manager?.edit || user?.role === "admin") && (<td className={`py-2 px-4 text-center border-r dark:border-[#ffffff38]`}>
-                  {helpers.ternaryCondition(!item?.announceStatus, <button title={t('ANNOUNCE_RESULT')} onClick={() => { setAnnounceResultModal(true); setAnnounceData(item) }} className="bg-gradientTo text-[10px] px-2 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue">
+                   {helpers.ternaryCondition(item?.category!=='MANUAL_QUESTION','N/A',helpers.ternaryCondition(!item?.announceStatus, <button title={t('ANNOUNCE_RESULT')} onClick={() => { setAnnounceResultModal(true); setAnnounceData(item) }} className="bg-gradientTo text-[10px] px-2 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue">
                     <GrAnnounce size={17} />
-                  </button>, <span className="text-green-600 font-bold">{t("RESULT_ANNOUNCED")}</span>)}
+                  </button>, <span className="text-green-600 font-bold">{t("RESULT_ANNOUNCED")}</span>))}
                 </td>)}
                 <td className={`py-2 px-4 border-r dark:border-[#ffffff38] text-center`}>
                 <div className="flex flex-col md:flex-row justify-center items-center">

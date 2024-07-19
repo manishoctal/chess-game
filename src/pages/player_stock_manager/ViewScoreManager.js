@@ -203,7 +203,7 @@ function ViewScoreManager() {
     }, [searchTerm])
 
 
-    const [orderType] = useState([])
+    const [orderType] = useState([{ label: 'Purchase', value: 'purchase' }, { label: 'Sell', value: 'sell' }])
 
 
     // Download csv function start 

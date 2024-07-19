@@ -61,7 +61,7 @@ function ViewTradingQuestionManager() {
             const { status, startDate, endDate, searchKey } = filterData
 
             const payloadTrading = {
-                matchId:state?.matchId,
+                matchId: state?.matchId,
                 page,
                 pageSize: pageSize,
                 status: status,
@@ -76,16 +76,16 @@ function ViewTradingQuestionManager() {
             const result = await apiGet(path, payloadTrading)
             const responseTrading = result?.data?.results
             const resultStatus = result?.data?.success
-            if(resultStatus){
-            setViewTradingData(responseTrading)
-            setPaginationViewTradingObj({
-                ...viewTradingPaginationObj,
-                page: resultStatus ? responseTrading.page : null,
-                pageCount: resultStatus ? responseTrading.totalPages : null,
-                perPageItem: resultStatus ? responseTrading?.docs.length : null,
-                totalItems: resultStatus ? responseTrading.totalDocs : null
-            })
-        }
+            if (resultStatus) {
+                setViewTradingData(responseTrading)
+                setPaginationViewTradingObj({
+                    ...viewTradingPaginationObj,
+                    page: resultStatus ? responseTrading.page : null,
+                    pageCount: resultStatus ? responseTrading.totalPages : null,
+                    perPageItem: resultStatus ? responseTrading?.docs.length : null,
+                    totalItems: resultStatus ? responseTrading.totalDocs : null
+                })
+            }
         } catch (error) {
             console.error('error in get all sub admin list==>>>>', error.message)
         }
@@ -269,9 +269,9 @@ function ViewTradingQuestionManager() {
                                 type='button'
                                 title={t('ADD_QUESTIONS')}
                                 onClick={AddTradingQuestion}
-                                className='bg-gradientTo text-sm px-6 flex gap-2 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2'
+                                className='bg-gradientTo text-sm px-4 flex gap-2 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2'
                             >
-                                <IoIosAdd />{t('ADD_QUESTIONS')}
+                                <IoIosAdd color='white' size={20}/>{t('ADD_QUESTIONS')}
                             </button>)}
                         </form>
                         <ViewTradingQuestionTable
@@ -282,7 +282,7 @@ function ViewTradingQuestionManager() {
                             manager={manager}
                             pageSize={pageSize}
                             ViewallTradingQuestionsList={ViewallTradingQuestionsList}
-                            />
+                        />
                         <div className='flex justify-between'>
                             <PageSizeListViewTrading dynamicPage={dynamicPage} pageSize={pageSize} />
                             {viewTradingPaginationObj?.totalItems ? (

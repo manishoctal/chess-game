@@ -7,6 +7,7 @@ import { useState } from "react";
 import helpers from "utils/helpers";
 import ImageUploader from "components/reusable/ImageUploader";
 import LoaderButton from "components/reusable/LoaderButton";
+import { IoIosAddCircleOutline } from "react-icons/io";
 
 const BannerAdd = ({ setAddShowModal, getAllFAQ }) => {
   const { t } = useTranslation();
@@ -98,8 +99,8 @@ const BannerAdd = ({ setAddShowModal, getAllFAQ }) => {
                   onClick={() => setAddShowModal(false)}> {t("CLOSE")}</button>
 
                 {helpers.ternaryCondition(loader, <LoaderButton/>, <button
-                  className="bg-gradientTo text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150"
-                  type="submit" title={t("O_ADD")}>{t("O_ADD")}</button>)}
+                  className="bg-gradientTo text-white active:bg-emerald-600 flex gap-2 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150"
+                  type="submit" title={t("O_ADD")}><IoIosAddCircleOutline size={18}/>{t("O_ADD")}</button>)}
 
               </div>
             </div>

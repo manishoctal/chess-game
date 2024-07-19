@@ -50,11 +50,24 @@ const OfferTable = ({
   // change status of offer function end
 
 
-const getTableData=(details,dataClass)=>{
-  return <td className={`py-2 px-4 border-r dark:border-[#ffffff38] text-center ${dataClass||''}`}>
-  {details || 'N/A'}
-</td>
-}
+  const getTableData = (details, dataClass) => {
+    return <td className={`py-2 px-4 border-r dark:border-[#ffffff38] text-center ${dataClass || ''}`}>
+      {details || 'N/A'}
+    </td>
+  }
+
+  const chekIfExpired = (itemData) => {
+    const givenDate = new Date(itemData?.expiryDate);
+    const today = new Date();
+    const givenDateOnly = new Date(givenDate.getFullYear(), givenDate.getMonth(), givenDate.getDate());
+    const todayOnly = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+
+    if (givenDateOnly < todayOnly) {
+      return 'bg-[#ffdddd38]'
+    } else {
+      return ''
+    }
+  }
 
 
   return (
@@ -66,15 +79,15 @@ const getTableData=(details,dataClass)=>{
               <th scope="col" className="py-3 px-6">
                 {t("S.NO")}
               </th>
-              <OWalletTableHead sort={sort} setSort={setSort} name='OFFER_ID' fieldName='offerId' classTd={'justify-center'}/>
-              <OWalletTableHead sort={sort} setSort={setSort} name='OFFER_CODE' fieldName='code'  classTd={'justify-center'}/>
-              <OWalletTableHead sort={sort} setSort={setSort} name='USER_LIMIT' fieldName='maxUserLimit'  classTd={'justify-center'}/>
+              <OWalletTableHead sort={sort} setSort={setSort} name='OFFER_ID' fieldName='offerId' classTd={'justify-center'} />
+              <OWalletTableHead sort={sort} setSort={setSort} name='OFFER_CODE' fieldName='code' classTd={'justify-center'} />
+              <OWalletTableHead sort={sort} setSort={setSort} name='USER_LIMIT' fieldName='maxUserLimit' classTd={'justify-center'} />
               <OWalletTableHead sort={sort} setSort={setSort} name='RESTRICTED_USES' fieldName='limitPerUser' classTd={'justify-center'} />
-              <OWalletTableHead sort={sort} setSort={setSort} name='CASH_BONUS' fieldName='cashBackAmount'  classTd={'justify-center'}/>
-              <OWalletTableHead sort={sort} setSort={setSort} name='EXPIRY_DATE' fieldName='expiryDate'  classTd={'justify-center'}/>
-              <OWalletTableHead sort={sort} setSort={setSort} name='O_CREATED_AT' fieldName='createdAt'  classTd={'justify-center'}/>
-              <OWalletTableHead sort={sort} setSort={setSort} name='O_UPDATED_AT' fieldName='updatedAt'  classTd={'justify-center'}/>
-              {helpers.andOperator((manager?.add || manager?.edit || user?.role === "admin") ,( <OWalletTableHead sort={sort} setSort={setSort} name='O_STATUS' fieldName='status' classTd={'justify-center'} />))}
+              <OWalletTableHead sort={sort} setSort={setSort} name='CASH_BONUS' fieldName='cashBackAmount' classTd={'justify-center'} />
+              <OWalletTableHead sort={sort} setSort={setSort} name='EXPIRY_DATE' fieldName='expiryDate' classTd={'justify-center'} />
+              <OWalletTableHead sort={sort} setSort={setSort} name='O_CREATED_AT' fieldName='createdAt' classTd={'justify-center'} />
+              <OWalletTableHead sort={sort} setSort={setSort} name='O_UPDATED_AT' fieldName='updatedAt' classTd={'justify-center'} />
+              {helpers.andOperator((manager?.add || manager?.edit || user?.role === "admin"), (<OWalletTableHead sort={sort} setSort={setSort} name='O_STATUS' fieldName='status' classTd={'justify-center'} />))}
               <th scope="col" className="py-3 px-6 text-center">
                 {t("O_ACTION")}
               </th>
@@ -84,7 +97,7 @@ const getTableData=(details,dataClass)=>{
             {subAdmin?.map((item, i) => (
               <tr
                 key={i}
-                className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+                className={`bg-white border-b dark:bg-gray-800 dark:border-gray-700  ${chekIfExpired(item)}`}
               >
                 <th
                   scope="row"
@@ -94,14 +107,14 @@ const getTableData=(details,dataClass)=>{
                 </th>
 
                 {getTableData(item?.offerId)}
-                {getTableData(item?.code,'font-bold')}
+                {getTableData(item?.code, 'font-bold')}
                 {getTableData(item?.maxUserLimit)}
                 {getTableData(item?.limitPerUser)}
                 {getTableData(helpers.formattedAmount(item?.cashBackAmount))}
                 {getTableData(helpers.getDateAndTime(item?.expiryDate))}
                 {getTableData(helpers.getDateAndTime(item?.createdAt))}
-                 {getTableData(helpers.getDateAndTime(item?.updatedAt))}
-                 {helpers.andOperator((manager?.add || manager?.edit || user?.role === "admin") ,( <td className="py-2 px-4 border-r dark:border-[#ffffff38]">
+                {getTableData(helpers.getDateAndTime(item?.updatedAt))}
+                {helpers.andOperator((manager?.add || manager?.edit || user?.role === "admin"), (<td className="py-2 px-4 border-r dark:border-[#ffffff38]">
                   <label
                     className="inline-flex relative items-center cursor-pointer"
                     title={startCase(item?.status)}
