@@ -25,15 +25,15 @@ const ViewWalletBalance = ({ setIsAmountModal, viewBalance }) => {
                 </button>
               </div>
 
-              <div className='md:py-4 sm:px-2 sm:py-3 md:px-7 px-2 flex justify-between w-[70%]'>
+              <div className='md:py-4 sm:px-2 sm:py-3 md:px-7 px-2 gap-5 flex'>
                 <label>{t('BONUS_AMOUNT')}:</label>
                 <b>{helpers.formattedAmount(viewBalance?.bonusAmount) || 0}</b>
               </div>
-              <div className='md:py-4 sm:px-2 sm:py-3 md:px-7 px-2 flex justify-between w-[70%]'>
+              <div className='md:py-4 sm:px-2 sm:py-3 md:px-7 px-2 flex gap-5 flex'>
                 <label>{t('DEPOSIT_AMOUNT')}:</label>
                 <b>{helpers.formattedAmount(viewBalance?.depositAmount) || 0}</b>
               </div>
-              <div className='md:py-4 sm:px-2 sm:py-3 md:px-7 px-2 flex justify-between w-[70%]'>
+              <div className='md:py-4 sm:px-2 sm:py-3 md:px-7 px-2 gap-5 flex'>
                 <label>{t('WINNING_AMOUNT')}:</label>
                 <b>{helpers.formattedAmount(viewBalance?.winningAmount) || 0}</b>
               </div>
@@ -51,6 +51,8 @@ const ViewWalletBalance = ({ setIsAmountModal, viewBalance }) => {
             </div>
           </div>
         </form>
+
+
       </div>
       <div className='opacity-25 fixed inset-0 z-40 bg-black' />
     </>

@@ -11,6 +11,7 @@ import { preventMaxInput } from "utils/validations";
 import apiPath from "utils/apiPath";
 import { apiPost } from "utils/apiFetch";
 import useToastContext from "hooks/useToastContext";
+import { IoIosAddCircleOutline } from "react-icons/io";
 const AddQuestion = ({ setEditShowTradingModal, stateData,ViewallTradingQuestionsList }) => {
     const { t } = useTranslation();
     const notification = useToastContext();
@@ -831,8 +832,8 @@ const AddQuestion = ({ setEditShowTradingModal, stateData,ViewallTradingQuestion
                                 </button>
                                 {helpers.ternaryCondition(addLoader,
                                     <LoaderButton />,
-                                    <button className="bg-gradientTo text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150" type="submit"
-                                        title={t("O_ADD")}>{t("O_ADD")} </button>)}
+                                    <button className="bg-gradientTo text-white flex gap-2 active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150" type="submit"
+                                        title={t("O_ADD")}><IoIosAddCircleOutline size={18}/>{t("O_ADD")} </button>)}
                             </div>
                         </div>
                     </div>

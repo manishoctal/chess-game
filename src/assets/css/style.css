@@ -180,18 +180,18 @@ button:hover{
 }
 
 span.flatpickr-weekday {
-  background-color: #000000 !important;
+  background-color: #4a24c2 !important;
   color: #ffffff !important;
 }
 
 .flatpickr-current-month .flatpickr-monthDropdown-months {
-  background-color: #000000 !important;
+  background-color:  #4a24c2 !important;
 }
 .flatpickr-months .flatpickr-month {
-  background-color: #000000 !important;
+  background-color:  #4a24c2 !important;
 }
 .flatpickr-weekdays {
-  background-color: #000000 !important;
+  background-color:  #4a24c2 !important;
 }
 
 div:where(.swal2-container) button:where(.swal2-styled).swal2-confirm {

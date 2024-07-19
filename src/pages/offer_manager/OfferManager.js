@@ -230,9 +230,9 @@ function OfferManager() {
                 type='button'
                 title={t('ADD_OFFER')}
                 onClick={() => { setEditShowOfferModal(true); setEditView('add') }}
-                className='bg-gradientTo text-sm px-6 flex gap-2 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2'
+                className='bg-gradientTo text-sm px-4 flex gap-2 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue'
               >
-                <IoIosAdd size={18} /> {t('ADD_OFFER')}
+                <IoIosAdd size={20} /> {t('ADD_OFFER')}
               </button>)}
             </form>
 

@@ -16,6 +16,7 @@ import helpers from 'utils/helpers'
 import { preventMaxInput } from 'utils/validations'
 import { FaCircleArrowLeft } from 'react-icons/fa6'
 import { FaEdit } from 'react-icons/fa'
+import { IoIosAddCircleOutline } from 'react-icons/io'
 const { startCase, capitalize } = require('lodash')
 
 const SubAdd = () => {
@@ -463,7 +464,7 @@ const SubAdd = () => {
               title={t(itemType)}
               onClick={handleSubmit(onSubmit)}
             >
-             {helpers.andOperator(itemType==='Edit',<FaEdit size={16} />)} {itemType}
+             {helpers.andOperator(itemType==='Edit',<FaEdit size={16} />)}  {helpers.andOperator(itemType==='Add',<IoIosAddCircleOutline size={18}/>)} {itemType}
             </button>,
             null
           )

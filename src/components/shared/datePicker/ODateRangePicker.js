@@ -3,6 +3,7 @@ import "flatpickr/dist/themes/material_blue.css";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 const pickerClasses = [
+
   "cursor-pointer",
   "bg-calendar dark:bg-calendarDark",
   "bg-[right_10px_top_10px]",
