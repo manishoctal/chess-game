@@ -9,6 +9,7 @@ import { apiPut } from "utils/apiFetch";
 import apiPath from "utils/apiPath";
 import useToastContext from "hooks/useToastContext";
 import { NavLink } from "react-router-dom";
+import { FcExpired } from "react-icons/fc";
 
 const OfferTable = ({
   subAdmin,
@@ -56,14 +57,14 @@ const OfferTable = ({
     </td>
   }
 
-  const chekIfExpired = (itemData) => {
+  const checkIfExpired = (itemData) => {
     const givenDate = new Date(itemData?.expiryDate);
     const today = new Date();
     const givenDateOnly = new Date(givenDate.getFullYear(), givenDate.getMonth(), givenDate.getDate());
     const todayOnly = new Date(today.getFullYear(), today.getMonth(), today.getDate());
 
     if (givenDateOnly < todayOnly) {
-      return 'bg-[#ffdddd38]'
+      return <FcExpired  size={18} title="Expired"/>
     } else {
       return ''
     }
@@ -97,13 +98,14 @@ const OfferTable = ({
             {subAdmin?.map((item, i) => (
               <tr
                 key={i}
-                className={`bg-white border-b dark:bg-gray-800 dark:border-gray-700  ${chekIfExpired(item)}`}
+                className={`bg-white border-b dark:bg-gray-800 dark:border-gray-700`}
               >
                 <th
                   scope="row"
                   className="py-2 px-4 border-r dark:border-[#ffffff38] font-medium text-gray-900  dark:text-white"
                 >
-                  {i + 1 + pageSize * (page - 1)}
+                  <span className="flex gap-2">{i + 1 + pageSize * (page - 1)}{checkIfExpired(item)}</span>
+
                 </th>
 
                 {getTableData(item?.offerId)}
