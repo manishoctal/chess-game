@@ -218,7 +218,7 @@ function ViewTradingQuestionManager() {
                                     {getTableDataViewTrading(startCase(state?.matchName) || 'N/A')}
                                     {getTableDataViewTrading(startCase(state?.formatType) || 'N/A')}
                                     {getTableDataViewTrading(helpers?.getDateAndTime(state?.startDate))}
-                                    {getTableDataViewTrading(state?.questionsCount || 'N/A')}
+                                    {getTableDataViewTrading(state?.questionsCount || '0')}
                                     {getTableDataViewTrading(startCase(state?.matchStatus), helpers.getMatchStatus(state?.matchStatus))}
                                 </tr>
                             </tbody>

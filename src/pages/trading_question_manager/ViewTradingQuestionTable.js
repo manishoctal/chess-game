@@ -4,7 +4,7 @@ import { isEmpty, startCase } from "lodash";
 import helpers from "../../utils/helpers";
 import OViewTradingTableHead from '../../components/reusable/OTableHead'
 import { GrAnnounce } from "react-icons/gr";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { AiFillEye } from "react-icons/ai";
 import AuthContext from "context/AuthContext";
 import { apiPut } from "utils/apiFetch";
@@ -21,6 +21,7 @@ const ViewTradingQuestionTable = ({
   ViewallTradingQuestionsList
 }) => {
   const { t } = useTranslation();
+  const { state } = useLocation()
 
   const { user } = useContext(AuthContext)
   const notification = useToastContext();
@@ -142,7 +143,7 @@ const ViewTradingQuestionTable = ({
                   <div className="">
                     <ul className="flex justify-center">
                       <li className="px-2 py-2 hover:text-gradientTo">
-                        <NavLink to='/trading-question-manager/view' title={t("O_VIEW")} state={item}>
+                        <NavLink to='/trading-question-manager/view' title={t("O_VIEW")} state={state}>
                           <AiFillEye className="cursor-pointer w-5 h-5 text-slate-600" />
                         </NavLink>
                       </li>
