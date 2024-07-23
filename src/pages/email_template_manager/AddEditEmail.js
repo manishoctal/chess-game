@@ -14,6 +14,7 @@ import { useLocation, useNavigate } from 'react-router'
 import { FaEdit } from 'react-icons/fa'
 import helpers from 'utils/helpers'
 import { startCase } from 'lodash'
+import { IoCaretBackCircleOutline } from 'react-icons/io5'
 
 export default function AddEditEmail() {
   const { t } = useTranslation()
@@ -208,11 +209,11 @@ export default function AddEditEmail() {
         <div className='flex items-center justify-center p-3 mt-3 border bg-[#cbd5e13a]  rounded-b'>
           <Link to='/email-manager'>
             <button
-              className='text-black bg-[#E1E1E1] font-normal px-12 py-2.5 text-sm outline-none focus:outline-none rounded mr-6  ease-linear transition-all duration-150'
+              className='text-black bg-[#E1E1E1] font-normal px-6 flex gap-2 py-2.5 text-sm outline-none focus:outline-none rounded mr-6  ease-linear transition-all duration-150'
               type='button'
               title={t('O_BACK')}
             >
-              {t('O_BACK')}
+               <IoCaretBackCircleOutline size={18}/>{t('O_BACK')}
             </button>
           </Link>
 

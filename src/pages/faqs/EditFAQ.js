@@ -8,6 +8,7 @@ import { useState } from "react";
 import helpers from "utils/helpers";
 import { FaEdit } from "react-icons/fa";
 import { IoIosAddCircleOutline } from "react-icons/io";
+import { IoClose } from "react-icons/io5";
 
 const EditFAQ = ({ setEditShowModal, getAllFAQ, item, viewType }) => {
   const { t } = useTranslation();
@@ -128,11 +129,11 @@ const EditFAQ = ({ setEditShowModal, getAllFAQ, item, viewType }) => {
               </div>
               <div className="dark:bg-gray-900 flex items-center justify-center p-6 border-t border-solid border-slate-200 rounded-b">
                 <button
-                  className="text-black bg-[#E1E1E1] font-normal px-12 py-2.5 text-sm outline-none focus:outline-none rounded mr-6  ease-linear transition-all duration-150"
+                  className="text-black bg-[#E1E1E1] font-normal px-6 flex gap-2 py-2.5 text-sm outline-none focus:outline-none rounded mr-6  ease-linear transition-all duration-150"
                   type="button"
                   title={t("CLOSE")}
                   onClick={() => setEditShowModal(false)} >
-                  {t("CLOSE")}
+                  <IoClose size={19}/> {t("CLOSE")}
                 </button>
 
                 {helpers.ternaryCondition(loader, <button className="bg-gradientTo text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150">

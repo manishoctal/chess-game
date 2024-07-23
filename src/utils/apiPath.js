@@ -57,7 +57,8 @@ const apiPath = Object.freeze({
   getFormatList:'/v1/admin/questions/getMatchFormatType',
   getMatchList:'/v1/admin/questions/getMatchesList',
   addQuestions:'/v1/admin/questions',
-  tradingQuestionList:'/v1/admin/questions'
+  tradingQuestionList:'/v1/admin/questions',
+  announceResult:'/v1/admin/questions/announceResult'
 
 });
 

@@ -98,7 +98,7 @@ const ViewTradingQuestionTable = ({
                 {getViewTradingValue(startCase(item?.questionObj?.questionText) || 'N/A', 'font-bold')}
                 {getViewTradingValue(helpers.getDateAndTime(item?.createdAt))}
                 {getViewTradingValue(item?.optionACount?.toString() || 'N/A', 'font-bold text-center')}
-                {getViewTradingValue(item?.optionBCount || 'N/A', 'font-bold text-center')}
+                {getViewTradingValue(item?.optionBCount?.toString() || 'N/A', 'font-bold text-center')}
                 {(manager?.add || manager?.edit || user?.role === "admin") && (<td className="py-2 px-4 border-r dark:border-[#ffffff38] text-center">
                   <label
                     className="inline-flex relative items-center cursor-pointer"
@@ -167,6 +167,7 @@ const ViewTradingQuestionTable = ({
         <AnnounceResult
           setAnnounceResultModal={setAnnounceResultModal}
           toAnnounceData={announceData}
+          ViewallTradingQuestionsList={ViewallTradingQuestionsList}
         />
       )}
     </div>

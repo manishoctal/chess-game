@@ -6,6 +6,7 @@ import AuthContext from "context/AuthContext";
 import helpers from "utils/helpers";
 import { Buffer } from 'buffer'
 import OBack from "components/reusable/OBack";
+import { IoCaretBackCircleOutline } from "react-icons/io5";
 const StaticContentView = () => {
   const { t } = useTranslation();
   const location = useLocation();
@@ -80,12 +81,12 @@ const StaticContentView = () => {
       </div>
       <div className="flex items-center justify-center p-6 border-t border-solid border-slate-200 rounded-b">
         <button
-          className="text-black bg-[#E1E1E1] font-normal px-12 py-2.5 text-sm outline-none focus:outline-none rounded mr-6  ease-linear transition-all duration-150"
+          className="text-black bg-[#E1E1E1] font-normal px-6 flex gap-2 py-2.5 text-sm outline-none focus:outline-none rounded mr-6  ease-linear transition-all duration-150"
           type="button"
           onClick={() => navigate("/static-content")}
           title={t("O_BACK")}
         >
-          {t("O_BACK")}
+           <IoCaretBackCircleOutline size={18}/>{t("O_BACK")}
         </button>
       </div>
     </>
