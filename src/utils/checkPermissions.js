@@ -9,5 +9,8 @@ export const permissionsMap = Object.freeze({
   banner_manager:'/banner-manager',
   trading_question_manager:'/trading-question-manager',
   notification_manager:'/notification_manager',
-  offer_manager:'/offer-manager'
+  offer_manager:'/offer-manager',
+  player_card_manager:'/player-card-manager',
+    player_stock_manager:'/player-stock-manager'
+
 });

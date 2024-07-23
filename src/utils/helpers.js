@@ -282,15 +282,14 @@ const helpers = {
 
   getMatchStatus: (status) => {
     switch (status) {
-      case 'live':
-        return 'text-blue-600';
+      case 'Live':
+        return 'text-blue-600 font-bold';
       case 'Not Started':
-        return 'text-yellow-400';
-      case 'Finished':
-        return 'text-green-600';
+        return 'text-yellow-400 font-bold';
+      case 'Finished':case 'In Progress':
+        return 'text-green-600 font-bold';
       case 'Cancelled':
-        return 'text-red-600';
-
+        return 'text-red-600 font-bold';
     }
   },
 

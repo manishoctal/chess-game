@@ -16,6 +16,9 @@ import helpers from 'utils/helpers'
 import { preventMaxInput } from 'utils/validations'
 import { FaCircleArrowLeft } from 'react-icons/fa6'
 import { FaEdit } from 'react-icons/fa'
+import { IoIosAddCircleOutline } from 'react-icons/io'
+import { IoCaretBackCircleOutline } from 'react-icons/io5'
+
 const { startCase, capitalize } = require('lodash')
 
 const SubAdd = () => {
@@ -443,12 +446,12 @@ const SubAdd = () => {
       </div>
       <div className='flex items-center justify-center p-6 border-t border-solid border-slate-200 rounded-b'>
         <button
-          className='text-black bg-[#E1E1E1] font-normal px-12 py-2.5 text-sm outline-none focus:outline-none rounded mr-6  ease-linear transition-all duration-150'
+          className='text-black bg-[#E1E1E1] font-normal px-6 gap-2 flex py-2.5 text-sm outline-none focus:outline-none rounded mr-6  ease-linear transition-all duration-150'
           type='button'
           title={t('O_BACK')}
           onClick={() => navigate('/sub-admin-manager')}
         >
-          {t('O_BACK')}
+         <IoCaretBackCircleOutline size={18}/>{t('O_BACK')}
         </button>
 
         {helpers.ternaryCondition(loader, <button className="bg-gradientTo text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150">
@@ -463,7 +466,7 @@ const SubAdd = () => {
               title={t(itemType)}
               onClick={handleSubmit(onSubmit)}
             >
-             {helpers.andOperator(itemType==='Edit',<FaEdit size={16} />)} {itemType}
+             {helpers.andOperator(itemType==='Edit',<FaEdit size={16} />)}  {helpers.andOperator(itemType==='Add',<IoIosAddCircleOutline size={18}/>)} {itemType}
             </button>,
             null
           )

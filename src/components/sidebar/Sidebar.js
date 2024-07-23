@@ -14,6 +14,11 @@ import Logout from '../../assets/images/logout.svg'
 import { useTranslation } from 'react-i18next'
 import logoImage from '../../assets/images/logo-admin.png'
 import Swal from 'sweetalert2'
+import { MdOutlineLocalOffer } from "react-icons/md";
+import { BsPatchQuestion } from "react-icons/bs";
+import { AiOutlineIdcard,AiOutlineStock  } from "react-icons/ai";
+
+import helpers from 'utils/helpers'
 
 const classNames = require('classnames')
 
@@ -84,16 +89,16 @@ const Sidebar = () => {
     return condition && text
   }
 
-  const SidebarNavItem = ({ permission, path, label, imgSrc }) => {
+  const SidebarNavItem = ({ permission, path, label, imgSrc,icon }) => {
     const navLink = generateNavLink(
       path,
       label,
-      <img
+      helpers.orOperator(icon,<img
         src={imgSrc}
         className="max-w-[18px]"
         title={t(label)}
         alt=""
-      />
+      />)
     );
 
     if (permission) {
@@ -160,14 +165,31 @@ const Sidebar = () => {
             permission="offer_manager"
             path="/offer-manager"
             label="OFFER_MANAGER"
-            imgSrc={rewardWithdrawalRequest}
+            icon={<MdOutlineLocalOffer  size={21} color='#a7a7a7'/>}
           />
           <SidebarNavItem
             permission="trading_question_manager"
             path="/trading-question-manager"
             label="TRADING_QUESTION_MANAGER"
+            icon={<BsPatchQuestion size={19} color='#a7a7a7'/>}
             imgSrc={rewardWithdrawalRequest}
           />
+
+          <SidebarNavItem
+            permission="player_card_manager"
+            path="/player-card-manager"
+            label="PLAYER_CARD_MANAGER"
+            icon={<AiOutlineIdcard size={20} color='#a7a7a7'/>}
+            imgSrc={rewardWithdrawalRequest}
+          />
+           <SidebarNavItem
+            permission="player_stock_manager"
+            path="/player-stock-manager"
+            label="PLAYER_STOCK_MANAGER"
+            icon={<AiOutlineStock size={20} color='#a7a7a7'/>}
+            imgSrc={rewardWithdrawalRequest}
+          />
+
           <SidebarNavItem
             permission="email_manager"
             path="/email-manager"

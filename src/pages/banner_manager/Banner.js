@@ -18,6 +18,7 @@ import { IoIosAdd } from 'react-icons/io'
 
 
 function Banner() {
+
   const { t } = useTranslation()
   const notification = useToastContext()
   const { user, updatePageName } = useContext(AuthContext)
@@ -68,7 +69,7 @@ function Banner() {
         status: category,
         startDate: startDate ? dayjs(startDate).format('YYYY-MM-DD') : null,
         endDate: endDate ? dayjs(endDate).format('YYYY-MM-DD') : null,
-        keyword: helpers.normalizeSpaces(searchKey)||null,
+        keyword: helpers.normalizeSpaces(searchKey) || null,
         sortBy: sort.sortBy,
         sortType: sort.sortType
       }
@@ -147,17 +148,10 @@ function Banner() {
 
   // banner delete change function end
 
-
-
-
-
   const statusPage = e => {
     setPage(1)
     setFilterData({ ...filterData, category: e.target.value, isFilter: true })
   }
-
-
-
 
   const [item, setItem] = useState()
   const editViewBanner = async (type, data) => {
@@ -222,11 +216,6 @@ function Banner() {
 
   // debounce search end
 
-
-
-
-
-
   return (
     <div>
       <div className='bg-[#F9F9F9] dark:bg-slate-900'>
@@ -273,7 +262,7 @@ function Banner() {
                   </button>
 
                 </div>
-               
+
               </div>
 
               <div className='flex items-center justify-end px-4 ms-auto mb-3'>
@@ -281,16 +270,21 @@ function Banner() {
                   <button
                     title={t('ADD_BANNER')}
                     type='button'
-                    className='bg-gradientTo flex text-sm px-6 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue whitespace-nowrap'
+                    className='bg-gradientTo flex text-sm px-4 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue whitespace-nowrap'
                     onClick={() => setAddShowModal(true)}
                   >
-                    <IoIosAdd size={18} /> {t('ADD_BANNER')}
+                    <IoIosAdd size={20} /> {t('ADD_BANNER')}
                   </button>
                 )}
               </div>
-             
             </form>
-            
+            <div className='flex justify-end'>
+              <div className="bg-gray-100 p-2 rounded-md shadow-md w-[25%]">
+                <p className="text-sm text-gray-700 flex">
+                  <span className='text-red-500 font-semibold mr-1'>Disclaimer:</span> <marquee className="font-semibold" behavior="slide" direction="left" loop="1">Only 5 banners can be activated at a time.</marquee>
+                </p>
+              </div>
+            </div>
             <SubTable
               allBanner={bannerData?.docs}
               allbannerData={getAllBanner}

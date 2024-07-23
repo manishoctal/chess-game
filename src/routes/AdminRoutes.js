@@ -26,6 +26,10 @@ import NotificationAdd from 'pages/notification_manager/NotificationAdd'
 import AuthorizationRoute from 'utils/AuthorizationRoute'
 import TradingQuestionManager from 'pages/trading_question_manager/TradingQuestionManager'
 import ViewTradingQuestionManager from 'pages/trading_question_manager/ViewTradingQuestionManager'
+import PlayerCardManager from 'pages/player_card_manager/PlayerCardManager'
+import ViewPlayerCardManager from 'pages/player_card_manager/ViewPlayerCard'
+import PlayerStockManager from 'pages/player_stock_manager/PlayerStockManager'
+import ViewPlayerStockManager from 'pages/player_stock_manager/ViewScoreManager'
 const UseChange = ({ data }) => {
   const { t } = useTranslation()
   return t(data)
@@ -116,6 +120,41 @@ const AdminRoutes = {
       element: <AuthorizationRoute><ViewTradingQuestionManager /></AuthorizationRoute>,
       name: (
           <UseChange data='VIEW_TRADING_QUESTION_MANAGER' />
+      )
+    },
+
+
+    
+    {
+      path: '/player-card-manager',
+      element: <AuthorizationRoute><PlayerCardManager /></AuthorizationRoute>,
+      name: (
+          <UseChange data='PLAYER_CARD_MANAGER' />
+      )
+    },
+
+
+    {
+      path: '/player-card-manager/view',
+      element: <AuthorizationRoute><ViewPlayerCardManager /></AuthorizationRoute>,
+      name: (
+          <UseChange data='VIEW_PLAYER_CARD_MANAGER' />
+      )
+    },
+
+    {
+      path: '/player-stock-manager',
+      element: <AuthorizationRoute><PlayerStockManager /></AuthorizationRoute>,
+      name: (
+          <UseChange data='PLAYER_STOCK_MANAGER' />
+      )
+    },
+
+    {
+      path: '/player-stock-manager/view',
+      element: <AuthorizationRoute><ViewPlayerStockManager /></AuthorizationRoute>,
+      name: (
+          <UseChange data='VIEW_PLAYER_STOCK_MANAGER' />
       )
     },
 

@@ -12,7 +12,7 @@ import DynamicLabel from "utils/DynamicLabel";
 import Select from "react-select";
 import ErrorMessage from "components/ErrorMessage";
 import helpers from "utils/helpers";
-import { IoSendSharp } from "react-icons/io5";
+import { IoClose, IoSendSharp } from "react-icons/io5";
 const NotificationAdd = ({ getAllNotifications, handleCategory }) => {
   const [loading, setLoading] = useState(false);
   const [notificationUserError, setNotificationUserError] = useState(false);
@@ -256,16 +256,18 @@ const NotificationAdd = ({ getAllNotifications, handleCategory }) => {
               </div>
               <div className="flex items-center justify-center p-6 border-t border-solid border-slate-200 rounded-b dark:bg-gray-900">
                 <button
-                  className="text-black bg-[#E1E1E1] font-normal px-12 py-2.5 text-sm outline-none focus:outline-none rounded mr-6  ease-linear transition-all duration-150"
+                  className="text-black bg-[#E1E1E1] font-normal px-6 flex gap-2 py-2.5 text-sm outline-none focus:outline-none rounded mr-6  ease-linear transition-all duration-150"
                   type="button"
                   onClick={() => handleCategory(false)}
+                  title={t("O_CLOSE")}
                 >
-                  {t("O_BACK")}
+                   <IoClose size={19}/>{t("O_CLOSE")}
                 </button>
                 <OButton
                 extraClasses={'!px-6'}
                   label={<><IoSendSharp size={16} className="mr-2" />{t("O_SEND")}</>}
                   type="submit"
+                  title={t("O_SEND")}
                   onClick={handleSubmit(onSubmit)}
                   loading={loading}
                   disabled={loading}

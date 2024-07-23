@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next'
+import { IoClose } from 'react-icons/io5'
 import helpers from 'utils/helpers'
 const ViewWalletBalance = ({ setIsAmountModal, viewBalance }) => {
   const { t } = useTranslation()
@@ -25,32 +26,34 @@ const ViewWalletBalance = ({ setIsAmountModal, viewBalance }) => {
                 </button>
               </div>
 
-              <div className='md:py-4 sm:px-2 sm:py-3 md:px-7 px-2 flex justify-between w-[70%]'>
+              <div className='md:py-4 sm:px-2 sm:py-3 md:px-7 px-2 gap-5 flex'>
                 <label>{t('BONUS_AMOUNT')}:</label>
                 <b>{helpers.formattedAmount(viewBalance?.bonusAmount) || 0}</b>
               </div>
-              <div className='md:py-4 sm:px-2 sm:py-3 md:px-7 px-2 flex justify-between w-[70%]'>
+              <div className='md:py-4 sm:px-2 sm:py-3 md:px-7 px-2 flex gap-5 flex'>
                 <label>{t('DEPOSIT_AMOUNT')}:</label>
                 <b>{helpers.formattedAmount(viewBalance?.depositAmount) || 0}</b>
               </div>
-              <div className='md:py-4 sm:px-2 sm:py-3 md:px-7 px-2 flex justify-between w-[70%]'>
+              <div className='md:py-4 sm:px-2 sm:py-3 md:px-7 px-2 gap-5 flex'>
                 <label>{t('WINNING_AMOUNT')}:</label>
                 <b>{helpers.formattedAmount(viewBalance?.winningAmount) || 0}</b>
               </div>
 
               <div className='dark:border-[#ffffff38] dark:bg-slate-900 flex items-center justify-center p-6 border-t border-solid border-slate-200 rounded-b'>
                 <button
-                  className='text-black bg-[#E1E1E1] font-normal px-12 py-2.5 text-sm outline-none focus:outline-none rounded mr-6  ease-linear transition-all duration-150'
+                  className='text-black bg-[#E1E1E1] font-normal px-6 flex gap-2 py-2.5 text-sm outline-none focus:outline-none rounded mr-6  ease-linear transition-all duration-150'
                   type='button'
                   onClick={() => setIsAmountModal(false)}
                 >
-                  {t('CLOSE')}
+                 <IoClose size={19}/> {t('CLOSE')}
                 </button>
 
               </div>
             </div>
           </div>
         </form>
+
+
       </div>
       <div className='opacity-25 fixed inset-0 z-40 bg-black' />
     </>

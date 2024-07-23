@@ -25,6 +25,7 @@ const apiPath = Object.freeze({
   notificationToggle: "/v1/admin/notification-toggle",
   changeContentStatus: "/v1/admin/static-content/change-status",
   getFAQs: "/v1/admin/faq",
+  reOrderFaq:'/v1/admin/faq/reOrderFAQ',
   searchUsers:'/v1/admin/user/search',
   bannerAdd:'/v1/admin/banner',
   changeFAQStatus: "/v1/admin/faqs/status",
@@ -56,7 +57,8 @@ const apiPath = Object.freeze({
   getFormatList:'/v1/admin/questions/getMatchFormatType',
   getMatchList:'/v1/admin/questions/getMatchesList',
   addQuestions:'/v1/admin/questions',
-  tradingQuestionList:'/v1/admin/questions'
+  tradingQuestionList:'/v1/admin/questions',
+  announceResult:'/v1/admin/questions/announceResult'
 
 });
 

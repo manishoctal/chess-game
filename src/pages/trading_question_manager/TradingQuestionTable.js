@@ -35,7 +35,7 @@ const TradingQuestionTable = ({
         ),
         type: "match",
       };
-      
+
       const path = `${apiPath.changeStatus}/${item?._id}`;
       const result = await apiPut(path, payload);
       if (result?.status === 200) {
@@ -49,11 +49,11 @@ const TradingQuestionTable = ({
   };
   // change status of offer function end
 
-const getTableDataTrading=(details,dataClass)=>{
-  return <td className={`py-2 px-4 border-r dark:border-[#ffffff38] text-center ${dataClass||''}`}>
-  {details || 'N/A'}
-</td>
-}
+  const getTableDataTrading = (details, dataClass) => {
+    return <td className={`py-2 px-4 border-r dark:border-[#ffffff38] text-center ${dataClass || ''}`}>
+      {details || 'N/A'}
+    </td>
+  }
 
 
   return (
@@ -65,12 +65,12 @@ const getTableDataTrading=(details,dataClass)=>{
               <th scope="col" className="py-3 px-6 text-center">
                 {t("S.NO")}
               </th>
-              <OTradingTableHead sort={sort} setSort={setSort} name='MATCH_ID' fieldName='matchId' classTd={'justify-center'}/>
-              <OTradingTableHead sort={sort} setSort={setSort} name='MATCH_NAME' fieldName='localTeamShortName'  classTd={'justify-center'}/>
-              <OTradingTableHead sort={sort} setSort={setSort} name='FORMAT_TYPE' fieldName='formatType'  classTd={'justify-center'}/>
+              <OTradingTableHead sort={sort} setSort={setSort} name='MATCH_ID' fieldName='matchId' classTd={'justify-center'} />
+              <OTradingTableHead sort={sort} setSort={setSort} name='MATCH_NAME' fieldName='localTeamShortName' classTd={'justify-center'} />
+              <OTradingTableHead sort={sort} setSort={setSort} name='FORMAT_TYPE' fieldName='formatType' classTd={'justify-center'} />
               <OTradingTableHead sort={sort} setSort={setSort} name='STATUS_OF_MATCHES' fieldName='matchStatus' classTd={'justify-center'} />
               <OTradingTableHead sort={sort} setSort={setSort} name='START_DATE' fieldName='startDate' classTd={'justify-center'} />
-              <OTradingTableHead sort={sort} setSort={setSort} name='QUESTIONS' fieldName='questionsCount'  classTd={'justify-center'}/>
+              <OTradingTableHead sort={sort} setSort={setSort} name='QUESTIONS' fieldName='questionsCount' classTd={'justify-center'} />
               {(manager?.add || manager?.edit || user?.role === "admin") && (<OTradingTableHead sort={sort} setSort={setSort} name='O_STATUS' fieldName='status' classTd={'justify-center'} />)}
               {(manager?.view || user?.role === "admin") && (<th scope="col" className="py-3 px-6 text-center">
                 {t("O_ACTION")}
@@ -90,11 +90,13 @@ const getTableDataTrading=(details,dataClass)=>{
                   {i + 1 + pageSize * (page - 1)}
                 </th>
                 {getTableDataTrading(item?.matchId)}
-                {getTableDataTrading(startCase(item?.matchName)||'N/A','font-bold')}
-                {getTableDataTrading(item?.formatType?.toUpperCase()||'N/A')}
-                {getTableDataTrading(startCase(item?.matchStatus)||'N/A', helpers.getMatchStatus(item?.matchStatus))}
+                {getTableDataTrading(startCase(item?.matchName) || 'N/A', 'font-bold')}
+                {getTableDataTrading(item?.formatType?.toUpperCase() || 'N/A')}
+                {getTableDataTrading(startCase(item?.matchStatus) || 'N/A', helpers.getMatchStatus(item?.matchStatus))}
                 {getTableDataTrading(helpers.matchDateFormat(item?.startDate))}
-                {getTableDataTrading(item?.questionsCount||'N/A','font-bold')}
+                <td className={`py-2 px-4 border-r dark:border-[#ffffff38] text-center font-bold`}>
+                  {item?.questionsCount || 0}
+                </td>
                 {(manager?.add || manager?.edit || user?.role === "admin") && (<td className="py-2 px-4 border-r dark:border-[#ffffff38] text-center">
                   <label
                     className="inline-flex relative items-center cursor-pointer"
@@ -122,7 +124,7 @@ const getTableDataTrading=(details,dataClass)=>{
                 {(manager?.view || user?.role === "admin") && (<td className="py-2 px-4 border-l">
                   <div className="">
                     <ul className="flex justify-center">
-                    <li className="px-2 py-2 hover:text-gradientTo">
+                      <li className="px-2 py-2 hover:text-gradientTo">
                         <NavLink to='/trading-question-manager/view' title={t("O_VIEW")} state={item}>
                           <AiFillEye className="cursor-pointer w-5 h-5 text-slate-600" />
                         </NavLink>

@@ -229,10 +229,10 @@ function SubAdmin() {
                   <button
                     title={t('ADD_SUB_ADMIN')}
                     type='button'
-                    className='bg-gradientTo flex text-sm px-6 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue whitespace-nowrap'
+                    className='bg-gradientTo flex text-sm px-4 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue whitespace-nowrap'
                     onClick={() => navigate('/sub-admin-manager/add')}
                   >
-                   <IoIosAdd size={18}/>
+                   <IoIosAdd size={20}/>
                    {t('ADD_SUB_ADMIN')}
                   </button>
                 )}

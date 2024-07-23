@@ -11,7 +11,12 @@ import { preventMaxInput } from "utils/validations";
 import apiPath from "utils/apiPath";
 import { apiPost } from "utils/apiFetch";
 import useToastContext from "hooks/useToastContext";
+import { IoIosAddCircleOutline } from "react-icons/io";
+import { useNavigate } from "react-router-dom";
+import { IoClose } from "react-icons/io5";
 const AddQuestion = ({ setEditShowTradingModal, stateData,ViewallTradingQuestionsList }) => {
+    console.log("🚀 ~ AddQuestion ~ stateData:", stateData);
+    const navigate=useNavigate()
     const { t } = useTranslation();
     const notification = useToastContext();
 
@@ -249,8 +254,14 @@ const AddQuestion = ({ setEditShowTradingModal, stateData,ViewallTradingQuestion
             if (result?.data?.success) {
                 ViewallTradingQuestionsList()
               notification.success(result?.data?.message);
-              
-              setEditShowTradingModal(false);
+
+            //  show question count after add question 
+              let totalQuestionsCount = 0;
+              formattedData?.forEach(item => {
+                totalQuestionsCount += item?.questions?.length;
+              });
+              navigate('/trading-question-manager/view',{state:{...stateData,questionsCount:stateData?.questionsCount+totalQuestionsCount},replace:true})
+             setEditShowTradingModal(false);
               
             }
         } catch (error) {
@@ -381,7 +392,7 @@ const AddQuestion = ({ setEditShowTradingModal, stateData,ViewallTradingQuestion
                                                             value={helpers.ternaryCondition(teamPerformance?.index1, 'did_team_win_loss_match', '')}
                                                             register={register(`teamPerformance.questions.0.slug`, { onChange: () => { setTeamPerformance({ ...teamPerformance, index1: !teamPerformance?.index1 }) } })}
                                                         />
-                                                        <label htmlFor='team'>Did </label>
+                                                        <label>Did </label>
                                                         <div>
                                                             <select disabled={!teamPerformance?.index1} {...register('teamPerformance.questions.0.team', { required: helpers.orOperator(teamPerformance?.index1, false), })} className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer">
                                                                 <option value="">Select Team</option>
@@ -398,7 +409,7 @@ const AddQuestion = ({ setEditShowTradingModal, stateData,ViewallTradingQuestion
                                                             </select>
                                                             {helpers.andOperator(errors?.teamPerformance?.questions[0]?.winLoss, <div className="text-[12px] text-red-500">Please select win/lose.</div>)}
                                                         </div>
-                                                        <label htmlFor='team'> the match? </label>
+                                                        <label> the match? </label>
                                                     </div>
                                                     <div className="mb-2 gap-2 flex">
                                                         <OInputField
@@ -408,7 +419,7 @@ const AddQuestion = ({ setEditShowTradingModal, stateData,ViewallTradingQuestion
                                                             value={helpers.ternaryCondition(teamPerformance?.index2, 'did_team_score_more_than', '')}
                                                             register={register(`teamPerformance.questions.1.slug`, { onChange: () => { setTeamPerformance({ ...teamPerformance, index2: !teamPerformance?.index2 }) } })}
                                                         />
-                                                        <label htmlFor='team1'>Did </label>
+                                                        <label>Did </label>
                                                         <div>
                                                             <select disabled={!teamPerformance?.index2} {...register('teamPerformance.questions.1.team', { required: helpers.orOperator(teamPerformance?.index2, false) })} className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer">
                                                                 <option value="">Select Team</option>
@@ -417,7 +428,7 @@ const AddQuestion = ({ setEditShowTradingModal, stateData,ViewallTradingQuestion
                                                             </select>
                                                             {helpers.andOperator(errors?.teamPerformance?.questions[1]?.team, <div className="text-[12px] text-red-500">Please select team.</div>)}
                                                         </div>
-                                                        <label htmlFor='team1'> score more than </label>
+                                                        <label> score more than </label>
                                                         <div>
                                                             <input
                                                                 type="number"
@@ -429,7 +440,7 @@ const AddQuestion = ({ setEditShowTradingModal, stateData,ViewallTradingQuestion
                                                             />
                                                             {helpers.andOperator(errors?.teamPerformance?.questions[1]?.score, <div className="text-[12px] text-red-500">Please enter run.</div>)}
                                                         </div>
-                                                        <label htmlFor='team1'> runs? </label>
+                                                        <label> runs? </label>
                                                         <div>
                                                             <input type="number" disabled={!teamPerformance?.index2}  {...register('teamPerformance.questions.1.threshold', {
                                                                 required: helpers.orOperator(teamPerformance?.index2, false),
@@ -450,7 +461,7 @@ const AddQuestion = ({ setEditShowTradingModal, stateData,ViewallTradingQuestion
                                                             value={helpers.ternaryCondition(teamPerformance?.index3, 'did_team_lose_more_than_wickets', '')}
                                                             register={register(`teamPerformance.questions.2.slug`, { onChange: () => { setTeamPerformance({ ...teamPerformance, index3: !teamPerformance?.index3 }) } })}
                                                         />
-                                                        <label htmlFor='team2'>Did </label>
+                                                        <label>Did </label>
                                                         <div>
                                                             <select disabled={!teamPerformance?.index3} {...register('teamPerformance.questions.2.team', { required: helpers.orOperator(teamPerformance?.index3, false) })} className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer">
                                                                 <option value="">Select Team</option>
@@ -459,7 +470,7 @@ const AddQuestion = ({ setEditShowTradingModal, stateData,ViewallTradingQuestion
                                                             </select>
                                                             {helpers.andOperator(errors?.teamPerformance?.questions[2]?.team, <div className="text-[12px] text-red-500">Please select team.</div>)}
                                                         </div>
-                                                        <label htmlFor='team2'> lose more than </label>
+                                                        <label> lose more than </label>
                                                         <div>
                                                             <input
                                                                 type="number"
@@ -470,7 +481,7 @@ const AddQuestion = ({ setEditShowTradingModal, stateData,ViewallTradingQuestion
                                                             />
                                                             {helpers.andOperator(errors?.teamPerformance?.questions[2]?.wickets, <div className="text-[12px] text-red-500">Please enter wicket.</div>)}
                                                         </div>
-                                                        <label htmlFor='team2'> wickets in their innings? </label>
+                                                        <label> wickets in their innings? </label>
                                                         <div>
                                                             <input type="number" disabled={!teamPerformance?.index3} {...register('teamPerformance.questions.2.threshold', {
                                                                 required: helpers.orOperator(teamPerformance?.index3, false),
@@ -497,7 +508,7 @@ const AddQuestion = ({ setEditShowTradingModal, stateData,ViewallTradingQuestion
                                                         value={helpers.ternaryCondition(playerPerformance?.index1, 'did_player_score_century', '')}
                                                         register={register(`playerPerformance.questions.0.slug`, { onChange: () => { setPlayerPerformance({ ...playerPerformance, index1: !playerPerformance?.index1 }) } })}
                                                     />
-                                                    <label htmlFor='player'>Did </label>
+                                                    <label>Did </label>
                                                     <div>
                                                         <select disabled={!playerPerformance?.index1} {...register('playerPerformance.questions.0.playerId', { required: helpers.orOperator(playerPerformance?.index1, false) })} className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0 peer">
                                                             <option value="">Select Player X</option>
@@ -506,7 +517,7 @@ const AddQuestion = ({ setEditShowTradingModal, stateData,ViewallTradingQuestion
                                                         </select>
                                                         {helpers.andOperator(errors?.playerPerformance?.questions[0]?.playerId, <div className="text-[12px] text-red-500">Please select player.</div>)}
                                                     </div>
-                                                    <label htmlFor='player'> score a century? </label>
+                                                    <label> score a century? </label>
                                                     <div>
                                                         <input type="number" disabled={!playerPerformance?.index1} {...register('playerPerformance.questions.0.threshold', {
                                                             required: helpers.orOperator(playerPerformance?.index1, false),
@@ -525,7 +536,7 @@ const AddQuestion = ({ setEditShowTradingModal, stateData,ViewallTradingQuestion
                                                         value={helpers.ternaryCondition(playerPerformance?.index2, 'did_player_take_more_wickets', '')}
                                                         register={register(`playerPerformance.questions.1.slug`, { onChange: () => { setPlayerPerformance({ ...playerPerformance, index2: !playerPerformance?.index2 }) } })}
                                                     />
-                                                    <label htmlFor='player1'>Did </label>
+                                                    <label>Did </label>
                                                     <div>
                                                         <select disabled={!playerPerformance?.index2} {...register('playerPerformance.questions.1.playerId', { required: playerPerformance?.index2 || false, })} className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer">
                                                             <option value="">Select Player Y</option>
@@ -534,7 +545,7 @@ const AddQuestion = ({ setEditShowTradingModal, stateData,ViewallTradingQuestion
                                                         </select>
                                                         {helpers.andOperator(errors?.playerPerformance?.questions[1]?.playerId, <div className="text-[12px] text-red-500">Please select player.</div>)}
                                                     </div>
-                                                    <label htmlFor='player1'> take </label>
+                                                    <label> take </label>
                                                     <div>
                                                         <input
                                                             type="number"
@@ -546,7 +557,7 @@ const AddQuestion = ({ setEditShowTradingModal, stateData,ViewallTradingQuestion
                                                         {helpers.andOperator(errors?.playerPerformance?.questions[1]?.wicket, <div className="text-[12px] text-red-500">Wicket is required.</div>)}
 
                                                     </div>
-                                                    <label htmlFor='player1'> or more wickets in the match? </label>
+                                                    <label> or more wickets in the match? </label>
                                                     <div>
                                                         <input type="number" disabled={!playerPerformance?.index2} {...register('playerPerformance.questions.1.threshold', {
                                                             required: helpers.orOperator(playerPerformance?.index2, false),
@@ -567,7 +578,7 @@ const AddQuestion = ({ setEditShowTradingModal, stateData,ViewallTradingQuestion
                                                         value={helpers.ternaryCondition(playerPerformance?.index3, 'did_player_hit_more_sixes', '')}
                                                         register={register(`playerPerformance.questions.2.slug`, { onChange: () => { setPlayerPerformance({ ...playerPerformance, index3: !playerPerformance?.index3 }) } })}
                                                     />
-                                                    <label htmlFor='player2'>Did </label>
+                                                    <label>Did </label>
                                                     <div>
                                                         <select disabled={!playerPerformance?.index3} {...register('playerPerformance.questions.2.playerId', { required: helpers.orOperator(playerPerformance?.index3, false) })} className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer">
                                                             <option value="">Select Player Z</option>
@@ -576,7 +587,7 @@ const AddQuestion = ({ setEditShowTradingModal, stateData,ViewallTradingQuestion
                                                         </select>
                                                         {helpers.andOperator(errors?.playerPerformance?.questions[2]?.playerId, <div className="text-[12px] text-red-500">Please select player.</div>)}
                                                     </div>
-                                                    <label htmlFor='player2'> hit more than </label>
+                                                    <label> hit more than </label>
                                                     <div className="mt-">
                                                         <input
                                                             type="number"
@@ -588,7 +599,7 @@ const AddQuestion = ({ setEditShowTradingModal, stateData,ViewallTradingQuestion
                                                         {helpers.andOperator(errors?.playerPerformance?.questions[2]?.sixes, <div className="text-[12px] text-red-500">Sixes are required.</div>)}
 
                                                     </div>
-                                                    <label htmlFor='player2'> sixes? </label>
+                                                    <label> sixes? </label>
                                                 </div>
                                             </div>
                                         </div>
@@ -607,7 +618,7 @@ const AddQuestion = ({ setEditShowTradingModal, stateData,ViewallTradingQuestion
                                                         value={helpers.ternaryCondition(specificEvent?.index1, 'was_hat_trick_taken', '')}
                                                         register={register(`specificEvent.questions.0.slug`, { onChange: () => { setSPecificEvent({ ...specificEvent, index1: !specificEvent?.index1 }) } })}
                                                     />
-                                                    <label htmlFor='Specific'>Was there a hat-trick taken in the match? </label>
+                                                    <label>Was there a hat-trick taken in the match? </label>
                                                 </div>
                                                 <div className="mb-2 flex gap-2">
 
@@ -618,7 +629,7 @@ const AddQuestion = ({ setEditShowTradingModal, stateData,ViewallTradingQuestion
                                                         value={helpers.ternaryCondition(specificEvent?.index2, 'did_team_win_toss_and_choose_bat_first', '')}
                                                         register={register(`specificEvent.questions.1.slug`, { onChange: () => { setSPecificEvent({ ...specificEvent, index2: !specificEvent?.index2 }) } })}
                                                     />
-                                                    <label htmlFor='Specific1'>Did </label>
+                                                    <label>Did </label>
                                                     <div>
 
                                                         <select disabled={!specificEvent?.index2}  {...register('specificEvent.questions.1.team', { required: helpers.orOperator(specificEvent?.index2, false) })} className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer">
@@ -628,7 +639,7 @@ const AddQuestion = ({ setEditShowTradingModal, stateData,ViewallTradingQuestion
                                                         </select>
                                                         {helpers.andOperator(errors?.specificEvent?.questions[1]?.team, <div className="text-[12px] text-red-500">Please select team.</div>)}
                                                     </div>
-                                                    <label htmlFor='Specific1'> win the toss and choose to bat first? </label>
+                                                    <label> win the toss and choose to bat first? </label>
                                                 </div>
                                                 <div className="mb-2 flex gap-2">
 
@@ -639,7 +650,7 @@ const AddQuestion = ({ setEditShowTradingModal, stateData,ViewallTradingQuestion
                                                         value={helpers.ternaryCondition(specificEvent?.index3, 'was_there_rain_intruption', '')}
                                                         register={register(`specificEvent.questions.2.slug`, { onChange: () => { setSPecificEvent({ ...specificEvent, index3: !specificEvent?.index3 }) } })}
                                                     />
-                                                    <label htmlFor='Specific2'>Was there a rain interruption during the match? </label>
+                                                    <label>Was there a rain interruption during the match? </label>
                                                 </div>
                                             </div>
                                         </div>
@@ -659,7 +670,7 @@ const AddQuestion = ({ setEditShowTradingModal, stateData,ViewallTradingQuestion
                                                         register={register(`technicalDecision.questions.0.slug`, { onChange: () => { setTechnicalDecision({ ...technicalDecision, index1: !technicalDecision?.index1 }) } })}
                                                     />
 
-                                                    <label htmlFor='decisions'>Was there a DRS (Decision Review System) review during the match? </label>
+                                                    <label>Was there a DRS (Decision Review System) review during the match? </label>
                                                 </div>
                                                 <div className="mb-2 flex gap-2">
 
@@ -670,7 +681,7 @@ const AddQuestion = ({ setEditShowTradingModal, stateData,ViewallTradingQuestion
                                                         value={helpers.ternaryCondition(technicalDecision?.index2, 'did_third_umpire_overturn_on_field_decisions', '')}
                                                         register={register(`technicalDecision.questions.1.slug`, { onChange: () => { setTechnicalDecision({ ...technicalDecision, index2: !technicalDecision?.index2 }) } })}
                                                     />
-                                                    <label htmlFor='decisions1'>Did the third umpire overturn an on-field decision? </label>
+                                                    <label>Did the third umpire overturn an on-field decision? </label>
                                                 </div>
                                                 <div className="mb-2 flex gap-2">
                                                     <OInputField
@@ -680,7 +691,7 @@ const AddQuestion = ({ setEditShowTradingModal, stateData,ViewallTradingQuestion
                                                         value={helpers.ternaryCondition(technicalDecision?.index3, 'was_any_player_out_for_obstructing', '')}
                                                         register={register(`technicalDecision.questions.2.slug`, { onChange: () => { setTechnicalDecision({ ...technicalDecision, index3: !technicalDecision?.index3 }) } })}
                                                     />
-                                                    <label htmlFor='decisions2'>Was any player given out for obstructing the field? </label>
+                                                    <label>Was any player given out for obstructing the field? </label>
                                                 </div>
                                             </div>
                                         </div>
@@ -699,7 +710,7 @@ const AddQuestion = ({ setEditShowTradingModal, stateData,ViewallTradingQuestion
                                                         value={helpers.ternaryCondition(matchOutcome?.index1, 'was_the_match_decided_by_duckworth_lewis', '')}
                                                         register={register(`matchOutcome.questions.0.slug`, { onChange: () => { setMatchOutcome({ ...matchOutcome, index1: !matchOutcome?.index1 }) } })}
                                                     />
-                                                    <label htmlFor='outcomes'>Was the match decided by the Duckworth-Lewis method? </label>
+                                                    <label>Was the match decided by the Duckworth-Lewis method? </label>
                                                 </div>
                                                 <div className="mb-2 flex gap-2">
                                                     <OInputField
@@ -709,7 +720,7 @@ const AddQuestion = ({ setEditShowTradingModal, stateData,ViewallTradingQuestion
                                                         value={helpers.ternaryCondition(matchOutcome?.index2, 'did_match_tie', '')}
                                                         register={register(`matchOutcome.questions.1.slug`, { onChange: () => { setMatchOutcome({ ...matchOutcome, index2: !matchOutcome?.index2 }) } })}
                                                     />
-                                                    <label htmlFor='outcomes1'>Did the match end in a tie? </label>
+                                                    <label>Did the match end in a tie? </label>
                                                 </div>
                                                 <div className="mb-2 flex gap-2">
 
@@ -720,7 +731,7 @@ const AddQuestion = ({ setEditShowTradingModal, stateData,ViewallTradingQuestion
                                                         value={helpers.ternaryCondition(matchOutcome?.index3, 'did_there_super_over', '')}
                                                         register={register(`matchOutcome.questions.2.slug`, { onChange: () => { setMatchOutcome({ ...matchOutcome, index3: !matchOutcome?.index3 }) } })}
                                                     />
-                                                    <label htmlFor='outcomes2'>Did the match go to a Super Over? </label>
+                                                    <label >Did the match go to a Super Over? </label>
                                                 </div>
                                             </div>
                                         </div>
@@ -739,7 +750,7 @@ const AddQuestion = ({ setEditShowTradingModal, stateData,ViewallTradingQuestion
                                                         value={helpers.ternaryCondition(injuryAndSubs?.index1, 'was_any_player_substituted', '')}
                                                         register={register(`injuryAndSubs.questions.0.slug`, { onChange: () => { setInjuryAndSubs({ ...injuryAndSubs, index1: !injuryAndSubs?.index1 }) } })}
                                                     />
-                                                    <label htmlFor='injuries1'>Was any player substituted due to injury? </label>
+                                                    <label>Was any player substituted due to injury? </label>
                                                 </div>
                                                 <div className="mb-2 flex gap-2">
                                                     <OInputField
@@ -749,7 +760,7 @@ const AddQuestion = ({ setEditShowTradingModal, stateData,ViewallTradingQuestion
                                                         value={helpers.ternaryCondition(injuryAndSubs?.index2, 'did_concussion_substituted_come_into_play', '')}
                                                         register={register(`injuryAndSubs.questions.1.slug`, { onChange: () => { setInjuryAndSubs({ ...injuryAndSubs, index2: !injuryAndSubs?.index2 }) } })}
                                                     />
-                                                    <label htmlFor='injuries2'>Did a concussion substitute come into play during the match? </label>
+                                                    <label>Did a concussion substitute come into play during the match? </label>
                                                 </div>
                                             </div>
                                         </div>
@@ -767,7 +778,7 @@ const AddQuestion = ({ setEditShowTradingModal, stateData,ViewallTradingQuestion
                                                         value={helpers.ternaryCondition(umpiringRules?.index1, 'was_there_a_no_ball', '')}
                                                         register={register(`umpiringRules.questions.0.slug`, { onChange: () => { setUmpiringRules({ ...umpiringRules, index1: !umpiringRules?.index1 }) } })}
                                                     />
-                                                    <label htmlFor='rules1'>Was there a no-ball called for overstepping? </label>
+                                                    <label>Was there a no-ball called for overstepping? </label>
                                                 </div>
                                                 <div className="mb-2 flex gap-2">
                                                     <OInputField
@@ -777,7 +788,7 @@ const AddQuestion = ({ setEditShowTradingModal, stateData,ViewallTradingQuestion
                                                         value={helpers.ternaryCondition(umpiringRules?.index2, 'did_any_player_receive_penalty', '')}
                                                         register={register(`umpiringRules.questions.1.slug`, { onChange: () => { setUmpiringRules({ ...umpiringRules, index2: !umpiringRules?.index2 }) } })}
                                                     />
-                                                    <label htmlFor='rules2'>Did any player receive a penalty for dissent or misconduct? </label>
+                                                    <label>Did any player receive a penalty for dissent or misconduct? </label>
                                                 </div>
                                             </div>
                                         </div>
@@ -823,16 +834,16 @@ const AddQuestion = ({ setEditShowTradingModal, stateData,ViewallTradingQuestion
                             <div className="dark:border-[#ffffff38] dark:bg-slate-900 flex items-center justify-center p-6 border-t border-solid border-slate-200 rounded-b">
                                 <button
                                     title={t("CLOSE")}
-                                    className="text-black bg-[#E1E1E1] font-normal px-12 py-2.5 text-sm outline-none focus:outline-none rounded mr-6  ease-linear transition-all duration-150"
+                                    className="text-black bg-[#E1E1E1] font-normal px-6 flex gap-2 py-2.5 text-sm outline-none focus:outline-none rounded mr-6  ease-linear transition-all duration-150"
                                     type="button"
                                     onClick={() => setEditShowTradingModal(false)}
                                 >
-                                    {t("CLOSE")}
+                                    <IoClose size={19}/> {t("CLOSE")}
                                 </button>
                                 {helpers.ternaryCondition(addLoader,
                                     <LoaderButton />,
-                                    <button className="bg-gradientTo text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150" type="submit"
-                                        title={t("O_ADD")}>{t("O_ADD")} </button>)}
+                                    <button className="bg-gradientTo text-white flex gap-2 active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150" type="submit"
+                                        title={t("O_ADD")}><IoIosAddCircleOutline size={18}/>{t("O_ADD")} </button>)}
                             </div>
                         </div>
                     </div>

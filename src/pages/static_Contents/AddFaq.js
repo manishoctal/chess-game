@@ -6,6 +6,7 @@ import useToastContext from "hooks/useToastContext";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import OInputField from "components/reusable/OInputField";
+import { IoIosAddCircleOutline } from "react-icons/io";
 
 const AddFaq = ({ setShowModal, getAllFAQ }) => {
   const { t } = useTranslation();
@@ -147,10 +148,10 @@ const AddFaq = ({ setShowModal, getAllFAQ }) => {
                   </div>
                 ) : (
                   <button
-                    className="bg-LightBlue text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150"
+                    className="bg-LightBlue text-white active:bg-emerald-600 font-normal text-sm px-4 flex gap-2 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150"
                     type="submit"
                   >
-                    Add FAQ
+                   <IoIosAddCircleOutline size={18}/> Add FAQ
                   </button>
                 )}
               </div>
