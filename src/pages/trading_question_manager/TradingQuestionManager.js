@@ -50,10 +50,6 @@ import helpers from 'utils/helpers'
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('')
   const [isInitialized, setIsInitialized] = useState(false)
   const [searchTerm, setSearchTerm] = useState('')
-
-  const [debouncedSearchTerm1, setDebouncedSearchTerm1] = useState('')
-  const [isInitialized1, setIsInitialized1] = useState(false)
-  const [searchTerm1, setSearchTerm1] = useState('')
   const [formatSuggestion, setFormatSuggestion] = useState([])
   const [filterData, setFilterData] = useState({
     category: '',
@@ -152,7 +148,6 @@ import helpers from 'utils/helpers'
     setPage(1)
     setSearchTerm('')
     setPageSize(10)
-    setFormatSuggestion([])
   }
 
   const handleDateChangeTradingQuestion = (start, end) => {
@@ -202,16 +197,7 @@ import helpers from 'utils/helpers'
 
 
 
-  // debounce function for dropdown search start
-
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      setDebouncedSearchTerm1(searchTerm1?.trim());
-    }, 500);
-    return () => {
-      clearTimeout(timeoutId);
-    };
-  }, [searchTerm1]);
+  // function for format dropdown start
 
   const handleSearchFormatOption = async (event) => {
     try {
@@ -232,12 +218,8 @@ import helpers from 'utils/helpers'
 
 
   useEffect(() => {
-    if (!isInitialized1) {
-      setIsInitialized1(true);
-    } else if (searchTerm1) {
-      handleSearchFormatOption(debouncedSearchTerm1)
-    }
-  }, [debouncedSearchTerm1]);
+    handleSearchFormatOption()
+  }, []);
 
   // debounce function for dropdown search end
 
@@ -280,15 +262,12 @@ import helpers from 'utils/helpers'
                     <Select
                       className='border-1 rounded-lg border-[#DFDFDF]'
                       name="formatType"
-                      inputValue={searchTerm1}
-                      onInputChange={(value) => setSearchTerm1(value)}
                       placeholder={
                         <span className='text-[14px]'>
-                          {t("SEARCH_FORMAT_TYPE")}
+                          {t("SELECT_FORMAT_TYPE")}
                         </span>
                       }
                       options={formatSuggestion}
-                      defaultValue={t("SELECT_USERS")}
                       onChange={(e) => { setFilterData({ ...filterData, formatType: e }) }}
                       styles={customStyles}
                       value={filterData?.formatType}

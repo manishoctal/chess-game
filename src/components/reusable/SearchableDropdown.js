@@ -1,3 +1,4 @@
+import { startCase } from 'lodash';
 import React, { useState, useEffect } from 'react';
 import helpers from 'utils/helpers';
 
@@ -83,7 +84,7 @@ function SearchableDropdown({ searchTerm, setSearchTerm, setFilteredItems,placeh
                         {filteredItems?.length > 0 ? (
                             filteredItems?.map((item, index) => (
                                 <li key={index} className={`p-2 cursor-pointer hover:bg-gray-200 ${highlightedIndex === index ? 'highlighted bg-gray-300' : ''}`}
-                                 onClick={() => {handleItemClick(item)}} ><small>{item?.name} ({item?.email + ',' + item?.mobile})</small></li> ))
+                                 onClick={() => {handleItemClick(item)}} ><small> <b className='mb-0'>{startCase(item?.name)}</b> <span className='block'>({item?.email + ',' + item?.mobile})</span></small></li> ))
                         ) : (
                             <li className="p-2 text-gray-500 px-2"><small>No results found</small></li>
                         )}
