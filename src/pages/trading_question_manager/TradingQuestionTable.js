@@ -9,7 +9,6 @@ import { apiPut } from "utils/apiFetch";
 import apiPath from "utils/apiPath";
 import useToastContext from "hooks/useToastContext";
 import { NavLink } from "react-router-dom";
-
 const TradingQuestionTable = ({
   tradingData,
   allTradingQuestionList,

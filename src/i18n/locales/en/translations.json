@@ -763,7 +763,12 @@
   "MINIMUM_SHARE_FOR_TRADE":"Minimum Share For Trade",
   "PLEASE_ENTER_MAXIMUM_SHARE_FOR_TRADE":"Please enter maximum share sor trade.",
   "PLEASE_ENTER_MINIMUM_SHARE_FOR_TRADE":"Please enter minimum share sor trade.",
-  "MIN_SHARE_FOR_TRADE_MUST_BE_LESS":"Minimum share for trade must be less than maximum share."
+  "MIN_SHARE_FOR_TRADE_MUST_BE_LESS":"Minimum share for trade must be less than maximum share.",
+  "MATCH_STATUS":"Match Status",
+  "CANCELLED":"Cancelled",
+  "LIVE":"In Progress",
+  "FINISHED":"Finished",
+  "NOT_STARTED":"Upcoming"
 
 
 }
