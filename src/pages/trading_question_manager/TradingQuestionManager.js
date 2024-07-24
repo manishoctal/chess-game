@@ -61,8 +61,8 @@ import helpers from 'utils/helpers'
     isFilter: false
   })
   const [sort, setSort] = useState({
-    sortBy: 'startDate',
-    sortType: 'desc'
+    sortBy: '',
+    sortType: ''
   })
 
 
@@ -89,13 +89,13 @@ import helpers from 'utils/helpers'
       const questionPayload = {
         page,
         pageSize: pageSize,
-        status: category,
+        status: helpers.orOperator(category,null),
         startDate: startDate ? dayjs(startDate).format('YYYY-MM-DD') : null,
         endDate: endDate ? dayjs(endDate).format('YYYY-MM-DD') : null,
-        keyword:helpers.normalizeSpaces(searchKey),
-        sortKey: sort.sortBy,
+        keyword:helpers.orOperator(helpers.normalizeSpaces(searchKey),null),
+        sortKey: helpers.orOperator(sort.sortBy,null),
         matchStatus,
-        sortType: sort.sortType,
+        sortType: helpers.orOperator(sort.sortType,null),
         formatType: toStartCase(filterData?.formatType?.value) || null
 
       }

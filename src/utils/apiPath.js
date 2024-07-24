@@ -58,7 +58,8 @@ const apiPath = Object.freeze({
   getMatchList:'/v1/admin/questions/getMatchesList',
   addQuestions:'/v1/admin/questions',
   tradingQuestionList:'/v1/admin/questions',
-  announceResult:'/v1/admin/questions/announceResult'
+  announceResult:'/v1/admin/questions/announceResult',
+  getPlayerList:'/v1/admin/questions/getMatchPlayersList'
 
 });
 

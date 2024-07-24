@@ -9,14 +9,13 @@ import OInputField from "components/reusable/OInputField";
 import { isEmpty, startCase } from "lodash";
 import { preventMaxInput } from "utils/validations";
 import apiPath from "utils/apiPath";
-import { apiPost } from "utils/apiFetch";
+import { apiGet, apiPost } from "utils/apiFetch";
 import useToastContext from "hooks/useToastContext";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import { IoClose } from "react-icons/io5";
-const AddQuestion = ({ setEditShowTradingModal, stateData,ViewallTradingQuestionsList }) => {
-    console.log("🚀 ~ AddQuestion ~ stateData:", stateData);
-    const navigate=useNavigate()
+const AddQuestion = ({ setEditShowTradingModal, stateData, ViewallTradingQuestionsList }) => {
+    const navigate = useNavigate()
     const { t } = useTranslation();
     const notification = useToastContext();
 
@@ -64,6 +63,34 @@ const AddQuestion = ({ setEditShowTradingModal, stateData,ViewallTradingQuestion
         }, { "label": "Umpiring and Rules", "value": "umpiringRules" }
     ])
 
+
+    const [playerList, setPlayerList] = useState([])
+    const getPlayerList = async (matchId) => {
+        try {
+            const path = apiPath?.getPlayerList
+            const playerPayload = { matchId: matchId }
+            const result = await apiGet(path, playerPayload);
+            if (result?.data?.success) {
+                setPlayerList(result?.data?.results)
+                return
+            }
+            setPlayerList([])
+
+        } catch (error) {
+            console.error("error in get player list==>>>>", error.message);
+        }
+
+    }
+
+    useEffect(() => {
+        if (stateData?.matchId)
+            getPlayerList(stateData?.matchId)
+
+    }, [stateData])
+
+
+
+
     const checkAllAccess = () => {
 
         // check if no question is selected
@@ -92,17 +119,17 @@ const AddQuestion = ({ setEditShowTradingModal, stateData,ViewallTradingQuestion
 
             setValue('playerPerformance.questions.0.slug', '')
 
-            setValue('playerPerformance.questions.0.playerId', '')
+            setValue('playerPerformance.questions.0.player', '')
             setValue('playerPerformance.questions.0.threshold', '')
 
             setValue('playerPerformance.questions.1.slug', '')
 
-            setValue('playerPerformance.questions.1.playerId', '')
+            setValue('playerPerformance.questions.1.player', '')
             setValue('playerPerformance.questions.1.wicket', '')
             setValue('playerPerformance.questions.1.threshold', '')
 
             setValue('playerPerformance.questions.2.slug', '')
-            setValue('playerPerformance.questions.2.playerId', '')
+            setValue('playerPerformance.questions.2.player', '')
             setValue('playerPerformance.questions.2.sixes', '')
 
             setValue('specificEvent.questions.0.slug', '')
@@ -147,15 +174,15 @@ const AddQuestion = ({ setEditShowTradingModal, stateData,ViewallTradingQuestion
             setValue('playerPerformance.questions.1.slug', '')
             setValue('playerPerformance.questions.2.slug', '')
 
-            setValue('playerPerformance.questions.0.playerId', '')
+            setValue('playerPerformance.questions.0.player', '')
             setValue('playerPerformance.questions.0.threshold', '')
 
 
-            setValue('playerPerformance.questions.1.playerId', '')
+            setValue('playerPerformance.questions.1.player', '')
             setValue('playerPerformance.questions.1.wicket', '')
             setValue('playerPerformance.questions.1.threshold', '')
 
-            setValue('playerPerformance.questions.2.playerId', '')
+            setValue('playerPerformance.questions.2.player', '')
             setValue('playerPerformance.questions.2.sixes', '')
         }
         if (!checkValueExists("specificEvents")) {
@@ -208,17 +235,25 @@ const AddQuestion = ({ setEditShowTradingModal, stateData,ViewallTradingQuestion
                 if (helpers.andOperator(Array.isArray(data[key]?.questions), data[key]?.questions?.length > 0)) {
                     const category = key?.replace(/([a-z])([A-Z])/g, '$1_$2').toUpperCase();
                     const questions = data[key]?.questions?.filter(question => question?.slug).map(question => {
-                        if (!isEmpty(question?.team)) {
+                        if (!isEmpty(question?.player)) {
                             return {
                                 ...question,
                                 slug: question?.slug?.toUpperCase(),
-                                team: JSON.parse(question?.team),
-                            };
+                                player: JSON.parse(question?.player),
+                            }
                         } else {
-                            return {
-                                ...question,
-                                slug: question?.slug?.toUpperCase(),
-                            };
+                            if (!isEmpty(question?.team)) {
+                                return {
+                                    ...question,
+                                    slug: question?.slug?.toUpperCase(),
+                                    team: JSON.parse(question?.team),
+                                };
+                            } else {
+                                return {
+                                    ...question,
+                                    slug: question?.slug?.toUpperCase(),
+                                };
+                            }
                         }
                     });
                     result.push({
@@ -236,33 +271,31 @@ const AddQuestion = ({ setEditShowTradingModal, stateData,ViewallTradingQuestion
             formattedData?.push({ category: 'MANUAL_QUESTION', questions: [{ slug: 'MANUAL_QUESTION', question: e?.manualQuestion }] })
         }
 
-        if(!formattedData?.length&&!e?.manualQuestion){
+        if (!formattedData?.length && !e?.manualQuestion) {
             notification.error('Please select question type or enter question manually.');
-            console.log('formattedData', e)
-
             return
         }
         try {
-            const payloadQuestion={
-                seriesId: helpers.orOperator(stateData?.seriesId,''),
-                matchId: helpers.orOperator(stateData?.matchId,''),
-                questionArray:formattedData
+            const payloadQuestion = {
+                seriesId: helpers.orOperator(stateData?.seriesId, ''),
+                matchId: helpers.orOperator(stateData?.matchId, ''),
+                questionArray: formattedData
             }
             setAddLoader(true)
             const path = apiPath?.addQuestions
             const result = await apiPost(path, payloadQuestion);
             if (result?.data?.success) {
                 ViewallTradingQuestionsList()
-              notification.success(result?.data?.message);
+                notification.success(result?.data?.message);
 
-            //  show question count after add question 
-              let totalQuestionsCount = 0;
-              formattedData?.forEach(item => {
-                totalQuestionsCount += item?.questions?.length;
-              });
-              navigate('/trading-question-manager/view',{state:{...stateData,questionsCount:stateData?.questionsCount+totalQuestionsCount},replace:true})
-             setEditShowTradingModal(false);
-              
+                //  show question count after add question 
+                let totalQuestionsCount = 0;
+                formattedData?.forEach(item => {
+                    totalQuestionsCount += item?.questions?.length;
+                });
+                navigate('/trading-question-manager/view', { state: { ...stateData, questionsCount: stateData?.questionsCount + totalQuestionsCount }, replace: true })
+                setEditShowTradingModal(false);
+
             }
         } catch (error) {
             console.error("error in get add question==>>>>", error.message);
@@ -510,12 +543,11 @@ const AddQuestion = ({ setEditShowTradingModal, stateData,ViewallTradingQuestion
                                                     />
                                                     <label>Did </label>
                                                     <div>
-                                                        <select disabled={!playerPerformance?.index1} {...register('playerPerformance.questions.0.playerId', { required: helpers.orOperator(playerPerformance?.index1, false) })} className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0 peer">
-                                                            <option value="">Select Player X</option>
-                                                            <option value="teamA">Player A</option>
-                                                            <option value="teamB">Player B</option>
+                                                        <select disabled={!playerPerformance?.index1} {...register('playerPerformance.questions.0.player', { required: helpers.orOperator(playerPerformance?.index1, false) })} className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0 peer">
+                                                            <option value="">Select Player</option>
+                                                            {playerList?.map((res, i) => { return (<option key={i} value={JSON.stringify({ playerName: helpers.orOperator(res?.playerName, 'N/A'), playerId: helpers.orOperator(res?.playerId, 'N/A') })}>{res?.playerName}</option>) })}
                                                         </select>
-                                                        {helpers.andOperator(errors?.playerPerformance?.questions[0]?.playerId, <div className="text-[12px] text-red-500">Please select player.</div>)}
+                                                        {helpers.andOperator(errors?.playerPerformance?.questions[0]?.player, <div className="text-[12px] text-red-500">Please select player.</div>)}
                                                     </div>
                                                     <label> score a century? </label>
                                                     <div>
@@ -538,12 +570,11 @@ const AddQuestion = ({ setEditShowTradingModal, stateData,ViewallTradingQuestion
                                                     />
                                                     <label>Did </label>
                                                     <div>
-                                                        <select disabled={!playerPerformance?.index2} {...register('playerPerformance.questions.1.playerId', { required: playerPerformance?.index2 || false, })} className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer">
-                                                            <option value="">Select Player Y</option>
-                                                            <option value="teamA">Player A</option>
-                                                            <option value="teamB">Player B</option>
+                                                        <select disabled={!playerPerformance?.index2} {...register('playerPerformance.questions.1.player', { required: playerPerformance?.index2 || false, })} className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer">
+                                                            <option value="">Select Player</option>
+                                                            {playerList?.map((res, i) => { return (<option key={i} value={JSON.stringify({ playerName: helpers.orOperator(res?.playerName, 'N/A'), playerId: helpers.orOperator(res?.playerId, 'N/A') })}>{res?.playerName}</option>) })}
                                                         </select>
-                                                        {helpers.andOperator(errors?.playerPerformance?.questions[1]?.playerId, <div className="text-[12px] text-red-500">Please select player.</div>)}
+                                                        {helpers.andOperator(errors?.playerPerformance?.questions[1]?.player, <div className="text-[12px] text-red-500">Please select player.</div>)}
                                                     </div>
                                                     <label> take </label>
                                                     <div>
@@ -580,12 +611,11 @@ const AddQuestion = ({ setEditShowTradingModal, stateData,ViewallTradingQuestion
                                                     />
                                                     <label>Did </label>
                                                     <div>
-                                                        <select disabled={!playerPerformance?.index3} {...register('playerPerformance.questions.2.playerId', { required: helpers.orOperator(playerPerformance?.index3, false) })} className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer">
-                                                            <option value="">Select Player Z</option>
-                                                            <option value="teamA">Player A</option>
-                                                            <option value="teamB">Player B</option>
+                                                        <select disabled={!playerPerformance?.index3} {...register('playerPerformance.questions.2.player', { required: helpers.orOperator(playerPerformance?.index3, false) })} className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer">
+                                                            <option value="">Select Player</option>
+                                                            {playerList?.map((res, i) => { return (<option key={i} value={JSON.stringify({ playerName: helpers.orOperator(res?.playerName, 'N/A'), playerId: helpers.orOperator(res?.playerId, 'N/A') })}>{res?.playerName}</option>) })}
                                                         </select>
-                                                        {helpers.andOperator(errors?.playerPerformance?.questions[2]?.playerId, <div className="text-[12px] text-red-500">Please select player.</div>)}
+                                                        {helpers.andOperator(errors?.playerPerformance?.questions[2]?.player, <div className="text-[12px] text-red-500">Please select player.</div>)}
                                                     </div>
                                                     <label> hit more than </label>
                                                     <div className="mt-">
@@ -838,12 +868,12 @@ const AddQuestion = ({ setEditShowTradingModal, stateData,ViewallTradingQuestion
                                     type="button"
                                     onClick={() => setEditShowTradingModal(false)}
                                 >
-                                    <IoClose size={19}/> {t("CLOSE")}
+                                    <IoClose size={19} /> {t("CLOSE")}
                                 </button>
                                 {helpers.ternaryCondition(addLoader,
                                     <LoaderButton />,
                                     <button className="bg-gradientTo text-white flex gap-2 active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150" type="submit"
-                                        title={t("O_ADD")}><IoIosAddCircleOutline size={18}/>{t("O_ADD")} </button>)}
+                                        title={t("O_ADD")}><IoIosAddCircleOutline size={18} />{t("O_ADD")} </button>)}
                             </div>
                         </div>
                     </div>
