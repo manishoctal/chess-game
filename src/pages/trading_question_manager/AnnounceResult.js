@@ -5,7 +5,7 @@ import helpers from "utils/helpers";
 import LoaderButton from "components/reusable/LoaderButton";
 import OInputField from "components/reusable/OInputField";
 import { GrAnnounce } from "react-icons/gr";
-import { apiPost, apiPut } from "utils/apiFetch";
+import { apiPut } from "utils/apiFetch";
 import apiPath from "utils/apiPath";
 import useToastContext from "hooks/useToastContext";
 import { IoClose } from "react-icons/io5";

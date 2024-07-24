@@ -61,8 +61,8 @@ import helpers from 'utils/helpers'
     isFilter: false
   })
   const [sort, setSort] = useState({
-    sortBy: 'startDate',
-    sortType: 'desc'
+    sortBy: '',
+    sortType: ''
   })
 
 
@@ -84,17 +84,18 @@ import helpers from 'utils/helpers'
   // get all trading question list start
   const allTradingQuestionList = async () => {
     try {
-      const { category, startDate, endDate, searchKey } = filterData
+      const { category, startDate, endDate, searchKey,matchStatus } = filterData
 
       const questionPayload = {
         page,
         pageSize: pageSize,
-        status: category,
+        status: helpers.orOperator(category,null),
         startDate: startDate ? dayjs(startDate).format('YYYY-MM-DD') : null,
         endDate: endDate ? dayjs(endDate).format('YYYY-MM-DD') : null,
-        keyword:helpers.normalizeSpaces(searchKey),
-        sortKey: sort.sortBy,
-        sortType: sort.sortType,
+        keyword:helpers.orOperator(helpers.normalizeSpaces(searchKey),null),
+        sortKey: helpers.orOperator(sort.sortBy,null),
+        matchStatus,
+        sortType: helpers.orOperator(sort.sortType,null),
         formatType: toStartCase(filterData?.formatType?.value) || null
 
       }
@@ -138,6 +139,7 @@ import helpers from 'utils/helpers'
   const handleResetTrading = () => {
     setFilterData({
       category: '',
+      matchStatus:'',
       formatType: '',
       startDate: '',
       searchKey: '',
@@ -225,6 +227,7 @@ import helpers from 'utils/helpers'
 
   return (
     <div>
+    
       <div className='bg-[#F9F9F9] dark:bg-slate-900'>
         <div className='px-3 py-4'>
           <div className='bg-white border border-[#E9EDF9] rounded-lg dark:bg-slate-800 dark:border-[#ffffff38]'>
@@ -255,6 +258,26 @@ import helpers from 'utils/helpers'
                       </option>
                       <option value="active">{t("O_ACTIVE")}</option>
                       <option value="inactive">{t("O_INACTIVE")}</option>
+                    </select>
+                  </div>
+
+                  <div className="flex items-center mb-3 ml-3">
+                    <select
+                      id="matchStatus"
+                      type="matchStatus"
+                      name="matchStatus"
+                      className="block p-2 w-full text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer"
+                      placeholder=" "
+                      value={filterData?.matchStatus}
+                      onChange={(e)=>{setFilterData({...filterData,matchStatus:e?.target?.value});setPage(1)}}
+                    >
+                      <option defaultValue value="">
+                        {t("MATCH_STATUS")}
+                      </option>
+                      <option value="cancelled">{t("CANCELLED")}</option>
+                      <option value="completed">{t("FINISHED")}</option>
+                      <option value="live">{t("LIVE")}</option>
+                      <option value="upcoming">{t("NOT_STARTED")}</option>
                     </select>
                   </div>
                   <div className="flex items-center mb-3 ml-3">
