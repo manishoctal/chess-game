@@ -227,84 +227,66 @@ const AddQuestion = ({ setEditShowTradingModal, stateData, ViewallTradingQuestio
 
     // submit function start
     const handleSubmitAddQuestionForm = async (e) => {
-        console.time()
-        function transformData(data) {
-            const result = [];
-
-            Object.keys(data)?.forEach(key => {
-                if (helpers.andOperator(Array.isArray(data[key]?.questions), data[key]?.questions?.length > 0)) {
-                    const category = key?.replace(/([a-z])([A-Z])/g, '$1_$2').toUpperCase();
-                    const questions = data[key]?.questions?.filter(question => question?.slug).map(question => {
+        console.time();
+    
+        const transformData = (data) => {
+            return Object.keys(data)
+                .filter(key => Array.isArray(data[key]?.questions) && data[key]?.questions?.length > 0)
+                .map(key => ({
+                    category: key?.replace(/([a-z])([A-Z])/g, '$1_$2')?.toUpperCase(),
+                    questions: data[key]?.questions?.filter(question => question?.slug).map(question => {
+                        const baseQuestion = { ...question, slug: question?.slug?.toUpperCase() };
                         if (!isEmpty(question?.player)) {
-                            return {
-                                ...question,
-                                slug: question?.slug?.toUpperCase(),
-                                player: JSON.parse(question?.player),
-                            }
+                            baseQuestion.player = JSON.parse(question?.player);
+                        } else if (!isEmpty(question?.team)) {
+                            baseQuestion.team = JSON.parse(question?.team);
                         }
-                        if (!isEmpty(question?.team)) {
-                            return {
-                                ...question,
-                                slug: question?.slug?.toUpperCase(),
-                                team: JSON.parse(question?.team),
-                            };
-                        } else {
-                            return {
-                                ...question,
-                                slug: question?.slug?.toUpperCase(),
-                            };
-                        }
-
-                    });
-                    result.push({
-                        category,
-                        questions
-                    });
-                }
-            });
-            return result;
-        }
-
+                        return baseQuestion;
+                    })
+                }));
+        };
+    
         const transformedData = transformData(e);
-        const formattedData = transformedData?.filter(item => item.questions.length > 0)
+        const formattedData = transformedData?.filter(item => item?.questions?.length > 0);   
         if (e?.manualQuestion) {
-            formattedData?.push({ category: 'MANUAL_QUESTION', questions: [{ slug: 'MANUAL_QUESTION', question: e?.manualQuestion }] })
+            formattedData.push({ category: 'MANUAL_QUESTION', questions: [{ slug: 'MANUAL_QUESTION', question: e?.manualQuestion }] });
         }
-
-        if (helpers.andOperator(!formattedData?.length,!e?.manualQuestion)) {
+    
+        if (!formattedData.length && !e?.manualQuestion) {
             notification.error('Please select question type or enter question manually.');
-            return
+            return;
         }
+    
         try {
             const payloadQuestion = {
-                seriesId: helpers.orOperator(stateData?.seriesId, ''),
-                matchId: helpers.orOperator(stateData?.matchId, ''),
+                seriesId: stateData?.seriesId || '',
+                matchId: stateData?.matchId || '',
                 questionArray: formattedData
-            }
-            setAddLoader(true)
-            const path = apiPath?.addQuestions
-            const result = await apiPost(path, payloadQuestion);
+            };
+    
+            setAddLoader(true);
+            const result = await apiPost(apiPath?.addQuestions, payloadQuestion);
+    
             if (result?.data?.success) {
-                ViewallTradingQuestionsList()
+                ViewallTradingQuestionsList();
                 notification.success(result?.data?.message);
-
-                //  show question count after add question 
-                let totalQuestionsCount = 0;
-                formattedData?.forEach(item => {
-                    totalQuestionsCount += item?.questions?.length;
+    
+                const totalQuestionsCount = formattedData.reduce((acc, item) => acc + item?.questions?.length, 0);
+                navigate('/trading-question-manager/view', { 
+                    state: { ...stateData, questionsCount: stateData?.questionsCount + totalQuestionsCount }, 
+                    replace: true 
                 });
-                navigate('/trading-question-manager/view', { state: { ...stateData, questionsCount: stateData?.questionsCount + totalQuestionsCount }, replace: true })
                 setEditShowTradingModal(false);
-
             }
         } catch (error) {
             console.error("error in get add question==>>>>", error.message);
         } finally {
-            setAddLoader(false)
+            setAddLoader(false);
         }
-
-        console.timeEnd()
+    
+        console.timeEnd();
     };
+    
     // submit function end
 
 
