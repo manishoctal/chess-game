@@ -271,7 +271,7 @@ const AddQuestion = ({ setEditShowTradingModal, stateData, ViewallTradingQuestio
             formattedData?.push({ category: 'MANUAL_QUESTION', questions: [{ slug: 'MANUAL_QUESTION', question: e?.manualQuestion }] })
         }
 
-        if (!formattedData?.length && !e?.manualQuestion) {
+        if (helpers.andOperator(!formattedData?.length,!e?.manualQuestion)) {
             notification.error('Please select question type or enter question manually.');
             return
         }
