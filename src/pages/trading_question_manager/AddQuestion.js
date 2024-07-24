@@ -547,7 +547,7 @@ const AddQuestion = ({ setEditShowTradingModal, stateData, ViewallTradingQuestio
                                                         type="checkbox"
                                                         name="player1"
                                                         id='player1'
-                                                        value={helpers.ternaryCondition(playerPerformance?.index2, 'did_player_take_more_wickets', '')}
+                                                        value={helpers.ternaryCondition(playerPerformance?.index2, 'did_player_take_more_wicket', '')}
                                                         register={register(`playerPerformance.questions.1.slug`, { onChange: () => { setPlayerPerformance({ ...playerPerformance, index2: !playerPerformance?.index2 }) } })}
                                                     />
                                                     <label>Did </label>
