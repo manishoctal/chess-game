@@ -231,7 +231,7 @@ const AddQuestion = ({ setEditShowTradingModal, stateData, ViewallTradingQuestio
         function transformData(data) {
             const result = [];
 
-            Object.keys(data).forEach(key => {
+            Object.keys(data)?.forEach(key => {
                 if (helpers.andOperator(Array.isArray(data[key]?.questions), data[key]?.questions?.length > 0)) {
                     const category = key?.replace(/([a-z])([A-Z])/g, '$1_$2').toUpperCase();
                     const questions = data[key]?.questions?.filter(question => question?.slug).map(question => {
@@ -241,20 +241,20 @@ const AddQuestion = ({ setEditShowTradingModal, stateData, ViewallTradingQuestio
                                 slug: question?.slug?.toUpperCase(),
                                 player: JSON.parse(question?.player),
                             }
-                        } else {
-                            if (!isEmpty(question?.team)) {
-                                return {
-                                    ...question,
-                                    slug: question?.slug?.toUpperCase(),
-                                    team: JSON.parse(question?.team),
-                                };
-                            } else {
-                                return {
-                                    ...question,
-                                    slug: question?.slug?.toUpperCase(),
-                                };
-                            }
                         }
+                        if (!isEmpty(question?.team)) {
+                            return {
+                                ...question,
+                                slug: question?.slug?.toUpperCase(),
+                                team: JSON.parse(question?.team),
+                            };
+                        } else {
+                            return {
+                                ...question,
+                                slug: question?.slug?.toUpperCase(),
+                            };
+                        }
+
                     });
                     result.push({
                         category,
@@ -545,7 +545,7 @@ const AddQuestion = ({ setEditShowTradingModal, stateData, ViewallTradingQuestio
                                                     <div>
                                                         <select disabled={!playerPerformance?.index1} {...register('playerPerformance.questions.0.player', { required: helpers.orOperator(playerPerformance?.index1, false) })} className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0 peer">
                                                             <option value="">Select Player</option>
-                                                            {playerList?.map((res, i) => { return (<option key={i} value={JSON.stringify({ playerName: helpers.orOperator(res?.playerName, 'N/A'), playerId: helpers.orOperator(res?.playerId, 'N/A') })}>{res?.playerName}</option>) })}
+                                                            {playerList?.map((res, ind) => { return (<option key={ind} value={JSON.stringify({ playerName: helpers.orOperator(res?.playerName, 'N/A'), playerId: helpers.orOperator(res?.playerId, 'N/A') })}>{res?.playerName}</option>) })}
                                                         </select>
                                                         {helpers.andOperator(errors?.playerPerformance?.questions[0]?.player, <div className="text-[12px] text-red-500">Please select player.</div>)}
                                                     </div>
@@ -572,7 +572,7 @@ const AddQuestion = ({ setEditShowTradingModal, stateData, ViewallTradingQuestio
                                                     <div>
                                                         <select disabled={!playerPerformance?.index2} {...register('playerPerformance.questions.1.player', { required: playerPerformance?.index2 || false, })} className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer">
                                                             <option value="">Select Player</option>
-                                                            {playerList?.map((res, i) => { return (<option key={i} value={JSON.stringify({ playerName: helpers.orOperator(res?.playerName, 'N/A'), playerId: helpers.orOperator(res?.playerId, 'N/A') })}>{res?.playerName}</option>) })}
+                                                            {playerList?.map((res, ind) => { return (<option key={ind} value={JSON.stringify({ playerName: helpers.orOperator(res?.playerName, 'N/A'), playerId: helpers.orOperator(res?.playerId, 'N/A') })}>{res?.playerName}</option>) })}
                                                         </select>
                                                         {helpers.andOperator(errors?.playerPerformance?.questions[1]?.player, <div className="text-[12px] text-red-500">Please select player.</div>)}
                                                     </div>
@@ -613,7 +613,7 @@ const AddQuestion = ({ setEditShowTradingModal, stateData, ViewallTradingQuestio
                                                     <div>
                                                         <select disabled={!playerPerformance?.index3} {...register('playerPerformance.questions.2.player', { required: helpers.orOperator(playerPerformance?.index3, false) })} className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer">
                                                             <option value="">Select Player</option>
-                                                            {playerList?.map((res, i) => { return (<option key={i} value={JSON.stringify({ playerName: helpers.orOperator(res?.playerName, 'N/A'), playerId: helpers.orOperator(res?.playerId, 'N/A') })}>{res?.playerName}</option>) })}
+                                                            {playerList?.map((res, ind) => { return (<option key={ind} value={JSON.stringify({ playerName: helpers.orOperator(res?.playerName, 'N/A'), playerId: helpers.orOperator(res?.playerId, 'N/A') })}>{res?.playerName}</option>) })}
                                                         </select>
                                                         {helpers.andOperator(errors?.playerPerformance?.questions[2]?.player, <div className="text-[12px] text-red-500">Please select player.</div>)}
                                                     </div>
