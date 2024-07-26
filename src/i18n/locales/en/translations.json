@@ -768,7 +768,8 @@
   "CANCELLED":"Cancelled",
   "LIVE":"In Progress",
   "FINISHED":"Finished",
-  "NOT_STARTED":"Upcoming"
+  "NOT_STARTED":"Upcoming",
+  "O_VISIBILITY":"Visibility"
 
 
 }

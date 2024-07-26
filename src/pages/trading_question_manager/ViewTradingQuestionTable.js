@@ -56,6 +56,28 @@ const ViewTradingQuestionTable = ({
       console.error("error in get status change list==>>>>", error.message);
     }
   };
+  const handelVisibilityStatusChangeTrading = async (itemVisibility) => {
+    try {
+      const payloadVisible = {
+        visibility: helpers.ternaryCondition(
+          itemVisibility?.visibility === "inactive",
+          "active",
+          "inactive"
+        ),
+        type: "question",
+      };
+      const path = `${apiPath.changeStatus}/${itemVisibility?._id}`;
+      const result = await apiPut(path, payloadVisible);
+      if (result?.status === 200) {
+        ViewallTradingQuestionsList()
+        notification.success(result.data.message);
+
+      }
+
+    } catch (error) {
+      console.error("error in get status change list==>>>>", error.message);
+    }
+  };
 
 
   return (
@@ -73,6 +95,10 @@ const ViewTradingQuestionTable = ({
               <OViewTradingTableHead sort={sort} setSort={setSort} name='NO_COUNT' fieldName='optionBCount' classTd={'justify-center'} />
               {(manager?.add || manager?.edit || user?.role === "admin") && (
                 <OViewTradingTableHead sort={sort} setSort={setSort} name='O_STATUS' fieldName='status' classTd={'justify-center'} />)}
+
+              {(manager?.add || manager?.edit || user?.role === "admin") && (
+                <OViewTradingTableHead sort={sort} setSort={setSort} name='O_VISIBILITY' fieldName='visibility' classTd={'justify-center'} />)}
+
               {(manager?.add || manager?.edit || user?.role === "admin") && (
                 <OViewTradingTableHead sort={sort} setSort={setSort} name='MARK_ANSWER' fieldName='announceStatus' classTd={'justify-center'} />)}
               <th scope="col" className="py-3 px-6 text-center">
@@ -123,20 +149,48 @@ const ViewTradingQuestionTable = ({
                     <div className="w-10 h-5 bg-gray-200 rounded-full peer peer-focus:ring-0 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-gradientTo" />
                   </label>
                 </td>)}
+
+
+                {(manager?.add || manager?.edit || user?.role === "admin") && (<td className="py-2 px-4 border-r dark:border-[#ffffff38] text-center">
+                  <label
+                    className="inline-flex relative items-center cursor-pointer"
+                    title={startCase(item?.visibility)}
+                  >
+                    <input
+                      type="checkbox"
+                      className="sr-only peer"
+                      checked={item?.visibility === "active"}
+                      onChange={(e) =>
+                        helpers.alertFunction(
+                          `${t("ARE_YOU_SURE_YOU_WANT_TO")} ${helpers.ternaryCondition(
+                            e.target.checked,
+                            "active",
+                            "inactive"
+                          )} question's visibility?`,
+                          item,
+                          handelVisibilityStatusChangeTrading
+                        )
+                      }
+                    />
+                    <div className="w-10 h-5 bg-gray-200 rounded-full peer peer-focus:ring-0 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-gradientTo" />
+                  </label>
+                </td>)}
+
+
                 {(manager?.add || manager?.edit || user?.role === "admin") && (<td className={`py-2 px-4 text-center border-r dark:border-[#ffffff38]`}>
-                   {helpers.ternaryCondition(item?.category!=='MANUAL_QUESTION','N/A',helpers.ternaryCondition(!item?.announceStatus, <button title={t('ANNOUNCE_RESULT')} onClick={() => { setAnnounceResultModal(true); setAnnounceData(item) }} className="bg-gradientTo text-[10px] px-2 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue">
+                  {helpers.ternaryCondition(item?.category !== 'MANUAL_QUESTION', 'N/A', helpers.ternaryCondition(!item?.announceStatus, <button title={t('ANNOUNCE_RESULT')} onClick={() => { setAnnounceResultModal(true); setAnnounceData(item) }} className="bg-gradientTo text-[10px] px-2 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue">
                     <GrAnnounce size={17} />
                   </button>, <span className="text-green-600 font-bold">{t("RESULT_ANNOUNCED")}</span>))}
                 </td>)}
                 <td className={`py-2 px-4 border-r dark:border-[#ffffff38] text-center`}>
-                <div className="flex flex-col md:flex-row justify-center items-center">
-                  <button title={startCase(item?.optionA)} className=" text-[10px] border-gray-500 px-3 py-2 rounded-lg items-center border text-white hover:bg-gray-100">
-                    <span className="text-[#000000] font-semibold">{startCase(item?.optionA)} {helpers.orOperator(item?.pollAStatus, 0)}</span>
-                  </button>
+                  <div className="flex flex-col md:flex-row justify-center items-center">
+                    <button title={startCase(item?.optionA)} className=" text-[10px] border-gray-500 px-3 py-2 rounded-lg items-center border text-white hover:bg-gray-100">
+                      <span className="text-[#000000] font-semibold">{startCase(item?.optionA)} {helpers.orOperator(item?.pollAStatus, 0)}</span>
+                    </button>
 
-                  <button title={startCase(item?.optionB)} className=" text-[10px] border-gray-500 px-3 mx-2 py-2 rounded-lg items-center border text-white hover:bg-gray-100">
-                    <span className="text-[#000000] font-semibold">{t('O_NO')} {helpers.orOperator(item?.pollBStatus, 0)}</span>
-                  </button>
+                    <button title={startCase(item?.optionB)} className=" text-[10px] border-gray-500 px-3 mx-2 py-2 rounded-lg items-center border text-white hover:bg-gray-100">
+                      <span className="text-[#000000] font-semibold">{t('O_NO')} {helpers.orOperator(item?.pollBStatus, 0)}</span>
+                    </button>
                   </div>
                 </td>
                 {(manager?.view || user?.role === "admin") && (<td className="py-2 px-4 border-l">
