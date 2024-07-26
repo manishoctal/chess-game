@@ -246,14 +246,11 @@ function ViewTradingQuestionManager() {
                                             value={filterData?.status}
                                             onChange={statusPageViewTrading}
                                         >
-                                            <option defaultValue value="">
-                                                {t("O_ALL")}
-                                            </option>
+                                            <option defaultValue value="">{t("O_ALL")}</option>
                                             <option value="active">{t("O_ACTIVE")}</option>
                                             <option value="inactive">{t("O_INACTIVE")}</option>
                                         </select>
                                     </div>
-
                                     <button
                                         type='button'
                                         onClick={handleReset}
@@ -271,7 +268,7 @@ function ViewTradingQuestionManager() {
                                 onClick={AddTradingQuestion}
                                 className='bg-gradientTo text-sm px-4 flex gap-2 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2'
                             >
-                                <IoIosAdd color='white' size={20}/>{t('ADD_QUESTIONS')}
+                                <IoIosAdd color='white' size={20} />{t('ADD_QUESTIONS')}
                             </button>)}
                         </form>
                         <ViewTradingQuestionTable

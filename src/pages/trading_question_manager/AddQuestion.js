@@ -525,9 +525,10 @@ const AddQuestion = ({ setEditShowTradingModal, stateData, ViewallTradingQuestio
                                                     />
                                                     <label>Did </label>
                                                     <div>
+                                                        {console.log('playerList',playerList)}
                                                         <select disabled={!playerPerformance?.index1} {...register('playerPerformance.questions.0.player', { required: helpers.orOperator(playerPerformance?.index1, false) })} className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0 peer">
                                                             <option value="">Select Player</option>
-                                                            {playerList?.map((res, ind) => { return (<option key={ind} value={JSON.stringify({ playerName: helpers.orOperator(res?.playerName, 'N/A'), playerId: helpers.orOperator(res?.playerId, 'N/A') })}>{res?.playerName}</option>) })}
+                                                            {helpers.andOperator(playerList?.length>0,playerList?.map((res, ind) => { return (<option key={ind} value={JSON.stringify({ playerName: helpers.orOperator(res?.playerName, 'N/A'), playerId: helpers.orOperator(res?.playerId, 'N/A') })}>{res?.playerName}</option>) }))}
                                                         </select>
                                                         {helpers.andOperator(errors?.playerPerformance?.questions[0]?.player, <div className="text-[12px] text-red-500">Please select player.</div>)}
                                                     </div>
@@ -554,7 +555,7 @@ const AddQuestion = ({ setEditShowTradingModal, stateData, ViewallTradingQuestio
                                                     <div>
                                                         <select disabled={!playerPerformance?.index2} {...register('playerPerformance.questions.1.player', { required: playerPerformance?.index2 || false, })} className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer">
                                                             <option value="">Select Player</option>
-                                                            {playerList?.map((res, ind) => { return (<option key={ind} value={JSON.stringify({ playerName: helpers.orOperator(res?.playerName, 'N/A'), playerId: helpers.orOperator(res?.playerId, 'N/A') })}>{res?.playerName}</option>) })}
+                                                            {helpers.andOperator(playerList?.length>0,playerList?.map((res, ind) => { return (<option key={ind} value={JSON.stringify({ playerName: helpers.orOperator(res?.playerName, 'N/A'), playerId: helpers.orOperator(res?.playerId, 'N/A') })}>{res?.playerName}</option>) }))}
                                                         </select>
                                                         {helpers.andOperator(errors?.playerPerformance?.questions[1]?.player, <div className="text-[12px] text-red-500">Please select player.</div>)}
                                                     </div>
@@ -595,7 +596,7 @@ const AddQuestion = ({ setEditShowTradingModal, stateData, ViewallTradingQuestio
                                                     <div>
                                                         <select disabled={!playerPerformance?.index3} {...register('playerPerformance.questions.2.player', { required: helpers.orOperator(playerPerformance?.index3, false) })} className="p-1 text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer">
                                                             <option value="">Select Player</option>
-                                                            {playerList?.map((res, ind) => { return (<option key={ind} value={JSON.stringify({ playerName: helpers.orOperator(res?.playerName, 'N/A'), playerId: helpers.orOperator(res?.playerId, 'N/A') })}>{res?.playerName}</option>) })}
+                                                            {helpers.andOperator(playerList?.length>0,playerList?.map((res, ind) => { return (<option key={ind} value={JSON.stringify({ playerName: helpers.orOperator(res?.playerName, 'N/A'), playerId: helpers.orOperator(res?.playerId, 'N/A') })}>{res?.playerName}</option>) }))}
                                                         </select>
                                                         {helpers.andOperator(errors?.playerPerformance?.questions[2]?.player, <div className="text-[12px] text-red-500">Please select player.</div>)}
                                                     </div>
