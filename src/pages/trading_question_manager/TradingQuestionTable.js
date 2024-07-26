@@ -70,6 +70,9 @@ const TradingQuestionTable = ({
       case 'Cancelled':
         return startCase(matchStatus);
 
+        default :
+        return startCase(matchStatus)
+
     }
   }
 
