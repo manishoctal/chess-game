@@ -290,6 +290,8 @@ const helpers = {
         return 'text-green-600 font-bold';
       case 'Cancelled':
         return 'text-red-600 font-bold';
+        case 'Delayed':
+          return 'text-[#ec9630] font-bold';
     }
   },
 
