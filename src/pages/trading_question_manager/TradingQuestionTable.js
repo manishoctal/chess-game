@@ -55,6 +55,28 @@ const TradingQuestionTable = ({
   }
 
 
+  const getMatchStatus = (matchStatus) => {
+    switch (matchStatus) {
+      case 'Live':
+        return startCase(matchStatus);
+      case 'Not Started':
+        return startCase(matchStatus);
+      case 'Finished':
+        return startCase(matchStatus);
+      case 'In Progress':
+        return <>
+          {startCase(matchStatus)} (Live)<span className="relative inline-flex mx-2 h-[5px] w-[5px] mb-[1px] animate-ping rounded-full bg-red-500"></span>
+        </>
+      case 'Cancelled':
+        return startCase(matchStatus);
+
+        default :
+        return startCase(matchStatus)
+
+    }
+  }
+
+
   return (
     <div className="p-3">
       <div className="overflow-x-auto relative rounded-lg border">
@@ -91,7 +113,7 @@ const TradingQuestionTable = ({
                 {getTableDataTrading(item?.matchId)}
                 {getTableDataTrading(startCase(item?.matchName) || 'N/A', 'font-bold')}
                 {getTableDataTrading(item?.formatType?.toUpperCase() || 'N/A')}
-                {getTableDataTrading(startCase(item?.matchStatus) || 'N/A', helpers.getMatchStatus(item?.matchStatus))}
+                {getTableDataTrading(getMatchStatus(item?.matchStatus) || 'N/A', helpers.getMatchStatus(item?.matchStatus))}
                 {getTableDataTrading(helpers.matchDateFormat(item?.startDate))}
                 <td className={`py-2 px-4 border-r dark:border-[#ffffff38] text-center font-bold`}>
                   {item?.questionsCount || 0}

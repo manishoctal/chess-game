@@ -279,7 +279,7 @@ function Banner() {
               </div>
             </form>
             <div className='flex justify-end'>
-              <div className="bg-gray-100 p-2 rounded-md shadow-md w-[25%]">
+              <div className="bg-gray-100 p-2 rounded-md shadow-md">
                 <p className="text-sm text-gray-700 flex">
                   <span className='text-red-500 font-semibold mr-1'>Disclaimer:</span> <marquee className="font-semibold" behavior="slide" direction="left" loop="1">Only 5 banners can be activated at a time.</marquee>
                 </p>

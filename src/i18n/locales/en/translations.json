@@ -768,7 +768,37 @@
   "CANCELLED":"Cancelled",
   "LIVE":"In Progress",
   "FINISHED":"Finished",
-  "NOT_STARTED":"Upcoming"
+  "NOT_STARTED":"Upcoming",
+  "O_VISIBILITY":"Visibility",
+  "PLAYER_CARD_T20":"Player Card T20",
+  "PLAYER_CARD_ODI":"Player Card ODI",
+  "PLAYER_CARD_TEST":"Player Card Test",
+  "PLEASE_ENTER_PLAYER_CARD_T20":"Please enter player card T20.",
+  "PLEASE_ENTER_PLAYER_CARD_ODI":"Please enter player card ODI.",
+  "PLEASE_ENTER_PLAYER_CARD_TEST":"Please enter player card test.",
+  "ADMIN_SETTING":"Admin Setting",
+  "PLATFORM_FEE_HEADING":"Platform Fee",
+  "CARD_AND_STOCK_DETAILS":"Card And Stock Details",
+  "OTHER_SETTING":"Other Setting",
+  "ALL_ROUNDER":"All Rounder",
+  "BATSMAN":"Batsman",
+  "BOWLER":"Bowler",
+  "PLAYER_STOCK_DETAILS":"Player Stock Details",
+  "O_T20":"T20",
+  "O_ODI":"ODI",
+  "O_TEST":"TEST",
+  "PLAYER_DETAILS":"Card Details",
+  "PURCHASED_CARD":"Purchased Card",
+  "CARD_DETAILS":"Card Details",
+  "T20_CARD_LIMIT":"T20 Card Limit",
+   "ODI_CARD_LIMIT":"ODI Card Limit",
+    "TEST_CARD_LIMIT":"Test Card Limit",
+    "CARD_LIMIT_MUST_BE_GREATER_THAN_T20_PURCHASE_CARD":"Limit must be greater than T20 purchased card",
+    "CARD_LIMIT_MUST_BE_GREATER_THAN_ODI_PURCHASE_CARD":"Limit must be greater than ODI purchased card",
+    "CARD_LIMIT_MUST_BE_GREATER_THAN_TEST_PURCHASE_CARD":"Limit must be greater than Test purchased card"
+
+
+
 
 
 }
