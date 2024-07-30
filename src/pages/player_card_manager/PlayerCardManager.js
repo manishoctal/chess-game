@@ -208,21 +208,21 @@ function PlayerCardManager() {
     };
 
     const customStylesSearch = {
-        option: (provided) => ({
-            ...provided,
+        option: (provided1) => ({
+            ...provided1,
             fontSize: '13px',
             zIndex: 999
         }),
-        singleValue: (provided) => ({
-            ...provided,
+        singleValue: (provided1) => ({
+            ...provided1,
             fontSize: '14px',
         }),
-        container: (provided) => ({
-            ...provided,
+        container: (provided1) => ({
+            ...provided1,
             width: 220,
         }),
-        control: (provided) => ({
-            ...provided,
+        control: (provided1) => ({
+            ...provided1,
             height: 20,
             minHeight: 38,
         }),
