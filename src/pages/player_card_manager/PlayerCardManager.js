@@ -6,7 +6,6 @@ import PaginationCard from '../Pagination'
 import { useTranslation } from 'react-i18next'
 import AuthContext from 'context/AuthContext'
 import PageSizeListCard from 'components/PageSizeList'
-import OSearchCard from 'components/reusable/OSearch'
 import { BiReset } from 'react-icons/bi'
 import helpers from 'utils/helpers'
 import OReactSelect from 'components/reusable/OReactSelect'
@@ -29,11 +28,6 @@ function PlayerCardManager() {
         pageCount: 1,
         pageRangeDisplayed: 10
     })
-
-    const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('')
-    const [isInitialized, setIsInitialized] = useState(false)
-    const [searchTerm, setSearchTerm] = useState('')
-
     const [filterData, setFilterData] = useState({
         category: '',
         formatType: '',
@@ -126,42 +120,13 @@ function PlayerCardManager() {
             isFilter: false
         })
         setPage(1)
-        setSearchTerm('')
         setPageSize(10)
     }
-
-
-    useEffect(() => {
-        if (!isInitialized) {
-            setIsInitialized(true)
-        } else if (searchTerm || !filterData?.isReset) {
-            setFilterData({
-                ...filterData,
-                isReset: false,
-                searchKey: debouncedSearchTerm || '',
-                isFilter: !!debouncedSearchTerm
-            })
-            setPage(1)
-        }
-    }, [debouncedSearchTerm])
 
     useEffect(() => {
         updatePageName(t('PLAYER_CARD_MANAGER'))
     }, [])
 
-    // debounce search start
-
-
-    useEffect(() => {
-        const timeoutId = setTimeout(() => {
-            setDebouncedSearchTerm(searchTerm)
-        }, 500)
-        return () => {
-            clearTimeout(timeoutId)
-        }
-    }, [searchTerm])
-
-    // debounce search end
 
     const customStyles = {
         option: (provided) => ({
