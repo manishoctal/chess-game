@@ -32,9 +32,11 @@ const AnnounceResult = ({ setAnnounceResultModal, toAnnounceData,ViewallTradingQ
               const path = `${apiPath.announceResult}/${toAnnounceData?._id}`;
               const result = await apiPut(path, announcePayload);
               if (result?.data?.success) {
-                notification.success(result.data.message);
+                notification.success(result?.data?.message);
                 ViewallTradingQuestionsList()
                 setAnnounceResultModal(false)
+              }else{
+                notification.error(result?.data?.message);
               }
         
         } catch(error) {
