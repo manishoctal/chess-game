@@ -261,7 +261,7 @@ function ViewTradingQuestionManager() {
                                     </button>
                                 </div>
                             </div>
-
+                               <div>
                             {(manager?.add || manager?.edit || user?.role === "admin") && (<button
                                 type='button'
                                 title={t('ADD_QUESTIONS')}
@@ -270,6 +270,7 @@ function ViewTradingQuestionManager() {
                             >
                                 <IoIosAdd color='white' size={20} />{t('ADD_QUESTIONS')}
                             </button>)}
+                            </div>
                         </form>
                         <ViewTradingQuestionTable
                             viewTradingData={viewTradingData?.docs}

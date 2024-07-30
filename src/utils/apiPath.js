@@ -59,7 +59,11 @@ const apiPath = Object.freeze({
   addQuestions:'/v1/admin/questions',
   tradingQuestionList:'/v1/admin/questions',
   announceResult:'/v1/admin/questions/announceResult',
-  getPlayerList:'/v1/admin/questions/getMatchPlayersList'
+  getPlayerList:'/v1/admin/questions/getMatchPlayersList',
+  getMasterData:'/v1/admin/player-card/get-master-data',
+  getPlayerCardList:'/v1/admin/player-card/list',
+  setCardLimit:'/v1/admin/player-card',
+  generatePreSignUrl:'/v1/admin/player-card/generate-pre-signed-url'
 
 });
 

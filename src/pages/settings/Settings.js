@@ -180,7 +180,23 @@ const Settings = () => {
       min: { value: 1, message: t("MINIMUM_VALUE_MUST_IS_1"), },
       valueAsNumber: true,
       validate: (value) => value < watch('maximumSharesForTrade') || t("MIN_SHARE_FOR_TRADE_MUST_BE_LESS"),
-    }
+    },
+
+    playerCardT20: {
+      required: { value: true, message: t("PLEASE_ENTER_PLAYER_CARD_T20"), },
+      maxLength: { value: 3, message: t("MAX_LIMIT_IS_3_CHARACTERS"), },
+      min: { value: 1, message: t("MINIMUM_VALUE_MUST_IS_1"), },
+    },
+    playerCardOdi: {
+      required: { value: true, message: t("PLEASE_ENTER_PLAYER_CARD_ODI"), },
+      maxLength: { value: 3, message: t("MAX_LIMIT_IS_3_CHARACTERS"), },
+      min: { value: 1, message: t("MINIMUM_VALUE_MUST_IS_1"), },
+    },
+    playerCardTests: {
+      required: { value: true, message: t("PLEASE_ENTER_PLAYER_CARD_TEST"), },
+      maxLength: { value: 3, message: t("MAX_LIMIT_IS_3_CHARACTERS"), },
+      min: { value: 1, message: t("MINIMUM_VALUE_MUST_IS_1"), },
+    },
   }
 
 
@@ -195,52 +211,45 @@ const Settings = () => {
                 {t("SETTING")}
               </div>
             </header>
-            <div className="bg-white py-6 px-4  rounded-b-md dark:bg-gray-800 dark:text-white">
-              <div className="px-2  w-full">
-                <div className="justify-between flex items-center">
-                  <div className="flex items-center">
-                    <div className="relative w-24 h-24 ">
+      
+            <div className="bg-white py-6 px-4 rounded-b-md dark:bg-gray-800 dark:text-white">
+              <div className="px-2 w-full">
+                <div className="flex flex-col md:flex-row justify-between items-center">
+                  <div className="flex flex-col sm:flex-row items-center">
+                    <div className="relative w-24 h-24 mb-4 sm:mb-0">
                       <OImage
                         src={pic}
                         fallbackUrl="/images/user.png"
-                        className="w-full h-full border"
+                        className="w-full h-full border rounded-full"
                         alt=""
-                        style={{ borderRadius: "100px" }}
                       />
                     </div>
-
-                    <div className="pl-6  w-full2 flex align-center">
-                      <div>
-                        {(manager?.add || user?.role === "admin") && (
-                          <Link to="/change-password">
-                            {" "}
-                            <OButton
-                              label={<>{t("CHANGE_PASSWORD")}</>}
-                              type="button"
-                              loading={settingChangeLoading}
-                              title={t("CHANGE_PASSWORD")}
-                            />
-                          </Link>
-                        )}
-                      </div>
-
-                      <div className="  ">
-                        <OButton
-                          label={<>{t("VIEW_LOGIN_CREDENTIALS")}</>}
-                          type="button"
-                          // disabled
-                          onClick={() => handleUserView()}
-                          loading={settingChangeLoading}
-                          title={t("VIEW_LOGIN_CREDENTIALS")}
-                        />
-                      </div>
+                    <div className="pl-0 sm:pl-6 flex flex-col sm:flex-row items-center">
+                      {(manager?.add || user?.role === "admin") && (
+                        <Link to="/change-password" className="mb-4 sm:mb-0">
+                          <OButton
+                            label={<>{t("CHANGE_PASSWORD")}</>}
+                            type="button"
+                            loading={settingChangeLoading}
+                            title={t("CHANGE_PASSWORD")}
+                          />
+                        </Link>
+                      )}
+                      <OButton
+                        label={<>{t("VIEW_LOGIN_CREDENTIALS")}</>}
+                        type="button"
+                        onClick={() => handleUserView()}
+                        loading={settingChangeLoading}
+                        title={t("VIEW_LOGIN_CREDENTIALS")}
+                        className="mt-4 sm:mt-0"
+                      />
                     </div>
                   </div>
                 </div>
               </div>
-
-              <main className="justify-center aline-center  flex-wrap grid  lg:grid-cols-6 md:grid-cols-3 sm:grid-cols-2 grid-cols-1  gap-4" />
+              <main className="flex justify-center items-center flex-wrap grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mt-6"></main>
             </div>
+
           </div>
         </section>
       </form>
@@ -251,174 +260,226 @@ const Settings = () => {
             <div className="font-semibold dark:text-white">{t("SETTINGS")}</div>
           </header>
           <div className="bg-white py-6 px-4  rounded-b-md dark:bg-gray-800 dark:text-white">
-            <main className="justify-center  flex-wrap grid  lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1  gap-4">
-              <div className="relative z-0 mb-6 w-full group">
-                <OInputField
-                  wrapperClassName="relative z-0  w-full group"
-                  type="text"
-                  inputLabel={<>{t("ADMIN_EMAIL_ADDRESS")}</>}
-                  id="adminEmail"
-                  maxLength={50}
-                  autoComplete="off"
-                  onInput={(e) => preventMaxInput(e, 50)}
-                  register={register("adminEmail", formValidation["email"])}
-                  placeholder=" "
-                  disable={manager?.add === false}
+            <main className="justify-center flex-wrap grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1  gap-4">
+
+
+              <div className="border border-1  border-[#E1DEDE] rounded-md p-4">
+                <span className="block text-center p-2 text-sm font-bold bg-gray-100">{t("ADMIN_SETTING")}</span>
+                <div className="relative z-0 mb-6 w-full group mt-4">
+                  <OInputField
+                    wrapperClassName="relative z-0  w-full group"
+                    type="text"
+                    inputLabel={<>{t("ADMIN_EMAIL_ADDRESS")}</>}
+                    id="adminEmail"
+                    maxLength={50}
+                    autoComplete="off"
+                    onInput={(e) => preventMaxInput(e, 50)}
+                    register={register("adminEmail", formValidation["email"])}
+                    placeholder=" "
+                    disable={manager?.add === false}
+                  />
+                  <ErrorMessage message={errors?.adminEmail?.message} />
+                </div>
+
+                <ReusableInputField
+                  label={t("MIN_WITHDRAWAL_AMOUNT_TO_BANK")}
+                  id="minWithdrawalLimit"
+                  register={register}
+                  errors={errors}
+                  manager={manager}
+                  validationRules={validationFields?.minWithdrawalLimit}
                 />
-                <ErrorMessage message={errors?.adminEmail?.message} />
+
+                <ReusableInputField
+                  label={t("Max_WITHDRAWAL_AMOUNT_TO_BANK")}
+                  id="maxWithdrawalLimit"
+                  register={register}
+                  errors={errors}
+                  manager={manager}
+                  validationRules={validationFields?.maxWithdrawalLimit}
+                />
+
+                <ReusableInputField
+                  label={t("REFERRAL_BONUS_FOR_TOURIST")}
+                  id="referralAmount"
+                  register={register}
+                  manager={manager}
+                  errors={errors}
+                  validationRules={validationFields?.referralAmount}
+                />
+                <ReusableInputField
+                  label={t("SIGN_UP_BONUS_FOR_LOCAL")}
+                  id="signupBonus"
+                  register={register}
+                  manager={manager}
+                  errors={errors}
+                  validationRules={validationFields.signupBonus}
+                />
               </div>
-              <ReusableInputField
-                label={t("MIN_WITHDRAWAL_AMOUNT_TO_BANK")}
-                id="minWithdrawalLimit"
-                register={register}
-                errors={errors}
-                manager={manager}
-                validationRules={validationFields?.minWithdrawalLimit}
-              />
+              <div className="border border-1  border-[#E1DEDE] rounded-md p-4">
+                <div className="mb-4">
+                  <span className="block text-center text-sm p-2 font-bold bg-gray-100">{t("PLATFORM_FEE_HEADING")}</span>
+                </div>
+                <ReusableInputField
+                  label={t("PLATFORM_FEE")}
+                  id="playerCardPlatfromFee"
+                  register={register}
+                  manager={manager}
+                  errors={errors}
+                  validationRules={validationFields?.playerCardPlatfromFee}
+                />
 
-              <ReusableInputField
-                label={t("Max_WITHDRAWAL_AMOUNT_TO_BANK")}
-                id="maxWithdrawalLimit"
-                register={register}
-                errors={errors}
-                manager={manager}
-                validationRules={validationFields?.maxWithdrawalLimit}
-              />
+                <ReusableInputField
+                  label={t("PLATFORM_FEE_STOCK_PERCENTAGE")}
+                  id="stockPlatfromFee"
+                  register={register}
+                  errors={errors}
+                  manager={manager}
+                  validationRules={validationFields?.stockPlatfromFee}
+                />
 
-              <ReusableInputField
-                label={t("REFERRAL_BONUS_FOR_TOURIST")}
-                id="referralAmount"
-                register={register}
-                manager={manager}
-                errors={errors}
-                validationRules={validationFields?.referralAmount}
-              />
+                <ReusableInputField
+                  label={t("PLATFORM_FEE_QUESTION_TRADE")}
+                  id="questionTradePlatformKey"
+                  register={register}
+                  errors={errors}
+                  manager={manager}
+                  validationRules={validationFields?.questionTradePlatformKey}
+                />
 
-              <ReusableInputField
-                label={t("SIGN_UP_BONUS_FOR_LOCAL")}
-                id="signupBonus"
-                register={register}
-                manager={manager}
-                errors={errors}
-                validationRules={validationFields.signupBonus}
-              />
+                <ReusableInputField
+                  label={t("TDS_IN_PERCENTAGE")}
+                  id="tds"
+                  manager={manager}
+                  register={register}
+                  errors={errors}
+                  validationRules={validationFields?.tds}
+                />
+              </div>
+              <div className="border border-1  border-[#E1DEDE] rounded-md p-4">
+                <div className="mb-4">
+                  <span className="block text-center text-sm p-2 font-bold bg-gray-100">{t("CARD_AND_STOCK_DETAILS")}</span>
+                </div>
+                <ReusableInputField
+                  label={t("NUMBER_OF_PLAYER_STOCK")}
+                  id="numberOfPlayerStocks"
+                  register={register}
+                  errors={errors}
+                  manager={manager}
+                  validationRules={validationFields?.numberOfPlayerStocks}
+                />
 
-              <ReusableInputField
-                label={t("PLATFORM_FEE")}
-                id="playerCardPlatfromFee"
-                register={register}
-                manager={manager}
-                errors={errors}
-                validationRules={validationFields?.playerCardPlatfromFee}
-              />
+                <ReusableInputField
+                  label={t("NUMBER_OF_PLAYER_CARD")}
+                  id="numberOfPlayerCards"
+                  register={register}
+                  manager={manager}
+                  errors={errors}
+                  validationRules={validationFields?.numberOfPlayerCards}
+                />
 
-              <ReusableInputField
-                label={t("PLATFORM_FEE_STOCK_PERCENTAGE")}
-                id="stockPlatfromFee"
-                register={register}
-                errors={errors}
-                manager={manager}
-                validationRules={validationFields?.stockPlatfromFee}
-              />
+                <ReusableInputField
+                  label={t("PENALTY_OF_PERCENTAGE")}
+                  id="penaltyStockPercentage"
+                  register={register}
+                  manager={manager}
+                  errors={errors}
+                  validationRules={validationFields?.penaltyStockPercentage}
+                />
 
-              <ReusableInputField
-                label={t("PLATFORM_FEE_QUESTION_TRADE")}
-                id="questionTradePlatformKey"
-                register={register}
-                errors={errors}
-                manager={manager}
-                validationRules={validationFields?.questionTradePlatformKey}
-              />
+                <ReusableInputField
+                  label={t("MAXIMUM_STOCK_USER_CAN_PURCHASE")}
+                  id="maximumStockPurchase"
+                  register={register}
+                  manager={manager}
+                  errors={errors}
+                  validationRules={validationFields?.maximumStockPurchase}
+                />
 
-              <ReusableInputField
-                label={t("NUMBER_OF_PLAYER_STOCK")}
-                id="numberOfPlayerStocks"
-                register={register}
-                errors={errors}
-                manager={manager}
-                validationRules={validationFields?.numberOfPlayerStocks}
-              />
+                <ReusableInputField
+                  label={t("MAXIMUM_CARD_USER_CAN_PURCHASE")}
+                  id="maximumCardPurchase"
+                  register={register}
+                  errors={errors}
+                  manager={manager}
+                  validationRules={validationFields?.maximumCardPurchase}
+                />
 
-              <ReusableInputField
-                label={t("NUMBER_OF_PLAYER_CARD")}
-                id="numberOfPlayerCards"
-                register={register}
-                manager={manager}
-                errors={errors}
-                validationRules={validationFields?.numberOfPlayerCards}
-              />
+                {/* <ReusableInputField
+                  label={t("TDS_IN_PERCENTAGE")}
+                  id="tds"
+                  manager={manager}
+                  register={register}
+                  errors={errors}
+                  validationRules={validationFields?.tds}
+                /> */}
+              </div>
 
-              <ReusableInputField
-                label={t("PENALTY_OF_PERCENTAGE")}
-                id="penaltyStockPercentage"
-                register={register}
-                manager={manager}
-                errors={errors}
-                validationRules={validationFields?.penaltyStockPercentage}
-              />
+              <div className="border border-1  border-[#E1DEDE] rounded-md p-4">
+                <div className="mb-4">
+                  <span className="block text-center text-sm p-2 font-bold bg-gray-100">{t("OTHER_SETTING")}</span>
+                </div>
+                <ReusableInputField
+                  label={t("MAXIMUM_SHARE_FOR_TRADE")}
+                  id="maximumSharesForTrade"
+                  register={register}
+                  errors={errors}
+                  manager={manager}
+                  validationRules={validationFields?.maximumSharesForTrade}
+                />
 
-              <ReusableInputField
-                label={t("MAXIMUM_STOCK_USER_CAN_PURCHASE")}
-                id="maximumStockPurchase"
-                register={register}
-                manager={manager}
-                errors={errors}
-                validationRules={validationFields?.maximumStockPurchase}
-              />
+                <ReusableInputField
+                  label={t("MINIMUM_SHARE_FOR_TRADE")}
+                  id="minimumSharesForTrade"
+                  register={register}
+                  errors={errors}
+                  manager={manager}
+                  validationRules={validationFields?.minimumSharesForTrade}
+                />
 
-              <ReusableInputField
-                label={t("MAXIMUM_CARD_USER_CAN_PURCHASE")}
-                id="maximumCardPurchase"
-                register={register}
-                errors={errors}
-                manager={manager}
-                validationRules={validationFields?.maximumCardPurchase}
-              />
-
-              <ReusableInputField
-                label={t("TDS_IN_PERCENTAGE")}
-                id="tds"
-                manager={manager}
-                register={register}
-                errors={errors}
-                validationRules={validationFields?.tds}
-              />
-
-              <ReusableInputField
-                label={t("MAXIMUM_SHARE_FOR_TRADE")}
-                id="maximumSharesForTrade"
-                register={register}
-                errors={errors}
-                manager={manager}
-                validationRules={validationFields?.maximumSharesForTrade}
-              />
-
-              <ReusableInputField
-                label={t("MINIMUM_SHARE_FOR_TRADE")}
-                id="minimumSharesForTrade"
-                register={register}
-                errors={errors}
-                manager={manager}
-                validationRules={validationFields?.minimumSharesForTrade}
-              />
-
+                <ReusableInputField
+                  label={t("PLAYER_CARD_T20")}
+                  id="playerCardT20"
+                  manager={manager}
+                  register={register}
+                  errors={errors}
+                  validationRules={validationFields?.playerCardT20}
+                />
+                <ReusableInputField
+                  label={t("PLAYER_CARD_ODI")}
+                  id="playerCardOdi"
+                  register={register}
+                  errors={errors}
+                  manager={manager}
+                  validationRules={validationFields?.playerCardOdi}
+                />
+                <ReusableInputField
+                  label={t("PLAYER_CARD_TEST")}
+                  id="playerCardTests"
+                  register={register}
+                  errors={errors}
+                  manager={manager}
+                  validationRules={validationFields?.playerCardTests}
+                />
+              </div>
             </main>
+
+            {(manager?.add || user?.role === "admin") && (
+              <div className="text-center mt-8">
+                <OButton
+                  disabled={!isDirty}
+                  label={<><GrUpdate size={16} className="mr-2" />{t("O_UPDATE")}</>}
+                  type="submit"
+                  onClick={handleSubmit(handleSubmitForm)}
+                  loading={settingChangeLoading}
+                  title={t("O_UPDATE")}
+                />
+              </div>
+            )}
           </div>
         </div>
       </div>
-      {(manager?.add || user?.role === "admin") && (
-        <div className="text-center mt-4 ">
-          <OButton
-            disabled={!isDirty}
-            label={<><GrUpdate size={16} className="mr-2" />{t("O_UPDATE")}</>}
-            type="submit"
-            onClick={handleSubmit(handleSubmitForm)}
-            loading={settingChangeLoading}
-            title={t("O_UPDATE")}
-          />
-        </div>
-      )}
-
+    
       {viewShowModal ? (
         <Credential setViewShowModal={setViewShowModal} email={user?.email} />
       ) : null}
@@ -441,6 +502,7 @@ const ReusableInputField = ({ label, id, register, errors, validationRules, mana
       type="number"
       wrapperClassName="relative z-0  w-full group"
       maxLength={40}
+      labelType={true}
       disable={manager?.add === false}
       inputLabel={<>{label}</>}
       id={id}
