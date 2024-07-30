@@ -11,7 +11,6 @@ import helpers from 'utils/helpers'
 import OReactSelect from 'components/reusable/OReactSelect'
 import EditLimitModal from './EditLimitModal'
 import { isEmpty } from 'lodash'
-
 function PlayerCardManager() {
     const { t } = useTranslation()
     const { user, updatePageName } = useContext(AuthContext)
@@ -19,19 +18,21 @@ function PlayerCardManager() {
     const [isDelete] = useState(false)
     const manager = user?.permission?.find(e => e.manager === 'player_card_manager') ?? {}
     const [editShowLimitModal, setEditShowLimitModal] = useState(false)
-
     const [playerCard, setPlayerCard] = useState([])
     const [page, setPage] = useState(1)
+    const[playerListSearch,setPlayerListSearch]=useState([])
 
     const [paginationCardObj, setPaginationCardObj] = useState({
         page: 1,
         pageCount: 1,
         pageRangeDisplayed: 10
     })
-    const [filterData, setFilterData] = useState({
+    const [filterData, setFilterDataPlayerCard] = useState({
         category: '',
         formatType: '',
+        keyword:'',
         playerRole: '',
+        gender: '',
         playerRanking: '',
         playerTeam: '',
         searchKey: '',
@@ -46,25 +47,32 @@ function PlayerCardManager() {
     })
 
 
+    const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('')
+    const [isInitialized, setIsInitializedPlayerCard] = useState(false)
+    const [searchTerm, setSearchTermPlayerCard] = useState('')
+
+
     const [activeIndex, setActiveIndex] = useState(null);
     const [activeData, setActiveData] = useState(null);
 
     // get all offer list start
     const getAllPlayerCard = async () => {
         try {
-            const { category, searchKey, playerRanking, playerTeam, playerRole, formatType } = filterData
+            const { category, playerRanking, playerTeam, playerRole, formatType, gender,keyword } = filterData
 
             const payloadCard = {
                 page,
                 pageSize: pageSize,
                 status: category,
-                keyword: helpers.normalizeSpaces(searchKey) || null,
                 sortBy: sort.sortBy,
                 sortType: sort.sortType,
                 format: helpers.orOperator(formatType?.value, null),
                 rank: helpers.orOperator(playerRanking?.value, null),
                 team: helpers.orOperator(playerTeam?.value, null),
-                playerRole: helpers.orOperator(playerRole?.value, null)
+                playerRole: helpers.orOperator(playerRole?.value, null),
+                gender: helpers.orOperator(gender?.value, null),
+                keyword: helpers.orOperator(keyword?.value, null)
+
             }
 
             const path = apiPath.getPlayerCardList
@@ -88,6 +96,17 @@ function PlayerCardManager() {
         }
     }
 
+
+    useEffect(() => {
+        if (!isInitialized) {
+            console.log("🚀 ~ useEffect ~ isInitialized:", isInitialized);
+            setIsInitializedPlayerCard(true);
+        } else if (searchTerm) {
+            getSearchedData(debouncedSearchTerm)
+        }
+    }, [debouncedSearchTerm]);
+
+
     useEffect(() => {
         // api call function
         getAllPlayerCard()
@@ -95,6 +114,40 @@ function PlayerCardManager() {
     }, [filterData, page, sort, pageSize])
 
     // get all wallet list end
+
+
+
+    // debounce search start
+
+
+    useEffect(() => {
+        const timeoutId = setTimeout(() => {
+            setDebouncedSearchTerm(searchTerm?.trim())
+        }, 500)
+        return () => {
+            clearTimeout(timeoutId)
+        }
+    }, [searchTerm])
+
+    // debounce search end
+
+
+    const getSearchedData = async (e) => {
+        try {
+            const payloadCard = {
+                keyword: e
+            }
+            const path = apiPath.getPlayerDataSearched
+            const playerList = await apiGet(path, payloadCard)
+                 if(playerList?.data?.success){
+                    const listPlayer=playerList?.data?.results?.map((res)=>{return{label:res?.playerName,value:res?.playerId}})
+                    setPlayerListSearch(listPlayer)
+                 }
+        } catch (error) {
+            console.error('error in get all sub admin list==>>>>', error.message)
+        }
+    }
+
 
     const handlePageClick = event => {
         const newPage = event.selected + 1
@@ -107,10 +160,12 @@ function PlayerCardManager() {
     }
 
     const handleCardReset = () => {
-        setFilterData({
+        setFilterDataPlayerCard({
             category: '',
             formatType: '',
             playerRole: '',
+            keyword:'',
+            gender: '',
             playerRanking: '',
             playerTeam: '',
             startDate: '',
@@ -120,6 +175,8 @@ function PlayerCardManager() {
             isFilter: false
         })
         setPage(1)
+        setSearchTermPlayerCard('')
+        setPlayerListSearch([])
         setPageSize(10)
     }
 
@@ -144,6 +201,28 @@ function PlayerCardManager() {
         }),
         control: (provided) => ({
             ...provided,
+            height: 20,
+            minHeight: 38,
+        }),
+
+    };
+
+    const customStylesSearch = {
+        option: (provided1) => ({
+            ...provided1,
+            fontSize: '13px',
+            zIndex: 999
+        }),
+        singleValue: (provided1) => ({
+            ...provided1,
+            fontSize: '14px',
+        }),
+        container: (provided1) => ({
+            ...provided1,
+            width: 220,
+        }),
+        control: (provided1) => ({
+            ...provided1,
             height: 20,
             minHeight: 38,
         }),
@@ -195,8 +274,16 @@ function PlayerCardManager() {
                         <form className='border-b border-b-[#E3E3E3] 2xl:flex gap-2 px-4 py-3 justify-between'>
                             <div className='col-span-2 flex flex-wrap  items-center'>
                                 <div className='flex items-center lg:pt-0 pt-3 flex-wrap justify-center mb-2 2xl:mb-0 mt-3'>
+                                    <OReactSelect name='playerList' onChange={(e) => { setPage(1); setFilterDataPlayerCard({ ...filterData, keyword: e }) }} options={playerListSearch}
+                                        inputValue={searchTerm}
+                                        onInputChange={(value) => { setSearchTermPlayerCard(value) }}
+                                        placeholder={
+                                            <span className='text-[14px]'>
+                                                {t("SEARCH_BY_PLAYER_NAME_PLAYER_ROLE")}
+                                            </span>
+                                        } value={filterData?.keyword} style={customStylesSearch} />
 
-                                    <OReactSelect name='playerRole' onChange={(e) => {setPage(1); setFilterData({ ...filterData, playerRole: e }) }} options={formatData?.playerRole}
+                                    <OReactSelect name='playerRole' onChange={(e) => { setPage(1); setFilterDataPlayerCard({ ...filterData, playerRole: e }) }} options={formatData?.playerRole}
                                         placeholder={
                                             <span className='text-[14px]'>
                                                 {t("PLAYER_ROLE")}
@@ -205,7 +292,7 @@ function PlayerCardManager() {
 
 
 
-                                    <OReactSelect name='formatType' onChange={(e) => {setPage(1); setFilterData({ ...filterData, formatType: e }) }} options={formatData?.formatType}
+                                    <OReactSelect name='formatType' onChange={(e) => { setPage(1); setFilterDataPlayerCard({ ...filterData, formatType: e }) }} options={formatData?.formatType}
                                         placeholder={
                                             <span className='text-[14px]'>
                                                 {t("FORMAT_TYPE")}
@@ -214,19 +301,26 @@ function PlayerCardManager() {
 
 
 
-                                    <OReactSelect name='playerRanking' onChange={(e) => {setPage(1); setFilterData({ ...filterData, playerRanking: e }) }} options={formatData?.playerRanking}
+                                    <OReactSelect name='playerRanking' onChange={(e) => { setPage(1); setFilterDataPlayerCard({ ...filterData, playerRanking: e }) }} options={formatData?.playerRanking}
                                         placeholder={
                                             <span className='text-[14px]'>
                                                 {t("PLAYER_RANKING")}
                                             </span>
                                         } value={filterData?.playerRanking} style={customStyles} disable={isEmpty(filterData?.formatType)} />
 
-                                    <OReactSelect name='playerTeam' onChange={(e) => {setPage(1); setFilterData({ ...filterData, playerTeam: e }) }} options={formatData?.teamData}
+                                    <OReactSelect name='playerTeam' onChange={(e) => { setPage(1); setFilterDataPlayerCard({ ...filterData, playerTeam: e }) }} options={formatData?.teamData}
                                         placeholder={
                                             <span className='text-[14px]'>
                                                 {t("PLAYER_TEAM")}
                                             </span>
                                         } value={filterData?.playerTeam} style={customStyles} />
+
+                                    <OReactSelect name='gender' onChange={(e) => { setPage(1); setFilterDataPlayerCard({ ...filterData, gender: e }) }} options={[{ label: "Male", value: 'male' }, { label: "Female", value: 'female' }]}
+                                        placeholder={
+                                            <span className='text-[14px]'>
+                                                {t("GENDER")}
+                                            </span>
+                                        } value={filterData?.gender} style={customStyles} />
 
                                     <button
                                         type='button'

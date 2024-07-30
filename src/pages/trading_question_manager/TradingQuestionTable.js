@@ -65,7 +65,7 @@ const TradingQuestionTable = ({
         return startCase(matchStatus);
       case 'In Progress':
         return <>
-          {startCase(matchStatus)} (Live)<span className="relative inline-flex mx-2 h-[5px] w-[5px] mb-[1px] animate-ping rounded-full bg-red-500"></span>
+          {startCase(matchStatus)}<span className="relative inline-flex mx-2 h-[5px] w-[5px] mb-[1px] animate-ping rounded-full bg-red-500"></span>
         </>
       case 'Cancelled':
         return startCase(matchStatus);
@@ -114,8 +114,8 @@ const TradingQuestionTable = ({
                 {getTableDataTrading(startCase(item?.matchName) || 'N/A', 'font-bold')}
                 {getTableDataTrading(item?.formatType?.toUpperCase() || 'N/A')}
                 {getTableDataTrading(getMatchStatus(item?.matchStatus) || 'N/A', helpers.getMatchStatus(item?.matchStatus))}
-                {getTableDataTrading(helpers.matchDateFormat(item?.startDate))}
-                <td className={`py-2 px-4 border-r dark:border-[#ffffff38] text-center font-bold`}>
+                {getTableDataTrading(helpers.matchDateFormat(item?.startDate),'w-[130px]')}
+                <td className={`py-2 px-4 border-r dark:border-[#ffffff38] text-center font-bold w-20`}>
                   {item?.questionsCount || 0}
                 </td>
                 {(manager?.add || manager?.edit || user?.role === "admin") && (<td className="py-2 px-4 border-r dark:border-[#ffffff38] text-center">

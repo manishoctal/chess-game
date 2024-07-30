@@ -223,7 +223,7 @@ function Banner() {
           <div className='bg-white border border-[#E9EDF9] rounded-lg dark:bg-slate-800 dark:border-[#ffffff38]'>
             <form className='border-b border-b-[#E3E3E3] 2xl:flex gap-2 px-4 py-3'>
               <div className='col-span-2 flex flex-wrap  items-center'>
-                <div className='flex items-center lg:pt-0 pt-3 flex-wrap justify-center mb-2 2xl:mb-0'>
+                <div className='flex items-center lg:pt-0 pt-3 flex-wrap  mb-2 2xl:mb-0'>
                   <div className='relative flex items-center mb-3'>
                     <OSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm} placeholder={t('SEARCH_BY_BANNER_ID')} />
                   </div>

@@ -63,7 +63,8 @@ const apiPath = Object.freeze({
   getMasterData:'/v1/admin/player-card/get-master-data',
   getPlayerCardList:'/v1/admin/player-card/list',
   setCardLimit:'/v1/admin/player-card',
-  generatePreSignUrl:'/v1/admin/player-card/generate-pre-signed-url'
+  generatePreSignUrl:'/v1/admin/player-card/generate-pre-signed-url',
+  getPlayerDataSearched:'/v1/admin/player-card/search-keyword'
 
 });
 

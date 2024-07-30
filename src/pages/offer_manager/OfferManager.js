@@ -71,7 +71,7 @@ function OfferManager() {
         status: category,
         startDate: startDate ? dayjs(startDate).format('YYYY-MM-DD') : null,
         endDate: endDate ? dayjs(endDate).format('YYYY-MM-DD') : null,
-        keyword: helpers.normalizeSpaces(searchKey)||null,
+        keyword: helpers.normalizeSpaces(searchKey) || null,
         sortBy: sort.sortBy,
         sortType: sort.sortType
       }
@@ -184,8 +184,8 @@ function OfferManager() {
         <div className='px-3 py-4'>
           <div className='bg-white border border-[#E9EDF9] rounded-lg dark:bg-slate-800 dark:border-[#ffffff38]'>
             <form className='border-b border-b-[#E3E3E3] 2xl:flex gap-2 px-4 py-3 justify-between'>
-              <div className='col-span-2 flex flex-wrap  items-center'>
-                <div className='flex items-center lg:pt-0 pt-3 flex-wrap justify-center mb-2 2xl:mb-0'>
+              <div className='col-span-2 flex-wrap items-center'>
+                <div className='flex items-center lg:pt-0 pt-3  justify-center mb-2 2xl:mb-0'>
                   <div className='relative flex items-center mb-3'>
                     <OSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm} placeholder={t('SEARCH_BY_OFFER_ID_OFFER_CODE')} />
                   </div>
@@ -214,26 +214,28 @@ function OfferManager() {
                     </select>
                   </div>
 
-
+                 
                   <button
                     type='button'
                     onClick={handleOfferReset}
                     title={t('O_RESET')}
-                    className='bg-gradientTo text-sm px-6 flex gap-2 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2'
+                    className='bg-gradientTo text-sm px-6 mx-2 flex mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue'
                   >
                     <BiReset size={18} /> {t('O_RESET')}
                   </button>
                 </div>
               </div>
 
-              {(manager?.add || user?.role === "admin") && (<button
-                type='button'
-                title={t('ADD_OFFER')}
-                onClick={() => { setEditShowOfferModal(true); setEditView('add') }}
-                className='bg-gradientTo text-sm px-4 flex gap-2 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue'
-              >
-                <IoIosAdd size={20} /> {t('ADD_OFFER')}
-              </button>)}
+              <div className='flex justify-end'>
+                {(manager?.add || user?.role === "admin") && (<button
+                  type='button'
+                  title={t('ADD_OFFER')}
+                  onClick={() => { setEditShowOfferModal(true); setEditView('add') }}
+                  className='bg-gradientTo text-sm px-4 flex gap-2 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue'
+                >
+                  <IoIosAdd size={20} /> {t('ADD_OFFER')}
+                </button>)}
+              </div>
             </form>
 
             <SubTable
