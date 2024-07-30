@@ -196,7 +196,7 @@ function PlayerCardManager() {
                             <div className='col-span-2 flex flex-wrap  items-center'>
                                 <div className='flex items-center lg:pt-0 pt-3 flex-wrap justify-center mb-2 2xl:mb-0 mt-3'>
 
-                                    <OReactSelect name='playerRole' onChange={(e) => { setFilterData({ ...filterData, playerRole: e }) }} options={formatData?.playerRole}
+                                    <OReactSelect name='playerRole' onChange={(e) => {setPage(1); setFilterData({ ...filterData, playerRole: e }) }} options={formatData?.playerRole}
                                         placeholder={
                                             <span className='text-[14px]'>
                                                 {t("PLAYER_ROLE")}
@@ -205,7 +205,7 @@ function PlayerCardManager() {
 
 
 
-                                    <OReactSelect name='formatType' onChange={(e) => { setFilterData({ ...filterData, formatType: e }) }} options={formatData?.formatType}
+                                    <OReactSelect name='formatType' onChange={(e) => {setPage(1); setFilterData({ ...filterData, formatType: e }) }} options={formatData?.formatType}
                                         placeholder={
                                             <span className='text-[14px]'>
                                                 {t("FORMAT_TYPE")}
@@ -214,14 +214,14 @@ function PlayerCardManager() {
 
 
 
-                                    <OReactSelect name='playerRanking' onChange={(e) => { setFilterData({ ...filterData, playerRanking: e }) }} options={formatData?.playerRanking}
+                                    <OReactSelect name='playerRanking' onChange={(e) => {setPage(1); setFilterData({ ...filterData, playerRanking: e }) }} options={formatData?.playerRanking}
                                         placeholder={
                                             <span className='text-[14px]'>
                                                 {t("PLAYER_RANKING")}
                                             </span>
                                         } value={filterData?.playerRanking} style={customStyles} disable={isEmpty(filterData?.formatType)} />
 
-                                    <OReactSelect name='playerTeam' onChange={(e) => { setFilterData({ ...filterData, playerTeam: e }) }} options={formatData?.teamData}
+                                    <OReactSelect name='playerTeam' onChange={(e) => {setPage(1); setFilterData({ ...filterData, playerTeam: e }) }} options={formatData?.teamData}
                                         placeholder={
                                             <span className='text-[14px]'>
                                                 {t("PLAYER_TEAM")}
