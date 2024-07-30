@@ -22,6 +22,7 @@ const EditLimitModal = ({ setEditShowLimitModal, cardLimitEdit, getAllPlayerCard
     const {
         register,
         handleSubmit,
+        watch,
         formState: { errors },
     } = useForm({
         mode: "onBlur",
@@ -68,6 +69,7 @@ const EditLimitModal = ({ setEditShowLimitModal, cardLimitEdit, getAllPlayerCard
     }
     const [PlayerImag, setPlayerImage] = useState(cardLimitEdit?.playerImage)
     const handleFileChangePlayer = async (e) => {
+        if(e?.target?.files){
         try {
             const payloadPre = {
                 contentType: e?.target?.files[0]?.type,
@@ -85,6 +87,7 @@ const EditLimitModal = ({ setEditShowLimitModal, cardLimitEdit, getAllPlayerCard
 
         const url = URL?.createObjectURL(e?.target?.files[0])
         setPlayerImage(url)
+    }
     }
 
 
@@ -279,7 +282,7 @@ const EditLimitModal = ({ setEditShowLimitModal, cardLimitEdit, getAllPlayerCard
                                 {helpers.ternaryCondition(loader,
                                     <LoaderButton />,
                                     <button className="bg-gradientTo text-white active:bg-emerald-600 font-normal text-sm px-8 flex gap-2 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150" type="submit"
-                                        title={t("O_EDIT")}> <FaEdit size={16} />{t("O_EDIT")} </button>)}
+                                        title={t("O_EDIT")} disabled={helpers.andOperator(helpers.andOperator(!watch('availableCardT20'), !watch('availableCardOdi')), helpers.andOperator(!watch('availableCardTests'), isEmpty(playerImgPath)))}> <FaEdit size={16} />{t("O_EDIT")} </button>)}
                             </div>
                         </div>
                     </div>

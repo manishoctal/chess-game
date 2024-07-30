@@ -92,7 +92,7 @@ const PlayerCardTable = ({
                                     {getTableDataPlayerCard(startCase(item?.playerName || 'N/A'),'font-bold')}
                                     {getTableDataPlayerCard(startCase(item?.gender || 'N/A'),'font-bold')}
                                     <td className="py-2 px-4 border-r dark:border-[#ffffff38] flex justify-center">
-                                        <div className="relative w-14 h-15 mb-4 sm:mb-0">
+                                        <div className="relative w-14 h-15 mb-4 sm:mb-0" onClick={(e)=>{e.stopPropagation(); setIsOpenView(item); setFormatType('image')}}>
                                             <OImage
                                                 src={item?.playerImage}
                                                 fallbackUrl="/images/user.png"
@@ -140,21 +140,21 @@ const PlayerCardTable = ({
                                                         {helpers.orOperator(helpers.orOperator(activeData?.t20RankingAllRounders, activeData?.t20RankingBatsmen), activeData?.t20RankingBowlers) && <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700" >
                                                             {getTableDataPlayerCard('T20')}
                                                             {getTableDataPlayerCard(activeData?.availableCardT20, 'font-bold')}
-                                                            <td className="py-3 px-3 cursor-pointer text-center border-r flex justify-center" onClick={() => { setIsOpenView(activeData); setFormatType('T20') }}><AiFillEye className="cursor-pointer w-5 h-5 text-slate-600" title={t('VIEW')}/></td>
+                                                            <td className="py-3 px-3 cursor-pointer text-center border-r flex justify-center"><AiFillEye className="cursor-pointer w-5 h-5 text-slate-600" title={t('VIEW')} onClick={() => { setIsOpenView(activeData); setFormatType('T20') }}/></td>
 
 
                                                         </tr>}
                                                         {helpers.orOperator(helpers.orOperator(activeData?.odiRankingAllRounders, activeData?.odiRankingBatsmen), activeData?.odiRankingBowlers) && <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700" >
                                                             {getTableDataPlayerCard('ODI')}
                                                             {getTableDataPlayerCard(activeData?.availableCardOdi, 'font-bold')}
-                                                            <td className="py-3 px-3 cursor-pointer text-center border-r flex justify-center" onClick={() => { setIsOpenView(activeData); setFormatType('ODI') }}><AiFillEye className="cursor-pointer w-5 h-5 text-slate-600" title={t('VIEW')}/></td>
+                                                            <td className="py-3 px-3 cursor-pointer text-center border-r flex justify-center"><AiFillEye className="cursor-pointer w-5 h-5 text-slate-600" title={t('VIEW')} onClick={() => { setIsOpenView(activeData); setFormatType('ODI') }}/></td>
 
 
                                                         </tr>}
                                                         {helpers.orOperator(helpers.orOperator(activeData?.testsRankingAllRounders, activeData?.testsRankingBatsmen), activeData?.testsRankingBowlers) && <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700" >
                                                             {getTableDataPlayerCard('TEST')}
                                                             {getTableDataPlayerCard(activeData?.availableCardTests, 'font-bold')}
-                                                            <td className="py-3 px-3 cursor-pointer text-center border-r flex justify-center" onClick={() => { setIsOpenView(activeData); setFormatType('TEST') }}><AiFillEye className="cursor-pointer w-5 h-5 text-slate-600" title={t('VIEW')}/></td>
+                                                            <td className="py-3 px-3 cursor-pointer text-center border-r flex justify-center"><AiFillEye className="cursor-pointer w-5 h-5 text-slate-600" title={t('VIEW')} onClick={() => { setIsOpenView(activeData); setFormatType('TEST')}}/></td>
                                                         </tr>}
                                                     </tbody>
                                                 </table>

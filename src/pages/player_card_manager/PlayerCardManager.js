@@ -182,12 +182,6 @@ function PlayerCardManager() {
     }
 
     // add edit modal end
-
-
-
-
-
-
     const handleAccordionClick = (index, item) => {
         setActiveIndex(activeIndex === index ? null : index);
         setActiveData(item)
