@@ -277,6 +277,9 @@ const AddQuestion = ({ setEditShowTradingModal, stateData, ViewallTradingQuestio
                     replace: true 
                 });
                 setEditShowTradingModal(false);
+            }else{
+                notification.error(result?.data?.message);
+                setEditShowTradingModal(false);
             }
         } catch (error) {
             console.error("error in get add question==>>>>", error.message);

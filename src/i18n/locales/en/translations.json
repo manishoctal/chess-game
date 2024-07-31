@@ -795,7 +795,8 @@
     "TEST_CARD_LIMIT":"Test Card Limit",
     "CARD_LIMIT_MUST_BE_GREATER_THAN_T20_PURCHASE_CARD":"Limit must be greater than T20 purchased card",
     "CARD_LIMIT_MUST_BE_GREATER_THAN_ODI_PURCHASE_CARD":"Limit must be greater than ODI purchased card",
-    "CARD_LIMIT_MUST_BE_GREATER_THAN_TEST_PURCHASE_CARD":"Limit must be greater than Test purchased card"
+    "CARD_LIMIT_MUST_BE_GREATER_THAN_TEST_PURCHASE_CARD":"Limit must be greater than Test purchased card",
+    "O_TOSS":"Toss Status"
 
 
 

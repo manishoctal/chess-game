@@ -37,6 +37,7 @@ const AnnounceResult = ({ setAnnounceResultModal, toAnnounceData,ViewallTradingQ
                 setAnnounceResultModal(false)
               }else{
                 notification.error(result?.data?.message);
+                setAnnounceResultModal(false)
               }
         
         } catch(error) {

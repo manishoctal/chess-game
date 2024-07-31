@@ -224,11 +224,11 @@ const Settings = () => {
                       />
                     </div>
                   </div>
-                  <div className="grid lg:grid-cols-1 xl:grid-cols-1 2xl:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 grid-cols-1 gap-2">
+                  <div className="grid lg:grid-cols-1 xl:grid-cols-1 2xl:grid-cols-2  md:grid-cols-2 sm:grid-cols-1 grid-cols-1 gap-2">
                     {(manager?.add || user?.role === "admin") && (
                       <Link to="/change-password"
                         title={t("CHANGE_PASSWORD")}
-                        className="mt-4 sm:mt-0 px-1 text-center  text-white bg-gradientTo hover:bg-DarkBlue cursor-pointer  font-normal active:bg-slate-100 text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150"
+                        className="mt-4 sm:mt-0 px-1 text-center  text-white bg-gradientTo hover:bg-DarkBlue cursor-pointer  font-normal active:bg-slate-100 text-sm py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150"
                       >
                         {t("CHANGE_PASSWORD")}
                       </Link>
@@ -237,7 +237,7 @@ const Settings = () => {
                       type="button"
                       onClick={() => handleUserView()}
                       title={t("VIEW_LOGIN_CREDENTIALS")}
-                      className="mt-4 sm:mt-0 px-1 text-white bg-gradientTo hover:bg-DarkBlue cursor-pointer  font-normal active:bg-slate-100 text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150"
+                      className="mt-4 sm:mt-0 text-white bg-gradientTo hover:bg-DarkBlue cursor-pointer  font-normal active:bg-slate-100 text-sm px-1 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150"
                     >{t("VIEW_LOGIN_CREDENTIALS")}</button>
                   </div>
 
