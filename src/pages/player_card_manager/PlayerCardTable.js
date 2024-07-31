@@ -143,21 +143,21 @@ const PlayerCardTable = ({
                                                         {helpers.orOperator(helpers.orOperator(activeData?.t20RankingAllRounders, activeData?.t20RankingBatsmen), activeData?.t20RankingBowlers) && <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700" >
                                                             {getTableDataPlayerCard('T20')}
                                                             {getTableDataPlayerCard(activeData?.availableCardT20, 'font-bold')}
-                                                            <td className="py-3 px-3 cursor-pointer text-center border-r flex justify-center"><AiFillEye className="cursor-pointer w-5 h-5 text-slate-600" title={t('VIEW')} onClick={() => { setIsOpenView(activeData); setFormatType('T20') }} /></td>
+                                                            <td className="py-3 px-3 cursor-pointer text-center flex justify-center"><AiFillEye className="cursor-pointer w-5 h-5 text-slate-600" title={t('VIEW')} onClick={() => { setIsOpenView(activeData); setFormatType('T20') }} /></td>
 
 
                                                         </tr>}
                                                         {helpers.orOperator(helpers.orOperator(activeData?.odiRankingAllRounders, activeData?.odiRankingBatsmen), activeData?.odiRankingBowlers) && <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700" >
                                                             {getTableDataPlayerCard('ODI')}
                                                             {getTableDataPlayerCard(activeData?.availableCardOdi, 'font-bold')}
-                                                            <td className="py-3 px-3 cursor-pointer text-center border-r flex justify-center"><AiFillEye className="cursor-pointer w-5 h-5 text-slate-600" title={t('VIEW')} onClick={() => { setIsOpenView(activeData); setFormatType('ODI') }} /></td>
+                                                            <td className="py-3 px-3 cursor-pointer text-center flex justify-center"><AiFillEye className="cursor-pointer w-5 h-5 text-slate-600" title={t('VIEW')} onClick={() => { setIsOpenView(activeData); setFormatType('ODI') }} /></td>
 
 
                                                         </tr>}
                                                         {helpers.orOperator(helpers.orOperator(activeData?.testsRankingAllRounders, activeData?.testsRankingBatsmen), activeData?.testsRankingBowlers) && <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700" >
                                                             {getTableDataPlayerCard('TEST')}
                                                             {getTableDataPlayerCard(activeData?.availableCardTests, 'font-bold')}
-                                                            <td className="py-3 px-3 cursor-pointer text-center border-r flex justify-center"><AiFillEye className="cursor-pointer w-5 h-5 text-slate-600" title={t('VIEW')} onClick={() => { setIsOpenView(activeData); setFormatType('TEST') }} /></td>
+                                                            <td className="py-3 px-3 cursor-pointer text-center flex justify-center"><AiFillEye className="cursor-pointer w-5 h-5 text-slate-600" title={t('VIEW')} onClick={() => { setIsOpenView(activeData); setFormatType('TEST') }} /></td>
                                                         </tr>}
 
                                                         {!helpers.orOperator(helpers.orOperator(activeData?.t20RankingAllRounders, activeData?.t20RankingBatsmen), activeData?.t20RankingBowlers) && !helpers.orOperator(helpers.orOperator(activeData?.odiRankingAllRounders, activeData?.odiRankingBatsmen), activeData?.odiRankingBowlers) && !helpers.orOperator(helpers.orOperator(activeData?.testsRankingAllRounders, activeData?.testsRankingBatsmen), activeData?.testsRankingBowlers) ? (
