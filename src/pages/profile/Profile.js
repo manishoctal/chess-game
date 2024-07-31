@@ -134,9 +134,11 @@ const Profile = () => {
 
 
   return (
-    <div className='bg-[#F9F9F9] dark:bg-slate-900'>
-      <div className='px-3 py-4'>
-        <div className='bg-white border border-[#E9EDF9] dark:border-[#E9EDF9] rounded-lg py-4 dark:bg-slate-800 '>
+        <div className="sm:px-8 px-4 py-4 ">
+        <div className="border  xl:w-full">
+          <header className="border-b  py-2 px-4 bg-gray-100 rounded-t-md dark:bg-gray-800" style={{height:'40px'}}>
+            <div className="font-semibold dark:text-white"></div>
+          </header>
           <form onSubmit={handleSubmit(handleSubmitForm)} method='post'>
             <div className='grid lg:grid-cols-3 sm:grid-cols-2'>
               <div className='py-4 px-4 md:px-8'>
@@ -249,7 +251,7 @@ const Profile = () => {
                 </div>
               </div>
             </div>
-            <div className='flex justify-center mt-4'>
+            <div className='flex justify-center mt-4 mb-3'>
            {updateProfileLoading?
                 <button className="bg-gradientTo text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150">
                   <div className="spinner-container">
@@ -265,7 +267,6 @@ const Profile = () => {
               />}
             </div>
           </form>
-        </div>
       </div>
 
       <Dialog
@@ -298,7 +299,7 @@ const Profile = () => {
                   step={0.1}
                   onChange={handleSlider}
                 />
-                <div className='flex items-center justify-center p-6 border-t border-solid border-slate-200 rounded-b'>
+                <div className='flex items-center justify-center p-6 border-t border-solid border-slate-200 rounded-b '>
                   <button
                     className='text-black bg-[#E1E1E1] font-normal   px-12 py-2.5 text-sm outline-none focus:outline-none rounded mr-6  ease-linear transition-all duration-150'
                     type='button'
