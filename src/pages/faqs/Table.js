@@ -105,7 +105,7 @@ const Table = ({
 
   return (
     <div className="p-3">
-
+      <span className="italic text-xs text-left pl-2 text-[#A5A5A5] dark:text-gray-200">Note:You can reorder FAQs rows by dragging and dropping them.</span>
       <div className="overflow-x-auto relative rounded-lg border">
         <DragDropContext onDragEnd={onDragEnd}>
           <table className="w-full text-xs text-left text-[#A5A5A5] dark:text-gray-400 ">

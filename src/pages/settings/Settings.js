@@ -203,57 +203,6 @@ const Settings = () => {
 
   return (
     <section className="">
-      <form>
-        <section className="sm:px-8 px-4 py-4 ">
-          <div className="border xl:w-full round">
-            <header className="border-b  py-2 px-4 bg-gray-100 rounded-t-md dark:bg-gray-800 ">
-              <div className="font-semibold dark:text-white">
-                {t("SETTING")}
-              </div>
-            </header>
-      
-            <div className="bg-white py-6 px-4 rounded-b-md dark:bg-gray-800 dark:text-white">
-              <div className="px-2 w-full">
-                <div className="flex flex-col md:flex-row justify-between items-center">
-                  <div className="flex flex-col sm:flex-row items-center">
-                    <div className="relative w-24 h-24 mb-4 sm:mb-0">
-                      <OImage
-                        src={pic}
-                        fallbackUrl="/images/user.png"
-                        className="w-full h-full border rounded-full"
-                        alt=""
-                      />
-                    </div>
-                    <div className="pl-0 sm:pl-6 flex flex-col sm:flex-row items-center">
-                      {(manager?.add || user?.role === "admin") && (
-                        <Link to="/change-password" className="mb-4 sm:mb-0">
-                          <OButton
-                            label={<>{t("CHANGE_PASSWORD")}</>}
-                            type="button"
-                            loading={settingChangeLoading}
-                            title={t("CHANGE_PASSWORD")}
-                          />
-                        </Link>
-                      )}
-                      <OButton
-                        label={<>{t("VIEW_LOGIN_CREDENTIALS")}</>}
-                        type="button"
-                        onClick={() => handleUserView()}
-                        loading={settingChangeLoading}
-                        title={t("VIEW_LOGIN_CREDENTIALS")}
-                        className="mt-4 sm:mt-0"
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <main className="flex justify-center items-center flex-wrap grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mt-6"></main>
-            </div>
-
-          </div>
-        </section>
-      </form>
-
       <div className="sm:px-8 px-4 py-4 ">
         <div className="border  xl:w-full">
           <header className="border-b  py-2 px-4 bg-gray-100 rounded-t-md dark:bg-gray-800 ">
@@ -262,9 +211,40 @@ const Settings = () => {
           <div className="bg-white py-6 px-4  rounded-b-md dark:bg-gray-800 dark:text-white">
             <main className="justify-center flex-wrap grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1  gap-4">
 
-
               <div className="border border-1  border-[#E1DEDE] rounded-md p-4">
                 <span className="block text-center p-2 text-sm font-bold bg-gray-100">{t("ADMIN_SETTING")}</span>
+                <div className="bg-white rounded-b-md dark:bg-gray-800 dark:text-white mt-4">
+                  <div className="flex justify-center mb-3">
+                    <div className="relative w-24 h-24 mb-4 sm:mb-0">
+                      <OImage
+                        src={pic}
+                        fallbackUrl="/images/user.png"
+                        className="w-full h-full border rounded-full"
+                        alt=""
+                      />
+                    </div>
+                  </div>
+                  <div className="grid lg:grid-cols-1 xl:grid-cols-1 2xl:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 grid-cols-1 gap-2">
+                    {(manager?.add || user?.role === "admin") && (
+                      <Link to="/change-password"
+                        title={t("CHANGE_PASSWORD")}
+                        className="mt-4 sm:mt-0 px-1 text-center  text-white bg-gradientTo hover:bg-DarkBlue cursor-pointer  font-normal active:bg-slate-100 text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150"
+                      >
+                        {t("CHANGE_PASSWORD")}
+                      </Link>
+                    )}
+                    <button
+                      type="button"
+                      onClick={() => handleUserView()}
+                      title={t("VIEW_LOGIN_CREDENTIALS")}
+                      className="mt-4 sm:mt-0 px-1 text-white bg-gradientTo hover:bg-DarkBlue cursor-pointer  font-normal active:bg-slate-100 text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150"
+                    >{t("VIEW_LOGIN_CREDENTIALS")}</button>
+                  </div>
+
+                  <main className="flex justify-center items-center flex-wrap grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mt-6"></main>
+                </div>
+
+
                 <div className="relative z-0 mb-6 w-full group mt-4">
                   <OInputField
                     wrapperClassName="relative z-0  w-full group"
@@ -307,14 +287,7 @@ const Settings = () => {
                   errors={errors}
                   validationRules={validationFields?.referralAmount}
                 />
-                <ReusableInputField
-                  label={t("SIGN_UP_BONUS_FOR_LOCAL")}
-                  id="signupBonus"
-                  register={register}
-                  manager={manager}
-                  errors={errors}
-                  validationRules={validationFields.signupBonus}
-                />
+
               </div>
               <div className="border border-1  border-[#E1DEDE] rounded-md p-4">
                 <div className="mb-4">
@@ -354,6 +327,15 @@ const Settings = () => {
                   register={register}
                   errors={errors}
                   validationRules={validationFields?.tds}
+                />
+
+                <ReusableInputField
+                  label={t("SIGN_UP_BONUS_FOR_LOCAL")}
+                  id="signupBonus"
+                  register={register}
+                  manager={manager}
+                  errors={errors}
+                  validationRules={validationFields.signupBonus}
                 />
               </div>
               <div className="border border-1  border-[#E1DEDE] rounded-md p-4">
@@ -479,7 +461,7 @@ const Settings = () => {
           </div>
         </div>
       </div>
-    
+
       {viewShowModal ? (
         <Credential setViewShowModal={setViewShowModal} email={user?.email} />
       ) : null}
