@@ -76,6 +76,15 @@ const TradingQuestionTable = ({
     }
   }
 
+  const getTossStatus=(e) => {
+
+    if(e) {
+        return<td className={`py-2 px-4 border-r dark:border-[#ffffff38] text-center text-green-600 font-bold`}>{startCase('Completed')}</td>
+    }else{
+      return<td className={`py-2 px-4 border-r dark:border-[#ffffff38] text-center text-yellow-400 font-bold`}>{startCase('Not Completed')}</td>
+    }
+  }
+
 
   return (
     <div className="p-3">
@@ -89,6 +98,7 @@ const TradingQuestionTable = ({
               <OTradingTableHead sort={sort} setSort={setSort} name='MATCH_ID' fieldName='matchId' classTd={'justify-center'} />
               <OTradingTableHead sort={sort} setSort={setSort} name='MATCH_NAME' fieldName='localTeamShortName' classTd={'justify-center'} />
               <OTradingTableHead sort={sort} setSort={setSort} name='FORMAT_TYPE' fieldName='formatType' classTd={'justify-center'} />
+              <OTradingTableHead sort={sort} setSort={setSort} name='O_TOSS' fieldName='lineup' classTd={'justify-center'} />
               <OTradingTableHead sort={sort} setSort={setSort} name='STATUS_OF_MATCHES' fieldName='matchStatus' classTd={'justify-center'} />
               <OTradingTableHead sort={sort} setSort={setSort} name='START_DATE' fieldName='startDate' classTd={'justify-center'} />
               <OTradingTableHead sort={sort} setSort={setSort} name='QUESTIONS' fieldName='questionsCount' classTd={'justify-center'} />
@@ -113,6 +123,7 @@ const TradingQuestionTable = ({
                 {getTableDataTrading(item?.matchId)}
                 {getTableDataTrading(startCase(item?.matchName) || 'N/A', 'font-bold')}
                 {getTableDataTrading(item?.formatType?.toUpperCase() || 'N/A')}
+                {getTossStatus(item?.lineup)}
                 {getTableDataTrading(getMatchStatus(item?.matchStatus) || 'N/A', helpers.getMatchStatus(item?.matchStatus))}
                 {getTableDataTrading(helpers.matchDateFormat(item?.startDate),'w-[130px]')}
                 <td className={`py-2 px-4 border-r dark:border-[#ffffff38] text-center font-bold w-20`}>
