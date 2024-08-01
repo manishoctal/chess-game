@@ -65,7 +65,7 @@ const TradingQuestionTable = ({
         return startCase(matchStatus);
       case 'In Progress':
         return <>
-          {startCase(matchStatus)} (Live)<span className="relative inline-flex mx-2 h-[5px] w-[5px] mb-[1px] animate-ping rounded-full bg-red-500"></span>
+          {startCase(matchStatus)}<span className="relative inline-flex mx-2 h-[5px] w-[5px] mb-[1px] animate-ping rounded-full bg-red-500"></span>
         </>
       case 'Cancelled':
         return startCase(matchStatus);
@@ -73,6 +73,15 @@ const TradingQuestionTable = ({
         default :
         return startCase(matchStatus)
 
+    }
+  }
+
+  const getTossStatus=(e) => {
+
+    if(e) {
+        return<td className={`py-2 px-4 border-r dark:border-[#ffffff38] text-center text-green-600 font-bold`}>{startCase('Completed')}</td>
+    }else{
+      return<td className={`py-2 px-4 border-r dark:border-[#ffffff38] text-center text-yellow-400 font-bold`}>{startCase('Not Completed')}</td>
     }
   }
 
@@ -89,6 +98,7 @@ const TradingQuestionTable = ({
               <OTradingTableHead sort={sort} setSort={setSort} name='MATCH_ID' fieldName='matchId' classTd={'justify-center'} />
               <OTradingTableHead sort={sort} setSort={setSort} name='MATCH_NAME' fieldName='localTeamShortName' classTd={'justify-center'} />
               <OTradingTableHead sort={sort} setSort={setSort} name='FORMAT_TYPE' fieldName='formatType' classTd={'justify-center'} />
+              <OTradingTableHead sort={sort} setSort={setSort} name='O_TOSS' fieldName='lineup' classTd={'justify-center'} />
               <OTradingTableHead sort={sort} setSort={setSort} name='STATUS_OF_MATCHES' fieldName='matchStatus' classTd={'justify-center'} />
               <OTradingTableHead sort={sort} setSort={setSort} name='START_DATE' fieldName='startDate' classTd={'justify-center'} />
               <OTradingTableHead sort={sort} setSort={setSort} name='QUESTIONS' fieldName='questionsCount' classTd={'justify-center'} />
@@ -113,9 +123,10 @@ const TradingQuestionTable = ({
                 {getTableDataTrading(item?.matchId)}
                 {getTableDataTrading(startCase(item?.matchName) || 'N/A', 'font-bold')}
                 {getTableDataTrading(item?.formatType?.toUpperCase() || 'N/A')}
+                {getTossStatus(item?.lineup)}
                 {getTableDataTrading(getMatchStatus(item?.matchStatus) || 'N/A', helpers.getMatchStatus(item?.matchStatus))}
-                {getTableDataTrading(helpers.matchDateFormat(item?.startDate))}
-                <td className={`py-2 px-4 border-r dark:border-[#ffffff38] text-center font-bold`}>
+                {getTableDataTrading(helpers.matchDateFormat(item?.startDate),'w-[130px]')}
+                <td className={`py-2 px-4 border-r dark:border-[#ffffff38] text-center font-bold w-20`}>
                   {item?.questionsCount || 0}
                 </td>
                 {(manager?.add || manager?.edit || user?.role === "admin") && (<td className="py-2 px-4 border-r dark:border-[#ffffff38] text-center">

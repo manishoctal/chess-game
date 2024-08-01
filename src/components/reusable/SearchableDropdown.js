@@ -77,7 +77,7 @@ function SearchableDropdown({ searchTerm, setSearchTerm, setFilteredItems,placeh
                     onKeyDown={handleKeyDown}
                     onBlur={handleBlur}
                     onChange={(e) => { setSearchTerm(e?.target?.value); setIsSelected(false) }}
-                    className="block w-full p-2 outline-none text-sm text-gray-900 2xl:min-w-[250px] xl:min-w-[300px] rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 2xl:min-w-[350px] xl:min-w-[300px]  2xl:min-w-[250px] xl:min-w-[300px]"
+                    className="block w-full p-2 outline-none text-sm text-gray-900 2xl:min-w-[250px] lg:min-w-[280px] sm:min-w-[280px] md:min-w-[280px] xl:min-w-[300px] rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 2xl:min-w-[350px] xl:min-w-[300px]  2xl:min-w-[250px] xl:min-w-[300px]"
                 />
                 {dropdownVisible && (
                     <ul className="border border-t-0 absolute bg-white w-full z-10 max-h-80 overflow-auto">

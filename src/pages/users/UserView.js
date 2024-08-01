@@ -292,7 +292,7 @@ const UserView = () => {
                 </figure>
                 <figcaption className="w-[calc(100%_-_41px)]">
                   <span className="block text-[#5 C5C5C]">{t("O_MOBILE_NUMBER")}</span>
-                  <strong>{item?.mobile ? helpers.ternaryCondition(item?.countryCode?.includes('+'), `${item?.countryCode} ${item?.mobile}`, `+${item?.countryCode} ${item?.mobile}`) : 'N/A'}</strong>
+                  <strong>{item?.mobile || 'N/A'}</strong>
                 </figcaption>
               </div>
             </div>
@@ -304,7 +304,7 @@ const UserView = () => {
                 <img src={balanceIcon} alt="" />
               </figure>
               <figcaption className="text-white">
-                <span className="block">{helpers.formattedAmount(item?.totalAmount) || 0}</span>
+                <span className="block">{helpers.formattedAmount(item?.walletAmount) || 0}</span>
                 <span className="text-sm">{t("AVAILABLE_BALANCE")}</span>
               </figcaption>
             </div>

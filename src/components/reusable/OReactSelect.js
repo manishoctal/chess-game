@@ -8,6 +8,8 @@ const OReactSelect = props => {
     value,
     onChange,
     options,
+    inputValue,
+    onInputChange,
     name,
     style,
     disable
@@ -40,6 +42,8 @@ const OReactSelect = props => {
     <div className={wrapperClassName ?? 'flex items-center mb-3 ml-3'}>
       <Select
         name={name}
+        inputValue={inputValue}
+        onInputChange={onInputChange}
         options={options}
         placeholder={placeholder}
         className='border-1 rounded-lg border-[#DFDFDF]'

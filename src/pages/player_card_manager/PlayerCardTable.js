@@ -69,7 +69,7 @@ const PlayerCardTable = ({
                             <React.Fragment key={i}>
                                 <tr
                                     key={i}
-                                    className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 cursor-pointer text-center"
+                                    className="bg-white border-b dark:bg-gray-800 border dark:border-gray-700 cursor-pointer text-center"
                                     onClick={() => handleAccordionOnOff(i, item)}
                                 >
                                     <th
@@ -84,15 +84,13 @@ const PlayerCardTable = ({
 
                                     <th
                                         scope="row"
-                                        className="py-2 px-4 border-r text-center dark:border-[#ffffff38] font-medium text-gray-900  dark:text-white">
+                                        className="py-2 px-4  text-center dark:border-[#ffffff38] font-medium text-gray-900  dark:text-white">
                                         {i + 1 + pageSize * (page - 1)}
                                     </th>
-
-
-                                    {getTableDataPlayerCard(startCase(item?.playerName || 'N/A'),'font-bold')}
-                                    {getTableDataPlayerCard(startCase(item?.gender || 'N/A'),'font-bold')}
-                                    <td className="py-2 px-4 border-r dark:border-[#ffffff38] flex justify-center">
-                                        <div className="relative w-14 h-15 mb-4 sm:mb-0" onClick={(e)=>{e.stopPropagation(); setIsOpenView(item); setFormatType('image')}}>
+                                    {getTableDataPlayerCard(startCase(item?.playerName || 'N/A'), 'font-bold')}
+                                    {getTableDataPlayerCard(startCase(item?.gender || 'N/A'), 'font-bold')}
+                                    <td className="py-2 px-4  dark:border-[#ffffff38] flex justify-center">
+                                        <div className="relative w-14 h-15 mb-4 sm:mb-0" onClick={(e) => { e.stopPropagation(); setIsOpenView(item); setFormatType('image') }}>
                                             <OImage
                                                 src={item?.playerImage}
                                                 fallbackUrl="/images/user.png"
@@ -101,7 +99,7 @@ const PlayerCardTable = ({
                                             />
                                         </div>
                                     </td>
-                                    {getTableDataPlayerCard(startCase(item?.team || 'N/A'),'font-bold')}
+                                    {getTableDataPlayerCard(startCase(item?.team || 'N/A'), 'font-bold')}
 
                                     <td className="py-2 border-l px-4">
                                         <div className="">
@@ -125,8 +123,13 @@ const PlayerCardTable = ({
                                 {helpers.andOperator(activeIndex === i, (
                                     <tr>
                                         <td colSpan="14" className="pt-3 pb-3 bg-gray-50">
-                                            <div className="transition-all duration-500 ease-in-out overflow-hidden w-full flex justify-center " style={{ maxHeight: helpers.ternaryCondition(activeIndex === i , '500px' , '0') }}>
-                                                <table className="w-[90%] text-xs text-left text-[#A5A5A5] dark:text-gray-400">
+                                           
+                                         
+                                            <div className="transition-all duration-500 ease-in-out overflow-hidden flex justify-center" style={{ maxHeight: helpers.ternaryCondition(activeIndex === i, '500px', '0') }}>
+                                            <div className=" overflow-x-auto relative rounded-lg border overflow-hidden w-[90%] flex justify-center">
+                                               
+                                               <table className="text-xs text-left text-[#A5A5A5] dark:text-gray-400 w-full">
+                                               
                                                     <thead className="text-xs text-gray-900 border border-[#E1E6EE] bg-[#E1E6EE] dark:bg-gray-700 dark:text-gray-400 dark:border-[#ffffff38]">
                                                         <tr>
                                                             {PlayerCardHeader('FORMAT_TYPE')}
@@ -140,28 +143,39 @@ const PlayerCardTable = ({
                                                         {helpers.orOperator(helpers.orOperator(activeData?.t20RankingAllRounders, activeData?.t20RankingBatsmen), activeData?.t20RankingBowlers) && <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700" >
                                                             {getTableDataPlayerCard('T20')}
                                                             {getTableDataPlayerCard(activeData?.availableCardT20, 'font-bold')}
-                                                            <td className="py-3 px-3 cursor-pointer text-center border-r flex justify-center"><AiFillEye className="cursor-pointer w-5 h-5 text-slate-600" title={t('VIEW')} onClick={() => { setIsOpenView(activeData); setFormatType('T20') }}/></td>
+                                                            <td className="py-3 px-3 cursor-pointer text-center flex justify-center"><AiFillEye className="cursor-pointer w-5 h-5 text-slate-600" title={t('VIEW')} onClick={() => { setIsOpenView(activeData); setFormatType('T20') }} /></td>
 
 
                                                         </tr>}
                                                         {helpers.orOperator(helpers.orOperator(activeData?.odiRankingAllRounders, activeData?.odiRankingBatsmen), activeData?.odiRankingBowlers) && <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700" >
                                                             {getTableDataPlayerCard('ODI')}
                                                             {getTableDataPlayerCard(activeData?.availableCardOdi, 'font-bold')}
-                                                            <td className="py-3 px-3 cursor-pointer text-center border-r flex justify-center"><AiFillEye className="cursor-pointer w-5 h-5 text-slate-600" title={t('VIEW')} onClick={() => { setIsOpenView(activeData); setFormatType('ODI') }}/></td>
+                                                            <td className="py-3 px-3 cursor-pointer text-center flex justify-center"><AiFillEye className="cursor-pointer w-5 h-5 text-slate-600" title={t('VIEW')} onClick={() => { setIsOpenView(activeData); setFormatType('ODI') }} /></td>
 
 
                                                         </tr>}
                                                         {helpers.orOperator(helpers.orOperator(activeData?.testsRankingAllRounders, activeData?.testsRankingBatsmen), activeData?.testsRankingBowlers) && <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700" >
                                                             {getTableDataPlayerCard('TEST')}
                                                             {getTableDataPlayerCard(activeData?.availableCardTests, 'font-bold')}
-                                                            <td className="py-3 px-3 cursor-pointer text-center border-r flex justify-center"><AiFillEye className="cursor-pointer w-5 h-5 text-slate-600" title={t('VIEW')} onClick={() => { setIsOpenView(activeData); setFormatType('TEST')}}/></td>
+                                                            <td className="py-3 px-3 cursor-pointer text-center flex justify-center"><AiFillEye className="cursor-pointer w-5 h-5 text-slate-600" title={t('VIEW')} onClick={() => { setIsOpenView(activeData); setFormatType('TEST') }} /></td>
                                                         </tr>}
+
+                                                        {!helpers.orOperator(helpers.orOperator(activeData?.t20RankingAllRounders, activeData?.t20RankingBatsmen), activeData?.t20RankingBowlers) && !helpers.orOperator(helpers.orOperator(activeData?.odiRankingAllRounders, activeData?.odiRankingBatsmen), activeData?.odiRankingBowlers) && !helpers.orOperator(helpers.orOperator(activeData?.testsRankingAllRounders, activeData?.testsRankingBatsmen), activeData?.testsRankingBowlers) ? (
+                                                            <tr className="bg-white border w-full text-center dark:bg-gray-800 dark:border-gray-700">
+                                                                <td className="py-4 px-6" colSpan={12}>
+                                                                    {t("O_NO_RECORD_FOUND")}
+                                                                </td></tr>
+                                                        ) : null}
                                                     </tbody>
+                                                   
                                                 </table>
+                                                
+                                            </div>
                                             </div>
                                         </td>
                                     </tr>
                                 ))}
+
                             </React.Fragment>
                         ))}
                         {isEmpty(playerCard) ? (

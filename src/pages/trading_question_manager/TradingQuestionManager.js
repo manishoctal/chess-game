@@ -241,7 +241,6 @@ import helpers from 'utils/helpers'
                     handleDateChange={handleDateChangeTradingQuestion}
                     isReset={filterData?.isReset}
                     setIsReset={setFilterData}
-                    filterData={filterData}
                   />
                   <div className="flex items-center mb-3 ml-3">
                     <select

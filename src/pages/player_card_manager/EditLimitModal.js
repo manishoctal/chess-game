@@ -50,6 +50,9 @@ const EditLimitModal = ({ setEditShowLimitModal, cardLimitEdit, getAllPlayerCard
                 notification.success(resultLimit?.data?.message)
                 getAllPlayerCard()
                 setEditShowLimitModal(false)
+            }else{
+                notification.error(resultLimit?.data?.message)
+                setEditShowLimitModal(false)
             }
 
         } catch (error) {

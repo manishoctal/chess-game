@@ -261,15 +261,15 @@ function ViewTradingQuestionManager() {
                                     </button>
                                 </div>
                             </div>
-                               <div>
-                            {(manager?.add || manager?.edit || user?.role === "admin") && (<button
-                                type='button'
-                                title={t('ADD_QUESTIONS')}
-                                onClick={AddTradingQuestion}
-                                className='bg-gradientTo text-sm px-4 flex gap-2 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2'
-                            >
-                                <IoIosAdd color='white' size={20} />{t('ADD_QUESTIONS')}
-                            </button>)}
+                            <div>
+                                {(manager?.add || manager?.edit || user?.role === "admin") && (<button
+                                    type='button'
+                                    title={t('ADD_QUESTIONS')}
+                                    onClick={AddTradingQuestion}
+                                    className='bg-gradientTo text-sm px-4 flex gap-2 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2'
+                                >
+                                    <IoIosAdd color='white' size={20} />{t('ADD_QUESTIONS')}
+                                </button>)}
                             </div>
                         </form>
                         <ViewTradingQuestionTable
