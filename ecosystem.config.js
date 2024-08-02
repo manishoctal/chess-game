@@ -1,7 +1,9 @@
 module.exports = {
-  apps : [{
-    name: 'cricket-pandit-admin',
-    script: 'server.js',
-    watch: false
-  }],
+  apps: [
+    {
+      name: "chess-game-admin",
+      script: "server.js",
+      watch: false,
+    },
+  ],
 };
