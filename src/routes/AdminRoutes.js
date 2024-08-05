@@ -31,6 +31,7 @@ import ViewPlayerCardManager from "pages/player_card_manager/ViewPlayerCard";
 import PlayerStockManager from "pages/player_stock_manager/PlayerStockManager";
 import ViewPlayerStockManager from "pages/player_stock_manager/ViewScoreManager";
 import GameType from "pages/game_type_manager/GameType";
+import SubscribedManager from "pages/subscribed_manager/SubscribedManager";
 const UseChange = ({ data }) => {
   const { t } = useTranslation();
   return t(data);
@@ -91,15 +92,25 @@ const AdminRoutes = {
       ),
       name: <UseChange data="GAME_TYPE_MANAGER" />,
     },
+    {
+      path: "/subscribed-manager",
+      element: (
+        <AuthorizationRoute>
+          {" "}
+          <SubscribedManager />
+        </AuthorizationRoute>
+      ),
+      name: <UseChange data="SUBSCRIBED_MANAGER" />,
+    },
 
     {
-      path: "/banner-manager",
+      path: "/how-to-play-manager",
       element: (
         <AuthorizationRoute>
           <BannerManager />
         </AuthorizationRoute>
       ),
-      name: <UseChange data="EMAIL_MANAGER" />,
+      name: <UseChange data="HOW_TO_PLAY_MANAGER" />,
     },
 
     {

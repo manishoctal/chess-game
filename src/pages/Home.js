@@ -338,20 +338,20 @@ function Home() {
     );
   };
 
-  if (helpers.andOperator(user?.role == "subAdmin", !manager?.view)) {
-    return (
-      <div className="flex justify-center items-center" style={{ height: "700px" }}>
-        <div className="text-center">
-          <div className="text-[26px]" style={{ fontWeight: 500 }}>
-            <h3>Welcome! {`${startCase(user?.firstName)} ${startCase(user?.lastName)}`} You Are Not Authorize To View This Page</h3>
-          </div>
-          <div className="text-[20px] mt-1" style={{ fontWeight: 400 }}>
-            <p>Sorry for the inconvenience.</p>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  // if (helpers.andOperator(user?.role == "subAdmin", !manager?.view)) {
+  //   return (
+  //     <div className="flex justify-center items-center" style={{ height: "700px" }}>
+  //       <div className="text-center">
+  //         <div className="text-[26px]" style={{ fontWeight: 500 }}>
+  //           <h3>Welcome! {`${startCase(user?.firstName)} ${startCase(user?.lastName)}`} You Are Not Authorize To View This Page</h3>
+  //         </div>
+  //         <div className="text-[20px] mt-1" style={{ fontWeight: 400 }}>
+  //           <p>Sorry for the inconvenience.</p>
+  //         </div>
+  //       </div>
+  //     </div>
+  //   );
+  // }
   return (
     <>
       <div className="py-4 px-4 md:px-8 dark:bg-slate-900">

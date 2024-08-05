@@ -7,10 +7,11 @@ import { validationRules } from "utils/constants";
 import AuthContext from "../context/AuthContext";
 import Loader from "../layout/Loader";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
-import Captcha from '../components/reusable/captcha/Captcha'
+import Captcha from "../components/reusable/captcha/Captcha";
 import { useTranslation } from "react-i18next";
-import logoImage from "../assets/images/login-logo.png";
+import logoImage from "../assets/images/login_logo.png";
 import FormValidation from "utils/formValidation";
+import { preventMaxInput } from "utils/validations";
 function Login() {
   const { t } = useTranslation();
   const [icon, setIcon] = useState(true);
@@ -26,10 +27,8 @@ function Login() {
     reset,
     formState: { errors },
   } = useForm({ mode: "onBlur", shouldFocusError: true, defaultValues: {} });
-  const [rememberMe, setRememberMe] = useState(
-    window?.localStorage.getItem("rememberMe") === "true"
-  );
-  const formValidation = FormValidation()
+  const [rememberMe, setRememberMe] = useState(window?.localStorage.getItem("rememberMe") === "true");
+  const formValidation = FormValidation();
 
   const handleRememberMe = (e) => {
     window?.localStorage.setItem("rememberMe", e.target.checked);
@@ -45,13 +44,13 @@ function Login() {
     }
   }, []);
 
-  const [isLoginError, setLoginError] = useState(false)
+  const [isLoginError, setLoginError] = useState(false);
   useEffect(() => {
     if (isLoginError) {
       setMessage("");
-      setCaptchaInput('')
+      setCaptchaInput("");
     }
-  }, [isLoginError])
+  }, [isLoginError]);
   // login function start
   const onSubmit = async (data) => {
     if (!captchaInput) {
@@ -65,7 +64,6 @@ function Login() {
       return;
     }
 
-
     if (rememberMe) {
       window?.localStorage.setItem("email", data.email);
       window?.localStorage.setItem("password", data.password);
@@ -75,12 +73,9 @@ function Login() {
     }
     setMessage("CAPTCHA validation successful!");
     setMessageClass("text-green-600");
-    setLoginError(false)
+    setLoginError(false);
     await loginUser(data, setLoginError);
-
-
   };
-
 
   // login function end
 
@@ -100,27 +95,15 @@ function Login() {
     }
   };
 
-
-
-
-
   return (
     <div className="bg-gradient-to-r from-gradientFrom to-gradientTo h-screen">
       <Loader />
       <div className="p-4">
         <div className="login-form bg-white max-w-lg m-auto mt-10 sm:mt-16 md:mt-28 rounded-[20px] overflow-hidden">
-          <form
-            className="sm:py-12 sm:px-11 py-8 px-7 dark:bg-slate-900"
-            onSubmit={handleSubmit(onSubmit)}
-            method="post"
-          >
-            <img src={logoImage} alt="logoImage" className="m-auto py-2 max-w-[267px]" style={{ filter: ` brightness(1) invert(1)` }} />
-            <h1 className="text-center text-[40px] font-bold dark:text-white">
-              {t("LOGIN_LETS_START")}!
-            </h1>
-            <h2 className="text-center text-lg text-[#A5A5A5] sm:mb-12 mb-6">
-              {t("LOGIN_ONLY_FEW_MINUTES")}
-            </h2>
+          <form className="sm:py-12 sm:px-11 py-8 px-7 dark:bg-slate-900" onSubmit={handleSubmit(onSubmit)} method="post">
+            <img src={logoImage} alt="logoImage" className="m-auto py-2 max-w-[267px]" />
+            <h1 className="text-center text-[40px] font-bold dark:text-white">{t("LOGIN_LETS_START")}!</h1>
+            <h2 className="text-center text-lg text-[#A5A5A5] sm:mb-12 mb-6">{t("LOGIN_ONLY_FEW_MINUTES")}</h2>
             <div className="relative z-0 mb-6 w-full group">
               <input
                 type="text"
@@ -129,8 +112,7 @@ function Login() {
                 placeholder=" "
                 name="email"
                 onKeyDown={(e) => preventSpace(e)}
-                {...register("email",
-                  formValidation.email)}
+                {...register("email", formValidation.email)}
               />
 
               <label
@@ -151,15 +133,15 @@ function Login() {
                 className="dark:text-white block py-4 px-3 w-full text-sm text-gray-900 bg-transparent border-2 rounded-lg border-[#DFDFDF] appearance-none dark:text-black dark:border-[#DFDFDF]  focus:outline-none focus:ring-0  peer"
                 placeholder=" "
                 autoComplete="new-password"
+                onInput={(e) => preventMaxInput(e, 16)}
                 {...register("password", {
                   required: "Please enter password.",
                   validate: {
-                    whiteSpace: (value) => value.trim() ? true : t('WHITE_SPACES_NOT_ALLOWED')
+                    whiteSpace: (value) => (value.trim() ? true : t("WHITE_SPACES_NOT_ALLOWED")),
                   },
                   pattern: {
                     value: validationRules.password,
-                    message:
-                      "Password must contain lowercase,uppercase characters, numbers, special character and must be 8 character long.",
+                    message: "Password must contain lowercase,uppercase characters, numbers, special character and must be 8 character long.",
                   },
                 })}
               />
@@ -171,15 +153,11 @@ function Login() {
                 <span className="text-red-500">*</span>
               </label>
               {icon ? (
-                <span
-                  className="dark:text-white password_view cursor-pointer absolute top-[18px] right-[20px]"
-                  onClick={() => changeIcon()} >
+                <span className="dark:text-white password_view cursor-pointer absolute top-[18px] right-[20px]" onClick={() => changeIcon()}>
                   <AiFillEyeInvisible />
                 </span>
               ) : (
-                <span
-                  className="dark:text-white password_view absolute top-[18px] right-[20px]"
-                  onClick={() => changeIcon()}>
+                <span className="dark:text-white password_view absolute top-[18px] right-[20px]" onClick={() => changeIcon()}>
                   <AiFillEye />
                 </span>
               )}
@@ -190,46 +168,30 @@ function Login() {
               <div>
                 <input
                   type="text"
-                  name='captcha'
-                  id='captcha'
-                  placeholder='Enter CAPTCHA:'
+                  name="captcha"
+                  id="captcha"
+                  placeholder="Enter CAPTCHA:"
                   className="dark:text-white block py-4 px-3 w-full text-sm text-gray-900 bg-transparent border-2 rounded-lg border-[#DFDFDF] appearance-none dark:text-black dark:border-[#DFDFDF]  focus:outline-none focus:ring-0  peer"
                   value={captchaInput}
-                  style={{ height: '45px' }}
+                  style={{ height: "45px" }}
                   onChange={(e) => setCaptchaInput(e.target.value)}
                 />
               </div>
               <div className="mt-2">
-                <Captcha onChange={setGeneratedCaptcha} isLoginError={isLoginError}/>
+                <Captcha onChange={setGeneratedCaptcha} isLoginError={isLoginError} />
               </div>
             </div>
-            <div className="mb-3">
-              {message && (
-                <p className={`text-sm ${messageClass}`}>{message}.</p>
-              )}
-            </div>
+            <div className="mb-3">{message && <p className={`text-sm ${messageClass}`}>{message}.</p>}</div>
             <div className="flex items-start mb-8">
               <div className="flex items-center h-5">
                 <div>
-                  <input
-                    id="remember"
-                    type="checkbox"
-                    checked={!!rememberMe}
-                    className="w-4 h-4 bg-gray-50 rounded border border-[#DFDFDF] focus:ring-3 focus:ring-[#DFDFDF]"
-                    onChange={(e) => handleRememberMe(e)}
-                  />
+                  <input id="remember" type="checkbox" checked={!!rememberMe} className="w-4 h-4 bg-gray-50 rounded border border-[#DFDFDF] focus:ring-3 focus:ring-[#DFDFDF]" onChange={(e) => handleRememberMe(e)} />
                 </div>
-                <label
-                  htmlFor="remember"
-                  className="ml-2 text-sm text-black dark:text-white"
-                >
+                <label htmlFor="remember" className="ml-2 text-sm text-black dark:text-white">
                   {t("LOGIN_REMEMBER_ME")}
                 </label>
               </div>
-              <Link
-                to="/forgot-password"
-                className="ml-auto text-[#6236FF] hover:text-[#9D36FF] hover:underline text-sm font-medium"
-              >
+              <Link to="/forgot-password" className="ml-auto text-[#6236FF] hover:text-[#9D36FF] hover:underline text-sm font-medium">
                 {t("LOGIN_FORGOT_PASSWORD")}?
               </Link>
             </div>

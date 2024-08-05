@@ -12,10 +12,10 @@ module.exports = {
     extend: {
       colors: {
         DarkBlue: "#631bd1", // Buttons Hover
-        gradientTo: "#4a24c2", //  Buttons
-        gradpurple: "#4a24c2", // Sidebar Gradiant
-        gradientFrom: "#000", // Sidebar Gradiant
-        sideBarNavColor: "#ffffff",
+        gradientTo: "#0096ff", //  Buttons
+        gradpurple: "#ffffff", // Sidebar Gradiant
+        gradientFrom: "#ffffff", // Sidebar Gradiant
+        sideBarNavColor: "#000000",
         sideBarNavActiveColor: "#ffffff",
       },
 

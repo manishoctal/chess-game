@@ -12,7 +12,7 @@ import faqs from "../../assets/images/faqs.svg";
 import emailManager from "../../assets/images/email-manager.svg";
 import Logout from "../../assets/images/logout.svg";
 import { useTranslation } from "react-i18next";
-import logoImage from "../../assets/images/logo-admin.png";
+import logoImage from "../../assets/images/Logo.png";
 import Swal from "sweetalert2";
 import { MdOutlineLocalOffer } from "react-icons/md";
 import { BsPatchQuestion } from "react-icons/bs";
@@ -30,8 +30,8 @@ const Sidebar = () => {
     <NavLink
       to={to}
       className={({ isActive }) =>
-        classNames("flex items-center px-4 lg:px-7 py-4 hover:bg-sideBarNavActiveColor hover:text-gradientTo", {
-          "bg-white": isActive,
+        classNames("flex items-center px-4 lg:px-7 sidebar-icons py-4  hover:text-gradientTo", {
+          "bg-gradientTo text-white hover:text-white": isActive,
           "text-black": isActive,
           active: isActive,
         })
@@ -84,7 +84,7 @@ const Sidebar = () => {
   };
 
   const SidebarNavItem = ({ permission, path, label, imgSrc, icon }) => {
-    const navLink = generateNavLink(path, label, helpers.orOperator(icon, <img src={imgSrc} className="max-w-[18px]" title={t(label)} alt="" />));
+    const navLink = generateNavLink(path, label, helpers.orOperator(icon, <img src={imgSrc} className={`max-w-[18px]`} title={t(label)} alt="" />));
 
     if (permission) {
       return andOperator(checkSidebarPermission(permission), navLink);
@@ -98,7 +98,7 @@ const Sidebar = () => {
   }
 
   return (
-    <div className={`sidebar lg:block z-10   ${sidebarStatus === "open" ? "block" : "sidebarHide"} bg-gradient-to-t from-gradpurple to-gradientFrom w-[220px] xl:w-[280px] fixed h-full overflow-y-auto`}>
+    <div className={`shadow-lg sidebar lg:block z-10   ${sidebarStatus === "open" ? "block" : "sidebarHide"} bg-gradient-to-t from-gradpurple to-gradientFrom w-[220px] xl:w-[280px] fixed h-full overflow-y-auto`}>
       <div className="text-sideBarNavColor">
         <Link to="/dashboard" onClick={() => updatePageName("Dashboard")} className={`px-2 py-8 w-full text-center flex justify-center ${sidebarStatus === "open" ? "showToggle" : ""}`}>
           <img src={logoImage} className="inline max-w-[187px]" alt="" />
@@ -113,8 +113,9 @@ const Sidebar = () => {
           <SidebarNavItem permission="subAdmin_manager" path="/sub-admin-manager" label="SUB_ADMIN_MANAGERS" imgSrc={SubAdmin} />
           {/* <SidebarNavItem permission="user_manager" path="/users" label="USER_MANAGER" imgSrc={userManager} /> */}
           <SidebarNavItem permission="game_type_manager" path="/game-type-manager" label="GAME_TYPE_MANAGER" imgSrc={userManager} />
-          <SidebarNavItem permission="banner_manager" path="/banner-manager" label="BANNER_MANAGER" imgSrc={rewardWithdrawalRequest} />
+          <SidebarNavItem permission="how_to_play_manager" path="/how-to-play-manager" label="HOW_TO_PLAY_MANAGER" imgSrc={rewardWithdrawalRequest} />
           {/* <SidebarNavItem permission="offer_manager" path="/offer-manager" label="OFFER_MANAGER" icon={<MdOutlineLocalOffer size={21} color="#a7a7a7" />} /> */}
+          <SidebarNavItem permission="subscribed_manager" path="/subscribed-manager" label="SUBSCRIBED_MANAGER" icon={<MdOutlineLocalOffer size={21} color="#a7a7a7" />} />
           {/* <SidebarNavItem permission="trading_question_manager" path="/trading-question-manager" label="TRADING_QUESTION_MANAGER" icon={<BsPatchQuestion size={19} color="#a7a7a7" />} imgSrc={rewardWithdrawalRequest} />
 
           <SidebarNavItem permission="player_card_manager" path="/player-card-manager" label="PLAYER_CARD_MANAGER" icon={<AiOutlineIdcard size={20} color="#a7a7a7" />} imgSrc={rewardWithdrawalRequest} />

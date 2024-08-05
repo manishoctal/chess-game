@@ -66,6 +66,9 @@ const apiPath = Object.freeze({
   generatePreSignUrl: "/v1/admin/player-card/generate-pre-signed-url",
   getPlayerDataSearched: "/v1/admin/player-card/search-keyword",
   getGameType: "/v1/admin/gameType",
+  getCheckUser: "/v1/admin/check-user",
+  getImagePath: "/v1/admin/presigned-url",
+  getImageBanner: "/v1/admin/banner/presigned-url",
 });
 
 export default apiPath;
