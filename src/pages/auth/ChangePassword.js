@@ -11,6 +11,7 @@ import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { preventMaxInput } from "utils/validations";
 import OInputField from "components/reusable/OInputField";
 import { isEmpty } from "lodash";
+import ErrorMessage from "components/ErrorMessage";
 
 const ChangePassword = () => {
   const { t } = useTranslation();
@@ -25,10 +26,17 @@ const ChangePassword = () => {
 
   const [changePasswordLoading, setChangePasswordLoading] = useState(false);
   const notification = useToastContext();
-  const { logoutUser, updatePageName } = useContext(AuthContext);
+  const { logoutUser, updatePageName, user } = useContext(AuthContext);
   const [icon, setIcon] = useState(true);
   const [icon2, setIcon2] = useState(true);
   const [icon3, setIcon3] = useState(true);
+
+  useEffect(() => {
+    reset({
+      question: user.question,
+      answer: user.answer,
+    });
+  }, [user]);
 
   const handleSubmitForm = async (data) => {
     try {
@@ -41,6 +49,8 @@ const ChangePassword = () => {
       const res = await apiPost(pathObj.changePassword, {
         oldPassword: data.oldPassword,
         newPassword: data.newPassword,
+        question: data.question,
+        answer: data.answer,
       });
       if (res.data.success) {
         reset();
@@ -74,13 +84,13 @@ const ChangePassword = () => {
   }, [newPassword, trigger]);
 
   useEffect(() => {
-    updatePageName("Change password")
-  }, [])
+    updatePageName("Change password");
+  }, []);
 
   return (
     <div className="sm:px-8 px-4 py-4 ">
       <div className="border  xl:w-full">
-        <header className="border-b  py-2 px-4 bg-gray-100 rounded-t-md dark:bg-gray-800" style={{ height: '40px' }}>
+        <header className="border-b  py-2 px-4 bg-gray-100 rounded-t-md dark:bg-gray-800" style={{ height: "40px" }}>
           <div className="font-semibold dark:text-white"></div>
         </header>
         <form onSubmit={handleSubmit(handleSubmitForm)} method="post">
@@ -93,8 +103,7 @@ const ChangePassword = () => {
                   name="oldPassword"
                   id="oldPassword"
                   autoFocus
-                  placeholder={t('ENTER_OLD_PASSWORD')}
-
+                  placeholder={t("ENTER_OLD_PASSWORD")}
                   autocomplete="new-password"
                   inputLabel={
                     <>
@@ -104,31 +113,24 @@ const ChangePassword = () => {
                   }
                   disableAutofill
                   errors={errors}
-                  onInput={(e) => preventMaxInput(e, 15)}
+                  onInput={(e) => preventMaxInput(e, 16)}
                   register={register("oldPassword", {
                     required: "Please enter old password.",
                     validate: {
-                      whiteSpace: (value) => value.trim() ? true : t('WHITE_SPACES_NOT_ALLOWED')
+                      whiteSpace: (value) => (value.trim() ? true : t("WHITE_SPACES_NOT_ALLOWED")),
                     },
                     pattern: {
                       value: validationRules.password,
-                      message:
-                        "Old password must contain lowercase,uppercase characters, numbers, special character and must be 8 character long.",
+                      message: "Old password must contain lowercase,uppercase characters, numbers, special character and must be 8 character long.",
                     },
                   })}
                 />
                 {icon ? (
-                  <span
-                    className="password_view absolute top-[41px] right-[20px]"
-                    onClick={() => changeIcon()}
-                  >
+                  <span className="password_view absolute top-[41px] right-[20px]" onClick={() => changeIcon()}>
                     <AiFillEyeInvisible className="dark:text-white" />
                   </span>
                 ) : (
-                  <span
-                    className="password_view absolute top-[41px] right-[20px]"
-                    onClick={() => changeIcon()}
-                  >
+                  <span className="password_view absolute top-[41px] right-[20px]" onClick={() => changeIcon()}>
                     <AiFillEye className="dark:text-white" />
                   </span>
                 )}
@@ -141,7 +143,7 @@ const ChangePassword = () => {
                   type={icon2 ? "password" : "text"}
                   name="newPassword"
                   id="newPassword"
-                  placeholder={t('ENTER_NEW_PASSWORD')}
+                  placeholder={t("ENTER_NEW_PASSWORD")}
                   errors={errors}
                   inputLabel={
                     <>
@@ -149,7 +151,7 @@ const ChangePassword = () => {
                       <span className="text-red-500">*</span>
                     </>
                   }
-                  onInput={(e) => preventMaxInput(e, 15)}
+                  onInput={(e) => preventMaxInput(e, 16)}
                   register={register("newPassword", {
                     required: "Please enter new password.",
                     pattern: {
@@ -159,17 +161,11 @@ const ChangePassword = () => {
                   })}
                 />
                 {icon2 ? (
-                  <span
-                    className="password_view absolute top-[41px] right-[20px]"
-                    onClick={() => changeIcon2()}
-                  >
+                  <span className="password_view absolute top-[41px] right-[20px]" onClick={() => changeIcon2()}>
                     <AiFillEyeInvisible className="dark:text-white" />
                   </span>
                 ) : (
-                  <span
-                    className="password_view absolute top-[41px] right-[20px]"
-                    onClick={() => changeIcon2()}
-                  >
+                  <span className="password_view absolute top-[41px] right-[20px]" onClick={() => changeIcon2()}>
                     <AiFillEye className="dark:text-white" />
                   </span>
                 )}
@@ -182,8 +178,7 @@ const ChangePassword = () => {
                   type={icon3 ? "password" : "text"}
                   name="confirm_password"
                   id="confirm_password"
-                  placeholder={t('ENTER_CONFIRM_PASSWORD')}
-
+                  placeholder={t("ENTER_CONFIRM_PASSWORD")}
                   errors={errors}
                   inputLabel={
                     <>
@@ -191,7 +186,7 @@ const ChangePassword = () => {
                       <span className="text-red-500">*</span>
                     </>
                   }
-                  onInput={(e) => preventMaxInput(e, 15)}
+                  onInput={(e) => preventMaxInput(e, 16)}
                   register={register("confirm_password", {
                     required: "Please enter confirm password.",
                     pattern: {
@@ -206,20 +201,78 @@ const ChangePassword = () => {
                   })}
                 />
                 {icon3 ? (
-                  <span
-                    className="password_view absolute top-[41px] right-[20px]"
-                    onClick={() => changeIcon3()}
-                  >
+                  <span className="password_view absolute top-[41px] right-[20px]" onClick={() => changeIcon3()}>
                     <AiFillEyeInvisible className="dark:text-white" />
                   </span>
                 ) : (
-                  <span
-                    className="password_view absolute top-[41px] right-[20px]"
-                    onClick={() => changeIcon3()}
-                  >
+                  <span className="password_view absolute top-[41px] right-[20px]" onClick={() => changeIcon3()}>
                     <AiFillEye className="dark:text-white" />
                   </span>
                 )}
+              </div>
+            </div>
+            <div className="py-4 px-4">
+              <div className="relative">
+                <OInputField
+                  type="text"
+                  name="question"
+                  id="question"
+                  inputLabel={
+                    <>
+                      Security question<span className="text-red-500">*</span>
+                    </>
+                  }
+                  wrapperClassName="relative z-0  w-full group"
+                  placeholder=" "
+                  maxLength={500}
+                  register={register("question", {
+                    required: t("PLEASE_ENTER_QUESTION"),
+                    minLength: {
+                      value: 2,
+                      message: t("MINIMUM_LENGTH_MUST_BE_2"),
+                    },
+                    maxLength: {
+                      value: 500,
+                      message: "Minimum length must be 500.",
+                    },
+                    validate: {
+                      whiteSpace: (value) => (value.trim() ? true : t("WHITE_SPACES_NOT_ALLOWED")),
+                    },
+                  })}
+                />
+                <ErrorMessage message={errors?.question?.message} />
+              </div>
+            </div>
+            <div className="py-4 px-4">
+              <div className="relative">
+                <OInputField
+                  type="text"
+                  name="answer"
+                  id="answer"
+                  inputLabel={
+                    <>
+                      Answer<span className="text-red-500">*</span>
+                    </>
+                  }
+                  wrapperClassName="relative z-0  w-full group"
+                  placeholder=" "
+                  maxLength={500}
+                  register={register("answer", {
+                    required: t("PLEASE_ENTER_ANSWER"),
+                    minLength: {
+                      value: 2,
+                      message: t("MINIMUM_LENGTH_MUST_BE_2"),
+                    },
+                    maxLength: {
+                      value: 500,
+                      message: "Minimum length must be 500.",
+                    },
+                    validate: {
+                      whiteSpace: (value) => (value.trim() ? true : t("WHITE_SPACES_NOT_ALLOWED")),
+                    },
+                  })}
+                />
+                <ErrorMessage message={errors?.answer?.message} />
               </div>
             </div>
           </div>
@@ -231,17 +284,10 @@ const ChangePassword = () => {
                 </div>
               </button>
             ) : (
-              <OButton
-                disabled={!isDirty}
-                label={<>{t("O_SUBMIT")}</>}
-                type="submit"
-                title={t('O_SUBMIT')}
-              />
+              <OButton disabled={!isDirty} label={<>{t("O_SUBMIT")}</>} type="submit" title={t("O_SUBMIT")} />
             )}
           </div>
         </form>
-
-
       </div>
     </div>
   );

@@ -29,7 +29,7 @@ const StaticContentList = ({ countryList, page, handleEdit, sort, setSort, hande
 
                 <OStaticTableHead sort={sort} setSort={setSort} name="Title" fieldName="title" />
                 <OStaticTableHead sort={sort} setSort={setSort} name="O_UPDATED_AT" fieldName="updatedAt" />
-                {(manager?.add || manager?.edit || user?.role === "admin") && <OStaticTableHead sort={sort} setSort={setSort} name="O_STATUS" fieldName="status" />}
+                {(manager?.add || manager?.edit || user?.role === "admin") && <OStaticTableHead sort={sort} setSort={setSort} name="O_STATUS" fieldName="status" classTd={"justify-center"} />}
                 {(manager?.add || user?.role === "admin") && (
                   <th scope="col" className="py-3 px-6 text-center  ">
                     {t("O_ACTION")}

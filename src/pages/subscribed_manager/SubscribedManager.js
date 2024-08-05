@@ -6,13 +6,13 @@ import AuthContext from "context/AuthContext";
 import useToastContext from "hooks/useToastContext";
 import OSearch from "components/reusable/OSearch";
 import { BiReset } from "react-icons/bi";
-import Table from "./Table";
+import SubscribedTable from "./SubscribedTable";
 
-function GameType() {
+function SubscribedManager() {
   const { t } = useTranslation();
   const notification = useToastContext();
   const { user, updatePageName } = useContext(AuthContext);
-  const manager = user?.permission?.find((e) => e.manager === "game_type_manager") ?? {};
+  const manager = user?.permission?.find((e) => e.manager === "subscribed_manager") ?? {};
   const [gameType, setGameType] = useState();
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
@@ -44,7 +44,7 @@ function GameType() {
       const response = result?.data?.results;
       setGameType(response);
     } catch (error) {
-      console.error("error in get all game type list==>>>>", error.message);
+      console.error("error in get all subscribed list==>>>>", error.message);
     }
   };
 
@@ -65,7 +65,7 @@ function GameType() {
         allGameType({ statusChange: 1 });
       }
     } catch (error) {
-      console.error("error in get all users list==>>>>", error.message);
+      console.error("error in get all subscribed list==>>>>", error.message);
     }
   };
 
@@ -106,7 +106,7 @@ function GameType() {
     };
   }, [searchTerm]);
   useEffect(() => {
-    updatePageName(t("GAME_TYPE_MANAGER"));
+    updatePageName(t("SUBSCRIBED_MANAGER"));
   }, []);
 
   return (
@@ -118,7 +118,7 @@ function GameType() {
               <div className="col-span-2 flex flex-wrap  items-center">
                 <div className="flex items-center lg:pt-0 pt-3 flex-wrap justify-center mb-2 2xl:mb-0">
                   <div className="relative flex items-center mb-3">
-                    <OSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm} placeholder={t("GAME_TYPE")} />
+                    <OSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm} placeholder={t("SUBSCRIPTION_NAME")} />
                   </div>
                   {(manager?.add || manager?.edit || user?.role === "admin") && (
                     <div className="flex items-center mb-3 ml-3">
@@ -147,7 +147,7 @@ function GameType() {
                 </div>
               </div>
             </form>
-            <Table gameType={gameType} allGameType={allGameType} setSort={setSort} sort={sort} manager={manager} handelStatusChange={handelStatusChange} />
+            <SubscribedTable gameType={gameType} allGameType={allGameType} setSort={setSort} sort={sort} manager={manager} handelStatusChange={handelStatusChange} />
           </div>
         </div>
       </div>
@@ -155,4 +155,4 @@ function GameType() {
   );
 }
 
-export default GameType;
+export default SubscribedManager;

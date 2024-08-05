@@ -225,18 +225,18 @@ const SubAdd = () => {
               <div className="px-2">{renderInputField(false, "email", t("EMAIL_ADDRESS"), 50, formValidation["emailAddress"], item?.type === "view" || item?.type === "edit", t("ENTER_EMAIL_ADDRESS"))}</div>
 
               <div className="px-2">
-                <DynamicLabel name={t("O_MOBILE")} type={true} htmlFor={countryCode} />
+                <DynamicLabel name={t("O_MOBILE_NUMBER")} type={true} htmlFor={countryCode} />
 
                 <DynamicLabel />
                 <Controller
                   control={control}
                   name="mobile"
                   rules={{
-                    required: "Please enter mobile no.",
+                    required: "Please enter mobile number.",
                     validate: (value) => {
                       const inputValue = value?.toString()?.slice(inputRef?.current?.state?.selectedCountry?.countryCode?.length, value?.length);
-                      if (inputValue?.length < 10) {
-                        return "Mobile no. must be 10 digit";
+                      if (inputValue?.length < 8) {
+                        return "Mobile no. must be 8 digit";
                       } else if (inputValue?.length > 12) {
                         return "Mobile no. should be not exceed 12 digits";
                       }
