@@ -9,7 +9,7 @@ import OButton from "components/reusable/OButton";
 import { validationRules } from "utils/constants";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import logoImage from "../../assets/images/login-logo.png";
+import logoImage from "../../assets/images/login_logo.png";
 function ForgotPassword() {
   const { t } = useTranslation();
   const notification = useToastContext();
@@ -44,15 +44,9 @@ function ForgotPassword() {
       <Loader />
       <div className="p-4">
         <div className="login-form bg-white max-w-lg m-auto mt-10 sm:mt-16 md:mt-28 rounded-[20px] overflow-hidden">
-          <form
-            className="sm:py-12 sm:px-11 py-8 px-7 dark:bg-slate-900"
-            onSubmit={handleSubmit(onSubmit)}
-            method="post"
-          >
-            <img src={logoImage} alt="logoImage" className="m-auto py-2 max-w-[267px]" style={{ filter: ` brightness(1) invert(1)` }} />
-            <h1 className="text-center text-[40px] font-bold mb-6 dark:text-white">
-              {t("FORGOT_PASSWORD")}
-            </h1>
+          <form className="sm:py-12 sm:px-11 py-8 px-7 dark:bg-slate-900" onSubmit={handleSubmit(onSubmit)} method="post">
+            <img src={logoImage} alt="logoImage" className="m-auto py-2 max-w-[267px]" />
+            <h1 className="text-center text-[40px] font-bold mb-6 dark:text-white">{t("FORGOT_PASSWORD")}</h1>
             <div className="relative z-0 mb-6 w-full group">
               <input
                 type="text"
@@ -80,23 +74,11 @@ function ForgotPassword() {
             </div>
 
             <div className="text-center mt-8">
-              <OButton
-                label={<>{t("O_SUBMIT")}</>}
-                type="submit"
-                loading={forgotPasswordLoading}
-              />
+              <OButton label={<>{t("O_SUBMIT")}</>} type="submit" loading={forgotPasswordLoading} />
             </div>
             <div className="text-center mt-4">
-              <Link
-                to="/login"
-                className="ml-auto hover:underline text-sm font-medium dark:text-white"
-              >
-               
-                {t("FORGOT_PASSWORD_BACK_TO")}{" "}
-                <span className=" text-[#6236FF] hover:text-[#9D36FF]">
-                 
-                  {t("FORGOT_PASSWORD_LOGIN")}{" "}
-                </span>
+              <Link to="/login" className="ml-auto hover:underline text-sm font-medium dark:text-white">
+                {t("FORGOT_PASSWORD_BACK_TO")} <span className=" text-[#6236FF] hover:text-[#9D36FF]">{t("FORGOT_PASSWORD_LOGIN")} </span>
               </Link>
             </div>
           </form>

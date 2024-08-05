@@ -6,11 +6,12 @@ export const permissionsMap = Object.freeze({
   static_page_management: "/static-content",
   email_manager: "/email-manager",
   FAQ: "/faqs",
-  banner_manager:'/banner-manager',
-  trading_question_manager:'/trading-question-manager',
-  notification_manager:'/notification_manager',
-  offer_manager:'/offer-manager',
-  player_card_manager:'/player-card-manager',
-    player_stock_manager:'/player-stock-manager'
-
+  game_type_manager: "/game-type-manager",
+  how_to_play_manager: "/how-to-play-manager",
+  banner_manager: "/banner-manager",
+  trading_question_manager: "/trading-question-manager",
+  notification_manager: "/notification_manager",
+  offer_manager: "/offer-manager",
+  player_card_manager: "/player-card-manager",
+  player_stock_manager: "/player-stock-manager",
 });

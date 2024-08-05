@@ -265,7 +265,7 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-confirm {
   100% {
     transform: rotate(360deg);
   }
-  
+
 }
 
 @media(max-width:991px)
@@ -281,4 +281,12 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-confirm {
 
 .transition-max-height {
   transition: max-height 0.5s ease-in-out;
+}
+
+.sidebar-icons svg, .sidebar-icons img {
+  color: #0000005c !important;
+  filter: brightness(0);
+}
+.sidebar-icons.active  span img,.sidebar-icons.active span svg{
+  filter: brightness(0) invert(1)!important;
 }

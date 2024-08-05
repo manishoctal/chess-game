@@ -40,44 +40,33 @@ const FormValidation = () => {
         message: t("MINIMUM_LENGTH_MUST_BE_2"),
       },
       validate: {
-        whiteSpace: (value) =>
-          value.trim() ? true : t("WHITE_SPACES_NOT_ALLOWED"),
+        whiteSpace: (value) => (value.trim() ? true : t("WHITE_SPACES_NOT_ALLOWED")),
       },
     },
     numbersOfCoupon: {
       required: t("PLEASE_ENTER_NUMBER_OF_COUPONS"),
       validate: {
-        notGreaterThan100: (value) =>
-          parseInt(value, 10) <= 1000 || t("NUMBER_NOT_GREATER_THAN_1000"),
-        notLessThan0: (value) =>
-          parseInt(value, 10) >= 0 || t("NUMBER_NOT_LESS_THAN_0"),
+        notGreaterThan100: (value) => parseInt(value, 10) <= 1000 || t("NUMBER_NOT_GREATER_THAN_1000"),
+        notLessThan0: (value) => parseInt(value, 10) >= 0 || t("NUMBER_NOT_LESS_THAN_0"),
       },
     },
 
     subAdminName: {
       required: t("PLEASE_ENTER_FIRST_NAME"),
       validate: {
-        noSpace: (value) =>
-          value.trim() !== "" || t("CANNOT_START_WITH_A_SPACE"),
-        onlyAlphabets: (value) =>
-          /^[a-zA-Z_ ]*$/.test(value) || t("ONLY_ALPHABETS_ARE_ALLOWED"),
-        minLength: (value) =>
-          value.length >= 2 || t("MINIMUM_LENGTH_MUST_BE_2_CHARACTERS"),
-        maxLength: (value) =>
-          value.length <= 20 || t("MAXIMUM_LENGTH_SHOULD_BE_20_CHARACTERS"),
+        noSpace: (value) => value.trim() !== "" || t("CANNOT_START_WITH_A_SPACE"),
+        onlyAlphabets: (value) => /^[a-zA-Z_ ]*$/.test(value) || t("ONLY_ALPHABETS_ARE_ALLOWED"),
+        minLength: (value) => value.length >= 2 || t("MINIMUM_LENGTH_MUST_BE_2_CHARACTERS"),
+        maxLength: (value) => value.length <= 20 || t("MAXIMUM_LENGTH_SHOULD_BE_20_CHARACTERS"),
       },
     },
     subAdminLastName: {
       required: t("PLEASE_ENTER_LAST_NAME"),
       validate: {
-        noSpace: (value) =>
-          value.trim() !== "" || t("CANNOT_START_WITH_A_SPACE"),
-        onlyAlphabets: (value) =>
-          /^[a-zA-Z_ ]*$/.test(value) || t("ONLY_ALPHABETS_ARE_ALLOWED"),
-        minLength: (value) =>
-          value.length >= 2 || t("MINIMUM_LENGTH_MUST_BE_2_CHARACTERS"),
-        maxLength: (value) =>
-          value.length <= 20 || t("MAXIMUM_LENGTH_SHOULD_BE_20_CHARACTERS"),
+        noSpace: (value) => value.trim() !== "" || t("CANNOT_START_WITH_A_SPACE"),
+        onlyAlphabets: (value) => /^[a-zA-Z_ ]*$/.test(value) || t("ONLY_ALPHABETS_ARE_ALLOWED"),
+        minLength: (value) => value.length >= 2 || t("MINIMUM_LENGTH_MUST_BE_2_CHARACTERS"),
+        maxLength: (value) => value.length <= 20 || t("MAXIMUM_LENGTH_SHOULD_BE_20_CHARACTERS"),
       },
     },
 
@@ -96,8 +85,7 @@ const FormValidation = () => {
         message: t("MAXIMUM_LENGTH_SHOULD_BE_20_CHARACTERS"),
       },
       validate: {
-        whiteSpace: (value) =>
-          value.trim() ? true : t("WHITE_SPACES_NOT_ALLOWED"),
+        whiteSpace: (value) => (value.trim() ? true : t("WHITE_SPACES_NOT_ALLOWED")),
       },
     },
     nationalityId: {
@@ -115,8 +103,7 @@ const FormValidation = () => {
         message: t("MAXIMUM_LENGTH_SHOULD_BE_20_CHARACTERS"),
       },
       validate: {
-        whiteSpace: (value) =>
-          value.trim() ? true : t("WHITE_SPACES_NOT_ALLOWED"),
+        whiteSpace: (value) => (value.trim() ? true : t("WHITE_SPACES_NOT_ALLOWED")),
       },
     },
     email: {
@@ -126,8 +113,17 @@ const FormValidation = () => {
         message: t("INVALID_EMAIL_ADDRESS"),
       },
       validate: {
-        whiteSpace: (value) =>
-          value.trim() ? true : t("WHITE_SPACES_NOT_ALLOWED"),
+        whiteSpace: (value) => (value.trim() ? true : t("WHITE_SPACES_NOT_ALLOWED")),
+      },
+    },
+    emailAddress: {
+      required: t("PLEASE_ENTER_EMAIL_ADDRESS"),
+      pattern: {
+        value: validationRules.email,
+        message: t("INVALID_EMAIL_ADDRESS"),
+      },
+      validate: {
+        whiteSpace: (value) => (value.trim() ? true : t("WHITE_SPACES_NOT_ALLOWED")),
       },
     },
     subject: {
@@ -141,8 +137,7 @@ const FormValidation = () => {
         message: t("SUBJECT_SHOULD_NOT_EXCEED_500_CHARACTERS"),
       },
       validate: {
-        whiteSpace: (value) =>
-          value.trim() ? true : t("WHITE_SPACES_NOT_ALLOWED"),
+        whiteSpace: (value) => (value.trim() ? true : t("WHITE_SPACES_NOT_ALLOWED")),
       },
     },
     mobile: {
@@ -171,8 +166,7 @@ const FormValidation = () => {
         message: "Description should not exceed 300 characters.",
       },
       validate: {
-        whiteSpace: (value) =>
-          value.trim() ? true : t("WHITE_SPACES_NOT_ALLOWED"),
+        whiteSpace: (value) => (value.trim() ? true : t("WHITE_SPACES_NOT_ALLOWED")),
       },
     },
     title: {
@@ -186,11 +180,9 @@ const FormValidation = () => {
         message: "Title should not exceed 100 characters.",
       },
       validate: {
-        whiteSpace: (value) =>
-          value.trim() ? true : t("WHITE_SPACES_NOT_ALLOWED"),
+        whiteSpace: (value) => (value.trim() ? true : t("WHITE_SPACES_NOT_ALLOWED")),
       },
     },
-
 
     metaTitle: {
       required: t("PLEASE_ENTER_META_TITLE"),
@@ -203,8 +195,7 @@ const FormValidation = () => {
         message: "Meta title should not exceed 100 characters.",
       },
       validate: {
-        whiteSpace: (value) =>
-          value.trim() ? true : t("WHITE_SPACES_NOT_ALLOWED"),
+        whiteSpace: (value) => (value.trim() ? true : t("WHITE_SPACES_NOT_ALLOWED")),
       },
     },
     metaKeyword: {
@@ -218,8 +209,7 @@ const FormValidation = () => {
         message: "Meta keyword should not exceed 100 characters.",
       },
       validate: {
-        whiteSpace: (value) =>
-          value.trim() ? true : t("WHITE_SPACES_NOT_ALLOWED"),
+        whiteSpace: (value) => (value.trim() ? true : t("WHITE_SPACES_NOT_ALLOWED")),
       },
     },
     metaDescription: {
@@ -233,8 +223,7 @@ const FormValidation = () => {
         message: "Meta description should not exceed 100 characters.",
       },
       validate: {
-        whiteSpace: (value) =>
-          value.trim() ? true : t("WHITE_SPACES_NOT_ALLOWED"),
+        whiteSpace: (value) => (value.trim() ? true : t("WHITE_SPACES_NOT_ALLOWED")),
       },
     },
     address: {
@@ -248,8 +237,7 @@ const FormValidation = () => {
         message: "Description should not exceed 250 characters.",
       },
       validate: {
-        whiteSpace: (value) =>
-          value.trim() ? true : t("WHITE_SPACES_NOT_ALLOWED"),
+        whiteSpace: (value) => (value.trim() ? true : t("WHITE_SPACES_NOT_ALLOWED")),
       },
     },
   };
