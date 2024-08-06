@@ -17,7 +17,7 @@ const NotificationAdd = ({ getAllNotifications, handleCategory }) => {
   const [loading, setLoading] = useState(false);
   const [notificationUserError, setNotificationUserError] = useState(false);
   const [usersSuggestion, setUsersSuggestion] = useState([]);
-  const [selectedUsers, setSelectedUsers] = useState('');
+  const [selectedUsers, setSelectedUsers] = useState("");
   const formValidation = FormValidation();
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
@@ -34,13 +34,13 @@ const NotificationAdd = ({ getAllNotifications, handleCategory }) => {
   const customStyles = {
     option: (provided) => ({
       ...provided,
-      fontSize: '12px',
-      zIndex: 999
+      fontSize: "12px",
+      zIndex: 999,
     }),
 
     singleValue: (provided) => ({
       ...provided,
-      fontSize: '12px',
+      fontSize: "12px",
     }),
   };
   const notification = useToastContext();
@@ -48,33 +48,32 @@ const NotificationAdd = ({ getAllNotifications, handleCategory }) => {
 
   // add notification function start
   const onSubmit = async (data) => {
-    if (availableFor === 'specificUser' && selectedUsers=='') {
+    if (availableFor === "specificUser" && selectedUsers == "") {
       setNotificationUserError(true);
-    }else{
-    try {
-      setLoading(true);
-      const obj = {
-        ...data,
-        sendTo: availableFor,
-        user:helpers.ternaryCondition(availableFor!=='all',selectedUsers?.value,null)
-      };
+    } else {
+      try {
+        setLoading(true);
+        const obj = {
+          ...data,
+          sendTo: availableFor,
+          user: helpers.ternaryCondition(availableFor !== "all", selectedUsers?.value, null),
+        };
 
-      const res = await apiPost(apiPath.notifications, { ...obj });
-      if (res.data.success) {
-        notification.success(res?.data?.message);
-        handleCategory();
-        getAllNotifications();
-      } else {
-        notification.error(res?.data?.message);
+        const res = await apiPost(apiPath.notifications, { ...obj });
+        if (res.data.success) {
+          notification.success(res?.data?.message);
+          handleCategory();
+          getAllNotifications();
+        } else {
+          notification.error(res?.data?.message);
+        }
+      } catch (err) {
+        console.error("err:", err);
+      } finally {
+        setLoading(false);
       }
-    } catch (err) {
-      console.error("err:", err);
-    } finally {
-      setLoading(false);
     }
-  }
   };
-
 
   // add notification function end
 
@@ -88,38 +87,32 @@ const NotificationAdd = ({ getAllNotifications, handleCategory }) => {
     };
   }, [searchTerm]);
 
-
-
   const handleSearchOption = async (event) => {
     try {
       const payload = {
-        keyword: event
+        keyword: event,
       };
       const path = apiPath.searchUsers;
       const result = await apiGet(path, payload);
       if (result?.data?.success) {
-        const formattedOption = result?.data?.results?.map((res) => { return ({ label: `${res?.name + ',' + '(' + res?.email + ')'}`, value: res?._id }) })
-        setUsersSuggestion(formattedOption)
-
+        const formattedOption = result?.data?.results?.map((res) => {
+          return { label: `${res?.name + "," + "(" + res?.email + ")"}`, value: res?._id };
+        });
+        setUsersSuggestion(formattedOption);
       }
-
     } catch (error) {
       console.error("error ", error);
     }
   };
 
-
   useEffect(() => {
     if (!isInitialized) {
       setIsInitialized(true);
     } else if (searchTerm) {
-      handleSearchOption(debouncedSearchTerm)
+      handleSearchOption(debouncedSearchTerm);
     }
   }, [debouncedSearchTerm]);
   // debounce function for search end
-
-
-
 
   useEffect(() => {
     getAllNotifications();
@@ -131,13 +124,8 @@ const NotificationAdd = ({ getAllNotifications, handleCategory }) => {
           <div className="sm:py-4 sm:px-2 py-8 px-7 ">
             <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
               <div className="dark:bg-gray-900 flex items-center justify-between p-5 border-b border-solid border-slate-200 rounded-t">
-                <h3 className="text-xl font-semibold dark:text-white">
-                  {t("SEND_NOTIFICATION")}
-                </h3>
-                <button
-                  className=" ml-auto flex items-center justify-center  text-black border-2 rounded-full  h-8 w-8 float-right text-3xl leading-none font-extralight outline-none focus:outline-none"
-                  onClick={() => handleCategory(false)}
-                >
+                <h3 className="text-xl font-semibold dark:text-white">{t("SEND_NOTIFICATION")}</h3>
+                <button className=" ml-auto flex items-center justify-center  text-black border-2 rounded-full  h-8 w-8 float-right text-3xl leading-none font-extralight outline-none focus:outline-none" onClick={() => handleCategory(false)}>
                   <span className=" text-[#B8BBBF]  text-4xl " title="Close">
                     ×
                   </span>
@@ -149,10 +137,10 @@ const NotificationAdd = ({ getAllNotifications, handleCategory }) => {
                     <OInputField
                       wrapperClassName=""
                       name="title"
-                      placeholder={t('ENTER_TITLE')}
+                      placeholder={t("ENTER_NOTIFICATION_TITLE")}
                       inputLabel={
                         <>
-                          {t("O_TITLE")}
+                          {t("NOTIFICATION_TITLE")}
                           <span className="text-red-500">*</span>
                         </>
                       }
@@ -169,15 +157,12 @@ const NotificationAdd = ({ getAllNotifications, handleCategory }) => {
                       name="description"
                       inputLabel={
                         <>
-                          {t("O_MESSAGE")}
+                          {t("ENTER_CONTENT")}
                           <span className="text-red-500">*</span>
                         </>
                       }
                       type="textarea"
-                      register={register(
-                        "description",
-                        formValidation.description
-                      )}
+                      register={register("description", formValidation.description)}
                       errors={errors}
                     />
                   </div>
@@ -190,13 +175,13 @@ const NotificationAdd = ({ getAllNotifications, handleCategory }) => {
                           type="radio"
                           checked={availableFor === "all"}
                           name="default-radio"
-                          onChange={() => {setAvailableFor("all");setSelectedUsers('')}}
+                          onChange={() => {
+                            setAvailableFor("all");
+                            setSelectedUsers("");
+                          }}
                           className="w-4 cursor-pointer h-4 text-blue-600 bg-gray-100 border-gray-300 rounded  dark:bg-gray-700 dark:border-gray-600"
                         />
-                        <label
-                          htmlFor="default-checkbox"
-                          className="ml-2 text-sm font-medium cursor-pointer text-gray-900 dark:text-gray-300"
-                        >
+                        <label htmlFor="default-checkbox" className="ml-2 text-sm font-medium cursor-pointer text-gray-900 dark:text-gray-300">
                           {t("ALL_USERS")}
                         </label>
                       </div>
@@ -206,50 +191,50 @@ const NotificationAdd = ({ getAllNotifications, handleCategory }) => {
                           type="radio"
                           checked={availableFor === "specificUser"}
                           name="default-radio"
-                          onChange={() => {setAvailableFor("specificUser");setSelectedUsers('')}}
+                          onChange={() => {
+                            setAvailableFor("specificUser");
+                            setSelectedUsers("");
+                          }}
                           className="w-4 cursor-pointer h-4 text-blue-600 bg-gray-100 border-gray-300 rounded  dark:bg-gray-700 dark:border-gray-600"
                         />
-                        <label
-                          htmlFor="default-checkbox1"
-                          className="ml-2 text-sm font-medium cursor-pointer text-gray-900 dark:text-gray-300"
-                        >
+                        <label htmlFor="default-checkbox1" className="ml-2 text-sm font-medium cursor-pointer text-gray-900 dark:text-gray-300">
                           {t("ANY_PARTICULAR_USERS")}
                         </label>
                       </div>
-
                     </div>
                     <div>
-                      {availableFor == 'specificUser' && <div className="relative z-0 w-full group md:py-3 sm:py-3">
-                        <DynamicLabel
-                          name={<>{t("SPECIFIC_USER")} <span className="text-red-600">*</span></>}
-                          type={false}
-                        />
-                        <Select
-                          wrapperClassName="relative z-0 mb-2 w-full group"
-                          name="language"
-                          inputValue={searchTerm}
-                          onInputChange={(value) => setSearchTerm(value)}
-                          placeholder={
-                            <>
-                              {t("SEARCH_USER_BY_NAME")}
-                            </>
-                          }
-                          options={[{label:t('SEARCH_USER_BY_NAME'),value:''},...usersSuggestion]}
-                          defaultValue={t("SELECT_USERS")}
-                          onChange={(e) => {
-                            if(e?.value==''){
-                              setSelectedUsers('');
-                            }else{
-                            setSelectedUsers(e);
-                            setNotificationUserError(false);}}}
-                          selectStyles={customStyles}
-                          value={selectedUsers}
-                        />
-                        {selectedUsers=='' && notificationUserError && (
-                          <ErrorMessage message="Please select users." />
-                        )}
-
-                      </div>}
+                      {availableFor == "specificUser" && (
+                        <div className="relative z-0 w-full group md:py-3 sm:py-3">
+                          <DynamicLabel
+                            name={
+                              <>
+                                {t("SPECIFIC_USER")} <span className="text-red-600">*</span>
+                              </>
+                            }
+                            type={false}
+                          />
+                          <Select
+                            wrapperClassName="relative z-0 mb-2 w-full group"
+                            name="language"
+                            inputValue={searchTerm}
+                            onInputChange={(value) => setSearchTerm(value)}
+                            placeholder={<>{t("SEARCH_USER_BY_NAME")}</>}
+                            options={[{ label: t("SEARCH_USER_BY_NAME"), value: "" }, ...usersSuggestion]}
+                            defaultValue={t("SELECT_USERS")}
+                            onChange={(e) => {
+                              if (e?.value == "") {
+                                setSelectedUsers("");
+                              } else {
+                                setSelectedUsers(e);
+                                setNotificationUserError(false);
+                              }
+                            }}
+                            selectStyles={customStyles}
+                            value={selectedUsers}
+                          />
+                          {selectedUsers == "" && notificationUserError && <ErrorMessage message="Please select users." />}
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -261,11 +246,17 @@ const NotificationAdd = ({ getAllNotifications, handleCategory }) => {
                   onClick={() => handleCategory(false)}
                   title={t("O_CLOSE")}
                 >
-                   <IoClose size={19}/>{t("O_CLOSE")}
+                  <IoClose size={19} />
+                  {t("O_CLOSE")}
                 </button>
                 <OButton
-                extraClasses={'!px-6'}
-                  label={<><IoSendSharp size={16} className="mr-2" />{t("O_SEND")}</>}
+                  extraClasses={"!px-6"}
+                  label={
+                    <>
+                      <IoSendSharp size={16} className="mr-2" />
+                      {t("O_SEND")}
+                    </>
+                  }
                   type="submit"
                   title={t("O_SEND")}
                   onClick={handleSubmit(onSubmit)}

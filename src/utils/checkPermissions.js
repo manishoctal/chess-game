@@ -13,5 +13,5 @@ export const permissionsMap = Object.freeze({
   notification_manager: "/notification_manager",
   offer_manager: "/offer-manager",
   player_card_manager: "/player-card-manager",
-  player_stock_manager: "/player-stock-manager",
+  subscribed_manager: "/subscribed-manager",
 });

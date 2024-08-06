@@ -30,7 +30,7 @@ const Sidebar = () => {
     <NavLink
       to={to}
       className={({ isActive }) =>
-        classNames("flex items-center px-4 lg:px-7 sidebar-icons py-4  hover:text-gradientTo", {
+        classNames("flex items-center px-4 lg:px-7 sidebar-icons py-4  ", {
           "bg-gradientTo text-white hover:text-white": isActive,
           "text-black": isActive,
           active: isActive,
@@ -114,7 +114,7 @@ const Sidebar = () => {
           {/* <SidebarNavItem permission="user_manager" path="/users" label="USER_MANAGER" imgSrc={userManager} /> */}
           <SidebarNavItem permission="game_type_manager" path="/game-type-manager" label="GAME_TYPE_MANAGER" imgSrc={userManager} />
           <SidebarNavItem permission="how_to_play_manager" path="/how-to-play-manager" label="HOW_TO_PLAY_MANAGER" imgSrc={rewardWithdrawalRequest} />
-          {/* <SidebarNavItem permission="offer_manager" path="/offer-manager" label="OFFER_MANAGER" icon={<MdOutlineLocalOffer size={21} color="#a7a7a7" />} /> */}
+          <SidebarNavItem permission="offer_manager" path="/offer-manager" label="OFFER_MANAGER" icon={<MdOutlineLocalOffer size={21} color="#a7a7a7" />} />
           <SidebarNavItem permission="subscribed_manager" path="/subscribed-manager" label="SUBSCRIBED_MANAGER" icon={<MdOutlineLocalOffer size={21} color="#a7a7a7" />} />
           {/* <SidebarNavItem permission="trading_question_manager" path="/trading-question-manager" label="TRADING_QUESTION_MANAGER" icon={<BsPatchQuestion size={19} color="#a7a7a7" />} imgSrc={rewardWithdrawalRequest} />
 
@@ -122,11 +122,11 @@ const Sidebar = () => {
           <SidebarNavItem permission="player_stock_manager" path="/player-stock-manager" label="PLAYER_STOCK_MANAGER" icon={<AiOutlineStock size={20} color="#a7a7a7" />} imgSrc={rewardWithdrawalRequest} /> */}
 
           <SidebarNavItem permission="email_manager" path="/email-manager" label="EMAIL_MANAGER" imgSrc={emailManager} />
-          {/* <SidebarNavItem permission="notification_manager" path="/notification_manager" label="NOTIFICATION_MANAGER" imgSrc={notificationManager} /> */}
+          <SidebarNavItem permission="notification_manager" path="/notification_manager" label="NOTIFICATION_MANAGER" imgSrc={notificationManager} />
           <SidebarNavItem permission="static_page_management" path="/static-content" label="NAV_STATIC_CONTENTS" imgSrc={manageStaticContents} />
           <SidebarNavItem permission="FAQ" path="/faqs" label="NAV_FAQS" imgSrc={faqs} />
           {/* <SidebarNavItem permission="settings" path="/setting" label="SETTINGS" imgSrc={globalSettings} /> */}
-          <Link onClick={handleLogout} className="flex items-center px-4 lg:px-7 py-4 hover:bg-sideBarNavActiveColor hover:text-gradientTo">
+          <Link onClick={handleLogout} className="flex items-center px-4 lg:px-7 py-4 sidebar-icons hover:bg-sideBarNavActiveColor">
             <span className="mr-2">
               <img src={Logout} className="max-w-[18px]" title={t("NAV_LOGOUT")} alt="logout" />
             </span>

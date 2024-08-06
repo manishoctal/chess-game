@@ -156,21 +156,21 @@ const FormValidation = () => {
       },
     },
     description: {
-      required: "Please enter description.",
+      required: "Please enter content.",
       minLength: {
         value: 10,
-        message: "Description should contains at least 10 characters.",
+        message: "Content should contains at least 10 characters.",
       },
       maxLength: {
         value: 300,
-        message: "Description should not exceed 300 characters.",
+        message: "Content should not exceed 300 characters.",
       },
       validate: {
         whiteSpace: (value) => (value.trim() ? true : t("WHITE_SPACES_NOT_ALLOWED")),
       },
     },
     title: {
-      required: t("PLEASE_ENTER_TITLE"),
+      required: t("PLEASE_ENTER_NOTIFICATION_TITLE"),
       minLength: {
         value: 2,
         message: "Title should contains at least 2 characters.",
@@ -238,6 +238,31 @@ const FormValidation = () => {
       },
       validate: {
         whiteSpace: (value) => (value.trim() ? true : t("WHITE_SPACES_NOT_ALLOWED")),
+      },
+    },
+    subscriptionName: {
+      required: t("PLEASE_ENTER_SUBSCRIPTION_NAME"),
+      pattern: {
+        value: /^[^\s].*/,
+        message: t("CANNOT_START_WITH_A_SPACE"),
+      },
+      minLength: {
+        value: 2,
+        message: t("MINIMUM_LENGTH_MUST_BE_2"),
+      },
+      maxLength: {
+        value: 20,
+        message: t("MAXIMUM_LENGTH_SHOULD_BE_20_CHARACTERS"),
+      },
+      validate: {
+        whiteSpace: (value) => (value.trim() ? true : t("WHITE_SPACES_NOT_ALLOWED")),
+      },
+    },
+    price: {
+      required: t("PLEASE_ENTER_PRICE"),
+      pattern: {
+        value: /^[^\s].*/,
+        message: t("CANNOT_START_WITH_A_SPACE"),
       },
     },
   };
