@@ -174,11 +174,10 @@ function Home() {
         startDate: helpers?.ternaryCondition(filterData?.startDate, dayjs(filterData?.startDate).format("YYYY-MM-DD"), null),
         endDate: helpers?.ternaryCondition(filterData?.endDate, dayjs(filterData?.endDate).format("YYYY-MM-DD"), null),
       };
-      const path = pathObj.getDashboardDetails;
+      const path = pathObj.getDashboardDetailsss;
       const result = await apiGet(path, payload);
       setDashboardDetails({ ...dashboardDetails, ...result.data.results });
     } catch (error) {
-      console.error("error:", error);
       if (error.response.status === 401 || error.response.status === 409) {
         logoutUser();
       }
@@ -208,16 +207,16 @@ function Home() {
     });
   };
 
-  useEffect(() => {
-    if (startDate && endDate && selectedButton) {
-      // graph api call function ====
-      handleGraphApiCall(startDate, endDate, selectedButton, "first");
-    }
-    if (graphTwoDropdownValue && graphTwoEndDate && graphTwoStartData) {
-      // graph api call function ====
-      handleGraphApiCall(graphTwoStartData, graphTwoEndDate, graphTwoDropdownValue, "second");
-    }
-  }, [startDate, endDate, selectedButton, graphTwoStartData, graphTwoEndDate, graphTwoDropdownValue]);
+  // useEffect(() => {
+  //   if (startDate && endDate && selectedButton) {
+  //     // graph api call function ====
+  //     handleGraphApiCall(startDate, endDate, selectedButton, "first");
+  //   }
+  //   if (graphTwoDropdownValue && graphTwoEndDate && graphTwoStartData) {
+  //     // graph api call function ====
+  //     handleGraphApiCall(graphTwoStartData, graphTwoEndDate, graphTwoDropdownValue, "second");
+  //   }
+  // }, [startDate, endDate, selectedButton, graphTwoStartData, graphTwoEndDate, graphTwoDropdownValue]);
 
   const handleActiveForFirst = (start, end) => {
     if (start && end) {
@@ -244,51 +243,51 @@ function Home() {
     }
   };
 
-  const setChartDataForType = (prevData, newCategories, newData) => ({
-    ...prevData,
-    options: {
-      ...prevData?.options,
-      xaxis: {
-        ...prevData?.options?.xaxis,
-        categories: newCategories,
-      },
-    },
-    series: [
-      {
-        ...prevData?.series[0],
-        data: newData,
-      },
-    ],
-  });
+  // const setChartDataForType = (prevData, newCategories, newData) => ({
+  //   ...prevData,
+  //   options: {
+  //     ...prevData?.options,
+  //     xaxis: {
+  //       ...prevData?.options?.xaxis,
+  //       categories: newCategories,
+  //     },
+  //   },
+  //   series: [
+  //     {
+  //       ...prevData?.series[0],
+  //       data: newData,
+  //     },
+  //   ],
+  // });
 
-  const handleGraphApiCall = async (start, end, dropValue, type) => {
-    try {
-      const payload = {
-        startDate: helpers?.ternaryCondition(start, dayjs(start).format("YYYY-MM-DD"), null),
-        endDate: helpers?.ternaryCondition(end, dayjs(end).format("YYYY-MM-DD"), null),
-        type: dropValue,
-      };
-      const path = "";
-      const result = await apiGet(path, payload);
-      if (result?.data?.success) {
-        const newCategories = result?.data?.results?.xAxis;
-        let yAxisData = result?.data?.results?.yAxis;
+  // const handleGraphApiCall = async (start, end, dropValue, type) => {
+  //   try {
+  //     const payload = {
+  //       startDate: helpers?.ternaryCondition(start, dayjs(start).format("YYYY-MM-DD"), null),
+  //       endDate: helpers?.ternaryCondition(end, dayjs(end).format("YYYY-MM-DD"), null),
+  //       type: dropValue,
+  //     };
+  //     const path = "";
+  //     const result = await apiGet(path, payload);
+  //     if (result?.data?.success) {
+  //       const newCategories = result?.data?.results?.xAxis;
+  //       let yAxisData = result?.data?.results?.yAxis;
 
-        if (Array.isArray(yAxisData)) {
-          let newData = yAxisData.map((number) => Math.round(number));
-          if (type === "first") {
-            setChartData((prevData) => setChartDataForType(prevData, newCategories, newData));
-          } else {
-            setChartDataTwo((prevData) => setChartDataForType(prevData, newCategories, newData));
-          }
-        }
-      } else {
-        notification.error(result?.data?.message);
-      }
-    } catch (error) {
-      console.error("error:", error);
-    }
-  };
+  //       if (Array.isArray(yAxisData)) {
+  //         let newData = yAxisData.map((number) => Math.round(number));
+  //         if (type === "first") {
+  //           setChartData((prevData) => setChartDataForType(prevData, newCategories, newData));
+  //         } else {
+  //           setChartDataTwo((prevData) => setChartDataForType(prevData, newCategories, newData));
+  //         }
+  //       }
+  //     } else {
+  //       notification.error(result?.data?.message);
+  //     }
+  //   } catch (error) {
+  //     console.error("error:", error);
+  //   }
+  // };
 
   const checkIfButtonShouldBeDisabled = (start, end, type) => {
     const dateDifference = dayjs(end).diff(start, "day");
