@@ -437,7 +437,7 @@
   "PLEASE_ENTER_AMOUNT": "Please enter amount.",
   "DEPOSIT_AMOUNT_IN_ADMIN_WALLET": "Deposit amount in super admin wallet",
   "PLEASE_ENTER_CONTENT": "Please enter content.",
-  "PLEASE_ENTER_TITLE": "Please enter title.",
+
   "MINIMUM_LENGTH_MUST_BE_2": "Minimum length must be 2.",
   "MINIMUM_LENGTH_MUST_BE_15": "Minimum length must be 15.",
   "ARE_YOU_SURE_YOU_WANT_TO": "Are you sure you want to",
@@ -820,5 +820,21 @@
   "SUBSCRIPTION_ID": "Subscription ID",
   "PLEASE_ENTER_ANSWER": "Please enter answer.",
   "QUESTION": "Question",
-  "PLEASE_ENTER_QUESTION": "Please enter security question."
+  "PLEASE_ENTER_QUESTION": "Please enter security question.",
+  "EDIT_SUBSCRIBED": "Edit Subscribed",
+  "PLEASE_ENTER_SUBSCRIPTION_NAME": "Please enter subscription name.",
+  "PLEASE_ENTER_PRICE": "Please enter price.",
+  "MONTH": "Month",
+  "YEARLY": "Yearly",
+  "VIEW_SUBSCRIPTION_MANAGER": "View Subscription Manager",
+  "SEARCH_BY_USER_ID_MOBILE": "User ID, Mobile",
+  "EXPIRE": "Expire",
+  "NOTIFICATION_TITLE": "Notification Title",
+  "CONTENT": "Content",
+  "SEND_DATE": "Send Date",
+  "USERS": "Users",
+  "ENTER_NOTIFICATION_TITLE": "Enter notification title",
+  "ENTER_CONTENT": "Enter content",
+  "SEARCH_BY_NOTIFICATION_TITLE": "Notification title",
+  "PLEASE_ENTER_NOTIFICATION_TITLE": "Please enter notification title."
 }

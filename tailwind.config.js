@@ -11,7 +11,7 @@ module.exports = {
     },
     extend: {
       colors: {
-        DarkBlue: "#631bd1", // Buttons Hover
+        DarkBlue: "#0081db", // Buttons Hover
         gradientTo: "#0096ff", //  Buttons
         gradpurple: "#ffffff", // Sidebar Gradiant
         gradientFrom: "#ffffff", // Sidebar Gradiant

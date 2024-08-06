@@ -19,8 +19,8 @@ const BannerAdd = ({ setAddShowModal, getAllFAQ }) => {
   const [picture, setPicture] = useState();
   const notification = useToastContext();
   const [imageError, setImageError] = useState("");
-  const [playerImgPath, setPlayerImgPath] = useState({});
-  const [PlayerImag, setPlayerImage] = useState("");
+  const [bannerImgPath, setBannerImgPath] = useState({});
+  const [bannerImage, setBannerImage] = useState("");
 
   // banner add function start
   const handleSubmitForm = async () => {
@@ -30,15 +30,15 @@ const BannerAdd = ({ setAddShowModal, getAllFAQ }) => {
     }
     try {
       setLoader(true);
-      if (!isEmpty(playerImgPath)) {
+      if (!isEmpty(bannerImgPath)) {
         const reader = new FileReader();
-        reader.readAsArrayBuffer(playerImgPath?.file);
+        reader.readAsArrayBuffer(bannerImgPath?.file);
         reader.onloadend = async () => {
           const binaryData = reader.result;
-          await axios.put(playerImgPath?.data?.url, binaryData, { headers: { "Content-Type": "application/octet-stream" } });
+          await axios.put(bannerImgPath?.data?.url, binaryData, { headers: { "Content-Type": "application/octet-stream" } });
         };
       }
-      const payloadPre = { image: helpers.orOperator(playerImgPath?.data?.key, null) };
+      const payloadPre = { image: helpers.orOperator(bannerImgPath?.data?.key, null) };
       const path = apiPath.bannerAdd;
       const result = await apiPost(path, payloadPre);
       if (result?.data?.success === true) {
@@ -68,16 +68,16 @@ const BannerAdd = ({ setAddShowModal, getAllFAQ }) => {
 
       const result = await apiGet(path, payloadPre);
       if (result?.data?.success) {
-        setPlayerImgPath({ data: result?.data?.results, file: e });
+        setBannerImgPath({ data: result?.data?.results, file: e });
         const url = URL.createObjectURL(e);
         setPicture({ file: e, url: url });
       }
     } catch (error) {
-      console.error("error in get player limit edit list==>>>>", error.message);
+      console.error("error in get banner list==>>>>", error.message);
     }
 
     const url = URL?.createObjectURL(e);
-    setPlayerImage(url);
+    setBannerImage(url);
   };
 
   // change file function end
@@ -97,7 +97,7 @@ const BannerAdd = ({ setAddShowModal, getAllFAQ }) => {
                 </button>
               </div>
               <div className="flex justify-center">
-                <ImageUploader onFileChange={handleFileChange} imageSrc={PlayerImag} />
+                <ImageUploader onFileChange={handleFileChange} imageSrc={bannerImage} />
               </div>
               {imageError && <small className="text-red-500 text-center">{imageError}</small>}
 
