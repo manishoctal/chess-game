@@ -69,6 +69,9 @@ const apiPath = Object.freeze({
   getCheckUser: "/v1/admin/check-user",
   getImagePath: "/v1/admin/presigned-url",
   getImageBanner: "/v1/admin/banner/presigned-url",
+  getSubscription: "/v1/admin/subscription",
+  subscriptionEdit: "/v1/admin/subscription",
+  getSubscriptionUsers: "/v1/admin/subscription/user-list",
 });
 
 export default apiPath;

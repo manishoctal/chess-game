@@ -32,6 +32,7 @@ import PlayerStockManager from "pages/player_stock_manager/PlayerStockManager";
 import ViewPlayerStockManager from "pages/player_stock_manager/ViewScoreManager";
 import GameType from "pages/game_type_manager/GameType";
 import SubscribedManager from "pages/subscribed_manager/SubscribedManager";
+import ViewSubscriptionManager from "pages/subscribed_manager/ViewSubscriptionManager";
 const UseChange = ({ data }) => {
   const { t } = useTranslation();
   return t(data);
@@ -101,6 +102,15 @@ const AdminRoutes = {
         </AuthorizationRoute>
       ),
       name: <UseChange data="SUBSCRIBED_MANAGER" />,
+    },
+    {
+      path: "/subscription-manager/view",
+      element: (
+        <AuthorizationRoute>
+          <ViewSubscriptionManager />
+        </AuthorizationRoute>
+      ),
+      name: <UseChange data="VIEW_OFFER_MANAGER" />,
     },
 
     {

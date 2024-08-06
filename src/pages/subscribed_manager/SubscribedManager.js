@@ -7,6 +7,7 @@ import useToastContext from "hooks/useToastContext";
 import OSearch from "components/reusable/OSearch";
 import { BiReset } from "react-icons/bi";
 import SubscribedTable from "./SubscribedTable";
+import SubscribedEdit from "./SubscribedEdit";
 
 function SubscribedManager() {
   const { t } = useTranslation();
@@ -17,6 +18,9 @@ function SubscribedManager() {
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
   const [isInitialized, setIsInitialized] = useState(false);
+  const [editShowModal, setEditShowModal] = useState(false);
+  const [editView, setEditView] = useState();
+  const [item, setItem] = useState();
   const [filterData, setFilterData] = useState({
     category: "",
     searchKey: "",
@@ -39,7 +43,7 @@ function SubscribedManager() {
         sortType: sort.sortType,
       };
 
-      const path = apiPath.getGameType;
+      const path = apiPath.getSubscription;
       const result = await apiGet(path, payload);
       const response = result?.data?.results;
       setGameType(response);
@@ -56,7 +60,7 @@ function SubscribedManager() {
     try {
       const payload = {
         status: item?.status === "inactive" ? "active" : "inactive",
-        type: "gameType",
+        type: "subscriptionType",
       };
       const path = `${apiPath.changeStatus}/${item?._id}`;
       const result = await apiPut(path, payload);
@@ -95,6 +99,12 @@ function SubscribedManager() {
 
   const adminStatusPage = (e) => {
     setFilterData({ ...filterData, category: e.target.value, isFilter: true });
+  };
+
+  const editViewBanner = async (type, data) => {
+    setEditView(type);
+    setItem(data);
+    setEditShowModal(true);
   };
 
   useEffect(() => {
@@ -147,10 +157,11 @@ function SubscribedManager() {
                 </div>
               </div>
             </form>
-            <SubscribedTable gameType={gameType} allGameType={allGameType} setSort={setSort} sort={sort} manager={manager} handelStatusChange={handelStatusChange} />
+            <SubscribedTable gameType={gameType} allGameType={allGameType} setSort={setSort} sort={sort} manager={manager} handelStatusChange={handelStatusChange} editViewBanner={editViewBanner} />
           </div>
         </div>
       </div>
+      {editShowModal && <SubscribedEdit setEditShowModal={setEditShowModal} allGameType={allGameType} item={item} viewType={editView} />}
     </div>
   );
 }

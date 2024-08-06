@@ -28,8 +28,8 @@ const SubscribedTable = ({ gameType, sort, setSort, manager, handelStatusChange,
               <th scope="col" className="py-3 px-6">
                 {t("S.NO")}
               </th>
-              <OSubcribedTableHead sort={sort} fieldName="subscriptionID" setSort={setSort} name="SUBSCRIPTION_ID" />
-              <OSubcribedTableHead name="SUBSCRIPTION_NAME" fieldName="subscriptionName" sort={sort} setSort={setSort} />
+              <OSubcribedTableHead sort={sort} fieldName="subscriptionId" setSort={setSort} name="SUBSCRIPTION_ID" />
+              <OSubcribedTableHead name="SUBSCRIPTION_NAME" fieldName="name" sort={sort} setSort={setSort} />
               <OSubcribedTableHead name="FEATURE" fieldName="feature" sort={sort} setSort={setSort} />
               <OSubcribedTableHead name="DURATION" fieldName="duration" sort={sort} setSort={setSort} />
               <OSubcribedTableHead name="PRICE" fieldName="price" sort={sort} setSort={setSort} />
@@ -46,8 +46,8 @@ const SubscribedTable = ({ gameType, sort, setSort, manager, handelStatusChange,
                 <th scope="row" className="py-2 px-4 border-r dark:border-[#ffffff38] font-medium text-gray-900  dark:text-white">
                   {i + 1}
                 </th>
-                <td className="py-2 px-4 border-r dark:border-[#ffffff38]">{item?.subscriptionID || "N/A"}</td>
-                <td className="py-2 px-4 border-r dark:border-[#ffffff38]">{startCase(item?.subscriptionName)}</td>
+                <td className="py-2 px-4 border-r dark:border-[#ffffff38]">{item?.subscriptionId || "N/A"}</td>
+                <td className="py-2 px-4 border-r dark:border-[#ffffff38]">{startCase(item?.name)}</td>
                 <td className="py-2 px-4 border-r dark:border-[#ffffff38]">{startCase(item?.feature)}</td>
                 <td className="py-2 px-4 border-r dark:border-[#ffffff38]">{startCase(item?.duration)}</td>
                 <td className="py-2 px-4 border-r dark:border-[#ffffff38]">{startCase(item?.price)}</td>
@@ -60,7 +60,7 @@ const SubscribedTable = ({ gameType, sort, setSort, manager, handelStatusChange,
                         type="checkbox"
                         className="sr-only peer"
                         checked={item?.status === "active"}
-                        onChange={(e) => helpers.alertFunction(`${t("ARE_YOU_SURE_YOU_WANT_TO")} ${helpers.ternaryCondition(e.target.checked, "active", "inactive")} '${item.gameType}'?`, item, handelStatusChange)}
+                        onChange={(e) => helpers.alertFunction(`${t("ARE_YOU_SURE_YOU_WANT_TO")} ${helpers.ternaryCondition(e.target.checked, "active", "inactive")} '${item.name}'?`, item, handelStatusChange)}
                       />
                       <div className="w-10 h-5 bg-gray-200 rounded-full peer peer-focus:ring-0 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-gradientTo" />
                     </label>
@@ -83,7 +83,7 @@ const SubscribedTable = ({ gameType, sort, setSort, manager, handelStatusChange,
                       )}
                       {(manager?.view || user?.role === "admin") && (
                         <li className="px-2 py-2 hover:text-gradientTo">
-                          <NavLink to="/subscribed-manager/view" title={t("O_VIEW")} state={item}>
+                          <NavLink to="/subscription-manager/view" title={t("O_VIEW")} state={item}>
                             <AiFillEye className="cursor-pointer w-5 h-5 text-slate-600" />
                           </NavLink>
                         </li>
