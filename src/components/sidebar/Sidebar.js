@@ -116,6 +116,7 @@ const Sidebar = () => {
           <SidebarNavItem permission="how_to_play_manager" path="/how-to-play-manager" label="HOW_TO_PLAY_MANAGER" imgSrc={rewardWithdrawalRequest} />
           <SidebarNavItem permission="offer_manager" path="/offer-manager" label="OFFER_MANAGER" icon={<MdOutlineLocalOffer size={21} color="#a7a7a7" />} />
           <SidebarNavItem permission="subscribed_manager" path="/subscribed-manager" label="SUBSCRIBED_MANAGER" icon={<MdOutlineLocalOffer size={21} color="#a7a7a7" />} />
+          <SidebarNavItem permission="achievement_and_badges" path="/achievement-and-badges" label="ACHIEVEMENT_AND_BADGES" imgSrc={rewardWithdrawalRequest} />
           {/* <SidebarNavItem permission="trading_question_manager" path="/trading-question-manager" label="TRADING_QUESTION_MANAGER" icon={<BsPatchQuestion size={19} color="#a7a7a7" />} imgSrc={rewardWithdrawalRequest} />
 
           <SidebarNavItem permission="player_card_manager" path="/player-card-manager" label="PLAYER_CARD_MANAGER" icon={<AiOutlineIdcard size={20} color="#a7a7a7" />} imgSrc={rewardWithdrawalRequest} />

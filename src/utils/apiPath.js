@@ -72,6 +72,10 @@ const apiPath = Object.freeze({
   getSubscription: "/v1/admin/subscription",
   subscriptionEdit: "/v1/admin/subscription",
   getSubscriptionUsers: "/v1/admin/subscription/user-list",
+  getAchievement: "v1/admin/achievement",
+  getAllAchievement: "v1/admin/achievement",
+  getImageAchievement: "/v1/admin/achievement/presigned-url",
+  getAchievementUsers: "/v1/admin/subscription/user-list",
 });
 
 export default apiPath;

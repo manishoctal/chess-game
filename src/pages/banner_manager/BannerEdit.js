@@ -23,40 +23,6 @@ const BannerEdit = ({ setEditShowModal, getAllFAQ, item, viewType }) => {
   const [bannerImage, setBannerImage] = useState("");
 
   // edit banner function start
-  // const handleSubmitForm = async (data) => {
-  //   if (!picture?.file) {
-  //     setImageError("Please choose image.");
-  //     return;
-  //   }
-  //   try {
-  //     setLoader(true);
-  //     if (!isEmpty(bannerImgPath)) {
-  //       const reader = new FileReader();
-  //       reader.readAsArrayBuffer(bannerImgPath?.file);
-  //       reader.onloadend = async () => {
-  //         const binaryData = reader.result;
-  //         await axios.put(bannerImgPath?.data?.url, binaryData, { headers: { "Content-Type": "application/octet-stream" } });
-  //         console.log('image uploaded at s3-----------');
-
-  //       };
-  //     }
-
-  //     const payloadPre = { image: helpers.orOperator(bannerImgPath?.data?.key, null) };
-  //     const path = `${apiPath.bannerEdit}/${item?._id}`;
-  //     const result = await apiPut(path, payloadPre);
-  //     if (result?.data?.success === true) {
-  //       notification.success(result?.data?.message);
-  //       getAllFAQ();
-  //       setEditShowModal(false);
-  //     } else {
-  //       notification.error(result?.data?.message);
-  //     }
-  //   } catch (error) {
-  //     console.error("error:", error.message);
-  //   } finally {
-  //     setLoader(false);
-  //   }
-  // };
 
   const handleSubmitForm = async (data) => {
     if (!picture?.file) {
@@ -66,8 +32,6 @@ const BannerEdit = ({ setEditShowModal, getAllFAQ, item, viewType }) => {
 
     try {
       setLoader(true);
-
-      // Check if there is an image to upload
       if (!isEmpty(bannerImgPath)) {
         const uploadImageToS3 = () => {
           return new Promise((resolve, reject) => {
@@ -91,8 +55,6 @@ const BannerEdit = ({ setEditShowModal, getAllFAQ, item, viewType }) => {
 
         await uploadImageToS3();
       }
-
-      // Prepare the payload and call the backend API after the image is successfully uploaded to S3
       const payloadPre = {
         image: helpers.orOperator(bannerImgPath?.data?.key, null),
       };

@@ -155,7 +155,7 @@ const FormValidation = () => {
         message: "Maximum length should be 10 digits.",
       },
     },
-    description: {
+    content: {
       required: "Please enter content.",
       minLength: {
         value: 10,
@@ -164,6 +164,21 @@ const FormValidation = () => {
       maxLength: {
         value: 300,
         message: "Content should not exceed 300 characters.",
+      },
+      validate: {
+        whiteSpace: (value) => (value.trim() ? true : t("WHITE_SPACES_NOT_ALLOWED")),
+      },
+    },
+
+    description: {
+      required: "Please enter description.",
+      minLength: {
+        value: 10,
+        message: "Description should contains at least 10 characters.",
+      },
+      maxLength: {
+        value: 300,
+        message: "Description should not exceed 300 characters.",
       },
       validate: {
         whiteSpace: (value) => (value.trim() ? true : t("WHITE_SPACES_NOT_ALLOWED")),
@@ -263,6 +278,24 @@ const FormValidation = () => {
       pattern: {
         value: /^[^\s].*/,
         message: t("CANNOT_START_WITH_A_SPACE"),
+      },
+    },
+    name: {
+      required: t("PLEASE_ENTER_NAME"),
+      pattern: {
+        value: /^[^\s].*/,
+        message: t("CANNOT_START_WITH_A_SPACE"),
+      },
+      minLength: {
+        value: 2,
+        message: t("MINIMUM_LENGTH_MUST_BE_2"),
+      },
+      maxLength: {
+        value: 20,
+        message: t("MAXIMUM_LENGTH_SHOULD_BE_20_CHARACTERS"),
+      },
+      validate: {
+        whiteSpace: (value) => (value.trim() ? true : t("WHITE_SPACES_NOT_ALLOWED")),
       },
     },
   };
