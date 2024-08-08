@@ -182,18 +182,18 @@ button:hover{
 }
 
 span.flatpickr-weekday {
-  background-color: #4a24c2 !important;
+  background-color: #0096ff !important;
   color: #ffffff !important;
 }
 
 .flatpickr-current-month .flatpickr-monthDropdown-months {
-  background-color:  #4a24c2 !important;
+  background-color:  #0096ff !important;
 }
 .flatpickr-months .flatpickr-month {
-  background-color:  #4a24c2 !important;
+  background-color:  #0096ff !important;
 }
 .flatpickr-weekdays {
-  background-color:  #4a24c2 !important;
+  background-color:  #0096ff !important;
 }
 
 div:where(.swal2-container) button:where(.swal2-styled).swal2-confirm {
@@ -286,9 +286,5 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-confirm {
 }
 
 .sidebar-icons svg, .sidebar-icons img {
-  /* color: #0000005c !important; */
   filter: brightness(0);
 }
-/* .sidebar-icons.active  span img,.sidebar-icons.active span svg{
-  filter: brightness(0) invert(1)!important;
-} */

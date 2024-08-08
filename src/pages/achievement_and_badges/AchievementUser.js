@@ -2,9 +2,9 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { isEmpty, startCase } from "lodash";
 import helpers from "../../utils/helpers";
-import OWalletTableHead from "../../components/reusable/OTableHead";
+import OSubscriptionTableHead from "../../components/reusable/OTableHead";
 
-const OfferAppliedUser = ({ offerUsers, page, sort, setSort, pageSize }) => {
+const AchievementUser = ({ subscriptionUsers, page, sort, setSort, pageSize }) => {
   const { t } = useTranslation();
   // change status of offer function start
 
@@ -21,33 +21,29 @@ const OfferAppliedUser = ({ offerUsers, page, sort, setSort, pageSize }) => {
               <th scope="col" className="py-3 px-6">
                 {t("S.NO")}
               </th>
-              <OWalletTableHead sort={sort} setSort={setSort} name="USER_ID" fieldName="userId" />
-              <OWalletTableHead sort={sort} setSort={setSort} name="FULL_NAME" fieldName="fullName" />
-              <OWalletTableHead sort={sort} setSort={setSort} name="USER_NAME" fieldName="userName" />
-              <OWalletTableHead sort={sort} setSort={setSort} name="MOBILE_NUMBER" fieldName="mobile" />
-              <OWalletTableHead sort={sort} setSort={setSort} name="OFFER_CODE" fieldName="code" />
-              <OWalletTableHead sort={sort} setSort={setSort} name="USED_DATE" fieldName="createdAt" />
-              <OWalletTableHead sort={sort} setSort={setSort} name="AMOUNT_ADDED" fieldName="transactionAmount" />
-              <OWalletTableHead sort={sort} setSort={setSort} name="CASH_BONUS" fieldName="cashbackAmount" />
+              <OSubscriptionTableHead sort={sort} setSort={setSort} name="USER_ID" fieldName="userId" />
+              <OSubscriptionTableHead sort={sort} setSort={setSort} name="FULL_NAME" fieldName="fullName" />
+              <OSubscriptionTableHead sort={sort} setSort={setSort} name="USER_NAME" fieldName="userName" />
+              <OSubscriptionTableHead sort={sort} setSort={setSort} name="O_MOBILE" fieldName="mobile" />
+              <OSubscriptionTableHead sort={sort} setSort={setSort} name="O_EMAIL" fieldName="email" />
+              <OSubscriptionTableHead sort={sort} setSort={setSort} name="O_CREATED_AT" fieldName="createdAt" />
             </tr>
           </thead>
           <tbody>
-            {offerUsers?.map((item, i) => (
+            {subscriptionUsers?.map((item, i) => (
               <tr key={i} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                 <th scope="row" className="py-2 px-4 border-r dark:border-[#ffffff38] font-medium text-gray-900  dark:text-white">
                   {i + 1 + pageSize * (page - 1)}
                 </th>
                 {getOfferUserValue(item?.userId)}
-                {getOfferUserValue(startCase(item?.fullName) || "N/A")}
+                {getOfferUserValue(startCase(item?.firstName + " " + item?.lastName) || "N/A")}
                 {getOfferUserValue(item?.userName || "N/A")}
                 {getOfferUserValue(item?.mobile || "N/A")}
-                {getOfferUserValue(item?.offerCode || "N/A", "font-bold")}
+                {getOfferUserValue(item?.email || "N/A")}
                 {getOfferUserValue(helpers.getDateAndTime(item?.createdAt))}
-                {getOfferUserValue(helpers.formattedAmount(item?.amount) || "N/A", "font-bold")}
-                {getOfferUserValue(helpers.formattedAmount(item?.cashBonus) || "N/A", "font-bold")}
               </tr>
             ))}
-            {isEmpty(offerUsers) ? (
+            {isEmpty(subscriptionUsers) ? (
               <tr className="bg-white border-b w-full text-center dark:bg-gray-800 dark:border-gray-700">
                 <td className="py-4 px-6" colSpan={9}>
                   {t("O_NO_RECORD_FOUND")}
@@ -61,4 +57,4 @@ const OfferAppliedUser = ({ offerUsers, page, sort, setSort, pageSize }) => {
   );
 };
 
-export default OfferAppliedUser;
+export default AchievementUser;
