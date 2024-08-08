@@ -7,7 +7,6 @@ import helpers from "utils/helpers";
 
 function MainLayout({ children, type }) {
   const { sidebarStatus, user } = useContext(AuthContext);
-  console.log("🚀 ~ MainLayout ~ sidebarStatus:", user?.isPasswordSet, user?.isPasswordSet ? helpers.ternaryCondition(sidebarStatus === "open", "xl:ml-[280px] lg:ml-[220px] ml-0", "") : "");
   return (
     <div className="main_wrap">
       <Loader />

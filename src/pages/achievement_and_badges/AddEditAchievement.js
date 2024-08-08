@@ -15,7 +15,6 @@ import ErrorMessage from "components/ErrorMessage";
 import DynamicLabel from "utils/DynamicLabel";
 import OImage from "components/reusable/OImage";
 import { AiFillCloseCircle } from "react-icons/ai";
-import defaultImage from "../../../src/assets/images/No-image-found.jpg";
 import { startCase } from "lodash";
 import axios from "axios";
 
@@ -50,7 +49,6 @@ const AddEditAchievement = ({ setEditShowOfferModal, viewType, allAchievement, o
       });
     }
   }, [offerDetails]);
-  console.log("offerDetails", offerDetails);
 
   const [loader, setLoader] = useState(false);
   const notification = useToastContext();
@@ -64,44 +62,46 @@ const AddEditAchievement = ({ setEditShowOfferModal, viewType, allAchievement, o
 
   const checkValidation = (image, setProfilePicError, errMessage) => {
     let isValid = true;
-    if (!image || !image.file) {
+    if (image === "" || image === undefined) {
       isValid = false;
       setProfilePicError(errMessage);
     }
     return isValid;
   };
 
-  // edit subscription function start
   // submit function start
   const handleSubmitForm = async (data) => {
-    // const isValid = checkValidation(image?.file, setProfilePicError, "Please upload image.");
-    // if (!isValid) {
-    //   return;
-    // }
+    const isValid = checkValidation(image?.file || image?.imgUrl, setProfilePicError, "Please upload image.");
+    if (!isValid) {
+      return;
+    }
     try {
       setLoader(true);
 
       // Upload the image to the presigned URL
-      const reader = new FileReader();
-      reader.readAsArrayBuffer(image.file);
-      reader.onloadend = async () => {
-        const binaryData = reader.result;
-        await axios.put(image.data.url, binaryData, { headers: { "Content-Type": "application/octet-stream" } });
-
-        // Proceed with form submission
-        const payloadPre = { image: helpers.orOperator(image.data.key, null), name: data?.name, type: type, criteria: criteria, description: data?.description, rating: data?.rating, gameType: gameTypeList };
-        const path = helpers.ternaryCondition(viewType == "add", apiPath.getAllAchievement, apiPath.getAllAchievement + "/" + offerDetails?._id);
-        const apiFunction = helpers.ternaryCondition(viewType === "add", apiPost, apiPut);
-        const result = await apiFunction(path, payloadPre);
-        console.log("result", result);
-        if (result?.status === 200) {
-          notification.success(result?.data?.message);
-          allAchievement({ statusChange: 1 });
-          setEditShowOfferModal(false);
-        } else {
-          notification.error(result?.data?.message);
-        }
-      };
+      let payloadPre = {};
+      if (image?.file) {
+        const reader = new FileReader();
+        reader.readAsArrayBuffer(image.file);
+        reader.onloadend = async () => {
+          const binaryData = reader.result;
+          await axios.put(image.data.url, binaryData, { headers: { "Content-Type": "application/octet-stream" } });
+        };
+        payloadPre = { ...payloadPre, image: helpers.orOperator(image.data.key, null) };
+      }
+      // Proceed with form submission
+      payloadPre = { ...payloadPre, name: data?.name, type: type, criteria: criteria, description: data?.description, rating: data?.rating, gameType: gameTypeList };
+      const path = helpers.ternaryCondition(viewType == "add", apiPath.getAllAchievement, apiPath.getAllAchievement + "/" + offerDetails?._id);
+      const apiFunction = helpers.ternaryCondition(viewType === "add", apiPost, apiPut);
+      const result = await apiFunction(path, payloadPre);
+      console.log("result", result);
+      if (result?.status === 200) {
+        notification.success(result?.data?.message);
+        allAchievement({ statusChange: 1 });
+        setEditShowOfferModal(false);
+      } else {
+        notification.error(result?.data?.message);
+      }
     } catch (error) {
       console.error("error in get all badges list==>>>>", error.message);
       notification.error("An error occurred while uploading the image");
@@ -171,15 +171,6 @@ const AddEditAchievement = ({ setEditShowOfferModal, viewType, allAchievement, o
     setImage("");
   };
 
-  let imageUrl;
-
-  if (image && typeof image === "object" && image instanceof Blob) {
-    imageUrl = URL.createObjectURL(image);
-    console.log("🚀 ~ AddEditAchievement ~ image:", image);
-  } else {
-    imageUrl = image ? image : defaultImage;
-  }
-
   const getGameTypeList = async () => {
     try {
       const res = await apiGet(apiPath.getGameType, {});
@@ -208,19 +199,21 @@ const AddEditAchievement = ({ setEditShowOfferModal, viewType, allAchievement, o
 
   const imageClass = image ? "object-cover" : "object-contain";
 
+  const handleKeyDown = (event) => {
+    if (!["Backspace", "Delete", "Tab"].includes(event.key) && !/[0-9.]/.test(event.key)) {
+      event.preventDefault();
+    }
+  };
+  const preventMax = (e) => {
+    if (e.target.value.length > 4) {
+      e.target.value = e.target.value.slice(0, 4);
+    }
+  };
+
   return (
     <>
-      <div className=" overflow-y-auto justify-center items-center flex overflow-x-hidden  fixed inset-0 z-50 outline-none focus:outline-none">
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            const isValid = checkValidation(image, setProfilePicError, "Please upload image.");
-            if (isValid) {
-              handleSubmit(handleSubmitForm)();
-            }
-          }}
-          method="post"
-        >
+      <div className=" overflow-y-auto justify-center items-center overflow-x-hidden  fixed inset-0 z-50 outline-none focus:outline-none">
+        <form onSubmit={handleSubmit(handleSubmitForm)} method="post">
           <div className="relative w-auto my-6 mx-auto max-w-3xl">
             <div className="overflow-hidden  dark:border-[#ffffff38] border border-white rounded-lg shadow-lg relative flex flex-col min-w-[552px] bg-white outline-none focus:outline-none">
               <div className="flex items-center justify-between p-5 dark:bg-gray-900 border-b dark:border-[#ffffff38] border-solid border-slate-200 rounded-t dark:bg-slate-900">
@@ -266,7 +259,7 @@ const AddEditAchievement = ({ setEditShowOfferModal, viewType, allAchievement, o
 
                   <div className="">
                     <OInputField
-                      wrapperClassName="relative z-0 mb-3 w-[250px] group"
+                      wrapperClassName="relative z-0 mb-3 w-full group"
                       name="name"
                       inputLabel={
                         <>
@@ -284,7 +277,7 @@ const AddEditAchievement = ({ setEditShowOfferModal, viewType, allAchievement, o
                 <div className="grid grid-cols-2  items-baseline mt-3 gap-x-4 px-5">
                   <div className="">
                     <OInputField
-                      wrapperClassName="relative z-0 mb-3 w-[250px] group"
+                      wrapperClassName="relative z-0 mb-3 w-full group"
                       name="description"
                       inputLabel={
                         <>
@@ -331,7 +324,7 @@ const AddEditAchievement = ({ setEditShowOfferModal, viewType, allAchievement, o
                 <div className="grid grid-cols-2  items-baseline mt-3 gap-x-4 px-5">
                   <div className="">
                     <OInputField
-                      wrapperClassName="relative z-0 mb-3 w-[250px] group"
+                      wrapperClassName="relative z-0 mb-3 w-full group"
                       name="rating"
                       inputLabel={
                         <>
@@ -339,7 +332,9 @@ const AddEditAchievement = ({ setEditShowOfferModal, viewType, allAchievement, o
                           <span className="text-red-500">*</span>
                         </>
                       }
-                      type="text"
+                      onKeyDown={(event) => handleKeyDown(event)}
+                      onInput={(e) => preventMax(e)}
+                      type="number"
                       register={register("rating", {
                         required: "Please enter won match/ ELO rating.",
                         min: {
@@ -347,10 +342,15 @@ const AddEditAchievement = ({ setEditShowOfferModal, viewType, allAchievement, o
                           message: type === "eloRating" ? "Minimum ELO rating must be 800." : "Minimum value must be 1.",
                         },
 
-                        // max: {
-                        //   value: type === "eloRating" ? 2000 : "",
-                        //   message: type === "eloRating" ? "Maximum ELO rating must be 2000." : "",
-                        // },
+                        max: {
+                          value: type === "eloRating" ? 2000 : "",
+                          message: type === "eloRating" ? "Maximum ELO rating must be 2000." : "",
+                        },
+                        pattern: {
+                          value: /^\d+$/,
+                          message: "Decimals not allowed.",
+                        },
+
                         validate: {
                           whiteSpace: (value) => (value.trim() ? true : t("WHITE_SPACES_NOT_ALLOWED")),
                         },
@@ -434,8 +434,7 @@ const AddEditAchievement = ({ setEditShowOfferModal, viewType, allAchievement, o
                       </div>
 
                       <div className="mt-2">
-                        {profilePicError && <p style={{ color: "red" }}>{profilePicError}</p>}
-                        {/* <ErrorMessage message={profilePicError} /> */}
+                        <ErrorMessage message={profilePicError} />
                       </div>
                     </div>
                   </div>

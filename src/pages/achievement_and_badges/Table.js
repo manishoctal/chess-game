@@ -48,7 +48,7 @@ const Table = ({ badges, page, sort, setSort, manager, handelStatusChange, pageS
               <OBadgesTableHead sort={sort} setSort={setSort} name="GAME_TYPE" fieldName="gameType" />
               <OBadgesTableHead sort={sort} setSort={setSort} name="WON_MATCH_ELO_RATING" fieldName="rating" />
               <OBadgesTableHead sort={sort} setSort={setSort} name="O_CREATED_AT" fieldName="createdAt" />
-              <OBadgesTableHead sort={sort} setSort={setSort} name="IMAGE" fieldName="image" />
+              <OBadgesTableHead sort={sort} setSort={setSort} name="IMAGE" fieldName="image" classTd={"flex justify-center"} />
               {(manager?.add || manager?.edit || user?.role === "admin") && <OBadgesTableHead sort={sort} setSort={setSort} name="O_STATUS" fieldName="status" classTd={" flex justify-center"} />}
               <th scope="col" className="py-3 px-6 text-center">
                 {t("O_ACTION")}
@@ -76,7 +76,7 @@ const Table = ({ badges, page, sort, setSort, manager, handelStatusChange, pageS
 
                 {getDateTable(helpers.getDateAndTime(item?.createdAt) || "N/A")}
                 <td className="py-2 px-4 border-r dark:border-[#ffffff38] w-[200px]">
-                  <OImage src={item.image} className="w-[50px] h-[50px] rounded-full" alt="profile picture" onClick={() => handleShowImage(item)} />
+                  <OImage src={item.image} className="w-[50px] h-[50px] rounded-full m-auto" alt="profile picture" onClick={() => handleShowImage(item)} />
                 </td>
                 {(manager?.add || manager?.edit || user?.role === "admin") && (
                   <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-center">

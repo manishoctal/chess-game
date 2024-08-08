@@ -24,11 +24,9 @@ const AchievementUser = ({ subscriptionUsers, page, sort, setSort, pageSize }) =
               <OSubscriptionTableHead sort={sort} setSort={setSort} name="USER_ID" fieldName="userId" />
               <OSubscriptionTableHead sort={sort} setSort={setSort} name="FULL_NAME" fieldName="fullName" />
               <OSubscriptionTableHead sort={sort} setSort={setSort} name="USER_NAME" fieldName="userName" />
-              <OSubscriptionTableHead sort={sort} setSort={setSort} name="BADGE_ACHIEVEMENT_ID" fieldName="mobile" />
-              <OSubscriptionTableHead sort={sort} setSort={setSort} name="NAME" fieldName="email" />
-              <OSubscriptionTableHead sort={sort} setSort={setSort} name="DESCRIPTION" fieldName="createdAt" />
-              <OSubscriptionTableHead sort={sort} setSort={setSort} name="EARNED_ON" fieldName="updatedAt" />
-              <OSubscriptionTableHead sort={sort} setSort={setSort} name="IMAGE" fieldName="status" />
+              <OSubscriptionTableHead sort={sort} setSort={setSort} name="O_MOBILE" fieldName="mobile" />
+              <OSubscriptionTableHead sort={sort} setSort={setSort} name="O_EMAIL" fieldName="email" />
+              <OSubscriptionTableHead sort={sort} setSort={setSort} name="O_CREATED_AT" fieldName="createdAt" />
             </tr>
           </thead>
           <tbody>
@@ -42,9 +40,7 @@ const AchievementUser = ({ subscriptionUsers, page, sort, setSort, pageSize }) =
                 {getOfferUserValue(item?.userName || "N/A")}
                 {getOfferUserValue(item?.mobile || "N/A")}
                 {getOfferUserValue(item?.email || "N/A")}
-                {getOfferUserValue(helpers.getDateAndTime(item?.startDate))}
-                {getOfferUserValue(helpers.getDateAndTime(item?.endDate))}
-                {getOfferUserValue(startCase(item?.status) || "N/A")}
+                {getOfferUserValue(helpers.getDateAndTime(item?.createdAt))}
               </tr>
             ))}
             {isEmpty(subscriptionUsers) ? (

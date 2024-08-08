@@ -18,7 +18,7 @@ const ShowImage = ({ handleShowImage, showImage }) => {
             </button>
             <div className="overflow-hidden border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
               <div className="flex justify-center">
-                <OImage src={showImage?.image} className="w-full h-full object-cover" />
+                <OImage src={showImage?.image} className="w-full h-full object-cover text-center" />
               </div>
             </div>
           </div>

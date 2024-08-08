@@ -193,7 +193,7 @@ function AchievementBadges() {
             <form className="border-b border-b-[#E3E3E3] 2xl:flex gap-2 px-4 py-3">
               <div className="col-span-2 flex flex-wrap  items-center">
                 <div className="flex items-center lg:pt-0 pt-3 flex-wrap justify-center mb-2 2xl:mb-0">
-                  <div className="relative flex items-center mb-3">
+                  <div className="relative flex items-center mb-3 w-[300px]">
                     <OSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm} placeholder={t("ACHIEVEMENT_AND_BADGES_NAME")} />
                   </div>
 

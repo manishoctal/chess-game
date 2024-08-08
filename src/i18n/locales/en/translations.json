@@ -857,5 +857,7 @@
   "EDIT": "Edit",
   "VIEW_ACHIEVEMENT_AND_BADGES_MANAGER": "View Achievement and badges",
   "BADGE_ACHIEVEMENT_ID": "Badge/ Achievement ID",
-  "EARNED_ON": "Earned on"
+  "EARNED_ON": "Earned on",
+  "USER_REGISTER_GRAPH": "User Register Graph",
+  "ADMIN_PROFIT_GRAPH": "Admin profit Graph"
 }
