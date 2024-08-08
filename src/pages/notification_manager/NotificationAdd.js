@@ -162,7 +162,7 @@ const NotificationAdd = ({ getAllNotifications, handleCategory }) => {
                         </>
                       }
                       type="textarea"
-                      register={register("description", formValidation.description)}
+                      register={register("description", formValidation.content)}
                       errors={errors}
                     />
                   </div>
