@@ -16,6 +16,7 @@ const Permission = [
   generateManager("how_to_play_manager", { shownAdd: true, shownAll: true }),
   generateManager("offer_manager", { shownAdd: true, shownAll: true }),
   generateManager("subscribed_manager", { shownAdd: true, shownAll: true }),
+  generateManager("achievement_and_badges", { shownAdd: true, shownAll: true }),
   generateManager("email_manager", { shownAdd: true, shownAll: true }),
   generateManager("notification_manager", { shownAdd: true, shownAll: true }),
   // generateManager("settings", { shownAdd: true, shownAll: true }),

@@ -194,8 +194,12 @@ function NotificationManager() {
             {categoryAdd && <NotificationAdd categoryAdd={categoryAdd} getAllNotifications={getAllNotifications} handleCategory={handleCategory} />}
 
             <div className="flex justify-between">
-              <PageSizeList dynamicPage={dynamicPage} pageSize={pageSize} />
-              {paginationObj?.totalItems !== 0 && <Pagination handlePageClick={handlePageClick} options={paginationObj} page={page} />}
+              {paginationObj?.totalItems ? (
+                <>
+                  <PageSizeList dynamicPage={dynamicPage} pageSize={pageSize} />
+                  <Pagination handlePageClick={handlePageClick} options={paginationObj} page={page} />
+                </>
+              ) : null}
             </div>
           </div>
         </div>

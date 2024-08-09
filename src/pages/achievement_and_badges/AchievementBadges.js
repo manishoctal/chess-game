@@ -7,7 +7,6 @@ import dayjs from "dayjs";
 import ODateRangePicker from "components/shared/datePicker/ODateRangePicker";
 import { useTranslation } from "react-i18next";
 import AuthContext from "context/AuthContext";
-import { useNavigate } from "react-router-dom";
 import useToastContext from "hooks/useToastContext";
 import PageSizeList from "components/PageSizeList";
 import OSearch from "components/reusable/OSearch";
@@ -18,7 +17,6 @@ import AddEditAchievement from "./AddEditAchievement";
 
 function AchievementBadges() {
   const { t } = useTranslation();
-  const navigate = useNavigate();
   const notification = useToastContext();
   const { user, updatePageName } = useContext(AuthContext);
   const manager = user?.permission?.find((e) => e.manager === "achievement_and_badges") ?? {};
@@ -233,6 +231,7 @@ function AchievementBadges() {
                     onClick={() => {
                       setEditShowOfferModal(true);
                       setEditView("add");
+                      setItem("");
                     }}
                   >
                     <IoIosAdd size={20} />
@@ -255,8 +254,14 @@ function AchievementBadges() {
             />
 
             <div className="flex justify-between">
-              <PageSizeList dynamicPage={dynamicPage} pageSize={pageSize} />
-              {paginationObj?.totalItems ? <Pagination handlePageClick={handlePageClick} options={paginationObj} isDelete={isDelete} page={page} /> : null}
+              {helpers.ternaryCondition(
+                paginationObj?.totalItems,
+                <>
+                  <PageSizeList dynamicPage={dynamicPage} pageSize={pageSize} />
+                  <Pagination handlePageClick={handlePageClick} options={paginationObj} isDelete={isDelete} page={page} />
+                </>,
+                null
+              )}
             </div>
           </div>
         </div>

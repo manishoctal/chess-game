@@ -3,7 +3,7 @@ import { apiPut } from "../../utils/apiFetch";
 import apiPath from "../../utils/apiPath";
 import useToastContext from "hooks/useToastContext";
 import { useTranslation } from "react-i18next";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import helpers from "utils/helpers";
 import { FaEdit } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";

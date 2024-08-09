@@ -797,8 +797,10 @@
   "CARD_LIMIT_MUST_BE_GREATER_THAN_ODI_PURCHASE_CARD": "Limit must be greater than ODI purchased card",
   "CARD_LIMIT_MUST_BE_GREATER_THAN_TEST_PURCHASE_CARD": "Limit must be greater than Test purchased card",
   "O_TOSS": "Toss Status",
-  "TOTAL_NO_OF_USERS": "Total Number of User register",
-  "TOTAL_CHALLENGE": "Total challenge",
+  "TOTAL_NO_OF_ACTIVE_USERS": "Active User register",
+  "TOTAL_NO_OF_INACTIVE_USERS": "In-Active User register",
+  "FREE_CHALLENGE": "Free challenge",
+  "PAID_CHALLENGE": "Paid challenge",
   "TOTAL_PUZZLE_CHALLENGES": "Total Puzzle challenges",
   "TOTAL_TOURNAMENT": "Total Tournament",
   "TOTAL_NET_ADMIN_PROFIT": "Total net Admin profit",
@@ -859,5 +861,6 @@
   "BADGE_ACHIEVEMENT_ID": "Badge/ Achievement ID",
   "EARNED_ON": "Earned on",
   "USER_REGISTER_GRAPH": "User Register Graph",
-  "ADMIN_PROFIT_GRAPH": "Admin profit Graph"
+  "ADMIN_PROFIT_GRAPH": "Admin profit Graph",
+  "OFFER_CODE_CANNOT_CONTAIN_SPACES": "Offer code cannot contain spaces."
 }

@@ -13,7 +13,6 @@ import helpers from "utils/helpers";
 import { FaCircleArrowLeft } from "react-icons/fa6";
 import { BiReset } from "react-icons/bi";
 import AchievementUser from "./AchievementUser";
-import { startCase } from "lodash";
 import OImage from "components/reusable/OImage";
 import ShowImage from "./ShowImage";
 
@@ -117,9 +116,6 @@ function ViewAchievementManager() {
   const handlePageClick = (event) => {
     const newPage = event.selected + 1;
     setPage(newPage);
-  };
-  const adminStatusPage = (e) => {
-    setFilterData({ ...filterData, category: e.target.value, isFilter: true });
   };
 
   // debounce search start
@@ -234,8 +230,14 @@ function ViewAchievementManager() {
             </form>
             <AchievementUser subscriptionUsers={subscriptionUsers?.docs} page={page} setSort={setSort} sort={sort} manager={manager} pageSize={pageSize} />
             <div className="flex justify-between">
-              <PageSizeList dynamicPage={dynamicPage} pageSize={pageSize} />
-              {viewPaginationObj?.totalItems ? <Pagination handlePageClick={handlePageClick} options={viewPaginationObj} isDelete={isDelete} page={page} /> : null}
+              {helpers.ternaryCondition(
+                viewPaginationObj?.totalItems,
+                <>
+                  <PageSizeList dynamicPage={dynamicPage} pageSize={pageSize} />
+                  <Pagination handlePageClick={handlePageClick} options={viewPaginationObj} isDelete={isDelete} page={page} />
+                </>,
+                null
+              )}
             </div>
           </div>
         </div>

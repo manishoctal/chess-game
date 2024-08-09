@@ -14,4 +14,5 @@ export const permissionsMap = Object.freeze({
   offer_manager: "/offer-manager",
   player_card_manager: "/player-card-manager",
   subscribed_manager: "/subscribed-manager",
+  achievement_and_badges: "/achievement-and-badges",
 });

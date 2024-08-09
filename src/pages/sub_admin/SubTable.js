@@ -37,7 +37,7 @@ const SubTable = ({ subAdmin, page, sort, setSort, manager, handelStatusChange, 
               <OSubadminTableHead name="FIRST_NAME" fieldName="firstName" sort={sort} setSort={setSort} />
               <OSubadminTableHead name="LAST_NAME" fieldName="lastName" sort={sort} setSort={setSort} />
               <OSubadminTableHead name="EMAIL_ADDRESS" sort={sort} setSort={setSort} fieldName="email" />
-
+              <OSubadminTableHead sort={sort} setSort={setSort} name="COUNTRY_CODE" fieldName="countryCode" />
               <OSubadminTableHead sort={sort} setSort={setSort} name="O_MOBILE_NUMBER" fieldName="mobile" />
               {/* <OSubadminTableHead sort={sort} setSort={setSort} name="ADDRESS" fieldName="address" /> */}
               <th scope="col" className="py-3 px-6 text-center">
@@ -64,14 +64,14 @@ const SubTable = ({ subAdmin, page, sort, setSort, manager, handelStatusChange, 
                 <td className="py-2 px-4 border-r dark:border-[#ffffff38]">{startCase(item?.lastName)}</td>
 
                 <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-slate-900 font-bold">{item?.email || "N/A"}</td>
-
+                <td className="py-2 px-4 border-r dark:border-[#ffffff38] font-bold">
+                  {`+`} {item?.countryCode || "N/A"}
+                </td>
                 <td className="py-2 px-4 border-r dark:border-[#ffffff38] font-bold">{item?.mobile || "N/A"}</td>
-                {/* <td className="py-2 px-4 border-r dark:border-[#ffffff38] w-[190px]">{startCase(item?.address) || "N/A"}</td> */}
 
                 <td className="py-2 px-4 border-r dark:border-[#ffffff38]  font-bold text-slate-600 text-center">{getRoleAssigned(item)}</td>
 
                 {getDateTable(helpers.getDateAndTime(item?.createdAt) || "N/A")}
-                {/* {getDateTable(helpers.getDateAndTime(item?.updatedAt) || "N/A")} */}
                 {(manager?.add || manager?.edit || user?.role === "admin") && (
                   <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-center">
                     <label className="inline-flex relative items-center cursor-pointer" title={`${helpers.ternaryCondition(item?.status === "active", "Active", "Inactive")}`}>

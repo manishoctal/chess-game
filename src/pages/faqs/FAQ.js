@@ -29,8 +29,8 @@ function Faq() {
   const [item, setItem] = useState("");
   const [isDelete, setIsDelete] = useState(false);
   const [sort, setSort] = useState({
-    sortBy: "createdAt",
-    sortType: "desc",
+    sortBy: "sequence",
+    sortType: "asc",
   });
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
   const [isInitialized, setIsInitialized] = useState(false);
@@ -230,8 +230,14 @@ function Faq() {
             <Table FAQs={FAQs} getAllFAQ={getAllFAQ} handelEdit={handelEdit} page={page} setSort={setSort} sort={sort} manager={manager} paginationObj={paginationObj} pageSize={pageSize} setFAQS={setFAQS} />
 
             <div className="flex justify-between">
-              <PageSizeList dynamicPage={dynamicPage} pageSize={pageSize} />
-              {paginationObj?.totalItems !== 0 && <Pagination handlePageClick={handlePageClick} options={paginationObj} page={page} isDelete={isDelete} />}
+              {helpers.ternaryCondition(
+                paginationObj?.totalItems,
+                <>
+                  <PageSizeList dynamicPage={dynamicPage} pageSize={pageSize} />
+                  <Pagination handlePageClick={handlePageClick} options={paginationObj} page={page} isDelete={isDelete} />
+                </>,
+                null
+              )}
             </div>
           </div>
         </div>

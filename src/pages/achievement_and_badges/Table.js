@@ -3,7 +3,6 @@ import { AiFillEdit, AiFillEye } from "react-icons/ai";
 import { useTranslation } from "react-i18next";
 import AuthContext from "context/AuthContext";
 import { isEmpty, startCase } from "lodash";
-import { useNavigate } from "react-router-dom";
 import helpers from "../../utils/helpers";
 import OBadgesTableHead from "../../components/reusable/OTableHead";
 import OImage from "components/reusable/OImage";
@@ -12,7 +11,6 @@ import { NavLink } from "react-router-dom";
 
 const Table = ({ badges, page, sort, setSort, manager, handelStatusChange, pageSize, editViewBanner }) => {
   const { t } = useTranslation();
-  const navigate = useNavigate();
   const { user, updatePageName } = useContext(AuthContext);
 
   useEffect(() => {
@@ -70,7 +68,7 @@ const Table = ({ badges, page, sort, setSort, manager, handelStatusChange, pageS
                 <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-slate-900 font-bold">{item?.description || "N/A"}</td>
 
                 <td className="py-2 px-4 border-r dark:border-[#ffffff38] font-bold">{item?.criteria || "N/A"}</td>
-                <td className="py-2 px-4 border-r dark:border-[#ffffff38] w-[190px]">{startCase(item?.gameType) || "N/A"}</td>
+                <td className="py-2 px-4 border-r dark:border-[#ffffff38] w-[190px]">{startCase(item?.gameType?.gameType) || "N/A"}</td>
 
                 <td className="py-2 px-4 border-r dark:border-[#ffffff38]  font-bold text-slate-600 text-center">{item?.rating || "N/A"}</td>
 
