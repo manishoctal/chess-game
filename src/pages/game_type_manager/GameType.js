@@ -23,10 +23,6 @@ function GameType() {
     isReset: false,
     isFilter: false,
   });
-  const [sort, setSort] = useState({
-    sortBy: "createdAt",
-    sortType: "desc",
-  });
 
   const allGameType = async (O) => {
     try {
@@ -35,8 +31,6 @@ function GameType() {
       const payload = {
         status: category,
         keyword: searchKey?.trim(),
-        sortBy: sort.sortBy,
-        sortType: sort.sortType,
       };
 
       const path = apiPath.getGameType;
@@ -50,7 +44,7 @@ function GameType() {
 
   useEffect(() => {
     allGameType();
-  }, [filterData, sort]);
+  }, [filterData]);
 
   const handelStatusChange = async (item) => {
     try {
@@ -147,7 +141,7 @@ function GameType() {
                 </div>
               </div>
             </form>
-            <Table gameType={gameType} allGameType={allGameType} setSort={setSort} sort={sort} manager={manager} handelStatusChange={handelStatusChange} />
+            <Table gameType={gameType} allGameType={allGameType} manager={manager} handelStatusChange={handelStatusChange} />
           </div>
         </div>
       </div>

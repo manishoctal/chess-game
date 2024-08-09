@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import { AiFillEdit } from "react-icons/ai";
 import OEmailTableHead from "../../components/reusable/OTableHead";
 
-const Table = ({ emailTemplate, page, manager, handelStatusChange, sort, setSort }) => {
+const Table = ({ emailTemplate, page, manager, handelStatusChange }) => {
   const { t } = useTranslation();
   const { user } = useContext(AuthContext);
 
@@ -22,12 +22,21 @@ const Table = ({ emailTemplate, page, manager, handelStatusChange, sort, setSort
                 {" "}
                 {t("S.NO")}
               </th>
-              <OEmailTableHead sort={sort} setSort={setSort} name="EMAIL_TEMPLATE_NAME" fieldName="title" />
-              <OEmailTableHead sort={sort} setSort={setSort} name="O_SUBJECT" fieldName="subject" />
-              <OEmailTableHead sort={sort} setSort={setSort} name="O_UPDATED_AT" fieldName="updatedAt" />
+              <th scope="col" className="py-3 px-3">
+                {t("EMAIL_TEMPLATE_NAME")}
+              </th>
+              <th scope="col" className="py-3 px-3">
+                {t("O_SUBJECT")}
+              </th>
+              <th scope="col" className="py-3 px-3">
+                {t("O_UPDATED_AT")}
+              </th>
+
               {(manager?.add || user?.role === "admin") && (
                 <>
-                  <OEmailTableHead sort={sort} setSort={setSort} name="O_STATUS" fieldName="status" classTd={"justify-center"} />
+                  <th scope="col" className="py-3 px-3 text-center">
+                    {t("O_STATUS")}
+                  </th>
                   <th scope="col" className="py-3 px-6 text-center">
                     {t("O_ACTION")}
                   </th>

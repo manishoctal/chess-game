@@ -69,8 +69,8 @@ const BannerAdd = ({ setAddShowModal, getAllFAQ }) => {
       const result = await apiGet(path, payloadPre);
       if (result?.data?.success) {
         setBannerImgPath({ data: result?.data?.results, file: e });
-        const url = URL.createObjectURL(e);
-        setPicture({ file: e, url: url });
+        const urls = URL.createObjectURL(e);
+        setPicture({ file: e, url: urls });
       }
     } catch (error) {
       console.error("error in get banner list==>>>>", error.message);

@@ -7,7 +7,7 @@ import { AiFillEdit, AiFillEye } from "react-icons/ai";
 import OSubcribedTableHead from "../../components/reusable/OTableHead";
 import { NavLink } from "react-router-dom";
 
-const SubscribedTable = ({ gameType, sort, setSort, manager, handelStatusChange, editViewBanner }) => {
+const SubscribedTable = ({ gameType, manager, handelStatusChange, editViewBanner }) => {
   const { t } = useTranslation();
   const { user, updatePageName } = useContext(AuthContext);
 
@@ -28,13 +28,29 @@ const SubscribedTable = ({ gameType, sort, setSort, manager, handelStatusChange,
               <th scope="col" className="py-3 px-6">
                 {t("S.NO")}
               </th>
-              <OSubcribedTableHead sort={sort} fieldName="subscriptionId" setSort={setSort} name="SUBSCRIPTION_ID" />
-              <OSubcribedTableHead name="SUBSCRIPTION_NAME" fieldName="name" sort={sort} setSort={setSort} />
-              <OSubcribedTableHead name="FEATURE" fieldName="feature" sort={sort} setSort={setSort} />
-              <OSubcribedTableHead name="DURATION" fieldName="duration" sort={sort} setSort={setSort} />
-              <OSubcribedTableHead name="PRICE" fieldName="price" sort={sort} setSort={setSort} />
-              <OSubcribedTableHead name="O_UPDATED_AT" fieldName="updatedAt" sort={sort} setSort={setSort} />
-              {(manager?.add || manager?.edit || user?.role === "admin") && <OSubcribedTableHead sort={sort} setSort={setSort} name="O_STATUS" fieldName="status" classTd={" flex justify-center"} />}
+              <th scope="col" className="py-3 px-3">
+                {t("SUBSCRIPTION_ID")}
+              </th>
+              <th scope="col" className="py-3 px-3">
+                {t("SUBSCRIPTION_NAME")}
+              </th>
+              <th scope="col" className="py-3 px-3">
+                {t("FEATURE")}
+              </th>
+              <th scope="col" className="py-3 px-3">
+                {t("DURATION")}
+              </th>
+              <th scope="col" className="py-3 px-3">
+                {t("PRICE")}
+              </th>
+              <th scope="col" className="py-3 px-3">
+                {t("O_UPDATED_AT")}
+              </th>
+              {(manager?.add || manager?.edit || user?.role === "admin") && (
+                <th scope="col" className="py-3 px-6 flex justify-center">
+                  {t("O_STATUS")}
+                </th>
+              )}
               <th scope="col" className="py-3 px-6 text-center">
                 {t("O_ACTION")}
               </th>

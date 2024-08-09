@@ -187,27 +187,30 @@ const SubAdd = () => {
     );
   };
   let itemType = helpers.ternaryCondition(item?.type === "edit", t("O_EDIT"), t("O_ADD"));
-
-  const renderInputField = (autoFocus, name, label, maxLength, validation, disable, placeholder) => (
-    <OInputField
-      wrapperClassName="relative z-0 mb-6 w-full group"
-      name={name}
-      inputLabel={
-        <>
-          {label}
-          <span className="text-red-500">*</span>
-        </>
-      }
-      type="text"
-      autoFocus={autoFocus}
-      maxLength={maxLength}
-      placeholder={placeholder || ""}
-      onInput={(e) => preventMaxInput(e, maxLength)}
-      register={register(name, validation)}
-      errors={errors}
-      disable={disable}
-    />
+  const renderInputField = (autoFocus, name, label, maxLength, validation, disable, placeholder, greyClass) => (
+    <div>
+      <OInputField
+        wrapperClassName="relative z-0 mb-6 w-full group"
+        name={name}
+        inputLabel={
+          <>
+            {label}
+            <span className="text-red-500">*</span>
+          </>
+        }
+        type="text"
+        autoFocus={autoFocus}
+        greyClass={greyClass}
+        maxLength={maxLength}
+        placeholder={placeholder || ""}
+        onInput={(e) => preventMaxInput(e, maxLength)}
+        register={register(name, validation)}
+        errors={errors}
+        disable={disable}
+      />
+    </div>
   );
+
   return (
     <>
       <div className="relative p-6 flex-auto">
@@ -222,7 +225,7 @@ const SubAdd = () => {
               <div className="px-2">{renderInputField(true, "firstName", t("O_FIRST_NAME"), 15, formValidation["subAdminName"], item?.type === "view", t("ENTER_FIRST_NAME"))}</div>
               <div className="px-2">{renderInputField(false, "lastName", t("O_LAST_NAME"), 15, formValidation["subAdminLastName"], item?.type === "view", t("ENTER_LAST_NAME"))}</div>
 
-              <div className="px-2">{renderInputField(false, "email", t("EMAIL_ADDRESS"), 50, formValidation["emailAddress"], item?.type === "view" || item?.type === "edit", t("ENTER_EMAIL_ADDRESS"))}</div>
+              <div className="px-2">{renderInputField(false, "email", t("EMAIL_ADDRESS"), 50, formValidation["emailAddress"], item?.type === "view" || item?.type === "edit", t("ENTER_EMAIL_ADDRESS"), item?.type === "edit" ? "greyClass " : "")}</div>
 
               <div className="px-2">
                 <DynamicLabel name={t("O_MOBILE_NUMBER")} type={true} htmlFor={countryCode} />

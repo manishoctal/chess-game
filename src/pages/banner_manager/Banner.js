@@ -28,8 +28,9 @@ function Banner() {
   const [editView, setEditView] = useState();
   const manager = user?.permission?.find((e) => e.manager === "how_to_play_manager") ?? {};
   const [bannerData, setAllBanner] = useState();
+  const [bannerStatus, setBannerStatus] = useState();
 
-  const [bannerPaginationObj, setBannerbannerPaginationObj] = useState({
+  const [bannerPaginationObj, setBannerPaginationObj] = useState({
     page: 1,
     pageCount: 1,
     pageRangeDisplayed: 10,
@@ -38,8 +39,8 @@ function Banner() {
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
   const [isInitialized, setIsInitialized] = useState(false);
   const [sort, setSort] = useState({
-    sortBy: "createdAt",
-    sortType: "desc",
+    sortBy: "sequence",
+    sortType: "asc",
   });
   const [filterData, setFilterData] = useState({
     category: "",
@@ -75,8 +76,12 @@ function Banner() {
       const result = await apiGet(path, payload);
       const response = result?.data?.results;
       const resultStatus = result?.data?.success;
-      setAllBanner(response);
-      setBannerbannerPaginationObj({
+      const dragIdResponse = response?.docs.map((element, index) => {
+        return { ...element, id: `${index}` };
+      });
+      setAllBanner(dragIdResponse);
+      setBannerStatus(response);
+      setBannerPaginationObj({
         ...bannerPaginationObj,
         page: resultStatus ? response.page : null,
         pageCount: resultStatus ? response.totalPages : null,
@@ -114,9 +119,11 @@ function Banner() {
       };
       const path = `${apiPath.changeStatus}/${details?._id}`;
       const result = await apiPut(path, payload);
-      if (result?.status === 200) {
+      if (result?.data?.success === true) {
         notification.success(result?.data?.message);
         getAllBanner({ statusChange: 1 });
+      } else {
+        notification.error(result?.data?.message);
       }
     } catch (error) {
       console.error("error in get all users list==>>>>", error.message);
@@ -257,6 +264,7 @@ function Banner() {
                     type="button"
                     className="bg-gradientTo flex text-sm px-4 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue whitespace-nowrap"
                     onClick={() => setAddShowModal(true)}
+                    disabled={bannerStatus?.activeBannerCount >= 5}
                   >
                     <IoIosAdd size={20} /> {t("ADD_BANNER")}
                   </button>
@@ -275,7 +283,7 @@ function Banner() {
             </div>
             <SubTable
               allBanner={bannerData?.docs}
-              allbannerData={getAllBanner}
+              getAllFAQ={getAllBanner}
               handelDelete={handelDelete}
               editViewBanner={editViewBanner}
               page={page}
@@ -284,11 +292,20 @@ function Banner() {
               manager={manager}
               handelStatusChange={handelStatusChange}
               pageSize={pageSize}
+              bannerData={bannerData}
+              setAllBanner={setAllBanner}
+              bannerStatus={bannerStatus}
             />
 
             <div className="flex justify-between">
-              <PageSizeList dynamicPage={dynamicPage} pageSize={pageSize} />
-              {bannerPaginationObj?.totalItems ? <Pagination handlePageClick={handlePageClick} options={bannerPaginationObj} isDelete={isDelete} page={page} /> : null}
+              {helpers.ternaryCondition(
+                bannerPaginationObj?.totalItems,
+                <>
+                  <PageSizeList dynamicPage={dynamicPage} pageSize={pageSize} />
+                  <Pagination handlePageClick={handlePageClick} options={bannerPaginationObj} isDelete={isDelete} page={page} />
+                </>,
+                null
+              )}
             </div>
           </div>
         </div>

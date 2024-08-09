@@ -8,7 +8,7 @@ const AdminGraph = () => {
   const [categories, setCategories] = useState(["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep"]);
   const [graphData, setGraphData] = useState([
     {
-      name: "Admin",
+      name: "profits",
       data: [10, 0, 100, 0, 49, 0, 69, 91, 148],
     },
   ]);
@@ -32,11 +32,11 @@ const AdminGraph = () => {
       const success = result.data?.success;
       if (success) {
         const response = result.data?.results;
-        const data = result.data?.results?.userRegistrations;
+        const data = result.data?.results?.earningGraph;
         const count = data?.map((item) => item?.count);
         const labels = data?.map((item) => item?.label);
         setCategories(labels);
-        setGraphData([{ name: "users", data: count }]);
+        setGraphData([{ name: "profits", data: count }]);
         setGraphYear(generateYearArray(response?.year));
       }
     } catch (error) {

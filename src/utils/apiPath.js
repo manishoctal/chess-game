@@ -26,6 +26,7 @@ const apiPath = Object.freeze({
   changeContentStatus: "/v1/admin/static-content/change-status",
   getFAQs: "/v1/admin/faq",
   reOrderFaq: "/v1/admin/faq/reOrderFAQ",
+  reOrderBanner: "/v1/admin/banner/arrange-order",
   searchUsers: "/v1/admin/user/search",
   bannerAdd: "/v1/admin/banner",
   changeFAQStatus: "/v1/admin/faqs/status",
@@ -78,6 +79,7 @@ const apiPath = Object.freeze({
   getAchievementUsers: "/v1/admin/achievement/user-list",
   getGraphUserDetails: "/v1/admin/user-graph",
   getGraphAdminDetails: "/v1/admin/earning-graph",
+  downloadDashboardCsv: "/v1/admin/csv-download",
 });
 
 export default apiPath;
