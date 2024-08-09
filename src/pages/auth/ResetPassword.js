@@ -11,8 +11,6 @@ import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { validationRules } from "utils/constants";
 import { useTranslation } from "react-i18next";
 import logoImage from "../../assets/images/login_logo.png";
-import apiPath from "utils/apiPath";
-import OInputField from "components/reusable/OInputField";
 import { preventMaxInput } from "utils/validations";
 
 function ResetPassword() {
@@ -55,7 +53,7 @@ function ResetPassword() {
 
   const allQuestionType = async (O) => {
     try {
-      const path = apiPath.getCheckUser + "/" + resetToken;
+      const path = pathObj.getCheckUser + "/" + resetToken;
       const result = await apiGet(path, {});
       const response = result?.data?.results;
       console.log("response", response);

@@ -14,11 +14,11 @@ import AuthContext from "context/AuthContext";
 import ODateRangePicker from "components/shared/datePicker/ODateRangePicker";
 import OCountUp from "components/OCountUp";
 import helpers from "utils/helpers";
-import { Link } from "react-router-dom";
+import apiPath from "utils/apiPath";
 
 function Dashboard() {
   const { t } = useTranslation();
-  const { logoutUser, user } = useContext(AuthContext);
+  const { logoutUser } = useContext(AuthContext);
   const [dashboardDetails, setDashboardDetails] = useState({});
 
   const [filterData, setFilterData] = useState({
@@ -67,6 +67,24 @@ function Dashboard() {
     });
   };
 
+  const onCsvDownload = async () => {
+    try {
+      const { startDate, endDate } = filterData;
+      const payloadCsv = {
+        startDate: startDate ? helpers.getFormattedDate(startDate) : null,
+        endDate: endDate ? helpers.getFormattedDate(endDate) : null,
+      };
+
+      const path = apiPath.downloadDashboardCsv;
+      const result = await apiGet(path, payloadCsv);
+      if (result?.data?.success) {
+        helpers.downloadFile(result?.data?.results?.filePath);
+      }
+    } catch (error) {
+      console.error("error in get all dashboard list==>>>>", error.message);
+    }
+  };
+
   return (
     <div>
       <div className="flex flex-wrap items-center mt-3 mb-3">
@@ -80,28 +98,49 @@ function Dashboard() {
           >
             <BiReset size={18} /> {t("O_RESET")}
           </button>
-          <button type="button" className="bg-gradientTo text-sm px-6 flex gap-2 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2" title={t("DOWNLOAD_CSV")}>
+          <button type="button" className="bg-gradientTo text-sm px-6 flex gap-2 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2" title={t("DOWNLOAD_CSV")} onClick={onCsvDownload}>
             <GoDownload size={18} /> {t("DOWNLOAD_CSV")}
           </button>
         </div>
       </div>
       <div className="sale_report grid pt-10 3xl:grid-cols-4 gap-y-10 gap-4 gap-x-10 2xl:grid-cols-4 sm:grid-cols-2 mb-7 ">
-        <Link to="/users">
-          <div className="text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border">
-            <h3 className="text-center mb-0 text-slate-900 font-bold md:text-3xl sm:text-lg dark:text-white">
-              <OCountUp value={dashboardDetails?.totalActiveUsers + dashboardDetails?.totalInactiveUsers} />
-              <span className="text-base text-neutral-400 font-normal block pt-3 ">{t("TOTAL_NO_OF_USERS")}</span>
-            </h3>
-            <span className="text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-30px] p-3 border z-10 bg-white">
-              <FaUserTie />
-            </span>
-          </div>
-        </Link>
+        {/* <Link to="/users"> */}
         <div className="text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border">
           <h3 className="text-center mb-0 text-slate-900 font-bold md:text-3xl sm:text-lg dark:text-white">
-            <OCountUp value={dashboardDetails?.totalFreeChallenge + dashboardDetails?.totalPaidChallenge} />
+            <OCountUp value={dashboardDetails?.totalActiveUsers} />
+            <span className="text-base text-neutral-400 font-normal block pt-3 ">{t("TOTAL_NO_OF_ACTIVE_USERS")}</span>
+          </h3>
+          <span className="text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-30px] p-3 border z-10 bg-white">
+            <FaUserTie />
+          </span>
+        </div>
+        {/* </Link> */}
+        {/* <Link to="/users"> */}
+        <div className="text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border">
+          <h3 className="text-center mb-0 text-slate-900 font-bold md:text-3xl sm:text-lg dark:text-white">
+            <OCountUp value={dashboardDetails?.totalInactiveUsers} />
+            <span className="text-base text-neutral-400 font-normal block pt-3 ">{t("TOTAL_NO_OF_INACTIVE_USERS")}</span>
+          </h3>
+          <span className="text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-30px] p-3 border z-10 bg-white">
+            <FaUserTie />
+          </span>
+        </div>
+        {/* </Link> */}
+        <div className="text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border">
+          <h3 className="text-center mb-0 text-slate-900 font-bold md:text-3xl sm:text-lg dark:text-white">
+            <OCountUp value={dashboardDetails?.totalFreeChallenge} />
 
-            <span className="text-base text-neutral-400 font-normal block pt-3 ">{t("TOTAL_CHALLENGE")}</span>
+            <span className="text-base text-neutral-400 font-normal block pt-3 ">{t("FREE_CHALLENGE")}</span>
+          </h3>
+          <span className="text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-30px] p-3 border z-10 bg-white">
+            <FaAddressCard size={30} />
+          </span>
+        </div>
+        <div className="text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border">
+          <h3 className="text-center mb-0 text-slate-900 font-bold md:text-3xl sm:text-lg dark:text-white">
+            <OCountUp value={dashboardDetails?.totalPaidChallenge} />
+
+            <span className="text-base text-neutral-400 font-normal block pt-3 ">{t("PAID_CHALLENGE")}</span>
           </h3>
           <span className="text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-30px] p-3 border z-10 bg-white">
             <FaAddressCard size={30} />

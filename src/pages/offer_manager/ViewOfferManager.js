@@ -251,16 +251,25 @@ function ViewOfferManager() {
                   </button>
                 </div>
               </div>
-
-              <button type="button" title={t("EXPORT_CSV")} className="bg-gradientTo text-sm flex gap-2 px-8 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto " onClick={onCsvDownload}>
-                <BiSolidFileExport size={18} />
-                {t("EXPORT_CSV")}
-              </button>
+              {helpers.ternaryCondition(
+                viewPaginationObj?.totalItems,
+                <button type="button" title={t("EXPORT_CSV")} className="bg-gradientTo text-sm flex gap-2 px-8 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto " onClick={onCsvDownload}>
+                  <BiSolidFileExport size={18} />
+                  {t("EXPORT_CSV")}
+                </button>,
+                null
+              )}
             </form>
             <OfferAppliedTable offerUsers={offerUsers?.docs} editViewBanner={editViewBanner} page={page} setSort={setSort} sort={sort} manager={manager} pageSize={pageSize} />
             <div className="flex justify-between">
-              <PageSizeList dynamicPage={dynamicPage} pageSize={pageSize} />
-              {viewPaginationObj?.totalItems ? <Pagination handlePageClick={handlePageClick} options={viewPaginationObj} isDelete={isDelete} page={page} /> : null}
+              {helpers?.ternaryCondition(
+                viewPaginationObj?.totalItems,
+                <>
+                  <PageSizeList dynamicPage={dynamicPage} pageSize={pageSize} />
+                  <Pagination handlePageClick={handlePageClick} options={viewPaginationObj} isDelete={isDelete} page={page} />
+                </>,
+                null
+              )}
             </div>
           </div>
         </div>

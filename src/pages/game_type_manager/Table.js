@@ -4,7 +4,7 @@ import AuthContext from "context/AuthContext";
 import { isEmpty, startCase } from "lodash";
 import helpers from "../../utils/helpers";
 import OGameTableHead from "../../components/reusable/OTableHead";
-const Table = ({ gameType, sort, setSort, manager, handelStatusChange }) => {
+const Table = ({ gameType, manager, handelStatusChange }) => {
   const { t } = useTranslation();
   const { user, updatePageName } = useContext(AuthContext);
 
@@ -21,9 +21,20 @@ const Table = ({ gameType, sort, setSort, manager, handelStatusChange }) => {
               <th scope="col" className="py-3 px-6">
                 {t("S.NO")}
               </th>
-              <OGameTableHead sort={sort} fieldName="gameID" setSort={setSort} name="GAME_ID" />
-              <OGameTableHead name="GAME_TYPE" fieldName="gameType" sort={sort} setSort={setSort} />
-              {(manager?.add || manager?.edit || user?.role === "admin") && <OGameTableHead sort={sort} setSort={setSort} name="O_STATUS" fieldName="status" classTd={" flex justify-center"} />}
+              <th scope="col" className="py-3 px-3">
+                {t("GAME_ID")}
+              </th>
+              <th scope="col" className="py-3 px-3">
+                {t("GAME_TYPE")}
+              </th>
+              {
+                (manager?.add || manager?.edit || user?.role === "admin") && (
+                  <th scope="col" className="py-3 px-3 flex justify-center">
+                    {t("O_STATUS")}
+                  </th>
+                )
+                // <OGameTableHead name="O_STATUS" fieldName="status" classTd={" flex justify-center"} />
+              }
             </tr>
           </thead>
           <tbody>

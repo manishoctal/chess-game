@@ -4,7 +4,7 @@ import dayjs from "dayjs";
 import { useContext, useEffect } from "react";
 import { isEmpty } from "lodash";
 import AuthContext from "context/AuthContext";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import OStaticTableHead from "../../components/reusable/OTableHead";
 import helpers from "utils/helpers";
 
@@ -65,13 +65,6 @@ const StaticContentList = ({ countryList, page, handleEdit, sort, setSort, hande
                       <td className="py-2 px-4 border-l ">
                         <div className="">
                           <ul className="flex justify-center">
-                            {/* {item?.slug !== 'faq' && <li
-                              className='px-2 py-2 hover:bg-white hover:text-gradientTo' >
-                              <NavLink title='view' className='hover:text-blue-700 transition duration-150 ease-in-out' data-bs-toggle='tooltip' to='/static-content/view' state={item}>
-                                <AiFillEye className='cursor-pointer w-5 h-5 text-slate-600' />
-                              </NavLink>
-                            </li>} */}
-
                             {item?.slug !== "faq" ? (
                               <li onClick={() => handleEdit(item)} className="px-2 py-2 hover:bg-white hover:text-gradientTo">
                                 <a title="Edit" className="hover:text-blue-700 transition duration-150 ease-in-out" data-bs-toggle="tooltip">

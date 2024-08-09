@@ -173,13 +173,16 @@ const AddEditAchievement = ({ setEditShowOfferModal, viewType, allAchievement, o
 
   const getGameTypeList = async () => {
     try {
-      const res = await apiGet(apiPath.getGameType, {});
+      const payload = {
+        isActive: true,
+      };
+
+      const res = await apiGet(apiPath.getGameType, payload);
       setRecordTemp(res?.data?.results);
     } catch (error) {
       console.log("error:", error);
     }
   };
-
   const selectCategory = (e) => {
     if (e.target.value) {
       setGameTypeList(e.target.value);
@@ -306,7 +309,7 @@ const AddEditAchievement = ({ setEditShowOfferModal, viewType, allAchievement, o
                           className="block p-3 py-[10px] w-full text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF] focus:outline-none focus:ring-0  peer"
                           onChange={(e) => {
                             field.onChange(e);
-                            setType(e.target.value);
+                            setCriteria(e.target.value);
                           }}
                         >
                           <option defaultValue value="">
@@ -338,13 +341,13 @@ const AddEditAchievement = ({ setEditShowOfferModal, viewType, allAchievement, o
                       register={register("rating", {
                         required: "Please enter won match/ ELO rating.",
                         min: {
-                          value: type === "eloRating" ? 800 : 1,
-                          message: type === "eloRating" ? "Minimum ELO rating must be 800." : "Minimum value must be 1.",
+                          value: criteria === "eloRating" ? 800 : 1,
+                          message: criteria === "eloRating" ? "Minimum ELO rating must be 800." : "Minimum value must be 1.",
                         },
 
                         max: {
-                          value: type === "eloRating" ? 2000 : "",
-                          message: type === "eloRating" ? "Maximum ELO rating must be 2000." : "",
+                          value: criteria === "eloRating" ? 2000 : "",
+                          message: criteria === "eloRating" ? "Maximum ELO rating must be 2000." : "",
                         },
                         pattern: {
                           value: /^\d+$/,

@@ -1,6 +1,5 @@
 import React, { useContext, useRef, useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import FormData from "form-data";
 import AuthContext from "context/AuthContext";
 import OButton from "components/reusable/OButton";
 import { AiFillCamera } from "react-icons/ai";
@@ -25,7 +24,7 @@ const Profile = () => {
     handleSubmit,
     reset,
     watch,
-    formState: { errors, isDirty, dirtyFields },
+    formState: { errors, isDirty },
   } = useForm({ mode: "onChange", shouldFocusError: true, defaultValues: {} });
   const [open, setOpen] = useState(false);
   const [updateProfileLoading, setUpdateProfileLoading] = useState(false);

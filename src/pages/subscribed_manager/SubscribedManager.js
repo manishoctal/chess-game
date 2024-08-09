@@ -20,16 +20,12 @@ function SubscribedManager() {
   const [isInitialized, setIsInitialized] = useState(false);
   const [editShowModal, setEditShowModal] = useState(false);
   const [editView, setEditView] = useState();
-  const [item, setItem] = useState();
+  const [items, setItem] = useState();
   const [filterData, setFilterData] = useState({
     category: "",
     searchKey: "",
     isReset: false,
     isFilter: false,
-  });
-  const [sort, setSort] = useState({
-    sortBy: "createdAt",
-    sortType: "desc",
   });
 
   const allGameType = async (O) => {
@@ -39,8 +35,6 @@ function SubscribedManager() {
       const payload = {
         status: category,
         keyword: searchKey?.trim(),
-        sortBy: sort.sortBy,
-        sortType: sort.sortType,
       };
 
       const path = apiPath.getSubscription;
@@ -54,7 +48,7 @@ function SubscribedManager() {
 
   useEffect(() => {
     allGameType();
-  }, [filterData, sort]);
+  }, [filterData]);
 
   const handelStatusChange = async (item) => {
     try {
@@ -157,11 +151,11 @@ function SubscribedManager() {
                 </div>
               </div>
             </form>
-            <SubscribedTable gameType={gameType} allGameType={allGameType} setSort={setSort} sort={sort} manager={manager} handelStatusChange={handelStatusChange} editViewBanner={editViewBanner} />
+            <SubscribedTable gameType={gameType} allGameType={allGameType} manager={manager} handelStatusChange={handelStatusChange} editViewBanner={editViewBanner} />
           </div>
         </div>
       </div>
-      {editShowModal && <SubscribedEdit setEditShowModal={setEditShowModal} allGameType={allGameType} item={item} viewType={editView} />}
+      {editShowModal && <SubscribedEdit setEditShowModal={setEditShowModal} allGameType={allGameType} item={items} viewType={editView} />}
     </div>
   );
 }

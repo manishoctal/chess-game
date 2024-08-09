@@ -34,7 +34,6 @@ import GameType from "pages/game_type_manager/GameType";
 import SubscribedManager from "pages/subscribed_manager/SubscribedManager";
 import ViewSubscriptionManager from "pages/subscribed_manager/ViewSubscriptionManager";
 import AchievementBadges from "pages/achievement_and_badges/AchievementBadges";
-import AddEditAchievement from "pages/achievement_and_badges/AddEditAchievement";
 import ViewAchievementManager from "pages/achievement_and_badges/ViewAchievementManager";
 const UseChange = ({ data }) => {
   const { t } = useTranslation();

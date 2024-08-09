@@ -202,8 +202,14 @@ function ViewSubscriptionManager() {
             </form>
             <SubscriptionUser subscriptionUsers={subscriptionUsers?.docs} page={page} setSort={setSort} sort={sort} manager={manager} pageSize={pageSize} />
             <div className="flex justify-between">
-              <PageSizeList dynamicPage={dynamicPage} pageSize={pageSize} />
-              {viewPaginationObj?.totalItems ? <Pagination handlePageClick={handlePageClick} options={viewPaginationObj} isDelete={isDelete} page={page} /> : null}
+              {helpers.ternaryCondition(
+                viewPaginationObj?.totalItems,
+                <>
+                  <PageSizeList dynamicPage={dynamicPage} pageSize={pageSize} />
+                  <Pagination handlePageClick={handlePageClick} options={viewPaginationObj} isDelete={isDelete} page={page} />{" "}
+                </>,
+                null
+              )}
             </div>
           </div>
         </div>
