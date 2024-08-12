@@ -99,7 +99,7 @@ const SubscribedTable = ({ gameType, manager, handelStatusChange, editViewBanner
                       )}
                       {(manager?.view || user?.role === "admin") && (
                         <li className="px-2 py-2 hover:text-gradientTo">
-                          <NavLink to="/subscription-manager/view" title={t("O_VIEW")} state={item}>
+                          <NavLink to="/subscribed-manager/view" title={t("O_VIEW")} state={item}>
                             <AiFillEye className="cursor-pointer w-5 h-5 text-slate-600" />
                           </NavLink>
                         </li>

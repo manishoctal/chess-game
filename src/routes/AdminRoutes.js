@@ -106,13 +106,13 @@ const AdminRoutes = {
       name: <UseChange data="SUBSCRIBED_MANAGER" />,
     },
     {
-      path: "/subscription-manager/view",
+      path: "/subscribed-manager/view",
       element: (
         <AuthorizationRoute>
           <ViewSubscriptionManager />
         </AuthorizationRoute>
       ),
-      name: <UseChange data="VIEW_OFFER_MANAGER" />,
+      name: <UseChange data="VIEW_SUBSCRIPTION_MANAGER" />,
     },
 
     {
