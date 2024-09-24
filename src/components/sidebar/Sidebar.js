@@ -114,7 +114,7 @@ const Sidebar = () => {
         <nav className="pt-4 pb-5 flex flex-col justify-center font-normal text-xs overflow-y-auto">
           <SidebarNavItem path="/dashboard" label="NAV_DASHBOARD" imgSrc={Dashboard} />
           <SidebarNavItem permission="subAdmin_manager" path="/sub-admin-manager" label="SUB_ADMIN_MANAGERS" icon={<FaUserGear size={21} color="#a7a7a7" />} />
-          {/* <SidebarNavItem permission="user_manager" path="/users" label="USER_MANAGER" imgSrc={userManager} /> */}
+          <SidebarNavItem permission="user_manager" path="/users" label="USER_MANAGER" imgSrc={userManager} />
           <SidebarNavItem permission="game_type_manager" path="/game-type-manager" label="GAME_TYPE_MANAGER" icon={<VscGame size={21} color="#a7a7a7" />} />
           <SidebarNavItem permission="how_to_play_manager" path="/how-to-play-manager" label="HOW_TO_PLAY_MANAGER" imgSrc={rewardWithdrawalRequest} />
           <SidebarNavItem permission="offer_manager" path="/offer-manager" label="OFFER_MANAGER" icon={<MdOutlineLocalOffer size={21} color="#a7a7a7" />} />

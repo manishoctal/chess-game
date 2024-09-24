@@ -35,6 +35,7 @@ import SubscribedManager from "pages/subscribed_manager/SubscribedManager";
 import ViewSubscriptionManager from "pages/subscribed_manager/ViewSubscriptionManager";
 import AchievementBadges from "pages/achievement_and_badges/AchievementBadges";
 import ViewAchievementManager from "pages/achievement_and_badges/ViewAchievementManager";
+import GameHistoryTable from "pages/users/GameHistoryTable";
 const UseChange = ({ data }) => {
   const { t } = useTranslation();
   return t(data);
@@ -74,6 +75,12 @@ const AdminRoutes = {
       path: "/users/view",
       element: <UserView />,
       name: <UseChange data="USER_MANAGER" />,
+    },
+
+    {
+      path: "/users/view/game-history",
+      element: <GameHistoryTable />,
+      name: <UseChange data="USER_GAME_HISTORY" />,
     },
 
     {
