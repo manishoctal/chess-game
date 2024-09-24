@@ -17,6 +17,7 @@ module.exports = {
         gradientFrom: "#ffffff", // Sidebar Gradiant
         sideBarNavColor: "#000000",
         sideBarNavActiveColor: "#ffffff",
+        gradBlack:"#000"
       },
 
       backgroundImage: {

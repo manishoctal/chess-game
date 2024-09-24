@@ -2,7 +2,7 @@ import OImage from "components/reusable/OImage";
 import dayjs from "dayjs";
 import React, { useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useLocation, Link, useNavigate } from "react-router-dom";
+import { useLocation, Link, useNavigate, NavLink } from "react-router-dom";
 import defaultImage from "../../assets/images/No-image-found.jpg";
 import checkIcon from "../../assets/images/check.png";
 import { startCase } from "lodash";
@@ -22,6 +22,9 @@ import ShowImage from "./ShowImage";
 import bonusIcon from "../../assets/icons/icon/bonus.svg";
 import AuthContext from "context/AuthContext";
 import { FaCircleArrowLeft } from "react-icons/fa6";
+import FreezeBalancePopup from "./FreezeBalancePopup";
+import { FaFlag } from "react-icons/fa";
+import { BiHistory } from "react-icons/bi";
 
 const UserView = () => {
   const { t } = useTranslation();
@@ -32,9 +35,12 @@ const UserView = () => {
   const notification = useToastContext();
   const [kycSection, setKycSection] = useState(null);
   const [showBanner, setShowBanner] = useState(false);
+  const [showFreeModel,setShowFreeModel]=useState(false);
   const [walletBox, setWalletBox] = useState(false);
 
-
+  const handleFreeModal = () =>{
+    setShowFreeModel(!showFreeModel)
+  }
 
   const getUserDetails = async () => {
     try {
@@ -188,10 +194,30 @@ const UserView = () => {
         <Link className="mb-5 ml-4 block" onClick={handleBack}>
           <IoArrowBackSharp />
         </Link>,
-        <div className='flex active mb-5 ml-4 '>
+        <div className='flex active mb-3 ml-4 justify-between'>
+          
           <Link aria-current="page" className="" to={-1}>
             <FaCircleArrowLeft size={27} />
           </Link>
+
+          <div className="flex items-center">
+
+          <NavLink
+            to="/users/view/game-history"
+            title={t("O_VIEW")}
+            className="bg-gradientTo flex gap-2 text-sm px-6 ml-3  py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2"
+          >
+            <BiHistory  className="cursor-pointer w-5 h-5 text-white" />{" "}
+            {t("GAME_HISTORY")}
+          </NavLink>
+
+ 
+
+            <button onClick={()=>handleFreeModal()}className="bg-gradientTo flex gap-2 text-sm px-6 ml-3  py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2">
+              {t("FREEZE_BALANCE")}
+            </button>
+          </div>
+
         </div>
       )}
       {helpers.andOperator(
@@ -269,7 +295,7 @@ const UserView = () => {
                   <img src={firstNameIcon} alt="" />
                 </figure>
                 <figcaption className="w-[calc(100%_-_41px)]">
-                  <span className="block text-[#5 C5C5C]">{t("NAME")}</span>
+                  <span className="block text-[#5 C5C5C]">{t("USERS_FULL_NAME")}</span>
                   <strong> {helpers.ternaryCondition(item?.firstName, startCase((item?.firstName ?? "") + " " + (item?.lastName ?? "")), "N/A")}</strong>
                 </figcaption>
               </div>
@@ -312,6 +338,7 @@ const UserView = () => {
         </div>
 
         <div className="grid grid-cols-3 gap-5">
+
           <div className="border border-1 border-[#E1DEDE] rounded-md p-6 ps-3">
             <ul>
               <div>
@@ -378,6 +405,51 @@ const UserView = () => {
                     </figcaption>
                   </div>
                 </li>
+
+                <li className="mb-4">
+                  <div className="flex items-center">
+                    <figure className="bg-[#F2F2F2] w-[42px] h-[41px] rounded-full flex items-center justify-center mr-3">
+                      <img src={bonusIcon} alt="" />
+                    </figure>
+                    <figcaption className="w-[calc(100%_-_41px)]">
+                      <span className="block text-[#5C5C5C] dark:text-white">{t("MONETRY_RATING")}</span>
+                      <strong className="dark:text-slate-400">{item?.inviteCode || 'N/A'}</strong>
+                    </figcaption>
+                  </div>
+                </li>
+                <li className="mb-4">
+                  <div className="flex items-center">
+                    <figure className="bg-[#F2F2F2] w-[42px] h-[41px] rounded-full flex items-center justify-center mr-3">
+                      <img src={bonusIcon} alt="" />
+                    </figure>
+                    <figcaption className="w-[calc(100%_-_41px)]">
+                      <span className="block text-[#5C5C5C] dark:text-white">{t("RATING_CASUAL")}</span>
+                      <strong className="dark:text-slate-400">{item?.inviteCode || 'N/A'}</strong>
+                    </figcaption>
+                  </div>
+                </li>
+                <li className="mb-4">
+                  <div className="flex items-center">
+                    <figure className="bg-[#F2F2F2] w-[42px] h-[41px] rounded-full flex items-center justify-center mr-3">
+                      <img src={bonusIcon} alt="" />
+                    </figure>
+                    <figcaption className="w-[calc(100%_-_41px)]">
+                      <span className="block text-[#5C5C5C] dark:text-white">{t("TIME_ZONE")}</span>
+                      <strong className="dark:text-slate-400">{item?.inviteCode || 'N/A'}</strong>
+                    </figcaption>
+                  </div>
+                </li>
+                <li className="mb-4">
+                  <div className="flex items-center">
+                    <figure className="bg-[#F2F2F2] w-[42px] h-[41px] rounded-full flex items-center justify-center mr-3">
+                      <img src={bonusIcon} alt="" />
+                    </figure>
+                    <figcaption className="w-[calc(100%_-_41px)]">
+                      <span className="block text-[#5C5C5C] dark:text-white">{t("O_STATUS")}</span>
+                      <strong className="dark:text-slate-400">{item?.inviteCode || 'N/A'}</strong>
+                    </figcaption>
+                  </div>
+                </li>
               </div>
             </ul>
           </div>
@@ -431,68 +503,73 @@ const UserView = () => {
               {t("KYC_VERIFIED")}: <b>{helpers.ternaryCondition(item?.kycStatus, 'Yes', 'No')}</b>
             </span>
           </div>
+
           <div className="border border-1 border-[#E1DEDE] rounded-md p-6 ps-3">
+            <span className="block text-center pb-3 font-bold ">{t("GAME_STATICS")}</span>
             <ul>
               <div>
                 <li className="mb-4">
                   <div className="flex items-center">
+                    <figure className="bg-[#F2F2F2] w-[42px] h-[41px] rounded-full flex items-center justify-center mr-3">
+                      <img src={cityIcon} alt="" />
+                    </figure>
                     <figcaption className="w-[calc(100%_-_41px)]">
-                      <span className="block text-[#5C5C5C] font-bold mb-4">{t("O_PORTFOLIO")}</span>
-
-                      <div className="relative mt-4 ">
-                        <figure className="inline-block overflow-hidden border mb-3 w-full sm:max-w-[300px] md:max-w-[400px] lg:max-w-[480px] h-auto p-2 w-[480px] overflow-x-auto relative rounded-lg border">
-                          <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white p-2 mt-3">
-                            {t('PLAYER_CARD')}
-                          </label>
-
-                          <div className="flex flex-col md:flex-row justify-between mb-4">
-                            <PlayerCardInfo label={t('O_INVESTMENT')} value={helpers.formattedAmount(100)} />
-                            <PlayerCardInfo label={t('TOTAL_SELLING_CARD')} value={helpers.formattedAmount(100)} />
-                            <PlayerCardInfo label={t('RETURN_SELLING_CARD')} value={helpers.formattedAmount(100)} />
-                          </div>
-
-                          <div className="flex flex-col md:flex-row justify-between">
-                            <PlayerCardInfo label={t('CARD_BOUGHT')} value={helpers.formattedAmount(100)} />
-                            <PlayerCardInfo label={t('CARD_SOLD')} value={helpers.formattedAmount(100)} />
-                            <PlayerCardInfo label={t('CARD_HOLD')} value={helpers.formattedAmount(100)} />
-                          </div>
-                        </figure>
-                      </div>
-
-                      <div className="relative mt-4">
-                        <figure className="inline-block overflow-hidden border mb-3 w-full sm:max-w-[300px] md:max-w-[400px] lg:max-w-[480px] h-auto p-2 w-[480px] overflow-x-auto relative rounded-lg border">
-                          <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white p-2 mt-3">{t('PLAYER_STOCK')}</label>
-
-                          <div className="flex justify-between mb-9">
-                            <StockCardInfo label1={t('O_INVESTMENT')} value1={helpers.formattedAmount(100)} />
-                            <StockCardInfo label1={t('TOTAL_SELLING_STOCK')} value1={helpers.formattedAmount(100)} />
-                            <StockCardInfo label1={t('RETURN_SELLING_STOCK')} value1={helpers.formattedAmount(100)} />
-                          </div>
-
-                          <div className="flex justify-between">
-                            <StockCardInfo label1={t('STOCK_BOUGHT')} value1={helpers.formattedAmount(100)} />
-                            <StockCardInfo label1={t('STOCK_SOLD')} value1={helpers.formattedAmount(100)} />
-                            <StockCardInfo label1={t('STOCK_HOLD')} value1={helpers.formattedAmount(100)} />
-                          </div>
-                        </figure>
-                      </div>
-
+                      <span className="block text-[#5C5C5C]">{t("TOTAL_NO_OF_GAME_PLAYED")}</span>
+                      <strong>{helpers.ternaryCondition(item?.userId, item?.userId, "N/A")}</strong>
                     </figcaption>
                   </div>
                 </li>
               </div>
+              <div>
+                <li className="mb-4">
+                  <div className="flex items-center">
+                    <figure className="bg-[#F2F2F2] w-[42px] h-[41px] rounded-full flex items-center justify-center mr-3">
+                      <img src={locationIcon} alt="" />
+                    </figure>
+                    <figcaption className="w-[calc(100%_-_41px)]">
+                      <span className="block text-[#5C5C5C]">{t("TOTAL_NO_OF_GAME_WON")}</span>
+                      <strong>{helpers.ternaryCondition(item?.userName, item?.userName, "N/A")}</strong>
+                    </figcaption>
+                  </div>
+                </li>
+              </div>
+              <div>
+                <li className="mb-4">
+                  <div className="flex items-center">
+                    <figure className="bg-[#F2F2F2] w-[42px] h-[41px] rounded-full flex items-center justify-center mr-3">
+                      <img src={dobIcon} alt="" />
+                    </figure>
+                    <figcaption className="w-[calc(100%_-_41px)]">
+                      <span className="block text-[#5C5C5C]">{t("TOTAL_NO_OF_GAME_LOSE")}</span>
+                      <strong>{helpers.ternaryCondition(item?.createdAt, dayjs(item?.createdAt).format("D MMM YYYY"), "N/A")}</strong>
+                    </figcaption>
+                  </div>
+                </li>
+              </div>
+              <div>
+                <li className="mb-4">
+                  <div className="flex items-center">
+                    <figure className="bg-[#F2F2F2] w-[42px] h-[41px] rounded-full flex items-center justify-center mr-3">
+                      <img src={locationIcon} alt="" />
+                    </figure>
+                    <figcaption className="w-[calc(100%_-_41px)]">
+                      <span className="block text-[#5C5C5C]">{t("TOTAL_NO_OF_GAME_DRAWN")}</span>
+                      <strong>{helpers.ternaryCondition(item?.inviteByCode, item?.inviteByCode, "N/A")}</strong>
+                    </figcaption>
+                  </div>
+                </li>
+              </div>
+
             </ul>
           </div>
-
-
-
 
 
         </div>
       </div>
 
-
       {showBanner && showImage && <ShowImage handleShowImage={handleShowImage} showImage={showImage} />}
+      {showFreeModel && <FreezeBalancePopup handleFreeModal={handleFreeModal}/>}
+
     </div>
   );
 };

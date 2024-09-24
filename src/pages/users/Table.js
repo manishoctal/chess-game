@@ -10,6 +10,10 @@ import UserEdit from "./UserEdit";
 import ViewWalletBalance from "./ViewWalletBalance";
 import helpers from "../../utils/helpers";
 import OUserTableHead from '../../components/reusable/OTableHead'
+import { FaFlag } from "react-icons/fa";
+import { MdFeedback } from "react-icons/md";
+import ReportUserPopup from "./ReportUserPopup";
+import ReviewRatingPopup from "./ReviewRatingPopup";
 
 const Table = ({
   users,
@@ -22,6 +26,7 @@ const Table = ({
   sort,
   userType,
   pageSize,
+  userResult
 }) => {
   const { t } = useTranslation();
   const notification = useToastContext();
@@ -29,6 +34,16 @@ const Table = ({
   const [editShowModal, setEditShowModal] = useState(false);
   const [editItem, setEditItem] = useState("");
   const [isAmountModal, setIsAmountModal] = useState(false);
+  const [showReportPopup, setShowReportPopup] = useState(false);
+  const [showReviewPopup, setShowReviewPopup] = useState(false);
+
+  const handleReportToggle = () => {
+    setShowReportPopup(!showReportPopup)
+  }
+
+ const handleShorReviewToggle = () =>{
+  setShowReviewPopup(!showReviewPopup)
+ }
 
   const handelStatusChange = async (item) => {
     try {
@@ -88,21 +103,21 @@ const Table = ({
     );
   };
   const getDisplayName = (userDetail) => {
-    return startCase(userDetail?.fullName)||'N/A';
+    return startCase(userDetail?.fullName) || 'N/A';
   };
 
   const getDisplayUserId = (userDetail) => {
-    return userDetail?.userId ?? "N/A";
+    return userDetail?.userUniqId ?? "N/A";
   };
 
 
-  const getWalletAmount = (userData) => {
+  const getInviteCode = (userData) => {
     return userData?.inviteCode ? userData?.inviteCode : 'N/A'
 
   };
 
   const getKycStatusText = (userKyc) => {
-    return helpers.ternaryCondition(userKyc?.kycStatus, 'Yes', 'No',);
+    return helpers.ternaryCondition(userKyc?.isKYCVerified === 0, 'No', 'Yes');
   };
 
   const renderTableCell = (content, classNames) => (
@@ -123,13 +138,13 @@ const Table = ({
   );
 
 
-// on View Wallet balance modal function start
-const[viewBalance,setViewBalance]=useState()
-const onViewWalletBalance=(e)=>{
-  setIsAmountModal(true)
-  setViewBalance(e)
-}
-// on View Wallet balance modal function end
+  // on View Wallet balance modal function start
+  const [viewBalance, setViewBalance] = useState()
+  const onViewWalletBalance = (e) => {
+    setIsAmountModal(true)
+    setViewBalance(e)
+  }
+  // on View Wallet balance modal function end
 
 
 
@@ -146,6 +161,26 @@ const onViewWalletBalance=(e)=>{
           >
             <AiFillEye className="cursor-pointer w-5 h-5 text-slate-600 dark:hover:text-white hover:text-blue-700" />{" "}
           </NavLink>
+
+          <button
+            className="px-2 py-2" onClick={() => handleReportToggle()}
+          >
+            <div className="relative">
+              <FaFlag className="cursor-pointer w-5 h-5 text-slate-600 dark:hover:text-white hover:text-blue-700" />{" "}
+              <span className="w-5 h-5 bg-black text-white rounded-full flex items-center justify-center text-[10px] absolute top-[-8px] right-[-7px]">10</span>
+            </div>
+          </button>
+
+
+          <button
+            className="px-2 py-2" onClick={() => handleShorReviewToggle()}
+          >
+            <div className="relative">
+            <MdFeedback className="cursor-pointer w-5 h-5 text-slate-600 dark:hover:text-white hover:text-blue-700" />{" "}
+            </div>
+          </button>
+
+
 
           {(manager?.add || user?.role === "admin") &&
             userTypeDetail === "local" &&
@@ -165,7 +200,7 @@ const onViewWalletBalance=(e)=>{
   );
 
   const renderUserTypeSpecificCells = (item) => {
-    return renderTableCell(getWalletAmount(item), "bg-white py-2 px-4 border-r border  dark:border-[#ffffff38] text-center font-bold"
+    return renderTableCell(getInviteCode(item), "bg-white py-2 px-4 border-r border  dark:border-[#ffffff38] text-center font-bold"
     );
   }
 
@@ -180,27 +215,22 @@ const onViewWalletBalance=(e)=>{
 
   const renderWalletTableCell = (e) => {
     return <td className="py-2 px-4 border-r  dark:border-[#ffffff38]  border text-center">
-        <div className="flex justify-center" onClick={()=>{onViewWalletBalance(e)}}>
-          <AiFillWallet
-            className="text-green text-lg cursor-pointer  text-slate-600"
-            title="User Wallet"
-          />
-        </div>
-      </td>
-    
+      <div className="flex justify-center" onClick={() => { onViewWalletBalance(e) }}>
+        <AiFillWallet
+          className="text-green text-lg cursor-pointer  text-slate-600"
+          title="User Wallet"
+        />
+      </div>
+    </td>
+
   }
-  const getRowClassName = (item) => {
-    return item && item.status === "deleted"
-      ? "text-red-600 font-bold"
-      : "bg-white";
-  };
+
 
   const renderTableRows = () => {
     return users?.map((item, i) => {
-      const rowClassName = getRowClassName(item);
 
       return (
-        <tr key={i} className={rowClassName}>
+        <tr key={i}>
           {renderTableCell(i + 1 + pageSize * (page - 1), "py-4 px-3 border-r border  font-medium text-gray-900  dark:text-white dark:border-[#ffffff38]")}
           {renderTableCell(getDisplayUserId(item), "bg-white py-4 px-4 border-r border  dark:border-[#ffffff38]")}
           {renderTableCell(getDisplayName(item), "bg-white py-4 px-4 border-r border  dark:border-[#ffffff38]")}
@@ -209,15 +239,44 @@ const onViewWalletBalance=(e)=>{
           {renderTableCell(helpers.ternaryCondition(item?.mobile, item?.mobile, "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold")}
           {renderUserTypeSpecificCells(item)}
           {renderCommonTableCells(item)}
-          {renderWalletTableCell(item)}
-          {renderStatusTableCell(item)}
+          {renderTableCell(helpers.ternaryCondition(item?.ratingMonetary, item?.ratingMonetary, "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold")}
+          {renderTableCell(helpers.ternaryCondition(item?.ratingCasual, item?.ratingCasual, "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold")}
+          {
+            !userResult && renderStatusTableCell(item)
+          }
+
           {renderActionTableCells(item, userType)}
         </tr>
       );
-      // )
-      // )
+
     });
   };
+
+
+
+  //   return staticUsers?.map((item, i) => {
+  //     const rowClassName = getRowClassName(item);
+  //     console.log("item",item)
+  //     return (
+  //       <tr key={i} className={rowClassName}>
+  //       {renderTableCell(i + 1, "py-4 px-3 border-r border font-medium text-gray-900 dark:text-white dark:border-[#ffffff38]")}
+  //       {renderTableCell(item.userId, "bg-white py-4 px-4 border-r border dark:border-[#ffffff38]")}
+  //       {renderTableCell(item.name, "bg-white py-4 px-4 border-r border dark:border-[#ffffff38]")}
+  //       {renderTableCell(item.userName || "N/A", "bg-white border py-2 px-4 border-r dark:border-[#ffffff38] font-bold")}
+  //       {renderTableCell(item.email || "N/A", "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] font-bold text-slate-900")}
+  //       {renderTableCell(item.mobile || "N/A", "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold")}
+  //       {renderUserTypeSpecificCells(item)}
+  //       {renderCommonTableCells(item)}
+  //       {renderTableCell(item.mobile || "N/A", "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold")}
+  //       {renderTableCell(item.mobile || "N/A", "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold")}
+  //       {renderStatusTableCell(item)}
+  //       {renderActionTableCells(item, item.userType)}
+  //     </tr>
+  //     );
+  //     // )
+  //     // )
+  //   });
+  // };
 
   return (
     <>
@@ -233,27 +292,30 @@ const onViewWalletBalance=(e)=>{
                 <OUserTableHead sort={sort} setSort={setSort} name='USER_ID' fieldName='userId' />
                 <OUserTableHead sort={sort} setSort={setSort} name='FULL_NAME' fieldName='fullName' />
                 <OUserTableHead sort={sort} setSort={setSort} name='USER_NAME' fieldName='userName' />
-                <OUserTableHead sort={sort} setSort={setSort} name='O_EMAIL_ID' fieldName='email' /> 
-                <OUserTableHead sort={sort} setSort={setSort} name='O_MOBILE' fieldName='mobile'/>
-                <OUserTableHead sort={sort} setSort={setSort} name='INVITE_CODE' fieldName='inviteCode'/>
-                <OUserTableHead sort={sort} setSort={setSort} name='JOINED_DATE' fieldName='createdAt'/>
+                <OUserTableHead sort={sort} setSort={setSort} name='O_EMAIL_ID' fieldName='email' />
+                <OUserTableHead sort={sort} setSort={setSort} name='O_MOBILE' fieldName='mobile' />
+                <OUserTableHead sort={sort} setSort={setSort} name='INVITE_CODE_USED' fieldName='inviteCode' />
+                <OUserTableHead sort={sort} setSort={setSort} name='JOINED_DATE' fieldName='createdAt' />
                 <th scope="col" className="py-3 px-6 text-left">
                   {t("KYC_VERIFIED")}
                 </th>
-                <th scope="col" className="py-3 px-6 text-left">
-                  {t("O_WALLET")}
-                </th>
+                <OUserTableHead sort={sort} setSort={setSort} name='RATING_MONETRY' fieldName='rating' />
+                <OUserTableHead sort={sort} setSort={setSort} name='RATING_CASUAL' fieldName='rating-casual' />
 
-                {helpers.andOperator(
-                  manager?.add || user?.permission?.length === 0,
-                  <OUserTableHead sort={sort} setSort={setSort} name='O_STATUS' fieldName='status'/>)}
-                <th scope="col" className="py-3 px-6 text-left">
+                {
+                  !userResult && helpers.andOperator(
+                    manager?.add || user?.permission?.length === 0,
+                    <OUserTableHead sort={sort} setSort={setSort} name='O_STATUS' fieldName='status' />)
+                }
+
+                <th scope="col" className="py-3 px-6 text-center">
                   {t("O_ACTION")}
                 </th>
               </tr>
             </thead>
             <tbody>
               {users?.length > 0 && renderTableRows()}
+              {/* {renderTableRows()} */}
               {helpers.ternaryCondition(
                 isEmpty(users),
                 <tr className="bg-white text-center border-b dark:bg-gray-800 dark:border-gray-700">
@@ -287,6 +349,14 @@ const onViewWalletBalance=(e)=>{
           viewBalance={viewBalance}
         />
       )}
+      {
+        showReportPopup && <ReportUserPopup handleReportToggle={handleReportToggle} />
+      }
+      {
+        showReviewPopup && <ReviewRatingPopup handleShorReviewToggle={handleShorReviewToggle}/>
+      }
+
+
     </>
   );
 };
