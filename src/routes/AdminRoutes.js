@@ -11,7 +11,6 @@ import AddStaticContent from "pages/static_Contents/AddStaticContent";
 import EditStaticContent from "pages/static_Contents/EditStaticContent";
 import StaticContentView from "pages/static_Contents/StaticContentView";
 import NotificationManager from "pages/notification_manager/NotificationManager";
-import CommunityModeratorManager from "pages/community_moderator_manager/CommunityModeratorManager";
 import Profile from "pages/profile/Profile";
 import ChangePassword from "pages/auth/ChangePassword";
 import Sidebar from "components/sidebar/Sidebar";
@@ -37,7 +36,8 @@ import ViewSubscriptionManager from "pages/subscribed_manager/ViewSubscriptionMa
 import AchievementBadges from "pages/achievement_and_badges/AchievementBadges";
 import ViewAchievementManager from "pages/achievement_and_badges/ViewAchievementManager";
 import GameHistoryTable from "pages/users/GameHistoryTable";
-import ViewCommunityModerator from "pages/community_moderator_manager/ViewCommunityModerator";
+import ViewCommunityModerator from "pages/community-moderator-manager/ViewCommunityModerator";
+import CommunityModeratorManager from "pages/community-moderator-manager/CommunityModeratorManager";
 const UseChange = ({ data }) => {
   const { t } = useTranslation();
   return t(data);
@@ -353,24 +353,24 @@ const AdminRoutes = {
     // community moderator manager
     
     {
-      path: "/community_moderator_manager",
+      path: "/community-moderator-manager",
       element: (
         <AuthorizationRoute>
           {" "}
           <CommunityModeratorManager />
         </AuthorizationRoute>
       ),
-      name: <UseChange data="COMMUNITY_MODERATOR_MANAGER" />,
+      name: <UseChange data="community-moderator-manager" />,
     },
     {
-      path: "/community_moderator_manager/view",
+      path: "/community-moderator-manager/view",
       element: (
         <AuthorizationRoute>
           {" "}
           <ViewCommunityModerator />
         </AuthorizationRoute>
       ),
-      name: <UseChange data="COMMUNITY_MODERATOR_MANAGER" />,
+      name: <UseChange data="community-moderator-manager" />,
     },
 
     // {

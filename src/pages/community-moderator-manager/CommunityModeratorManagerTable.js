@@ -8,7 +8,7 @@ import AuthContext from "context/AuthContext";
 import { NavLink, useNavigate } from "react-router-dom";
 import { AiFillEye } from "react-icons/ai";
 
-const NotificationTable = ({ notifications, paginationObj, sort, setSort, pageSize, manager,handelStatusChange }) => {
+const CommunityModeratorManagerTable = ({ allCommunity, paginationObj, sort, setSort, pageSize, manager,handelStatusChange }) => {
   const navigate = useNavigate();
   const { t } = useTranslation();
 
@@ -37,8 +37,8 @@ const NotificationTable = ({ notifications, paginationObj, sort, setSort, pageSi
             </tr>
           </thead>
           <tbody>
-            {notifications &&
-              notifications?.map((item, i) => (
+            {allCommunity &&
+              allCommunity?.map((item, i) => (
                 <tr key={i} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                   <th scope="row" className="py-4 px-6 border-r font-medium text-gray-900  dark:text-white">
                     {i + 1 + pageSize * (paginationObj?.page - 1)}
@@ -51,7 +51,6 @@ const NotificationTable = ({ notifications, paginationObj, sort, setSort, pageSi
                   <td className="py-4 px-6 border-r text-center">{item?.commentCount || "N/A"}</td>
                   <td className="py-4 px-6 border-r text-center">{item?.reportCount || "N/A"}</td>
                   <td className="py-4 px-6 border-r text-center">{item?.community || "N/A"}</td>
-                  {/* <td className="py-4 px-6 border-r text-center">{item?.status || "N/A"}</td> */}
                   
                   <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-center">
                     <label className="inline-flex relative items-center cursor-pointer" title={`${helpers.ternaryCondition(item?.status === "active", "Active", "Inactive")}`}>
@@ -71,7 +70,7 @@ const NotificationTable = ({ notifications, paginationObj, sort, setSort, pageSi
                     <ul className="flex justify-center">
                         <li
                           onClick={() =>
-                            navigate("/community_moderator_manager/view", {
+                            navigate("/community-moderator-manager/view", {
                               state: { item, type: "view" },
                             })
                           }
@@ -89,9 +88,9 @@ const NotificationTable = ({ notifications, paginationObj, sort, setSort, pageSi
                 </tr>
               ))}
 
-            {isEmpty(notifications) && (
+            {isEmpty(allCommunity) && (
               <tr className="bg-white text-center border-b dark:bg-gray-800 dark:border-gray-700">
-                <td className="py-4 px-6 border-r" colSpan={5}>
+                <td className="py-4 px-6 border-r" colSpan={12}>
                   {t("O_NO_RECORD_FOUND")}
                 </td>
               </tr>
@@ -103,4 +102,4 @@ const NotificationTable = ({ notifications, paginationObj, sort, setSort, pageSi
   );
 };
 
-export default NotificationTable;
+export default CommunityModeratorManagerTable;

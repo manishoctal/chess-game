@@ -98,7 +98,7 @@ const GameHistoryTable = ({
   };
 
   return (
-    <>
+  
       <div className="p-5">
     
         <div className="tabs-header flex items-center justify-between mb-10">
@@ -108,13 +108,13 @@ const GameHistoryTable = ({
             
          <div className="flex items-center">
          <button
-            className={`bg-gradientTo mr-4 text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150 ${activeTab === 'Tab1' ? 'bg-gradBlack' : ''}`}
+            className={` mr-4 text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150 ${activeTab === 'Tab1' ? 'bg-gradBlack' : 'bg-gradientTo'}`}
             onClick={() => handleTabClick('Tab1')}
           >
             {t("CASUAL_CHALLENGE")}
           </button>
           <button
-            className={`bg-gradientTo text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 ease-linear transition-all duration-150 ${activeTab === 'Tab2' ? 'bg-gradBlack' : ''}`}
+            className={` text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 ease-linear transition-all duration-150 ${activeTab === 'Tab2' ? 'bg-gradBlack' : 'bg-gradientTo'}`}
             onClick={() => handleTabClick('Tab2')}
           >
             {t("MONETARY_CHALLENGE")}
@@ -190,7 +190,6 @@ const GameHistoryTable = ({
       </div>
 
 
-    </>
   );
 };
 

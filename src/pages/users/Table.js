@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { apiPut } from "../../utils/apiFetch";
+import { apiGet, apiPut } from "../../utils/apiFetch";
 import apiPath from "../../utils/apiPath";
 import { isEmpty, startCase } from "lodash";
 import useToastContext from "hooks/useToastContext";
@@ -36,12 +36,24 @@ const Table = ({
   const [isAmountModal, setIsAmountModal] = useState(false);
   const [showReportPopup, setShowReportPopup] = useState(false);
   const [showReviewPopup, setShowReviewPopup] = useState(false);
+  const [reportItem,setReportItem]=useState("")
 
-  const handleReportToggle = () => {
+
+
+
+  // report-table//
+
+
+
+  //report-table//
+
+  const handleReportToggle = (item) => {
+    setReportItem(item?._id)
     setShowReportPopup(!showReportPopup)
   }
 
- const handleShorReviewToggle = () =>{
+ const handleShorReviewToggle = (itemReview) =>{
+  setReportItem(itemReview?._id)
   setShowReviewPopup(!showReviewPopup)
  }
 
@@ -138,15 +150,7 @@ const Table = ({
   );
 
 
-  // on View Wallet balance modal function start
   const [viewBalance, setViewBalance] = useState()
-  const onViewWalletBalance = (e) => {
-    setIsAmountModal(true)
-    setViewBalance(e)
-  }
-  // on View Wallet balance modal function end
-
-
 
   const renderActionTableCells = (item, userTypeDetail) => (
     <td className="py-2 px-4 border-l border">
@@ -163,7 +167,7 @@ const Table = ({
           </NavLink>
 
           <button
-            className="px-2 py-2" onClick={() => handleReportToggle()}
+            className="px-2 py-2" onClick={() => handleReportToggle(item)}
           >
             <div className="relative">
               <FaFlag className="cursor-pointer w-5 h-5 text-slate-600 dark:hover:text-white hover:text-blue-700" />{" "}
@@ -173,7 +177,7 @@ const Table = ({
 
 
           <button
-            className="px-2 py-2" onClick={() => handleShorReviewToggle()}
+            className="px-2 py-2" onClick={() => handleShorReviewToggle(item)}
           >
             <div className="relative">
             <MdFeedback className="cursor-pointer w-5 h-5 text-slate-600 dark:hover:text-white hover:text-blue-700" />{" "}
@@ -213,18 +217,6 @@ const Table = ({
     );
 
 
-  const renderWalletTableCell = (e) => {
-    return <td className="py-2 px-4 border-r  dark:border-[#ffffff38]  border text-center">
-      <div className="flex justify-center" onClick={() => { onViewWalletBalance(e) }}>
-        <AiFillWallet
-          className="text-green text-lg cursor-pointer  text-slate-600"
-          title="User Wallet"
-        />
-      </div>
-    </td>
-
-  }
-
 
   const renderTableRows = () => {
     return users?.map((item, i) => {
@@ -253,31 +245,6 @@ const Table = ({
   };
 
 
-
-  //   return staticUsers?.map((item, i) => {
-  //     const rowClassName = getRowClassName(item);
-  //     console.log("item",item)
-  //     return (
-  //       <tr key={i} className={rowClassName}>
-  //       {renderTableCell(i + 1, "py-4 px-3 border-r border font-medium text-gray-900 dark:text-white dark:border-[#ffffff38]")}
-  //       {renderTableCell(item.userId, "bg-white py-4 px-4 border-r border dark:border-[#ffffff38]")}
-  //       {renderTableCell(item.name, "bg-white py-4 px-4 border-r border dark:border-[#ffffff38]")}
-  //       {renderTableCell(item.userName || "N/A", "bg-white border py-2 px-4 border-r dark:border-[#ffffff38] font-bold")}
-  //       {renderTableCell(item.email || "N/A", "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] font-bold text-slate-900")}
-  //       {renderTableCell(item.mobile || "N/A", "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold")}
-  //       {renderUserTypeSpecificCells(item)}
-  //       {renderCommonTableCells(item)}
-  //       {renderTableCell(item.mobile || "N/A", "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold")}
-  //       {renderTableCell(item.mobile || "N/A", "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold")}
-  //       {renderStatusTableCell(item)}
-  //       {renderActionTableCells(item, item.userType)}
-  //     </tr>
-  //     );
-  //     // )
-  //     // )
-  //   });
-  // };
-
   return (
     <>
       <div className="p-3">
@@ -289,18 +256,16 @@ const Table = ({
                   {t("S.NO")}
                 </th>
 
-                <OUserTableHead sort={sort} setSort={setSort} name='USER_ID' fieldName='userId' />
+                <OUserTableHead sort={sort} setSort={setSort} name='USER_ID' fieldName='userUniqId' />
                 <OUserTableHead sort={sort} setSort={setSort} name='FULL_NAME' fieldName='fullName' />
                 <OUserTableHead sort={sort} setSort={setSort} name='USER_NAME' fieldName='userName' />
                 <OUserTableHead sort={sort} setSort={setSort} name='O_EMAIL_ID' fieldName='email' />
                 <OUserTableHead sort={sort} setSort={setSort} name='O_MOBILE' fieldName='mobile' />
                 <OUserTableHead sort={sort} setSort={setSort} name='INVITE_CODE_USED' fieldName='inviteCode' />
                 <OUserTableHead sort={sort} setSort={setSort} name='JOINED_DATE' fieldName='createdAt' />
-                <th scope="col" className="py-3 px-6 text-left">
-                  {t("KYC_VERIFIED")}
-                </th>
-                <OUserTableHead sort={sort} setSort={setSort} name='RATING_MONETRY' fieldName='rating' />
-                <OUserTableHead sort={sort} setSort={setSort} name='RATING_CASUAL' fieldName='rating-casual' />
+                <OUserTableHead sort={sort} setSort={setSort} name='KYC_VERIFIED' fieldName='isKYCVerified' />
+                <OUserTableHead sort={sort} setSort={setSort} name='RATING_MONETRY' fieldName='ratingMonetary' />
+                <OUserTableHead sort={sort} setSort={setSort} name='RATING_CASUAL' fieldName='ratingCasual' />
 
                 {
                   !userResult && helpers.andOperator(
@@ -350,10 +315,10 @@ const Table = ({
         />
       )}
       {
-        showReportPopup && <ReportUserPopup handleReportToggle={handleReportToggle} />
+        showReportPopup && <ReportUserPopup handleReportToggle={handleReportToggle} reportItem={reportItem} />
       }
       {
-        showReviewPopup && <ReviewRatingPopup handleShorReviewToggle={handleShorReviewToggle}/>
+        showReviewPopup && <ReviewRatingPopup handleShorReviewToggle={handleShorReviewToggle} reportItem={reportItem}/>
       }
 
 
