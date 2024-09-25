@@ -1,9 +1,27 @@
+import { Rating, Typography } from "@mui/material";
+import dayjs from "dayjs";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { IoClose } from "react-icons/io5";
+import { apiGet } from "utils/apiFetch";
+import apiPath from "utils/apiPath";
+import helpers from "utils/helpers";
 
 
-const ReviewRatingPopup = ({ handleShorReviewToggle }) => {
+const ReviewRatingPopup = ({ handleShorReviewToggle, reportItem }) => {
     const { t } = useTranslation();
+    const [storeRating, setStoreRating] = useState({})
+    const getAllReport = async () => {
+        const result = await apiGet(`${apiPath?.userReviewRating}/${reportItem}`)
+        if (result?.data?.success) {
+            setStoreRating(result?.data?.results)
+        }
+    }
+    useEffect(() => {
+        getAllReport()
+    }, [reportItem])
+
+    console.log("storeRating", storeRating)
     return (
         <>
             <div className="justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
@@ -19,12 +37,21 @@ const ReviewRatingPopup = ({ handleShorReviewToggle }) => {
                             </button>
                         </div>
 
-                        <div className="px-[20px] py-10">
-                            <ul className="list-disc pl-5 space-y-2">
-                                <li className="text-gray-800 font-semibold">Date:</li>
-                                <li className="text-gray-800 font-semibold">Average rating to platform : </li>
-                                <li className="text-gray-800 font-semibold">Review rating:</li>
-                                <li className="text-gray-800 font-semibold">Feedback:</li>
+                        <div className="px-[20px] py-6">
+                            <ul className="space-y-2">
+                                <li className="text-gray-800 font-semibold">Date: <span className="text-sm font-normal ml-1">{helpers?.ternaryCondition(storeRating?.createdAt, dayjs(storeRating?.createdAt).format("YYYY-MM-DD"), "N/A")} </span></li>
+                                <li className="text-gray-800 font-semibold flex items-center">Average rating to platform : <span className="text-sm font-normal ml-1">
+                                    {helpers?.ternaryCondition(storeRating?.avgRating, storeRating?.avgRating, 'N/A')}
+
+                                </span></li>
+                                <li className="text-gray-800 font-semibold flex items-center">Review rating:<span className="text-sm font-normal ml-1">
+                                    {<Rating name="half-rating-read" value={storeRating?.rating || 0} readOnly precision={0.5} />}
+                                </span> </li>
+                                <li className="text-gray-800 font-semibold break-words">Feedback: <span className="text-sm font-normal ml-1">
+
+                                    {helpers?.ternaryCondition(storeRating?.message, storeRating?.message, 'N/A')}
+                                </span>
+                                </li>
                             </ul>
 
                         </div>

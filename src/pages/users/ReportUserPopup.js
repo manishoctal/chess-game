@@ -1,63 +1,91 @@
 import OButton from "components/reusable/OButton";
 import OInputField from "components/reusable/OInputField";
-import { useState } from "react";
+import AuthContext from "context/AuthContext";
+import { isEmpty } from "lodash";
+import Pagination from "pages/Pagination";
+import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { IoClose } from "react-icons/io5";
+import { apiGet } from "utils/apiFetch";
+import apiPath from "utils/apiPath";
+import helpers from "utils/helpers";
 
 
-const ReportUserPopup = ({ handleReportToggle }) => {
+const ReportUserPopup = ({ handleReportToggle, reportItem }) => {
     const { t } = useTranslation();
     const renderTableCell = (content, classNames) => (
-        <td className={classNames}>{content}</td>
+        <td className={classNames}>{helpers?.ternaryCondition(content, content, "N/A")}</td>
     );
+    const { logoutUser } = useContext(AuthContext);
 
+    const [page, setPage] = useState(1);
+    const [pageSize, setPageSize] = useState(10);
+    const [reportList, setReportList] = useState([])
+    const [paginationObj, setPaginationObj] = useState({
+        page: 1,
+        pageCount: 1,
+        pageRangeDisplayed: 10,
+    });
 
-    const staticUsers = [
-        {
-            id: 1,
-            userId: "U001",
-            name: "John Doe",
-            userName: "johndoe",
-            email: "john@example.com",
-            mobile: "123-456-7890",
-            userType: "Admin",
-            status: "Active"
-        },
-        {
-            id: 2,
-            userId: "U002",
-            name: "Jane Smith",
-            userName: "janesmith",
-            email: "jane@example.com",
-            mobile: "098-765-4321",
-            userType: "User",
-            status: "Inactive"
-        },
-        {
-            id: 3,
-            userId: "U003",
-            name: "Robert Brown",
-            userName: "robertbrown",
-            email: "robert@example.com",
-            mobile: "555-555-5555",
-            userType: "Guest",
-            status: "Active"
+    const getAllReport = async () => {
+        try {
+
+            const payload = {
+                page,
+                pageSize: pageSize,
+            };
+
+            const path = `${apiPath.reportHistory}/${reportItem}`;
+            const result = await apiGet(path, payload);
+            if (result?.data?.success) {
+                const response = result?.data?.results;
+                setReportList(response?.docs);
+                const resultStatus = result?.data?.success;
+                setPaginationObj({
+                    ...paginationObj,
+                    page: helpers.ternaryCondition(resultStatus, response.page, null),
+                    perPageItem: helpers.ternaryCondition(resultStatus, response?.docs.length, null),
+                    totalItems: helpers.ternaryCondition(resultStatus, response.totalDocs, null),
+                    pageCount: helpers.ternaryCondition(resultStatus, response.totalPages, null),
+                });
+            }
+        } catch (error) {
+            console.error("error ", error);
+            setPaginationObj({});
+            if (error.response.status === 401 || error.response.status === 409) {
+                logoutUser();
+            }
         }
-    ];
+    };
 
+    const handlePageClick = (event) => {
+        const newPage = event.selected + 1;
+        setPage(newPage);
+    };
+
+
+    useEffect(() => {
+        getAllReport();
+    }, [page, pageSize]);
 
 
     const renderTableRows = () => {
-        return staticUsers?.map((item, i) => {
+        return reportList?.map((item, i) => {
             return (
-                <tr key={i} >
-                    {renderTableCell(i + 1, "py-4 px-3 border-r border font-medium text-gray-900 dark:text-white dark:border-[#ffffff38]")}
-                    {renderTableCell(item.userId, "bg-white py-4 px-4 border-r border dark:border-[#ffffff38]")}
-                    {renderTableCell(item.name, "bg-white py-4 px-4 border-r border dark:border-[#ffffff38]")}
-                    {renderTableCell(i + 1, "py-4 px-3 border-r border font-medium text-gray-900 dark:text-white dark:border-[#ffffff38]")}
-                    {renderTableCell(item.userId, "bg-white py-4 px-4 border-r border dark:border-[#ffffff38]")}
-                   
+                <tr key={item?._id} >
+                    {renderTableCell(item?.userData?.userUniqId, "py-4 px-3 border-r border font-medium text-gray-900 dark:text-white dark:border-[#ffffff38]")}
+                    {renderTableCell(item?.userData?.fullName, "bg-white py-4 px-4 border-r border dark:border-[#ffffff38]")}
+                    {renderTableCell(helpers.ternaryCondition(
+                        item?.createdAt,
+                        helpers.getDateAndTime(item?.createdAt),
+                        'N/A'
+                    ), "bg-white py-4 px-4 border-r border dark:border-[#ffffff38] text-center")}
+
+
+                    {renderTableCell(item?.reason, "py-4 px-3 border-r border font-medium text-gray-900 dark:text-white dark:border-[#ffffff38] text-center")}
+                    {renderTableCell(item?.userData?.mobile, "bg-white py-4 px-4 border-r border dark:border-[#ffffff38] text-center")}
+
                 </tr>
             );
 
@@ -109,23 +137,26 @@ const ReportUserPopup = ({ handleReportToggle }) => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {/* {users?.length > 0 && renderTableRows()} */}
-                                        {renderTableRows()}
-                                        {/* {helpers.ternaryCondition(
-                isEmpty(users),
-                <tr className="bg-white text-center border-b dark:bg-gray-800 dark:border-gray-700">
-                  <td
-                    className="py-2 px-4 border-r dark:border-[#ffffff38]"
-                    colSpan={13}
-                  >
-                    {t("O_NO_RECORD_FOUND")}
-                  </td>
-                </tr>,
-                null
-              )} */}
+                                        {reportList?.length > 0 && renderTableRows()}
+                                        {
+                                            isEmpty(reportList) &&
+                                            <tr className="bg-white text-center border-b dark:bg-gray-800 dark:border-gray-700">
+                                                <td
+                                                    className="py-2 px-4 border-r dark:border-[#ffffff38]"
+                                                    colSpan={13}
+                                                >
+                                                    {t("O_NO_RECORD_FOUND")}
+                                                </td>
+                                            </tr>
+                                        }
                                     </tbody>
                                 </table>
                             </div>
+
+                            {paginationObj?.totalItems ? (
+                                <Pagination handlePageClick={handlePageClick} options={paginationObj} page={page} />
+                            ) : null}
+
                         </div>
 
                         <div className="dark:border-[#ffffff38] dark:bg-slate-900 flex items-center justify-center p-6 border-t border-solid border-slate-200 rounded-b">
@@ -139,7 +170,13 @@ const ReportUserPopup = ({ handleReportToggle }) => {
                             </button>
                         </div>
                     </div>
+
+
+
+
                 </div>
+
+
 
             </div>
             <div className="opacity-25 fixed inset-0 z-40 bg-black" />

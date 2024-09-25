@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { apiGet, apiPut } from "../../utils/apiFetch";
 import apiPath from "../../utils/apiPath";
-import NotificationTable from "./CommunityModeratorManagerTable";
 import Pagination from "../Pagination";
 import AuthContext from "context/AuthContext";
 import dayjs from "dayjs";
@@ -11,6 +10,7 @@ import PageSizeList from "components/PageSizeList";
 import helpers from "utils/helpers";
 import OSearch from "components/reusable/OSearch";
 import { BiReset } from "react-icons/bi";
+import CommunityModeratorManagerTable from "./CommunityModeratorManagerTable";
 
 function CommunityModeratorManager() {
   const { t } = useTranslation();
@@ -26,7 +26,7 @@ function CommunityModeratorManager() {
   const [isInitialized, setIsInitialized] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [categoryAdd, setCategoryAdd] = useState(false);
-  const [notifications, setAllNotifications] = useState([]);
+  const [allCommunity, setAllCommunity] = useState([]);
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
 
@@ -60,92 +60,13 @@ function CommunityModeratorManager() {
         sortType: sort.sortType,
       };
 
-      const path = apiPath.notifications;
+      const path = apiPath.communityModeratror;
       const result = await apiGet(path, payload);
       if (result?.status === 200) {
         const response = result?.data?.results;
         const resultStatus = result?.data?.success;
-        let dummyRec = [
-          {
-            postId: 1,
-            username: "user123",
-            postTitle: "First Post",
-            likeCount: 34,
-            commentCount: 12,
-            reportCount: 1,
-            community: "General",
-            status: "active",
-            createdAt: "2024-09-20T14:30:00Z"
-          },
-          {
-            postId: 2,
-            username: "coolguy88",
-            postTitle: "A Day in the Life",
-            likeCount: 56,
-            commentCount: 8,
-            reportCount: 0,
-            community: "Lifestyle",
-            status: "active",
-            createdAt: "2024-09-21T09:00:00Z"
-          },
-          {
-            postId: 3,
-            username: "naturelover",
-            postTitle: "The Beauty of Nature",
-            likeCount: 78,
-            commentCount: 25,
-            reportCount: 2,
-            community: "Nature",
-            status: "Draft",
-            createdAt: "2024-09-22T11:15:00Z"
-          },
-          {
-            postId: 4,
-            username: "techwhiz",
-            postTitle: "Latest Tech Trends",
-            likeCount: 102,
-            commentCount: 15,
-            reportCount: 0,
-            community: "Technology",
-            status: "Published",
-            createdAt: "2024-09-23T16:45:00Z"
-          },
-          {
-            postId: 5,
-            username: "foodie_99",
-            postTitle: "Exploring Italian Cuisine",
-            likeCount: 45,
-            commentCount: 10,
-            reportCount: 1,
-            community: "Food",
-            status: "Published",
-            createdAt: "2024-09-24T08:30:00Z"
-          },
-          {
-            postId: 6,
-            username: "fitnessfan",
-            postTitle: "Workout Routines for Beginners",
-            likeCount: 67,
-            commentCount: 20,
-            reportCount: 0,
-            community: "Fitness",
-            status: "Published",
-            createdAt: "2024-09-25T10:00:00Z"
-          },
-          {
-            postId: 7,
-            username: "gamerPro",
-            postTitle: "Top 10 Video Games of 2024",
-            likeCount: 90,
-            commentCount: 30,
-            reportCount: 0,
-            community: "Gaming",
-            status: "Draft",
-            createdAt: "2024-09-26T12:15:00Z"
-          }
-        ];
-
-        setAllNotifications(dummyRec);
+   
+        setAllCommunity(response?.docs);
 
         setPaginationObj({
           ...paginationObj,
@@ -263,6 +184,9 @@ function CommunityModeratorManager() {
     }
   };
 
+console.log("allCommunity",allCommunity)
+
+
   return (
     <div>
       <div className="bg-[#F9F9F9] dark:bg-slate-900">
@@ -342,8 +266,8 @@ function CommunityModeratorManager() {
                 </div> */}
               </div>
             </form>
-            <NotificationTable
-              notifications={notifications}
+            <CommunityModeratorManagerTable
+              allCommunity={allCommunity}
               notification={notification}
               getAllNotifications={getAllNotifications}
               page={page}

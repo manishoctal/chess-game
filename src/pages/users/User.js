@@ -10,8 +10,9 @@ import { useTranslation } from "react-i18next";
 import PageSizeList from "components/PageSizeList";
 import helpers from "utils/helpers";
 import { useLocation } from "react-router-dom";
-import { BiReset } from "react-icons/bi";
+import { BiDownload, BiReset } from "react-icons/bi";
 import OSearch from "components/reusable/OSearch";
+import { GoDownload } from "react-icons/go";
 function User() {
   const { t } = useTranslation();
   const location = useLocation();
@@ -201,6 +202,25 @@ function User() {
 
   const manager = user?.permission?.find((e) => e.manager === "user_manager");
 
+  const onCsvDownload = async () => {
+    try {
+      const { startDate, endDate } = filterData;
+      const payloadCsv = {
+        startDate: startDate ? helpers.getFormattedDate(startDate) : null,
+        endDate: endDate ? helpers.getFormattedDate(endDate) : null,
+      };
+
+      const path = apiPath.downloadDashboardCsv;
+      const result = await apiGet(path, payloadCsv);
+      if (result?.data?.success) {
+        helpers.downloadFile(result?.data?.results?.filePath);
+      }
+    } catch (error) {
+      console.error("error in get all dashboard list==>>>>", error.message);
+    }
+  };
+
+
   return (
     <div>
       <div className="bg-[#F9F9F9] dark:bg-slate-900">
@@ -275,20 +295,28 @@ function User() {
 
             </form>
 
-            <div className="flex items-center  py-5 px-4">
+          <div className="flex items-center justify-between">
+          <div className="flex items-center  py-5 px-4">
               <button
-                className={`bg-gradientTo mr-4 text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150 ${activeTab === 'Tab1' ? 'bg-gradBlack' : ''}`}
+                className={` mr-4 text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150 ${activeTab === 'Tab1' ? 'bg-gradBlack' : 'bg-gradientTo'}`}
                 onClick={() => handleTabClick('Tab1')}
               >
                 {t("USERS")}
               </button>
               <button
-                className={`bg-gradientTo text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 ease-linear transition-all duration-150 ${activeTab === 'Tab2' ? 'bg-gradBlack' : ''}`}
+                className={` text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 ease-linear transition-all duration-150 ${activeTab === 'Tab2' ? 'bg-gradBlack' : 'bg-gradientTo'}`}
                 onClick={() => handleTabClick('Tab2')}
               >
                 {t("DELETED_USERS")}
               </button>
             </div>
+            <button
+               onClick={onCsvDownload}  className={`flex items-center bg-gradientTo mr-4 text-white active:bg-emerald-600 font-normal text-sm px-6 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-1`}
+              >
+               <GoDownload size={18} className="mr-2" />
+                {t("DOWNLOAD_FEEDBACK")}
+              </button>
+          </div>
 
             <Table
               users={users}

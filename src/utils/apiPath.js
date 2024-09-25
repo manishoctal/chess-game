@@ -1,7 +1,7 @@
 const apiPath = Object.freeze({
   loginUser: "/v1/admin/login",
   getUsers: "/v1/admin/user",
-  getUserDetails: "/v1/admin/user/details",
+  getUserDetails: "/v1/admin/user/view",
   acceptRewardRequest: "v1/admin/rewardRequest/accept",
   rejectRewardRequest: "v1/admin/rewardRequest/reject",
   getReports: "/v1/admin/report",
@@ -80,6 +80,9 @@ const apiPath = Object.freeze({
   getGraphUserDetails: "/v1/admin/user-graph",
   getGraphAdminDetails: "/v1/admin/earning-graph",
   downloadDashboardCsv: "/v1/admin/csv-download",
+  reportHistory:"/v1/admin/user/reports-history",
+  userReviewRating:"v1/admin/user/review",
+  communityModeratror:"v1/admin/community-moderator"
 });
 
 export default apiPath;
