@@ -11,6 +11,7 @@ import AddStaticContent from "pages/static_Contents/AddStaticContent";
 import EditStaticContent from "pages/static_Contents/EditStaticContent";
 import StaticContentView from "pages/static_Contents/StaticContentView";
 import NotificationManager from "pages/notification_manager/NotificationManager";
+import CommunityModeratorManager from "pages/community_moderator_manager/CommunityModeratorManager";
 import Profile from "pages/profile/Profile";
 import ChangePassword from "pages/auth/ChangePassword";
 import Sidebar from "components/sidebar/Sidebar";
@@ -35,6 +36,7 @@ import SubscribedManager from "pages/subscribed_manager/SubscribedManager";
 import ViewSubscriptionManager from "pages/subscribed_manager/ViewSubscriptionManager";
 import AchievementBadges from "pages/achievement_and_badges/AchievementBadges";
 import ViewAchievementManager from "pages/achievement_and_badges/ViewAchievementManager";
+import ViewCommunityModerator from "pages/community_moderator_manager/ViewCommunityModerator";
 const UseChange = ({ data }) => {
   const { t } = useTranslation();
   return t(data);
@@ -340,6 +342,41 @@ const AdminRoutes = {
       element: <Home />,
       name: <UseChange data="NAV_DASHBOARD" />,
     },
+
+    // community moderator manager
+    
+    {
+      path: "/community_moderator_manager",
+      element: (
+        <AuthorizationRoute>
+          {" "}
+          <CommunityModeratorManager />
+        </AuthorizationRoute>
+      ),
+      name: <UseChange data="COMMUNITY_MODERATOR_MANAGER" />,
+    },
+    {
+      path: "/community_moderator_manager/view",
+      element: (
+        <AuthorizationRoute>
+          {" "}
+          <ViewCommunityModerator />
+        </AuthorizationRoute>
+      ),
+      name: <UseChange data="COMMUNITY_MODERATOR_MANAGER" />,
+    },
+
+    // {
+    //   path: "/notification_manager/add",
+    //   element: (
+    //     <AuthorizationRoute>
+    //       {" "}
+    //       <NotificationAdd />
+    //     </AuthorizationRoute>
+    //   ),
+    //   name: <UseChange data="NOTIFICATION_MANAGER" />,
+    // },
+
   ],
 };
 

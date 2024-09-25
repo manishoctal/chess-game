@@ -862,5 +862,12 @@
   "EARNED_ON": "Earned on",
   "USER_REGISTER_GRAPH": "User Register Graph",
   "ADMIN_PROFIT_GRAPH": "Admin profit Graph",
-  "OFFER_CODE_CANNOT_CONTAIN_SPACES": "Offer code cannot contain spaces."
+  "OFFER_CODE_CANNOT_CONTAIN_SPACES": "Offer code cannot contain spaces.",
+  "COMMUNITY_MODERATOR_MANAGER": "Community moderator manager",
+  "COMMUNITY_MODERATOR_SEARCH_PLACEHOLDER": "Post ID, username, title" ,
+  "O_COMMUNITY": "Community",
+  "O_COMMUNITY_GLOBAL": "Global",
+  "O_COMMUNITY_FRIENDS": "Friends"
+
+  
 }
