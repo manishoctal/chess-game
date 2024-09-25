@@ -125,6 +125,7 @@ const Sidebar = () => {
           <SidebarNavItem permission="player_card_manager" path="/player-card-manager" label="PLAYER_CARD_MANAGER" icon={<AiOutlineIdcard size={20} color="#a7a7a7" />} imgSrc={rewardWithdrawalRequest} />
           <SidebarNavItem permission="player_stock_manager" path="/player-stock-manager" label="PLAYER_STOCK_MANAGER" icon={<AiOutlineStock size={20} color="#a7a7a7" />} imgSrc={rewardWithdrawalRequest} /> */}
 
+          <SidebarNavItem permission="community_moderator_manager" path="/community_moderator_manager" label="COMMUNITY_MODERATOR_MANAGER" icon={<AiOutlineMail size={21} color="#a7a7a7" />} />
           <SidebarNavItem permission="email_manager" path="/email-manager" label="EMAIL_MANAGER" icon={<AiOutlineMail size={21} color="#a7a7a7" />} />
           <SidebarNavItem permission="notification_manager" path="/notification_manager" label="NOTIFICATION_MANAGER" icon={<IoMdNotificationsOutline size={21} color="#a7a7a7" />} />
           <SidebarNavItem permission="static_page_management" path="/static-content" label="NAV_STATIC_CONTENTS" imgSrc={manageStaticContents} />

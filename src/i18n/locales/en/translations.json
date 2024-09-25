@@ -890,6 +890,12 @@
   "REPORT": "Report",
   "REPORT_RAISED_DATE": "Report raised Date",
   "REPORT_REASON": "Report reason",
-  "REVIEW_AND_RATING" : "Review and Rating"
+  "REVIEW_AND_RATING" : "Review and Rating",
+  "COMMUNITY_MODERATOR_MANAGER": "Community moderator manager",
+  "COMMUNITY_MODERATOR_SEARCH_PLACEHOLDER": "Post ID, username, title" ,
+  "O_COMMUNITY": "Community",
+  "O_COMMUNITY_GLOBAL": "Global",
+  "O_COMMUNITY_FRIENDS": "Friends"
 
+  
 }
