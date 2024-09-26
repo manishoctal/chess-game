@@ -15,7 +15,7 @@ export const permissionsMap = Object.freeze({
   subscribed_manager: "/subscribed-manager",
   achievement_and_badges: "/achievement-and-badges",
   challenges_manager: "/challenges-manager",
-  community_moderator_manager: "/community-moderator-manager",
+  community_moderator: "/community-moderator-manager",
   transaction_manager: "/transaction-manager",
   static_pages_management: "/static-content",
   widthDrawal_request_manager: "/withdrawal-request-manager",
