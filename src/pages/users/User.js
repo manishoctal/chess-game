@@ -305,12 +305,12 @@ function User() {
                 {t("DELETED_USERS")}
               </button>
             </div>
-            <button
+            {/* <button
                onClick={onCsvDownload}  className={`flex items-center bg-gradientTo mr-4 text-white active:bg-emerald-600 font-normal text-sm px-6 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-1`}
               >
                <GoDownload size={18} className="mr-2" />
                 {t("DOWNLOAD_FEEDBACK")}
-              </button>
+              </button> */}
           </div>
 
             <Table
