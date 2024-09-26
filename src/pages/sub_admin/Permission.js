@@ -23,7 +23,8 @@ const Permission = [
   generateManager("static_pages_management", { shownAdd: true, shownAll: true }),
   generateManager("settings", { shownAdd: true, shownAll: true }),
   generateManager("widthDrawal_request_manager", { shownAdd: true, shownAll: true }),
-  
+  generateManager("FAQ", { shownAdd: true, shownAll: true }),
+
   // generateManager("how_to_play_manager", { shownAdd: true, shownAll: true }),
   // generateManager("offer_manager", { shownAdd: true, shownAll: true }),
   // generateManager("subscribed_manager", { shownAdd: true, shownAll: true }),
@@ -32,7 +33,6 @@ const Permission = [
   // generateManager("notification_manager", { shownAdd: true, shownAll: true }),
   // // generateManager("settings", { shownAdd: true, shownAll: true }),
   // generateManager("static_page_management", { shownAdd: true, shownAll: true }),
-  // generateManager("FAQ", { shownAdd: true, shownAll: true }),
 ];
 
 export default Permission;
