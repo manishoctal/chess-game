@@ -1,9 +1,8 @@
 export const permissionsMap = Object.freeze({
   dashboard: "/dashboard",
   user_manager: "/users",
-  subAdmin_manager: "/sub-admin-manager",
+  // subAdmin_manager: "/sub-admin-manager",
   settings: "/setting",
-  static_page_management: "/static-content",
   email_manager: "/email-manager",
   FAQ: "/faqs",
   game_type_manager: "/game-type-manager",
@@ -15,4 +14,9 @@ export const permissionsMap = Object.freeze({
   player_card_manager: "/player-card-manager",
   subscribed_manager: "/subscribed-manager",
   achievement_and_badges: "/achievement-and-badges",
+  challenges_manager: "/challenges-manager",
+  community_moderator_manager: "/community-moderator-manager",
+  transaction_manager: "/transaction-manager",
+  static_pages_management: "/static-content",
+  widthDrawal_request_manager: "/withdrawal-request-manager",
 });

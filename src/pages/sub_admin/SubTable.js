@@ -88,7 +88,7 @@ const SubTable = ({ subAdmin, page, sort, setSort, manager, handelStatusChange, 
                 <td className="py-2 px-4 border-l">
                   <div className="">
                     <ul className="flex justify-center">
-                      <li
+                      {/* <li
                         onClick={() =>
                           navigate("/sub-admin-manager/add", {
                             state: { item, type: "view" },
@@ -99,7 +99,7 @@ const SubTable = ({ subAdmin, page, sort, setSort, manager, handelStatusChange, 
                         <a title={t("O_VIEW")}>
                           <AiFillEye className="cursor-pointer w-5 h-5 text-slate-600" />
                         </a>
-                      </li>
+                      </li> */}
                       {(manager?.add || user?.role === "admin") && (
                         <li
                           onClick={() =>

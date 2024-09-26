@@ -910,6 +910,9 @@
   "PLEASE_ENTER_TWITTER_URL": "Please enter a Twitter URL",
   "PLEASE_ENTER_VALID_TWITTER_URL": "Please enter a valid Twitter URL",
   "PLEASE_ENTER_LINKEDIN_URL": "Please enter a LinkedIn URL",
-  "PLEASE_ENTER_VALID_LINKEDIN_URL": "Please enter a valid LinkedIn URL"
+  "PLEASE_ENTER_VALID_LINKEDIN_URL": "Please enter a valid LinkedIn URL",
+  "SET_COMMISSION_TYPE": "Set commission type",
+  "PERCENTAGE": "Percentage",
+  "FIXED": "Fixed"
 
 }

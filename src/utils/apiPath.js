@@ -82,7 +82,8 @@ const apiPath = Object.freeze({
   downloadDashboardCsv: "/v1/admin/csv-download",
   reportHistory:"/v1/admin/user/reports-history",
   userReviewRating:"v1/admin/user/review",
-  communityModeratror:"v1/admin/community-moderator"
+  communityModeratror:"/v1/admin/community-moderator",
+  downloadFeedback: "v1/admin/user/download-review/feedback"
 });
 
 export default apiPath;

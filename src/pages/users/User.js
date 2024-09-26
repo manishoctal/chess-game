@@ -203,15 +203,10 @@ function User() {
   const manager = user?.permission?.find((e) => e.manager === "user_manager");
 
   const onCsvDownload = async () => {
+    
     try {
-      const { startDate, endDate } = filterData;
-      const payloadCsv = {
-        startDate: startDate ? helpers.getFormattedDate(startDate) : null,
-        endDate: endDate ? helpers.getFormattedDate(endDate) : null,
-      };
-
-      const path = apiPath.downloadDashboardCsv;
-      const result = await apiGet(path, payloadCsv);
+      const path = apiPath.downloadFeedback;
+      const result = await apiGet(path);
       if (result?.data?.success) {
         helpers.downloadFile(result?.data?.results?.filePath);
       }
