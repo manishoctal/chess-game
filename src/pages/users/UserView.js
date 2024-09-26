@@ -312,7 +312,7 @@ const UserView = () => {
                   </div>
                 </li>
               </div>
-              <div>
+              {/* <div>
                 <li className="mb-4">
                   <div className="flex items-center">
                     <figure className="bg-[#F2F2F2] w-[42px] h-[41px] rounded-full flex items-center justify-center mr-3">
@@ -324,9 +324,9 @@ const UserView = () => {
                     </figcaption>
                   </div>
                 </li>
-              </div>
+              </div> */}
               <div>
-                <li className="mb-4">
+                {/* <li className="mb-4">
                   <div className="flex items-center">
                     <figure className="bg-[#F2F2F2] w-[42px] h-[41px] rounded-full flex items-center justify-center mr-3">
                       <img src={bonusIcon} alt="" />
@@ -336,7 +336,7 @@ const UserView = () => {
                       <strong className="dark:text-slate-400">{helpers.ternaryCondition(item?.inviteCode, item?.inviteCode, "N/A")}</strong>
                     </figcaption>
                   </div>
-                </li>
+                </li> */}
 
                 <li className="mb-4">
                   <div className="flex items-center">

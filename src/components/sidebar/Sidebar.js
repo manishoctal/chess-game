@@ -13,6 +13,7 @@ import { AiOutlineMail } from "react-icons/ai";
 import { IoMdNotificationsOutline } from "react-icons/io";
 
 import helpers from "utils/helpers";
+import { FaRegQuestionCircle } from "react-icons/fa";
 
 const classNames = require("classnames");
 
@@ -57,6 +58,7 @@ const Sidebar = () => {
     if (!user) {
       return false;
     }
+    // debugger
     const localPermissions = [...user?.permission];
 
     if (user?.permission?.length === 0) {
@@ -116,11 +118,11 @@ const Sidebar = () => {
           <SidebarNavItem permission="player_card_manager" path="/player-card-manager" label="PLAYER_CARD_MANAGER" icon={<AiOutlineIdcard size={20} color="#a7a7a7" />} imgSrc={rewardWithdrawalRequest} />
           <SidebarNavItem permission="player_stock_manager" path="/player-stock-manager" label="PLAYER_STOCK_MANAGER" icon={<AiOutlineStock size={20} color="#a7a7a7" />} imgSrc={rewardWithdrawalRequest} /> */}
 
-          <SidebarNavItem permission="community-moderator-manager" path="/community-moderator-manager" label="community-moderator-manager" icon={<AiOutlineMail size={21} color="#a7a7a7" />} />
+          <SidebarNavItem permission="community_moderator_manager" path="/community-moderator-manager" label="community-moderator-manager" icon={<AiOutlineMail size={21} color="#a7a7a7" />} />
           <SidebarNavItem permission="email_manager" path="/email-manager" label="EMAIL_MANAGER" icon={<AiOutlineMail size={21} color="#a7a7a7" />} />
           <SidebarNavItem permission="notification_manager" path="/notification_manager" label="NOTIFICATION_MANAGER" icon={<IoMdNotificationsOutline size={21} color="#a7a7a7" />} />
-          <SidebarNavItem permission="static_page_management" path="/static-content" label="NAV_STATIC_CONTENTS" imgSrc={manageStaticContents} />
-          {/* <SidebarNavItem permission="FAQ" path="/faqs" label="NAV_FAQS" icon={<FaRegQuestionCircle size={21} color="#a7a7a7" />} /> */}
+          <SidebarNavItem permission="static_pages_management" path="/static-content" label="NAV_STATIC_CONTENTS" imgSrc={manageStaticContents} />
+          <SidebarNavItem permission="FAQ" path="/faqs" label="NAV_FAQS" icon={<FaRegQuestionCircle size={21} color="#a7a7a7" />} />
           <SidebarNavItem permission="settings" path="/setting" label="SETTINGS"  imgSrc={manageStaticContents}/>
           <Link onClick={handleLogout} className="flex items-center px-4 lg:px-7 py-4 sidebar-icons hover:bg-sideBarNavActiveColor">
             <span className="mr-2">

@@ -50,6 +50,8 @@ const SubAdd = () => {
     },
   });
 
+  console.log("item,", item)
+
   useEffect(() => {
     if (helpers.andOperator(item?.type !== "edit", item?.type !== "view") && helpers.andOperator(!manager?.add, user?.role !== "admin")) {
       navigate("/sub-admin-manager");
@@ -59,6 +61,8 @@ const SubAdd = () => {
   const notification = useToastContext();
   const [permissionJons, setPermission] = useState(helpers.ternaryCondition(item?.type, getValues("permission"), Permission));
   const formValidation = FormValidation();
+
+  console.log("permissionJons",permissionJons)
 
   const [countryCode] = useState("in");
   const [isSelectAll, setIsSelectAll] = useState(false);
@@ -310,6 +314,7 @@ const SubAdd = () => {
                 </thead>
                 <tbody>
                   {permissionJons?.map((data, i) => (
+                    
                     <tr key={i} className="bg-white border-b  dark:bg-gray-800 dark:border-gray-700">
                       <td className="py-2 px-4 border-r dark:border-[#ffffff38] ">{helpers.ternaryCondition(data.manager === "FAQ", "FAQ", capitalize(startCase(data.manager)))}</td>
                       <td className="py-2 px-4 border-r dark:border-[#ffffff38] ">

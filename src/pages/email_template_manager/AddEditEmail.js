@@ -156,7 +156,7 @@ export default function AddEditEmail() {
                 onInput={e => preventMaxInput(e, 500)}
                 register={register('title', formValidation.title)}
                 errors={errors}
-                disable
+                // disable
               />
             </div>
             <div className='md:py-4 sm:py-3 px-2'>

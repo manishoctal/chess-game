@@ -203,15 +203,10 @@ function User() {
   const manager = user?.permission?.find((e) => e.manager === "user_manager");
 
   const onCsvDownload = async () => {
+    
     try {
-      const { startDate, endDate } = filterData;
-      const payloadCsv = {
-        startDate: startDate ? helpers.getFormattedDate(startDate) : null,
-        endDate: endDate ? helpers.getFormattedDate(endDate) : null,
-      };
-
-      const path = apiPath.downloadDashboardCsv;
-      const result = await apiGet(path, payloadCsv);
+      const path = apiPath.downloadFeedback;
+      const result = await apiGet(path);
       if (result?.data?.success) {
         helpers.downloadFile(result?.data?.results?.filePath);
       }
@@ -310,12 +305,12 @@ function User() {
                 {t("DELETED_USERS")}
               </button>
             </div>
-            <button
+            {/* <button
                onClick={onCsvDownload}  className={`flex items-center bg-gradientTo mr-4 text-white active:bg-emerald-600 font-normal text-sm px-6 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-1`}
               >
                <GoDownload size={18} className="mr-2" />
                 {t("DOWNLOAD_FEEDBACK")}
-              </button>
+              </button> */}
           </div>
 
             <Table
