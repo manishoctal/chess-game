@@ -199,7 +199,7 @@ const Settings = () => {
   return (
     <section className="">
       <div className="sm:px-8 px-4 py-4 ">
-        <div className="border  xl:w-full">
+        <div className="border  xl:w-full mb-5">
           <header className="border-b  py-2 px-4 bg-gray-100 rounded-t-md dark:bg-gray-800 ">
             <div className="font-semibold dark:text-white">{t("SETTINGS")}</div>
           </header>
@@ -387,81 +387,7 @@ const Settings = () => {
                 </div>
               </div>
 
-              <div className="border p-5 rounded-md">
-
-
-                <form >
-                  {/* First Commission Type */}
-                  <div>
-                    <h3>Commission Type 1 (if money stake &lt; value)</h3>
-               <div>
-
-               <select
-                      className="block p-2 mb-4w-full text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer"
-
-                      {...register("commissionType1", { required: "Commission type is required" })}
-                    >
-                      <option value="">Select Commission Type</option>
-                      <option value="percentage">Percentage</option>
-                      <option value="fixed">Fixed</option>
-                    </select>
-                    {errors.commissionType1 && <p>{errors.commissionType1.message}</p>}
-               </div>
-
-
-                    {/* Dynamic Admin Commission Input */}
-                    <input
-                      type="number"
-                      className="bg-gray-50 border mb-4 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-
-                      placeholder="Set Admin Commission"
-                      {...register("adminCommission1", { required: "Admin commission is required" })}
-                    />
-                    {errors.adminCommission1 && <p>{errors.adminCommission1.message}</p>}
-                  </div>
-
-                  {/* Second Commission Type */}
-                  <div>
-                    <h3>Commission Type 2 (if money stake &gt; value)</h3>
-                    <select
-                      className="block p-2 mb-4 w-full text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer"
-
-                      {...register("commissionType2", { required: "Commission type is required" })}
-                    >
-                      <option value="">Select Commission Type</option>
-                      <option value="percentage">Percentage</option>
-                      <option value="fixed">Fixed</option>
-                    </select>
-                    {errors.commissionType2 && <p>{errors.commissionType2.message}</p>}
-
-                    {/* Dynamic Admin Commission Input */}
-                    <input
-                      className="bg-gray-50 border mb-4 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                      type="number"
-                      placeholder="Set Admin Commission"
-                      {...register("adminCommission2", { required: "Admin commission is required" })}
-                    />
-                    {errors.adminCommission2 && <p>{errors.adminCommission2.message}</p>}
-                  </div>
-
-                  {/* Money Stake Input */}
-                  <div className="mb-4">
-                    <label htmlFor="moneyStake">Money Stake:</label>
-                    <input
-                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                      type="number"
-                      id="moneyStake"
-                      {...register("moneyStake", { required: "Money stake is required" })}
-                    />
-                    {errors.moneyStake && <p>{errors.moneyStake.message}</p>}
-                  </div>
-
-                  {/* Submit Button */}
-                  <button type="submit">Submit</button>
-                </form>
-
-              </div>
-
+           
 
             </main>
 
@@ -479,6 +405,92 @@ const Settings = () => {
             )}
           </div>
         </div>
+        <div className="border p-5 rounded-md">
+
+
+{/* <form >
+  <div className="mb-4">
+    <h3 className="mb-4">Commission Type 1 (if money stake &lt; value)</h3>
+    <div className="flex items-center">
+      <div>
+
+        <select
+          className="block p-2 mr-4 mb-4w-full text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer"
+
+          {...register("commissionType1", { required: "Commission type is required" })}
+        >
+          <option value="">Select Commission Type</option>
+          <option value="percentage">Percentage</option>
+          <option value="fixed">Fixed</option>
+        </select>
+        {errors.commissionType1 && <ErrorMessage message={errors.commissionType1.message} />}
+      </div>
+
+
+      <div>
+        <input
+          type="number"
+          className="bg-gray-50 border  border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+
+          placeholder="Set Admin Commission"
+          {...register("adminCommission1", { required: "Admin commission is required" })}
+        />
+        {errors.adminCommission1 && <p>{errors.adminCommission1.message}</p>}
+      </div>
+    </div>
+
+  </div>
+
+  <div className="mb-4">
+    <h3 className="mb-4">Commission Type 1 (if money stake &lt; value)</h3>
+    <div className="flex items-center">
+      <div>
+
+        <select
+          className="block p-2 mr-4 mb-4w-full text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer"
+
+          {...register("commissionType1", { required: "Commission type is required" })}
+        >
+          <option value="">Select Commission Type</option>
+          <option value="percentage">Percentage</option>
+          <option value="fixed">Fixed</option>
+        </select>
+        {errors.commissionType1 && <ErrorMessage message={errors.commissionType1.message} />}
+      </div>
+
+
+      <div>
+        <input
+          type="number"
+          className="bg-gray-50 border  border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+
+          placeholder="Set Admin Commission"
+          {...register("adminCommission1", { required: "Admin commission is required" })}
+        />
+        {errors.adminCommission1 && <ErrorMessage message={errors.adminCommission1.message} />}
+      </div>
+    </div>
+
+  </div>
+
+  <div className="mb-4">
+    <label htmlFor="moneyStake">Money Stake:</label>
+    <input
+      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+      type="number"
+      id="moneyStake"
+      {...register("moneyStake", { required: "Money stake is required" })}
+    />
+  {errors.moneyStake && <ErrorMessage message={errors.moneyStake.message} />}
+  </div>
+
+
+</form> */}
+
+</div>
+
+
+
       </div>
 
       {viewShowModal ? (
