@@ -72,3 +72,67 @@ export const validateFile = (file, type = 'image') => {
 };
 
 export const supportedImageTypes = ['image/jpeg', 'image/jpg', 'image/png']
+
+export const preventText = (e) => {
+  if (!/[0-9]/.test(e.key)) {
+    e.preventDefault();
+  }
+}
+export const handleNumericInput = (event) => {
+  const isAllowedKey = ["Backspace", "Delete", "Tab", "ArrowLeft", "ArrowRight"].includes(event.key) || /[0-9]/.test(event.key);
+  
+  if (!isAllowedKey) {
+    event.preventDefault();
+    return;
+  }
+  
+  // Get the current input value plus the new key
+  const inputValue = event.target.value;
+  const newValue = inputValue + event.key;
+
+  // Check if the value exceeds 100
+  if (parseInt(newValue, 10) > 100) {
+    event.preventDefault();
+  }
+};
+
+let pressedKeys=[];
+export const handleKeyDownCashIn = e => {
+  pressedKeys.push(e.key)
+  var lastKey = pressedKeys[pressedKeys.length - 2]
+
+  const isInvalidKey = ['-', '+', 'e'].includes(e.key)
+  const isDotKey = e.key === '.'
+
+  if (lastKey === '.') {
+    if (isInvalidKey || isDotKey) {
+      e.preventDefault()
+    }
+  } else if (isInvalidKey) {
+    e.preventDefault()
+  }
+
+  if (
+    !['Backspace', 'Delete', 'Tab'].includes(e.key) &&
+    e.target.value?.split('.')[1]?.length >= 2
+  ) {
+    e.preventDefault()
+  }
+}
+
+export const preventMaxHundred = e => {
+  if (e.target.value > 100) {
+    e.target.value = e.target.value.slice(0, 2)
+  }
+}
+
+
+// export const preventMaxHundred = e => {
+//   if (e.target.value > 100) {
+//     e.target.value = e.target.value.slice(0, 2)
+//   }
+// }
+// min: {
+//                   value: 0.01,
+//                   message: 'Minimum value must is 0.01.'
+//                 }

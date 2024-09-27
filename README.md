@@ -14,7 +14,7 @@ Start the development server:
 npm start
 
 
-Build the production-ready app:
+Build the production-ready app
 
 
 npm run build

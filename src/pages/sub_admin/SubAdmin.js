@@ -14,7 +14,6 @@ import OSearch from "components/reusable/OSearch";
 import { BiReset } from "react-icons/bi";
 import { IoIosAdd } from "react-icons/io";
 import helpers from "utils/helpers";
-import { isEmpty } from "lodash";
 
 function SubAdmin() {
   const { t } = useTranslation();
@@ -173,6 +172,7 @@ function SubAdmin() {
       clearTimeout(timeoutId);
     };
   }, [searchTerm]);
+
   useEffect(() => {
     updatePageName(t("SUB_ADMIN_MANAGERS"));
   }, []);

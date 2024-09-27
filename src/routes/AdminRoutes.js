@@ -35,6 +35,9 @@ import SubscribedManager from "pages/subscribed_manager/SubscribedManager";
 import ViewSubscriptionManager from "pages/subscribed_manager/ViewSubscriptionManager";
 import AchievementBadges from "pages/achievement_and_badges/AchievementBadges";
 import ViewAchievementManager from "pages/achievement_and_badges/ViewAchievementManager";
+import GameHistoryTable from "pages/users/GameHistoryTable";
+import ViewCommunityModerator from "pages/community-moderator-manager/ViewCommunityModerator";
+import CommunityModeratorManager from "pages/community-moderator-manager/CommunityModeratorManager";
 const UseChange = ({ data }) => {
   const { t } = useTranslation();
   return t(data);
@@ -74,6 +77,12 @@ const AdminRoutes = {
       path: "/users/view",
       element: <UserView />,
       name: <UseChange data="USER_MANAGER" />,
+    },
+
+    {
+      path: "/users/view/game-history",
+      element: <GameHistoryTable />,
+      name: <UseChange data="USER_GAME_HISTORY" />,
     },
 
     {
@@ -340,6 +349,41 @@ const AdminRoutes = {
       element: <Home />,
       name: <UseChange data="NAV_DASHBOARD" />,
     },
+
+    // community moderator manager
+    
+    {
+      path: "/community-moderator-manager",
+      element: (
+        <AuthorizationRoute>
+          {" "}
+          <CommunityModeratorManager />
+        </AuthorizationRoute>
+      ),
+      name: <UseChange data="community-moderator-manager" />,
+    },
+    {
+      path: "/community-moderator-manager/view",
+      element: (
+        <AuthorizationRoute>
+          {" "}
+          <ViewCommunityModerator />
+        </AuthorizationRoute>
+      ),
+      name: <UseChange data="community-moderator-manager" />,
+    },
+
+    // {
+    //   path: "/notification_manager/add",
+    //   element: (
+    //     <AuthorizationRoute>
+    //       {" "}
+    //       <NotificationAdd />
+    //     </AuthorizationRoute>
+    //   ),
+    //   name: <UseChange data="NOTIFICATION_MANAGER" />,
+    // },
+
   ],
 };
 

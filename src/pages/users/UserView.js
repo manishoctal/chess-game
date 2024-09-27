@@ -2,7 +2,7 @@ import OImage from "components/reusable/OImage";
 import dayjs from "dayjs";
 import React, { useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useLocation, Link, useNavigate } from "react-router-dom";
+import { useLocation, Link, useNavigate, NavLink } from "react-router-dom";
 import defaultImage from "../../assets/images/No-image-found.jpg";
 import checkIcon from "../../assets/images/check.png";
 import { startCase } from "lodash";
@@ -22,29 +22,31 @@ import ShowImage from "./ShowImage";
 import bonusIcon from "../../assets/icons/icon/bonus.svg";
 import AuthContext from "context/AuthContext";
 import { FaCircleArrowLeft } from "react-icons/fa6";
+import FreezeBalancePopup from "./FreezeBalancePopup";
+import { BiHistory } from "react-icons/bi";
 
 const UserView = () => {
   const { t } = useTranslation();
   const { logoutUser } = useContext(AuthContext);
   const location = useLocation();
-  const [item, setItems] = useState();
+  const [item, setItem] = useState();
   const navigate = useNavigate();
   const notification = useToastContext();
   const [kycSection, setKycSection] = useState(null);
   const [showBanner, setShowBanner] = useState(false);
+  const [showFreeModel,setShowFreeModel]=useState(false);
   const [walletBox, setWalletBox] = useState(false);
-
-
+  
+  const handleFreeModal = () =>{
+    setShowFreeModel(!showFreeModel)
+  }
 
   const getUserDetails = async () => {
     try {
-      const payload = {
-        userId: location?.state?._id || null
-      };
-      const path = apiPath.getUserDetails;
-      const result = await apiGet(path, payload);
+      const path = `${apiPath.getUserDetails}/${location?.state?._id}`;
+      const result = await apiGet(path);
       if (result?.data?.success) {
-        setItems(result?.data?.results)
+        setItem(result?.data?.results)
       }
     } catch (error) {
       console.error("error ", error);
@@ -156,29 +158,10 @@ const UserView = () => {
     setShowBanner(!showBanner);
   };
 
-  const handleWalletBox = () => {
-    setWalletBox(false);
-  };
-
   const handleBack = () => {
     setWalletBox(false);
   };
 
-
-
-  const PlayerCardInfo = ({ label, value }) => (
-    <div>
-      <label className="block text-sm font-medium text-gray-900 dark:text-white px-2 mb-1">{label}</label>
-      <span className="block text-sm font-medium text-gray-900 dark:text-white px-2 text-center">{value}</span>
-    </div>
-  )
-
-  const StockCardInfo = ({ label1, value1 }) => (
-    <div>
-      <label className="block text-sm font-medium text-gray-900 dark:text-white px-2 mb-1">{label1}</label>
-      <span className="block text-sm font-medium text-gray-900 dark:text-white px-2 text-center">{value1}</span>
-    </div>
-  )
 
 
   return (
@@ -188,64 +171,39 @@ const UserView = () => {
         <Link className="mb-5 ml-4 block" onClick={handleBack}>
           <IoArrowBackSharp />
         </Link>,
-        <div className='flex active mb-5 ml-4 '>
+        <div className='flex active mb-3 ml-4 justify-between'>
+          
           <Link aria-current="page" className="" to={-1}>
             <FaCircleArrowLeft size={27} />
           </Link>
-        </div>
-      )}
-      {helpers.andOperator(
-        item?.userType === "tourist",
-        <div className="mt-10">
-          <div className="items-center flex mb-5">
-            <div className="mr-5 flex cursor-pointer">
-              <figure className="overflow-hidden rounded-full inline-block  border border-2 mb-5">
-                <OImage
-                  className="w-[100px] h-[100px] inline"
-                  src={helpers?.orOperator(item?.profilePic, defaultImage)}
-                  onClick={helpers.ternaryCondition(item?.profilePic !== "https://octal-dev.s3.ap-south-1.amazonaws.com/", () => handleShowImage(item.profilePic), undefined)}
-                  fallbackUrl={defaultImage}
-                  alt=""
-                />
-              </figure>
-              {helpers.andOperator(
-                item?.verificationStatus === "verified",
-                <span>
-                  <img src={item?.verificationStatus === "verified" && checkIcon} alt="" />
-                </span>
-              )}
-            </div>
-            <div className="grid grid-cols-4 bg-[#F2F2F2] rounded-lg p-4 w-[70%] mr-4 px-8">
-              {helpers.ternaryCondition(
-                walletBox,
-                <InformationSection iconSrc={firstNameIcon} title={t("USER_ID")} content={helpers.ternaryCondition(item?.userId, startCase(item?.userId), "N/A")} />,
-                <InformationSection iconSrc={firstNameIcon} title={t("FAMILY_NAME")} content={helpers.ternaryCondition(item?.familyName, startCase(item?.familyName), "N/A")} />
-              )}
-              <InformationSection iconSrc={firstNameIcon} title={t("FIRST_NAME")} content={helpers.ternaryCondition(item?.firstName, startCase(item?.firstName), "N/A")} />
-              <InformationSection iconSrc={emailIcon} title={t("EMAIL_ADDRESS")} content={helpers.ternaryCondition(item?.email, item?.email, "N/A")} />
-              <div className="ps-2">
-                <InformationSection iconSrc={mobileIcon} title={t("O_MOBILE_NUMBER")} content={`+${item?.countryCode} ${item?.mobile}`} />
-              </div>
-            </div>
-            <div className="bg-[#000] rounded-lg p-4" onClick={handleWalletBox}>
-              <div className="flex items-center">
-                <figure className="mr-3">
-                  <img src={balanceIcon} alt="" />
-                </figure>
-                <figcaption className="text-white">
-                  <span className="block">{helpers.formattedAmount(item?.walletAmount)}</span>
-                  <span className="text-sm">{t("AVAILABLE_BALANCE")}</span>
-                </figcaption>
-              </div>
-            </div>
+
+          <div className="flex items-center">
+
+          <NavLink
+            to="/users/view/game-history"
+            title={t("O_VIEW")}
+            className="bg-gradientTo flex gap-2 text-sm px-6 ml-3  py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2"
+          >
+            <BiHistory  className="cursor-pointer w-5 h-5 text-white" />{" "}
+            {t("GAME_HISTORY")}
+          </NavLink>
+
+ 
+
+            {/* <button onClick={()=>handleFreeModal()}className="bg-gradientTo flex gap-2 text-sm px-6 ml-3  py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2">
+              {t("FREEZE_BALANCE")}
+            </button> */}
           </div>
+
         </div>
       )}
+   
+ 
 
       <div className="mt-10">
         <div className="flex items-center">
           <div className="flex mr-5 cursor-pointer">
-            <figure className="inline-block overflow-hidden rounded-full border border-2 mb-5">
+            <figure className="inline-block overflow-hidden rounded-full border-2 mb-5">
               <OImage
                 src={item?.profilePic || defaultImage}
                 className="w-[100px] h-[100px] inline"
@@ -269,8 +227,8 @@ const UserView = () => {
                   <img src={firstNameIcon} alt="" />
                 </figure>
                 <figcaption className="w-[calc(100%_-_41px)]">
-                  <span className="block text-[#5 C5C5C]">{t("NAME")}</span>
-                  <strong> {helpers.ternaryCondition(item?.firstName, startCase((item?.firstName ?? "") + " " + (item?.lastName ?? "")), "N/A")}</strong>
+                  <span className="block text-[#5 C5C5C]">{t("USERS_FULL_NAME")}</span>
+                  <strong> {helpers.ternaryCondition(item?.fullName, item?.fullName, "N/A")}</strong>
                 </figcaption>
               </div>
             </div>
@@ -292,7 +250,7 @@ const UserView = () => {
                 </figure>
                 <figcaption className="w-[calc(100%_-_41px)]">
                   <span className="block text-[#5 C5C5C]">{t("O_MOBILE_NUMBER")}</span>
-                  <strong>{item?.mobile || 'N/A'}</strong>
+                  <strong>{helpers.ternaryCondition(item?.mobile, item?.mobile, "N/A")}</strong>
                 </figcaption>
               </div>
             </div>
@@ -312,6 +270,7 @@ const UserView = () => {
         </div>
 
         <div className="grid grid-cols-3 gap-5">
+
           <div className="border border-1 border-[#E1DEDE] rounded-md p-6 ps-3">
             <ul>
               <div>
@@ -322,7 +281,7 @@ const UserView = () => {
                     </figure>
                     <figcaption className="w-[calc(100%_-_41px)]">
                       <span className="block text-[#5C5C5C]">{t("USER_ID")}</span>
-                      <strong>{helpers.ternaryCondition(item?.userId, item?.userId, "N/A")}</strong>
+                      <strong>{helpers.ternaryCondition(item?.userUniqId, item?.userUniqId, "N/A")}</strong>
                     </figcaption>
                   </div>
                 </li>
@@ -353,7 +312,7 @@ const UserView = () => {
                   </div>
                 </li>
               </div>
-              <div>
+              {/* <div>
                 <li className="mb-4">
                   <div className="flex items-center">
                     <figure className="bg-[#F2F2F2] w-[42px] h-[41px] rounded-full flex items-center justify-center mr-3">
@@ -365,16 +324,61 @@ const UserView = () => {
                     </figcaption>
                   </div>
                 </li>
-              </div>
+              </div> */}
               <div>
-                <li className="mb-4">
+                {/* <li className="mb-4">
                   <div className="flex items-center">
                     <figure className="bg-[#F2F2F2] w-[42px] h-[41px] rounded-full flex items-center justify-center mr-3">
                       <img src={bonusIcon} alt="" />
                     </figure>
                     <figcaption className="w-[calc(100%_-_41px)]">
                       <span className="block text-[#5C5C5C] dark:text-white">{t("INVITE_CODE")}</span>
-                      <strong className="dark:text-slate-400">{item?.inviteCode || 'N/A'}</strong>
+                      <strong className="dark:text-slate-400">{helpers.ternaryCondition(item?.inviteCode, item?.inviteCode, "N/A")}</strong>
+                    </figcaption>
+                  </div>
+                </li> */}
+
+                <li className="mb-4">
+                  <div className="flex items-center">
+                    <figure className="bg-[#F2F2F2] w-[42px] h-[41px] rounded-full flex items-center justify-center mr-3">
+                      <img src={bonusIcon} alt="" />
+                    </figure>
+                    <figcaption className="w-[calc(100%_-_41px)]">
+                      <span className="block text-[#5C5C5C] dark:text-white">{t("MONETRY_RATING")}</span>
+                      <strong className="dark:text-slate-400">{helpers.ternaryCondition(item?.ratingMonetary, item?.ratingMonetary, "0")}</strong>
+                    </figcaption>
+                  </div>
+                </li>
+                <li className="mb-4">
+                  <div className="flex items-center">
+                    <figure className="bg-[#F2F2F2] w-[42px] h-[41px] rounded-full flex items-center justify-center mr-3">
+                      <img src={bonusIcon} alt="" />
+                    </figure>
+                    <figcaption className="w-[calc(100%_-_41px)]">
+                      <span className="block text-[#5C5C5C] dark:text-white">{t("RATING_CASUAL")}</span>
+                      <strong className="dark:text-slate-400">{helpers.ternaryCondition(item?.ratingCasual, item?.ratingCasual, "0")}</strong>
+                    </figcaption>
+                  </div>
+                </li>
+                <li className="mb-4">
+                  <div className="flex items-center">
+                    <figure className="bg-[#F2F2F2] w-[42px] h-[41px] rounded-full flex items-center justify-center mr-3">
+                      <img src={bonusIcon} alt="" />
+                    </figure>
+                    <figcaption className="w-[calc(100%_-_41px)]">
+                      <span className="block text-[#5C5C5C] dark:text-white">{t("TIME_ZONE")}</span>
+                      <strong>{helpers.ternaryCondition(item?.createdAt, dayjs(item?.createdAt).format("D MMM YYYY"), "N/A")}</strong>
+                    </figcaption>
+                  </div>
+                </li>
+                <li className="mb-4">
+                  <div className="flex items-center">
+                    <figure className="bg-[#F2F2F2] w-[42px] h-[41px] rounded-full flex items-center justify-center mr-3">
+                      <img src={bonusIcon} alt="" />
+                    </figure>
+                    <figcaption className="w-[calc(100%_-_41px)]">
+                      <span className="block text-[#5C5C5C] dark:text-white">{t("O_STATUS")}</span>
+                      <strong className="dark:text-slate-400">{helpers.ternaryCondition(item?.status, item?.status, "N/A")}</strong>
                     </figcaption>
                   </div>
                 </li>
@@ -388,9 +392,9 @@ const UserView = () => {
               <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{t('GOVERNMENT_ID_PDF')}</label>
               <figure className="inline-block overflow-hidden border mb-3 w-full h-[200px]">
                 <OImage
-                  src={item?.kycRecord?.docImageFront || defaultImage}
+                  src={item?.document || defaultImage}
                   className="w-full h-full object-contain inline  cursor-pointer"
-                  onClick={() => handleShowImage(item?.kycRecord?.docImageFront)}
+                  onClick={() => handleShowImage(item?.document)}
                   alt=""
                   fallbackUrl={defaultImage}
                 />
@@ -398,15 +402,15 @@ const UserView = () => {
               {renderApprovalStatus()}
             </div>
 
-            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white text-center">or</label>
+            <span className="block mb-2 text-sm font-medium text-gray-900 dark:text-white text-center">or</span>
 
             <div className="relative">
               <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{t('FRONT_PROOF_ID_IMAGE')}</label>
               <figure className="inline-block overflow-hidden border mb-3 w-full h-[200px]">
                 <OImage
-                  src={item?.kycRecord?.docImageFront || defaultImage}
+                  src={item?.frontPicture || defaultImage}
                   className="w-full h-full object-contain inline  cursor-pointer"
-                  onClick={() => handleShowImage(item?.kycRecord?.docImageFront)}
+                  onClick={() => handleShowImage(item?.frontPicture)}
                   alt=""
                   fallbackUrl={defaultImage}
                 />
@@ -417,82 +421,87 @@ const UserView = () => {
               <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{t('BACK_PROOF_ID_IMAGE')}</label>
               <figure className="inline-block overflow-hidden border mb-3 w-full h-[200px]">
                 <OImage
-                  src={item?.kycRecord?.docImageBack || defaultImage}
+                  src={item?.backPicture || defaultImage}
                   className="w-full h-full object-contain inline cursor-pointer"
                   alt=""
-                  onClick={() => handleShowImage(item?.kycRecord?.docImageBack)}
+                  onClick={() => handleShowImage(item?.backPicture)}
                   fallbackUrl={defaultImage}
                 />
               </figure>
               {renderApprovalStatus()}
             </div>
             {kycSection}
-            <span className="block text-center mt-4">
+            {/* <span className="block text-center mt-4">
               {t("KYC_VERIFIED")}: <b>{helpers.ternaryCondition(item?.kycStatus, 'Yes', 'No')}</b>
-            </span>
+            </span> */}
           </div>
+
           <div className="border border-1 border-[#E1DEDE] rounded-md p-6 ps-3">
+            <span className="block text-center pb-3 font-bold ">{t("GAME_STATICS")}</span>
             <ul>
               <div>
                 <li className="mb-4">
                   <div className="flex items-center">
+                    <figure className="bg-[#F2F2F2] w-[42px] h-[41px] rounded-full flex items-center justify-center mr-3">
+                      <img src={cityIcon} alt="" />
+                    </figure>
                     <figcaption className="w-[calc(100%_-_41px)]">
-                      <span className="block text-[#5C5C5C] font-bold mb-4">{t("O_PORTFOLIO")}</span>
-
-                      <div className="relative mt-4 ">
-                        <figure className="inline-block overflow-hidden border mb-3 w-full sm:max-w-[300px] md:max-w-[400px] lg:max-w-[480px] h-auto p-2 w-[480px] overflow-x-auto relative rounded-lg border">
-                          <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white p-2 mt-3">
-                            {t('PLAYER_CARD')}
-                          </label>
-
-                          <div className="flex flex-col md:flex-row justify-between mb-4">
-                            <PlayerCardInfo label={t('O_INVESTMENT')} value={helpers.formattedAmount(100)} />
-                            <PlayerCardInfo label={t('TOTAL_SELLING_CARD')} value={helpers.formattedAmount(100)} />
-                            <PlayerCardInfo label={t('RETURN_SELLING_CARD')} value={helpers.formattedAmount(100)} />
-                          </div>
-
-                          <div className="flex flex-col md:flex-row justify-between">
-                            <PlayerCardInfo label={t('CARD_BOUGHT')} value={helpers.formattedAmount(100)} />
-                            <PlayerCardInfo label={t('CARD_SOLD')} value={helpers.formattedAmount(100)} />
-                            <PlayerCardInfo label={t('CARD_HOLD')} value={helpers.formattedAmount(100)} />
-                          </div>
-                        </figure>
-                      </div>
-
-                      <div className="relative mt-4">
-                        <figure className="inline-block overflow-hidden border mb-3 w-full sm:max-w-[300px] md:max-w-[400px] lg:max-w-[480px] h-auto p-2 w-[480px] overflow-x-auto relative rounded-lg border">
-                          <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white p-2 mt-3">{t('PLAYER_STOCK')}</label>
-
-                          <div className="flex justify-between mb-9">
-                            <StockCardInfo label1={t('O_INVESTMENT')} value1={helpers.formattedAmount(100)} />
-                            <StockCardInfo label1={t('TOTAL_SELLING_STOCK')} value1={helpers.formattedAmount(100)} />
-                            <StockCardInfo label1={t('RETURN_SELLING_STOCK')} value1={helpers.formattedAmount(100)} />
-                          </div>
-
-                          <div className="flex justify-between">
-                            <StockCardInfo label1={t('STOCK_BOUGHT')} value1={helpers.formattedAmount(100)} />
-                            <StockCardInfo label1={t('STOCK_SOLD')} value1={helpers.formattedAmount(100)} />
-                            <StockCardInfo label1={t('STOCK_HOLD')} value1={helpers.formattedAmount(100)} />
-                          </div>
-                        </figure>
-                      </div>
-
+                      <span className="block text-[#5C5C5C]">{t("TOTAL_NO_OF_GAME_PLAYED")}</span>
+                      <strong>{helpers.ternaryCondition(item?.gameStatic?.totalPlay, item?.gameStatic?.totalPlay, "N/A")}</strong>
                     </figcaption>
                   </div>
                 </li>
               </div>
+              <div>
+                <li className="mb-4">
+                  <div className="flex items-center">
+                    <figure className="bg-[#F2F2F2] w-[42px] h-[41px] rounded-full flex items-center justify-center mr-3">
+                      <img src={locationIcon} alt="" />
+                    </figure>
+                    <figcaption className="w-[calc(100%_-_41px)]">
+                      <span className="block text-[#5C5C5C]">{t("TOTAL_NO_OF_GAME_WON")}</span>
+                      <strong>{helpers.ternaryCondition(item?.gameStatic?.totalLoss, item?.gameStatic?.totalLoss, "N/A")}</strong>
+                    </figcaption>
+                  </div>
+                </li>
+              </div>
+              <div>
+                <li className="mb-4">
+                  <div className="flex items-center">
+                    <figure className="bg-[#F2F2F2] w-[42px] h-[41px] rounded-full flex items-center justify-center mr-3">
+                      <img src={dobIcon} alt="" />
+                    </figure>
+                    <figcaption className="w-[calc(100%_-_41px)]">
+                      <span className="block text-[#5C5C5C]">{t("TOTAL_NO_OF_GAME_LOSE")}</span>
+                      <strong>{helpers.ternaryCondition(item?.gameStatic?.totalDraw, item?.gameStatic?.totalDraw, "N/A")}</strong>
+                    </figcaption>
+                  </div>
+                </li>
+              </div>
+              <div>
+                <li className="mb-4">
+                  <div className="flex items-center">
+                    <figure className="bg-[#F2F2F2] w-[42px] h-[41px] rounded-full flex items-center justify-center mr-3">
+                      <img src={locationIcon} alt="" />
+                    </figure>
+                    <figcaption className="w-[calc(100%_-_41px)]">
+                      <span className="block text-[#5C5C5C]">{t("TOTAL_NO_OF_GAME_DRAWN")}</span>
+                      <strong>{helpers.ternaryCondition(item?.gameStatic?.totalWon, item?.gameStatic?.totalWon, "N/A")}</strong>
+                    </figcaption>
+                  </div>
+                </li>
+              </div>
+
             </ul>
           </div>
-
-
-
 
 
         </div>
       </div>
 
-
       {showBanner && showImage && <ShowImage handleShowImage={handleShowImage} showImage={showImage} />}
+      {showFreeModel && <FreezeBalancePopup handleFreeModal={handleFreeModal}/>}
+
     </div>
   );
 };

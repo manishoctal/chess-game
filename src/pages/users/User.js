@@ -10,11 +10,15 @@ import { useTranslation } from "react-i18next";
 import PageSizeList from "components/PageSizeList";
 import helpers from "utils/helpers";
 import { useLocation } from "react-router-dom";
-import SearchWithOption from '../../components/reusable/SearchableDropdown'
-import { BiReset } from "react-icons/bi";
+import { BiDownload, BiReset } from "react-icons/bi";
+import OSearch from "components/reusable/OSearch";
+import { GoDownload } from "react-icons/go";
 function User() {
   const { t } = useTranslation();
   const location = useLocation();
+  const [searchTerm, setSearchTerm] = useState("");
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
+  const [isInitialized, setIsInitialized] = useState(false);
   const { logoutUser, user, updatePageName } = useContext(AuthContext);
   const [paginationObj, setPaginationObj] = useState({
     page: 1,
@@ -24,18 +28,19 @@ function User() {
 
   const [users, setAllUser] = useState([]);
   const [userType] = useState(location?.state?.userType ? location?.state?.userType : "tourist");
-
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [isDelete] = useState(false);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
-  const [isInitialized, setIsInitialized] = useState(false);
+  const [activeTab, setActiveTab] = useState('Tab1');
 
+  const handleTabClick = (tab) => {
+    setActiveTab(tab);
+  };
   const [filterData, setFilterData] = useState({
-    isKYCVerified: "",
-    category: "",
+    kyc: undefined,
+    category: undefined,
     userId: "",
+    searchKey: "",
     startDate: "",
     endDate: "",
     isReset: false,
@@ -46,25 +51,33 @@ function User() {
     sortType: "desc",
   });
 
-  // get all user start
+
+  const userResult = helpers?.ternaryCondition(activeTab === "Tab1", false, true)
+
   const getAllUser = async () => {
     try {
-      const { category, startDate, endDate, searchkey, isKYCVerified, userId } = filterData;
+      const { category, startDate, endDate, searchKey, kyc, userId } = filterData;
 
       const payload = {
         page,
         pageSize: pageSize,
-        status: category,
         startDate: startDate ? dayjs(startDate).format("YYYY-MM-DD") : null,
         endDate: endDate ? dayjs(endDate).format("YYYY-MM-DD") : null,
-        keyword: searchkey?.trim(),
+        keyword: helpers.normalizeSpaces(searchKey) || null,
         sortKey: sort?.sortBy,
         sortType: sort?.sortType,
-        isKYCVerified,
-        userId: userId || null
+        userId: userId || null,
       };
 
-      const path = apiPath.getUsers;
+      if (category && category !== undefined) {
+        payload.status = category;
+      }
+
+      if (kyc && kyc !== undefined) {
+        payload.kyc = kyc;
+      }
+
+      const path = `${apiPath.getUsers}/${userResult}`;
       const result = await apiGet(path, payload);
       if (result?.data?.success) {
         const response = result?.data?.results;
@@ -87,9 +100,10 @@ function User() {
     }
   };
 
+
   useEffect(() => {
     getAllUser();
-  }, [page, filterData, sort, pageSize]);
+  }, [page, filterData, sort, pageSize, activeTab]);
 
   // get all user end
   const dynamicPage = (e) => {
@@ -101,10 +115,10 @@ function User() {
     const newPage = event.selected + 1;
     setPage(newPage);
   };
+
   const handleUserView = () => {
     updatePageName(` ${t("VIEW") + " " + t("USER_MANAGER")}`);
   };
-
 
 
   useEffect(() => {
@@ -114,8 +128,8 @@ function User() {
   const handleReset = () => {
     setFilterData({
       isKYCVerified: "",
-      category: "",
-      kycStatus: "",
+      category: undefined,
+      kyc: "",
       userId: "",
       startDate: "",
       endDate: "",
@@ -140,72 +154,67 @@ function User() {
   };
 
 
-  const [filteredItems, setFilteredItems] = useState([]);
-  const [dropdownVisible, setDropdownVisible] = useState(false);
-
-  // debounce search start
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      setDebouncedSearchTerm(searchTerm?.trim());
-    }, 200);
-    return () => {
-      clearTimeout(timeoutId);
-    };
-  }, [searchTerm]);
   const statusPage = (e) => {
-    setFilterData({
-      ...filterData,
-      category: e.target.value,
+    const selectedValue = e.target.value;
+
+    setFilterData((prevData) => ({
+      ...prevData,
+      category: selectedValue ? selectedValue : undefined,
       isFilter: true,
       isReset: false,
+    }));
+    setPage(1);
+  };
+
+  const kycStatus = (e) => {
+    setFilterData({
+      ...filterData,
+      isFilter: true,
+      isReset: false,
+      kyc: e.target.value
     });
     setPage(1);
   };
-  const [isSelected, setIsSelected] = useState(false)
-  // debounce search start
 
-
-
-  // search option start
-  const handleSearchOption = async (event) => {
-    const value = event;
-    if (value === '') {
-      setFilteredItems([]);
-      setDropdownVisible(false);
-      setFilterData({...filterData, userId: ''});
-    } else {
-      try {
-
-        const payload = {
-          keyword: event?.toLowerCase()
-        };
-        const path = apiPath.searchUsers;
-        const result = await apiGet(path, payload);
-        if (result?.data?.success) {
-          const resultData = result?.data?.results
-          setFilteredItems(resultData);
-        }
-
-      } catch (error) {
-        console.error("error ", error);
-      }
-      setDropdownVisible(true);
-    }
-  };
-
-  // search option end
 
   useEffect(() => {
     if (!isInitialized) {
       setIsInitialized(true);
-    } else if ((searchTerm || !filterData?.isReset) && !isSelected) {
-      handleSearchOption(debouncedSearchTerm)
+    } else if (searchTerm || !filterData?.isReset) {
+      setFilterData({
+        ...filterData,
+        isReset: false,
+        searchKey: debouncedSearchTerm || "",
+        isFilter: !!debouncedSearchTerm,
+      });
       setPage(1);
     }
   }, [debouncedSearchTerm]);
 
-  // debounce search end
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      setDebouncedSearchTerm(searchTerm);
+    }, 500);
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, [searchTerm]);
+
   const manager = user?.permission?.find((e) => e.manager === "user_manager");
+
+  const onCsvDownload = async () => {
+    
+    try {
+      const path = apiPath.downloadFeedback;
+      const result = await apiGet(path);
+      if (result?.data?.success) {
+        helpers.downloadFile(result?.data?.results?.filePath);
+      }
+    } catch (error) {
+      console.error("error in get all dashboard list==>>>>", error.message);
+    }
+  };
+
 
   return (
     <div>
@@ -213,28 +222,59 @@ function User() {
         <div className="px-3 py-4">
 
           <div className="bg-white border border-[#E9EDF9] rounded-lg dark:bg-slate-800 dark:border-[#ffffff38]">
-            <form className="border-b border-b-[#E3E3E3]  px-4 py-3 pt-5 flex flex-wrap justify-between">
+            <form className="border-b border-b-[#E3E3E3]  px-4 py-3 pt-5 flex flex-wrap">
+              <div className="flex items-center md:justify-end mb-3">
+                <label htmlFor="default-search" className="mb-2 font-medium text-sm  text-gray-900 sr-only">
+
+                  {t("USER_ID_EMAIL_MOBILE")}
+                </label>
+                <div className="flex">
+                  <div className="relative">
+                    <OSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm} placeholder={t("USER_ID_EMAIL_MOBILE")} />
+                  </div>
+                </div>
+              </div>
               <div className="flex flex-wrap items-center">
                 <div className="flex items-center lg:pt-0 pt-3 justify-center">
                   <ODateRangePicker handleDateChange={handleDateChange} isReset={filterData?.isReset} setIsReset={setFilterData} />
+                  {
+                    !userResult && <div className="flex items-center mb-3 ml-3">
+                      <select
+                        id="countries"
+                        type="password"
+                        name="floating_password"
+                        className="block p-2 w-full text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer"
+                        placeholder=""
+                        value={filterData?.category}
+                        onChange={statusPage}
+                      >
+                        <option value="">
+                          {t("O_ALL")}
+                        </option>
+                        <option value="active">{t("O_ACTIVE")}</option>
+                        <option value="inactive">{t("O_INACTIVE")}</option>
+                      </select>
+                    </div>
+                  }
+
 
                   <div className="flex items-center mb-3 ml-3">
                     <select
                       id="countries"
-                      type="password"
                       name="floating_password"
-                      className="block p-2 w-full text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer"
+                      className="block p-2 min-w-[100px] text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer"
                       placeholder=" "
-                      value={filterData?.category}
-                      onChange={statusPage}
+                      value={filterData?.kyc}
+                      onChange={kycStatus}
                     >
-                      <option defaultValue value="">
-                        {t("O_ALL")}
+                      <option value="">
+                        {t("MERCHANT_KYC")}
                       </option>
-                      <option value="active">{t("O_ACTIVE")}</option>
-                      <option value="inactive">{t("O_INACTIVE")}</option>
+                      <option value="1">{t("O_YES")}</option>
+                      <option value="0">{t("O_NO")}</option>
                     </select>
                   </div>
+
                   <button
                     type='button'
                     onClick={() => handleReset()}
@@ -247,18 +287,32 @@ function User() {
 
                 </div>
               </div>
-              <div className="flex items-center md:justify-end px-4">
-                <label htmlFor="default-search" className="mb-2 font-medium text-sm  text-gray-900 sr-only">
 
-                  {t("USER_ID_EMAIL_MOBILE")}
-                </label>
-                <div className="flex">
-                  <div className="relative">
-                    <SearchWithOption searchTerm={searchTerm} setIsSelected={setIsSelected} setFilterData={setFilterData} filterData={filterData} setSearchTerm={setSearchTerm} filteredItems={filteredItems} dropdownVisible={dropdownVisible} setDropdownVisible={setDropdownVisible} setFilteredItems={setFilteredItems} placeholder={t('USER_ID_EMAIL_MOBILE')} />
-                  </div>
-                </div>
-              </div>
             </form>
+
+          <div className="flex items-center justify-between">
+          <div className="flex items-center  py-5 px-4">
+              <button
+                className={` mr-4 text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150 ${activeTab === 'Tab1' ? 'bg-gradBlack' : 'bg-gradientTo'}`}
+                onClick={() => handleTabClick('Tab1')}
+              >
+                {t("USERS")}
+              </button>
+              <button
+                className={` text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 ease-linear transition-all duration-150 ${activeTab === 'Tab2' ? 'bg-gradBlack' : 'bg-gradientTo'}`}
+                onClick={() => handleTabClick('Tab2')}
+              >
+                {t("DELETED_USERS")}
+              </button>
+            </div>
+            <button
+               onClick={onCsvDownload}  className={`flex items-center bg-gradientTo mr-4 text-white active:bg-emerald-600 font-normal text-sm px-6 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-1`}
+              >
+               <GoDownload size={18} className="mr-2" />
+                {t("DOWNLOAD_FEEDBACK")}
+              </button>
+          </div>
+
             <Table
               users={users}
               user={user}
@@ -271,6 +325,7 @@ function User() {
               pageSize={pageSize}
               userType={userType}
               manager={manager}
+              userResult={userResult}
             />
             <div className="flex justify-between">
               <PageSizeList dynamicPage={dynamicPage} pageSize={pageSize} />
@@ -283,7 +338,7 @@ function User() {
       </div>
 
 
-   
+
 
 
     </div>

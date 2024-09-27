@@ -17,6 +17,8 @@ import { preventMaxInput } from "utils/validations";
 import helpers from "utils/helpers";
 import DepositAmount from "./DepositAmount";
 import { GrUpdate } from "react-icons/gr";
+import { handleKeyDownCashIn, handleNumericInput, preventMaxHundred, preventText } from "utils/reusableMethods";
+import Commission from "./Commission";
 
 const Settings = () => {
   const { logoutUser, user, updatePageName } = useContext(AuthContext);
@@ -29,7 +31,7 @@ const Settings = () => {
     watch,
     formState: { isDirty, errors },
   } = useForm({
-    mode: "onBlur",
+    mode: "onChange",
     shouldFocusError: true,
     defaultValues: {
     },
@@ -74,7 +76,7 @@ const Settings = () => {
       const res = await apiGet(pathObj.getSettings);
       if (res) {
         reset(res?.data?.results);
-
+        console.log("res", res)
       }
     } catch (error) {
       console.error("error:", error);
@@ -93,6 +95,9 @@ const Settings = () => {
   useEffect(() => {
     updatePageName(t("SETTINGS"));
   }, []);
+
+  const urlPattern = /^(http(s):\/\/.)[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)$/;
+
 
   const validationFields = {
 
@@ -121,81 +126,72 @@ const Settings = () => {
       min: { value: 1, message: t("MINIMUM_VALUE_MUST_IS_1"), },
     },
 
-    playerCardPlatfromFee: {
+    platformFee: {
       required: { value: true, message: t("PLEASE_ENTER_PLAYER_CARD_PLATFORM_FEE"), },
-      maxLength: { value: 40, message: t("MAX_LIMIT_IS_40_CHARACTERS"), },
-      min: { value: 1, message: t("MINIMUM_VALUE_MUST_IS_1"), },
+      min: {
+        value: 0.01,
+        message: 'Minimum value must is 0.01.'
+      }
     },
 
-    stockPlatfromFee: {
-      required: { value: true, message: t("PLEASE_ENTER_STOCK_PLATFORM_FEE"), },
-      pattern: { value: /^\d+$/, message: t("ONLY_DIGITS_ARE_ALLOWED"), },
-      maxLength: { value: 40, message: t("MAX_LIMIT_IS_40_CHARACTERS"), },
-      min: { value: 1, message: t("MINIMUM_VALUE_MUST_IS_1"), },
+    gstTimeDeposit: {
+      required: { value: true, message: t("PLEASE_ENTER_GST"), },
+      min: {
+        value: 0.01,
+        message: 'Minimum value must is 0.01.'
+      }
     },
-    questionTradePlatformKey: {
-      required: { value: true, message: t("PLEASE_ENTER_QUESTION_TRADE_FEE"), },
-      maxLength: { value: 40, message: t("MAX_LIMIT_IS_40_CHARACTERS"), },
-      min: { value: 1, message: t("MINIMUM_VALUE_MUST_IS_1"), },
-    },
-    numberOfPlayerStocks: {
-      required: { value: true, message: t("PLEASE_ENTER_NUMBER_OF_PLAYER_STOCK"), },
-      maxLength: { value: 40, message: t("MAX_LIMIT_IS_40_CHARACTERS"), },
-      min: { value: 1, message: t("MINIMUM_VALUE_MUST_IS_1"), },
-    },
-    numberOfPlayerCards: {
-      required: { value: true, message: t("PLEASE_ENTER_NUMBER_OF_PLAYER_CARD"), },
-      maxLength: { value: 40, message: t("MAX_LIMIT_IS_40 CHARACTERS"), },
-      min: { value: 1, message: t("MINIMUM_VALUE_MUST_IS_1"), },
-    },
-    penaltyStockPercentage: {
-      required: { value: true, message: t("PLEASE_ENTER_PENALTY_OF_STOCK_PERCENTAGE"), },
-      maxLength: { value: 3, message: t("MAX_LIMIT_IS_3_CHARACTERS"), },
-      min: { value: 1, message: t("MINIMUM_VALUE_MUST_IS_1"), },
-    },
-    maximumStockPurchase: {
-      required: { value: true, message: t("PLEASE_ENTER_MAXIMUM_STOCK_CAN_PURCHASE"), },
-      maxLength: { value: 3, message: t("MAX_LIMIT_IS_3_CHARACTERS"), },
-      min: { value: 1, message: t("MINIMUM_VALUE_MUST_IS_1"), },
-    },
-    maximumCardPurchase: {
-      required: { value: true, message: t("PLEASE_ENTER_MAXIMUM_CARD_CAN_PURCHASE"), },
-      maxLength: { value: 3, message: t("MAX_LIMIT_IS_3 CHARACTERS"), },
-      min: { value: 1, message: t("MINIMUM_VALUE_MUST_IS_1"), },
-    },
+
     tds: {
       required: { value: true, message: t("PLEASE_ENTER_TDS"), },
-      maxLength: { value: 3, message: t("MAX_LIMIT_IS_3_CHARACTERS"), },
-      min: { value: 1, message: t("MINIMUM_VALUE_MUST_IS_1"), },
-    },
-    maximumSharesForTrade: {
-      required: { value: true, message: t("PLEASE_ENTER_MAXIMUM_SHARE_FOR_TRADE"), },
-      maxLength: { value: 3, message: t("MAX_LIMIT_IS_3 CHARACTERS"), },
-      min: { value: 1, message: t("MINIMUM_VALUE_MUST_IS_1"), },
-      valueAsNumber: true,
-    },
-    minimumSharesForTrade: {
-      required: { value: true, message: t("PLEASE_ENTER_MINIMUM_SHARE_FOR_TRADE"), },
-      maxLength: { value: 3, message: t("MAX_LIMIT_IS_3 CHARACTERS"), },
-      min: { value: 1, message: t("MINIMUM_VALUE_MUST_IS_1"), },
-      valueAsNumber: true,
-      validate: (value) => value < watch('maximumSharesForTrade') || t("MIN_SHARE_FOR_TRADE_MUST_BE_LESS"),
+      min: {
+        value: 0.01,
+        message: 'Minimum value must is 0.01.'
+      }
     },
 
-    playerCardT20: {
-      required: { value: true, message: t("PLEASE_ENTER_PLAYER_CARD_T20"), },
-      maxLength: { value: 3, message: t("MAX_LIMIT_IS_3_CHARACTERS"), },
-      min: { value: 1, message: t("MINIMUM_VALUE_MUST_IS_1"), },
+    youtube: {
+      required: {
+        value: true,
+        message: t("PLEASE_ENTER_YOUTUBE_URL"),
+      },
+
+      pattern: {
+        value: urlPattern,
+        message: t("PLEASE_ENTER_VALID_YOUTUBE_URL"),
+      },
     },
-    playerCardOdi: {
-      required: { value: true, message: t("PLEASE_ENTER_PLAYER_CARD_ODI"), },
-      maxLength: { value: 3, message: t("MAX_LIMIT_IS_3_CHARACTERS"), },
-      min: { value: 1, message: t("MINIMUM_VALUE_MUST_IS_1"), },
+    instagram: {
+      required: {
+        value: true,
+        message: t("PLEASE_ENTER_INSTAGRAM_URL"),
+      },
+      pattern: {
+        value: urlPattern,
+        message: t("PLEASE_ENTER_VALID_INSTAGRAM_URL"),
+      },
     },
-    playerCardTests: {
-      required: { value: true, message: t("PLEASE_ENTER_PLAYER_CARD_TEST"), },
-      maxLength: { value: 3, message: t("MAX_LIMIT_IS_3_CHARACTERS"), },
-      min: { value: 1, message: t("MINIMUM_VALUE_MUST_IS_1"), },
+
+    twitter: {
+      required: {
+        value: true,
+        message: t("PLEASE_ENTER_TWITTER_URL"),
+      },
+      pattern: {
+        value: urlPattern,
+        message: t("PLEASE_ENTER_VALID_TWITTER_URL"),
+      },
+    },
+
+    linkedin: {
+      required: {
+        value: true,
+        message: t("PLEASE_ENTER_LINKEDIN_URL"),
+      },
+      pattern: {
+        value: urlPattern,
+        message: t("PLEASE_ENTER_VALID_LINKEDIN_URL"),
+      },
     },
   }
 
@@ -204,53 +200,21 @@ const Settings = () => {
   return (
     <section className="">
       <div className="sm:px-8 px-4 py-4 ">
-        <div className="border  xl:w-full">
+        <div className="border  xl:w-full mb-5">
           <header className="border-b  py-2 px-4 bg-gray-100 rounded-t-md dark:bg-gray-800 ">
             <div className="font-semibold dark:text-white">{t("SETTINGS")}</div>
           </header>
           <div className="bg-white py-6 px-4  rounded-b-md dark:bg-gray-800 dark:text-white">
-            <main className="justify-center flex-wrap grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1  gap-4">
+            <main className="justify-center flex-wrap grid lg:grid-cols-1 md:grid-cols-3 sm:grid-cols-2 grid-cols-1  gap-4">
 
-              <div className="border border-1  border-[#E1DEDE] rounded-md p-4">
-                <span className="block text-center p-2 text-sm font-bold bg-gray-100">{t("ADMIN_SETTING")}</span>
-                <div className="bg-white rounded-b-md dark:bg-gray-800 dark:text-white mt-4">
-                  <div className="flex justify-center mb-3">
-                    <div className="relative w-24 h-24 mb-4 sm:mb-0">
-                      <OImage
-                        src={pic}
-                        fallbackUrl="/images/user.png"
-                        className="w-full h-full border rounded-full"
-                        alt=""
-                      />
-                    </div>
-                  </div>
-                  <div className="grid lg:grid-cols-1 xl:grid-cols-1 2xl:grid-cols-2  md:grid-cols-2 sm:grid-cols-1 grid-cols-1 gap-2">
-                    {(manager?.add || user?.role === "admin") && (
-                      <Link to="/change-password"
-                        title={t("CHANGE_PASSWORD")}
-                        className="mt-4 sm:mt-0 px-1 text-center  text-white bg-gradientTo hover:bg-DarkBlue cursor-pointer  font-normal active:bg-slate-100 text-sm py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150"
-                      >
-                        {t("CHANGE_PASSWORD")}
-                      </Link>
-                    )}
-                    <button
-                      type="button"
-                      onClick={() => handleUserView()}
-                      title={t("VIEW_LOGIN_CREDENTIALS")}
-                      className="mt-4 sm:mt-0 text-white bg-gradientTo hover:bg-DarkBlue cursor-pointer  font-normal active:bg-slate-100 text-sm px-1 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150"
-                    >{t("VIEW_LOGIN_CREDENTIALS")}</button>
-                  </div>
+              <div className="grid grid-cols-3 gap-x-5 border p-5 rounded-md">
 
-                  <main className="flex justify-center items-center flex-wrap grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mt-6"></main>
-                </div>
-
-
-                <div className="relative z-0 mb-6 w-full group mt-4">
+                <div className="mb-4">
                   <OInputField
                     wrapperClassName="relative z-0  w-full group"
                     type="text"
-                    inputLabel={<>{t("ADMIN_EMAIL_ADDRESS")}</>}
-                    id="adminEmail"
+                    // inputLabel={<>{t("ADMIN_EMAIL_ADDRESS")}</>}
+                    // id="adminEmail"
                     maxLength={50}
                     autoComplete="off"
                     onInput={(e) => preventMaxInput(e, 50)}
@@ -261,189 +225,171 @@ const Settings = () => {
                   <ErrorMessage message={errors?.adminEmail?.message} />
                 </div>
 
-                <ReusableInputField
-                  label={t("MIN_WITHDRAWAL_AMOUNT_TO_BANK")}
-                  id="minWithdrawalLimit"
-                  register={register}
-                  errors={errors}
-                  manager={manager}
-                  validationRules={validationFields?.minWithdrawalLimit}
-                />
 
-                <ReusableInputField
-                  label={t("Max_WITHDRAWAL_AMOUNT_TO_BANK")}
-                  id="maxWithdrawalLimit"
-                  register={register}
-                  errors={errors}
-                  manager={manager}
-                  validationRules={validationFields?.maxWithdrawalLimit}
-                />
-
-                <ReusableInputField
-                  label={t("REFERRAL_BONUS_FOR_TOURIST")}
-                  id="referralAmount"
-                  register={register}
-                  manager={manager}
-                  errors={errors}
-                  validationRules={validationFields?.referralAmount}
-                />
-
-              </div>
-              <div className="border border-1  border-[#E1DEDE] rounded-md p-4">
-                <div className="mb-4">
-                  <span className="block text-center text-sm p-2 font-bold bg-gray-100">{t("PLATFORM_FEE_HEADING")}</span>
+                <div className="">
+                  <OInputField
+                    wrapperClassName="relative z-0  w-full group"
+                    type="text"
+                    name="minWithdrawalLimit"
+                    inputLabel={<>{t("MIN_WITHDRAWAL_AMOUNT_TO_BANK")}</>}
+                    id="minWithdrawalLimit"
+                    autoComplete="off"
+                    onInput={(e) => preventMaxInput(e, 50)}
+                    register={register("minWithdrawalLimit", validationFields?.minWithdrawalLimit)}
+                    placeholder=" "
+                  />
+                  <ErrorMessage message={errors?.minWithdrawalLimit?.message} />
                 </div>
+
+
+                <div className="">
+                  <OInputField
+                    wrapperClassName="relative z-0  w-full group"
+                    type="text"
+                    name="maxWithdrawalLimit"
+                    inputLabel={<>{t("Max_WITHDRAWAL_AMOUNT_TO_BANK")}</>}
+                    id="maxWithdrawalLimit"
+                    autoComplete="off"
+                    onInput={(e) => preventMaxInput(e, 50)}
+                    register={register("maxWithdrawalLimit", validationFields?.maxWithdrawalLimit)}
+                    placeholder=" "
+                  />
+                  <ErrorMessage message={errors?.maxWithdrawalLimit?.message} />
+                </div>
+                {/* 
+                <div className="">
+                  <OInputField
+                    wrapperClassName="relative z-0  w-full group"
+                    type="text"
+                    name="referralAmount"
+                    inputLabel={<>{t("REFERRAL_BONUS_FOR_TOURIST")}</>}
+                    id="referralAmount"
+                    autoComplete="off"
+                    onInput={(e) => preventMaxInput(e, 50)}
+                    register={register("referralAmount", validationFields?.referralAmount)}
+                    placeholder=" "
+                  />
+                  <ErrorMessage message={errors?.referralAmount?.message} />
+                </div>
+ */}
+
+
+
                 <ReusableInputField
                   label={t("PLATFORM_FEE")}
-                  id="playerCardPlatfromFee"
+                  id="platformFee"
                   register={register}
                   manager={manager}
+                  maxLength={3}
                   errors={errors}
-                  validationRules={validationFields?.playerCardPlatfromFee}
+
+                  validationRules={validationFields?.platformFee}
                 />
 
                 <ReusableInputField
-                  label={t("PLATFORM_FEE_STOCK_PERCENTAGE")}
-                  id="stockPlatfromFee"
+                  label={t("GST_TIME_OF_DEPOSIT")}
+                  id="gstPrcentage"
                   register={register}
                   errors={errors}
                   manager={manager}
-                  validationRules={validationFields?.stockPlatfromFee}
+                  validationRules={validationFields?.gstTimeDeposit}
                 />
 
-                <ReusableInputField
-                  label={t("PLATFORM_FEE_QUESTION_TRADE")}
-                  id="questionTradePlatformKey"
-                  register={register}
-                  errors={errors}
-                  manager={manager}
-                  validationRules={validationFields?.questionTradePlatformKey}
-                />
 
                 <ReusableInputField
-                  label={t("TDS_IN_PERCENTAGE")}
-                  id="tds"
+                  label={t("TDS_TIME_OF_DEPOSIT")}
+                  id="tdsPrecentage"
                   manager={manager}
                   register={register}
                   errors={errors}
                   validationRules={validationFields?.tds}
                 />
 
-                <ReusableInputField
-                  label={t("SIGN_UP_BONUS_FOR_LOCAL")}
-                  id="signupBonus"
-                  register={register}
-                  manager={manager}
-                  errors={errors}
-                  validationRules={validationFields.signupBonus}
-                />
+                {/* <div className="">
+                  <OInputField
+                    wrapperClassName="relative z-0  w-full group"
+                    type="text"
+                    name="signUpBonus"
+                    inputLabel={<>{t("SIGN_UP_BONUS_FOR_LOCAL")}</>}
+                    id="signUpBonus"
+                    autoComplete="off"
+                    onInput={(e) => preventMaxInput(e, 50)}
+                    register={register("signUpBonus", validationFields?.signupBonus)}
+                    placeholder=" "
+                  />
+                  <ErrorMessage message={errors?.signUpBonus?.message} />
+                </div> */}
+
               </div>
-              <div className="border border-1  border-[#E1DEDE] rounded-md p-4">
+
+              <div className="grid grid-cols-4 gap-x-5 border p-5 rounded-md social-media">
                 <div className="mb-4">
-                  <span className="block text-center text-sm p-2 font-bold bg-gray-100">{t("CARD_AND_STOCK_DETAILS")}</span>
+                  <OInputField
+                    wrapperClassName="relative z-0  w-full group"
+                    type="text"
+                    inputLabel={<>{t("YOUTUBE")}</>}
+                    id="youtube"
+                    maxLength={50}
+                    autoComplete="off"
+                    onInput={(e) => preventMaxInput(e, 50)}
+                    register={register("youtube", validationFields?.youtube)}
+                    placeholder=" "
+                    disable={manager?.add === false}
+                  />
+                  <ErrorMessage message={errors?.youtube?.message} />
                 </div>
-                <ReusableInputField
-                  label={t("NUMBER_OF_PLAYER_STOCK")}
-                  id="numberOfPlayerStocks"
-                  register={register}
-                  errors={errors}
-                  manager={manager}
-                  validationRules={validationFields?.numberOfPlayerStocks}
-                />
 
-                <ReusableInputField
-                  label={t("NUMBER_OF_PLAYER_CARD")}
-                  id="numberOfPlayerCards"
-                  register={register}
-                  manager={manager}
-                  errors={errors}
-                  validationRules={validationFields?.numberOfPlayerCards}
-                />
-
-                <ReusableInputField
-                  label={t("PENALTY_OF_PERCENTAGE")}
-                  id="penaltyStockPercentage"
-                  register={register}
-                  manager={manager}
-                  errors={errors}
-                  validationRules={validationFields?.penaltyStockPercentage}
-                />
-
-                <ReusableInputField
-                  label={t("MAXIMUM_STOCK_USER_CAN_PURCHASE")}
-                  id="maximumStockPurchase"
-                  register={register}
-                  manager={manager}
-                  errors={errors}
-                  validationRules={validationFields?.maximumStockPurchase}
-                />
-
-                <ReusableInputField
-                  label={t("MAXIMUM_CARD_USER_CAN_PURCHASE")}
-                  id="maximumCardPurchase"
-                  register={register}
-                  errors={errors}
-                  manager={manager}
-                  validationRules={validationFields?.maximumCardPurchase}
-                />
-
-                {/* <ReusableInputField
-                  label={t("TDS_IN_PERCENTAGE")}
-                  id="tds"
-                  manager={manager}
-                  register={register}
-                  errors={errors}
-                  validationRules={validationFields?.tds}
-                /> */}
-              </div>
-
-              <div className="border border-1  border-[#E1DEDE] rounded-md p-4">
                 <div className="mb-4">
-                  <span className="block text-center text-sm p-2 font-bold bg-gray-100">{t("OTHER_SETTING")}</span>
+                  <OInputField
+                    wrapperClassName="relative z-0  w-full group"
+                    type="text"
+                    inputLabel={<>{t("INSTAGRAM")}</>}
+                    id="instagram"
+                    maxLength={50}
+                    autoComplete="off"
+                    onInput={(e) => preventMaxInput(e, 50)}
+                    register={register("instagram", validationFields?.instagram)}
+                    placeholder=" "
+                    disable={manager?.add === false}
+                  />
+                  <ErrorMessage message={errors?.instagram?.message} />
                 </div>
-                <ReusableInputField
-                  label={t("MAXIMUM_SHARE_FOR_TRADE")}
-                  id="maximumSharesForTrade"
-                  register={register}
-                  errors={errors}
-                  manager={manager}
-                  validationRules={validationFields?.maximumSharesForTrade}
-                />
 
-                <ReusableInputField
-                  label={t("MINIMUM_SHARE_FOR_TRADE")}
-                  id="minimumSharesForTrade"
-                  register={register}
-                  errors={errors}
-                  manager={manager}
-                  validationRules={validationFields?.minimumSharesForTrade}
-                />
+                <div className="mb-4">
+                  <OInputField
+                    wrapperClassName="relative z-0  w-full group"
+                    type="text"
+                    inputLabel={<>{t("LINKEDIN")}</>}
+                    id="linkedin"
+                    maxLength={50}
+                    autoComplete="off"
+                    onInput={(e) => preventMaxInput(e, 50)}
+                    register={register("linkedin", validationFields?.linkedin)}
+                    placeholder=" "
+                    disable={manager?.add === false}
+                  />
+                  <ErrorMessage message={errors?.linkedin?.message} />
+                </div>
 
-                <ReusableInputField
-                  label={t("PLAYER_CARD_T20")}
-                  id="playerCardT20"
-                  manager={manager}
-                  register={register}
-                  errors={errors}
-                  validationRules={validationFields?.playerCardT20}
-                />
-                <ReusableInputField
-                  label={t("PLAYER_CARD_ODI")}
-                  id="playerCardOdi"
-                  register={register}
-                  errors={errors}
-                  manager={manager}
-                  validationRules={validationFields?.playerCardOdi}
-                />
-                <ReusableInputField
-                  label={t("PLAYER_CARD_TEST")}
-                  id="playerCardTests"
-                  register={register}
-                  errors={errors}
-                  manager={manager}
-                  validationRules={validationFields?.playerCardTests}
-                />
+                <div className="mb-4">
+                  <OInputField
+                    wrapperClassName="relative z-0  w-full group"
+                    type="text"
+                    inputLabel={<>{t("TWITTER")}</>}
+                    id="twitter"
+                    maxLength={50}
+                    autoComplete="off"
+                    onInput={(e) => preventMaxInput(e, 50)}
+                    register={register("twitter", validationFields?.twitter)}
+                    placeholder=" "
+                    disable={manager?.add === false}
+                  />
+                  <ErrorMessage message={errors?.twitter?.message} />
+                </div>
               </div>
+
+
+
             </main>
 
             {(manager?.add || user?.role === "admin") && (
@@ -460,6 +406,14 @@ const Settings = () => {
             )}
           </div>
         </div>
+        {/* <div className="border p-5 rounded-md">
+
+              <Commission/>
+     
+        </div> */}
+
+
+
       </div>
 
       {viewShowModal ? (
@@ -478,16 +432,17 @@ const Settings = () => {
 
 export default Settings;
 
-const ReusableInputField = ({ label, id, register, errors, validationRules, manager }) => (
+const ReusableInputField = ({ label, id, register, errors, validationRules, manager, onInput, onKeyDown }) => (
   <div className="relative z-0 mb-6 w-full group">
     <OInputField
       type="number"
       wrapperClassName="relative z-0  w-full group"
-      maxLength={40}
       labelType={true}
       disable={manager?.add === false}
       inputLabel={<>{label}</>}
       id={id}
+      onInput={preventMaxHundred}
+      onKeyDown={handleKeyDownCashIn}
       register={register(id, validationRules)}
       placeholder=" "
     />

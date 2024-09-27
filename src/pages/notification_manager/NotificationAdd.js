@@ -94,9 +94,11 @@ const NotificationAdd = ({ getAllNotifications, handleCategory }) => {
       };
       const path = apiPath.searchUsers;
       const result = await apiGet(path, payload);
+      console.log("result",result?.data?.results?.docs)
       if (result?.data?.success) {
-        const formattedOption = result?.data?.results?.map((res) => {
-          return { label: `${res?.name + "," + "(" + res?.email + ")"}`, value: res?._id };
+        const formattedOption = result?.data?.results?.docs.map((res) => {
+          // return { label: `${res?.fullName + "," + "(" + res?.email + ")"}`, value: res?._id };
+          return { label: `${res?.fullName }`, value: res?._id };
         });
         setUsersSuggestion(formattedOption);
       }
