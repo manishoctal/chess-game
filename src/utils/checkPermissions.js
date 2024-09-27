@@ -19,4 +19,5 @@ export const permissionsMap = Object.freeze({
   transaction_manager: "/transaction-manager",
   static_pages_management: "/static-content",
   widthDrawal_request_manager: "/withdrawal-request-manager",
+  feedback_manager: "/feedback-manager",
 });

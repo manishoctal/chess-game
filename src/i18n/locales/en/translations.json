@@ -913,6 +913,8 @@
   "PLEASE_ENTER_VALID_LINKEDIN_URL": "Please enter a valid LinkedIn URL",
   "SET_COMMISSION_TYPE": "Set commission type",
   "PERCENTAGE": "Percentage",
-  "FIXED": "Fixed"
+  "FIXED": "Fixed",
+  "PLEASE_ENTER_FREEZE_AMOUNT": "Please enter freeze amount.",
+  "ENTER_FREEZE_AMOUNT": "Enter freeze amount"
 
 }

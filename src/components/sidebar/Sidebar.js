@@ -120,6 +120,7 @@ const Sidebar = () => {
 
           <SidebarNavItem permission="community_moderator" path="/community-moderator-manager" label="community-moderator-manager" icon={<AiOutlineMail size={21} color="#a7a7a7" />} />
           <SidebarNavItem permission="email_manager" path="/email-manager" label="EMAIL_MANAGER" icon={<AiOutlineMail size={21} color="#a7a7a7" />} />
+          <SidebarNavItem permission="feedback_manager" path="/feedback-manager" label="FEEDBACK_MANAGER" icon={<AiOutlineMail size={21} color="#a7a7a7" />} />
           <SidebarNavItem permission="notification_manager" path="/notification_manager" label="NOTIFICATION_MANAGER" icon={<IoMdNotificationsOutline size={21} color="#a7a7a7" />} />
           <SidebarNavItem permission="static_pages_management" path="/static-content" label="NAV_STATIC_CONTENTS" imgSrc={manageStaticContents} />
           <SidebarNavItem permission="FAQ" path="/faqs" label="NAV_FAQS" icon={<FaRegQuestionCircle size={21} color="#a7a7a7" />} />

@@ -42,7 +42,7 @@ const Settings = () => {
   const [viewShowModal, setViewShowModal] = useState(false);
   const [isAmountModal, setIsAmountModal] = useState(false);
   const notification = useToastContext();
-
+  const [saveSettingData,setSaveSettingData]=useState("")
 
   // change setting function start
   const handleSubmitForm = async (data) => {
@@ -77,6 +77,7 @@ const Settings = () => {
       if (res) {
         reset(res?.data?.results);
         console.log("res", res)
+        setSaveSettingData(res?.data?.results)
       }
     } catch (error) {
       console.error("error:", error);
@@ -406,11 +407,11 @@ const Settings = () => {
             )}
           </div>
         </div>
-        {/* <div className="border p-5 rounded-md">
+        <div className="border p-5 rounded-md">
 
-              <Commission/>
+              <Commission saveSettingData={saveSettingData}/>
      
-        </div> */}
+        </div>
 
 
 
