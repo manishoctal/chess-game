@@ -12,6 +12,7 @@ import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import movePng from "../../assets/images/move.png";
 
 const Table = ({ FAQs, getAllFAQ, handelEdit, paginationObj, manager, pageSize, sort, setSort, setFAQS }) => {
+
   const { t } = useTranslation();
   const { user } = useContext(AuthContext);
   const notification = useToastContext();
@@ -164,13 +165,15 @@ const Table = ({ FAQs, getAllFAQ, handelEdit, paginationObj, manager, pageSize, 
                                 )}
 
                                 {helpers.andOperator(
-                                  manager?.delete || user?.role === "admin",
+                                  manager?.add || user?.role === "admin",
                                   <li onClick={(e) => helpers.alertFunction(`Are you sure want to delete '${item.title}'?`, item, handelDelete, true)} className="px-2 py-2 hover:bg-white hover:text-gradientTo">
                                     <button title={t("DELETE_FAQS")}>
                                       <AiFillDelete className="w-5 h-5 text-red-600" />{" "}
                                     </button>
                                   </li>
                                 )}
+
+                                
                               </ul>
                             </div>
                           </td>

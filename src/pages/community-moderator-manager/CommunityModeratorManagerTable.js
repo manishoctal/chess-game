@@ -30,7 +30,7 @@ const CommunityModeratorManagerTable = ({ allCommunity, paginationObj, sort, set
               <ONotificationTableHead sort={sort} setSort={setSort} name="Community" fieldName="community" classTd={"justify-center"} />
               <ONotificationTableHead sort={sort} setSort={setSort} name="Status" fieldName="status" classTd={"justify-center"} />
               <ONotificationTableHead sort={sort} setSort={setSort} name="Created At" fieldName="createdAt" classTd={"justify-center"} />
-              {(manager?.add || manager?.edit) && <OBadgesTableHead sort={sort} setSort={setSort} name="O_STATUS" fieldName="status" classTd={" flex justify-center"} />}
+              {/* {(manager?.add || manager?.edit) && <OBadgesTableHead sort={sort} setSort={setSort} name="O_STATUS" fieldName="status" classTd={" flex justify-center"} />} */}
               <th scope="col" className="py-3 px-6 text-center">
                 {t("O_ACTION")}
               </th>

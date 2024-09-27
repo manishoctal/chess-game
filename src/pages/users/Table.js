@@ -36,7 +36,7 @@ const Table = ({
   const [isAmountModal, setIsAmountModal] = useState(false);
   const [showReportPopup, setShowReportPopup] = useState(false);
   const [showReviewPopup, setShowReviewPopup] = useState(false);
-  const [reportItem,setReportItem]=useState("")
+  const [reportItem, setReportItem] = useState("")
 
 
 
@@ -52,10 +52,10 @@ const Table = ({
     setShowReportPopup(!showReportPopup)
   }
 
- const handleShorReviewToggle = (itemReview) =>{
-  setReportItem(itemReview?._id)
-  setShowReviewPopup(!showReviewPopup)
- }
+  const handleShorReviewToggle = (itemReview) => {
+    setReportItem(itemReview?._id)
+    setShowReviewPopup(!showReviewPopup)
+  }
 
   const handelStatusChange = async (item) => {
     try {
@@ -171,7 +171,7 @@ const Table = ({
           >
             <div className="relative">
               <FaFlag className="cursor-pointer w-5 h-5 text-slate-600 dark:hover:text-white hover:text-blue-700" />{" "}
-              <span className="w-5 h-5 bg-black text-white rounded-full flex items-center justify-center text-[10px] absolute top-[-8px] right-[-7px]">10</span>
+              <span className="w-5 h-5 bg-black text-white rounded-full flex items-center justify-center text-[10px] absolute top-[-8px] right-[-7px]">{helpers.ternaryCondition(item?.reportsCount, item?.reportsCount, "0")}</span>
             </div>
           </button>
 
@@ -180,7 +180,7 @@ const Table = ({
             className="px-2 py-2" onClick={() => handleShorReviewToggle(item)}
           >
             <div className="relative">
-            <MdFeedback className="cursor-pointer w-5 h-5 text-slate-600 dark:hover:text-white hover:text-blue-700" />{" "}
+              <MdFeedback className="cursor-pointer w-5 h-5 text-slate-600 dark:hover:text-white hover:text-blue-700" />{" "}
             </div>
           </button>
 
@@ -216,23 +216,35 @@ const Table = ({
       </td>
     );
 
-
+  const getRowClassName = (item) => {
+    return item && item.status === "deleted"
+      ? "text-red-600 font-bold"
+      : "bg-white";
+  };
 
   const renderTableRows = () => {
     return users?.map((item, i) => {
+      const rowClassName = getRowClassName(item);
 
       return (
-        <tr key={i}>
+        <tr key={i} className={rowClassName}>
           {renderTableCell(i + 1 + pageSize * (page - 1), "py-4 px-3 border-r border  font-medium text-gray-900  dark:text-white dark:border-[#ffffff38]")}
           {renderTableCell(getDisplayUserId(item), "bg-white py-4 px-4 border-r border  dark:border-[#ffffff38]")}
           {renderTableCell(getDisplayName(item), "bg-white py-4 px-4 border-r border  dark:border-[#ffffff38]")}
           {renderTableCell(helpers.ternaryCondition(item?.userName, item?.userName, "N/A"), "bg-white border py-2 px-4 border-r  dark:border-[#ffffff38] font-bold ")}
           {renderTableCell(helpers.ternaryCondition(item?.email, item?.email, "N/A"), "bg-white py-2 px-4 border-r border  dark:border-[#ffffff38] font-bold text-slate-900")}
-          {renderTableCell(helpers.ternaryCondition(item?.mobile, item?.mobile, "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold")}
+          {renderTableCell(
+            helpers.ternaryCondition(
+              item?.mobile,
+              `+ ${item?.countryCode || ""} ${item?.mobile}`,
+              "N/A"
+            ),
+            "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold"
+          )}
           {renderUserTypeSpecificCells(item)}
           {renderCommonTableCells(item)}
-          {renderTableCell(helpers.ternaryCondition(item?.ratingMonetary, item?.ratingMonetary, "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold")}
-          {renderTableCell(helpers.ternaryCondition(item?.ratingCasual, item?.ratingCasual, "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold")}
+          {renderTableCell(helpers.ternaryCondition(item?.ratingMonetary, item?.ratingMonetary, "0"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold")}
+          {renderTableCell(helpers.ternaryCondition(item?.ratingCasual, item?.ratingCasual, "0"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold")}
           {
             !userResult && renderStatusTableCell(item)
           }
@@ -318,7 +330,7 @@ const Table = ({
         showReportPopup && <ReportUserPopup handleReportToggle={handleReportToggle} reportItem={reportItem} />
       }
       {
-        showReviewPopup && <ReviewRatingPopup handleShorReviewToggle={handleShorReviewToggle} reportItem={reportItem}/>
+        showReviewPopup && <ReviewRatingPopup handleShorReviewToggle={handleShorReviewToggle} reportItem={reportItem} />
       }
 
 
