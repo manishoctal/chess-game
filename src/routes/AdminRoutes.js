@@ -38,6 +38,7 @@ import ViewAchievementManager from "pages/achievement_and_badges/ViewAchievement
 import GameHistoryTable from "pages/users/GameHistoryTable";
 import ViewCommunityModerator from "pages/community-moderator-manager/ViewCommunityModerator";
 import CommunityModeratorManager from "pages/community-moderator-manager/CommunityModeratorManager";
+import FeedbackManager from "pages/feedback-manager/FeedbackManager";
 const UseChange = ({ data }) => {
   const { t } = useTranslation();
   return t(data);
@@ -114,6 +115,19 @@ const AdminRoutes = {
       ),
       name: <UseChange data="SUBSCRIBED_MANAGER" />,
     },
+
+    {
+      path: "/feedback-manager",
+      element: (
+        <AuthorizationRoute>
+          {" "}
+          <FeedbackManager />
+        </AuthorizationRoute>
+      ),
+      name: <UseChange data="FEEDBACK_MANAGER" />,
+    },
+
+    
     {
       path: "/subscribed-manager/view",
       element: (

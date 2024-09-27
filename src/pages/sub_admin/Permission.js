@@ -24,6 +24,7 @@ const Permission = [
   generateManager("settings", { shownAdd: true, shownAll: true }),
   generateManager("widthDrawal_request_manager", { shownAdd: true, shownAll: true }),
   generateManager("FAQ", { shownAdd: true, shownAll: true }),
+  generateManager("feedback_manager", { shownAdd: true, shownAll: true }),
 
   // generateManager("how_to_play_manager", { shownAdd: true, shownAll: true }),
   // generateManager("offer_manager", { shownAdd: true, shownAll: true }),

@@ -85,7 +85,7 @@ const apiPath = Object.freeze({
   userReviewRating:"v1/admin/user/review",
   communityModeratror:"/v1/admin/community-moderator",
   downloadFeedback: "v1/admin/user/download-review/feedback",
-  freezeAmount:"/v1/admin/freeze-amount"
+  freezeAmount:"/v1/admin/user/freeze-amount"
 
 });
 

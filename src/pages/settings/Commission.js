@@ -2,16 +2,15 @@ import ErrorMessage from 'components/ErrorMessage';
 import OButton from 'components/reusable/OButton';
 import AuthContext from 'context/AuthContext';
 import useToastContext from 'hooks/useToastContext';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { GrUpdate } from 'react-icons/gr';
 import { apiPut } from 'utils/apiFetch';
 import apiPath from 'utils/apiPath';
-import FormValidation from 'utils/formValidation';
 import { handleKeyDownCashIn, preventMaxHundred } from 'utils/reusableMethods';
 
-const Commission = () => {
+const Commission = ({saveSettingData}) => {
     const {
         register,
         handleSubmit,
@@ -20,13 +19,7 @@ const Commission = () => {
     } = useForm({
         mode: 'onChange',
         shouldFocusError: true,
-        defaultValues: {
-            commissionType1: '',
-            commissionType2: '',
-            adminCommission1: '',
-            adminCommission2: '',
-            adminCommission3: '',
-        },
+    
     });
 
     const { t } = useTranslation();
@@ -78,7 +71,6 @@ const Commission = () => {
 
     };
 
-
     return (
         <div>
             <form onSubmit={handleSubmit(handleSubmitForm)}>
@@ -114,6 +106,7 @@ const Commission = () => {
                             <input
                                 disabled={!commissionType}
                                 type="number"
+                                value={saveSettingData?.adminCommission}
                                 placeholder="Set Admin Commission"
                                 onInput={commissionType === 'percentage' ? preventMaxHundred : null}
                                 onKeyDown={commissionType === 'percentage' ? handleKeyDownCashIn : null}
