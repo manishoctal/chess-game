@@ -213,8 +213,8 @@ const Settings = () => {
                   <OInputField
                     wrapperClassName="relative z-0  w-full group"
                     type="text"
-                    // inputLabel={<>{t("ADMIN_EMAIL_ADDRESS")}</>}
-                    // id="adminEmail"
+                    inputLabel={<>{t("ADMIN_EMAIL_ADDRESS")}</>}
+                    id="adminEmail"
                     maxLength={50}
                     autoComplete="off"
                     onInput={(e) => preventMaxInput(e, 50)}
