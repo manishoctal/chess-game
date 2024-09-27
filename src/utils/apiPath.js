@@ -35,6 +35,7 @@ const apiPath = Object.freeze({
   verficationDetail: "v1/admin/user/verification-details",
   notifications: "v1/admin/notification",
   getSettings: "/v1/admin/setting",
+  commissionSet: "/v1/admin/setting/comission",
   getUserTransaction: "/v1/admin/transaction/getUserTransaction",
   getDashboardDetails: "/v1/admin/dashboard",
   earningManagerGraph: "/v1/admin/earningManagerGraph",
@@ -83,7 +84,9 @@ const apiPath = Object.freeze({
   reportHistory:"/v1/admin/user/reports-history",
   userReviewRating:"v1/admin/user/review",
   communityModeratror:"/v1/admin/community-moderator",
-  downloadFeedback: "v1/admin/user/download-review/feedback"
+  downloadFeedback: "v1/admin/user/download-review/feedback",
+  freezeAmount:"/v1/admin/freeze-amount"
+
 });
 
 export default apiPath;

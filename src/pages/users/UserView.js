@@ -190,9 +190,9 @@ const UserView = () => {
 
  
 
-            <button onClick={()=>handleFreeModal()}className="bg-gradientTo flex gap-2 text-sm px-6 ml-3  py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2">
+            {/* <button onClick={()=>handleFreeModal()}className="bg-gradientTo flex gap-2 text-sm px-6 ml-3  py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2">
               {t("FREEZE_BALANCE")}
-            </button>
+            </button> */}
           </div>
 
         </div>
@@ -345,7 +345,7 @@ const UserView = () => {
                     </figure>
                     <figcaption className="w-[calc(100%_-_41px)]">
                       <span className="block text-[#5C5C5C] dark:text-white">{t("MONETRY_RATING")}</span>
-                      <strong className="dark:text-slate-400">{helpers.ternaryCondition(item?.ratingMonetary, item?.ratingMonetary, "N/A")}</strong>
+                      <strong className="dark:text-slate-400">{helpers.ternaryCondition(item?.ratingMonetary, item?.ratingMonetary, "0")}</strong>
                     </figcaption>
                   </div>
                 </li>
@@ -356,7 +356,7 @@ const UserView = () => {
                     </figure>
                     <figcaption className="w-[calc(100%_-_41px)]">
                       <span className="block text-[#5C5C5C] dark:text-white">{t("RATING_CASUAL")}</span>
-                      <strong className="dark:text-slate-400">{helpers.ternaryCondition(item?.ratingCasual, item?.ratingCasual, "N/A")}</strong>
+                      <strong className="dark:text-slate-400">{helpers.ternaryCondition(item?.ratingCasual, item?.ratingCasual, "0")}</strong>
                     </figcaption>
                   </div>
                 </li>
