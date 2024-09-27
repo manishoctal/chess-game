@@ -43,6 +43,9 @@ const FormValidation = () => {
         whiteSpace: (value) => (value.trim() ? true : t("WHITE_SPACES_NOT_ALLOWED")),
       },
     },
+    freezeAmount: {
+      required: t("PLEASE_ENTER_FREEZE_AMOUNT"),
+    },
     numbersOfCoupon: {
       required: t("PLEASE_ENTER_NUMBER_OF_COUPONS"),
       validate: {

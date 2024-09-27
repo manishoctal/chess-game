@@ -241,7 +241,7 @@ const Table = ({
             ),
             "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold"
           )}
-          {renderUserTypeSpecificCells(item)}
+          {/* {renderUserTypeSpecificCells(item)} */}
           {renderCommonTableCells(item)}
           {renderTableCell(helpers.ternaryCondition(item?.ratingMonetary, item?.ratingMonetary, "0"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold")}
           {renderTableCell(helpers.ternaryCondition(item?.ratingCasual, item?.ratingCasual, "0"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold")}
@@ -273,7 +273,7 @@ const Table = ({
                 <OUserTableHead sort={sort} setSort={setSort} name='USER_NAME' fieldName='userName' />
                 <OUserTableHead sort={sort} setSort={setSort} name='O_EMAIL_ID' fieldName='email' />
                 <OUserTableHead sort={sort} setSort={setSort} name='O_MOBILE' fieldName='mobile' />
-                <OUserTableHead sort={sort} setSort={setSort} name='INVITE_CODE_USED' fieldName='inviteCode' />
+                {/* <OUserTableHead sort={sort} setSort={setSort} name='INVITE_CODE_USED' fieldName='inviteCode' /> */}
                 <OUserTableHead sort={sort} setSort={setSort} name='JOINED_DATE' fieldName='createdAt' />
                 <OUserTableHead sort={sort} setSort={setSort} name='KYC_VERIFIED' fieldName='isKYCVerified' />
                 <OUserTableHead sort={sort} setSort={setSort} name='RATING_MONETRY' fieldName='ratingMonetary' />

@@ -190,9 +190,9 @@ const UserView = () => {
 
  
 
-            {/* <button onClick={()=>handleFreeModal()}className="bg-gradientTo flex gap-2 text-sm px-6 ml-3  py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2">
+            <button onClick={()=>handleFreeModal()}className="bg-gradientTo flex gap-2 text-sm px-6 ml-3  py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2">
               {t("FREEZE_BALANCE")}
-            </button> */}
+            </button>
           </div>
 
         </div>
@@ -386,7 +386,7 @@ const UserView = () => {
             </ul>
           </div>
 
-          <div className="border border-1  border-[#E1DEDE] rounded-md p-12">
+          {/* <div className="border border-1  border-[#E1DEDE] rounded-md p-12">
             <span className="block text-center pb-3 font-bold ">{t("KYC_DOCUMENT")}</span>
             <div className="relative">
               <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{t('GOVERNMENT_ID_PDF')}</label>
@@ -431,10 +431,8 @@ const UserView = () => {
               {renderApprovalStatus()}
             </div>
             {kycSection}
-            {/* <span className="block text-center mt-4">
-              {t("KYC_VERIFIED")}: <b>{helpers.ternaryCondition(item?.kycStatus, 'Yes', 'No')}</b>
-            </span> */}
-          </div>
+       
+          </div> */}
 
           <div className="border border-1 border-[#E1DEDE] rounded-md p-6 ps-3">
             <span className="block text-center pb-3 font-bold ">{t("GAME_STATICS")}</span>
@@ -500,7 +498,7 @@ const UserView = () => {
       </div>
 
       {showBanner && showImage && <ShowImage handleShowImage={handleShowImage} showImage={showImage} />}
-      {showFreeModel && <FreezeBalancePopup handleFreeModal={handleFreeModal}/>}
+      {showFreeModel && <FreezeBalancePopup handleFreeModal={handleFreeModal} userId={location?.state?._id}/>}
 
     </div>
   );

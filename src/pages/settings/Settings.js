@@ -42,7 +42,7 @@ const Settings = () => {
   const [viewShowModal, setViewShowModal] = useState(false);
   const [isAmountModal, setIsAmountModal] = useState(false);
   const notification = useToastContext();
-
+  const [saveSettingData,setSaveSettingData]=useState("")
 
   // change setting function start
   const handleSubmitForm = async (data) => {
@@ -77,6 +77,7 @@ const Settings = () => {
       if (res) {
         reset(res?.data?.results);
         console.log("res", res)
+        setSaveSettingData(res?.data?.results)
       }
     } catch (error) {
       console.error("error:", error);
@@ -213,8 +214,8 @@ const Settings = () => {
                   <OInputField
                     wrapperClassName="relative z-0  w-full group"
                     type="text"
-                    // inputLabel={<>{t("ADMIN_EMAIL_ADDRESS")}</>}
-                    // id="adminEmail"
+                    inputLabel={<>{t("ADMIN_EMAIL_ADDRESS")}</>}
+                    id="adminEmail"
                     maxLength={50}
                     autoComplete="off"
                     onInput={(e) => preventMaxInput(e, 50)}
@@ -406,11 +407,11 @@ const Settings = () => {
             )}
           </div>
         </div>
-        {/* <div className="border p-5 rounded-md">
+        <div className="border p-5 rounded-md">
 
-              <Commission/>
+              <Commission saveSettingData={saveSettingData}/>
      
-        </div> */}
+        </div>
 
 
 
