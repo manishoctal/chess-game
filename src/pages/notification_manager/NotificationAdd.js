@@ -116,13 +116,13 @@ const NotificationAdd = ({ getAllNotifications, handleCategory }) => {
   }, [debouncedSearchTerm]);
   // debounce function for search end
 
-  useEffect(() => {
-    getAllNotifications();
-  }, []);
+  // useEffect(() => {
+  //   getAllNotifications();
+  // }, []);
   return (
     <div>
-      <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
-        <div className="relative my-6 mx-auto">
+      <div className="justify-center items-center  overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+        <div className="relative my-6 mx-auto max-w-[480px]">
           <div className="sm:py-4 sm:px-2 py-8 px-7 ">
             <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
               <div className="dark:bg-gray-900 flex items-center justify-between p-5 border-b border-solid border-slate-200 rounded-t">
@@ -133,7 +133,7 @@ const NotificationAdd = ({ getAllNotifications, handleCategory }) => {
                   </span>
                 </button>
               </div>
-              <div className="relative p-6 flex-auto dark:bg-gray-800">
+              <div className="relative p-6 flex-auto dark:bg-gray-800 ">
                 <div className="">
                   <div className="px-2">
                     <OInputField
