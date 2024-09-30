@@ -10,51 +10,40 @@ import { apiPut } from 'utils/apiFetch';
 import apiPath from 'utils/apiPath';
 import { handleKeyDownCashIn, preventMaxHundred } from 'utils/reusableMethods';
 
-const Commission = ({saveSettingData}) => {
+const Commission = ({ saveSettingData }) => {
     const {
         register,
         handleSubmit,
-        reset,
+        setValue,
+        watch,
         formState: { isDirty, errors },
     } = useForm({
         mode: 'onChange',
         shouldFocusError: true,
-    
+
     });
 
     const { t } = useTranslation();
     const { user } = useContext(AuthContext);
     const manager = user?.permission?.find((e) => e.manager === 'settings') ?? {};
     const notification = useToastContext();
-    const [commissionType, setCommissionType] = useState('');
-    const [commissionType2, setCommissionType2] = useState('');
-    const [moneyStack,setMoneyStack]=useState()
-
-    const handleCommissionTypeChange1 = (e) => {
-        setCommissionType(e.target.value);
-        reset({ adminCommission2: '' });
-    };
-
-    const handleCommissionTypeChange2 = (e) => {
-        setCommissionType2(e.target.value);
-        reset({ adminCommission3: '' });
-    };
+    const [moneyStack, setMoneyStack] = useState()
 
     const handleSubmitForm = async (data) => {
 
         try {
             const commissionObject1 = {
-                commissionType: commissionType,
+                commissionType: data?.firstCommission,
                 type: "lt",
-                adminCommission: data.adminCommission2,
+                adminCommission: data.adminCommisionfirst,
                 amount: moneyStack,
             };
-    
+
             const commissionObject2 = {
-                commissionType: commissionType2, 
-                type: "gt",                    
+                commissionType: data?.secondCommision,
+                type: "gt",
                 adminCommission: data.adminCommission3,
-                amount: moneyStack,          
+                amount: moneyStack,
             };
             const payload = {
                 commissions: [commissionObject1, commissionObject2]
@@ -65,16 +54,29 @@ const Commission = ({saveSettingData}) => {
             if (result?.status === 200) {
                 notification.success(result?.data?.message);
             }
-          } catch (error) {
+        } catch (error) {
             console.error("error in get all badges list==>>>>", error.message);
-          }
+        }
 
     };
+
+    useEffect(() => {
+        setValue("firstCommission", saveSettingData?.commissions?.[0]?.commissionType)
+        setValue("secondCommision", saveSettingData?.commissions?.[0]?.commissionType)
+        setValue("adminCommisionfirst", saveSettingData?.commissions?.[0]?.adminCommission)
+        setValue("adminCommission3", saveSettingData?.commissions?.[1]?.adminCommission)
+
+    }, [saveSettingData])
+
 
     return (
         <div>
             <form onSubmit={handleSubmit(handleSubmitForm)}>
                 {/* Commission Type 1 */}
+
+
+                <h2 className='text-2xl mb-6 font-medium'>Commission</h2>
+
                 <div className="mb-4">
                     <div className="flex items-center">
                         <div className='mr-3'>
@@ -85,18 +87,21 @@ const Commission = ({saveSettingData}) => {
                             <select
                                 id="countries"
                                 type="password"
-                                name="floating_password"
+                                name="firstCommission"
                                 className="block p-2 w-full text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer"
                                 placeholder=" "
-                                value={commissionType}
-                                onChange={handleCommissionTypeChange1}
+                                {...register('firstCommission', {
+                                    required: 'Please select a commission type',
+                                })}
                             >
                                 <option value="">Select Commission Type</option>
                                 <option value="percentage">Percentage</option>
                                 <option value="fixed">Fixed</option>
                             </select>
 
-
+                            {errors.firstCommission && (
+                                <ErrorMessage message={errors.firstCommission.message} />
+                            )}
                         </div>
 
                         <div className="mr-3">
@@ -104,14 +109,14 @@ const Commission = ({saveSettingData}) => {
                                 Set Admin commission if money stake &lt;
                             </h3>
                             <input
-                                disabled={!commissionType}
+                                disabled={!watch("firstCommission")}
                                 type="number"
-                                value={saveSettingData?.adminCommission}
+                                name="adminCommisionfirst"
                                 placeholder="Set Admin Commission"
-                                onInput={commissionType === 'percentage' ? preventMaxHundred : null}
-                                onKeyDown={commissionType === 'percentage' ? handleKeyDownCashIn : null}
+                                onInput={watch("firstCommission") === 'percentage' ? preventMaxHundred : null}
+                                onKeyDown={watch("firstCommission") === 'percentage' ? handleKeyDownCashIn : null}
                                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                {...register('adminCommission2', {
+                                {...register('adminCommisionfirst', {
                                     required: 'Admin commission is required',
                                     min: {
                                         value: 0.01,
@@ -120,13 +125,13 @@ const Commission = ({saveSettingData}) => {
 
                                 })}
                             />
-                            {errors.adminCommission2 && <ErrorMessage message={errors.adminCommission2?.message} />}
+                            {errors.adminCommisionfirst && <ErrorMessage message={errors.adminCommisionfirst?.message} />}
                         </div>
 
                         <div>
                             <input
-                               value={moneyStack}
-                                onChange={(e)=>setMoneyStack(e.target.value)}
+                                defaultValue={moneyStack || saveSettingData?.commissions?.[0]?.amount}
+                                onChange={(e) => setMoneyStack(e.target.value)}
                                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 type="number"
                                 id="moneyStake2"
@@ -147,17 +152,21 @@ const Commission = ({saveSettingData}) => {
                             <select
                                 id="countries"
                                 type="password"
-                                name="floating_password"
+                                name="secondCommision"
                                 className="block p-2 w-full text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer"
                                 placeholder=" "
-                                value={commissionType2}
-                                onChange={handleCommissionTypeChange2}
+                                {...register('secondCommision', {
+                                    required: 'Please select a commission type',
+                                })}
                             >
                                 <option value="">Select Commission Type</option>
                                 <option value="percentage">Percentage</option>
                                 <option value="fixed">Fixed</option>
                             </select>
 
+                            {errors.secondCommision && (
+                                <ErrorMessage message={errors.secondCommision.message} />
+                            )}
 
                         </div>
 
@@ -166,11 +175,12 @@ const Commission = ({saveSettingData}) => {
                                 Set Admin commission if money stake &gt;
                             </h3>
                             <input
-                                disabled={!commissionType2}
+                                disabled={!watch("secondCommision")}
                                 type="number"
+                                name="adminCommission3"
                                 placeholder="Set Admin Commission"
-                                onInput={commissionType2 === 'percentage' ? preventMaxHundred : null}
-                                onKeyDown={commissionType2 === 'percentage' ? handleKeyDownCashIn : null}
+                                onInput={watch("secondCommision") === 'percentage' ? preventMaxHundred : null}
+                                onKeyDown={watch("secondCommision") === 'percentage' ? handleKeyDownCashIn : null}
                                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 {...register('adminCommission3', {
                                     required: 'Admin commission is required',
@@ -186,8 +196,8 @@ const Commission = ({saveSettingData}) => {
 
                         <div>
                             <input
-                             value={moneyStack}
-                             onChange={(e)=>setMoneyStack(e.target.value)}
+                                defaultValue={moneyStack || saveSettingData?.commissions?.[1]?.amount}
+                                onChange={(e) => setMoneyStack(e.target.value)}
                                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 type="number"
                                 id="moneyStake2"
@@ -196,12 +206,12 @@ const Commission = ({saveSettingData}) => {
                     </div>
                 </div>
 
-              
+
 
                 {(manager?.add || user?.role === 'admin') && (
                     <div className="text-center mt-8">
                         <OButton
-                            // disabled={!isDirty}
+                            disabled={!isDirty}
                             label={
                                 <>
                                     <GrUpdate size={16} className="mr-2" />

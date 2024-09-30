@@ -323,7 +323,10 @@ const Settings = () => {
 
               </div>
 
-              <div className="grid grid-cols-4 gap-x-5 border p-5 rounded-md social-media">
+          <div className="border p-5 rounded-md social-media">
+          <h2 className='text-2xl mb-6 font-medium'>Social Links</h2>
+
+          <div className="grid grid-cols-4 gap-x-5">
                 <div className="mb-4">
                   <OInputField
                     wrapperClassName="relative z-0  w-full group"
@@ -388,6 +391,7 @@ const Settings = () => {
                   <ErrorMessage message={errors?.twitter?.message} />
                 </div>
               </div>
+          </div>
 
 
 
