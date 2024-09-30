@@ -37,7 +37,7 @@ const CommunityModeratorManagerTable = ({ allCommunity, paginationObj, sort, set
             </tr>
           </thead>
           <tbody>
-            {allCommunity &&
+            {allCommunity && allCommunity?.length > 0 && 
               allCommunity?.map((item, i) => (
                 <tr key={i} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                   <th scope="row" className="py-4 px-6 border-r font-medium text-gray-900  dark:text-white">

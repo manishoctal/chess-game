@@ -44,7 +44,7 @@ function CommunityModeratorManager() {
   });
 
   // get all notification function start
-  const getAllNotifications = async () => {
+  const getAllCommunity = async () => {
     try {
       const { startDate, endDate, searchkey, community, status } = filterData;
 
@@ -86,7 +86,7 @@ function CommunityModeratorManager() {
   };
 
   useEffect(() => {
-    getAllNotifications();
+    getAllCommunity();
   }, [page, filterData, sort, pageSize]);
   // get all notification function end
 
@@ -177,7 +177,7 @@ function CommunityModeratorManager() {
       const result = await apiPut(path, payload);
       if (result?.status === 200) {
         notification.success(result.data.message);
-        // allAchievement({ statusChange: 1 });
+        getAllCommunity()
       }
     } catch (error) {
       console.error("error in get all badges list==>>>>", error.message);
@@ -269,7 +269,7 @@ console.log("allCommunity",allCommunity)
             <CommunityModeratorManagerTable
               allCommunity={allCommunity}
               notification={notification}
-              getAllNotifications={getAllNotifications}
+              getAllCommunity={getAllCommunity}
               page={page}
               setSort={setSort}
               sort={sort}
@@ -281,7 +281,7 @@ console.log("allCommunity",allCommunity)
 
             />
 
-            {/* {categoryAdd && <NotificationAdd categoryAdd={categoryAdd} getAllNotifications={getAllNotifications} handleCategory={handleCategory} />} */}
+            {/* {categoryAdd && <NotificationAdd categoryAdd={categoryAdd} getAllCommunity={getAllCommunity} handleCategory={handleCategory} />} */}
 
             <div className="flex justify-between">
               {paginationObj?.totalItems ? (
