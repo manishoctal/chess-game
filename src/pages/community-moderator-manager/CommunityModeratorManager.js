@@ -15,7 +15,7 @@ import CommunityModeratorManagerTable from "./CommunityModeratorManagerTable";
 function CommunityModeratorManager() {
   const { t } = useTranslation();
   const { logoutUser, notification, user } = useContext(AuthContext);
-  const manager = user?.permission?.find((e) => e.manager === "notification_manager" || "achievement_and_badges") ?? {};
+  const manager = user?.permission?.find((e) => e.manager === "community_moderator" || "achievement_and_badges") ?? {};
   const [paginationObj, setPaginationObj] = useState({
     page: 1,
     pageCount: 1,
@@ -34,9 +34,11 @@ function CommunityModeratorManager() {
     category: "",
     searchkey: "",
     startDate: "",
+    community: "",
     endDate: "",
     isReset: false,
     isFilter: false,
+    
   });
   const [sort, setSort] = useState({
     sortBy: "createdAt",
@@ -110,9 +112,7 @@ function CommunityModeratorManager() {
     }
   }, [debouncedSearchTerm]);
 
-  const handleCategory = () => {
-    setCategoryAdd(!categoryAdd);
-  };
+
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -139,9 +139,6 @@ function CommunityModeratorManager() {
     setSearchTerm("");
     setPage(1);
   };
-
-
-
 
 
   const handleDateChange = (start, end) => {
@@ -183,8 +180,6 @@ function CommunityModeratorManager() {
       console.error("error in get all badges list==>>>>", error.message);
     }
   };
-
-console.log("allCommunity",allCommunity)
 
 
   return (
@@ -228,7 +223,7 @@ console.log("allCommunity",allCommunity)
                         name="floating_password"
                         className="block p-2 w-full text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer"
                         placeholder=" "
-                        value={filterData?.category}
+                        value={filterData?.community}
                         onChange={(e) => communityStatusChange(e)}
                       >
                         <option defaultValue value="">

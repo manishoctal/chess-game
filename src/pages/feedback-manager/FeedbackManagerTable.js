@@ -16,12 +16,12 @@ const FeedbackManagerTable = ({ allCommunity, paginationObj, sort, setSort, page
                 {t("S.NO")}
               </th>
               <ONotificationTableHead sort={sort} setSort={setSort} name="Username" fieldName="username" classTd={"justify-center"} />
-              <ONotificationTableHead sort={sort} setSort={setSort} name="message" fieldName="message" classTd={"justify-center"} />
+              <ONotificationTableHead sort={sort} setSort={setSort} name="Message" fieldName="message" classTd={"justify-center"} />
               <ONotificationTableHead sort={sort} setSort={setSort} name="Created At" fieldName="createdAt" classTd={"justify-center"} />
             </tr>
           </thead>
           <tbody>
-            {allCommunity &&
+            {allCommunity && allCommunity?.length > 0  &&
               allCommunity?.map((item, i) => (
                 <tr key={i} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                   <th scope="row" className="py-4 px-6 border-r font-medium text-gray-900  dark:text-white">

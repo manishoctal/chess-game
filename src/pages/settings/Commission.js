@@ -78,7 +78,7 @@ const Commission = ({ saveSettingData }) => {
                 <h2 className='text-2xl mb-6 font-medium'>Commission</h2>
 
                 <div className="mb-4">
-                    <div className="flex items-center">
+                    <div className="flex ">
                         <div className='mr-3'>
                             <h3 className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
                                 Set commission type
@@ -129,6 +129,9 @@ const Commission = ({ saveSettingData }) => {
                         </div>
 
                         <div>
+                        <h3 className="mb-2 h-[20px] block text-sm font-medium text-gray-900 dark:text-white">
+                               
+                            </h3>
                             <input
                                 defaultValue={moneyStack || saveSettingData?.commissions?.[0]?.amount}
                                 onChange={(e) => setMoneyStack(e.target.value)}
@@ -143,7 +146,7 @@ const Commission = ({ saveSettingData }) => {
 
 
                 <div className="mb-4">
-                    <div className="flex items-center">
+                    <div className="flex">
                         <div className='mr-3'>
                             <h3 className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
                                 Set commission type
@@ -195,6 +198,9 @@ const Commission = ({ saveSettingData }) => {
                         </div>
 
                         <div>
+                        <h3 className="mb-2 h-[20px] block text-sm font-medium text-gray-900 dark:text-white">
+                               
+                               </h3>
                             <input
                                 defaultValue={moneyStack || saveSettingData?.commissions?.[1]?.amount}
                                 onChange={(e) => setMoneyStack(e.target.value)}
