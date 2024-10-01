@@ -70,7 +70,7 @@ const CommunityModeratorManagerTable = ({ allCommunity, paginationObj, sort, set
                     <ul className="flex justify-center">
                         <li
                           onClick={() =>
-                            navigate("/community-moderator-manager/view", {
+                            navigate(`/community-moderator-manager/view/${item?._id}`, {
                               state: { item, type: "view" },
                             })
                           }

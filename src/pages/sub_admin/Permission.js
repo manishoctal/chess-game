@@ -9,11 +9,7 @@ const generateManager = (manager, options = {}) => ({
 });
 
 const Permission = [
-  // generateManager("trading_question_manager", { shownAdd: true, shownAll: true }),
-  // generateManager("player_card_manager", { shownAdd: true, shownAll: true }),
-
   generateManager("user_manager", { shownAdd: true, shownAll: true }),
-  // generateManager("subAdmin_manager", { shownAdd: true, shownAll: true }),
   generateManager("game_type_manager", { shownAdd: true, shownAll: true }),
   generateManager("challenges_manager", { shownAdd: true, shownAll: true }),
   generateManager("community_moderator", { shownAdd: true, shownAll: true }),
@@ -25,15 +21,7 @@ const Permission = [
   generateManager("widthDrawal_request_manager", { shownAdd: true, shownAll: true }),
   generateManager("FAQ", { shownAdd: true, shownAll: true }),
   generateManager("feedback_manager", { shownAdd: true, shownAll: true }),
-
-  // generateManager("how_to_play_manager", { shownAdd: true, shownAll: true }),
-  // generateManager("offer_manager", { shownAdd: true, shownAll: true }),
-  // generateManager("subscribed_manager", { shownAdd: true, shownAll: true }),
-  // generateManager("achievement_and_badges", { shownAdd: true, shownAll: true }),
-  // generateManager("email_manager", { shownAdd: true, shownAll: true }),
-  // generateManager("notification_manager", { shownAdd: true, shownAll: true }),
-  // // generateManager("settings", { shownAdd: true, shownAll: true }),
-  // generateManager("static_page_management", { shownAdd: true, shownAll: true }),
+  generateManager("transaction_manager", { shownAdd: true, shownAll: true }),
 ];
 
 export default Permission;

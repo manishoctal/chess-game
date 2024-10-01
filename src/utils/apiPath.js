@@ -40,7 +40,6 @@ const apiPath = Object.freeze({
   getDashboardDetails: "/v1/admin/dashboard",
   earningManagerGraph: "/v1/admin/earningManagerGraph",
   addMoneyToUserWallet: "/v1/admin/user/addMoneyToUserWallet",
-  transactionList: "/v1/admin/transaction/transactionList",
   scratchCardHistory: "/v1/admin/scratchCard/history",
   addScratchCard: "/v1/admin/scratchCard",
   viewScratchCard: "/v1/admin/user/getUserInfo",
@@ -84,9 +83,11 @@ const apiPath = Object.freeze({
   reportHistory:"/v1/admin/user/reports-history",
   userReviewRating:"v1/admin/user/review",
   communityModeratror:"/v1/admin/community-moderator",
-  downloadFeedback: "v1/admin/user/download-review/feedback",
-  freezeAmount:"/v1/admin/user/freeze-amount"
-
+  downloadFeedback: "/v1/admin/feedback/download-csv",
+  freezeAmount:"/v1/admin/user/freeze-amount",
+  transactionList: "/v1/admin/transaction",
+  specificUserApiList:"/v1/admin/transaction",
+  feedbackListing:"/v1/admin/feedback"
 });
 
 export default apiPath;

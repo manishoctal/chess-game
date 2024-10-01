@@ -101,18 +101,18 @@ const SubTable = ({ subAdmin, page, sort, setSort, manager, handelStatusChange, 
                         </a>
                       </li> */}
                       {(manager?.add || user?.role === "admin") && (
-                        <li
+                        <button
                           onClick={() =>
-                            navigate("/sub-admin-manager/add", {
+                            navigate(`/sub-admin-manager/edit/${item?._id}`, {
                               state: { item, type: "edit" },
                             })
                           }
                           className="px-2 py-2 hover:text-gradientTo"
                         >
-                          <a title={t("O_EDIT")}>
+                          <button title={t("O_EDIT")}>
                             <AiFillEdit className="cursor-pointer w-5 h-5 text-slate-600" />
-                          </a>
-                        </li>
+                          </button>
+                        </button>
                       )}
                     </ul>
                   </div>
