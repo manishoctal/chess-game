@@ -39,6 +39,7 @@ import GameHistoryTable from "pages/users/GameHistoryTable";
 import ViewCommunityModerator from "pages/community-moderator-manager/ViewCommunityModerator";
 import CommunityModeratorManager from "pages/community-moderator-manager/CommunityModeratorManager";
 import FeedbackManager from "pages/feedback-manager/FeedbackManager";
+import Transaction from "pages/transection_manager/Transaction";
 const UseChange = ({ data }) => {
   const { t } = useTranslation();
   return t(data);
@@ -75,7 +76,7 @@ const AdminRoutes = {
     },
 
     {
-      path: "/users/view",
+      path: "/users/view/:id",
       element: <UserView />,
       name: <UseChange data="USER_MANAGER" />,
     },
@@ -88,6 +89,15 @@ const AdminRoutes = {
 
     {
       path: "/sub-admin-manager/add",
+      element: (
+        <AuthorizationRoute>
+          <SubAdd />
+        </AuthorizationRoute>
+      ),
+      name: <UseChange data="SUB_ADMIN_MANAGERS" />,
+    },
+    {
+      path: "/sub-admin-manager/edit/:id",
       element: (
         <AuthorizationRoute>
           <SubAdd />
@@ -127,7 +137,18 @@ const AdminRoutes = {
       name: <UseChange data="FEEDBACK_MANAGER" />,
     },
 
-    
+    {
+      path: "/transection_manager",
+      element: (
+        <AuthorizationRoute>
+          {" "}
+          <Transaction />
+        </AuthorizationRoute>
+      ),
+      name: <UseChange data="NAV_TRANSACTION_MANAGER" />,
+    },
+
+
     {
       path: "/subscribed-manager/view",
       element: (
@@ -377,7 +398,7 @@ const AdminRoutes = {
       name: <UseChange data="community-moderator-manager" />,
     },
     {
-      path: "/community-moderator-manager/view",
+      path: "/community-moderator-manager/view/:id",
       element: (
         <AuthorizationRoute>
           {" "}

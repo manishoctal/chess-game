@@ -12,9 +12,8 @@ import { Link } from 'react-router-dom'
 import ReactQuill from 'react-quill'
 import { useLocation, useNavigate } from 'react-router'
 import { FaEdit } from 'react-icons/fa'
-import helpers from 'utils/helpers'
-import { startCase } from 'lodash'
 import { IoCaretBackCircleOutline } from 'react-icons/io5'
+import helpers from 'utils/helpers'
 
 export default function AddEditEmail() {
   const { t } = useTranslation()
@@ -64,6 +63,9 @@ export default function AddEditEmail() {
     }
     setIsLoading(false)
   }
+
+
+  console.log("editItem", editItem?.type)
 
   const QuillEditor = ({
     name,
@@ -151,7 +153,6 @@ export default function AddEditEmail() {
                 type='text'
                 autoFocus
                 style={{ cursor: 'not-allowed' }}
-
                 maxLength={500}
                 onInput={e => preventMaxInput(e, 500)}
                 register={register('title', formValidation.title)}
@@ -186,24 +187,48 @@ export default function AddEditEmail() {
           readOnly={type === 'view'}
         />
 
-      <div className="md:py-5 sm:px-2 sm:py-3 md:px-7 px-2">
+        <div className="md:py-5 sm:px-2 sm:py-3 md:px-7 px-2">
           <div className="">
             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"></label>
             <b className='text-sm'>{t('O_KEYWORD')}:</b>
             <div className="grid grid-cols-3 gap-5 mt-3">
-        
+
+              <div className="border rounded-sm w-full grid grid-cols-12 bg-white  p-3 gap-2 items-center" >
+                <div className="col-span-11">
+                  <p className="text-black-600 font-semibold">FULL_NAME</p>
+                  <p className="text-sm text-gray-800 font-light">User Full Name</p>
+                </div>
+              </div>
+
+              {
+                editItem?.type === "welcome-email" && <>
+
                   <div className="border rounded-sm w-full grid grid-cols-12 bg-white  p-3 gap-2 items-center" >
                     <div className="col-span-11">
-                      <p className="text-black-600 font-semibold">FIRSTNAME</p>
-                      <p className="text-sm text-gray-800 font-light">User First Name</p>
+                      <p className="text-black-600 font-semibold">EMAIL</p>
+                      <p className="text-sm text-gray-800 font-light">User Email</p>
                     </div>
                   </div>
+
                   <div className="border rounded-sm w-full grid grid-cols-12 bg-white  p-3 gap-2 items-center" >
                     <div className="col-span-11">
-                      <p className="text-black-600 font-semibold">LINK</p>
-                      <p className="text-sm text-gray-800 font-light">Reset Password Link</p>
+                      <p className="text-black-600 font-semibold">PASSWORD</p>
+                      <p className="text-sm text-gray-800 font-light">User Password</p>
                     </div>
                   </div>
+
+                </>
+              }
+              {
+                (helpers?.orOperator(editItem?.type === "forget-password" || editItem?.type === "change-password")) && <div className="border rounded-sm w-full grid grid-cols-12 bg-white  p-3 gap-2 items-center" >
+                  <div className="col-span-11">
+                    <p className="text-black-600 font-semibold">LINK</p>
+                    <p className="text-sm text-gray-800 font-light">Reset Password Link</p>
+                  </div>
+                </div>
+              }
+
+
             </div>
           </div>
         </div>
@@ -215,7 +240,7 @@ export default function AddEditEmail() {
               type='button'
               title={t('O_BACK')}
             >
-               <IoCaretBackCircleOutline size={18}/>{t('O_BACK')}
+              <IoCaretBackCircleOutline size={18} />{t('O_BACK')}
             </button>
           </Link>
 

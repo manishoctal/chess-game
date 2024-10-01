@@ -87,7 +87,7 @@ const AdminGraph = () => {
       curve: "straight",
     },
     title: {
-      text: "Admin profit Graph",
+      text: "Admin Profit Graph",
       align: "center",
     },
     grid: {

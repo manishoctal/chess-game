@@ -219,13 +219,13 @@ function SubAdmin() {
               <div className="flex items-center justify-end px-4 ms-auto mb-3">
                 {(manager?.add || user?.role === "admin") && (
                   <button
-                    title={t("ADD_SUB_ADMIN")}
+                    title={t("SUB_ADMIN_ADD_SUB_ADMIN")}
                     type="button"
                     className="bg-gradientTo flex text-sm px-4 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue whitespace-nowrap"
                     onClick={() => navigate("/sub-admin-manager/add")}
                   >
                     <IoIosAdd size={20} />
-                    {t("ADD_SUB_ADMIN")}
+                    {t("SUB_ADMIN_ADD_SUB_ADMIN")}
                   </button>
                 )}
               </div>

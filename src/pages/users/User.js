@@ -9,13 +9,16 @@ import ODateRangePicker from "components/shared/datePicker/ODateRangePicker";
 import { useTranslation } from "react-i18next";
 import PageSizeList from "components/PageSizeList";
 import helpers from "utils/helpers";
-import { useLocation } from "react-router-dom";
-import { BiDownload, BiReset } from "react-icons/bi";
+import { useLocation, useNavigate } from "react-router-dom";
+import { BiReset } from "react-icons/bi";
 import OSearch from "components/reusable/OSearch";
-import { GoDownload } from "react-icons/go";
+
 function User() {
   const { t } = useTranslation();
   const location = useLocation();
+  const [activeInactiveStatus, setActiveInactiveStatus] = useState(location?.state ?? "");
+
+  console.log("activeInactiveStatus",activeInactiveStatus)
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
   const [isInitialized, setIsInitialized] = useState(false);
@@ -31,6 +34,7 @@ function User() {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [isDelete] = useState(false);
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('Tab1');
 
   const handleTabClick = (tab) => {
@@ -38,7 +42,7 @@ function User() {
   };
   const [filterData, setFilterData] = useState({
     kyc: undefined,
-    category: undefined,
+    category: location?.state,
     userId: "",
     searchKey: "",
     startDate: "",
@@ -67,11 +71,12 @@ function User() {
         sortKey: sort?.sortBy,
         sortType: sort?.sortType,
         userId: userId || null,
+        status:category
       };
 
-      if (category && category !== undefined) {
-        payload.status = category;
-      }
+      // if (category && category !== undefined) {
+      //   payload.status = category;
+      // }
 
       if (kyc && kyc !== undefined) {
         payload.kyc = kyc;
@@ -135,10 +140,14 @@ function User() {
       endDate: "",
       isReset: true,
       isFilter: false,
+
     });
+    setActiveInactiveStatus("");
+    navigate(location.pathname, { replace: true, state: "" });
     setPage(1);
     setSearchTerm("");
     setPageSize(10);
+    navigate({path:'/users',replace:false,state:{}})
   };
 
 
@@ -232,7 +241,7 @@ function User() {
                         name="floating_password"
                         className="block p-2 w-full text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer"
                         placeholder=""
-                        value={filterData?.category}
+                        value={filterData?.category || activeInactiveStatus}
                         onChange={statusPage}
                       >
                         <option value="">
