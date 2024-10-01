@@ -21,6 +21,7 @@ const Permission = [
   generateManager("widthDrawal_request_manager", { shownAdd: true, shownAll: true }),
   generateManager("FAQ", { shownAdd: true, shownAll: true }),
   generateManager("feedback_manager", { shownAdd: true, shownAll: true }),
+  generateManager("transaction_manager", { shownAdd: true, shownAll: true }),
 ];
 
 export default Permission;
