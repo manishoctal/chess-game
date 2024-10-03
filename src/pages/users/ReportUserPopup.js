@@ -84,7 +84,15 @@ const ReportUserPopup = ({ handleReportToggle, reportItem }) => {
 
 
                     {renderTableCell(item?.reason, "py-4 px-3 border-r border font-medium text-gray-900 dark:text-white dark:border-[#ffffff38] text-center")}
-                    {renderTableCell(item?.userData?.mobile, "bg-white py-4 px-4 border-r border dark:border-[#ffffff38] text-center")}
+                    {renderTableCell(
+            helpers.ternaryCondition(
+              item?.userData?.mobile,
+              `+ ${item?.userData?.countryCode || ""} ${item?.userData?.mobile}`,
+              "N/A"
+            ),
+            "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold"
+          )}
+             
 
                 </tr>
             );

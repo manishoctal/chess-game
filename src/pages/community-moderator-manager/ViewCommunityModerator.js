@@ -6,13 +6,15 @@ import apiPath from "utils/apiPath";
 import helpers from "utils/helpers";
 import dayjs from "dayjs";
 import chessImage from "../../assets/images/chess.jpeg";
+import { FaLayerGroup } from "react-icons/fa";
+import ReactCountryFlag from "react-country-flag";
 
 
 function ViewCommunityModerator() {
   const location = useLocation();
-  const item = location.state;
+  const item = location?.state?.item;
   const [viewList, setViewList] = useState({})
-console.log("item",item)
+  console.log("item", item)
   const viewCommunityList = async () => {
     try {
       const result = await apiGet(`${apiPath?.communityModeratror}/${item?._id}`)
@@ -43,23 +45,43 @@ console.log("item",item)
           <div className="bg-white border border-[#E9EDF9] rounded-lg dark:bg-slate-800 dark:border-[#ffffff38] p-5">
 
             <div>
-           
-              
+
+
               <div className="w-[400px] border mb-5">
-                  <div className="p-5 mb-2">
-                  <img src={chessImage} alt="" />
-                  </div>
-
-                  <div className="border p-4 flex items-center justify-between">
-                    <strong>Like : <span className="font-light">{helpers?.ternaryCondition(viewList?.likeCount,viewList?.likeCount,"0")}</span></strong>
-                    <strong>Comment : <span className="font-light">{helpers?.ternaryCondition(viewList?.commentCount,viewList?.commentCount,"0")}</span></strong>
-                  </div>
-
+                <div className="p-5 mb-2 h-[300px]">{helpers?.ternaryCondition(viewList?.mediaType === "image",
+                  <img src={viewList?.file} alt="" className="w-full h-full object-cover" />,
+                  <iframe
+                    width="355"
+                    height="280"
+                    src={viewList?.file}
+                    title="YouTube video player"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  ></iframe>
+                )}
                 </div>
-                <ul className="list-disc ml-5">
-                <li className="mb-3"><strong>User Name :</strong> <span>{helpers?.ternaryCondition(viewList?.username, viewList?.username, "N/A")}</span></li>
+
+                <div className="border p-4 flex items-center justify-between">
+                  <strong>Like : <span className="font-light">{helpers?.ternaryCondition(viewList?.likeCount, viewList?.likeCount, "0")}</span></strong>
+                  <strong>Comment : <span className="font-light">{helpers?.ternaryCondition(viewList?.commentCount, viewList?.commentCount, "0")}</span></strong>
+                </div>
+
+              </div>
+              <ul className="list-disc ml-5">
+              <div className="mb-3">
+              <ReactCountryFlag
+                  countryCode="IN"
+                  svg
+                  title="IN"
+                  style={{
+                    width: '2em',
+                    height: '2em',
+                }}
+                />
+              </div>
+                <li className="mb-3"><strong>User Name :</strong> <span>{helpers?.ternaryCondition(viewList?.user?.userName, viewList?.user?.userName, "N/A")}</span> </li>
                 <li className="mb-3"><strong>Post Title :</strong> <span>{helpers?.ternaryCondition(viewList?.postTitle, viewList?.postTitle, "N/A")}</span></li>
-                <li className="mb-3"><strong>Date of post :</strong> <span>{helpers?.ternaryCondition(viewList?.createdAt, dayjs(viewList?.createdAt).format("DD-MM-YYYY"), "N/A")}</span></li>
+                <li className="mb-3"><strong>Date of Post :</strong> <span>{helpers?.ternaryCondition(viewList?.createdAt, dayjs(viewList?.createdAt).format("DD-MM-YYYY"), "N/A")}</span></li>
                 <li className="mb-3"><strong>Description :</strong> <span>{helpers?.ternaryCondition(viewList?.description, viewList?.description, "N/A")}</span></li>
 
 

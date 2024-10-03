@@ -13,7 +13,6 @@ const Permission = [
   generateManager("game_type_manager", { shownAdd: true, shownAll: true }),
   generateManager("challenges_manager", { shownAdd: true, shownAll: true }),
   generateManager("community_moderator", { shownAdd: true, shownAll: true }),
-  generateManager("transaction_manager", { shownAdd: true, shownAll: true }),
   generateManager("notification_manager", { shownAdd: true, shownAll: true }),
   generateManager("email_manager", { shownAdd: true, shownAll: true }),
   generateManager("static_pages_management", { shownAdd: true, shownAll: true }),

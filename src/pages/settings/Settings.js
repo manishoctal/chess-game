@@ -19,6 +19,7 @@ import DepositAmount from "./DepositAmount";
 import { GrUpdate } from "react-icons/gr";
 import { handleKeyDownCashIn, handleNumericInput, preventMaxHundred, preventText } from "utils/reusableMethods";
 import Commission from "./Commission";
+import GstComponent from "./GstComponent";
 
 const Settings = () => {
   const { logoutUser, user, updatePageName } = useContext(AuthContext);
@@ -42,7 +43,7 @@ const Settings = () => {
   const [viewShowModal, setViewShowModal] = useState(false);
   const [isAmountModal, setIsAmountModal] = useState(false);
   const notification = useToastContext();
-  const [saveSettingData,setSaveSettingData]=useState("")
+  const [saveSettingData, setSaveSettingData] = useState("")
 
   // change setting function start
   const handleSubmitForm = async (data) => {
@@ -287,24 +288,7 @@ const Settings = () => {
                   validationRules={validationFields?.platformFee}
                 />
 
-                <ReusableInputField
-                  label={t("GST_TIME_OF_DEPOSIT")}
-                  id="gstPrcentage"
-                  register={register}
-                  errors={errors}
-                  manager={manager}
-                  validationRules={validationFields?.gstTimeDeposit}
-                />
 
-
-                <ReusableInputField
-                  label={t("TDS_TIME_OF_DEPOSIT")}
-                  id="tdsPrecentage"
-                  manager={manager}
-                  register={register}
-                  errors={errors}
-                  validationRules={validationFields?.tds}
-                />
 
                 {/* <div className="">
                   <OInputField
@@ -323,75 +307,81 @@ const Settings = () => {
 
               </div>
 
-          <div className="border p-5 rounded-md social-media">
-          <h2 className='text-2xl mb-6 font-medium'>Social Links</h2>
+              <div className="border p-5 rounded-md">
+                      
+             <GstComponent saveSettingData={saveSettingData}/>
 
-          <div className="grid grid-cols-4 gap-x-5">
-                <div className="mb-4">
-                  <OInputField
-                    wrapperClassName="relative z-0  w-full group"
-                    type="text"
-                    inputLabel={<>{t("YOUTUBE")}</>}
-                    id="youtube"
-                    maxLength={50}
-                    autoComplete="off"
-                    onInput={(e) => preventMaxInput(e, 50)}
-                    register={register("youtube", validationFields?.youtube)}
-                    placeholder=" "
-                    disable={manager?.add === false}
-                  />
-                  <ErrorMessage message={errors?.youtube?.message} />
-                </div>
+              </div>
 
-                <div className="mb-4">
-                  <OInputField
-                    wrapperClassName="relative z-0  w-full group"
-                    type="text"
-                    inputLabel={<>{t("INSTAGRAM")}</>}
-                    id="instagram"
-                    maxLength={50}
-                    autoComplete="off"
-                    onInput={(e) => preventMaxInput(e, 50)}
-                    register={register("instagram", validationFields?.instagram)}
-                    placeholder=" "
-                    disable={manager?.add === false}
-                  />
-                  <ErrorMessage message={errors?.instagram?.message} />
-                </div>
+              <div className="border p-5 rounded-md social-media">
+                <h2 className='text-2xl mb-6 font-medium'>Social Links</h2>
 
-                <div className="mb-4">
-                  <OInputField
-                    wrapperClassName="relative z-0  w-full group"
-                    type="text"
-                    inputLabel={<>{t("LINKEDIN")}</>}
-                    id="linkedin"
-                    maxLength={50}
-                    autoComplete="off"
-                    onInput={(e) => preventMaxInput(e, 50)}
-                    register={register("linkedin", validationFields?.linkedin)}
-                    placeholder=" "
-                    disable={manager?.add === false}
-                  />
-                  <ErrorMessage message={errors?.linkedin?.message} />
-                </div>
+                <div className="grid grid-cols-4 gap-x-5">
+                  <div className="mb-4">
+                    <OInputField
+                      wrapperClassName="relative z-0  w-full group"
+                      type="text"
+                      inputLabel={<>{t("YOUTUBE")}</>}
+                      id="youtube"
+                      maxLength={50}
+                      autoComplete="off"
+                      onInput={(e) => preventMaxInput(e, 50)}
+                      register={register("youtube", validationFields?.youtube)}
+                      placeholder=" "
+                      disable={manager?.add === false}
+                    />
+                    <ErrorMessage message={errors?.youtube?.message} />
+                  </div>
 
-                <div className="mb-4">
-                  <OInputField
-                    wrapperClassName="relative z-0  w-full group"
-                    type="text"
-                    inputLabel={<>{t("TWITTER")}</>}
-                    id="twitter"
-                    maxLength={50}
-                    autoComplete="off"
-                    onInput={(e) => preventMaxInput(e, 50)}
-                    register={register("twitter", validationFields?.twitter)}
-                    placeholder=" "
-                    disable={manager?.add === false}
-                  />
-                  <ErrorMessage message={errors?.twitter?.message} />
+                  <div className="mb-4">
+                    <OInputField
+                      wrapperClassName="relative z-0  w-full group"
+                      type="text"
+                      inputLabel={<>{t("INSTAGRAM")}</>}
+                      id="instagram"
+                      maxLength={50}
+                      autoComplete="off"
+                      onInput={(e) => preventMaxInput(e, 50)}
+                      register={register("instagram", validationFields?.instagram)}
+                      placeholder=" "
+                      disable={manager?.add === false}
+                    />
+                    <ErrorMessage message={errors?.instagram?.message} />
+                  </div>
+
+                  <div className="mb-4">
+                    <OInputField
+                      wrapperClassName="relative z-0  w-full group"
+                      type="text"
+                      inputLabel={<>{t("LINKEDIN")}</>}
+                      id="linkedin"
+                      maxLength={50}
+                      autoComplete="off"
+                      onInput={(e) => preventMaxInput(e, 50)}
+                      register={register("linkedin", validationFields?.linkedin)}
+                      placeholder=" "
+                      disable={manager?.add === false}
+                    />
+                    <ErrorMessage message={errors?.linkedin?.message} />
+                  </div>
+
+                  <div className="mb-4">
+                    <OInputField
+                      wrapperClassName="relative z-0  w-full group"
+                      type="text"
+                      inputLabel={<>{t("TWITTER")}</>}
+                      id="twitter"
+                      maxLength={50}
+                      autoComplete="off"
+                      onInput={(e) => preventMaxInput(e, 50)}
+                      register={register("twitter", validationFields?.twitter)}
+                      placeholder=" "
+                      disable={manager?.add === false}
+                    />
+                    <ErrorMessage message={errors?.twitter?.message} />
+                  </div>
                 </div>
               </div>
-          </div>
 
 
 
@@ -413,8 +403,8 @@ const Settings = () => {
         </div>
         <div className="border p-5 rounded-md">
 
-              <Commission saveSettingData={saveSettingData}/>
-     
+          <Commission saveSettingData={saveSettingData} />
+
         </div>
 
 
@@ -437,12 +427,12 @@ const Settings = () => {
 
 export default Settings;
 
-const ReusableInputField = ({ label, id, register, errors, validationRules, manager, onInput, onKeyDown }) => (
+const ReusableInputField = ({ label, id, register, errors, validationRules, manager, onInput, onKeyDown, labelType }) => (
   <div className="relative z-0 mb-6 w-full group">
     <OInputField
       type="number"
       wrapperClassName="relative z-0  w-full group"
-      labelType={true}
+      labelType={labelType}
       disable={manager?.add === false}
       inputLabel={<>{label}</>}
       id={id}

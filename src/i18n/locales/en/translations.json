@@ -66,7 +66,7 @@
   "O_NEXT": "Next",
   "O_FIRST_NAME": "First Name",
   "O_LAST_NAME": "Last Name",
-  "O_COUNTRY_CODE": "Country code",
+  "O_COUNTRY_CODE": "Country Code",
   "O_MOBILE_NUMBER": "Mobile Number",
   "USERS_EMAIL_ID": "Email-ID",
   "O_PASSWORD": "Password",
@@ -895,7 +895,7 @@
   "COMMUNITY_MODERATOR_SEARCH_PLACEHOLDER": "Post ID, username, title" ,
   "O_COMMUNITY": "Community",
   "O_COMMUNITY_GLOBAL": "Global",
-  "O_COMMUNITY_FRIENDS": "Friends",
+  "O_COMMUNITY_FRIENDS": "Friend",
   "DOWNLOAD_FEEDBACK": "Download Feedback",
   "GST_TIME_OF_DEPOSIT": "GST at the time of deposit %",
   "TDS_TIME_OF_DEPOSIT": "TDS at the time of withdrawal %",
@@ -927,6 +927,13 @@
   "O_DEPOSIT": "Deposit",
   "O_REFUND_MONETARY_CHALLENGE": "Refund Monetary Challenge",
   "MAX_LIMIT": "Max Limit (100 User)",
-  "PLEASE_ENTER_MONEY_STACK": "Please enter money stack"
-
+  "PLEASE_ENTER_MONEY_STACK": "Please enter money stack",
+  "WITHDRAWAL_REQEUST_MANAGER": "Withdrawal Request Manager",
+  "SEARCH_BY_FULL_NAME_USER_MOBILE_USER_NAME": "Full Name, User ID, Mobile, Username",
+  "EXPORT_DATA_CSV": "Export Data in CSV",
+  "TOTAL_BALANCE": "Total Balance",
+  "REQUESTED_AMOUNT": "Requested Amount",
+  "REMAINING_AMOUNT":"Remaining amount",
+  "REQUESTED_DATE":"Requested Date",
+  "TIME_LEFT":"Time left"
 }

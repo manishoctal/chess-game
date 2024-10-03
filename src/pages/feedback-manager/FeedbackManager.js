@@ -178,15 +178,11 @@ function FeedbackManager() {
       const result = await apiPut(path, payload);
       if (result?.status === 200) {
         notification.success(result.data.message);
-        // allAchievement({ statusChange: 1 });
       }
     } catch (error) {
       console.error("error in get all badges list==>>>>", error.message);
     }
   };
-
-  console.log("allCommunity", allCommunity)
-
 
   const onCsvDownload = async () => {
 
@@ -210,7 +206,6 @@ function FeedbackManager() {
               <div className="col-span-2 flex flex-wrap  items-center">
                 <div className="flex items-center lg:pt-0 pt-3 flex-wrap justify-center mb-2 2xl:mb-0">
                   <div className="relative flex items-center mb-3">
-                    {/* Post ID, Posted username, Post title */}
                     <OSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm} placeholder={t("SEARCH_BY_KEYWORD")} />
                   </div>
                   <ODateRangePicker handleDateChange={handleDateChange} isReset={filterData?.isReset} setIsReset={setFilterData} />
