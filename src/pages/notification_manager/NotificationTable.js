@@ -2,9 +2,14 @@ import { isEmpty, startCase } from "lodash";
 import { useTranslation } from "react-i18next";
 import helpers from "utils/helpers";
 import ONotificationTableHead from "../../components/reusable/OTableHead";
+import { useState } from "react";
+import SpecifiUserPopup from "./SpecifiUserPopup";
 const NotificationTable = ({ notifications, paginationObj, sort, setSort, pageSize }) => {
   const { t } = useTranslation();
-
+  const [showSpecificUser,setShowSpecificUser]=useState(false);
+  const handleSpecificUser = () =>{
+    setShowSpecificUser(!showSpecificUser)
+  }
   return (
     <div className="p-3">
       <div className="overflow-x-auto relative rounded-lg border">
@@ -21,7 +26,7 @@ const NotificationTable = ({ notifications, paginationObj, sort, setSort, pageSi
             </tr>
           </thead>
           <tbody>
-            {notifications &&
+            {notifications && notifications?.length > 0 &&
               notifications?.map((item, i) => (
                 <tr key={i} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                   <th scope="row" className="py-4 px-6 border-r font-medium text-gray-900  dark:text-white">
@@ -32,7 +37,7 @@ const NotificationTable = ({ notifications, paginationObj, sort, setSort, pageSi
                   <td className="py-4 px-6 border-r text-center">{startCase(item?.description) || "N/A"}</td>
                   <td className="py-4 px-6 border-r w-60 text-center">
                     {helpers.ternaryCondition(item?.sendTo == "all", "All Users", startCase(item?.sendTo)) || "N/A"}{" "}
-                    {item?.sendTo !== "all" && !isEmpty(item?.userData) && <span className="font-bold text-slate-600">({startCase(item?.userData?.firstName || "N/A") + " " + startCase(item?.userData?.lastName) || ""})</span>}
+                    {/* {item?.sendTo !== "all"  && <button className="font-bold text-slate-600" onClick={()=>handleSpecificUser()}>({t("VIEW")})</button>} */}
                   </td>
                   <td className="py-4 px-6 border-r text-center">{helpers.getDateAndTime(item?.createdAt)}</td>
                 </tr>
@@ -47,6 +52,11 @@ const NotificationTable = ({ notifications, paginationObj, sort, setSort, pageSi
           </tbody>
         </table>
       </div>
+
+{
+  showSpecificUser && <SpecifiUserPopup handleSpecificUser={handleSpecificUser}/>
+}
+
     </div>
   );
 };

@@ -22,11 +22,11 @@ export const validationRules = {
 
   password: /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
   passwordMessage:
-    "Password must contain uppercase and lowercase characters, numbers, special character and must be minimum 8 character long.",
+    "Old password must contain lowercase, uppercase characters, numbers, a special character, and be between 8 to 16 characters long.",
   confirmPasswordMessage:
-    "Confirm password must contain uppercase and lowercase characters, numbers, special character and must be minimum 8 character long.",
+    "Confirm Old password must contain lowercase, uppercase characters, numbers, a special character, and be between 8 to 16 characters long.",
   newPasswordMessage:
-    "New password must contain uppercase and lowercase characters, numbers, special character and must be minimum 8 character long.",
+    "New password must contain lowercase, uppercase characters, numbers, a special character, and be between 8 to 16 characters long.",
   characters: /^[a-zA-Z_ ]*$/,
   charactersMessage: "Only alphabets are allowed.",
   numbers: /^[0-9]*$/,

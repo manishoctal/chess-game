@@ -15,12 +15,12 @@ import ODateRangePicker from "components/shared/datePicker/ODateRangePicker";
 import OCountUp from "components/OCountUp";
 import helpers from "utils/helpers";
 import apiPath from "utils/apiPath";
+import { NavLink } from "react-router-dom";
 
 function Dashboard() {
   const { t } = useTranslation();
   const { logoutUser } = useContext(AuthContext);
   const [dashboardDetails, setDashboardDetails] = useState({});
-
   const [filterData, setFilterData] = useState({
     startDate: "",
     endDate: "",
@@ -105,7 +105,7 @@ function Dashboard() {
       </div>
       <div className="sale_report grid pt-10 3xl:grid-cols-4 gap-y-10 gap-4 gap-x-10 2xl:grid-cols-4 sm:grid-cols-2 mb-7 ">
         {/* <Link to="/users"> */}
-        <div className="text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border">
+        <NavLink to="/users" state={"active"} className="cursor-pointer text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border">
           <h3 className="text-center mb-0 text-slate-900 font-bold md:text-3xl sm:text-lg dark:text-white">
             <OCountUp value={dashboardDetails?.totalActiveUsers} />
             <span className="text-base text-neutral-400 font-normal block pt-3 ">{t("TOTAL_NO_OF_ACTIVE_USERS")}</span>
@@ -113,10 +113,10 @@ function Dashboard() {
           <span className="text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-30px] p-3 border z-10 bg-white">
             <FaUserTie />
           </span>
-        </div>
+        </NavLink>
         {/* </Link> */}
         {/* <Link to="/users"> */}
-        <div className="text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border">
+        <NavLink to="/users" state={"inactive"} className="text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border">
           <h3 className="text-center mb-0 text-slate-900 font-bold md:text-3xl sm:text-lg dark:text-white">
             <OCountUp value={dashboardDetails?.totalInactiveUsers} />
             <span className="text-base text-neutral-400 font-normal block pt-3 ">{t("TOTAL_NO_OF_INACTIVE_USERS")}</span>
@@ -124,7 +124,7 @@ function Dashboard() {
           <span className="text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-30px] p-3 border z-10 bg-white">
             <FaUserTie />
           </span>
-        </div>
+        </NavLink>
         {/* </Link> */}
         <div className="text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border">
           <h3 className="text-center mb-0 text-slate-900 font-bold md:text-3xl sm:text-lg dark:text-white">

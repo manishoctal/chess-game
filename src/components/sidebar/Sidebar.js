@@ -14,6 +14,8 @@ import { IoMdNotificationsOutline } from "react-icons/io";
 
 import helpers from "utils/helpers";
 import { FaRegQuestionCircle } from "react-icons/fa";
+import { MdFeedback, MdWidthWide } from "react-icons/md";
+import { GrTransaction } from "react-icons/gr";
 
 const classNames = require("classnames");
 
@@ -108,19 +110,11 @@ const Sidebar = () => {
           <SidebarNavItem path="/dashboard" label="NAV_DASHBOARD" imgSrc={Dashboard} />
           <SidebarNavItem permission="subAdmin_manager" path="/sub-admin-manager" label="SUB_ADMIN_MANAGERS" icon={<FaUserGear size={21} color="#a7a7a7" />} />
           <SidebarNavItem permission="user_manager" path="/users" label="USER_MANAGER" imgSrc={userManager} />
-          {/* <SidebarNavItem permission="game_type_manager" path="/game-type-manager" label="GAME_TYPE_MANAGER" icon={<VscGame size={21} color="#a7a7a7" />} />
-          <SidebarNavItem permission="how_to_play_manager" path="/how-to-play-manager" label="HOW_TO_PLAY_MANAGER" imgSrc={rewardWithdrawalRequest} />
-          <SidebarNavItem permission="offer_manager" path="/offer-manager" label="OFFER_MANAGER" icon={<MdOutlineLocalOffer size={21} color="#a7a7a7" />} />
-          <SidebarNavItem permission="subscribed_manager" path="/subscribed-manager" label="SUBSCRIBED_MANAGER" icon={<MdOutlineSubscriptions size={21} color="#a7a7a7" />} />
-          <SidebarNavItem permission="achievement_and_badges" path="/achievement-and-badges" label="ACHIEVEMENT_AND_BADGES" icon={<GrAchievement size={21} color="#a7a7a7" />} /> */}
-          {/* <SidebarNavItem permission="trading_question_manager" path="/trading-question-manager" label="TRADING_QUESTION_MANAGER" icon={<BsPatchQuestion size={19} color="#a7a7a7" />} imgSrc={rewardWithdrawalRequest} />
-
-          <SidebarNavItem permission="player_card_manager" path="/player-card-manager" label="PLAYER_CARD_MANAGER" icon={<AiOutlineIdcard size={20} color="#a7a7a7" />} imgSrc={rewardWithdrawalRequest} />
-          <SidebarNavItem permission="player_stock_manager" path="/player-stock-manager" label="PLAYER_STOCK_MANAGER" icon={<AiOutlineStock size={20} color="#a7a7a7" />} imgSrc={rewardWithdrawalRequest} /> */}
-
           <SidebarNavItem permission="community_moderator" path="/community-moderator-manager" label="community-moderator-manager" icon={<AiOutlineMail size={21} color="#a7a7a7" />} />
           <SidebarNavItem permission="email_manager" path="/email-manager" label="EMAIL_MANAGER" icon={<AiOutlineMail size={21} color="#a7a7a7" />} />
-          <SidebarNavItem permission="feedback_manager" path="/feedback-manager" label="FEEDBACK_MANAGER" icon={<AiOutlineMail size={21} color="#a7a7a7" />} />
+          <SidebarNavItem permission="feedback_manager" path="/feedback-manager" label="FEEDBACK_MANAGER" icon={<MdFeedback size={21} color="#a7a7a7" />} />
+          {/* <SidebarNavItem permission="withdrawal_request_manager" path="/withdrawal-request-manager" label="WITHDRAWAL_REQEUST_MANAGER" icon={<MdWidthWide size={21} color="#a7a7a7" />} /> */}
+          {/* <SidebarNavItem permission="transaction_manager" path="/transection_manager" label="NAV_TRANSACTION_MANAGER" icon={<GrTransaction size={21} color="#a7a7a7" />} /> */}
           <SidebarNavItem permission="notification_manager" path="/notification_manager" label="NOTIFICATION_MANAGER" icon={<IoMdNotificationsOutline size={21} color="#a7a7a7" />} />
           <SidebarNavItem permission="static_pages_management" path="/static-content" label="NAV_STATIC_CONTENTS" imgSrc={manageStaticContents} />
           <SidebarNavItem permission="FAQ" path="/faqs" label="NAV_FAQS" icon={<FaRegQuestionCircle size={21} color="#a7a7a7" />} />

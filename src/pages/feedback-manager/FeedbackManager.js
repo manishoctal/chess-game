@@ -61,12 +61,12 @@ function FeedbackManager() {
         sortType: sort.sortType,
       };
 
-      const path = apiPath.communityModeratror;
+      const path = apiPath.feedbackListing;
       const result = await apiGet(path, payload);
       if (result?.status === 200) {
         const response = result?.data?.results;
         const resultStatus = result?.data?.success;
-   
+
         setAllCommunity(response?.docs);
 
         setPaginationObj({
@@ -178,28 +178,24 @@ function FeedbackManager() {
       const result = await apiPut(path, payload);
       if (result?.status === 200) {
         notification.success(result.data.message);
-        // allAchievement({ statusChange: 1 });
       }
     } catch (error) {
       console.error("error in get all badges list==>>>>", error.message);
     }
   };
 
-console.log("allCommunity",allCommunity)
+  const onCsvDownload = async () => {
 
-
-const onCsvDownload = async () => {
-    
-  try {
-    const path = apiPath.downloadFeedback;
-    const result = await apiGet(path);
-    if (result?.data?.success) {
-      helpers.downloadFile(result?.data?.results?.filePath);
+    try {
+      const path = apiPath.downloadFeedback;
+      const result = await apiGet(path);
+      if (result?.data?.success) {
+        helpers.downloadFile(result?.data?.results?.filePath);
+      }
+    } catch (error) {
+      console.error("error in get all dashboard list==>>>>", error.message);
     }
-  } catch (error) {
-    console.error("error in get all dashboard list==>>>>", error.message);
-  }
-};
+  };
 
   return (
     <div>
@@ -210,15 +206,23 @@ const onCsvDownload = async () => {
               <div className="col-span-2 flex flex-wrap  items-center">
                 <div className="flex items-center lg:pt-0 pt-3 flex-wrap justify-center mb-2 2xl:mb-0">
                   <div className="relative flex items-center mb-3">
-                    {/* Post ID, Posted username, Post title */}
                     <OSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm} placeholder={t("SEARCH_BY_KEYWORD")} />
                   </div>
                   <ODateRangePicker handleDateChange={handleDateChange} isReset={filterData?.isReset} setIsReset={setFilterData} />
-                
+
                   <button type="button" onClick={handleReset} title={t("O_RESET")} className="bg-gradientTo text-sm px-6 flex gap-2 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2">
                     <BiReset size={18} />
                     {t("O_RESET")}
                   </button>
+                  <div className="p-5">
+                    <button
+                      onClick={onCsvDownload} type="button" className="bg-gradientTo text-sm px-6 flex gap-2  mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2"
+                    >
+                      <GoDownload size={18} className="" />
+                      {t("DOWNLOAD_FEEDBACK")}
+                    </button>
+                  </div>
+
                 </div>
               </div>
 
@@ -227,18 +231,10 @@ const onCsvDownload = async () => {
                   {t("O_SEARCH")}
                 </label>
 
-    
+
               </div>
             </form>
 
-         <div className="p-5">
-         <button
-               onClick={onCsvDownload}  className={` ml-auto flex items-center bg-gradientTo mr-4 text-white active:bg-emerald-600 font-normal text-sm px-6 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-1`}
-              >
-               <GoDownload size={18} className="mr-2" />
-                {t("DOWNLOAD_FEEDBACK")}
-              </button>
-         </div>
 
             <FeedbackManagerTable
               allCommunity={allCommunity}

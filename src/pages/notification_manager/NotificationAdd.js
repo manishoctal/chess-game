@@ -75,9 +75,6 @@ const NotificationAdd = ({ getAllNotifications, handleCategory }) => {
     }
   };
 
-  // add notification function end
-
-  // debounce function for search start
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       setDebouncedSearchTerm(searchTerm?.trim());
@@ -97,7 +94,6 @@ const NotificationAdd = ({ getAllNotifications, handleCategory }) => {
       console.log("result",result?.data?.results?.docs)
       if (result?.data?.success) {
         const formattedOption = result?.data?.results?.docs.map((res) => {
-          // return { label: `${res?.fullName + "," + "(" + res?.email + ")"}`, value: res?._id };
           return { label: `${res?.fullName }`, value: res?._id };
         });
         setUsersSuggestion(formattedOption);
@@ -114,15 +110,11 @@ const NotificationAdd = ({ getAllNotifications, handleCategory }) => {
       handleSearchOption(debouncedSearchTerm);
     }
   }, [debouncedSearchTerm]);
-  // debounce function for search end
 
-  useEffect(() => {
-    getAllNotifications();
-  }, []);
   return (
     <div>
-      <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
-        <div className="relative my-6 mx-auto">
+      <div className="justify-center items-center  overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+        <div className="relative my-6 mx-auto max-w-[480px]">
           <div className="sm:py-4 sm:px-2 py-8 px-7 ">
             <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
               <div className="dark:bg-gray-900 flex items-center justify-between p-5 border-b border-solid border-slate-200 rounded-t">
@@ -133,7 +125,7 @@ const NotificationAdd = ({ getAllNotifications, handleCategory }) => {
                   </span>
                 </button>
               </div>
-              <div className="relative p-6 flex-auto dark:bg-gray-800">
+              <div className="relative p-6 flex-auto dark:bg-gray-800 ">
                 <div className="">
                   <div className="px-2">
                     <OInputField
@@ -211,6 +203,7 @@ const NotificationAdd = ({ getAllNotifications, handleCategory }) => {
                             name={
                               <>
                                 {t("SPECIFIC_USER")} <span className="text-red-600">*</span>
+                                <span className="inline-block ml-[165px] text-red-600">{t("MAX_LIMIT")}</span>
                               </>
                             }
                             type={false}
@@ -218,15 +211,20 @@ const NotificationAdd = ({ getAllNotifications, handleCategory }) => {
                           <Select
                             wrapperClassName="relative z-0 mb-2 w-full group"
                             name="language"
+                            isMulti={true}
                             inputValue={searchTerm}
                             onInputChange={(value) => setSearchTerm(value)}
                             placeholder={<>{t("SEARCH_USER_BY_NAME")}</>}
-                            options={[{ label: t("SEARCH_USER_BY_NAME"), value: "" }, ...usersSuggestion]}
+                            options={usersSuggestion.map(option => ({
+                              ...option,
+                              isDisabled: selectedUsers.length >= 100 && !selectedUsers.some(user => user.value === option.value)
+                            }))}
                             defaultValue={t("SELECT_USERS")}
                             onChange={(e) => {
                               if (e?.value == "") {
                                 setSelectedUsers("");
-                              } else {
+                              }
+                              else {
                                 setSelectedUsers(e);
                                 setNotificationUserError(false);
                               }

@@ -5,7 +5,7 @@ import { isEmpty, startCase } from "lodash";
 import useToastContext from "hooks/useToastContext";
 import { AiFillEdit, AiFillEye, AiFillWallet } from "react-icons/ai";
 import { useTranslation } from "react-i18next";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import UserEdit from "./UserEdit";
 import ViewWalletBalance from "./ViewWalletBalance";
 import helpers from "../../utils/helpers";
@@ -38,6 +38,7 @@ const Table = ({
   const [showReviewPopup, setShowReviewPopup] = useState(false);
   const [reportItem, setReportItem] = useState("")
 
+  const navigate = useNavigate();
 
 
 
@@ -123,17 +124,14 @@ const Table = ({
   };
 
 
-  const getInviteCode = (userData) => {
-    return userData?.inviteCode ? userData?.inviteCode : 'N/A'
-
-  };
-
   const getKycStatusText = (userKyc) => {
     return helpers.ternaryCondition(userKyc?.isKYCVerified === 0, 'No', 'Yes');
   };
 
   const renderTableCell = (content, classNames) => (
-    <td className={classNames}>{content}</td>
+    <td className={classNames}>
+      {content}
+    </td>
   );
   const renderCommonTableCells = (item) => (
     <>
@@ -158,43 +156,50 @@ const Table = ({
         <div className="flex justify-center items-center">
           <NavLink
             onClick={() => handleUserView(item)}
-            to="/users/view"
+            to={`/users/view/${item?._id}`}
             state={{ ...item, userTypeDetail }}
-            title={t("O_VIEW")}
             className="px-2 py-2"
           >
             <AiFillEye className="cursor-pointer w-5 h-5 text-slate-600 dark:hover:text-white hover:text-blue-700" />{" "}
           </NavLink>
 
-          <button
-            className="px-2 py-2" onClick={() => handleReportToggle(item)}
+          <div
+            className="px-2 py-2" 
+            onClick={() => {
+              if (item?.reportsCount) {
+                handleReportToggle(item);
+              }
+            }}
           >
             <div className="relative">
-              <FaFlag className="cursor-pointer w-5 h-5 text-slate-600 dark:hover:text-white hover:text-blue-700" />{" "}
-              <span className="w-5 h-5 bg-black text-white rounded-full flex items-center justify-center text-[10px] absolute top-[-8px] right-[-7px]">{helpers.ternaryCondition(item?.reportsCount, item?.reportsCount, "0")}</span>
+              <FaFlag className={` w-5 h-5 text-slate-600 dark:hover:text-white hover:text-blue-700 ${item?.reportsCount ? "cursor-pointer" : "" }`}/>{" "}
+              {
+                helpers?.ternaryCondition(item?.reportsCount, <span className="w-5 h-5 cursor-pointer bg-black text-white rounded-full flex items-center justify-center text-[10px] absolute top-[-8px] right-[-7px]">{helpers.ternaryCondition(item?.reportsCount, item?.reportsCount, "0")}</span>
+                  , "")
+              }
             </div>
-          </button>
+          </div>
 
 
-          <button
+          {/* <button
             className="px-2 py-2" onClick={() => handleShorReviewToggle(item)}
           >
             <div className="relative">
               <MdFeedback className="cursor-pointer w-5 h-5 text-slate-600 dark:hover:text-white hover:text-blue-700" />{" "}
             </div>
-          </button>
+          </button> */}
 
 
 
           {(manager?.add || user?.role === "admin") &&
             userTypeDetail === "local" &&
             (item?.status !== "deleted" ? (
-              <div onClick={() => handelEdit(item)}>
+              <button onClick={() => handelEdit(item)}>
                 <AiFillEdit
                   className="text-green text-lg cursor-pointer  text-slate-600"
                   title="Edit user"
                 />
-              </div>
+              </button>
             ) : (
               ""
             ))}
@@ -203,10 +208,6 @@ const Table = ({
     </td>
   );
 
-  const renderUserTypeSpecificCells = (item) => {
-    return renderTableCell(getInviteCode(item), "bg-white py-2 px-4 border-r border  dark:border-[#ffffff38] text-center font-bold"
-    );
-  }
 
   const renderStatusTableCell = (item) =>
     helpers.andOperator(
@@ -226,21 +227,34 @@ const Table = ({
     return users?.map((item, i) => {
       const rowClassName = getRowClassName(item);
 
+      // const getUserRedirection = () =>{
+      //   if(item?.userName){
+      //     navigate(`/users/view/${item?._id}`)
+      //   }
+      // }
+
+
       return (
         <tr key={i} className={rowClassName}>
           {renderTableCell(i + 1 + pageSize * (page - 1), "py-4 px-3 border-r border  font-medium text-gray-900  dark:text-white dark:border-[#ffffff38]")}
           {renderTableCell(getDisplayUserId(item), "bg-white py-4 px-4 border-r border  dark:border-[#ffffff38]")}
           {renderTableCell(getDisplayName(item), "bg-white py-4 px-4 border-r border  dark:border-[#ffffff38]")}
-          {renderTableCell(helpers.ternaryCondition(item?.userName, item?.userName, "N/A"), "bg-white border py-2 px-4 border-r  dark:border-[#ffffff38] font-bold ")}
+
+          <td className="bg-white py-4 px-4 border-r border  dark:border-[#ffffff38]">
+            <NavLink
+              to={`/users/view/${item?._id}`}
+              state={{ ...item }}
+              className="px-2 py-2 hover:text-black"
+            >
+              {helpers.ternaryCondition(item?.userName, item?.userName, "N/A")}
+            </NavLink>
+          </td>
+
+
           {renderTableCell(helpers.ternaryCondition(item?.email, item?.email, "N/A"), "bg-white py-2 px-4 border-r border  dark:border-[#ffffff38] font-bold text-slate-900")}
-          {renderTableCell(
-            helpers.ternaryCondition(
-              item?.mobile,
-              `+ ${item?.countryCode || ""} ${item?.mobile}`,
-              "N/A"
-            ),
-            "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold"
-          )}
+          {renderTableCell(helpers.ternaryCondition(item?.countryCode, `+ ${item?.countryCode}`, "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold")}
+          {renderTableCell(helpers.ternaryCondition(item?.mobile, item?.mobile, "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold")}
+
           {/* {renderUserTypeSpecificCells(item)} */}
           {renderCommonTableCells(item)}
           {renderTableCell(helpers.ternaryCondition(item?.ratingMonetary, item?.ratingMonetary, "0"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold")}
@@ -272,6 +286,7 @@ const Table = ({
                 <OUserTableHead sort={sort} setSort={setSort} name='FULL_NAME' fieldName='fullName' />
                 <OUserTableHead sort={sort} setSort={setSort} name='USER_NAME' fieldName='userName' />
                 <OUserTableHead sort={sort} setSort={setSort} name='O_EMAIL_ID' fieldName='email' />
+                <OUserTableHead sort={sort} setSort={setSort} name='O_COUNTRY_CODE' fieldName='countryCode' />
                 <OUserTableHead sort={sort} setSort={setSort} name='O_MOBILE' fieldName='mobile' />
                 {/* <OUserTableHead sort={sort} setSort={setSort} name='INVITE_CODE_USED' fieldName='inviteCode' /> */}
                 <OUserTableHead sort={sort} setSort={setSort} name='JOINED_DATE' fieldName='createdAt' />

@@ -15,7 +15,7 @@ const Captcha = ({ onChange,isLoginError }) => {
   const generateCaptcha = () => {
     const chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     let captchaText = '';
-    for (let i = 0; i < 6; i++) {
+    for (let i = 0; i < 4; i++) {
       const randomIndex = generateRandomBytes(1)[0] % chars.length;
       captchaText += chars.charAt(randomIndex);
     }
