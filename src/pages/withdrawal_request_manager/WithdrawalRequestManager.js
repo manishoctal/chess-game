@@ -10,14 +10,13 @@ import PageSizeList from "components/PageSizeList";
 import helpers from "utils/helpers";
 import OSearch from "components/reusable/OSearch";
 import { BiReset } from "react-icons/bi";
-import CommunityModeratorManagerTable from "./CommunityModeratorManagerTable";
-import useToastContext from "hooks/useToastContext";
+import { GoDownload } from "react-icons/go";
+import WithdrawalRequestTable from "./WithdrawalRequestTable";
 
-function CommunityModeratorManager() {
+function WithdrawalRequestManager() {
   const { t } = useTranslation();
-  const { logoutUser, user } = useContext(AuthContext);
-  const notification = useToastContext();
-  const manager = user?.permission?.find((e) => e.manager === "community_moderator" || "achievement_and_badges") ?? {};
+  const { logoutUser, notification, user } = useContext(AuthContext);
+  const manager = user?.permission?.find((e) => e.manager === "feedback_manager" || "achievement_and_badges") ?? {};
   const [paginationObj, setPaginationObj] = useState({
     page: 1,
     pageCount: 1,
@@ -27,6 +26,7 @@ function CommunityModeratorManager() {
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
   const [isInitialized, setIsInitialized] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+  const [categoryAdd, setCategoryAdd] = useState(false);
   const [allCommunity, setAllCommunity] = useState([]);
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
@@ -35,11 +35,9 @@ function CommunityModeratorManager() {
     category: "",
     searchkey: "",
     startDate: "",
-    community: "",
     endDate: "",
     isReset: false,
     isFilter: false,
-    
   });
   const [sort, setSort] = useState({
     sortBy: "createdAt",
@@ -47,8 +45,7 @@ function CommunityModeratorManager() {
   });
 
   // get all notification function start
-  const getAllCommunity = async (data, pageNO) => {
-    
+  const getAllNotifications = async () => {
     try {
       const { startDate, endDate, searchkey, community, status } = filterData;
 
@@ -64,9 +61,8 @@ function CommunityModeratorManager() {
         sortType: sort.sortType,
       };
 
-      const path = apiPath.communityModeratror;
+      const path = apiPath.feedbackListing;
       const result = await apiGet(path, payload);
-      console.log("result",result)
       if (result?.status === 200) {
         const response = result?.data?.results;
         const resultStatus = result?.data?.success;
@@ -91,7 +87,7 @@ function CommunityModeratorManager() {
   };
 
   useEffect(() => {
-    getAllCommunity();
+    getAllNotifications();
   }, [page, filterData, sort, pageSize]);
   // get all notification function end
 
@@ -115,7 +111,9 @@ function CommunityModeratorManager() {
     }
   }, [debouncedSearchTerm]);
 
-
+  const handleCategory = () => {
+    setCategoryAdd(!categoryAdd);
+  };
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -144,6 +142,9 @@ function CommunityModeratorManager() {
   };
 
 
+
+
+
   const handleDateChange = (start, end) => {
     setPage(1);
     setFilterData({
@@ -167,26 +168,41 @@ function CommunityModeratorManager() {
     setPage(1);
     setFilterData({ ...filterData, status: e.target.value, isFilter: true });
   };
-
-
   const handelStatusChange = async (item) => {
     try {
       const payload = {
         status: item?.status === "inactive" ? "active" : "inactive",
-        type: "post",
+        type: "achievement",
       };
       const path = `${apiPath.changeStatus}/${item?._id}`;
       const result = await apiPut(path, payload);
       if (result?.status === 200) {
-        getAllCommunity({ statusChange: 1 });
         notification.success(result.data.message);
-       
+        // allAchievement({ statusChange: 1 });
       }
     } catch (error) {
-      console.error("error in get all users list==>>>>", error.message);
+      console.error("error in get all badges list==>>>>", error.message);
     }
   };
 
+  console.log("allCommunity", allCommunity)
+  const statusPage = e => {
+    setPage(1)
+    setFilterData({ ...filterData, category: e.target.value, isFilter: true })
+  }
+
+  const onCsvDownload = async () => {
+
+    try {
+      const path = apiPath.downloadFeedback;
+      const result = await apiGet(path);
+      if (result?.data?.success) {
+        helpers.downloadFile(result?.data?.results?.filePath);
+      }
+    } catch (error) {
+      console.error("error in get all dashboard list==>>>>", error.message);
+    }
+  };
 
   return (
     <div>
@@ -197,11 +213,11 @@ function CommunityModeratorManager() {
               <div className="col-span-2 flex flex-wrap  items-center">
                 <div className="flex items-center lg:pt-0 pt-3 flex-wrap justify-center mb-2 2xl:mb-0">
                   <div className="relative flex items-center mb-3">
-                    <OSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm} placeholder={t("COMMUNITY_MODERATOR_SEARCH_PLACEHOLDER")} />
+                    {/* Post ID, Posted username, Post title */}
+                    <OSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm} placeholder={t("SEARCH_BY_FULL_NAME_USER_MOBILE_USER_NAME")} />
                   </div>
                   <ODateRangePicker handleDateChange={handleDateChange} isReset={filterData?.isReset} setIsReset={setFilterData} />
-                  {(
-                    <div className="flex items-center mb-3 ml-3">
+                  <div className="flex items-center mb-3 ml-3">
                       <select
                         id="countries"
                         type=" password"
@@ -214,35 +230,23 @@ function CommunityModeratorManager() {
                         <option defaultValue value="">
                           {t("O_ALL")}
                         </option>
-                        <option value="active">{t("O_ACTIVE")}</option>
-                        <option value="inactive">{t("O_INACTIVE")}</option>
+                        <option value="accepted">{t("ACCEPTED")}</option>
+                        <option value="rejected">{t("REJECTED")}</option>
                       </select>
                     </div>
-                  )}
-
-                  {(
-                    <div className="flex items-center mb-3 ml-3">
-                      <select
-                        id="countries"
-                        type=" password"
-                        name="floating_password"
-                        className="block p-2 w-full text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer"
-                        placeholder=" "
-                        value={filterData?.community}
-                        onChange={(e) => communityStatusChange(e)}
-                      >
-                        <option defaultValue value="">
-                          {t("O_COMMUNITY")}
-                        </option>
-                        <option value="global">{t("O_COMMUNITY_GLOBAL")}</option>
-                        <option value="friend">{t("O_COMMUNITY_FRIENDS")}</option>
-                      </select>
-                    </div>
-                  )}
                   <button type="button" onClick={handleReset} title={t("O_RESET")} className="bg-gradientTo text-sm px-6 flex gap-2 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2">
                     <BiReset size={18} />
                     {t("O_RESET")}
                   </button>
+                  <div className="p-5">
+                    <button
+                      onClick={onCsvDownload} type="button" className="bg-gradientTo text-sm px-6 flex gap-2  mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2"
+                    >
+                      <GoDownload size={18} className="" />
+                      {t("EXPORT_DATA_CSV")}
+                    </button>
+                  </div>
+
                 </div>
               </div>
 
@@ -250,14 +254,16 @@ function CommunityModeratorManager() {
                 <label htmlFor="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">
                   {t("O_SEARCH")}
                 </label>
+
+
               </div>
             </form>
 
 
-            <CommunityModeratorManagerTable
+            <WithdrawalRequestTable
               allCommunity={allCommunity}
               notification={notification}
-              getAllCommunity={getAllCommunity}
+              getAllNotifications={getAllNotifications}
               page={page}
               setSort={setSort}
               sort={sort}
@@ -284,4 +290,4 @@ function CommunityModeratorManager() {
     </div>
   );
 }
-export default CommunityModeratorManager;
+export default WithdrawalRequestManager;

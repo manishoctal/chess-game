@@ -29,7 +29,7 @@ function Login() {
   } = useForm({ mode: "onBlur", shouldFocusError: true, defaultValues: {} });
   const [rememberMe, setRememberMe] = useState(window?.localStorage.getItem("rememberMe") === "true");
   const formValidation = FormValidation();
-
+   
   const handleRememberMe = (e) => {
     window?.localStorage.setItem("rememberMe", e.target.checked);
     setRememberMe(e.target.checked);
@@ -40,6 +40,7 @@ function Login() {
       reset({
         email: window?.localStorage.getItem("email"),
         password: window?.localStorage.getItem("password"),
+        rememberMe:window?.localStorage.getItem("rememberMe")
       });
     }
   }, []);
@@ -67,9 +68,11 @@ function Login() {
     if (rememberMe) {
       window?.localStorage.setItem("email", data.email);
       window?.localStorage.setItem("password", data.password);
+      window?.localStorage.setItem("rememberMe", "true");
     } else {
       window?.localStorage.removeItem("email");
       window?.localStorage.removeItem("password");
+      window?.localStorage.removeItem("rememberMe");
     }
     setMessage("CAPTCHA validation successful!");
     setMessageClass("text-green-600");

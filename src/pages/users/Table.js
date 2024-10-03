@@ -252,14 +252,9 @@ const Table = ({
 
 
           {renderTableCell(helpers.ternaryCondition(item?.email, item?.email, "N/A"), "bg-white py-2 px-4 border-r border  dark:border-[#ffffff38] font-bold text-slate-900")}
-          {renderTableCell(
-            helpers.ternaryCondition(
-              item?.mobile,
-              `+ ${item?.countryCode || ""} ${item?.mobile}`,
-              "N/A"
-            ),
-            "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold"
-          )}
+          {renderTableCell(helpers.ternaryCondition(item?.countryCode, `+ ${item?.countryCode}`, "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold")}
+          {renderTableCell(helpers.ternaryCondition(item?.mobile, item?.mobile, "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold")}
+
           {/* {renderUserTypeSpecificCells(item)} */}
           {renderCommonTableCells(item)}
           {renderTableCell(helpers.ternaryCondition(item?.ratingMonetary, item?.ratingMonetary, "0"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold")}
@@ -291,6 +286,7 @@ const Table = ({
                 <OUserTableHead sort={sort} setSort={setSort} name='FULL_NAME' fieldName='fullName' />
                 <OUserTableHead sort={sort} setSort={setSort} name='USER_NAME' fieldName='userName' />
                 <OUserTableHead sort={sort} setSort={setSort} name='O_EMAIL_ID' fieldName='email' />
+                <OUserTableHead sort={sort} setSort={setSort} name='O_COUNTRY_CODE' fieldName='countryCode' />
                 <OUserTableHead sort={sort} setSort={setSort} name='O_MOBILE' fieldName='mobile' />
                 {/* <OUserTableHead sort={sort} setSort={setSort} name='INVITE_CODE_USED' fieldName='inviteCode' /> */}
                 <OUserTableHead sort={sort} setSort={setSort} name='JOINED_DATE' fieldName='createdAt' />

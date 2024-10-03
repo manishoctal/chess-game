@@ -121,7 +121,7 @@ const ChangePassword = () => {
                     },
                     pattern: {
                       value: validationRules.password,
-                      message: "Old password must contain lowercase,uppercase characters, numbers, special character and must be 8 character long.",
+                      message: "Old password must contain lowercase, uppercase characters, numbers, a special character, and be between 8 to 16 characters long.",
                     },
                   })}
                 />
