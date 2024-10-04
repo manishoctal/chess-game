@@ -1,11 +1,9 @@
-import { isEmpty } from "lodash";
+import { isEmpty, startCase } from "lodash";
 import { useTranslation } from "react-i18next";
 import helpers from "utils/helpers";
 import ONotificationTableHead from "../../components/reusable/OTableHead";
-import { NavLink } from "react-router-dom";
-import { Rating } from "@mui/material";
 
-const WithdrawalRequestTable = ({ allCommunity, paginationObj, sort, setSort, pageSize, manager, handelStatusChange }) => {
+const WithdrawalRequestTable = ({ allCommunity, paginationObj, sort, setSort, pageSize }) => {
   const { t } = useTranslation();
 
   return (
@@ -28,7 +26,9 @@ const WithdrawalRequestTable = ({ allCommunity, paginationObj, sort, setSort, pa
               <ONotificationTableHead sort={sort} setSort={setSort} name="REQUESTED_DATE" fieldName="requestedDate" classTd={"justify-center"} />
               <ONotificationTableHead sort={sort} setSort={setSort} name="O_STATUS" fieldName="status" classTd={"justify-center"} />
               <ONotificationTableHead sort={sort} setSort={setSort} name="TIME_LEFT" fieldName="timeLeft" classTd={"justify-center"} />
-              <ONotificationTableHead sort={sort} setSort={setSort} name="Created At" fieldName="createdAt" classTd={"justify-center"} />
+              <th scope="col" className="py-3 px-6 text-center">
+                  {t("O_ACTION")}
+                </th>
             </tr>
           </thead>
           <tbody>
@@ -38,19 +38,21 @@ const WithdrawalRequestTable = ({ allCommunity, paginationObj, sort, setSort, pa
                   <th scope="row" className="py-4 px-6 border-r font-medium text-gray-900  dark:text-white">
                     {i + 1 + pageSize * (paginationObj?.page - 1)}
                   </th>
-                  <td className="py-4 px-6 border-r text-center"><NavLink state={item} to={`/users/view/${item?._id}`}>{helpers?.ternaryCondition(item?.userDetails?.userName, item?.userDetails?.userName, "N/A")}</NavLink></td>
-                  <td className="py-4 px-6 border-r text-center">{helpers?.ternaryCondition(item?.message, item?.message, "N/A")}</td>
-                  <td className="py-4 px-6 border-r text-center">{helpers?.ternaryCondition(item?.message, item?.message, "N/A")}</td>
-                  <td className="py-4 px-6 border-r text-center">{helpers?.ternaryCondition(item?.message, item?.message, "N/A")}</td>
-                  <td className="py-4 px-6 border-r text-center">{helpers?.ternaryCondition(item?.message, item?.message, "N/A")}</td>
-                  <td className="py-4 px-6 border-r text-center">{helpers?.ternaryCondition(item?.message, item?.message, "N/A")}</td>
-                  <td className="py-4 px-6 border-r text-center">{helpers?.ternaryCondition(item?.message, item?.message, "N/A")}</td>
-                  <td className="py-4 px-6 border-r text-center">{helpers?.ternaryCondition(item?.message, item?.message, "N/A")}</td>
-                  <td className="py-4 px-6 border-r text-center">{helpers?.ternaryCondition(item?.message, item?.message, "N/A")}</td>
-                  <td className="py-4 px-6 border-r text-center">{helpers?.ternaryCondition(item?.message, item?.message, "N/A")}</td>
-                  <td className="py-4 px-6 border-r text-center">{helpers?.ternaryCondition(item?.message, item?.message, "N/A")}</td>
-                
+                  <td className="py-4 px-6 border-r text-center">{helpers?.ternaryCondition(item?.userDetails?.userUniqId, item?.userDetails?.userUniqId, "N/A")}</td>
+                  <td className="py-4 px-6 border-r text-center">{helpers?.ternaryCondition(item?.userDetails?.fullName, item?.userDetails?.fullName, "N/A")}</td>
+                  <td className="py-4 px-6 border-r text-center">{helpers?.ternaryCondition(item?.userDetails?.userName, item?.userDetails?.userName, "N/A")}</td>
+                  <td className="py-4 px-6 border-r text-center">{helpers?.ternaryCondition(item?.userDetails?.email, item?.userDetails?.email, "N/A")}</td>
+                  <td className="py-4 px-6 border-r text-center">{helpers?.ternaryCondition(item?.userDetails?.mobile, item?.userDetails?.mobile, "N/A")}</td>
+                  <td className="py-4 px-6 border-r text-center">{helpers?.ternaryCondition(item?.userDetails?.totalBalance, item?.userDetails?.totalBalance, "0")}</td>
+                  <td className="py-4 px-6 border-r text-center">{helpers?.ternaryCondition(item?.requestedAmount, item?.requestedAmount, "0")}</td>
+                  <td className="py-4 px-6 border-r text-center">{helpers?.ternaryCondition(item?.remainingAmount, item?.remainingAmount, "0")}</td>
                   <td className="py-4 px-6 border-r text-center">{helpers.getDateAndTime(item?.createdAt)}</td>
+                  <td className={`py-4 px-6 border-r text-center ${item?.status === 'accepted' ? 'text-green-500' : item?.status === 'rejected' ? 'text-red-500' : 'text-gray-600'
+                    }`}>
+                    {helpers?.ternaryCondition(item?.status, startCase(item?.status), "N/A")}
+                  </td>
+                  <td className="py-4 px-6 border-r text-center">{helpers.getDateAndTime(item?.createdAt)}</td>
+                  <td className="py-4 px-6 border-r text-center"><button className="bg-red-600 text-sm px-4 flex gap-2 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-red-600 sm:w-auto w-1/2">Reject</button></td>
                 </tr>
               ))}
 

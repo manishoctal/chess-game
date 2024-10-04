@@ -113,8 +113,8 @@ const Sidebar = () => {
           <SidebarNavItem permission="community_moderator" path="/community-moderator-manager" label="COMMUNITY_MODERATOR_MANAGER" icon={<AiOutlineMail size={21} color="#a7a7a7" />} />
           <SidebarNavItem permission="email_manager" path="/email-manager" label="EMAIL_MANAGER" icon={<AiOutlineMail size={21} color="#a7a7a7" />} />
           <SidebarNavItem permission="feedback_manager" path="/feedback-manager" label="FEEDBACK_MANAGER" icon={<MdFeedback size={21} color="#a7a7a7" />} />
-          {/* <SidebarNavItem permission="withdrawal_request_manager" path="/withdrawal-request-manager" label="WITHDRAWAL_REQEUST_MANAGER" icon={<MdWidthWide size={21} color="#a7a7a7" />} /> */}
-          {/* <SidebarNavItem permission="transaction_manager" path="/transection_manager" label="NAV_TRANSACTION_MANAGER" icon={<GrTransaction size={21} color="#a7a7a7" />} /> */}
+          <SidebarNavItem permission="withdrawal_request_manager" path="/withdrawal-request-manager" label="WITHDRAWAL_REQEUST_MANAGER" icon={<MdWidthWide size={21} color="#a7a7a7" />} />
+          <SidebarNavItem permission="transaction_manager" path="/transection_manager" label="NAV_TRANSACTION_MANAGER" icon={<GrTransaction size={21} color="#a7a7a7" />} />
           <SidebarNavItem permission="notification_manager" path="/notification_manager" label="NOTIFICATION_MANAGER" icon={<IoMdNotificationsOutline size={21} color="#a7a7a7" />} />
           <SidebarNavItem permission="static_pages_management" path="/static-content" label="NAV_STATIC_CONTENTS" imgSrc={manageStaticContents} />
           <SidebarNavItem permission="FAQ" path="/faqs" label="NAV_FAQS" icon={<FaRegQuestionCircle size={21} color="#a7a7a7" />} />

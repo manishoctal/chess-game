@@ -252,7 +252,7 @@ function Transaction() {
                       onClick={onCsvDownload} type="button" className="bg-gradientTo text-sm px-6 flex gap-2  mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2"
                     >
                       <GoDownload size={18} className="" />
-                      {t("DOWNLOAD_FEEDBACK")}
+                      {t("EXPORT_CSV_TRANSACTION")}
                     </button>
                   </div>
 

@@ -935,5 +935,6 @@
   "REQUESTED_AMOUNT": "Requested Amount",
   "REMAINING_AMOUNT":"Remaining amount",
   "REQUESTED_DATE":"Requested Date",
-  "TIME_LEFT":"Time left"
+  "TIME_LEFT":"Time left",
+  "EXPORT_CSV_TRANSACTION": "Export CSV"
 }
