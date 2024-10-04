@@ -14,10 +14,10 @@ export const permissionsMap = Object.freeze({
   player_card_manager: "/player-card-manager",
   subscribed_manager: "/subscribed-manager",
   achievement_and_badges: "/achievement-and-badges",
-  challenges_manager: "/challenges-manager",
   community_moderator: "/community-moderator-manager",
   transaction_manager: "/transaction-manager",
   static_pages_management: "/static-content",
   widthDrawal_request_manager: "/withdrawal-request-manager",
   feedback_manager: "/feedback-manager",
+  challenges_manager: "/challenges-manager",
 });

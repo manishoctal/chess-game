@@ -110,6 +110,7 @@ const Sidebar = () => {
           <SidebarNavItem path="/dashboard" label="NAV_DASHBOARD" imgSrc={Dashboard} />
           <SidebarNavItem permission="subAdmin_manager" path="/sub-admin-manager" label="SUB_ADMIN_MANAGERS" icon={<FaUserGear size={21} color="#a7a7a7" />} />
           <SidebarNavItem permission="user_manager" path="/users" label="USER_MANAGER" imgSrc={userManager} />
+          <SidebarNavItem permission="challenges_manager" path="/challenges-manager" label="CHALLENGES_MANAGER" imgSrc={userManager} />
           <SidebarNavItem permission="community_moderator" path="/community-moderator-manager" label="COMMUNITY_MODERATOR_MANAGER" icon={<AiOutlineMail size={21} color="#a7a7a7" />} />
           <SidebarNavItem permission="email_manager" path="/email-manager" label="EMAIL_MANAGER" icon={<AiOutlineMail size={21} color="#a7a7a7" />} />
           <SidebarNavItem permission="feedback_manager" path="/feedback-manager" label="FEEDBACK_MANAGER" icon={<MdFeedback size={21} color="#a7a7a7" />} />

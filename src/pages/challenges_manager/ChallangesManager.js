@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { apiGet } from "../../utils/apiFetch";
 import apiPath from "../../utils/apiPath";
-import Table from "./Table";
+import Table from "./challengesTable/CasualTable";
 import Pagination from "../Pagination";
 import AuthContext from "context/AuthContext";
 import dayjs from "dayjs";
@@ -12,8 +12,10 @@ import helpers from "utils/helpers";
 import { useLocation, useNavigate } from "react-router-dom";
 import { BiReset } from "react-icons/bi";
 import OSearch from "components/reusable/OSearch";
+import CasualTable from "./challengesTable/CasualTable";
+import MonetaryTable from "./challengesTable/MonetaryTable";
 
-function User() {
+function ChallangesManager() {
   const { t } = useTranslation();
   const location = useLocation();
   const [activeInactiveStatus, setActiveInactiveStatus] = useState(location?.state ?? "");
@@ -74,9 +76,6 @@ function User() {
         status:category
       };
 
-      // if (category && category !== undefined) {
-      //   payload.status = category;
-      // }
 
       if (kyc && kyc !== undefined) {
         payload.kyc = kyc;
@@ -127,7 +126,7 @@ function User() {
 
 
   useEffect(() => {
-    updatePageName(t("O_USERS"));
+    updatePageName(t("CHALLENGES_MANAGER"));
   }, []);
 
   const handleReset = () => {
@@ -287,37 +286,59 @@ function User() {
             </form>
 
           <div className="flex items-center justify-between">
-          <div className="flex items-center  py-5 px-4">
-              <button
-                className={` mr-4 text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150 ${activeTab === 'Tab1' ? 'bg-gradBlack' : 'bg-gradientTo'}`}
-                onClick={() => handleTabClick('Tab1')}
-              >
-                {t("USERS")}
-              </button>
-              <button
-                className={` text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 ease-linear transition-all duration-150 ${activeTab === 'Tab2' ? 'bg-gradBlack' : 'bg-gradientTo'}`}
-                onClick={() => handleTabClick('Tab2')}
-              >
-                {t("DELETED_USERS")}
-              </button>
-            </div>
-          
+
+
+          <div className="flex items-center p-5">
+         <button
+            className={` mr-4 text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150 ${activeTab === 'Tab1' ? 'bg-gradBlack' : 'bg-gradientTo'}`}
+            onClick={() => handleTabClick('Tab1')}
+          >
+            {t("CASUAL_CHALLENGE")}
+          </button>
+          <button
+            className={` text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 ease-linear transition-all duration-150 ${activeTab === 'Tab2' ? 'bg-gradBlack' : 'bg-gradientTo'}`}
+            onClick={() => handleTabClick('Tab2')}
+          >
+            {t("MONETARY_CHALLENGE")}
+          </button>
+         </div>
           </div>
 
-            <Table
-              users={users}
-              user={user}
-              getAllUser={getAllUser}
-              handleUserView={handleUserView}
-              page={page}
-              setSort={setSort}
-              sort={sort}
-              setPage={setPage}
-              pageSize={pageSize}
-              userType={userType}
-              manager={manager}
-              userResult={userResult}
-            />
+          {
+           helpers?.ternaryCondition(activeTab==="Tab1", <CasualTable
+            users={users}
+            user={user}
+            getAllUser={getAllUser}
+            handleUserView={handleUserView}
+            page={page}
+            setSort={setSort}
+            sort={sort}
+            setPage={setPage}
+            pageSize={pageSize}
+            userType={userType}
+            manager={manager}
+            userResult={userResult}
+          />,<MonetaryTable
+          users={users}
+          user={user}
+          getAllUser={getAllUser}
+          handleUserView={handleUserView}
+          page={page}
+          setSort={setSort}
+          sort={sort}
+          setPage={setPage}
+          pageSize={pageSize}
+          userType={userType}
+          manager={manager}
+          userResult={userResult}
+        />
+)
+          }
+
+        
+
+
+
             <div className="flex justify-between">
               <PageSizeList dynamicPage={dynamicPage} pageSize={pageSize} />
               {paginationObj?.totalItems ? (
@@ -335,4 +356,4 @@ function User() {
     </div>
   );
 }
-export default User;
+export default ChallangesManager;

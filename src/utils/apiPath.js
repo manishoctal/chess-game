@@ -87,7 +87,7 @@ const apiPath = Object.freeze({
   downloadFeedback: "/v1/admin/feedback/download-csv",
   freezeAmount:"/v1/admin/user/freeze-amount",
   transactionList: "/v1/admin/transaction",
-  specificUserApiList:"/v1/admin/specificUserList",
+  specificUserApiList:"/v1/admin/notification",
   feedbackListing:"/v1/admin/feedback"
 });
 

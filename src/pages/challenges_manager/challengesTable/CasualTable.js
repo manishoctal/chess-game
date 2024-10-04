@@ -1,21 +1,16 @@
 import React, { useState } from "react";
-import { apiGet, apiPut } from "../../utils/apiFetch";
-import apiPath from "../../utils/apiPath";
+import { apiPut } from "../../../utils/apiFetch";
+import apiPath from "../../../utils/apiPath";
 import { isEmpty, startCase } from "lodash";
 import useToastContext from "hooks/useToastContext";
-import { AiFillEdit, AiFillEye, AiFillWallet } from "react-icons/ai";
+import { AiFillEdit, AiFillEye, } from "react-icons/ai";
 import { useTranslation } from "react-i18next";
-import { Link, NavLink, useNavigate } from "react-router-dom";
-import UserEdit from "./UserEdit";
-import ViewWalletBalance from "./ViewWalletBalance";
-import helpers from "../../utils/helpers";
-import OUserTableHead from '../../components/reusable/OTableHead'
+import {  NavLink, useNavigate } from "react-router-dom";
+import helpers from "../../../utils/helpers";
+import OUserTableHead from '../../../components/reusable/OTableHead'
 import { FaFlag } from "react-icons/fa";
-import { MdFeedback } from "react-icons/md";
-import ReportUserPopup from "./ReportUserPopup";
-import ReviewRatingPopup from "./ReviewRatingPopup";
 
-const Table = ({
+const CasualTable = ({
   users,
   getAllUser,
   handleUserView,
@@ -30,33 +25,6 @@ const Table = ({
 }) => {
   const { t } = useTranslation();
   const notification = useToastContext();
-
-  const [editShowModal, setEditShowModal] = useState(false);
-  const [editItem, setEditItem] = useState("");
-  const [isAmountModal, setIsAmountModal] = useState(false);
-  const [showReportPopup, setShowReportPopup] = useState(false);
-  const [showReviewPopup, setShowReviewPopup] = useState(false);
-  const [reportItem, setReportItem] = useState("")
-
-  const navigate = useNavigate();
-
-
-
-  // report-table//
-
-
-
-  //report-table//
-
-  const handleReportToggle = (item) => {
-    setReportItem(item?._id)
-    setShowReportPopup(!showReportPopup)
-  }
-
-  const handleShorReviewToggle = (itemReview) => {
-    setReportItem(itemReview?._id)
-    setShowReviewPopup(!showReviewPopup)
-  }
 
   const handelStatusChange = async (item) => {
     try {
@@ -80,10 +48,7 @@ const Table = ({
     }
   };
 
-  const handelEdit = (item) => {
-    setEditItem(item);
-    setEditShowModal(!editShowModal);
-  };
+
 
   const statusLabel = (item) => {
     let statusText = item?.status === "active" ? "Active" : "Inactive";
@@ -148,7 +113,6 @@ const Table = ({
   );
 
 
-  const [viewBalance, setViewBalance] = useState()
 
   const renderActionTableCells = (item, userTypeDetail) => (
     <td className="py-2 px-4 border-l border">
@@ -163,46 +127,6 @@ const Table = ({
             <AiFillEye className="cursor-pointer w-5 h-5 text-slate-600 dark:hover:text-white hover:text-blue-700" />{" "}
           </NavLink>
 
-          <div
-            className="px-2 py-2" 
-            onClick={() => {
-              if (item?.reportsCount) {
-                handleReportToggle(item);
-              }
-            }}
-          >
-            <div className="relative">
-              <FaFlag className={` w-5 h-5 text-slate-600 dark:hover:text-white hover:text-blue-700 ${item?.reportsCount ? "cursor-pointer" : "" }`}/>{" "}
-              {
-                helpers?.ternaryCondition(item?.reportsCount, <span className="w-5 h-5 cursor-pointer bg-black text-white rounded-full flex items-center justify-center text-[10px] absolute top-[-8px] right-[-7px]">{helpers.ternaryCondition(item?.reportsCount, item?.reportsCount, "0")}</span>
-                  , "")
-              }
-            </div>
-          </div>
-
-
-          {/* <button
-            className="px-2 py-2" onClick={() => handleShorReviewToggle(item)}
-          >
-            <div className="relative">
-              <MdFeedback className="cursor-pointer w-5 h-5 text-slate-600 dark:hover:text-white hover:text-blue-700" />{" "}
-            </div>
-          </button> */}
-
-
-
-          {(manager?.add || user?.role === "admin") &&
-            userTypeDetail === "local" &&
-            (item?.status !== "deleted" ? (
-              <button onClick={() => handelEdit(item)}>
-                <AiFillEdit
-                  className="text-green text-lg cursor-pointer  text-slate-600"
-                  title="Edit user"
-                />
-              </button>
-            ) : (
-              ""
-            ))}
         </div>
       </div>
     </td>
@@ -226,14 +150,6 @@ const Table = ({
   const renderTableRows = () => {
     return users?.map((item, i) => {
       const rowClassName = getRowClassName(item);
-
-      // const getUserRedirection = () =>{
-      //   if(item?.userName){
-      //     navigate(`/users/view/${item?._id}`)
-      //   }
-      // }
-
-
       return (
         <tr key={i} className={rowClassName}>
           {renderTableCell(i + 1 + pageSize * (page - 1), "py-4 px-3 border-r border  font-medium text-gray-900  dark:text-white dark:border-[#ffffff38]")}
@@ -269,7 +185,7 @@ const Table = ({
 
 
   return (
-    <>
+
       <div className="p-3">
         <div className="overflow-x-auto relative rounded-lg border">
           <table className="w-full text-xs text-left text-[#A5A5A5] dark:text-gray-400 ">
@@ -279,17 +195,16 @@ const Table = ({
                   {t("S.NO")}
                 </th>
 
-                <OUserTableHead sort={sort} setSort={setSort} name='USER_ID' fieldName='userUniqId' />
-                <OUserTableHead sort={sort} setSort={setSort} name='FULL_NAME' fieldName='fullName' />
-                <OUserTableHead sort={sort} setSort={setSort} name='USER_NAME' fieldName='userName' />
-                <OUserTableHead sort={sort} setSort={setSort} name='O_EMAIL_ID' fieldName='email' />
-                <OUserTableHead sort={sort} setSort={setSort} name='O_COUNTRY_CODE' fieldName='countryCode' />
-                <OUserTableHead sort={sort} setSort={setSort} name='O_MOBILE' fieldName='mobile' />
-                {/* <OUserTableHead sort={sort} setSort={setSort} name='INVITE_CODE_USED' fieldName='inviteCode' /> */}
-                <OUserTableHead sort={sort} setSort={setSort} name='JOINED_DATE' fieldName='createdAt' />
-                <OUserTableHead sort={sort} setSort={setSort} name='KYC_VERIFIED' fieldName='isKYCVerified' />
-                <OUserTableHead sort={sort} setSort={setSort} name='RATING_MONETRY' fieldName='ratingMonetary' />
-                <OUserTableHead sort={sort} setSort={setSort} name='RATING_CASUAL' fieldName='ratingCasual' />
+                <OUserTableHead sort={sort} setSort={setSort} name='CAUSUAL_CHALLENGE_ID' fieldName='userUniqId' />
+                <OUserTableHead sort={sort} setSort={setSort} name='CREATOR_ID' fieldName='fullName' />
+                <OUserTableHead sort={sort} setSort={setSort} name='CREATOR_USER_NAME' fieldName='userName' />
+                <OUserTableHead sort={sort} setSort={setSort} name='ACCEPTED_ID' fieldName='email' />
+                <OUserTableHead sort={sort} setSort={setSort} name='ACCEPTOR_NAME' fieldName='countryCode' />
+                <OUserTableHead sort={sort} setSort={setSort} name='WINNER_NAME' fieldName='mobile' />
+                <OUserTableHead sort={sort} setSort={setSort} name='TIME_FORMAT' fieldName='createdAt' />
+                <OUserTableHead sort={sort} setSort={setSort} name='O_CREATED_AT' fieldName='isKYCVerified' />
+                <OUserTableHead sort={sort} setSort={setSort} name='CHALLENGE_TYPE' fieldName='ratingMonetary' />
+                <OUserTableHead sort={sort} setSort={setSort} name='MATCH_STATUS' fieldName='ratingCasual' />
 
                 {
                   !userResult && helpers.andOperator(
@@ -322,32 +237,8 @@ const Table = ({
         </div>
       </div>
 
-      {helpers.andOperator(
-        editShowModal,
-        <UserEdit
-          item={editItem}
-          setEditShowModal={setEditShowModal}
-          getAllUser={getAllUser}
-        />
-      )}
 
-      {helpers.andOperator(
-        isAmountModal,
-        <ViewWalletBalance
-          setIsAmountModal={setIsAmountModal}
-          viewBalance={viewBalance}
-        />
-      )}
-      {
-        showReportPopup && <ReportUserPopup handleReportToggle={handleReportToggle} reportItem={reportItem} />
-      }
-      {
-        showReviewPopup && <ReviewRatingPopup handleShorReviewToggle={handleShorReviewToggle} reportItem={reportItem} />
-      }
-
-
-    </>
   );
 };
 
-export default Table;
+export default CasualTable;
