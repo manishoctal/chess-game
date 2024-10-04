@@ -39,7 +39,9 @@ const UserView = () => {
   
   const handleFreeModal = () =>{
     setShowFreeModel(!showFreeModel)
+    getUserDetails()
   }
+
 
   const getUserDetails = async () => {
     try {
@@ -498,7 +500,7 @@ const UserView = () => {
       </div>
 
       {showBanner && showImage && <ShowImage handleShowImage={handleShowImage} showImage={showImage} />}
-      {showFreeModel && <FreezeBalancePopup handleFreeModal={handleFreeModal} userId={location?.state?._id}/>}
+      {showFreeModel && <FreezeBalancePopup handleFreeModal={handleFreeModal} userId={item}/>}
 
     </div>
   );

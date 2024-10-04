@@ -4,9 +4,7 @@ import { FaCircleArrowLeft } from "react-icons/fa6";
 import { apiGet } from "utils/apiFetch";
 import apiPath from "utils/apiPath";
 import helpers from "utils/helpers";
-import dayjs from "dayjs";
-import chessImage from "../../assets/images/chess.jpeg";
-import { FaLayerGroup } from "react-icons/fa";
+import dayjs from "dayjs"; 
 import ReactCountryFlag from "react-country-flag";
 
 

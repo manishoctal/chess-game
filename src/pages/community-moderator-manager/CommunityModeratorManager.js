@@ -15,7 +15,7 @@ import useToastContext from "hooks/useToastContext";
 
 function CommunityModeratorManager() {
   const { t } = useTranslation();
-  const { logoutUser, user } = useContext(AuthContext);
+  const { logoutUser, user ,updatePageName} = useContext(AuthContext);
   const notification = useToastContext();
   const manager = user?.permission?.find((e) => e.manager === "community_moderator" || "achievement_and_badges") ?? {};
   const [paginationObj, setPaginationObj] = useState({
@@ -45,6 +45,8 @@ function CommunityModeratorManager() {
     sortBy: "createdAt",
     sortType: "desc",
   });
+
+
 
   // get all notification function start
   const getAllCommunity = async (data, pageNO) => {
@@ -143,6 +145,14 @@ function CommunityModeratorManager() {
     setPage(1);
   };
 
+
+  const handleUserView = () => {
+    updatePageName(` ${t("VIEW") + " " + t("USER_MANAGER")}`);
+  };
+
+  useEffect(() => {
+    updatePageName(t("O_USERS"));
+  }, []);
 
   const handleDateChange = (start, end) => {
     setPage(1);
