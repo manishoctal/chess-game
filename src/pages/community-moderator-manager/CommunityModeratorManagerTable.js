@@ -4,10 +4,10 @@ import helpers from "utils/helpers";
 import ONotificationTableHead from "../../components/reusable/OTableHead";
 import { useContext } from "react";
 import AuthContext from "context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { AiFillEye } from "react-icons/ai";
 
-const CommunityModeratorManagerTable = ({ allCommunity, paginationObj, sort, setSort, pageSize, manager,handelStatusChange }) => {
+const CommunityModeratorManagerTable = ({ handleUserView, allCommunity, paginationObj, sort, setSort, pageSize, manager, handelStatusChange }) => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { user } = useContext(AuthContext);
@@ -37,7 +37,7 @@ const CommunityModeratorManagerTable = ({ allCommunity, paginationObj, sort, set
             </tr>
           </thead>
           <tbody>
-            {allCommunity && allCommunity?.length > 0 && 
+            {allCommunity && allCommunity?.length > 0 &&
               allCommunity?.map((item, i) => (
                 <tr key={i} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                   <th scope="row" className="py-4 px-6 border-r font-medium text-gray-900  dark:text-white">
@@ -45,48 +45,42 @@ const CommunityModeratorManagerTable = ({ allCommunity, paginationObj, sort, set
                   </th>
 
                   <td className="py-4 px-6 border-r text-center">{item?.postId || "N/A"}</td>
-                  <td className="py-4 px-6 border-r text-center">{helpers?.ternaryCondition(item?.user,item?.user?.userName,"N/A" )}</td>
-                  <td className="py-4 px-6 border-r text-center">{helpers?.ternaryCondition(item?.postTitle,item?.postTitle,"N/A" )} </td>
-                  <td className="py-4 px-6 border-r text-center">{helpers?.ternaryCondition(item?.likeCount,item?.likeCount,"0" )} </td>
-                  <td className="py-4 px-6 border-r text-center">{helpers?.ternaryCondition(item?.commentCount,item?.commentCount,"0" )}</td>
-                  <td className="py-4 px-6 border-r text-center">{helpers?.ternaryCondition(item?.reportCount,item?.reportCount,"0" )}</td>
-                  <td className="py-4 px-6 border-r text-center">{helpers?.ternaryCondition(item?.community,startCase(item?.community),"N/A" )}</td>
-                  
+                  <td className="py-4 px-6 border-r text-center">{helpers?.ternaryCondition(item?.user, item?.user?.userName, "N/A")}</td>
+                  <td className="py-4 px-6 border-r text-center">{helpers?.ternaryCondition(item?.postTitle, item?.postTitle, "N/A")} </td>
+                  <td className="py-4 px-6 border-r text-center">{helpers?.ternaryCondition(item?.likeCount, item?.likeCount, "0")} </td>
+                  <td className="py-4 px-6 border-r text-center">{helpers?.ternaryCondition(item?.commentCount, item?.commentCount, "0")}</td>
+                  <td className="py-4 px-6 border-r text-center">{helpers?.ternaryCondition(item?.reportCount, item?.reportCount, "0")}</td>
+                  <td className="py-4 px-6 border-r text-center">{helpers?.ternaryCondition(item?.community, startCase(item?.community), "N/A")}</td>
+
                   {(manager?.add || manager?.edit || user?.role === "admin") && (
-                  <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-center">
-                    <label className="inline-flex relative items-center cursor-pointer" title={`${helpers.ternaryCondition(item?.status === "active", "Active", "Inactive")}`}>
-                      <input
-                        type="checkbox"
-                        className="sr-only peer"
-                        checked={item?.status === "active"}
-                        onChange={(e) => helpers.alertFunction(`${t("ARE_YOU_SURE_YOU_WANT_TO")} ${helpers.ternaryCondition(e.target.checked, "active", "inactive")} '${item.postTitle}'?`, item, handelStatusChange)}
-                      />
-                      <div className="w-10 h-5 bg-gray-200 rounded-full peer peer-focus:ring-0 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-gradientTo" />
-                    </label>
-                  </td>
-                )}
-                
+                    <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-center">
+                      <label className="inline-flex relative items-center cursor-pointer" title={`${helpers.ternaryCondition(item?.status === "active", "Active", "Inactive")}`}>
+                        <input
+                          type="checkbox"
+                          className="sr-only peer"
+                          checked={item?.status === "active"}
+                          onChange={(e) => helpers.alertFunction(`${t("ARE_YOU_SURE_YOU_WANT_TO")} ${helpers.ternaryCondition(e.target.checked, "active", "inactive")} '${item.postTitle}'?`, item, handelStatusChange)}
+                        />
+                        <div className="w-10 h-5 bg-gray-200 rounded-full peer peer-focus:ring-0 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-gradientTo" />
+                      </label>
+                    </td>
+                  )}
+
                   <td className="py-4 px-6 border-r text-center">{helpers.getDateAndTime(item?.createdAt)}</td>
                   <td className="py-2 px-3 border-l">
-                  <div className="">
-                    <ul className="flex justify-center">
-                        <li
-                          onClick={() =>
-                            navigate(`/community-moderator-manager/view/${item?._id}`, {
-                              state: { item, type: "view" },
-                            })
-                          }
-                          className="px-2 py-2 hover:bg-white dark:hover:bg-transparent hover:text-LightBlue "
+                    <div className="">
+                      <ul className="flex justify-center">
+                        <NavLink
+                          onClick={() => handleUserView(item)}
+                          to={`/community-moderator-manager/view/${item?._id}`}
+                          state={{ ...item }}
+                          className="px-2 py-2"
                         >
-                          <a>
-                            {" "}
-                            <AiFillEye className="text-slate-600 w-5 h-5 cursor-pointer  " />
-                          </a>
-                        </li>
-                     
-                    </ul>
-                  </div>
-                </td>
+                          <AiFillEye className="text-slate-600 w-5 h-5 cursor-pointer  " /> 
+                          </NavLink>
+                      </ul>
+                    </div>
+                  </td>
                 </tr>
               ))}
 
