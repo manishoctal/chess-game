@@ -9,6 +9,7 @@ import OInputField from "components/reusable/OInputField";
 import FormValidation from "utils/formValidation";
 import { IoClose } from "react-icons/io5";
 import { preventText } from "utils/reusableMethods";
+import helpers from "utils/helpers";
 const FreezeBalancePopup = ({ handleFreeModal, userId }) => {
     const [isLoading, setIsLoading] = useState(false);
     const formValidation = FormValidation();
@@ -22,10 +23,13 @@ const FreezeBalancePopup = ({ handleFreeModal, userId }) => {
         shouldFocusError: true,
     });
     const notification = useToastContext();
-    const onSubmit = async () => {
+    const onSubmit = async (data) => {
         try {
+            const payload = {
+                freezedAmount: data?.amount
+            }
             setIsLoading(true);
-            const result = await apiPost(`${apiPath.freezeAmount}/${userId}`);
+            const result = await apiPost(`${apiPath.freezeAmount}/${userId?._id}`, payload);
             if (result?.data?.success === true) {
                 notification.success(result?.data?.message);
                 handleFreeModal()
@@ -38,19 +42,29 @@ const FreezeBalancePopup = ({ handleFreeModal, userId }) => {
         setIsLoading(false);
     };
 
+    console.log("userId", userId)
+
+
+
     return (
         <div>
             <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
-                <div className="relative my-6 mx-auto">
+                <div className="relative my-6 w-[390px]">
                     <div className="sm:py-4 sm:px-2 py-8 px-7 ">
                         <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                             <div className="dark:bg-gray-900 flex items-center justify-between p-5 border-b border-solid border-slate-200 rounded-t">
-                                <h3 className="text-xl font-semibold dark:text-white">{t("FREEZE_BALANCE")}</h3>
+                                <div>
+                                    <h3 className="text-xl font-semibold dark:text-white">{t("FREEZE_BALANCE")}</h3>
+                                    <strong className="text-black text-lg mt-2 block">{helpers?.ternaryCondition(userId?.freezedAmount, helpers?.formattedAmountAllCountry(parseInt(userId?.freezedAmount),userId?.country), "0")}</strong>
+                                </div>
+
                                 <button className=" ml-auto flex items-center justify-center  text-black border-2 rounded-full  h-8 w-8 float-right text-3xl leading-none font-extralight outline-none focus:outline-none" onClick={() => handleFreeModal()}>
                                     <span className=" text-[#B8BBBF]  text-4xl " title="Close">
                                         ×
                                     </span>
                                 </button>
+
+
                             </div>
                             <div className="relative p-6 flex-auto dark:bg-gray-800">
                                 <div className="">
@@ -85,7 +99,7 @@ const FreezeBalancePopup = ({ handleFreeModal, userId }) => {
                                 >
                                     <IoClose size={19} /> {t("CLOSE")}
                                 </button>
-                                  <OButton
+                                <OButton
                                     extraClasses={"!px-6"}
                                     label={
                                         <>
