@@ -41,6 +41,7 @@ import CommunityModeratorManager from "pages/community-moderator-manager/Communi
 import FeedbackManager from "pages/feedback-manager/FeedbackManager";
 import Transaction from "pages/transection_manager/Transaction";
 import WithdrawalRequestManager from "pages/withdrawal_request_manager/WithdrawalRequestManager";
+import ChallangesManager from "pages/challenges_manager/ChallangesManager";
 const UseChange = ({ data }) => {
   const { t } = useTranslation();
   return t(data);
@@ -65,6 +66,7 @@ const AdminRoutes = {
       element: <SubAdmin />,
       name: <UseChange data="SUB_ADMIN_MANAGERS" />,
     },
+
     {
       path: "/users",
       element: (
@@ -75,6 +77,18 @@ const AdminRoutes = {
       ),
       name: <UseChange data="USER_MANAGER" />,
     },
+
+    {
+      path: "/challenges-manager",
+      element: (
+        <AuthorizationRoute>
+          {" "}
+          <ChallangesManager />
+        </AuthorizationRoute>
+      ),
+      name: <UseChange data="CHALLENGES_MANAGER" />,
+    },
+
 
     {
       path: "/users/view/:id",

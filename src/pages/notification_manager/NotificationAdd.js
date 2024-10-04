@@ -17,7 +17,7 @@ const NotificationAdd = ({ getAllNotifications, handleCategory }) => {
   const [loading, setLoading] = useState(false);
   const [notificationUserError, setNotificationUserError] = useState(false);
   const [usersSuggestion, setUsersSuggestion] = useState([]);
-  const [selectedUsers, setSelectedUsers] = useState("");
+  const [selectedUsers, setSelectedUsers] = useState([]);
   const formValidation = FormValidation();
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
@@ -48,15 +48,18 @@ const NotificationAdd = ({ getAllNotifications, handleCategory }) => {
 
   // add notification function start
   const onSubmit = async (data) => {
+    
+    const specificUserId = selectedUsers?.map(selectedUsers => selectedUsers?.value);
     if (availableFor === "specificUser" && selectedUsers == "") {
       setNotificationUserError(true);
     } else {
       try {
+        setSelectedUsers([selectedUsers])
         setLoading(true);
         const obj = {
           ...data,
           sendTo: availableFor,
-          user: helpers.ternaryCondition(availableFor !== "all", selectedUsers?.value, null),
+          user: helpers.ternaryCondition(availableFor !== "all", specificUserId , null),
         };
 
         const res = await apiPost(apiPath.notifications, { ...obj });
@@ -110,6 +113,8 @@ const NotificationAdd = ({ getAllNotifications, handleCategory }) => {
       handleSearchOption(debouncedSearchTerm);
     }
   }, [debouncedSearchTerm]);
+
+  console.log("availableFor",availableFor)
 
   return (
     <div>
@@ -217,7 +222,7 @@ const NotificationAdd = ({ getAllNotifications, handleCategory }) => {
                             placeholder={<>{t("SEARCH_USER_BY_NAME")}</>}
                             options={usersSuggestion.map(option => ({
                               ...option,
-                              isDisabled: selectedUsers.length >= 100 && !selectedUsers.some(user => user.value === option.value)
+                              isDisabled: selectedUsers?.length >= 100 && !selectedUsers?.some(user => user.value === option.value)
                             }))}
                             defaultValue={t("SELECT_USERS")}
                             onChange={(e) => {

@@ -21,6 +21,7 @@ const Permission = [
   generateManager("FAQ", { shownAdd: true, shownAll: true }),
   generateManager("feedback_manager", { shownAdd: true, shownAll: true }),
   generateManager("transaction_manager", { shownAdd: true, shownAll: true }),
+  generateManager("challenges_manager", { shownAdd: true, shownAll: true }),
 ];
 
 export default Permission;
