@@ -265,7 +265,7 @@ const SubAdd = () => {
                       style={{ borderRadius: "20px" }}
                       country={countryCode}
                       enableSearch
-                      onlyCountries={["in"]}
+                      onlyCountries={["in", "ca", "au", "us", "gb"]}
                       countryCodeEditable={false}
                       disabled={item?.type === "view"}
                     />

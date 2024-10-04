@@ -75,8 +75,9 @@ const ODateRangePicker = (props) => {
           placeholder={t("O_START_DATE")}
           value={startDate}
           options={{
-            maxDate: endDate,
+            // maxDate: endDate,
             dateFormat: "d-m-Y",
+            maxDate:new Date()
           }}
           onChange={onChangeStartDate}
         />
@@ -93,6 +94,7 @@ const ODateRangePicker = (props) => {
           options={{
             minDate: startDate,
             dateFormat: "d-m-Y",
+            maxDate:new Date()
           }}
           onChange={onChangeEndDate}
         />

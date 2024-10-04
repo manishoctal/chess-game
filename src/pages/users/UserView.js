@@ -256,7 +256,7 @@ const UserView = () => {
             </div>
           </div>
 
-          <div className="bg-[#4a24c2] rounded-lg p-4 ">
+          <div className="bg-gradientTo rounded-lg p-4 ">
             <div className="flex items-center">
               <figure className="mr-3">
                 <img src={balanceIcon} alt="" />
