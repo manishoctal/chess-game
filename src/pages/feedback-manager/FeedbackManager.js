@@ -160,14 +160,7 @@ function FeedbackManager() {
     setPageSize(e.target.value);
   };
 
-  const communityStatusChange = (e) => {
-    setPage(1);
-    setFilterData({ ...filterData, community: e.target.value, isFilter: true });
-  };
-  const adminStatusChange = (e) => {
-    setPage(1);
-    setFilterData({ ...filterData, status: e.target.value, isFilter: true });
-  };
+
   const handelStatusChange = async (item) => {
     try {
       const payload = {

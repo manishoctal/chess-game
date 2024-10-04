@@ -10,9 +10,8 @@ import ReactCountryFlag from "react-country-flag";
 
 function ViewCommunityModerator() {
   const location = useLocation();
-  const item = location?.state?.item;
+  const item = location?.state;
   const [viewList, setViewList] = useState({})
-  console.log("item", item)
   const viewCommunityList = async () => {
     try {
       const result = await apiGet(`${apiPath?.communityModeratror}/${item?._id}`)

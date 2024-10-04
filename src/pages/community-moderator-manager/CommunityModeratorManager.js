@@ -147,11 +147,11 @@ function CommunityModeratorManager() {
 
 
   const handleUserView = () => {
-    updatePageName(` ${t("VIEW") + " " + t("USER_MANAGER")}`);
+    updatePageName(` ${t("VIEW") + " " + t("COMMUNITY_MODERATOR_MANAGER")}`);
   };
 
   useEffect(() => {
-    updatePageName(t("O_USERS"));
+    updatePageName(t("COMMUNITY_MODERATOR_MANAGER"));
   }, []);
 
   const handleDateChange = (start, end) => {
@@ -269,6 +269,7 @@ function CommunityModeratorManager() {
               notification={notification}
               getAllCommunity={getAllCommunity}
               page={page}
+              handleUserView={handleUserView}
               setSort={setSort}
               sort={sort}
               pageSize={pageSize}
