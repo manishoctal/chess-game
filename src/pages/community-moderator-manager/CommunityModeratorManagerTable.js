@@ -1,4 +1,4 @@
-import { isEmpty } from "lodash";
+import { isEmpty, startCase } from "lodash";
 import { useTranslation } from "react-i18next";
 import helpers from "utils/helpers";
 import ONotificationTableHead from "../../components/reusable/OTableHead";
@@ -50,7 +50,7 @@ const CommunityModeratorManagerTable = ({ allCommunity, paginationObj, sort, set
                   <td className="py-4 px-6 border-r text-center">{helpers?.ternaryCondition(item?.likeCount,item?.likeCount,"0" )} </td>
                   <td className="py-4 px-6 border-r text-center">{helpers?.ternaryCondition(item?.commentCount,item?.commentCount,"0" )}</td>
                   <td className="py-4 px-6 border-r text-center">{helpers?.ternaryCondition(item?.reportCount,item?.reportCount,"0" )}</td>
-                  <td className="py-4 px-6 border-r text-center">{helpers?.ternaryCondition(item?.community,item?.community,"N/A" )}</td>
+                  <td className="py-4 px-6 border-r text-center">{helpers?.ternaryCondition(item?.community,startCase(item?.community),"N/A" )}</td>
                   
                   {(manager?.add || manager?.edit || user?.role === "admin") && (
                   <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-center">
