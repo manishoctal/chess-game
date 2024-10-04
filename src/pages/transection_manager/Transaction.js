@@ -12,6 +12,7 @@ import { useLocation } from "react-router-dom";
 import { BiReset } from "react-icons/bi";
 import OSearch from "components/reusable/OSearch";
 import TransactionTable from "./TransactionTable";
+import { GoDownload } from "react-icons/go";
 function Transaction() {
   const { t } = useTranslation();
   const location = useLocation();
@@ -128,6 +129,21 @@ function Transaction() {
   };
 
 
+  const onCsvDownload = async () => {
+
+    try {
+      const path = apiPath.downloadFeedback;
+      const result = await apiGet(path);
+      if (result?.data?.success) {
+        helpers.downloadFile(result?.data?.results?.filePath);
+      }
+    } catch (error) {
+      console.error("error in get all dashboard list==>>>>", error.message);
+    }
+  };
+
+
+
   const handleDateChange = (start, end) => {
     setPage(1);
     setFilterData({
@@ -231,6 +247,14 @@ function Transaction() {
                     <BiReset size={18} />
                     {t('O_RESET')}
                   </button>
+                  <div className="p-5">
+                    <button
+                      onClick={onCsvDownload} type="button" className="bg-gradientTo text-sm px-6 flex gap-2  mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2"
+                    >
+                      <GoDownload size={18} className="" />
+                      {t("DOWNLOAD_FEEDBACK")}
+                    </button>
+                  </div>
 
                 </div>
               </div>
