@@ -1,11 +1,12 @@
 import ErrorMessage from 'components/ErrorMessage';
 import OButton from 'components/reusable/OButton';
 import OInputField from 'components/reusable/OInputField';
+import useToastContext from 'hooks/useToastContext';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { GrUpdate } from 'react-icons/gr';
-import { apiPost, apiPut } from 'utils/apiFetch';
+import { apiPut } from 'utils/apiFetch';
 import apiPath from 'utils/apiPath';
 import { handleKeyDownCashIn, preventMaxHundred } from 'utils/reusableMethods';
 
@@ -40,9 +41,12 @@ const GstComponent = ({saveSettingData}) => {
     };
 
     const countries = ["India", "Canada", "Australia", "USA", "UK"];
+    const [settingChangeLoading, setSettingChangeLoading] = useState(false);
+    const notification = useToastContext();
     
     const handleSubmitForm = async (data) => {
         try {
+            setSettingChangeLoading(true);
             const countryObject1 = {
                     india: data.indiaCountry,
                     canada: data.canadaCountry,
@@ -67,7 +71,8 @@ const GstComponent = ({saveSettingData}) => {
 
             const response = await apiPut(apiPath?.tdsDeposit, payload);
             if (response?.status === 200) {
-                console.log("Data successfully submitted");
+                notification.success(response?.data?.message);
+                setSettingChangeLoading(false);
             }
         } catch (error) {
             console.error("Error submitting data:", error.message);
@@ -149,6 +154,7 @@ const GstComponent = ({saveSettingData}) => {
                             {t('O_UPDATE')}
                         </>
                     }
+                    loading={settingChangeLoading}
                     type="submit"
                     title={t('O_UPDATE')}
                 />
