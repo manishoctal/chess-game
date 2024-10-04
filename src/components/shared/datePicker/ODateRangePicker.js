@@ -63,7 +63,6 @@ const ODateRangePicker = (props) => {
   }, []);
 
   return (
-    // <div className='sm:flex items-center text-center sm:text-left px-3 md:px-4 xl:px-7 lg:px-5  md:py-5 py-4 md:py-8 border'>
     <>
       <div className=" relative flex items-center mb-3">
         <label className="mx-2 text-[#B8BBBF] text-xs whitespace-nowrap">

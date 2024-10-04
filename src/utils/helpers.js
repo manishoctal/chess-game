@@ -271,6 +271,41 @@ const helpers = {
       currencyDisplay: "symbol",
     });
   },
+
+   getCurrencyByCountry : (countryCode) => {
+    console.log("countryCode",countryCode)
+  },
+  formattedAmountAllCountry: (amount, countryName) => {
+    let currencyCode;
+  
+    switch (countryName) {
+      case "India":
+        currencyCode = "INR";
+        break;
+      case "USA":
+        currencyCode = "USD";
+        break;
+      case "Canada":
+        currencyCode = "CAD";
+        break;
+      case "UK":
+        currencyCode = "GBP";
+        break;
+      case "Australia":
+        currencyCode = "AUD";
+        break;
+      default:
+        currencyCode = "INR";
+        break;
+    }
+  
+    return amount?.toLocaleString("th-TH", {
+      style: "currency",
+      currency: currencyCode,
+      currencyDisplay: "symbol",
+    });
+  },
+
   formateNull: (text) => {
     let result = "";
     if (text) {
