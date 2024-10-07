@@ -132,25 +132,10 @@ const MonetaryTable = ({
   );
 
 
-  const renderStatusTableCell = (item) =>
-    helpers.andOperator(
-      manager?.add || user?.permission?.length === 0,
-      <td className="py-2 px-4 border-r  dark:border-[#ffffff38] text-center border">
-        {statusLabel(item)}
-      </td>
-    );
-
-  const getRowClassName = (item) => {
-    return item && item.status === "deleted"
-      ? "text-red-600 font-bold"
-      : "bg-white";
-  };
-
   const renderTableRows = () => {
     return users?.map((item, i) => {
-      const rowClassName = getRowClassName(item);
       return (
-        <tr key={i} className={rowClassName}>
+        <tr key={i} >
           {renderTableCell(i + 1 + pageSize * (page - 1), "py-4 px-3 border-r border  font-medium text-gray-900  dark:text-white dark:border-[#ffffff38]")}
           {renderTableCell(getDisplayUserId(item), "bg-white py-4 px-4 border-r border  dark:border-[#ffffff38]")}
           {renderTableCell(getDisplayName(item), "bg-white py-4 px-4 border-r border  dark:border-[#ffffff38]")}
@@ -172,9 +157,9 @@ const MonetaryTable = ({
           {renderCommonTableCells(item)}
           {renderTableCell(helpers.ternaryCondition(item?.ratingMonetary, item?.ratingMonetary, "0"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold")}
           {renderTableCell(helpers.ternaryCondition(item?.ratingCasual, item?.ratingCasual, "0"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold")}
-          {
-            !userResult && renderStatusTableCell(item)
-          }
+          {renderTableCell(helpers.ternaryCondition(item?.ratingCasual, item?.ratingCasual, "0"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold")}
+          {renderTableCell(helpers.ternaryCondition(item?.ratingCasual, item?.ratingCasual, "0"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold")}
+
           {renderActionTableCells(item, userType)}
         </tr>
       );
@@ -193,18 +178,18 @@ const MonetaryTable = ({
                 <th scope="col" className="py-3 px-3">
                   {t("S.NO")}
                 </th>
-
                 <OUserTableHead sort={sort} setSort={setSort} name='MONETRY_CHALLENGE_ID' fieldName='userUniqId' />
                 <OUserTableHead sort={sort} setSort={setSort} name='CREATOR_USER_NAME' fieldName='fullName' />
                 <OUserTableHead sort={sort} setSort={setSort} name='ACCEPTOR_NAME' fieldName='userName' />
                 <OUserTableHead sort={sort} setSort={setSort} name='WINNER_NAME' fieldName='email' />
-                <OUserTableHead sort={sort} setSort={setSort} name='ACCEPTOR_NAME' fieldName='countryCode' />
-                <OUserTableHead sort={sort} setSort={setSort} name='WINNER_NAME' fieldName='mobile' />
                 <OUserTableHead sort={sort} setSort={setSort} name='CHALLENGE_CATEGORY' fieldName='createdAt' />
+                <OUserTableHead sort={sort} setSort={setSort} name='TIME_FORMAT' fieldName='timeFormat' />
                 <OUserTableHead sort={sort} setSort={setSort} name='O_CREATED_AT' fieldName='isKYCVerified' />
                 <OUserTableHead sort={sort} setSort={setSort} name='CHALLENGE_TYPE' fieldName='ratingMonetary' />
+                <OUserTableHead sort={sort} setSort={setSort} name='MONEY_AT_STACK' fieldName='ratingMonetary' />
+                <OUserTableHead sort={sort} setSort={setSort} name='ADMIN_COMMISION' fieldName='ratingMonetary' />
+                <OUserTableHead sort={sort} setSort={setSort} name='ARTWORK_ELIGIBILITY_FOR_TRADING' fieldName='ratingMonetary' />
                 <OUserTableHead sort={sort} setSort={setSort} name='MATCH_STATUS' fieldName='ratingCasual' />
-
                 {
                   !userResult && helpers.andOperator(
                     manager?.add || user?.permission?.length === 0,

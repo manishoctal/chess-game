@@ -3,29 +3,25 @@ import dayjs from "dayjs";
 import React, { useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useLocation, Link, useNavigate, NavLink } from "react-router-dom";
-import defaultImage from "../../assets/images/No-image-found.jpg";
-import checkIcon from "../../assets/images/check.png";
-import { startCase } from "lodash";
+import defaultImage from "../../../assets/images/No-image-found.jpg";
+import checkIcon from "../../../assets/images/check.png";
 import { IoArrowBackSharp } from "react-icons/io5";
 import helpers from "utils/helpers";
-import firstNameIcon from "../../assets/icons/icon/name-icon.svg";
-import balanceIcon from "../../assets/icons/icon/balance.svg";
-import emailIcon from "../../assets/icons/icon/email.svg";
-import mobileIcon from "../../assets/icons/icon/mobile.svg";
-import dobIcon from "../../assets/icons/icon/dob.svg";
-import locationIcon from "../../assets/icons/icon/location.svg";
-import cityIcon from "../../assets/icons/icon/city.svg";
+import firstNameIcon from "../../../assets/icons/icon/name-icon.svg";
+import balanceIcon from "../../../assets/icons/icon/balance.svg";
+import emailIcon from "../../../assets/icons/icon/email.svg";
+import mobileIcon from "../../../assets/icons/icon/mobile.svg";
+import dobIcon from "../../../assets/icons/icon/dob.svg";
+import locationIcon from "../../../assets/icons/icon/location.svg";
+import cityIcon from "../../../assets/icons/icon/city.svg";
 import useToastContext from "hooks/useToastContext";
 import apiPath from "utils/apiPath";
 import { apiGet, apiPut } from "utils/apiFetch";
-import ShowImage from "./ShowImage";
-import bonusIcon from "../../assets/icons/icon/bonus.svg";
 import AuthContext from "context/AuthContext";
 import { FaCircleArrowLeft } from "react-icons/fa6";
-import FreezeBalancePopup from "./FreezeBalancePopup";
 import { BiHistory } from "react-icons/bi";
 
-const UserView = () => {
+const CasualView = () => {
   const { t } = useTranslation();
   const { logoutUser } = useContext(AuthContext);
   const location = useLocation();
@@ -340,50 +336,6 @@ const UserView = () => {
                   </div>
                 </li> */}
 
-                <li className="mb-4">
-                  <div className="flex items-center">
-                    <figure className="bg-[#F2F2F2] w-[42px] h-[41px] rounded-full flex items-center justify-center mr-3">
-                      <img src={bonusIcon} alt="" />
-                    </figure>
-                    <figcaption className="w-[calc(100%_-_41px)]">
-                      <span className="block text-[#5C5C5C] dark:text-white">{t("MONETRY_RATING")}</span>
-                      <strong className="dark:text-slate-400">{helpers.ternaryCondition(item?.ratingMonetary, item?.ratingMonetary, "0")}</strong>
-                    </figcaption>
-                  </div>
-                </li>
-                <li className="mb-4">
-                  <div className="flex items-center">
-                    <figure className="bg-[#F2F2F2] w-[42px] h-[41px] rounded-full flex items-center justify-center mr-3">
-                      <img src={bonusIcon} alt="" />
-                    </figure>
-                    <figcaption className="w-[calc(100%_-_41px)]">
-                      <span className="block text-[#5C5C5C] dark:text-white">{t("RATING_CASUAL")}</span>
-                      <strong className="dark:text-slate-400">{helpers.ternaryCondition(item?.ratingCasual, item?.ratingCasual, "0")}</strong>
-                    </figcaption>
-                  </div>
-                </li>
-                <li className="mb-4">
-                  <div className="flex items-center">
-                    <figure className="bg-[#F2F2F2] w-[42px] h-[41px] rounded-full flex items-center justify-center mr-3">
-                      <img src={bonusIcon} alt="" />
-                    </figure>
-                    <figcaption className="w-[calc(100%_-_41px)]">
-                      <span className="block text-[#5C5C5C] dark:text-white">{t("TIME_ZONE")}</span>
-                      <strong>{helpers.ternaryCondition(item?.createdAt, dayjs(item?.createdAt).format("D MMM YYYY"), "N/A")}</strong>
-                    </figcaption>
-                  </div>
-                </li>
-                <li className="mb-4">
-                  <div className="flex items-center">
-                    <figure className="bg-[#F2F2F2] w-[42px] h-[41px] rounded-full flex items-center justify-center mr-3">
-                      <img src={bonusIcon} alt="" />
-                    </figure>
-                    <figcaption className="w-[calc(100%_-_41px)]">
-                      <span className="block text-[#5C5C5C] dark:text-white">{t("O_STATUS")}</span>
-                      <strong className="dark:text-slate-400">{helpers.ternaryCondition(item?.status, item?.status, "N/A")}</strong>
-                    </figcaption>
-                  </div>
-                </li>
               </div>
             </ul>
           </div>
@@ -499,11 +451,9 @@ const UserView = () => {
         </div>
       </div>
 
-      {showBanner && showImage && <ShowImage handleShowImage={handleShowImage} showImage={showImage} />}
-      {showFreeModel && <FreezeBalancePopup handleFreeModal={handleFreeModal} userId={item}/>}
 
     </div>
   );
 };
 
-export default UserView;
+export default CasualView;

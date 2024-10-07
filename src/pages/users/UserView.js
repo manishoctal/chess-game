@@ -42,10 +42,10 @@ const UserView = () => {
     getUserDetails()
   }
 
-
   const getUserDetails = async () => {
     try {
-      const path = `${apiPath.getUserDetails}/${location?.state?._id}`;
+    
+      const path = `${apiPath.getUserDetails}/${location?.state?.user?._id || location?.state?._id }`;
       const result = await apiGet(path);
       if (result?.data?.success) {
         setItem(result?.data?.results)

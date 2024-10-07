@@ -878,10 +878,10 @@
   "RATING_LOSE_GAIN": "Rating Lose/Gain",
   "RESULT": "Result",
   "MOVES": "Moves",
-  "MONEY_AT_STACK": "Money at stack",
-  "ADMIN_COMMISION": "Admin commission",
-  "CASUAL_CHALLENGE": "Casual challenge",
-  "MONETARY_CHALLENGE": "Monetary challenge",
+  "MONEY_AT_STACK": "Money at Stack",
+  "ADMIN_COMMISION": "Admin Commission",
+  "CASUAL_CHALLENGE": "Casual Challenge",
+  "MONETARY_CHALLENGE": "Monetary Challenge",
   "USER_GAME_HISTORY":"User Game History",
   "DELETED_USERS": "Deleted Users",
   "REPORT": "Report",
@@ -941,10 +941,11 @@
   "ACCEPTED_ID": "Acceptor ID",
   "ACCEPTOR_NAME": "Acceptor Name",
   "WINNER_NAME": "Winner Name",
-  "TIME_FORMAT": "Time format",
+  "TIME_FORMAT": "Time Format",
   "O_CREATED_AT": "Created At",
   "CHALLENGE_TYPE": "Challenge Type",
   "MATCH_STATUS": "Match Status",
   "MONETRY_CHALLENGE_ID": "Monetary Challenge ID",
-  "CHALLENGE_CATEGORY": "Challenge Category"
+  "CHALLENGE_CATEGORY": "Challenge Category",
+  "SPECIAL_CHARACTERS_NOT_ALLOWED": "Special characters are not allowed."
 }

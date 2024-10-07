@@ -1,6 +1,5 @@
 import ErrorMessage from 'components/ErrorMessage';
 import OButton from 'components/reusable/OButton';
-import OInputField from 'components/reusable/OInputField';
 import AuthContext from 'context/AuthContext';
 import useToastContext from 'hooks/useToastContext';
 import React, { useContext, useEffect, useState } from 'react';
@@ -18,10 +17,15 @@ const Commission = ({ saveSettingData }) => {
         handleSubmit,
         setValue,
         watch,
+        trigger,
         formState: { isDirty, errors },
     } = useForm({
         mode: 'onChange',
         shouldFocusError: true,
+      defaultValues: {
+      moneyStake1: saveSettingData?.commissions?.[0]?.amount || "",
+      moneyStake2: saveSettingData?.commissions?.[1]?.amount || "",
+    },
 
     });
 
@@ -29,23 +33,25 @@ const Commission = ({ saveSettingData }) => {
     const { user } = useContext(AuthContext);
     const manager = user?.permission?.find((e) => e.manager === 'settings') ?? {};
     const notification = useToastContext();
-    const [moneyStack, setMoneyStack] = useState()
+    const [settingChangeLoading, setSettingChangeLoading] = useState(false);
+
 
     const handleSubmitForm = async (data) => {
-
         try {
+            setSettingChangeLoading(true);
+
             const commissionObject1 = {
                 commissionType: data?.firstCommission,
                 type: "lt",
                 adminCommission: data.adminCommisionfirst,
-                amount: moneyStack,
+                amount: data?.moneyStake1,
             };
 
             const commissionObject2 = {
                 commissionType: data?.secondCommision,
                 type: "gt",
                 adminCommission: data.adminCommission3,
-                amount: moneyStack,
+                amount: data?.moneyStake2,
             };
             const payload = {
                 commissions: [commissionObject1, commissionObject2]
@@ -55,29 +61,38 @@ const Commission = ({ saveSettingData }) => {
 
             if (result?.status === 200) {
                 notification.success(result?.data?.message);
+                setSettingChangeLoading(false);
+
             }
         } catch (error) {
             console.error("error in get all badges list==>>>>", error.message);
+            setSettingChangeLoading(false);
+
         }
 
     };
 
     useEffect(() => {
-        setValue("firstCommission", saveSettingData?.commissions?.[0]?.commissionType)
-        setValue("secondCommision", saveSettingData?.commissions?.[1]?.commissionType)
-        setValue("adminCommisionfirst", saveSettingData?.commissions?.[0]?.adminCommission)
-        setValue("adminCommission3", saveSettingData?.commissions?.[1]?.adminCommission)
+        if (saveSettingData) {
+            setValue("firstCommission", saveSettingData?.commissions?.[0]?.commissionType);
+            setValue("secondCommision", saveSettingData?.commissions?.[1]?.commissionType);
+            setValue("adminCommisionfirst", saveSettingData?.commissions?.[0]?.adminCommission);
+            setValue("adminCommission3", saveSettingData?.commissions?.[1]?.adminCommission);
+            setValue("moneyStake1", saveSettingData?.commissions?.[0]?.amount);
+            setValue("moneyStake2", saveSettingData?.commissions?.[1]?.amount);
+    
+            // Trigger validation after setting values to reflect in isDirty
+            trigger(); // This will trigger validation on all fields and update form state
+        }
+    }, [saveSettingData, setValue, trigger]);
+    
+    // console.log("isDirty:", isDirty); // Log the value of isDirty to verify if it's changing
 
-    }, [saveSettingData])
-
-
-    console.log("saveSettingData?.commissions", saveSettingData?.commissions)
 
     return (
         <div>
-            <form onSubmit={handleSubmit(handleSubmitForm)}>
+            <div>
                 {/* Commission Type 1 */}
-
 
                 <h2 className='text-2xl mb-6 font-medium'>Commission</h2>
 
@@ -121,7 +136,7 @@ const Commission = ({ saveSettingData }) => {
                                 onKeyDown={watch("firstCommission") === 'percentage' ? handleKeyDownCashIn : null}
                                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 {...register('adminCommisionfirst', {
-                                    required: 'Admin commission is required',
+                                    required: 'Please enter admin commission.',
                                     min: {
                                         value: 0.01,
                                         message: 'Minimum value must is 0.01.'
@@ -142,14 +157,20 @@ const Commission = ({ saveSettingData }) => {
                                         If money stake &lt;
                                     </div>
                                 </h3>
-                                <input
-                                    defaultValue={moneyStack || saveSettingData?.commissions?.[0]?.amount}
-                                    onChange={(e) => setMoneyStack(e.target.value)}
+                                <input type="number"
+                                    id="moneyStake1"
+                                    placeholder='Enter Money Stake'
                                     className='pl-3 pr-3 outline-none'
-                                    type="number"
-                                    id="moneyStake2"
+                                    {...register("moneyStake1")}
+                                    onKeyDown={handleKeyDownCashIn}
+                                    onChange={(e) => {
+                                        setValue("moneyStake2", e?.target?.value)
+                                    }}
                                 />
                             </div>
+                            {/* {errors.moneyStake1 && (
+                                <ErrorMessage message={errors.moneyStake1.message} />
+                            )} */}
                         </div>
                     </div>
                 </div>
@@ -197,7 +218,7 @@ const Commission = ({ saveSettingData }) => {
                                 onKeyDown={watch("secondCommision") === 'percentage' ? handleKeyDownCashIn : null}
                                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 {...register('adminCommission3', {
-                                    required: 'Admin commission is required',
+                                    required: 'Please enter admin commission.',
                                     min: {
                                         value: 0.01,
                                         message: 'Minimum value must is 0.01.'
@@ -218,17 +239,21 @@ const Commission = ({ saveSettingData }) => {
                                         If money stake &gt;
                                     </div>
                                 </h3>
+
                                 <input
-                                    defaultValue={moneyStack || saveSettingData?.commissions?.[1]?.amount}
-                                    onChange={(e) => setMoneyStack(e.target.value)}
                                     type="number"
                                     className='pl-3 pr-3 outline-none'
                                     id="moneyStake2"
-
+                                    placeholder='Enter Money Stake'
+                                    {...register("moneyStake2")}
+                                    onKeyDown={handleKeyDownCashIn}
+                                    onChange={(e) => {
+                                        setValue("moneyStake1", e.target.value);
+                                    }}
                                 />
-
-                                
                             </div>
+                            {/* {errors.moneyStake2 && <ErrorMessage message={errors.moneyStake2?.message} />} */}
+
                         </div>
                     </div>
                 </div>
@@ -237,20 +262,18 @@ const Commission = ({ saveSettingData }) => {
 
                 {(manager?.add || user?.role === 'admin') && (
                     <div className="text-center mt-8">
-                        <OButton
-                            disabled={!isDirty}
-                            label={
-                                <>
-                                    <GrUpdate size={16} className="mr-2" />
-                                    {t('O_UPDATE')}
-                                </>
-                            }
-                            type="submit"
-                            title={t('O_UPDATE')}
-                        />
+                          <OButton
+                   disabled={!isDirty}
+                  label={<><GrUpdate size={16} className="mr-2" />{t("O_UPDATE")}</>}
+                  type="submit"
+                  onClick={handleSubmit(handleSubmitForm)}
+                  loading={settingChangeLoading}
+                  title={t("O_UPDATE")}
+                />
                     </div>
                 )}
-            </form>
+          
+        </div>
         </div>
     );
 };
