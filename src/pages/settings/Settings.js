@@ -66,10 +66,6 @@ const Settings = () => {
 
   // change setting function end
 
-  const handleUserView = () => {
-    setViewShowModal(true);
-  };
-
   // get all setting function start
 
   const getSettings = async () => {
@@ -197,6 +193,7 @@ const Settings = () => {
     },
   }
 
+  console.log("isDirty:", isDirty); // Log the value of isDirty to verify if it's changing
 
 
   return (
@@ -258,23 +255,6 @@ const Settings = () => {
                   />
                   <ErrorMessage message={errors?.maxWithdrawalLimit?.message} />
                 </div>
-                {/* 
-                <div className="">
-                  <OInputField
-                    wrapperClassName="relative z-0  w-full group"
-                    type="text"
-                    name="referralAmount"
-                    inputLabel={<>{t("REFERRAL_BONUS_FOR_TOURIST")}</>}
-                    id="referralAmount"
-                    autoComplete="off"
-                    onInput={(e) => preventMaxInput(e, 50)}
-                    register={register("referralAmount", validationFields?.referralAmount)}
-                    placeholder=" "
-                  />
-                  <ErrorMessage message={errors?.referralAmount?.message} />
-                </div>
- */}
-
 
 
                 <ReusableInputField
@@ -287,29 +267,6 @@ const Settings = () => {
 
                   validationRules={validationFields?.platformFee}
                 />
-
-
-
-                {/* <div className="">
-                  <OInputField
-                    wrapperClassName="relative z-0  w-full group"
-                    type="text"
-                    name="signUpBonus"
-                    inputLabel={<>{t("SIGN_UP_BONUS_FOR_LOCAL")}</>}
-                    id="signUpBonus"
-                    autoComplete="off"
-                    onInput={(e) => preventMaxInput(e, 50)}
-                    register={register("signUpBonus", validationFields?.signupBonus)}
-                    placeholder=" "
-                  />
-                  <ErrorMessage message={errors?.signUpBonus?.message} />
-                </div> */}
-
-              </div>
-
-              <div className="border p-5 rounded-md">
-                      
-             <GstComponent saveSettingData={saveSettingData}/>
 
               </div>
 
@@ -385,6 +342,8 @@ const Settings = () => {
 
 
 
+
+
             </main>
 
             {(manager?.add || user?.role === "admin") && (
@@ -401,13 +360,13 @@ const Settings = () => {
             )}
           </div>
         </div>
+
         <div className="border p-5 rounded-md">
-
-          <Commission saveSettingData={saveSettingData} />
-
+          <GstComponent saveSettingData={saveSettingData} />
         </div>
-
-
+        <div className="border p-5 rounded-md">
+          <Commission saveSettingData={saveSettingData} />
+        </div>
 
       </div>
 

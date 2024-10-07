@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { apiGet } from "../../utils/apiFetch";
 import apiPath from "../../utils/apiPath";
-import Table from "./challengesTable/CasualTable";
+import Table from "./challenges/CasualTable";
 import Pagination from "../Pagination";
 import AuthContext from "context/AuthContext";
 import dayjs from "dayjs";
@@ -12,8 +12,8 @@ import helpers from "utils/helpers";
 import { useLocation, useNavigate } from "react-router-dom";
 import { BiReset } from "react-icons/bi";
 import OSearch from "components/reusable/OSearch";
-import CasualTable from "./challengesTable/CasualTable";
-import MonetaryTable from "./challengesTable/MonetaryTable";
+import CasualTable from "./challenges/CasualTable";
+import MonetaryTable from "./challenges/MonetaryTable";
 
 function ChallangesManager() {
   const { t } = useTranslation();

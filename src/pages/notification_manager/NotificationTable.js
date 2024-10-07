@@ -34,7 +34,7 @@ const NotificationTable = ({ notifications, paginationObj, sort, setSort, pageSi
                   <th scope="row" className="py-4 px-6 border-r font-medium text-gray-900  dark:text-white">
                     {i + 1 + pageSize * (paginationObj?.page - 1)}
                   </th>
-                  <td className="py-4 px-6 border-r text-center">{startCase(item?.title) || "N/A"}</td>
+                  <td className="py-4 px-6 border-r text-center">{item?.title || "N/A"}</td>
 
                   <td className="py-4 px-6 border-r text-center">{startCase(item?.description) || "N/A"}</td>
                   <td className="py-4 px-6 border-r w-60 text-center">

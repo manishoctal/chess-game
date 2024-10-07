@@ -49,6 +49,7 @@ const Table = ({
   //report-table//
 
   const handleReportToggle = (item) => {
+    console.log("ITEM",item)
     setReportItem(item?._id)
     setShowReportPopup(!showReportPopup)
   }
