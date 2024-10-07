@@ -66,7 +66,6 @@ function ResetPassword() {
   };
 
 
-
   const newPassword = watch("password");
   useEffect(() => {
     if (!isEmpty(newPassword)) {

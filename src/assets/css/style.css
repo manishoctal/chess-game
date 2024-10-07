@@ -175,6 +175,20 @@ button:hover{
   /* border-r dark:border-[#ffffff38]adius: 7px 7px 0 0; */
 }
 
+
+.money-stack-input input {
+  border: none;
+  padding: 11px 11px;
+  background: transparent;
+}
+
+
+.money-stack-input input:focus-visible {
+  outline: none;
+}
+.money-stack-input label{
+  display: none;
+}
 .viewDetailLabel{
   font-size: 1.2rem;
   font-weight: 400;
@@ -288,3 +302,5 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-confirm {
 .sidebar-icons svg, .sidebar-icons img {
   filter: brightness(0);
 }
+
+

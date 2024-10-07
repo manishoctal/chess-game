@@ -1,5 +1,6 @@
 import ErrorMessage from 'components/ErrorMessage';
 import OButton from 'components/reusable/OButton';
+import OInputField from 'components/reusable/OInputField';
 import AuthContext from 'context/AuthContext';
 import useToastContext from 'hooks/useToastContext';
 import React, { useContext, useEffect, useState } from 'react';
@@ -10,6 +11,7 @@ import { apiPut } from 'utils/apiFetch';
 import apiPath from 'utils/apiPath';
 import helpers from 'utils/helpers';
 import { handleKeyDownCashIn, preventMaxHundred } from 'utils/reusableMethods';
+import { isEmpty } from "lodash";
 
 const Commission = ({ saveSettingData }) => {
     const {
@@ -22,10 +24,10 @@ const Commission = ({ saveSettingData }) => {
     } = useForm({
         mode: 'onChange',
         shouldFocusError: true,
-      defaultValues: {
-      moneyStake1: saveSettingData?.commissions?.[0]?.amount || "",
-      moneyStake2: saveSettingData?.commissions?.[1]?.amount || "",
-    },
+        defaultValues: {
+            moneyStake1: saveSettingData?.commissions?.[0]?.amount || "",
+            moneyStake2: saveSettingData?.commissions?.[1]?.amount || "",
+        },
 
     });
 
@@ -35,6 +37,46 @@ const Commission = ({ saveSettingData }) => {
     const notification = useToastContext();
     const [settingChangeLoading, setSettingChangeLoading] = useState(false);
 
+
+    const validationFields = {
+
+        adminCommisionfirst: {
+            required: {
+                value: true,
+                message: "Please enter admin commission.",
+            },
+            min: {
+                value: 0.01,
+                message: 'Minimum value must is 0.01.'
+            },
+
+        },
+
+        moneyStake1: {
+            required: {
+                value: true,
+                message: "Please enter money stake.",
+            },
+            min: {
+                value: 0.01,
+                message: 'Minimum value must is 0.01.'
+            },
+
+        },
+
+        adminCommisionSecond: {
+            required: {
+                value: true,
+                message: "Please enter admin commission.",
+            },
+            min: {
+                value: 0.01,
+                message: 'Minimum value must is 0.01.'
+            },
+
+        },
+
+    }
 
     const handleSubmitForm = async (data) => {
         try {
@@ -80,14 +122,17 @@ const Commission = ({ saveSettingData }) => {
             setValue("adminCommission3", saveSettingData?.commissions?.[1]?.adminCommission);
             setValue("moneyStake1", saveSettingData?.commissions?.[0]?.amount);
             setValue("moneyStake2", saveSettingData?.commissions?.[1]?.amount);
-    
-            // Trigger validation after setting values to reflect in isDirty
-            trigger(); // This will trigger validation on all fields and update form state
-        }
-    }, [saveSettingData, setValue, trigger]);
-    
-    // console.log("isDirty:", isDirty); // Log the value of isDirty to verify if it's changing
 
+        }
+    }, [saveSettingData, setValue]);
+
+    // console.log("isDirty:", isDirty); // Log the value of isDirty to verify if it's changing
+    const newPassword = watch("moneyStake1");
+    useEffect(() => {
+      if (!isEmpty(newPassword)) {
+        trigger("moneyStake2");
+      }
+    }, [newPassword, trigger]);
 
     return (
         <div>
@@ -127,50 +172,49 @@ const Commission = ({ saveSettingData }) => {
                             <h3 className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
                                 Enter {helpers?.ternaryCondition(watch("firstCommission") === 'percentage', "Percentage", "Fixed Amount")}
                             </h3>
-                            <input
-                                disabled={!watch("firstCommission")}
+
+                            <OInputField
+                                disable={!watch("firstCommission")}
+                                wrapperClassName="relative z-0  w-full group"
                                 type="number"
-                                name="adminCommisionfirst"
+                                id="adminCommisionfirst"
+                                register={register("adminCommisionfirst", validationFields?.adminCommisionfirst)}
                                 placeholder="Set Admin Commission"
                                 onInput={watch("firstCommission") === 'percentage' ? preventMaxHundred : null}
                                 onKeyDown={watch("firstCommission") === 'percentage' ? handleKeyDownCashIn : null}
-                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                {...register('adminCommisionfirst', {
-                                    required: 'Please enter admin commission.',
-                                    min: {
-                                        value: 0.01,
-                                        message: 'Minimum value must is 0.01.'
-                                    },
-
-                                })}
                             />
-                            {errors.adminCommisionfirst && <ErrorMessage message={errors.adminCommisionfirst?.message} />}
+
+                            <ErrorMessage message={errors?.adminCommisionfirst?.message} />
+
                         </div>
 
                         <div>
                             <h3 className="mb-2 h-[20px] block text-sm font-medium text-gray-900 dark:text-white">
                             </h3>
-                            <div className='flex items-center border border-gray-300 rounded-lg overflow-hidden'>
-                                <h3 className="block text-sm font-medium text-gray-900 dark:text-white">
+                            <div className='flex items-center border border-gray-300 rounded-lg overflow-hidden money-stack-input'>
+                                <h3 className="block text-sm font-medium text-gray-900 dark:text-white w-[200px]">
                                     <div className="bg-[#EFEFEF] border-r text-[#686868] text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     >
                                         If money stake &lt;
                                     </div>
                                 </h3>
-                                <input type="number"
+
+
+                                <OInputField
+                                    wrapperClassName="relative z-0  w-full group pl-3 pr-3 outline-none"
+                                    type="number"
                                     id="moneyStake1"
+                                    register={register("moneyStake1", validationFields?.moneyStake1)}
                                     placeholder='Enter Money Stake'
-                                    className='pl-3 pr-3 outline-none'
-                                    {...register("moneyStake1")}
                                     onKeyDown={handleKeyDownCashIn}
                                     onChange={(e) => {
                                         setValue("moneyStake2", e?.target?.value)
                                     }}
                                 />
+
                             </div>
-                            {/* {errors.moneyStake1 && (
-                                <ErrorMessage message={errors.moneyStake1.message} />
-                            )} */}
+                            <ErrorMessage message={errors?.moneyStake1?.message} />
+
                         </div>
                     </div>
                 </div>
@@ -209,50 +253,48 @@ const Commission = ({ saveSettingData }) => {
                             <h3 className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
                                 Enter {helpers?.ternaryCondition(watch("secondCommision") === 'percentage', "Percentage", "Fixed Amount")}
                             </h3>
-                            <input
-                                disabled={!watch("secondCommision")}
+
+
+                            <OInputField
+                                disable={!watch("secondCommision")}
+                                wrapperClassName="relative z-0  w-full group"
                                 type="number"
-                                name="adminCommission3"
+                                id="adminCommission3"
+                                register={register("adminCommission3", validationFields?.adminCommisionSecond)}
                                 placeholder="Set Admin Commission"
                                 onInput={watch("secondCommision") === 'percentage' ? preventMaxHundred : null}
                                 onKeyDown={watch("secondCommision") === 'percentage' ? handleKeyDownCashIn : null}
-                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                {...register('adminCommission3', {
-                                    required: 'Please enter admin commission.',
-                                    min: {
-                                        value: 0.01,
-                                        message: 'Minimum value must is 0.01.'
-                                    },
-
-                                })}
                             />
-                            {errors.adminCommission3 && <ErrorMessage message={errors.adminCommission3?.message} />}
+
+                            <ErrorMessage message={errors?.adminCommission3?.message} />
+
                         </div>
 
                         <div>
                             <h3 className="mb-2 h-[20px] block text-sm font-medium text-gray-900 dark:text-white">
                             </h3>
-                            <div className='flex items-center border border-gray-300 rounded-lg overflow-hidden'>
-                                <h3 className="block text-sm font-medium text-gray-900 dark:text-white">
+                            <div className='flex items-center border border-gray-300 rounded-lg overflow-hidden money-stack-input'>
+                                <h3 className="block text-sm font-medium text-gray-900 dark:text-white w-[200px]">
                                     <div className="bg-[#EFEFEF] border-r text-[#686868] text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     >
                                         If money stake &gt;
                                     </div>
                                 </h3>
 
-                                <input
+                                <OInputField
+                                    wrapperClassName="relative z-0  w-full group pl-3 pr-3 outline-none"
                                     type="number"
-                                    className='pl-3 pr-3 outline-none'
                                     id="moneyStake2"
+                                    register={register("moneyStake2", validationFields?.moneyStake1)}
                                     placeholder='Enter Money Stake'
-                                    {...register("moneyStake2")}
                                     onKeyDown={handleKeyDownCashIn}
                                     onChange={(e) => {
-                                        setValue("moneyStake1", e.target.value);
+                                        setValue("moneyStake1", e?.target?.value)
                                     }}
                                 />
+
                             </div>
-                            {/* {errors.moneyStake2 && <ErrorMessage message={errors.moneyStake2?.message} />} */}
+                            <ErrorMessage message={errors?.moneyStake2?.message} />
 
                         </div>
                     </div>
@@ -262,18 +304,18 @@ const Commission = ({ saveSettingData }) => {
 
                 {(manager?.add || user?.role === 'admin') && (
                     <div className="text-center mt-8">
-                          <OButton
-                   disabled={!isDirty}
-                  label={<><GrUpdate size={16} className="mr-2" />{t("O_UPDATE")}</>}
-                  type="submit"
-                  onClick={handleSubmit(handleSubmitForm)}
-                  loading={settingChangeLoading}
-                  title={t("O_UPDATE")}
-                />
+                        <OButton
+                            disabled={!isDirty}
+                            label={<><GrUpdate size={16} className="mr-2" />{t("O_UPDATE")}</>}
+                            type="submit"
+                            onClick={handleSubmit(handleSubmitForm)}
+                            loading={settingChangeLoading}
+                            title={t("O_UPDATE")}
+                        />
                     </div>
                 )}
-          
-        </div>
+
+            </div>
         </div>
     );
 };
