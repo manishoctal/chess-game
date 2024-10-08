@@ -20,7 +20,7 @@ const Commission = ({ saveSettingData }) => {
         setValue,
         watch,
         trigger,
-        formState: { isDirty, errors },
+        formState: { isDirty =false, errors },
     } = useForm({
         mode: 'onChange',
         shouldFocusError: true,
@@ -36,7 +36,6 @@ const Commission = ({ saveSettingData }) => {
     const manager = user?.permission?.find((e) => e.manager === 'settings') ?? {};
     const notification = useToastContext();
     const [settingChangeLoading, setSettingChangeLoading] = useState(false);
-
 
     const validationFields = {
 
@@ -79,6 +78,7 @@ const Commission = ({ saveSettingData }) => {
     }
 
     const handleSubmitForm = async (data) => {
+        debugger
         try {
             setSettingChangeLoading(true);
 
@@ -114,17 +114,17 @@ const Commission = ({ saveSettingData }) => {
 
     };
 
-    useEffect(() => {
-        if (saveSettingData) {
-            setValue("firstCommission", saveSettingData?.commissions?.[0]?.commissionType);
-            setValue("secondCommision", saveSettingData?.commissions?.[1]?.commissionType);
-            setValue("adminCommisionfirst", saveSettingData?.commissions?.[0]?.adminCommission);
-            setValue("adminCommission3", saveSettingData?.commissions?.[1]?.adminCommission);
-            setValue("moneyStake1", saveSettingData?.commissions?.[0]?.amount);
-            setValue("moneyStake2", saveSettingData?.commissions?.[1]?.amount);
+    // useEffect(() => {
+    //     if (saveSettingData) {
+    //         setValue("firstCommission", saveSettingData?.commissions?.[0]?.commissionType);
+    //         setValue("secondCommision", saveSettingData?.commissions?.[1]?.commissionType);
+    //         setValue("adminCommisionfirst", saveSettingData?.commissions?.[0]?.adminCommission);
+    //         setValue("adminCommission3", saveSettingData?.commissions?.[1]?.adminCommission);
+    //         setValue("moneyStake1", saveSettingData?.commissions?.[0]?.amount);
+    //         setValue("moneyStake2", saveSettingData?.commissions?.[1]?.amount);
 
-        }
-    }, [saveSettingData, setValue]);
+    //     }
+    // }, [saveSettingData]);
 
     // console.log("isDirty:", isDirty); // Log the value of isDirty to verify if it's changing
     const newPassword = watch("moneyStake1");
@@ -134,6 +134,7 @@ const Commission = ({ saveSettingData }) => {
       }
     }, [newPassword, trigger]);
 
+ console.log("isDirty",isDirty)
     return (
         <div>
             <div>
@@ -218,9 +219,6 @@ const Commission = ({ saveSettingData }) => {
                         </div>
                     </div>
                 </div>
-
-
-
                 <div className="mb-4">
                     <div className="flex">
                         <div className='mr-3'>
@@ -299,16 +297,13 @@ const Commission = ({ saveSettingData }) => {
                         </div>
                     </div>
                 </div>
-
-
-
                 {(manager?.add || user?.role === 'admin') && (
                     <div className="text-center mt-8">
                         <OButton
                             disabled={!isDirty}
                             label={<><GrUpdate size={16} className="mr-2" />{t("O_UPDATE")}</>}
                             type="submit"
-                            onClick={handleSubmit(handleSubmitForm)}
+                            onClick={()=>handleSubmit(handleSubmitForm)}
                             loading={settingChangeLoading}
                             title={t("O_UPDATE")}
                         />
