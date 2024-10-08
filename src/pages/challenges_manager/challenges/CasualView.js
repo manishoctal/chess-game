@@ -2,7 +2,7 @@ import React from 'react';
 
 const CasualView = () => {
   return (
-    <div className="container mx-auto p-4">
+    <div className="p-6">
       <div className="border border-gray-300 p-4 mb-4">
         <h2 className="font-bold">Challenge created detail</h2>
         <div className="grid grid-cols-2 gap-4 mt-2">

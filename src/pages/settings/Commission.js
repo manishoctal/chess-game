@@ -19,7 +19,7 @@ const Commission = ({ saveSettingData }) => {
         setValue,
         watch,reset,
         trigger,
-        formState: { isDirty, errors,dirtyFields,touchedFields },
+        formState: { isDirty, errors },
     } = useForm({
         mode: 'onChange',
         shouldFocusError: true,
@@ -120,12 +120,10 @@ console.log("touchedFields",isDirty)
             setValue("moneyStake1", saveSettingData?.commissions?.[0]?.amount);
             setValue("moneyStake2", saveSettingData?.commissions?.[1]?.amount);
     
-            // Trigger validation after setting values to reflect in isDirty
-            trigger(); // This will trigger validation on all fields and update form state
+            trigger(); 
         }
     }, [saveSettingData, setValue, trigger]);
     
-    // console.log("isDirty:", isDirty); // Log the value of isDirty to verify if it's changing
 
 
     return (
