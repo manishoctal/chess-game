@@ -17,14 +17,14 @@ const Commission = ({ saveSettingData }) => {
         register,
         handleSubmit,
         setValue,
-        watch,reset,
+        watch, reset,
         trigger,
         formState: { isDirty, errors },
     } = useForm({
         mode: 'onChange',
         shouldFocusError: true,
-      defaultValues: {
-    },
+        defaultValues: {
+        },
 
     });
 
@@ -33,7 +33,7 @@ const Commission = ({ saveSettingData }) => {
     const manager = user?.permission?.find((e) => e.manager === 'settings') ?? {};
     const notification = useToastContext();
     const [settingChangeLoading, setSettingChangeLoading] = useState(false);
-console.log("touchedFields",isDirty)
+    console.log("touchedFields", isDirty)
 
     const validationFields = {
 
@@ -119,11 +119,13 @@ console.log("touchedFields",isDirty)
             setValue("adminCommission3", saveSettingData?.commissions?.[1]?.adminCommission);
             setValue("moneyStake1", saveSettingData?.commissions?.[0]?.amount);
             setValue("moneyStake2", saveSettingData?.commissions?.[1]?.amount);
-    
-            trigger(); 
+
+            trigger();
         }
     }, [saveSettingData, setValue, trigger]);
-    
+
+
+    console.log("dirty",isDirty)
 
 
     return (
@@ -188,7 +190,7 @@ console.log("touchedFields",isDirty)
                                         If money stake &lt;
                                     </div>
                                 </h3>
-                                <OInputField
+                                {/* <OInputField
                                     wrapperClassName="relative z-0  w-full group pl-3 pr-3 outline-none"
                                     type="number"
                                     id="moneyStake1"
@@ -198,7 +200,25 @@ console.log("touchedFields",isDirty)
                                     onChange={(e) => {
                                         setValue("moneyStake2", e?.target?.value)
                                     }}
+                                /> */}
+
+                                <OInputField
+                                    wrapperClassName="relative z-0 w-full group pl-3 pr-3 outline-none"
+                                    type="number"
+                                    id="moneyStake1"
+                                    register={register("moneyStake1", {
+                                        ...validationFields?.moneyStake1,
+                                        onChange: (e) => {
+                                            setValue("moneyStake2", e.target.value,{
+                                                shouldDirty: true, // Mark the field as dirty
+                                            });
+                                        },
+                                    })}
+                                    placeholder='Enter Money Stake'
+                                    onKeyDown={handleKeyDownCashIn}
                                 />
+
+
 
                             </div>
                             <ErrorMessage message={errors?.moneyStake1?.message} />
@@ -240,7 +260,7 @@ console.log("touchedFields",isDirty)
                             <h3 className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
                                 Enter {helpers?.ternaryCondition(watch("secondCommision") === 'percentage', "Percentage", "Fixed Amount")}
                             </h3>
-                            
+
                             <OInputField
                                 disable={!watch("secondCommision")}
                                 wrapperClassName="relative z-0  w-full group"
@@ -266,7 +286,7 @@ console.log("touchedFields",isDirty)
                                     </div>
                                 </h3>
 
-                                <OInputField
+                                {/* <OInputField
                                     wrapperClassName="relative z-0  w-full group pl-3 pr-3 outline-none"
                                     type="number"
                                     id="moneyStake2"
@@ -276,6 +296,23 @@ console.log("touchedFields",isDirty)
                                     onChange={(e) => {
                                         setValue("moneyStake1", e?.target?.value)
                                     }}
+                                /> */}
+
+
+                                <OInputField
+                                    wrapperClassName="relative z-0 w-full group pl-3 pr-3 outline-none"
+                                    type="number"
+                                    id="moneyStake2"
+                                    register={register("moneyStake2", {
+                                        ...validationFields?.moneyStake1,
+                                        onChange: (e) => {
+                                            setValue("moneyStake1", e.target.value,{
+                                                shouldDirty: true, // Mark the field as dirty
+                                            });
+                                        },
+                                    })}
+                                    placeholder='Enter Money Stake'
+                                    onKeyDown={handleKeyDownCashIn}
                                 />
 
                             </div>
@@ -290,18 +327,18 @@ console.log("touchedFields",isDirty)
 
                 {(manager?.add || user?.role === 'admin') && (
                     <div className="text-center mt-8">
-                          <OButton
-                   disabled={!isDirty}
-                  label={<><GrUpdate size={16} className="mr-2" />{t("O_UPDATE")}</>}
-                  type="submit"
-                  onClick={handleSubmit(handleSubmitForm)}
-                  loading={settingChangeLoading}
-                  title={t("O_UPDATE")}
-                />
+                        <OButton
+                            disabled={!isDirty}
+                            label={<><GrUpdate size={16} className="mr-2" />{t("O_UPDATE")}</>}
+                            type="submit"
+                            onClick={handleSubmit(handleSubmitForm)}
+                            loading={settingChangeLoading}
+                            title={t("O_UPDATE")}
+                        />
                     </div>
                 )}
-          
-        </div>
+
+            </div>
         </div>
     );
 };

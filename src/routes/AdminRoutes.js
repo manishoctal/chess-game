@@ -95,6 +95,7 @@ const AdminRoutes = {
       name: <UseChange data="CHALLENGES_MANAGER" />,
     },
 
+
     {
       path: "/users/view/:id",
       element: <UserView />,

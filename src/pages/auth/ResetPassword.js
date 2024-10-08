@@ -88,7 +88,7 @@ function ResetPassword() {
             {questionType?.isQuestionSet === true && (
               <div>
                 <h2 className="mb-3">
-                  <span>Security question: </span>
+                  <strong className="">Security question: </strong>
                   {questionType?.question}
                 </h2>
                 <div className="relative z-0 mb-6 w-full group">

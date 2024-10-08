@@ -3,7 +3,7 @@ import Loader from 'components/shared/loader'
 
 const OButton = ({
   label,
-  disabled,
+  disabled = false,
   type,
   loading,
   onClick,
@@ -11,7 +11,6 @@ const OButton = ({
   style,
   title
 }) => {
-  
   return (
     <button
       className={`${disabled === false
