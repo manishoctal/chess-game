@@ -125,6 +125,8 @@ const Commission = ({ saveSettingData }) => {
     }, [saveSettingData, setValue, trigger]);
 
 
+    console.log("dirty",isDirty)
+
 
     return (
         <div>
@@ -207,7 +209,9 @@ const Commission = ({ saveSettingData }) => {
                                     register={register("moneyStake1", {
                                         ...validationFields?.moneyStake1,
                                         onChange: (e) => {
-                                            setValue("moneyStake2", e.target.value);
+                                            setValue("moneyStake2", e.target.value,{
+                                                shouldDirty: true, // Mark the field as dirty
+                                            });
                                         },
                                     })}
                                     placeholder='Enter Money Stake'
@@ -302,7 +306,9 @@ const Commission = ({ saveSettingData }) => {
                                     register={register("moneyStake2", {
                                         ...validationFields?.moneyStake1,
                                         onChange: (e) => {
-                                            setValue("moneyStake1", e.target.value);
+                                            setValue("moneyStake1", e.target.value,{
+                                                shouldDirty: true, // Mark the field as dirty
+                                            });
                                         },
                                     })}
                                     placeholder='Enter Money Stake'
