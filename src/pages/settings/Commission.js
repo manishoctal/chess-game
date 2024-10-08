@@ -17,7 +17,7 @@ const Commission = ({ saveSettingData }) => {
         register,
         handleSubmit,
         setValue,
-        watch, reset,
+        watch,
         trigger,
         formState: { isDirty, errors },
     } = useForm({
@@ -190,17 +190,7 @@ const Commission = ({ saveSettingData }) => {
                                         If money stake &lt;
                                     </div>
                                 </h3>
-                                {/* <OInputField
-                                    wrapperClassName="relative z-0  w-full group pl-3 pr-3 outline-none"
-                                    type="number"
-                                    id="moneyStake1"
-                                    register={register("moneyStake1", validationFields?.moneyStake1)}
-                                    placeholder='Enter Money Stake'
-                                    onKeyDown={handleKeyDownCashIn}
-                                    onChange={(e) => {
-                                        setValue("moneyStake2", e?.target?.value)
-                                    }}
-                                /> */}
+                         
 
                                 <OInputField
                                     wrapperClassName="relative z-0 w-full group pl-3 pr-3 outline-none"
@@ -210,15 +200,13 @@ const Commission = ({ saveSettingData }) => {
                                         ...validationFields?.moneyStake1,
                                         onChange: (e) => {
                                             setValue("moneyStake2", e.target.value,{
-                                                shouldDirty: true, // Mark the field as dirty
+                                                shouldDirty: true,
                                             });
                                         },
                                     })}
                                     placeholder='Enter Money Stake'
                                     onKeyDown={handleKeyDownCashIn}
                                 />
-
-
 
                             </div>
                             <ErrorMessage message={errors?.moneyStake1?.message} />
@@ -286,18 +274,6 @@ const Commission = ({ saveSettingData }) => {
                                     </div>
                                 </h3>
 
-                                {/* <OInputField
-                                    wrapperClassName="relative z-0  w-full group pl-3 pr-3 outline-none"
-                                    type="number"
-                                    id="moneyStake2"
-                                    register={register("moneyStake2", validationFields?.moneyStake1)}
-                                    placeholder='Enter Money Stake'
-                                    onKeyDown={handleKeyDownCashIn}
-                                    onChange={(e) => {
-                                        setValue("moneyStake1", e?.target?.value)
-                                    }}
-                                /> */}
-
 
                                 <OInputField
                                     wrapperClassName="relative z-0 w-full group pl-3 pr-3 outline-none"
@@ -307,7 +283,7 @@ const Commission = ({ saveSettingData }) => {
                                         ...validationFields?.moneyStake1,
                                         onChange: (e) => {
                                             setValue("moneyStake1", e.target.value,{
-                                                shouldDirty: true, // Mark the field as dirty
+                                                shouldDirty: true, 
                                             });
                                         },
                                     })}
