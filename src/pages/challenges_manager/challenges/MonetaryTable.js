@@ -1,8 +1,5 @@
 import React from "react";
-import { apiPut } from "../../../utils/apiFetch";
-import apiPath from "../../../utils/apiPath";
 import { isEmpty, startCase } from "lodash";
-import useToastContext from "hooks/useToastContext";
 import { AiFillEye, } from "react-icons/ai";
 import { useTranslation } from "react-i18next";
 import {  NavLink } from "react-router-dom";
@@ -11,7 +8,6 @@ import OUserTableHead from '../../../components/reusable/OTableHead'
 
 const MonetaryTable = ({
   users,
-  getAllUser,
   handleUserView,
   user,
   manager,
@@ -23,62 +19,8 @@ const MonetaryTable = ({
   userResult
 }) => {
   const { t } = useTranslation();
-  const notification = useToastContext();
-
-  const handelStatusChange = async (item) => {
-    try {
-      const payload = {
-        status: helpers.ternaryCondition(
-          item?.status === "inactive",
-          "active",
-          "inactive"
-        ),
-        type: "user",
-      };
-      const path = `${apiPath.changeStatus}/${item?._id}`;
-      const result = await apiPut(path, payload);
-      if (result?.status === 200) {
-        notification.success(result.data.message);
-        getAllUser({ statusChange: 1 });
-      }
-      // }
-    } catch (error) {
-      console.error("error in get all users list==>>>>", error.message);
-    }
-  };
 
 
-
-  const statusLabel = (item) => {
-    let statusText = item?.status === "active" ? "Active" : "Inactive";
-    let titleText = `${statusText}`;
-    return item?.status === "deleted" ? (
-      <div>Deleted</div>
-    ) : (
-      <label
-        className="inline-flex relative items-center cursor-pointer"
-        title={titleText}
-      >
-        <input
-          type="checkbox"
-          className="sr-only peer"
-          checked={item?.status === "active"}
-          onChange={(e) =>
-            helpers.alertFunction(
-              `${t("ARE_YOU_SURE_YOU_WANT_TO")} ${helpers.ternaryCondition(
-                e.target.checked,
-                "active",
-                "inactive"
-              )} user ?`,
-              item,
-              handelStatusChange
-            )
-          }
-        />
-        <div className="w-10 h-5 bg-gray-200 rounded-full peer peer-focus:ring-0 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-gradientTo" />
-      </label>
-    );
-  };
   const getDisplayName = (userDetail) => {
     return startCase(userDetail?.creatorDetails?.userName) || 'N/A';
   };
@@ -97,30 +39,15 @@ const MonetaryTable = ({
       {content}
     </td>
   );
-  const renderCommonTableCells = (item) => (
-    <>
-      {renderTableCell(
-        helpers.getDateAndTime(item?.createdAt) || "N/A",
-        "py-4 px-3 border-r  dark:border-[#ffffff38] text-center border font-bold"
-      )}
-      {renderTableCell(
-        getKycStatusText(item),
-        "py-4 px-3 border-r  dark:border-[#ffffff38] text-center border font-bold"
-      )}
 
-    </>
-  );
-
-
-
-  const renderActionTableCells = (item, userTypeDetail) => (
+  const renderActionTableCells = (item, type) => (
     <td className="py-2 px-4 border-l border">
       <div className="">
         <div className="flex justify-center items-center">
           <NavLink
             onClick={() => handleUserView(item)}
-            to={`/users/view/${item?._id}`}
-            state={{ ...item, userTypeDetail }}
+            to={`/challenges-manager/view/${item?._id}`}
+            state={{ ...item, type }}
             className="px-2 py-2"
           >
             <AiFillEye className="cursor-pointer w-5 h-5 text-slate-600 dark:hover:text-white hover:text-blue-700" />{" "}
@@ -167,7 +94,7 @@ const MonetaryTable = ({
           {renderTableCell(helpers.ternaryCondition(item?.AdminComission, item?.AdminComission, "0"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold")}
           {renderTableCell(helpers.ternaryCondition(item?.PlatformFee, item?.PlatformFee, "0"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold")}
           {renderTableCell(itemStatus, "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold")}
-          {renderActionTableCells(item, userType)}
+          {renderActionTableCells(item, "monetary")}
 
         </tr>
       );

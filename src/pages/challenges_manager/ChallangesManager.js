@@ -121,9 +121,12 @@ function ChallangesManager() {
   };
 
   const handleUserView = () => {
-    updatePageName(` ${t("VIEW") + " " + t("USER_MANAGER")}`);
+    updatePageName(` ${t("VIEW") + " " + t("CASUAL_CHALLENGE")}`);
   };
 
+  const handleMonetryView = () => {
+    updatePageName(` ${t("VIEW") + " " + t("MONETARY_CHALLENGE")}`);
+  };
 
   useEffect(() => {
     updatePageName(t("CHALLENGES_MANAGER"));
@@ -322,7 +325,7 @@ function ChallangesManager() {
                 users={users}
                 user={user}
                 getAllUser={getAllUser}
-                handleUserView={handleUserView}
+                handleUserView={handleMonetryView}
                 page={page}
                 setSort={setSort}
                 sort={sort}

@@ -947,5 +947,7 @@
   "MATCH_STATUS": "Match Status",
   "MONETRY_CHALLENGE_ID": "Monetary Challenge ID",
   "CHALLENGE_CATEGORY": "Challenge Category",
-  "SPECIAL_CHARACTERS_NOT_ALLOWED": "Special characters are not allowed."
+  "SPECIAL_CHARACTERS_NOT_ALLOWED": "Special characters are not allowed.",
+  "CASUAL_PLAYER": "Players",
+  "CHALLENGE_ID": "Challenge ID"
 }
