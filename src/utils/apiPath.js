@@ -88,7 +88,8 @@ const apiPath = Object.freeze({
   freezeAmount:"/v1/admin/user/freeze-amount",
   transactionList: "/v1/admin/transaction",
   specificUserApiList:"/v1/admin/notification",
-  feedbackListing:"/v1/admin/feedback"
+  feedbackListing:"/v1/admin/feedback",
+  challengeManager:"/v1/admin/challenges"
 });
 
 export default apiPath;

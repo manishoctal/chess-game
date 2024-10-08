@@ -11,23 +11,20 @@ import { apiPut } from 'utils/apiFetch';
 import apiPath from 'utils/apiPath';
 import helpers from 'utils/helpers';
 import { handleKeyDownCashIn, preventMaxHundred } from 'utils/reusableMethods';
-import { isEmpty } from "lodash";
 
 const Commission = ({ saveSettingData }) => {
     const {
         register,
         handleSubmit,
         setValue,
-        watch,
+        watch,reset,
         trigger,
-        formState: { isDirty =false, errors },
+        formState: { isDirty, errors,dirtyFields,touchedFields },
     } = useForm({
         mode: 'onChange',
         shouldFocusError: true,
-        defaultValues: {
-            moneyStake1: saveSettingData?.commissions?.[0]?.amount || "",
-            moneyStake2: saveSettingData?.commissions?.[1]?.amount || "",
-        },
+      defaultValues: {
+    },
 
     });
 
@@ -36,6 +33,7 @@ const Commission = ({ saveSettingData }) => {
     const manager = user?.permission?.find((e) => e.manager === 'settings') ?? {};
     const notification = useToastContext();
     const [settingChangeLoading, setSettingChangeLoading] = useState(false);
+console.log("touchedFields",isDirty)
 
     const validationFields = {
 
@@ -78,7 +76,6 @@ const Commission = ({ saveSettingData }) => {
     }
 
     const handleSubmitForm = async (data) => {
-        debugger
         try {
             setSettingChangeLoading(true);
 
@@ -114,27 +111,23 @@ const Commission = ({ saveSettingData }) => {
 
     };
 
-    // useEffect(() => {
-    //     if (saveSettingData) {
-    //         setValue("firstCommission", saveSettingData?.commissions?.[0]?.commissionType);
-    //         setValue("secondCommision", saveSettingData?.commissions?.[1]?.commissionType);
-    //         setValue("adminCommisionfirst", saveSettingData?.commissions?.[0]?.adminCommission);
-    //         setValue("adminCommission3", saveSettingData?.commissions?.[1]?.adminCommission);
-    //         setValue("moneyStake1", saveSettingData?.commissions?.[0]?.amount);
-    //         setValue("moneyStake2", saveSettingData?.commissions?.[1]?.amount);
-
-    //     }
-    // }, [saveSettingData]);
-
-    // console.log("isDirty:", isDirty); // Log the value of isDirty to verify if it's changing
-    const newPassword = watch("moneyStake1");
     useEffect(() => {
-      if (!isEmpty(newPassword)) {
-        trigger("moneyStake2");
-      }
-    }, [newPassword, trigger]);
+        if (saveSettingData) {
+            setValue("firstCommission", saveSettingData?.commissions?.[0]?.commissionType);
+            setValue("secondCommision", saveSettingData?.commissions?.[1]?.commissionType);
+            setValue("adminCommisionfirst", saveSettingData?.commissions?.[0]?.adminCommission);
+            setValue("adminCommission3", saveSettingData?.commissions?.[1]?.adminCommission);
+            setValue("moneyStake1", saveSettingData?.commissions?.[0]?.amount);
+            setValue("moneyStake2", saveSettingData?.commissions?.[1]?.amount);
+    
+            // Trigger validation after setting values to reflect in isDirty
+            trigger(); // This will trigger validation on all fields and update form state
+        }
+    }, [saveSettingData, setValue, trigger]);
+    
+    // console.log("isDirty:", isDirty); // Log the value of isDirty to verify if it's changing
 
- console.log("isDirty",isDirty)
+
     return (
         <div>
             <div>
@@ -173,7 +166,6 @@ const Commission = ({ saveSettingData }) => {
                             <h3 className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
                                 Enter {helpers?.ternaryCondition(watch("firstCommission") === 'percentage', "Percentage", "Fixed Amount")}
                             </h3>
-
                             <OInputField
                                 disable={!watch("firstCommission")}
                                 wrapperClassName="relative z-0  w-full group"
@@ -186,7 +178,6 @@ const Commission = ({ saveSettingData }) => {
                             />
 
                             <ErrorMessage message={errors?.adminCommisionfirst?.message} />
-
                         </div>
 
                         <div>
@@ -199,8 +190,6 @@ const Commission = ({ saveSettingData }) => {
                                         If money stake &lt;
                                     </div>
                                 </h3>
-
-
                                 <OInputField
                                     wrapperClassName="relative z-0  w-full group pl-3 pr-3 outline-none"
                                     type="number"
@@ -215,10 +204,12 @@ const Commission = ({ saveSettingData }) => {
 
                             </div>
                             <ErrorMessage message={errors?.moneyStake1?.message} />
-
                         </div>
                     </div>
                 </div>
+
+
+
                 <div className="mb-4">
                     <div className="flex">
                         <div className='mr-3'>
@@ -251,8 +242,7 @@ const Commission = ({ saveSettingData }) => {
                             <h3 className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
                                 Enter {helpers?.ternaryCondition(watch("secondCommision") === 'percentage', "Percentage", "Fixed Amount")}
                             </h3>
-
-
+                            
                             <OInputField
                                 disable={!watch("secondCommision")}
                                 wrapperClassName="relative z-0  w-full group"
@@ -265,14 +255,13 @@ const Commission = ({ saveSettingData }) => {
                             />
 
                             <ErrorMessage message={errors?.adminCommission3?.message} />
-
                         </div>
 
                         <div>
                             <h3 className="mb-2 h-[20px] block text-sm font-medium text-gray-900 dark:text-white">
                             </h3>
                             <div className='flex items-center border border-gray-300 rounded-lg overflow-hidden money-stack-input'>
-                                <h3 className="block text-sm font-medium text-gray-900 dark:text-white w-[200px]">
+                                <h3 className="block text-sm font-medium text-gray-900 dark:text-white  w-[200px]">
                                     <div className="bg-[#EFEFEF] border-r text-[#686868] text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     >
                                         If money stake &gt;
@@ -294,23 +283,27 @@ const Commission = ({ saveSettingData }) => {
                             </div>
                             <ErrorMessage message={errors?.moneyStake2?.message} />
 
+
                         </div>
                     </div>
                 </div>
+
+
+
                 {(manager?.add || user?.role === 'admin') && (
                     <div className="text-center mt-8">
-                        <OButton
-                            disabled={!isDirty}
-                            label={<><GrUpdate size={16} className="mr-2" />{t("O_UPDATE")}</>}
-                            type="submit"
-                            onClick={()=>handleSubmit(handleSubmitForm)}
-                            loading={settingChangeLoading}
-                            title={t("O_UPDATE")}
-                        />
+                          <OButton
+                   disabled={!isDirty}
+                  label={<><GrUpdate size={16} className="mr-2" />{t("O_UPDATE")}</>}
+                  type="submit"
+                  onClick={handleSubmit(handleSubmitForm)}
+                  loading={settingChangeLoading}
+                  title={t("O_UPDATE")}
+                />
                     </div>
                 )}
-
-            </div>
+          
+        </div>
         </div>
     );
 };

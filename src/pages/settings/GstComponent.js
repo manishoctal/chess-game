@@ -96,7 +96,7 @@ const GstComponent = ({saveSettingData}) => {
 
 
     return (
-        <form onSubmit={handleSubmit(handleSubmitForm)}>
+        <form onSubmit={handleSubmit(handleSubmitForm)} className='mb-5'>
           
           <div className='grid grid-cols-2 gap-x-5'>
 

@@ -20,7 +20,7 @@ function ChallangesManager() {
   const location = useLocation();
   const [activeInactiveStatus, setActiveInactiveStatus] = useState(location?.state ?? "");
 
-  console.log("activeInactiveStatus",activeInactiveStatus)
+  console.log("activeInactiveStatus", activeInactiveStatus)
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
   const [isInitialized, setIsInitialized] = useState(false);
@@ -58,7 +58,7 @@ function ChallangesManager() {
   });
 
 
-  const userResult = helpers?.ternaryCondition(activeTab === "Tab1", false, true)
+  const userResult = helpers?.ternaryCondition(activeTab === "Tab1", "casual", "monetary")
 
   const getAllUser = async () => {
     try {
@@ -73,7 +73,7 @@ function ChallangesManager() {
         sortKey: sort?.sortBy,
         sortType: sort?.sortType,
         userId: userId || null,
-        status:category
+        status: category
       };
 
 
@@ -81,7 +81,7 @@ function ChallangesManager() {
         payload.kyc = kyc;
       }
 
-      const path = `${apiPath.getUsers}/${userResult}`;
+      const path = `${apiPath.challengeManager}/${userResult}`;
       const result = await apiGet(path, payload);
       if (result?.data?.success) {
         const response = result?.data?.results;
@@ -146,7 +146,7 @@ function ChallangesManager() {
     setPage(1);
     setSearchTerm("");
     setPageSize(10);
-    navigate({path:'/users',replace:false,state:{}})
+    navigate({ path: '/users', replace: false, state: {} })
   };
 
 
@@ -285,59 +285,55 @@ function ChallangesManager() {
 
             </form>
 
-          <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between">
 
 
-          <div className="flex items-center p-5">
-         <button
-            className={` mr-4 text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150 ${activeTab === 'Tab1' ? 'bg-gradBlack' : 'bg-gradientTo'}`}
-            onClick={() => handleTabClick('Tab1')}
-          >
-            {t("CASUAL_CHALLENGE")}
-          </button>
-          <button
-            className={` text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 ease-linear transition-all duration-150 ${activeTab === 'Tab2' ? 'bg-gradBlack' : 'bg-gradientTo'}`}
-            onClick={() => handleTabClick('Tab2')}
-          >
-            {t("MONETARY_CHALLENGE")}
-          </button>
-         </div>
-          </div>
+              <div className="flex items-center p-5">
+                <button
+                  className={` mr-4 text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150 ${activeTab === 'Tab1' ? 'bg-gradBlack' : 'bg-gradientTo'}`}
+                  onClick={() => handleTabClick('Tab1')}
+                >
+                  {t("CASUAL_CHALLENGE")}
+                </button>
+                <button
+                  className={` text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 ease-linear transition-all duration-150 ${activeTab === 'Tab2' ? 'bg-gradBlack' : 'bg-gradientTo'}`}
+                  onClick={() => handleTabClick('Tab2')}
+                >
+                  {t("MONETARY_CHALLENGE")}
+                </button>
+              </div>
+            </div>
 
-          {
-           helpers?.ternaryCondition(activeTab==="Tab1", <CasualTable
-            users={users}
-            user={user}
-            getAllUser={getAllUser}
-            handleUserView={handleUserView}
-            page={page}
-            setSort={setSort}
-            sort={sort}
-            setPage={setPage}
-            pageSize={pageSize}
-            userType={userType}
-            manager={manager}
-            userResult={userResult}
-          />,<MonetaryTable
-          users={users}
-          user={user}
-          getAllUser={getAllUser}
-          handleUserView={handleUserView}
-          page={page}
-          setSort={setSort}
-          sort={sort}
-          setPage={setPage}
-          pageSize={pageSize}
-          userType={userType}
-          manager={manager}
-          userResult={userResult}
-        />
-)
-          }
-
-        
-
-
+            {
+              helpers?.ternaryCondition(activeTab === "Tab1", <CasualTable
+                users={users}
+                user={user}
+                getAllUser={getAllUser}
+                handleUserView={handleUserView}
+                page={page}
+                setSort={setSort}
+                sort={sort}
+                setPage={setPage}
+                pageSize={pageSize}
+                userType={userType}
+                manager={manager}
+                userResult={userResult}
+              />, <MonetaryTable
+                users={users}
+                user={user}
+                getAllUser={getAllUser}
+                handleUserView={handleUserView}
+                page={page}
+                setSort={setSort}
+                sort={sort}
+                setPage={setPage}
+                pageSize={pageSize}
+                userType={userType}
+                manager={manager}
+                userResult={userResult}
+              />
+              )
+            }
 
             <div className="flex justify-between">
               <PageSizeList dynamicPage={dynamicPage} pageSize={pageSize} />
