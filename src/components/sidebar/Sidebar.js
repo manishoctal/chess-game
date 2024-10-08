@@ -6,7 +6,7 @@ import userManager from "../../assets/images/user-manager.svg";
 import manageStaticContents from "../../assets/images/manage-static-contents.svg";
 import Logout from "../../assets/images/logout.svg";
 import { useTranslation } from "react-i18next";
-import logoImage from "../../assets/images/Logo.png";
+import logoImage from "../../assets/images/sidebar-logo.png";
 import Swal from "sweetalert2";
 import { FaUserGear } from "react-icons/fa6";
 import { AiOutlineMail } from "react-icons/ai";
@@ -98,7 +98,7 @@ const Sidebar = () => {
   return (
     <div className={`shadow-lg sidebar lg:block z-10   ${sidebarStatus === "open" ? "block" : "sidebarHide"} bg-gradient-to-t from-gradpurple to-gradientFrom w-[220px] xl:w-[280px] fixed h-full overflow-y-auto`}>
       <div className="text-sideBarNavColor">
-        <Link to="/dashboard" onClick={() => updatePageName("Dashboard")} className={`px-2 py-8 w-full text-center flex justify-center ${sidebarStatus === "open" ? "showToggle" : ""}`}>
+        <Link to="/dashboard" onClick={() => updatePageName("Dashboard")} className={`px-2 py-8 pb-3 w-full text-center flex justify-center ${sidebarStatus === "open" ? "showToggle" : ""}`}>
           <img src={logoImage} className="inline max-w-[187px]" alt="" />
         </Link>
         <div className="profile text-center">
