@@ -9,15 +9,13 @@ import { useTranslation } from "react-i18next";
 import AuthContext from "context/AuthContext";
 import OInputField from "components/reusable/OInputField";
 import imageDefault from "../../assets/images/No-image-found.jpg";
-import OImage from "components/reusable/OImage";
-import { Link } from "react-router-dom";
 import Credential from "./Credential";
 import FormValidation from "utils/formValidation";
 import { preventMaxInput } from "utils/validations";
 import helpers from "utils/helpers";
 import DepositAmount from "./DepositAmount";
 import { GrUpdate } from "react-icons/gr";
-import { handleKeyDownCashIn, handleNumericInput, preventMaxHundred, preventText } from "utils/reusableMethods";
+import { handleKeyDownCashIn, preventMaxHundred } from "utils/reusableMethods";
 import Commission from "./Commission";
 import GstComponent from "./GstComponent";
 
@@ -361,7 +359,7 @@ const Settings = () => {
           </div>
         </div>
 
-        <div className="border p-5 rounded-md">
+        <div className="border p-5 rounded-md mb-5">
           <GstComponent saveSettingData={saveSettingData} />
         </div>
         <div className="border p-5 rounded-md">
