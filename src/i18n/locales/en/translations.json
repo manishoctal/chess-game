@@ -952,5 +952,9 @@
   "CHALLENGE_ID": "Challenge ID",
   "SEARCH_CHALLENGES_ID": "Search Challenges Id",
   "RUNNING": "Running",
-  "COMPLETE": "Complete"
+  "COMPLETE": "Complete",
+  "SUBADMIN": "Sub Admin",
+  "SEARCH_BY_SUB_ADMIN": "Search By Sub Admin",
+  "SELECT_SUBADMIN": "Select Sub Admin",
+  "SPECIFIC_SUB_USER": "Specific Sub Admin"
 }
