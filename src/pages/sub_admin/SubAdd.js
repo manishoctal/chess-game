@@ -215,12 +215,14 @@ const SubAdd = () => {
     </div>
   );
 
-  // useEffect(()=>{
-  //   if(!item){
-  //     navigate("/sub-admin-manager")
-  //   }
-  // },[])
 
+  useEffect(() => {
+    if (!location.state && !location?.state?.addType) {
+      navigate("/sub-admin-manager");
+    }
+  }, [location]);
+
+  
   return (
     <>
       <div className="relative p-6 flex-auto">
