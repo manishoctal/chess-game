@@ -182,6 +182,11 @@ button:hover{
   background: transparent;
 }
 
+.dynamic-flag img{
+  width: 100%!important;
+  height: 100%!important;
+  object-fit: cover!important;
+}
 
 .money-stack-input input:focus-visible {
   outline: none;

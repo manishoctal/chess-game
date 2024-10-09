@@ -8,7 +8,7 @@ import { useTranslation } from "react-i18next";
 import OInputField from "components/reusable/OInputField";
 import FormValidation from "utils/formValidation";
 import { IoClose } from "react-icons/io5";
-import { preventText } from "utils/reusableMethods";
+import { handleCopy, handleCut, handlePaste, preventText } from "utils/reusableMethods";
 import helpers from "utils/helpers";
 const FreezeBalancePopup = ({ handleFreeModal, userId }) => {
     const [isLoading, setIsLoading] = useState(false);
@@ -44,7 +44,7 @@ const FreezeBalancePopup = ({ handleFreeModal, userId }) => {
 
     console.log("userId", userId)
 
-
+  
 
     return (
         <div>
@@ -55,7 +55,9 @@ const FreezeBalancePopup = ({ handleFreeModal, userId }) => {
                             <div className="dark:bg-gray-900 flex items-center justify-between p-5 border-b border-solid border-slate-200 rounded-t">
                                 <div>
                                     <h3 className="text-xl font-semibold dark:text-white">{t("FREEZE_BALANCE")}</h3>
-                                    <strong className="text-black text-lg mt-2 block">{helpers?.ternaryCondition(userId?.freezedAmount, helpers?.formattedAmountAllCountry(parseInt(userId?.freezedAmount),userId?.country), "0")}</strong>
+
+                                    <strong className="mt-2 block">{helpers.formattedAmount(userId?.freezedAmount)}</strong>
+                                    {/* <strong className="text-black text-lg mt-2 block">{helpers?.ternaryCondition(userId?.freezedAmount, helpers?.formattedAmount(parseInt(userId?.freezedAmount),userId?.country), "0")}</strong> */}
                                 </div>
 
                                 <button className=" ml-auto flex items-center justify-center  text-black border-2 rounded-full  h-8 w-8 float-right text-3xl leading-none font-extralight outline-none focus:outline-none" onClick={() => handleFreeModal()}>
@@ -79,6 +81,9 @@ const FreezeBalancePopup = ({ handleFreeModal, userId }) => {
                                                     <span className="text-red-500">*</span>
                                                 </>
                                             }
+                                            onCopy={handleCopy}
+                                            onCut={handleCut}
+                                            onPaste={handlePaste}
                                             onKeyPress={(e) => preventText(e)}
                                             type="text"
                                             autoFocus

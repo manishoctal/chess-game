@@ -949,5 +949,8 @@
   "CHALLENGE_CATEGORY": "Challenge Category",
   "SPECIAL_CHARACTERS_NOT_ALLOWED": "Special characters are not allowed.",
   "CASUAL_PLAYER": "Players",
-  "CHALLENGE_ID": "Challenge ID"
+  "CHALLENGE_ID": "Challenge ID",
+  "SEARCH_CHALLENGES_ID": "Search Challenges Id",
+  "RUNNING": "Running",
+  "COMPLETE": "Complete"
 }

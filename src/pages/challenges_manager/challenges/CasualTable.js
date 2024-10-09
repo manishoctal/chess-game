@@ -24,7 +24,7 @@ const CasualTable = ({
   const { t } = useTranslation();
 
   const getDisplayName = (userDetail) => {
-    return startCase(userDetail?.creatorDetails?.userUniqId) || 'N/A';
+    return userDetail?.creatorDetails?.userUniqId || 'N/A';
   };
 
   const getDisplayUserId = (userDetail) => {
@@ -109,7 +109,7 @@ const CasualTable = ({
           {renderTableCell(helpers.ternaryCondition(item?.winnerDetails?.userName, item?.winnerDetails?.userName, "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold")}
           {renderTableCell(helpers.ternaryCondition(item?.time, `${item?.time} Min`, "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold")}
           {renderTableCell(helpers.getDateAndTime(item?.createdAt, item?.createdAt, "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold")}
-          {renderTableCell(helpers.ternaryCondition(item?.challengeType, startCase(item?.challengeType), "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold")}
+          {renderTableCell(helpers.ternaryCondition(item?.type, startCase(item?.type), "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold")}
           <td className="bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold">{itemStatus}</td>
           {renderActionTableCells(item, "casual")}
         </tr>
@@ -130,16 +130,16 @@ const CasualTable = ({
                 {t("S.NO")}
               </th>
 
-              <OUserTableHead sort={sort} setSort={setSort} name='CAUSUAL_CHALLENGE_ID' fieldName='userUniqId' />
-              <OUserTableHead sort={sort} setSort={setSort} name='CREATOR_ID' fieldName='fullName' />
-              <OUserTableHead sort={sort} setSort={setSort} name='CREATOR_USER_NAME' fieldName='userName' />
-              <OUserTableHead sort={sort} setSort={setSort} name='ACCEPTED_ID' fieldName='email' />
-              <OUserTableHead sort={sort} setSort={setSort} name='ACCEPTOR_NAME' fieldName='countryCode' />
-              <OUserTableHead sort={sort} setSort={setSort} name='WINNER_NAME' fieldName='mobile' />
-              <OUserTableHead sort={sort} setSort={setSort} name='TIME_FORMAT' fieldName='createdAt' />
-              <OUserTableHead sort={sort} setSort={setSort} name='O_CREATED_AT' fieldName='isKYCVerified' />
-              <OUserTableHead sort={sort} setSort={setSort} name='CHALLENGE_TYPE' fieldName='ratingMonetary' />
-              <OUserTableHead sort={sort} setSort={setSort} name='MATCH_STATUS' fieldName='ratingCasual' />
+              <OUserTableHead sort={sort} setSort={setSort} name='CAUSUAL_CHALLENGE_ID' fieldName='challengeId' />
+              <OUserTableHead sort={sort} setSort={setSort} name='CREATOR_ID' fieldName='creatorDetails.userUniqId' />
+              <OUserTableHead sort={sort} setSort={setSort} name='CREATOR_USER_NAME' fieldName='creatorDetails.userName' />
+              <OUserTableHead sort={sort} setSort={setSort} name='ACCEPTED_ID' fieldName='acceptorDetails.userUniqId' />
+              <OUserTableHead sort={sort} setSort={setSort} name='ACCEPTOR_NAME' fieldName='acceptorDetails.userName' />
+              <OUserTableHead sort={sort} setSort={setSort} name='WINNER_NAME' fieldName='winnerDetails.userName' />
+              <OUserTableHead sort={sort} setSort={setSort} name='TIME_FORMAT' fieldName='time' />
+              <OUserTableHead sort={sort} setSort={setSort} name='O_CREATED_AT' fieldName='createdAt' />
+              <OUserTableHead sort={sort} setSort={setSort} name='CHALLENGE_TYPE' fieldName='type' />
+              <OUserTableHead sort={sort} setSort={setSort} name='MATCH_STATUS' fieldName='expiryScheduleDateTime' />
 
 
               <th scope="col" className="py-3 px-6 text-center">
