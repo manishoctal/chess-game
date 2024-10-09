@@ -1,32 +1,35 @@
-import { isEmpty } from "lodash";
+import { isEmpty, startCase } from "lodash";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { IoClose } from "react-icons/io5";
 import { apiGet } from "utils/apiFetch";
 import apiPath from "utils/apiPath";
+import helpers from "utils/helpers";
 
-const SpecifiUserPopup = ({ handleSpecificUser }) => {
-    const { t } = useTranslation();
-    const [userList,setUserList]=useState([])
+const SpecifiUserPopup = ({ handleSpecificUser, viewUser }) => {
+  const { t } = useTranslation();
+  const [userList, setUserList] = useState([])
 
-    const getSpecificUserList = async() =>{
-           try{
-            const res = await apiGet(apiPath?.specificUserApiList);
-            if(res?.data?.status===200)
-            {
-                setUserList(res?.data?.results)
-            }
+  const getSpecificUserList = async () => {
 
-           }
-           catch(error){
-            console.log("errr",error)
-           }
+    try {
+      const res = await apiGet(`${apiPath?.specificUserApiList}/${viewUser}`);
+      console.log("res", res)
+      if (res?.status === 200) {
+        setUserList(res?.data?.results?.users)
+      }
+
     }
+    catch (error) {
+      console.log("errr", error)
+    }
+  }
 
-    useEffect(()=>{
-        getSpecificUserList()
-    },[])
+  useEffect(() => {
+    getSpecificUserList()
+  }, [])
 
+  console.log("userList", userList)
   return (
     <div>
       <div className="justify-center items-center  overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
@@ -43,28 +46,60 @@ const SpecifiUserPopup = ({ handleSpecificUser }) => {
               </div>
 
               <div className="p-5 py-3">
-                <ul className="max-h-[300px] overflow-y-auto">
-                   {
-                    userList && userList?.length > 0 && userList?.map((item,i)=>{
-                        return  <li className="flex items-center py-2 border-b last:border-none" key={i}>
 
-                        <figcaption>
-                            {item?.userName}
-                            <div className="text-slate-500 text-sm">{item?.email}</div>
-                        </figcaption>
-                    </li>
-                    })
-                   }
+                <div className="overflow-x-auto relative rounded-lg border">
+                  <table className="w-full text-xs text-left text-[#A5A5A5] dark:text-gray-400 ">
+                    <thead className="text-xs text-gray-900 border border-[#E1E6EE] bg-[#E1E6EE] dark:bg-gray-700 dark:text-gray-400 dark:border-[#ffffff38]">
+                      <tr>
+                        <th scope="col" className="py-3 px-3 text-center">
+                          {t("USERNAME")}
+                        </th>
 
-                   {
-                    isEmpty(userList) &&  <div className="py-4 px-6 text-center">
-                    {t("O_NO_RECORD_FOUND")}
-                  </div>
-                   }
-                </ul>
+
+                        <th scope="col" className="py-3 px-6 text-center">
+                          {t("EMAIL")}
+                        </th>
+
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {
+                        userList && userList?.length > 0 && userList?.map((item, i) => {
+                          return <tr className="bg-white text-center border-b dark:bg-gray-800 dark:border-gray-700" key={i}>
+                            <td className="py-2 px-4 border-r dark:border-[#ffffff38]"
+
+                            >
+                              {helpers?.ternaryCondition(item?.userName, startCase(item?.userName), "N/A")}
+                            </td>
+
+                            <td className="py-2 px-4 border-r dark:border-[#ffffff38]"
+                            >
+                              {helpers?.ternaryCondition(item?.email, item?.email, "N/A")}
+                            </td>
+
+                          </tr>
+                        })
+                      }
+
+                      {helpers.ternaryCondition(
+                        isEmpty(userList),
+                        <tr className="bg-white text-center border-b dark:bg-gray-800 dark:border-gray-700">
+                          <td
+                            className="py-2 px-4 border-r dark:border-[#ffffff38]"
+                            colSpan={13}
+                          >
+                            {t("O_NO_RECORD_FOUND")}
+                          </td>
+                        </tr>,
+                        null
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+
 
               </div>
-           
+
               <div className="flex items-center justify-center p-6 border-t border-solid border-slate-200 rounded-b dark:bg-gray-900">
                 <button
                   className="text-black bg-[#E1E1E1] font-normal px-6 flex gap-2 py-2.5 text-sm outline-none focus:outline-none rounded  ease-linear transition-all duration-150"
@@ -75,7 +110,7 @@ const SpecifiUserPopup = ({ handleSpecificUser }) => {
                   <IoClose size={19} />
                   {t("O_CLOSE")}
                 </button>
-          
+
               </div>
             </div>
           </div>

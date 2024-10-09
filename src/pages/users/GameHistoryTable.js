@@ -1,33 +1,11 @@
-import React, { useContext, useEffect, useState } from "react";
-import { apiPut } from "../../utils/apiFetch";
-import apiPath from "../../utils/apiPath";
-import { isEmpty, startCase } from "lodash";
-import useToastContext from "hooks/useToastContext";
-import { AiFillEdit, AiFillEye, AiFillWallet } from "react-icons/ai";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Link, NavLink } from "react-router-dom";
-
-import helpers from "../../utils/helpers";
-import OUserTableHead from '../../components/reusable/OTableHead'
-import { FaFlag } from "react-icons/fa";
-import { MdFeedback } from "react-icons/md";
-import AuthContext from "context/AuthContext";
+import { Link, } from "react-router-dom";
 import { FaCircleArrowLeft } from "react-icons/fa6";
 
-const GameHistoryTable = ({
-  users,
-  getAllUser,
-  handleUserView,
-  user,
-  manager,
-  page,
-  setSort,
-  sort,
-
-}) => {
+const GameHistoryTable = () => {
   const { t } = useTranslation();
-  const [activeTab, setActiveTab] = useState('Tab1'); // Default to the first tab
-  const { updatePageName } = useContext(AuthContext);
+  const [activeTab, setActiveTab] = useState('Tab1');
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
@@ -170,20 +148,7 @@ const GameHistoryTable = ({
               </tr>
             </thead>
             <tbody>
-              {/* {users?.length > 0 && renderTableRows()} */}
               {renderTableRows()}
-              {/* {helpers.ternaryCondition(
-                isEmpty(users),
-                <tr className="bg-white text-center border-b dark:bg-gray-800 dark:border-gray-700">
-                  <td
-                    className="py-2 px-4 border-r dark:border-[#ffffff38]"
-                    colSpan={13}
-                  >
-                    {t("O_NO_RECORD_FOUND")}
-                  </td>
-                </tr>,
-                null
-              )} */}
             </tbody>
           </table>
         </div>

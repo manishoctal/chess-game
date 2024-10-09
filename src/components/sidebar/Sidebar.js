@@ -6,7 +6,7 @@ import userManager from "../../assets/images/user-manager.svg";
 import manageStaticContents from "../../assets/images/manage-static-contents.svg";
 import Logout from "../../assets/images/logout.svg";
 import { useTranslation } from "react-i18next";
-import logoImage from "../../assets/images/Logo.png";
+import logoImage from "../../assets/images/sidebar-logo.png";
 import Swal from "sweetalert2";
 import { FaUserGear } from "react-icons/fa6";
 import { AiOutlineMail } from "react-icons/ai";
@@ -98,7 +98,7 @@ const Sidebar = () => {
   return (
     <div className={`shadow-lg sidebar lg:block z-10   ${sidebarStatus === "open" ? "block" : "sidebarHide"} bg-gradient-to-t from-gradpurple to-gradientFrom w-[220px] xl:w-[280px] fixed h-full overflow-y-auto`}>
       <div className="text-sideBarNavColor">
-        <Link to="/dashboard" onClick={() => updatePageName("Dashboard")} className={`px-2 py-8 w-full text-center flex justify-center ${sidebarStatus === "open" ? "showToggle" : ""}`}>
+        <Link to="/dashboard" onClick={() => updatePageName("Dashboard")} className={`px-2 py-8 pb-3 w-full text-center flex justify-center ${sidebarStatus === "open" ? "showToggle" : ""}`}>
           <img src={logoImage} className="inline max-w-[187px]" alt="" />
         </Link>
         <div className="profile text-center">
@@ -110,11 +110,12 @@ const Sidebar = () => {
           <SidebarNavItem path="/dashboard" label="NAV_DASHBOARD" imgSrc={Dashboard} />
           <SidebarNavItem permission="subAdmin_manager" path="/sub-admin-manager" label="SUB_ADMIN_MANAGERS" icon={<FaUserGear size={21} color="#a7a7a7" />} />
           <SidebarNavItem permission="user_manager" path="/users" label="USER_MANAGER" imgSrc={userManager} />
+          <SidebarNavItem permission="challenges_manager" path="/challenges-manager" label="CHALLENGES_MANAGER" imgSrc={userManager} />
           <SidebarNavItem permission="community_moderator" path="/community-moderator-manager" label="COMMUNITY_MODERATOR_MANAGER" icon={<AiOutlineMail size={21} color="#a7a7a7" />} />
           <SidebarNavItem permission="email_manager" path="/email-manager" label="EMAIL_MANAGER" icon={<AiOutlineMail size={21} color="#a7a7a7" />} />
           <SidebarNavItem permission="feedback_manager" path="/feedback-manager" label="FEEDBACK_MANAGER" icon={<MdFeedback size={21} color="#a7a7a7" />} />
-          {/* <SidebarNavItem permission="withdrawal_request_manager" path="/withdrawal-request-manager" label="WITHDRAWAL_REQEUST_MANAGER" icon={<MdWidthWide size={21} color="#a7a7a7" />} /> */}
-          {/* <SidebarNavItem permission="transaction_manager" path="/transection_manager" label="NAV_TRANSACTION_MANAGER" icon={<GrTransaction size={21} color="#a7a7a7" />} /> */}
+          <SidebarNavItem permission="withdrawal_request_manager" path="/withdrawal-request-manager" label="WITHDRAWAL_REQEUST_MANAGER" icon={<MdWidthWide size={21} color="#a7a7a7" />} />
+          <SidebarNavItem permission="transaction_manager" path="/transection_manager" label="NAV_TRANSACTION_MANAGER" icon={<GrTransaction size={21} color="#a7a7a7" />} />
           <SidebarNavItem permission="notification_manager" path="/notification_manager" label="NOTIFICATION_MANAGER" icon={<IoMdNotificationsOutline size={21} color="#a7a7a7" />} />
           <SidebarNavItem permission="static_pages_management" path="/static-content" label="NAV_STATIC_CONTENTS" imgSrc={manageStaticContents} />
           <SidebarNavItem permission="FAQ" path="/faqs" label="NAV_FAQS" icon={<FaRegQuestionCircle size={21} color="#a7a7a7" />} />

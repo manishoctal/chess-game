@@ -42,10 +42,10 @@ const UserView = () => {
     getUserDetails()
   }
 
-
   const getUserDetails = async () => {
     try {
-      const path = `${apiPath.getUserDetails}/${location?.state?._id}`;
+    
+      const path = `${apiPath.getUserDetails}/${location?.state?.user?._id || location?.state?._id }`;
       const result = await apiGet(path);
       if (result?.data?.success) {
         setItem(result?.data?.results)
@@ -252,7 +252,13 @@ const UserView = () => {
                 </figure>
                 <figcaption className="w-[calc(100%_-_41px)]">
                   <span className="block text-[#5 C5C5C]">{t("O_MOBILE_NUMBER")}</span>
-                  <strong>{helpers.ternaryCondition(item?.mobile, item?.mobile, "N/A")}</strong>
+                  <strong>
+                    
+                  {helpers?.ternaryCondition(item?.countryCode
+              , `+${item?.countryCode} ${item?.mobile}`
+              , "N/A")}
+                    
+                    </strong>
                 </figcaption>
               </div>
             </div>

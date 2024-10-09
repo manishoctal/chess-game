@@ -126,13 +126,14 @@ export const preventMaxHundred = e => {
   }
 }
 
+export const handleCopy = (e) => {
+  e.preventDefault();
+};
 
-// export const preventMaxHundred = e => {
-//   if (e.target.value > 100) {
-//     e.target.value = e.target.value.slice(0, 2)
-//   }
-// }
-// min: {
-//                   value: 0.01,
-//                   message: 'Minimum value must is 0.01.'
-//                 }
+export const handleCut = (e) => {
+  e.preventDefault();
+};
+
+export const handlePaste = (e) => {
+  e.preventDefault(); 
+};

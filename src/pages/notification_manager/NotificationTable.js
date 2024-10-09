@@ -7,7 +7,9 @@ import SpecifiUserPopup from "./SpecifiUserPopup";
 const NotificationTable = ({ notifications, paginationObj, sort, setSort, pageSize }) => {
   const { t } = useTranslation();
   const [showSpecificUser,setShowSpecificUser]=useState(false);
-  const handleSpecificUser = () =>{
+  const [viewUser,setViewUser]=useState("");
+  const handleSpecificUser = (item) =>{
+    setViewUser(item?._id)
     setShowSpecificUser(!showSpecificUser)
   }
   return (
@@ -32,12 +34,12 @@ const NotificationTable = ({ notifications, paginationObj, sort, setSort, pageSi
                   <th scope="row" className="py-4 px-6 border-r font-medium text-gray-900  dark:text-white">
                     {i + 1 + pageSize * (paginationObj?.page - 1)}
                   </th>
-                  <td className="py-4 px-6 border-r text-center">{startCase(item?.title) || "N/A"}</td>
+                  <td className="py-4 px-6 border-r text-center">{item?.title || "N/A"}</td>
 
                   <td className="py-4 px-6 border-r text-center">{startCase(item?.description) || "N/A"}</td>
                   <td className="py-4 px-6 border-r w-60 text-center">
                     {helpers.ternaryCondition(item?.sendTo == "all", "All Users", startCase(item?.sendTo)) || "N/A"}{" "}
-                    {/* {item?.sendTo !== "all"  && <button className="font-bold text-slate-600" onClick={()=>handleSpecificUser()}>({t("VIEW")})</button>} */}
+                    {item?.sendTo !== "all"  && <button className="font-bold text-slate-600" onClick={()=>handleSpecificUser(item)}>({t("VIEW")})</button>}
                   </td>
                   <td className="py-4 px-6 border-r text-center">{helpers.getDateAndTime(item?.createdAt)}</td>
                 </tr>
@@ -54,7 +56,7 @@ const NotificationTable = ({ notifications, paginationObj, sort, setSort, pageSi
       </div>
 
 {
-  showSpecificUser && <SpecifiUserPopup handleSpecificUser={handleSpecificUser}/>
+  showSpecificUser && <SpecifiUserPopup handleSpecificUser={handleSpecificUser} viewUser={viewUser}/>
 }
 
     </div>

@@ -7,7 +7,7 @@ import dayjs from "dayjs";
 import ODateRangePicker from "components/shared/datePicker/ODateRangePicker";
 import { useTranslation } from "react-i18next";
 import AuthContext from "context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import useToastContext from "hooks/useToastContext";
 import PageSizeList from "components/PageSizeList";
 import OSearch from "components/reusable/OSearch";
@@ -222,8 +222,7 @@ function SubAdmin() {
                     title={t("SUB_ADMIN_ADD_SUB_ADMIN")}
                     type="button"
                     className="bg-gradientTo flex text-sm px-4 ml-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue whitespace-nowrap"
-                    onClick={() => navigate("/sub-admin-manager/add")}
-                  >
+                    onClick={() => navigate("/sub-admin-manager/add", { state: { addType: "add" } })}                  >
                     <IoIosAdd size={20} />
                     {t("SUB_ADMIN_ADD_SUB_ADMIN")}
                   </button>

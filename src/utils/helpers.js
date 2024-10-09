@@ -264,47 +264,55 @@ const helpers = {
   getFullName: (firstName, lastName) => {
     return compact([firstName, lastName]).join(" ");
   },
-  formattedAmount: (amount) => {
-    return amount?.toLocaleString("th-TH", {
-      style: "currency",
-      currency: "INR",
-      currencyDisplay: "symbol",
-    });
+  // formattedAmount: (amount) => {
+  //   return amount?.toLocaleString("th-TH", {
+  //     style: "currency",
+  //     currency: "USD",
+  //     currencyDisplay: "symbol",
+  //   });
+  // },
+
+  formattedAmount :(value) => {
+    return new Intl.NumberFormat('en-US', { 
+      style: 'currency', 
+      currency: 'USD' 
+    }).format(value);
   },
 
    getCurrencyByCountry : (countryCode) => {
     console.log("countryCode",countryCode)
   },
-  formattedAmountAllCountry: (amount, countryName) => {
-    let currencyCode;
   
-    switch (countryName) {
-      case "India":
-        currencyCode = "INR";
-        break;
-      case "USA":
-        currencyCode = "USD";
-        break;
-      case "Canada":
-        currencyCode = "CAD";
-        break;
-      case "UK":
-        currencyCode = "GBP";
-        break;
-      case "Australia":
-        currencyCode = "AUD";
-        break;
-      default:
-        currencyCode = "INR";
-        break;
-    }
+  // formattedAmountAllCountry: (amount, countryName) => {
+  //   let currencyCode;
   
-    return amount?.toLocaleString("th-TH", {
-      style: "currency",
-      currency: currencyCode,
-      currencyDisplay: "symbol",
-    });
-  },
+  //   switch (countryName) {
+  //     case "India":
+  //       currencyCode = "INR";
+  //       break;
+  //     case "USA":
+  //       currencyCode = "USD";
+  //       break;
+  //     case "Canada":
+  //       currencyCode = "CAD";
+  //       break;
+  //     case "UK":
+  //       currencyCode = "GBP";
+  //       break;
+  //     case "Australia":
+  //       currencyCode = "AUD";
+  //       break;
+  //     default:
+  //       currencyCode = "INR";
+  //       break;
+  //   }
+  
+  //   return amount?.toLocaleString("th-TH", {
+  //     style: "currency",
+  //     currency: currencyCode,
+  //     currencyDisplay: "symbol",
+  //   });
+  // },
 
   formateNull: (text) => {
     let result = "";

@@ -12,6 +12,7 @@ import { validationRules } from "utils/constants";
 import { useTranslation } from "react-i18next";
 import logoImage from "../../assets/images/login_logo.png";
 import { preventMaxInput } from "utils/validations";
+import { isEmpty } from "lodash";
 
 function ResetPassword() {
   const { t } = useTranslation();
@@ -26,8 +27,9 @@ function ResetPassword() {
     register,
     handleSubmit,
     watch,
+    trigger,
     formState: { errors, isDirty },
-  } = useForm({ mode: "onBlur", shouldFocusError: true, defaultValues: {} });
+  } = useForm({ mode: "onChange", shouldFocusError: true, defaultValues: {} });
   const [resetPasswordLoading, setResetPasswordLoading] = useState(false);
 
   const onSubmit = async (data) => {
@@ -63,6 +65,14 @@ function ResetPassword() {
     }
   };
 
+
+  const newPassword = watch("password");
+  useEffect(() => {
+    if (!isEmpty(newPassword)) {
+      trigger("confirm_password");
+    }
+  }, [newPassword, trigger]);
+
   useEffect(() => {
     allQuestionType();
   }, []);
@@ -78,7 +88,7 @@ function ResetPassword() {
             {questionType?.isQuestionSet === true && (
               <div>
                 <h2 className="mb-3">
-                  <span>Security question: </span>
+                  <strong className="">Security question: </strong>
                   {questionType?.question}
                 </h2>
                 <div className="relative z-0 mb-6 w-full group">

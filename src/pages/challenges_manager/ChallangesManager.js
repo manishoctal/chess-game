@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { apiGet } from "../../utils/apiFetch";
 import apiPath from "../../utils/apiPath";
+import Table from "./challenges/CasualTable";
 import Pagination from "../Pagination";
 import AuthContext from "context/AuthContext";
 import dayjs from "dayjs";
@@ -8,14 +9,19 @@ import ODateRangePicker from "components/shared/datePicker/ODateRangePicker";
 import { useTranslation } from "react-i18next";
 import PageSizeList from "components/PageSizeList";
 import helpers from "utils/helpers";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { BiReset } from "react-icons/bi";
 import OSearch from "components/reusable/OSearch";
-import TransactionTable from "./TransactionTable";
+import CasualTable from "./challenges/CasualTable";
+import MonetaryTable from "./challenges/MonetaryTable";
 import { GoDownload } from "react-icons/go";
-function Transaction() {
+
+function ChallangesManager() {
   const { t } = useTranslation();
   const location = useLocation();
+  const [activeInactiveStatus, setActiveInactiveStatus] = useState(location?.state ?? "");
+
+  console.log("activeInactiveStatus", activeInactiveStatus)
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
   const [isInitialized, setIsInitialized] = useState(false);
@@ -31,15 +37,21 @@ function Transaction() {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [isDelete] = useState(false);
+  const navigate = useNavigate();
+  const [activeTab, setActiveTab] = useState('Tab1');
 
+  const handleTabClick = (tab) => {
+    setActiveTab(tab);
+  };
   const [filterData, setFilterData] = useState({
+    kyc: undefined,
+    category: location?.state,
     userId: "",
     searchKey: "",
     startDate: "",
     endDate: "",
     isReset: false,
     isFilter: false,
-    transactionType: ""
   });
   const [sort, setSort] = useState({
     sortBy: "createdAt",
@@ -47,10 +59,11 @@ function Transaction() {
   });
 
 
+  const userResult = helpers?.ternaryCondition(activeTab === "Tab1", "casual", "monetary")
 
   const getAllUser = async () => {
     try {
-      const { transactionType, startDate, endDate, searchKey, userId } = filterData;
+      const { category, startDate, endDate, searchKey, kyc, userId } = filterData;
 
       const payload = {
         page,
@@ -61,14 +74,15 @@ function Transaction() {
         sortKey: sort?.sortBy,
         sortType: sort?.sortType,
         userId: userId || null,
+        status: category
       };
 
-      if (transactionType && transactionType !== undefined) {
-        payload.transactionType = transactionType;
+
+      if (kyc && kyc !== undefined) {
+        payload.kyc = kyc;
       }
 
-
-      const path = `${apiPath.transactionList}`;
+      const path = `${apiPath.challengeManager}/${userResult}`;
       const result = await apiGet(path, payload);
       if (result?.data?.success) {
         const response = result?.data?.results;
@@ -94,7 +108,7 @@ function Transaction() {
 
   useEffect(() => {
     getAllUser();
-  }, [page, filterData, sort, pageSize]);
+  }, [page, filterData, sort, pageSize, activeTab]);
 
   // get all user end
   const dynamicPage = (e) => {
@@ -107,41 +121,37 @@ function Transaction() {
     setPage(newPage);
   };
 
+  const handleUserView = () => {
+    updatePageName(` ${t("VIEW") + " " + t("CASUAL_CHALLENGE")}`);
+  };
 
+  const handleMonetryView = () => {
+    updatePageName(` ${t("VIEW") + " " + t("MONETARY_CHALLENGE")}`);
+  };
 
   useEffect(() => {
-    updatePageName(t("NAV_TRANSACTION_MANAGER"));
+    updatePageName(t("CHALLENGES_MANAGER"));
   }, []);
 
   const handleReset = () => {
     setFilterData({
-      transactionType: undefined,
+      isKYCVerified: "",
+      category: undefined,
       kyc: "",
       userId: "",
       startDate: "",
       endDate: "",
       isReset: true,
       isFilter: false,
+
     });
+    setActiveInactiveStatus("");
+    navigate(location.pathname, { replace: true, state: "" });
     setPage(1);
     setSearchTerm("");
     setPageSize(10);
+    navigate({ path: '/users', replace: false, state: {} })
   };
-
-
-  const onCsvDownload = async () => {
-
-    try {
-      const path = apiPath.downloadFeedback;
-      const result = await apiGet(path);
-      if (result?.data?.success) {
-        helpers.downloadFile(result?.data?.results?.filePath);
-      }
-    } catch (error) {
-      console.error("error in get all dashboard list==>>>>", error.message);
-    }
-  };
-
 
 
   const handleDateChange = (start, end) => {
@@ -161,12 +171,13 @@ function Transaction() {
 
     setFilterData((prevData) => ({
       ...prevData,
-      transactionType: selectedValue ? selectedValue : undefined,
+      category: selectedValue ? selectedValue : undefined,
       isFilter: true,
       isReset: false,
     }));
     setPage(1);
   };
+
 
 
   useEffect(() => {
@@ -192,7 +203,18 @@ function Transaction() {
     };
   }, [searchTerm]);
 
-  const manager = user?.permission?.find((e) => e.manager === "transaction_manager");
+  const manager = user?.permission?.find((e) => e.manager === "challenges_manager");
+
+  const onCsvDownload = async () => {
+    try {
+      const result = await apiGet(`${apiPath.challengeCSVDownload}/${userResult}`);
+      if (result?.data?.success) {
+        helpers.downloadFile(result?.data?.results?.filePath);
+      }
+    } catch (error) {
+      console.error("error in get all dashboard list==>>>>", error.message);
+    }
+  };
 
 
   return (
@@ -205,39 +227,40 @@ function Transaction() {
               <div className="flex items-center md:justify-end mb-3">
                 <label htmlFor="default-search" className="mb-2 font-medium text-sm  text-gray-900 sr-only">
 
-                  {t("USER_ID_EMAIL_MOBILE")}
+                  {t("SEARCH_CHALLENGES_ID")}
                 </label>
                 <div className="flex">
                   <div className="relative">
-                    <OSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm} placeholder={t("SEARCH_BY_FULL_NAME_TRANSACTION_EMAIL")} />
+                    <OSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm} placeholder={t("SEARCH_CHALLENGES_ID")} />
                   </div>
                 </div>
               </div>
               <div className="flex flex-wrap items-center">
                 <div className="flex items-center lg:pt-0 pt-3 justify-center">
                   <ODateRangePicker handleDateChange={handleDateChange} isReset={filterData?.isReset} setIsReset={setFilterData} />
+                  {
+                   <div className="flex items-center mb-3 ml-3">
+                      <select
+                        id="countries"
+                        type="password"
+                        name="floating_password"
+                        className="block p-2 w-full text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer"
+                        placeholder=""
+                        value={filterData?.category || activeInactiveStatus}
+                        onChange={statusPage}
+                      >
+                        <option value="">
+                          {t("O_ALL")}
+                        </option>
+                        <option value="upcoming">{t("NOT_STARTED")}</option>
+                        <option value="running">{t("RUNNING")}</option>
+                        <option value="complete">{t("COMPLETE")}</option>
+                      </select>
+                    </div>
+                  }
 
-                  <div className="flex items-center mb-3 ml-3">
-                    <select
-                      id="countries"
-                      type="password"
-                      name="floating_password"
-                      className="block p-2 w-full text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF] dark:text-[#A5A5A5] focus:outline-none focus:ring-0 peer"
-                      placeholder=""
-                      value={filterData?.category}
-                      onChange={statusPage}
-                    >
-                      <option value="">{t("TRANSACTION_TYPE")}</option>
-                      <option value="walletDeposit">{t("O_WALLET_DEPOSIT")}</option>
-                      <option value="withdrawMoney">{t("O_WITHDRAW_MONEY")}</option>
-                      <option value="casualChallenge">{t("O_CASUAL_CHALLENGE")}</option>
-                      <option value="monetaryChallenge">{t("O_MONETARY_CHALLENGE")}</option>
-                      <option value="deposit">{t("O_DEPOSIT")}</option>
-                      <option value="refundMonetaryChallenge">{t("O_REFUND_MONETARY_CHALLENGE")}</option>
-                    </select>
-                  </div>
 
-
+             
                   <button
                     type='button'
                     onClick={() => handleReset()}
@@ -247,34 +270,64 @@ function Transaction() {
                     <BiReset size={18} />
                     {t('O_RESET')}
                   </button>
-                  <div className="p-5">
-                    <button
-                      onClick={onCsvDownload} type="button" className="bg-gradientTo text-sm px-6 flex gap-2  mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2"
-                    >
-                      <GoDownload size={18} className="" />
-                      {t("EXPORT_CSV_TRANSACTION")}
-                    </button>
-                  </div>
-
+                  <button type="button" className="bg-gradientTo text-sm px-6 flex gap-2 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2" title={t("DOWNLOAD_CSV")} onClick={onCsvDownload}>
+            <GoDownload size={18} /> {t("DOWNLOAD_CSV")}
+          </button>
                 </div>
               </div>
 
             </form>
 
+            <div className="flex items-center justify-between">
 
 
-            <TransactionTable
-              users={users}
-              user={user}
-              getAllUser={getAllUser}
-              page={page}
-              setSort={setSort}
-              sort={sort}
-              setPage={setPage}
-              pageSize={pageSize}
-              userType={userType}
-              manager={manager}
-            />
+              <div className="flex items-center p-5">
+                <button
+                  className={` mr-4 text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150 ${activeTab === 'Tab1' ? 'bg-gradBlack' : 'bg-gradientTo'}`}
+                  onClick={() => handleTabClick('Tab1')}
+                >
+                  {t("CASUAL_CHALLENGE")}
+                </button>
+                <button
+                  className={` text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 ease-linear transition-all duration-150 ${activeTab === 'Tab2' ? 'bg-gradBlack' : 'bg-gradientTo'}`}
+                  onClick={() => handleTabClick('Tab2')}
+                >
+                  {t("MONETARY_CHALLENGE")}
+                </button>
+              </div>
+            </div>
+
+            {
+              helpers?.ternaryCondition(activeTab === "Tab1", <CasualTable
+                users={users}
+                user={user}
+                getAllUser={getAllUser}
+                handleUserView={handleUserView}
+                page={page}
+                setSort={setSort}
+                sort={sort}
+                setPage={setPage}
+                pageSize={pageSize}
+                userType={userType}
+                manager={manager}
+                userResult={userResult}
+              />, <MonetaryTable
+                users={users}
+                user={user}
+                getAllUser={getAllUser}
+                handleUserView={handleMonetryView}
+                page={page}
+                setSort={setSort}
+                sort={sort}
+                setPage={setPage}
+                pageSize={pageSize}
+                userType={userType}
+                manager={manager}
+                userResult={userResult}
+              />
+              )
+            }
+
             <div className="flex justify-between">
               <PageSizeList dynamicPage={dynamicPage} pageSize={pageSize} />
               {paginationObj?.totalItems ? (
@@ -292,4 +345,4 @@ function Transaction() {
     </div>
   );
 }
-export default Transaction;
+export default ChallangesManager;

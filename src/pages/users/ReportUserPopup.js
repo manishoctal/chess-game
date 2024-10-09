@@ -7,6 +7,7 @@ import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { IoClose } from "react-icons/io5";
+import { NavLink } from "react-router-dom";
 import { apiGet } from "utils/apiFetch";
 import apiPath from "utils/apiPath";
 import helpers from "utils/helpers";
@@ -72,10 +73,14 @@ const ReportUserPopup = ({ handleReportToggle, reportItem }) => {
 
     const renderTableRows = () => {
         return reportList?.map((item, i) => {
+     
             return (
                 <tr key={item?._id} >
                     {renderTableCell(item?.userData?.userUniqId, "py-4 px-3 border-r border font-medium text-gray-900 dark:text-white dark:border-[#ffffff38]")}
-                    {renderTableCell(item?.userData?.fullName, "bg-white py-4 px-4 border-r border dark:border-[#ffffff38]")}
+                    <td className="py-4 px-6 border-r text-center"><NavLink state={item} to={`/users/view/${item?._id}`} className="hover:text-black">{helpers?.ternaryCondition(item?.userData?.userName,item?.userData?.userName,"N/A")}</NavLink></td>
+
+                    {/* {renderTableCell(item?.userData?.userName, "bg-white py-4 px-4 border-r border dark:border-[#ffffff38]")} */}
+
                     {renderTableCell(helpers.ternaryCondition(
                         item?.createdAt,
                         helpers.getDateAndTime(item?.createdAt),
@@ -85,14 +90,14 @@ const ReportUserPopup = ({ handleReportToggle, reportItem }) => {
 
                     {renderTableCell(item?.reason, "py-4 px-3 border-r border font-medium text-gray-900 dark:text-white dark:border-[#ffffff38] text-center")}
                     {renderTableCell(
-            helpers.ternaryCondition(
-              item?.userData?.mobile,
-              `+ ${item?.userData?.countryCode || ""} ${item?.userData?.mobile}`,
-              "N/A"
-            ),
-            "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold"
-          )}
-             
+                        helpers.ternaryCondition(
+                            item?.userData?.mobile,
+                            `+ ${item?.userData?.countryCode || ""} ${item?.userData?.mobile}`,
+                            "N/A"
+                        ),
+                        "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold"
+                    )}
+
 
                 </tr>
             );

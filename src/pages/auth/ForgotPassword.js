@@ -28,6 +28,7 @@ function ForgotPassword() {
       if (res.data.success) {
         notification.success("Reset password has been sent to your email");
         reset();
+        localStorage.removeItem("token")
       } else {
         notification.error(res?.data?.message);
       }

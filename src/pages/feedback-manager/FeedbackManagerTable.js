@@ -17,7 +17,7 @@ const FeedbackManagerTable = ({ allCommunity, paginationObj, sort, setSort, page
               <th scope="col" className="py-3 px-6">
                 {t("S.NO")}
               </th>
-              <ONotificationTableHead sort={sort} setSort={setSort} name="Username" fieldName="username" classTd={"justify-center"} />
+              <ONotificationTableHead sort={sort} setSort={setSort} name="User Name" fieldName="user.userName" classTd={"justify-center"} />
               <ONotificationTableHead sort={sort} setSort={setSort} name="Message" fieldName="message" classTd={"justify-center"} />
               <ONotificationTableHead sort={sort} setSort={setSort} name="Rating" fieldName="rating" classTd={"justify-center"} />
               <ONotificationTableHead sort={sort} setSort={setSort} name="Created At" fieldName="createdAt" classTd={"justify-center"} />
@@ -30,7 +30,8 @@ const FeedbackManagerTable = ({ allCommunity, paginationObj, sort, setSort, page
                   <th scope="row" className="py-4 px-6 border-r font-medium text-gray-900  dark:text-white">
                     {i + 1 + pageSize * (paginationObj?.page - 1)}
                   </th>
-                  <td className="py-4 px-6 border-r text-center"><NavLink state={item} to={`/users/view/${item?._id}`}>{helpers?.ternaryCondition(item?.userDetails?.userName,item?.userDetails?.userName,"N/A")}</NavLink></td>
+             
+                  <td className="py-4 px-6 border-r text-center"><NavLink state={item} to={`/users/view/${item?.user?._id}`} className="hover:text-black">{helpers?.ternaryCondition(item?.user?.userName,item?.user?.userName,"N/A")}</NavLink></td>
                   <td className="py-4 px-6 border-r text-center">{helpers?.ternaryCondition(item?.message,item?.message,"N/A")}</td>
                   <td className="py-4 px-6 border-r text-center">
                   {helpers?.ternaryCondition(item?.rating,<Rating name="half-rating-read" value={item?.rating || 0} readOnly precision={0.5} />,"N/A" )}

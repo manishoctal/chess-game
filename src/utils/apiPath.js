@@ -87,8 +87,11 @@ const apiPath = Object.freeze({
   downloadFeedback: "/v1/admin/feedback/download-csv",
   freezeAmount:"/v1/admin/user/freeze-amount",
   transactionList: "/v1/admin/transaction",
-  specificUserApiList:"/v1/admin/specificUserList",
-  feedbackListing:"/v1/admin/feedback"
+  specificUserApiList:"/v1/admin/notification",
+  feedbackListing:"/v1/admin/feedback",
+  challengeManager:"/v1/admin/challenges",
+  challengesView:"/v1/admin/challenges/view",
+  challengeCSVDownload: "/v1/admin/challenges/download-csv"
 });
 
 export default apiPath;

@@ -45,7 +45,7 @@ const CommunityModeratorManagerTable = ({ handleUserView, allCommunity, paginati
                   </th>
 
                   <td className="py-4 px-6 border-r text-center">{item?.postId || "N/A"}</td>
-                  <td className="py-4 px-6 border-r text-center">{helpers?.ternaryCondition(item?.user, item?.user?.userName, "N/A")}</td>
+                  <td className="py-4 px-6 border-r text-center"><NavLink state={item} to={`/users/view/${item?.user?._id}`} className="hover:text-black">{helpers?.ternaryCondition(item?.user,item?.user?.userName,"N/A")}</NavLink></td>
                   <td className="py-4 px-6 border-r text-center">{helpers?.ternaryCondition(item?.postTitle, item?.postTitle, "N/A")} </td>
                   <td className="py-4 px-6 border-r text-center">{helpers?.ternaryCondition(item?.likeCount, item?.likeCount, "0")} </td>
                   <td className="py-4 px-6 border-r text-center">{helpers?.ternaryCondition(item?.commentCount, item?.commentCount, "0")}</td>
