@@ -143,6 +143,7 @@ const Commission = ({ saveSettingData }) => {
                             </h3>
 
                             <select
+                               disabled={manager?.add === false}
                                 id="countries"
                                 type="password"
                                 name="firstCommission"
@@ -167,7 +168,7 @@ const Commission = ({ saveSettingData }) => {
                                 Enter {helpers?.ternaryCondition(watch("firstCommission") === 'percentage', "Percentage", "Fixed Amount")}
                             </h3>
                             <OInputField
-                                disable={!watch("firstCommission")}
+                                disable={!watch("firstCommission") || manager?.add === false}
                                 wrapperClassName="relative z-0  w-full group"
                                 type="number"
                                 id="adminCommisionfirst"
@@ -196,6 +197,7 @@ const Commission = ({ saveSettingData }) => {
                                     wrapperClassName="relative z-0 w-full group pl-3 pr-3 outline-none"
                                     type="number"
                                     id="moneyStake1"
+                                    disable={manager?.add === false}
                                     register={register("moneyStake1", {
                                         ...validationFields?.moneyStake1,
                                         onChange: (e) => {
@@ -224,6 +226,7 @@ const Commission = ({ saveSettingData }) => {
                             </h3>
 
                             <select
+                                disabled={manager?.add === false}
                                 id="countries"
                                 type="password"
                                 name="secondCommision"
@@ -250,7 +253,7 @@ const Commission = ({ saveSettingData }) => {
                             </h3>
 
                             <OInputField
-                                disable={!watch("secondCommision")}
+                                disable={!watch("secondCommision") || manager?.add === false}
                                 wrapperClassName="relative z-0  w-full group"
                                 type="number"
                                 id="adminCommission3"
@@ -279,6 +282,7 @@ const Commission = ({ saveSettingData }) => {
                                     wrapperClassName="relative z-0 w-full group pl-3 pr-3 outline-none"
                                     type="number"
                                     id="moneyStake2"
+                                    disable={manager?.add === false}
                                     register={register("moneyStake2", {
                                         ...validationFields?.moneyStake1,
                                         onChange: (e) => {

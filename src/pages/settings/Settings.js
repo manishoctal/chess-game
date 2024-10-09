@@ -8,7 +8,6 @@ import OButton from "components/reusable/OButton";
 import { useTranslation } from "react-i18next";
 import AuthContext from "context/AuthContext";
 import OInputField from "components/reusable/OInputField";
-import imageDefault from "../../assets/images/No-image-found.jpg";
 import Credential from "./Credential";
 import FormValidation from "utils/formValidation";
 import { preventMaxInput } from "utils/validations";
@@ -37,7 +36,6 @@ const Settings = () => {
   });
   const [settingChangeLoading, setSettingChangeLoading] = useState(false);
   const formValidation = FormValidation();
-  const [pic] = useState(user?.profilePic ?? imageDefault);
   const [viewShowModal, setViewShowModal] = useState(false);
   const [isAmountModal, setIsAmountModal] = useState(false);
   const notification = useToastContext();
@@ -86,14 +84,12 @@ const Settings = () => {
   useEffect(() => {
     getSettings();
   }, []);
-  // get all setting function end
 
   useEffect(() => {
     updatePageName(t("SETTINGS"));
   }, []);
 
   const urlPattern = /^(http(s):\/\/.)[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)$/;
-
 
   const validationFields = {
 
@@ -191,8 +187,6 @@ const Settings = () => {
     },
   }
 
-  console.log("isDirty:", isDirty); // Log the value of isDirty to verify if it's changing
-
 
   return (
     <section className="">
@@ -234,6 +228,7 @@ const Settings = () => {
                     onInput={(e) => preventMaxInput(e, 50)}
                     register={register("minWithdrawalLimit", validationFields?.minWithdrawalLimit)}
                     placeholder=" "
+                    disable={manager?.add === false}
                   />
                   <ErrorMessage message={errors?.minWithdrawalLimit?.message} />
                 </div>
@@ -250,6 +245,7 @@ const Settings = () => {
                     onInput={(e) => preventMaxInput(e, 50)}
                     register={register("maxWithdrawalLimit", validationFields?.maxWithdrawalLimit)}
                     placeholder=" "
+                    disable={manager?.add === false}
                   />
                   <ErrorMessage message={errors?.maxWithdrawalLimit?.message} />
                 </div>
@@ -384,7 +380,7 @@ const Settings = () => {
 
 export default Settings;
 
-const ReusableInputField = ({ label, id, register, errors, validationRules, manager, onInput, onKeyDown, labelType }) => (
+const ReusableInputField = ({ label, id, register, errors, validationRules, manager, labelType }) => (
   <div className="relative z-0 mb-6 w-full group">
     <OInputField
       type="number"

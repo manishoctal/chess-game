@@ -1,8 +1,9 @@
 import ErrorMessage from 'components/ErrorMessage';
 import OButton from 'components/reusable/OButton';
 import OInputField from 'components/reusable/OInputField';
+import AuthContext from 'context/AuthContext';
 import useToastContext from 'hooks/useToastContext';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { GrUpdate } from 'react-icons/gr';
@@ -22,7 +23,8 @@ const GstComponent = ({saveSettingData}) => {
         shouldFocusError: true,
         defaultValues: {},
     });
-
+    const { user } = useContext(AuthContext);
+    const manager = user?.permission?.find((e) => e.manager === "settings") ?? {};
     const validationFields = {
         gstTimeDeposit: {
             required: { value: true, message: t("PLEASE_ENTER_GST") },
@@ -112,6 +114,7 @@ const GstComponent = ({saveSettingData}) => {
                             id={`${country.toLowerCase()}Country`}
                             register={register}
                             errors={errors}
+                            disable={manager?.add === false}
                             validationRules={validationFields?.gstTimeDeposit}
                         />
                     </div>
@@ -133,6 +136,7 @@ const GstComponent = ({saveSettingData}) => {
                         <ReusableInputField
                             id={`${country.toLowerCase()}CountryTds`}
                             register={register}
+                            disable={manager?.add === false}
                             errors={errors}
                             validationRules={validationFields?.tds}
                         />
@@ -144,7 +148,7 @@ const GstComponent = ({saveSettingData}) => {
 
 
           </div>
-
+          {(manager?.add || user?.role === 'admin') && (
             <div className="text-center mt-8">
                 <OButton
                     disabled={!isDirty}
@@ -159,6 +163,7 @@ const GstComponent = ({saveSettingData}) => {
                     title={t('O_UPDATE')}
                 />
             </div>
+             )}
         </form>
     );
 };
@@ -170,6 +175,7 @@ const ReusableInputField = ({
     id,
     register,
     errors,
+    disable,
     validationRules,
     onInput = preventMaxHundred,
     onKeyDown = handleKeyDownCashIn,
@@ -182,11 +188,12 @@ const ReusableInputField = ({
             labelType={labelType}
             inputLabel={<>{label}</>}
             id={id}
+            disable={disable}
             onInput={onInput}
             onKeyDown={onKeyDown}
             register={register(id, validationRules)}
             placeholder=" "
-        />
+            />
         <ErrorMessage message={errors?.[id]?.message} />
     </div>
 );

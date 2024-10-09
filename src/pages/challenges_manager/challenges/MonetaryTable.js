@@ -78,7 +78,9 @@ const MonetaryTable = ({
       }
 
       const itemStatus = getStatus(item?.scheduleDateTime, item?.expiryScheduleDateTime);
-
+{
+  console.log("item",item)
+}
       return (
         <tr key={i} >
           {renderTableCell(i + 1 + pageSize * (page - 1), "py-4 px-3 border-r border  font-medium text-gray-900  dark:text-white dark:border-[#ffffff38]")}
@@ -86,13 +88,13 @@ const MonetaryTable = ({
           {renderTableCell(getDisplayName(item), "bg-white py-4 px-4 border-r border  dark:border-[#ffffff38]")}
           {renderTableCell(helpers.ternaryCondition(item?.acceptorDetails?.userName, item?.acceptorDetails?.userName, "N/A"), "bg-white py-2 px-4 border-r border  dark:border-[#ffffff38] font-bold text-slate-900")}
           {renderTableCell(helpers.ternaryCondition(item?.winnerDetails?.userName,item?.winnerDetails?.userName, "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold")}
-          {renderTableCell(helpers.ternaryCondition(item?.ChallengeCategory, item?.ChallengeCategory, "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold")}
+          {renderTableCell(helpers.ternaryCondition(item?.challengeCategory, item?.challengeCategory, "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold")}
           {renderTableCell(helpers.ternaryCondition(item?.time, `${item?.time} Min`, "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold")}
           {renderTableCell(helpers.getDateAndTime(item?.createdAt, item?.createdAt, "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold")}
-          {renderTableCell(helpers.ternaryCondition(item?.challengeType, startCase(item?.challengeType), "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold")}
-          {renderTableCell(helpers.ternaryCondition(item?.MoneyAtStake, item?.MoneyAtStake, "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold")}
-          {renderTableCell(helpers.ternaryCondition(item?.AdminComission, item?.AdminComission, "0"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold")}
-          {renderTableCell(helpers.ternaryCondition(item?.PlatformFee, item?.PlatformFee, "0"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold")}
+          {renderTableCell(helpers.ternaryCondition(item?.type, startCase(item?.type), "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold")}
+          {renderTableCell(helpers.ternaryCondition(item?.moneyAtStake, item?.moneyAtStake, "0"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold")}
+          {renderTableCell(helpers.ternaryCondition(item?.adminComission, item?.adminComission, "0"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold")}
+          {renderTableCell(helpers.ternaryCondition(item?.platformFee, item?.platformFee, "0"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold")}
           {renderTableCell(itemStatus, "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold")}
           {renderActionTableCells(item, "monetary")}
 
@@ -113,18 +115,18 @@ const MonetaryTable = ({
                 <th scope="col" className="py-3 px-3">
                   {t("S.NO")}
                 </th>
-                <OUserTableHead sort={sort} setSort={setSort} name='MONETRY_CHALLENGE_ID' fieldName='userUniqId' />
-                <OUserTableHead sort={sort} setSort={setSort} name='CREATOR_USER_NAME' fieldName='fullName' />
-                <OUserTableHead sort={sort} setSort={setSort} name='ACCEPTOR_NAME' fieldName='userName' />
-                <OUserTableHead sort={sort} setSort={setSort} name='WINNER_NAME' fieldName='email' />
-                <OUserTableHead sort={sort} setSort={setSort} name='CHALLENGE_CATEGORY' fieldName='createdAt' />
-                <OUserTableHead sort={sort} setSort={setSort} name='TIME_FORMAT' fieldName='timeFormat' />
-                <OUserTableHead sort={sort} setSort={setSort} name='O_CREATED_AT' fieldName='isKYCVerified' />
-                <OUserTableHead sort={sort} setSort={setSort} name='CHALLENGE_TYPE' fieldName='ratingMonetary' />
-                <OUserTableHead sort={sort} setSort={setSort} name='MONEY_AT_STACK' fieldName='ratingMonetary' />
-                <OUserTableHead sort={sort} setSort={setSort} name='ADMIN_COMMISION' fieldName='ratingMonetary' />
-                <OUserTableHead sort={sort} setSort={setSort} name='ARTWORK_ELIGIBILITY_FOR_TRADING' fieldName='ratingMonetary' />
-                <OUserTableHead sort={sort} setSort={setSort} name='MATCH_STATUS' fieldName='ratingCasual' />
+                <OUserTableHead sort={sort} setSort={setSort} name='MONETRY_CHALLENGE_ID' fieldName='challengeId' />
+                <OUserTableHead sort={sort} setSort={setSort} name='CREATOR_USER_NAME' fieldName='creatorDetails.userName' />
+                <OUserTableHead sort={sort} setSort={setSort} name='ACCEPTOR_NAME' fieldName='acceptorDetails.userName' />
+                <OUserTableHead sort={sort} setSort={setSort} name='WINNER_NAME' fieldName='winnerDetails.userName' />
+                <OUserTableHead sort={sort} setSort={setSort} name='CHALLENGE_CATEGORY' fieldName='challengeCategory' />
+                <OUserTableHead sort={sort} setSort={setSort} name='TIME_FORMAT' fieldName='time' />
+                <OUserTableHead sort={sort} setSort={setSort} name='O_CREATED_AT' fieldName='createdAt' />
+                <OUserTableHead sort={sort} setSort={setSort} name='CHALLENGE_TYPE' fieldName='type' />
+                <OUserTableHead sort={sort} setSort={setSort} name='MONEY_AT_STACK' fieldName='moneyAtStake' />
+                <OUserTableHead sort={sort} setSort={setSort} name='ADMIN_COMMISION' fieldName='adminComission' />
+                <OUserTableHead sort={sort} setSort={setSort} name='PLATFORM_FEE_HEADING' fieldName='platformFee' />
+                <OUserTableHead sort={sort} setSort={setSort} name='MATCH_STATUS' fieldName='expiryScheduleDateTime' />
                 {
                   !userResult && helpers.andOperator(
                     manager?.add || user?.permission?.length === 0,

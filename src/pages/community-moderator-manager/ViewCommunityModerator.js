@@ -6,12 +6,20 @@ import apiPath from "utils/apiPath";
 import helpers from "utils/helpers";
 import dayjs from "dayjs"; 
 import ReactCountryFlag from "react-country-flag";
+import ImageModal from "./ImageModal";
 
 
 function ViewCommunityModerator() {
   const location = useLocation();
+  const [zoomImage,setZoomImage]=useState(false);
   const item = location?.state;
   const [viewList, setViewList] = useState({})
+
+  const showZoomImage = viewList?.mediaType === "image"
+
+  const handleZoomImage = () =>{
+    setZoomImage(!zoomImage)
+  }
   const viewCommunityList = async () => {
     try {
       const result = await apiGet(`${apiPath?.communityModeratror}/${item?._id}`)
@@ -28,8 +36,9 @@ function ViewCommunityModerator() {
     viewCommunityList()
   }, [])
 
-  console.log("viewList", viewList)
 
+
+  
   return (
     <div>
       <div className="bg-[#F9F9F9] dark:bg-slate-900">
@@ -46,7 +55,7 @@ function ViewCommunityModerator() {
 
               <div className="w-[400px] border mb-5">
                 <div className="p-5 mb-2 h-[300px]">{helpers?.ternaryCondition(viewList?.mediaType === "image",
-                  <img src={viewList?.file} alt="" className="w-full h-full object-cover" />,
+                  <img src={viewList?.file} alt="" className="w-full h-full object-cover cursor-pointer" onClick={()=>handleZoomImage()} />,
                   <iframe
                     width="355"
                     height="280"
@@ -89,6 +98,13 @@ function ViewCommunityModerator() {
           </div>
         </div>
       </div>
+
+      {
+
+zoomImage && <ImageModal handleZoomImage={handleZoomImage} showZoomImage={showZoomImage} image={viewList?.file}/>
+
+      }
+
     </div>
   );
 }

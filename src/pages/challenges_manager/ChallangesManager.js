@@ -14,6 +14,7 @@ import { BiReset } from "react-icons/bi";
 import OSearch from "components/reusable/OSearch";
 import CasualTable from "./challenges/CasualTable";
 import MonetaryTable from "./challenges/MonetaryTable";
+import { GoDownload } from "react-icons/go";
 
 function ChallangesManager() {
   const { t } = useTranslation();
@@ -177,15 +178,6 @@ function ChallangesManager() {
     setPage(1);
   };
 
-  const kycStatus = (e) => {
-    setFilterData({
-      ...filterData,
-      isFilter: true,
-      isReset: false,
-      kyc: e.target.value
-    });
-    setPage(1);
-  };
 
 
   useEffect(() => {
@@ -211,7 +203,18 @@ function ChallangesManager() {
     };
   }, [searchTerm]);
 
-  const manager = user?.permission?.find((e) => e.manager === "user_manager");
+  const manager = user?.permission?.find((e) => e.manager === "challenges_manager");
+
+  const onCsvDownload = async () => {
+    try {
+      const result = await apiGet(`${apiPath.challengeCSVDownload}/${userResult}`);
+      if (result?.data?.success) {
+        helpers.downloadFile(result?.data?.results?.filePath);
+      }
+    } catch (error) {
+      console.error("error in get all dashboard list==>>>>", error.message);
+    }
+  };
 
 
   return (
@@ -224,11 +227,11 @@ function ChallangesManager() {
               <div className="flex items-center md:justify-end mb-3">
                 <label htmlFor="default-search" className="mb-2 font-medium text-sm  text-gray-900 sr-only">
 
-                  {t("USER_ID_EMAIL_MOBILE")}
+                  {t("SEARCH_CHALLENGES_ID")}
                 </label>
                 <div className="flex">
                   <div className="relative">
-                    <OSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm} placeholder={t("USER_ID_EMAIL_MOBILE")} />
+                    <OSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm} placeholder={t("SEARCH_CHALLENGES_ID")} />
                   </div>
                 </div>
               </div>
@@ -236,7 +239,7 @@ function ChallangesManager() {
                 <div className="flex items-center lg:pt-0 pt-3 justify-center">
                   <ODateRangePicker handleDateChange={handleDateChange} isReset={filterData?.isReset} setIsReset={setFilterData} />
                   {
-                    !userResult && <div className="flex items-center mb-3 ml-3">
+                   <div className="flex items-center mb-3 ml-3">
                       <select
                         id="countries"
                         type="password"
@@ -249,30 +252,15 @@ function ChallangesManager() {
                         <option value="">
                           {t("O_ALL")}
                         </option>
-                        <option value="active">{t("O_ACTIVE")}</option>
-                        <option value="inactive">{t("O_INACTIVE")}</option>
+                        <option value="upcoming">{t("NOT_STARTED")}</option>
+                        <option value="running">{t("RUNNING")}</option>
+                        <option value="complete">{t("COMPLETE")}</option>
                       </select>
                     </div>
                   }
 
 
-                  <div className="flex items-center mb-3 ml-3">
-                    <select
-                      id="countries"
-                      name="floating_password"
-                      className="block p-2 min-w-[100px] text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer"
-                      placeholder=" "
-                      value={filterData?.kyc}
-                      onChange={kycStatus}
-                    >
-                      <option value="">
-                        {t("MERCHANT_KYC")}
-                      </option>
-                      <option value="1">{t("O_YES")}</option>
-                      <option value="0">{t("O_NO")}</option>
-                    </select>
-                  </div>
-
+             
                   <button
                     type='button'
                     onClick={() => handleReset()}
@@ -282,7 +270,9 @@ function ChallangesManager() {
                     <BiReset size={18} />
                     {t('O_RESET')}
                   </button>
-
+                  <button type="button" className="bg-gradientTo text-sm px-6 flex gap-2 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2" title={t("DOWNLOAD_CSV")} onClick={onCsvDownload}>
+            <GoDownload size={18} /> {t("DOWNLOAD_CSV")}
+          </button>
                 </div>
               </div>
 

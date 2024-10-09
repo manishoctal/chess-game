@@ -189,10 +189,6 @@ const ChangePassword = () => {
                   onInput={(e) => preventMaxInput(e, 16)}
                   register={register("confirm_password", {
                     required: "Please enter confirm password.",
-                    pattern: {
-                      value: validationRules.password,
-                      message: validationRules.confirmPasswordMessage,
-                    },
                     validate: (val) => {
                       if (watch("newPassword") !== val) {
                         return "Confirm Password field is not matching with new password field.";
