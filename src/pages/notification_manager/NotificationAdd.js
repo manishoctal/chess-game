@@ -17,6 +17,7 @@ const NotificationAdd = ({ getAllNotifications, handleCategory }) => {
   const [loading, setLoading] = useState(false);
   const [notificationUserError, setNotificationUserError] = useState(false);
   const [usersSuggestion, setUsersSuggestion] = useState([]);
+  const [adminSuggestion, setAdminSuggestion] = useState([]);
   const [selectedUsers, setSelectedUsers] = useState([]);
   const formValidation = FormValidation();
   const [searchTerm, setSearchTerm] = useState("");
@@ -48,8 +49,9 @@ const NotificationAdd = ({ getAllNotifications, handleCategory }) => {
 
   // add notification function start
   const onSubmit = async (data) => {
-    
+
     const specificUserId = selectedUsers?.map(selectedUsers => selectedUsers?.value);
+
     if (availableFor === "specificUser" && selectedUsers == "") {
       setNotificationUserError(true);
     } else {
@@ -59,7 +61,7 @@ const NotificationAdd = ({ getAllNotifications, handleCategory }) => {
         const obj = {
           ...data,
           sendTo: availableFor,
-          user: helpers.ternaryCondition(availableFor !== "all", specificUserId , null),
+          user: helpers.ternaryCondition(availableFor !== "all", specificUserId, null),
         };
 
         const res = await apiPost(apiPath.notifications, { ...obj });
@@ -94,10 +96,10 @@ const NotificationAdd = ({ getAllNotifications, handleCategory }) => {
       };
       const path = apiPath.searchUsers;
       const result = await apiGet(path, payload);
-      console.log("result",result?.data?.results?.docs)
+      console.log("result", result?.data?.results?.docs)
       if (result?.data?.success) {
         const formattedOption = result?.data?.results?.docs.map((res) => {
-          return { label: `${res?.fullName }`, value: res?._id };
+          return { label: `${res?.fullName}`, value: res?._id };
         });
         setUsersSuggestion(formattedOption);
       }
@@ -105,6 +107,26 @@ const NotificationAdd = ({ getAllNotifications, handleCategory }) => {
       console.error("error ", error);
     }
   };
+
+  const handleSearchOptionSubadmin = async (event) => {
+    try {
+      const payload = {
+        keyword: event,
+      };
+      const path = apiPath.getSubAdmin;
+      const result = await apiGet(path, payload);
+      console.log("result", result?.data?.results?.docs)
+      if (result?.data?.success) {
+        const formattedOption = result?.data?.results?.docs.map((res) => {
+          return { label: `${res?.firstName} ${res?.lastName}`, value: res?._id };
+        });
+        setAdminSuggestion(formattedOption);
+      }
+    } catch (error) {
+      console.error("error ", error);
+    }
+  };
+
 
   useEffect(() => {
     if (!isInitialized) {
@@ -114,12 +136,21 @@ const NotificationAdd = ({ getAllNotifications, handleCategory }) => {
     }
   }, [debouncedSearchTerm]);
 
-  console.log("availableFor",availableFor)
+
+  useEffect(() => {
+    if (!isInitialized) {
+      setIsInitialized(true);
+    } else if (searchTerm) {
+      handleSearchOptionSubadmin(debouncedSearchTerm);
+    }
+  }, [debouncedSearchTerm]);
+
+  console.log("availableFor", availableFor)
 
   return (
     <div>
       <div className="justify-center items-center  overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
-        <div className="relative my-6 mx-auto max-w-[480px]">
+        <div className="relative my-6 mx-auto max-w-[600px]">
           <div className="sm:py-4 sm:px-2 py-8 px-7 ">
             <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
               <div className="dark:bg-gray-900 flex items-center justify-between p-5 border-b border-solid border-slate-200 rounded-t">
@@ -184,6 +215,9 @@ const NotificationAdd = ({ getAllNotifications, handleCategory }) => {
                           {t("ALL_USERS")}
                         </label>
                       </div>
+
+
+
                       <div className="flex items-center w-[200px]">
                         <input
                           id="default-checkbox1"
@@ -200,7 +234,30 @@ const NotificationAdd = ({ getAllNotifications, handleCategory }) => {
                           {t("ANY_PARTICULAR_USERS")}
                         </label>
                       </div>
+
+
+                      <div className="flex items-center w-[200px] justify-center">
+                        <input
+                          id="default-checkbox3"
+                          type="radio"
+                          checked={availableFor === "subAdmin"}
+                          name="default-radio"
+                          onChange={() => {
+                            setAvailableFor("subAdmin");
+                            setSelectedUsers("");
+                          }}
+                          className="w-4 cursor-pointer h-4 text-blue-600 bg-gray-100 border-gray-300 rounded  dark:bg-gray-700 dark:border-gray-600"
+                        />
+                        <label htmlFor="default-checkbox1" className="ml-2 text-sm font-medium cursor-pointer text-gray-900 dark:text-gray-300">
+                          {t("SUBADMIN")}
+                        </label>
+                      </div>
+
                     </div>
+
+
+                    {/* specific-user */}
+
                     <div>
                       {availableFor == "specificUser" && (
                         <div className="relative z-0 w-full group md:py-3 sm:py-3">
@@ -241,6 +298,56 @@ const NotificationAdd = ({ getAllNotifications, handleCategory }) => {
                         </div>
                       )}
                     </div>
+
+                    {/* specific-user */}
+
+
+                    {/* sub-admin */}
+
+
+                    <div>
+                      {availableFor == "subAdmin" && (
+                        <div className="relative z-0 w-full group md:py-3 sm:py-3">
+                          <DynamicLabel
+                            name={
+                              <>
+                                {t("SPECIFIC_SUB_USER")} <span className="text-red-600">*</span>
+                                <span className="inline-block ml-[165px] text-red-600">{t("MAX_LIMIT")}</span>
+                              </>
+                            }
+                            type={false}
+                          />
+                          <Select
+                            wrapperClassName="relative z-0 mb-2 w-full group"
+                            name="subAdmin"
+                            isMulti={true}
+                            inputValue={searchTerm}
+                            onInputChange={(value) => setSearchTerm(value)}
+                            placeholder={<>{t("SEARCH_BY_SUB_ADMIN")}</>}
+                            options={adminSuggestion.map(option => ({
+                              ...option,
+                              isDisabled: selectedUsers?.length >= 100 && !selectedUsers?.some(user => user.value === option.value)
+                            }))}
+                            defaultValue={t("SELECT_SUBADMIN")}
+                            onChange={(e) => {
+                              if (e?.value == "") {
+                                setSelectedUsers("");
+                              }
+                              else {
+                                setSelectedUsers(e);
+                                setNotificationUserError(false);
+                              }
+                            }}
+                            selectStyles={customStyles}
+                            value={selectedUsers}
+                          />
+                          {selectedUsers == "" && notificationUserError && <ErrorMessage message="Please select sub admin." />}
+                        </div>
+                      )}
+                    </div>
+
+                    {/* sub-admin */}
+
                   </div>
                 </div>
               </div>
