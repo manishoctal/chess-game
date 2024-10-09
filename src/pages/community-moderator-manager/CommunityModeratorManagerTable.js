@@ -32,7 +32,7 @@ const CommunityModeratorManagerTable = ({ handleUserView, allCommunity, paginati
               <ONotificationTableHead sort={sort} setSort={setSort} name="Status" fieldName="status" classTd={"justify-center"} />
               <ONotificationTableHead sort={sort} setSort={setSort} name="Date And Time" fieldName="createdAt" classTd={"justify-center"} />
               <th scope="col" className="py-3 px-6 text-center">
-                {t("O_ACTION")}
+                {t("O_ACTION")} 
               </th>
             </tr>
           </thead>
