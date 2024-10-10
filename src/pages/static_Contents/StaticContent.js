@@ -198,24 +198,7 @@ const StaticContent = () => {
                 <div className='relative flex items-center mb-3'>
                   <OSearchStatic searchTerm={searchTerm} setSearchTerm={setSearchTerm} placeholder={t('SEARCH_BY_TITLE')} />
                 </div>
-                {helpers.andOperator((manager?.add || manager?.edit || user?.role === 'admin'), <div className='flex items-center mb-3 ml-3'>
-                  <select
-                    id='status'
-                    type=' status'
-                    name='status'
-                    className='block p-2 w-full text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer'
-                    placeholder=' '
-                    value={filterData?.status}
-                    onChange={e => staticStatusPage(e)}
-                  >
-                    <option defaultValue value=''>
-                      {t('O_ALL')}
-                    </option>
-                    <option value='active'>{t('O_ACTIVE')}</option>
-                    <option value='inactive'>{t('O_INACTIVE')}</option>
-                  </select>
-                </div>)}
-
+            
                 <button
                   type='button'
                   onClick={handleResetAll}
