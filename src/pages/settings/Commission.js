@@ -175,8 +175,7 @@ const Commission = ({ saveSettingData }) => {
                                 register={register("adminCommisionfirst", validationFields?.adminCommisionfirst)}
                                 placeholder="Set Admin Commission"
                                 onInput={watch("firstCommission") === 'percentage' ? preventMaxHundred : null}
-                                onKeyDown={watch("firstCommission") === 'percentage' ? handleKeyDownCashIn : null}
-                            />
+                                onKeyDown={handleKeyDownCashIn}                            />
 
                             <ErrorMessage message={errors?.adminCommisionfirst?.message} />
                         </div>
@@ -260,7 +259,7 @@ const Commission = ({ saveSettingData }) => {
                                 register={register("adminCommission3", validationFields?.adminCommisionSecond)}
                                 placeholder="Set Admin Commission"
                                 onInput={watch("secondCommision") === 'percentage' ? preventMaxHundred : null}
-                                onKeyDown={watch("secondCommision") === 'percentage' ? handleKeyDownCashIn : null}
+                                onKeyDown={handleKeyDownCashIn}
                             />
 
                             <ErrorMessage message={errors?.adminCommission3?.message} />
