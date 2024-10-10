@@ -16,7 +16,7 @@ import WithdrawalRequestTable from "./WithdrawalRequestTable";
 function WithdrawalRequestManager() {
   const { t } = useTranslation();
   const { logoutUser, notification, user } = useContext(AuthContext);
-  const manager = user?.permission?.find((e) => e.manager === "feedback_manager" || "achievement_and_badges") ?? {};
+  const manager = user?.permission?.find((e) => e.manager === "widthDrawal_request_manager") ?? {};
   const [paginationObj, setPaginationObj] = useState({
     page: 1,
     pageCount: 1,
@@ -26,7 +26,6 @@ function WithdrawalRequestManager() {
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
   const [isInitialized, setIsInitialized] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const [categoryAdd, setCategoryAdd] = useState(false);
   const [allCommunity, setAllCommunity] = useState([]);
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
@@ -34,6 +33,7 @@ function WithdrawalRequestManager() {
   const [filterData, setFilterData] = useState({
     category: "",
     searchkey: "",
+    status: "",
     startDate: "",
     endDate: "",
     isReset: false,
@@ -45,7 +45,7 @@ function WithdrawalRequestManager() {
   });
 
   // get all notification function start
-  const getAllNotifications = async () => {
+  const getAllWithdrawal = async () => {
     try {
       const { startDate, endDate, searchkey, community, status } = filterData;
 
@@ -61,7 +61,7 @@ function WithdrawalRequestManager() {
         sortType: sort.sortType,
       };
 
-      const path = apiPath.feedbackListing;
+      const path = apiPath.withdrawalManagerList;
       const result = await apiGet(path, payload);
       if (result?.status === 200) {
         const response = result?.data?.results;
@@ -87,7 +87,7 @@ function WithdrawalRequestManager() {
   };
 
   useEffect(() => {
-    getAllNotifications();
+    getAllWithdrawal();
   }, [page, filterData, sort, pageSize]);
   // get all notification function end
 
@@ -111,9 +111,6 @@ function WithdrawalRequestManager() {
     }
   }, [debouncedSearchTerm]);
 
-  const handleCategory = () => {
-    setCategoryAdd(!categoryAdd);
-  };
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -141,10 +138,6 @@ function WithdrawalRequestManager() {
     setPage(1);
   };
 
-
-
-
-
   const handleDateChange = (start, end) => {
     setPage(1);
     setFilterData({
@@ -160,10 +153,7 @@ function WithdrawalRequestManager() {
     setPageSize(e.target.value);
   };
 
-  const communityStatusChange = (e) => {
-    setPage(1);
-    setFilterData({ ...filterData, community: e.target.value, isFilter: true });
-  };
+
   const adminStatusChange = (e) => {
     setPage(1);
     setFilterData({ ...filterData, status: e.target.value, isFilter: true });
@@ -178,24 +168,31 @@ function WithdrawalRequestManager() {
       const result = await apiPut(path, payload);
       if (result?.status === 200) {
         notification.success(result.data.message);
-        // allAchievement({ statusChange: 1 });
       }
     } catch (error) {
       console.error("error in get all badges list==>>>>", error.message);
     }
   };
 
-  console.log("allCommunity", allCommunity)
-  const statusPage = e => {
-    setPage(1)
-    setFilterData({ ...filterData, category: e.target.value, isFilter: true })
-  }
+
+
+  
 
   const onCsvDownload = async () => {
 
     try {
-      const path = apiPath.downloadFeedback;
-      const result = await apiGet(path);
+      const { startDate, endDate, searchkey, status } = filterData;
+
+      const payload = {
+        startDate: startDate ? dayjs(startDate).format("YYYY-MM-DD") : null,
+        endDate: endDate ? dayjs(endDate).format("YYYY-MM-DD") : null,
+        sortBy: sort.sortBy,
+        sortType: sort.sortType,
+        keyword: helpers.normalizeSpaces(searchkey) || null,
+        status
+      }
+      const path = apiPath.downloadExcelWithdrawal;
+      const result = await apiGet(path, payload);
       if (result?.data?.success) {
         helpers.downloadFile(result?.data?.results?.filePath);
       }
@@ -213,11 +210,12 @@ function WithdrawalRequestManager() {
               <div className="col-span-2 flex flex-wrap  items-center">
                 <div className="flex items-center lg:pt-0 pt-3 flex-wrap justify-center mb-2 2xl:mb-0">
                   <div className="relative flex items-center mb-3">
-                    {/* Post ID, Posted username, Post title */}
                     <OSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm} placeholder={t("SEARCH_BY_FULL_NAME_USER_MOBILE_USER_NAME")} />
                   </div>
                   <ODateRangePicker handleDateChange={handleDateChange} isReset={filterData?.isReset} setIsReset={setFilterData} />
-                  <div className="flex items-center mb-3 ml-3">
+                  <div className="flex items-centerml-3">
+
+                    <div className="flex items-center mb-3 ml-3">
                       <select
                         id="countries"
                         type=" password"
@@ -235,6 +233,8 @@ function WithdrawalRequestManager() {
                         <option value="pending">{t("PENDING")}</option>
                       </select>
                     </div>
+
+                  </div>
                   <button type="button" onClick={handleReset} title={t("O_RESET")} className="bg-gradientTo text-sm px-6 flex gap-2 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2">
                     <BiReset size={18} />
                     {t("O_RESET")}
@@ -255,8 +255,6 @@ function WithdrawalRequestManager() {
                 <label htmlFor="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">
                   {t("O_SEARCH")}
                 </label>
-
-
               </div>
             </form>
 
@@ -264,7 +262,7 @@ function WithdrawalRequestManager() {
             <WithdrawalRequestTable
               allCommunity={allCommunity}
               notification={notification}
-              getAllNotifications={getAllNotifications}
+              getAllWithdrawal={getAllWithdrawal}
               page={page}
               setSort={setSort}
               sort={sort}
@@ -272,8 +270,6 @@ function WithdrawalRequestManager() {
               manager={manager}
               paginationObj={paginationObj}
               handelStatusChange={handelStatusChange}
-
-
             />
 
 

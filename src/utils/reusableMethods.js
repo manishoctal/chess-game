@@ -1,3 +1,5 @@
+import dayjs from "dayjs"
+
 export const generateRandomID = (length) => {
   let result = ''
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
@@ -136,4 +138,30 @@ export const handleCut = (e) => {
 
 export const handlePaste = (e) => {
   e.preventDefault(); 
+};
+
+
+export const getTimeDifference = (expiryTime) => {
+  const expiryDate = dayjs(expiryTime);
+  const currentDate = dayjs(); 
+
+  const totalMinutesDifference = expiryDate.diff(currentDate, 'minute');
+
+  let hoursDifference = Math.floor(totalMinutesDifference / 60);
+  let minutesDifference = totalMinutesDifference % 60;
+
+  let timeDifferenceText = "";
+
+  if (hoursDifference > 0) {
+      timeDifferenceText += `${hoursDifference} ${hoursDifference === 1 ? 'hour' : 'hours'}`; 
+  }
+
+  if (minutesDifference > 0) {
+      if (timeDifferenceText) {
+          timeDifferenceText += ` and `;
+      }
+      timeDifferenceText += `${minutesDifference} minute${minutesDifference === 1 ? '' : 's'}`;
+  }
+
+  return timeDifferenceText || "0 minutes";
 };

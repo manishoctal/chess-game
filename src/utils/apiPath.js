@@ -91,7 +91,12 @@ const apiPath = Object.freeze({
   feedbackListing:"/v1/admin/feedback",
   challengeManager:"/v1/admin/challenges",
   challengesView:"/v1/admin/challenges/view",
-  challengeCSVDownload: "/v1/admin/challenges/download-csv"
+  challengeCSVDownload: "/v1/admin/challenges/download-csv",
+  withdrawalManagerList:"/v1/admin/withdrawal-request",
+  downloadExcelWithdrawal:"/v1/admin/withdrawal-request/download-csv",
+  rejectWithdrawalReqeust:"/v1/admin/withdrawal-request",
+  transactionCSV:"/v1/admin/transaction/download-csv",
+  correncyConverter:"/v1/admin/setting/currency-measure"
 });
 
 export default apiPath;

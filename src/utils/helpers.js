@@ -306,6 +306,61 @@ const helpers = {
   //       currencyCode = "INR";
   //       break;
   //   }
+
+  formattedAmountAllCountry: (amount, countryName) => {
+    console.log("countryName", countryName);
+    let currencyCode;
+
+    // Define a mapping of countries to their respective currency codes
+    const currencyMap = {
+        "India": "INR",
+        "USA": "USD",
+        "Canada": "CAD",
+        "UK": "GBP",
+        "Australia": "AUD"
+    };
+
+    // Define exchange rates to USD
+    const exchangeRatesToUSD = {
+        "INR": 84.94,   // 1 INR = 84.0752 INR to USD
+        "USD": 1,         // 1 USD = 1 USD
+        "CAD": 1.3576,    // 1 CAD = 1.3576 USD
+        "AUD": 1.4702,    // 1 AUD = 1.4702 USD
+        "GBP": 0.7621     // 1 GBP = 0.7621 USD
+    };
+
+    // Get the currency code based on the country name
+    currencyCode = currencyMap[countryName];
+
+    // Log the currency code to ensure it's correctly fetched
+    console.log("currencyCode", currencyCode);
+
+    // Handle case where the countryName doesn't exist in the map
+    if (!currencyCode) {
+        currencyCode = "INR"; // Default to INR
+    }
+
+    // Convert the amount to USD if it's not in USD already
+    let amountInUSD = amount;
+    if (currencyCode !== "USD") {
+        const conversionRate = exchangeRatesToUSD[currencyCode];
+        if (conversionRate) {
+            amountInUSD = amount / conversionRate; // Convert to USD based on exchange rate
+            console.log(`Converted ${amount} ${currencyCode} to ${amountInUSD} USD`);
+        }
+    }
+
+    // Format the amount in USD using Intl.NumberFormat
+    const formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: "USD",  // Format as USD
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+    });
+
+    return formatter.format(amountInUSD); // Return the formatted USD value
+},
+
   
   //   return amount?.toLocaleString("th-TH", {
   //     style: "currency",
