@@ -132,8 +132,18 @@ function Transaction() {
   const onCsvDownload = async () => {
 
     try {
-      const path = apiPath.downloadFeedback;
-      const result = await apiGet(path);
+      const { startDate, endDate, searchkey, status } = filterData;
+      const payload = {
+        startDate: startDate ? dayjs(startDate).format("YYYY-MM-DD") : null,
+        endDate: endDate ? dayjs(endDate).format("YYYY-MM-DD") : null,
+        sortBy: sort.sortBy,
+        sortType: sort.sortType,
+        keyword: helpers.normalizeSpaces(searchkey) || null,
+        status
+      }
+
+      const path = apiPath.transactionCSV;
+      const result = await apiGet(path,payload);
       if (result?.data?.success) {
         helpers.downloadFile(result?.data?.results?.filePath);
       }

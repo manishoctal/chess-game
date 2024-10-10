@@ -386,7 +386,7 @@ const UserView = () => {
                     </figure>
                     <figcaption className="w-[calc(100%_-_41px)]">
                       <span className="block text-[#5C5C5C] dark:text-white">{t("O_STATUS")}</span>
-                      <strong className="dark:text-slate-400">{helpers.ternaryCondition(item?.status, item?.status, "N/A")}</strong>
+                      <strong className="dark:text-slate-400">{helpers.ternaryCondition(item?.status, startCase(item?.status), "N/A")}</strong>
                     </figcaption>
                   </div>
                 </li>

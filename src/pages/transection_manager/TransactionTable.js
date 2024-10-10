@@ -52,12 +52,11 @@ const TransactionTable = ({
           {renderTableCell(getDisplayName(item), "bg-white py-4 px-4 border-r border  dark:border-[#ffffff38]")}
           {renderTableCell(helpers.ternaryCondition(item?.userDetails?.email, item?.userDetails?.email, "N/A"), "bg-white py-2 px-4 border-r border  dark:border-[#ffffff38] font-bold text-slate-900")}
           {renderTableCell(helpers.ternaryCondition(item?.transactionId, item?.transactionId, "N/A"), "bg-white py-2 px-4 border-r border  dark:border-[#ffffff38] font-bold text-slate-900")}
-          {renderTableCell(helpers.ternaryCondition(item?.transactionType, item?.transactionType, "N/A"), "bg-white py-2 px-4 border-r border  dark:border-[#ffffff38] font-bold text-slate-900")}
+          {renderTableCell(helpers.ternaryCondition(item?.transactionType, startCase( item?.transactionType), "N/A"), "bg-white py-2 px-4 border-r border  dark:border-[#ffffff38] font-bold text-slate-900")}
           {renderCommonTableCells(item)}
-          {renderTableCell(helpers.ternaryCondition(item?.amount, item?.amount, "0"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold")}
-          {renderTableCell(helpers.ternaryCondition(item?.adminComission, item?.adminComission, "0"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold")}
-          {renderTableCell(helpers.ternaryCondition(item?.transactionFee, item?.transactionFee, "0"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold")}
-  
+          <td className="bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold">{helpers.formattedAmount(item?.amount)}</td>
+          <td className="bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold">{helpers.formattedAmount(item?.adminComission)}</td>
+          <td className="bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold">{helpers.formattedAmount(item?.transactionFee)}</td>
         </tr>
       );
 
@@ -76,9 +75,9 @@ const TransactionTable = ({
                   {t("S.NO")}
                 </th>
 
-                <OUserTableHead sort={sort} setSort={setSort} name='USER_ID' fieldName='userUniqId' />
-                <OUserTableHead sort={sort} setSort={setSort} name='FULL_NAME' fieldName='fullName' />
-                <OUserTableHead sort={sort} setSort={setSort} name='O_EMAIL_ID' fieldName='email' />
+                <OUserTableHead sort={sort} setSort={setSort} name='USER_ID' fieldName='userDetails.userUniqId' />
+                <OUserTableHead sort={sort} setSort={setSort} name='FULL_NAME' fieldName='userDetails.fullName' />
+                <OUserTableHead sort={sort} setSort={setSort} name='O_EMAIL_ID' fieldName='userDetails.email' />
                 <OUserTableHead sort={sort} setSort={setSort} name='O_TRANSACTION_ID' fieldName='transactionId' />
                 <OUserTableHead sort={sort} setSort={setSort} name='TRANSACTION_TYPE' fieldName='transactionType' />
                 <OUserTableHead sort={sort} setSort={setSort} name='TRANSACTION_DATE' fieldName='createdAt' />
