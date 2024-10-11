@@ -2,26 +2,14 @@ import React, { useContext } from "react";
 import { useTranslation } from "react-i18next";
 import AuthContext from "context/AuthContext";
 import { isEmpty, startCase } from "lodash";
-import {
-  BsArrowUpShort,
-  BsHandThumbsDown,
-  BsHandThumbsUp,
-} from "react-icons/bs";
+import { BsArrowUpShort, BsHandThumbsDown, BsHandThumbsUp } from "react-icons/bs";
 import apiPath from "utils/apiPath";
 import { apiPost } from "utils/apiFetch";
 import useToastContext from "hooks/useToastContext";
 import classNames from "classnames";
 import helpers from "utils/helpers";
 
-const RewardWithdrawalRequestTable = ({
-  subAdmin,
-  page,
-  sort,
-  setSort,
-  manager,
-  pageSize,
-  getAllRewardWithdrawalRequest,
-}) => {
+const RewardWithdrawalRequestTable = ({ subAdmin, page, sort, setSort, manager, pageSize, getAllRewardWithdrawalRequest }) => {
   const { t } = useTranslation();
 
   const { user } = useContext(AuthContext);
@@ -90,13 +78,8 @@ const RewardWithdrawalRequestTable = ({
                 <div className="flex justify-start">
                   <span>{t("O_CREATED_AT")} </span>
                   <span>
-                    {sort.sortBy === "createdAt" && sort.sortType === "asc" && (
-                      <BsArrowUpShort className="w-4 h-4" />
-                    )}
-                    {sort.sortBy === "createdAt" &&
-                      sort.sortType === "desc" && (
-                        <BsArrowUpShort className="w-4 h-4 rotate-180" />
-                      )}
+                    {sort.sortBy === "createdAt" && sort.sortType === "asc" && <BsArrowUpShort className="w-4 h-4" />}
+                    {sort.sortBy === "createdAt" && sort.sortType === "desc" && <BsArrowUpShort className="w-4 h-4 rotate-180" />}
                   </span>
                 </div>
               </th>
@@ -110,28 +93,13 @@ const RewardWithdrawalRequestTable = ({
           </thead>
           <tbody>
             {subAdmin?.map((item, i) => (
-              <tr
-                key={i}
-                className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
-              >
-                <th
-                  scope="row"
-                  className="py-2 px-4 border-r dark:border-[#ffffff38] font-medium text-gray-900  dark:text-white"
-                >
+              <tr key={i} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                <th scope="row" className="py-2 px-4 border-r dark:border-[#ffffff38] font-medium text-gray-900  dark:text-white">
                   {i + 1 + pageSize * (page - 1)}
                 </th>
-                <td className="py-2 px-4 border-r dark:border-[#ffffff38]">
-                  {helpers.formateNull(item?.userDetail?.firstName) +
-                    " " +
-                    helpers.formateNull(item?.userDetail?.lastName)}
-                </td>
-                <td className="py-2 px-4 border-r dark:border-[#ffffff38]">
-                  {" "}
-                  {helpers.formattedAmount(item?.amount)}
-                </td>
-                <td className="py-2 px-4 border-r dark:border-[#ffffff38]">
-                  {helpers.getDateAndTime(item?.createdAt)}
-                </td>
+                <td className="py-2 px-4 border-r dark:border-[#ffffff38]">{helpers.formateNull(item?.userDetail?.firstName) + " " + helpers.formateNull(item?.userDetail?.lastName)}</td>
+                <td className="py-2 px-4 border-r dark:border-[#ffffff38]"> {helpers.formattedAmount(item?.amount)}</td>
+                <td className="py-2 px-4 border-r dark:border-[#ffffff38]">{helpers.getDateAndTime(item?.createdAt)}</td>
 
                 {(manager?.add || user?.role === "admin") && (
                   <td className="text-center">

@@ -39,14 +39,12 @@ function Transaction() {
     endDate: "",
     isReset: false,
     isFilter: false,
-    transactionType: ""
+    transactionType: "",
   });
   const [sort, setSort] = useState({
     sortBy: "createdAt",
     sortType: "desc",
   });
-
-
 
   const getAllUser = async () => {
     try {
@@ -66,7 +64,6 @@ function Transaction() {
       if (transactionType && transactionType !== undefined) {
         payload.transactionType = transactionType;
       }
-
 
       const path = `${apiPath.transactionList}`;
       const result = await apiGet(path, payload);
@@ -91,7 +88,6 @@ function Transaction() {
     }
   };
 
-
   useEffect(() => {
     getAllUser();
   }, [page, filterData, sort, pageSize]);
@@ -106,8 +102,6 @@ function Transaction() {
     const newPage = event.selected + 1;
     setPage(newPage);
   };
-
-
 
   useEffect(() => {
     updatePageName(t("NAV_TRANSACTION_MANAGER"));
@@ -128,27 +122,24 @@ function Transaction() {
     setPageSize(10);
   };
 
-
   const onCsvDownload = async () => {
-
     try {
-      const {transactionType, startDate, endDate, searchkey, status } = filterData;
+      const { transactionType, startDate, endDate, searchkey, status } = filterData;
       const payload = {
         startDate: startDate ? dayjs(startDate).format("YYYY-MM-DD") : null,
         endDate: endDate ? dayjs(endDate).format("YYYY-MM-DD") : null,
         sortBy: sort.sortBy,
         sortType: sort.sortType,
         keyword: helpers.normalizeSpaces(searchkey) || null,
-        status
-      }
-
+        status,
+      };
 
       if (transactionType && transactionType !== undefined) {
         payload.transactionType = transactionType;
       }
 
       const path = apiPath.transactionCSV;
-      const result = await apiGet(path,payload);
+      const result = await apiGet(path, payload);
       if (result?.data?.success) {
         helpers.downloadFile(result?.data?.results?.filePath);
       }
@@ -156,8 +147,6 @@ function Transaction() {
       console.error("error in get all dashboard list==>>>>", error.message);
     }
   };
-
-
 
   const handleDateChange = (start, end) => {
     setPage(1);
@@ -170,7 +159,6 @@ function Transaction() {
     });
   };
 
-
   const statusPage = (e) => {
     const selectedValue = e.target.value;
 
@@ -182,7 +170,6 @@ function Transaction() {
     }));
     setPage(1);
   };
-
 
   useEffect(() => {
     if (!isInitialized) {
@@ -209,17 +196,14 @@ function Transaction() {
 
   const manager = user?.permission?.find((e) => e.manager === "transaction_manager");
 
-
   return (
     <div>
       <div className="bg-[#F9F9F9] dark:bg-slate-900">
         <div className="px-3 py-4">
-
           <div className="bg-white border border-[#E9EDF9] rounded-lg dark:bg-slate-800 dark:border-[#ffffff38]">
             <form className="border-b border-b-[#E3E3E3]  px-4 py-3 pt-5 flex flex-wrap">
               <div className="flex items-center md:justify-end mb-3">
                 <label htmlFor="default-search" className="mb-2 font-medium text-sm  text-gray-900 sr-only">
-
                   {t("USER_ID_EMAIL_MOBILE")}
                 </label>
                 <div className="flex">
@@ -252,58 +236,33 @@ function Transaction() {
                     </select>
                   </div>
 
-
                   <button
-                    type='button'
+                    type="button"
                     onClick={() => handleReset()}
-                    title={t('O_RESET')}
-                    className='bg-gradientTo flex gap-2 text-sm px-6 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2'
+                    title={t("O_RESET")}
+                    className="bg-gradientTo flex gap-2 text-sm px-6 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2"
                   >
                     <BiReset size={18} />
-                    {t('O_RESET')}
+                    {t("O_RESET")}
                   </button>
                   <div className="p-5">
-                    <button
-                      onClick={onCsvDownload} type="button" className="bg-gradientTo text-sm px-6 flex gap-2  mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2"
-                    >
+                    <button onClick={onCsvDownload} type="button" className="bg-gradientTo text-sm px-6 flex gap-2  mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2">
                       <GoDownload size={18} className="" />
                       {t("EXPORT_CSV_TRANSACTION")}
                     </button>
                   </div>
-
                 </div>
               </div>
-
             </form>
 
-
-
-            <TransactionTable
-              users={users}
-              user={user}
-              getAllUser={getAllUser}
-              page={page}
-              setSort={setSort}
-              sort={sort}
-              setPage={setPage}
-              pageSize={pageSize}
-              userType={userType}
-              manager={manager}
-            />
+            <TransactionTable users={users} paginationObj={paginationObj} user={user} getAllUser={getAllUser} page={page} setSort={setSort} sort={sort} setPage={setPage} pageSize={pageSize} userType={userType} manager={manager} />
             <div className="flex justify-between">
               <PageSizeList dynamicPage={dynamicPage} pageSize={pageSize} />
-              {paginationObj?.totalItems ? (
-                <Pagination handlePageClick={handlePageClick} options={paginationObj} isDelete={isDelete} page={page} />
-              ) : null}
+              {paginationObj?.totalItems ? <Pagination handlePageClick={handlePageClick} options={paginationObj} isDelete={isDelete} page={page} /> : null}
             </div>
           </div>
         </div>
       </div>
-
-
-
-
-
     </div>
   );
 }
