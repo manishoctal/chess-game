@@ -206,8 +206,21 @@ function ChallangesManager() {
   const manager = user?.permission?.find((e) => e.manager === "challenges_manager");
 
   const onCsvDownload = async () => {
+    const { category, startDate, endDate, searchKey, userId } = filterData;
+
+    const payload = {
+      startDate: startDate ? dayjs(startDate).format("YYYY-MM-DD") : null,
+      endDate: endDate ? dayjs(endDate).format("YYYY-MM-DD") : null,
+      keyword: helpers.normalizeSpaces(searchKey) || null,
+      sortKey: sort?.sortBy,
+      sortType: sort?.sortType,
+      userId: userId || null,
+      status: category
+    };
+
+
     try {
-      const result = await apiGet(`${apiPath.challengeCSVDownload}/${userResult}`);
+      const result = await apiGet(`${apiPath.challengeCSVDownload}/${userResult}`, payload);
       if (result?.data?.success) {
         helpers.downloadFile(result?.data?.results?.filePath);
       }
@@ -239,7 +252,7 @@ function ChallangesManager() {
                 <div className="flex items-center lg:pt-0 pt-3 justify-center">
                   <ODateRangePicker handleDateChange={handleDateChange} isReset={filterData?.isReset} setIsReset={setFilterData} />
                   {
-                   <div className="flex items-center mb-3 ml-3">
+                    <div className="flex items-center mb-3 ml-3">
                       <select
                         id="countries"
                         type="password"
@@ -260,7 +273,7 @@ function ChallangesManager() {
                   }
 
 
-             
+
                   <button
                     type='button'
                     onClick={() => handleReset()}
@@ -271,8 +284,8 @@ function ChallangesManager() {
                     {t('O_RESET')}
                   </button>
                   <button type="button" className="bg-gradientTo text-sm px-6 flex gap-2 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2" title={t("DOWNLOAD_CSV")} onClick={onCsvDownload}>
-            <GoDownload size={18} /> {t("DOWNLOAD_CSV")}
-          </button>
+                    <GoDownload size={18} /> {t("DOWNLOAD_CSV")}
+                  </button>
                 </div>
               </div>
 

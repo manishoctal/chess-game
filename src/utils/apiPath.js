@@ -96,7 +96,8 @@ const apiPath = Object.freeze({
   downloadExcelWithdrawal:"/v1/admin/withdrawal-request/download-csv",
   rejectWithdrawalReqeust:"/v1/admin/withdrawal-request",
   transactionCSV:"/v1/admin/transaction/download-csv",
-  correncyConverter:"/v1/admin/setting/currency-measure"
+  correncyConverter:"/v1/admin/setting/currency-measure",
+  getNotificationSubAdmin:'/v1/admin/notification/sub-admin'
 });
 
 export default apiPath;

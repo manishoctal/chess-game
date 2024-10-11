@@ -179,9 +179,21 @@ function FeedbackManager() {
 
   const onCsvDownload = async () => {
 
+    const { startDate, endDate, searchkey, community, status } = filterData;
+
+    const payload = {
+      community,
+      status,
+      startDate: startDate ? dayjs(startDate).format("YYYY-MM-DD") : null,
+      endDate: endDate ? dayjs(endDate).format("YYYY-MM-DD") : null,
+      keyword: helpers.normalizeSpaces(searchkey) || null,
+      sortBy: sort.sortBy,
+      sortType: sort.sortType,
+    };
+
     try {
       const path = apiPath.downloadFeedback;
-      const result = await apiGet(path);
+      const result = await apiGet(path,payload);
       if (result?.data?.success) {
         helpers.downloadFile(result?.data?.results?.filePath);
       }

@@ -6,14 +6,15 @@ import { apiGet } from "utils/apiFetch";
 import apiPath from "utils/apiPath";
 import helpers from "utils/helpers";
 
-const SpecifiUserPopup = ({ handleSpecificUser, viewUser }) => {
+const SpecifiUserPopup = ({ handleSpecificUser, viewUser,notificationUser }) => {
   const { t } = useTranslation();
   const [userList, setUserList] = useState([])
+  console.log('dfdfd',userList)
 
   const getSpecificUserList = async () => {
 
     try {
-      const res = await apiGet(`${apiPath?.specificUserApiList}/${viewUser}`);
+      const res = await apiGet(`${ helpers.ternaryCondition(notificationUser?.sendTo!=='subAdmin',apiPath?.specificUserApiList,apiPath?.getNotificationSubAdmin)}/${viewUser}`);
       console.log("res", res)
       if (res?.status === 200) {
         setUserList(res?.data?.results?.users)
@@ -52,10 +53,8 @@ const SpecifiUserPopup = ({ handleSpecificUser, viewUser }) => {
                     <thead className="text-xs text-gray-900 border border-[#E1E6EE] bg-[#E1E6EE] dark:bg-gray-700 dark:text-gray-400 dark:border-[#ffffff38]">
                       <tr>
                         <th scope="col" className="py-3 px-3 text-center">
-                          {t("USERNAME")}
+                          {notificationUser?.sendTo!=='subAdmin'?t("USERNAME"):t("FULL_NAME")}
                         </th>
-
-
                         <th scope="col" className="py-3 px-6 text-center">
                           {t("EMAIL")}
                         </th>
@@ -69,7 +68,7 @@ const SpecifiUserPopup = ({ handleSpecificUser, viewUser }) => {
                             <td className="py-2 px-4 border-r dark:border-[#ffffff38]"
 
                             >
-                              {helpers?.ternaryCondition(item?.userName, startCase(item?.userName), "N/A")}
+                              {helpers?.ternaryCondition(notificationUser?.sendTo!=='subAdmin',item?.userName?startCase(item?.userName):'N/A',startCase(item?.firstName||'')+' '+ startCase(item?.lastName||'') )}
                             </td>
 
                             <td className="py-2 px-4 border-r dark:border-[#ffffff38]"
