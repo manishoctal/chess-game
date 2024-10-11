@@ -262,6 +262,24 @@ const Settings = () => {
                   validationRules={validationFields?.platformFee}
                 />
 
+                <div className="">
+                  <OInputField
+                    wrapperClassName="relative z-0  w-full group"
+                    type="number"
+                    name="platformFee"
+                    inputLabel={<>{t("WITHDRAWAL_REQUEST_EXPIRY_HOURS")}</>}
+                    id="platformFee"
+                    autoComplete="off"
+                    onInput={preventMaxHundred}
+                    register={register("platformFee", validationFields?.maxWithdrawalLimit)}
+                    placeholder=" "
+                    disable={manager?.add === false}
+                    onKeyDown={handleKeyDownCashIn} 
+                  />
+                  <ErrorMessage message={errors?.maxWithdrawalLimit?.message} />
+                </div>
+
+
               </div>
 
               <div className="border p-5 rounded-md social-media">

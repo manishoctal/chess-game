@@ -132,8 +132,23 @@ function Transaction() {
   const onCsvDownload = async () => {
 
     try {
-      const path = apiPath.downloadFeedback;
-      const result = await apiGet(path);
+      const {transactionType, startDate, endDate, searchkey, status } = filterData;
+      const payload = {
+        startDate: startDate ? dayjs(startDate).format("YYYY-MM-DD") : null,
+        endDate: endDate ? dayjs(endDate).format("YYYY-MM-DD") : null,
+        sortBy: sort.sortBy,
+        sortType: sort.sortType,
+        keyword: helpers.normalizeSpaces(searchkey) || null,
+        status
+      }
+
+
+      if (transactionType && transactionType !== undefined) {
+        payload.transactionType = transactionType;
+      }
+
+      const path = apiPath.transactionCSV;
+      const result = await apiGet(path,payload);
       if (result?.data?.success) {
         helpers.downloadFile(result?.data?.results?.filePath);
       }
@@ -228,8 +243,8 @@ function Transaction() {
                       onChange={statusPage}
                     >
                       <option value="">{t("TRANSACTION_TYPE")}</option>
-                      <option value="walletDeposit">{t("O_WALLET_DEPOSIT")}</option>
-                      <option value="withdrawMoney">{t("O_WITHDRAW_MONEY")}</option>
+                      <option value="addToWallet">{t("O_WALLET_DEPOSIT")}</option>
+                      <option value="withdrawAmount">{t("O_WITHDRAW_MONEY")}</option>
                       <option value="casualChallenge">{t("O_CASUAL_CHALLENGE")}</option>
                       <option value="monetaryChallenge">{t("O_MONETARY_CHALLENGE")}</option>
                       <option value="deposit">{t("O_DEPOSIT")}</option>

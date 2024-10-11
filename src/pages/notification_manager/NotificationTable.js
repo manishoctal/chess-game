@@ -7,10 +7,12 @@ import SpecifiUserPopup from "./SpecifiUserPopup";
 const NotificationTable = ({ notifications, paginationObj, sort, setSort, pageSize }) => {
   const { t } = useTranslation();
   const [showSpecificUser,setShowSpecificUser]=useState(false);
+  const[notificationUser,setNotificationUser]=useState()
   const [viewUser,setViewUser]=useState("");
   const handleSpecificUser = (item) =>{
     setViewUser(item?._id)
     setShowSpecificUser(!showSpecificUser)
+    setNotificationUser(item)
   }
   return (
     <div className="p-3">
@@ -56,7 +58,7 @@ const NotificationTable = ({ notifications, paginationObj, sort, setSort, pageSi
       </div>
 
 {
-  showSpecificUser && <SpecifiUserPopup handleSpecificUser={handleSpecificUser} viewUser={viewUser}/>
+  showSpecificUser && <SpecifiUserPopup handleSpecificUser={handleSpecificUser} viewUser={viewUser} notificationUser={notificationUser} />
 }
 
     </div>
