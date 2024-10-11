@@ -34,21 +34,22 @@ const UserView = () => {
   const notification = useToastContext();
   const [kycSection, setKycSection] = useState(null);
   const [showBanner, setShowBanner] = useState(false);
-  const [showFreeModel,setShowFreeModel]=useState(false);
+  const [showFreeModel, setShowFreeModel] = useState(false);
   const [walletBox, setWalletBox] = useState(false);
-  
-  const handleFreeModal = () =>{
-    setShowFreeModel(!showFreeModel)
-    getUserDetails()
-  }
+
+  const handleFreeModal = () => {
+    setShowFreeModel(!showFreeModel);
+    getUserDetails();
+  };
+
+  console.log("object", location?.state?.userData?._id);
 
   const getUserDetails = async () => {
     try {
-    
-      const path = `${apiPath.getUserDetails}/${location?.state?.user?._id || location?.state?._id }`;
+      const path = `${apiPath.getUserDetails}/${location?.state?.userData?._id || location?.state?._id}`;
       const result = await apiGet(path);
       if (result?.data?.success) {
-        setItem(result?.data?.results)
+        setItem(result?.data?.results);
       }
     } catch (error) {
       console.error("error ", error);
@@ -56,16 +57,15 @@ const UserView = () => {
         logoutUser();
       }
     }
-  }
-
+  };
 
   useEffect(() => {
     if (location?.state) {
-      getUserDetails()
+      getUserDetails();
     } else {
-      navigate('/users')
+      navigate("/users");
     }
-  }, [location])
+  }, [location]);
   const approveAndReject = async (data) => {
     try {
       const payload = {
@@ -90,11 +90,7 @@ const UserView = () => {
           setTimeout(() => {
             resolve(
               <div className="flex items-center justify-center p-6">
-                <button
-                  className="text-black bg-[#E1E1E1] font-normal px-12 py-2.5 text-sm outline-none focus:outline-none rounded mr-6 ease-linear transition-all duration-150"
-                  type="button"
-                  onClick={() => approveAndReject("approved")}
-                >
+                <button className="text-black bg-[#E1E1E1] font-normal px-12 py-2.5 text-sm outline-none focus:outline-none rounded mr-6 ease-linear transition-all duration-150" type="button" onClick={() => approveAndReject("approved")}>
                   {t("APPROVE")}
                 </button>
 
@@ -164,8 +160,6 @@ const UserView = () => {
     setWalletBox(false);
   };
 
-
-
   return (
     <div className="p-5 dark:bg-slate-900">
       {helpers.ternaryCondition(
@@ -173,34 +167,22 @@ const UserView = () => {
         <Link className="mb-5 ml-4 block" onClick={handleBack}>
           <IoArrowBackSharp />
         </Link>,
-        <div className='flex active mb-3 ml-4 justify-between'>
-          
+        <div className="flex active mb-3 ml-4 justify-between">
           <Link aria-current="page" className="" to={-1}>
             <FaCircleArrowLeft size={27} />
           </Link>
 
           <div className="flex items-center">
+            <NavLink to="/users/view/game-history" title={t("O_VIEW")} className="bg-gradientTo flex gap-2 text-sm px-6 ml-3  py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2">
+              <BiHistory className="cursor-pointer w-5 h-5 text-white" /> {t("GAME_HISTORY")}
+            </NavLink>
 
-          <NavLink
-            to="/users/view/game-history"
-            title={t("O_VIEW")}
-            className="bg-gradientTo flex gap-2 text-sm px-6 ml-3  py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2"
-          >
-            <BiHistory  className="cursor-pointer w-5 h-5 text-white" />{" "}
-            {t("GAME_HISTORY")}
-          </NavLink>
-
- 
-
-            <button onClick={()=>handleFreeModal()}className="bg-gradientTo flex gap-2 text-sm px-6 ml-3  py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2">
+            <button onClick={() => handleFreeModal()} className="bg-gradientTo flex gap-2 text-sm px-6 ml-3  py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2">
               {t("FREEZE_BALANCE")}
             </button>
           </div>
-
         </div>
       )}
-   
- 
 
       <div className="mt-10">
         <div className="flex items-center">
@@ -252,13 +234,7 @@ const UserView = () => {
                 </figure>
                 <figcaption className="w-[calc(100%_-_41px)]">
                   <span className="block text-[#5 C5C5C]">{t("O_MOBILE_NUMBER")}</span>
-                  <strong>
-                    
-                  {helpers?.ternaryCondition(item?.countryCode
-              , `+${item?.countryCode} ${item?.mobile}`
-              , "N/A")}
-                    
-                    </strong>
+                  <strong>{helpers?.ternaryCondition(item?.countryCode, `+${item?.countryCode} ${item?.mobile}`, "N/A")}</strong>
                 </figcaption>
               </div>
             </div>
@@ -278,7 +254,6 @@ const UserView = () => {
         </div>
 
         <div className="grid grid-cols-3 gap-5">
-
           <div className="border border-1 border-[#E1DEDE] rounded-md p-6 ps-3">
             <ul>
               <div>
@@ -439,7 +414,7 @@ const UserView = () => {
               {renderApprovalStatus()}
             </div>
             {kycSection}
-       
+
           </div> */}
 
           <div className="border border-1 border-[#E1DEDE] rounded-md p-6 ps-3">
@@ -497,17 +472,13 @@ const UserView = () => {
                   </div>
                 </li>
               </div>
-
             </ul>
           </div>
-
-
         </div>
       </div>
 
       {showBanner && showImage && <ShowImage handleShowImage={handleShowImage} showImage={showImage} />}
-      {showFreeModel && <FreezeBalancePopup handleFreeModal={handleFreeModal} userId={item}/>}
-
+      {showFreeModel && <FreezeBalancePopup handleFreeModal={handleFreeModal} userId={item} />}
     </div>
   );
 };
