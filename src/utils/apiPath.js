@@ -97,7 +97,8 @@ const apiPath = Object.freeze({
   rejectWithdrawalReqeust:"/v1/admin/withdrawal-request",
   transactionCSV:"/v1/admin/transaction/download-csv",
   correncyConverter:"/v1/admin/setting/currency-measure",
-  getNotificationSubAdmin:'/v1/admin/notification/sub-admin'
+  getNotificationSubAdmin:'/v1/admin/notification/sub-admin',
+  bellNotification: "/v1/admin/notification/admin/list"
 });
 
 export default apiPath;

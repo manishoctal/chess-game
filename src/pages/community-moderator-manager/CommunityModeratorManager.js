@@ -52,13 +52,13 @@ function CommunityModeratorManager() {
   const getAllCommunity = async (data, pageNO) => {
     
     try {
-      const { startDate, endDate, searchkey, community, status } = filterData;
+      const { startDate, endDate, searchkey, community,category } = filterData;
 
       const payload = {
         page,
         pageSize,
         community,
-        status,
+        status:category,
         startDate: startDate ? dayjs(startDate).format("YYYY-MM-DD") : null,
         endDate: endDate ? dayjs(endDate).format("YYYY-MM-DD") : null,
         keyword: helpers.normalizeSpaces(searchkey) || null,
@@ -173,11 +173,17 @@ function CommunityModeratorManager() {
     setPage(1);
     setFilterData({ ...filterData, community: e.target.value, isFilter: true });
   };
-  const adminStatusChange = (e) => {
-    setPage(1);
-    setFilterData({ ...filterData, status: e.target.value, isFilter: true });
-  };
+  const statusPage = (e) => {
+    const selectedValue = e.target.value;
 
+    setFilterData((prevData) => ({
+      ...prevData,
+      category: selectedValue,
+      isFilter: true,
+      isReset: false,
+    }));
+    setPage(1);
+  };
 
   const handelStatusChange = async (item) => {
     try {
@@ -212,16 +218,16 @@ function CommunityModeratorManager() {
                   <ODateRangePicker handleDateChange={handleDateChange} isReset={filterData?.isReset} setIsReset={setFilterData} />
                   {(
                     <div className="flex items-center mb-3 ml-3">
-                      <select
+                     <select
                         id="countries"
-                        type=" password"
+                        type="password"
                         name="floating_password"
                         className="block p-2 w-full text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer"
-                        placeholder=" "
+                        placeholder=""
                         value={filterData?.category}
-                        onChange={(e) => adminStatusChange(e)}
+                        onChange={statusPage}
                       >
-                        <option defaultValue value="">
+                        <option value="">
                           {t("O_ALL")}
                         </option>
                         <option value="active">{t("O_ACTIVE")}</option>

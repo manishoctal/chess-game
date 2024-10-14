@@ -116,7 +116,9 @@ function Transaction() {
       endDate: "",
       isReset: true,
       isFilter: false,
+      category:""
     });
+    
     setPage(1);
     setSearchTerm("");
     setPageSize(10);

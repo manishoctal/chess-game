@@ -135,19 +135,6 @@ const UserView = () => {
     kycDocSection();
   }, [item?.kycRecord?.isApproved]);
 
-  const InformationSection = ({ iconSrc, title, content }) => {
-    return (
-      <div className="flex items-center">
-        <figure className="bg-white w-[42px] h-[41px] rounded-full flex items-center justify-center mr-3">
-          <img src={iconSrc} alt="" />
-        </figure>
-        <figcaption className="w-[calc(100%_-_41px)]">
-          <span className="text-[#5C5C5C] block">{title}</span>
-          <strong className="truncate max-w-[200px] block">{content}</strong>
-        </figcaption>
-      </div>
-    );
-  };
 
   const [showImage, setShowImage] = useState();
 
@@ -295,32 +282,8 @@ const UserView = () => {
                   </div>
                 </li>
               </div>
-              {/* <div>
-                <li className="mb-4">
-                  <div className="flex items-center">
-                    <figure className="bg-[#F2F2F2] w-[42px] h-[41px] rounded-full flex items-center justify-center mr-3">
-                      <img src={locationIcon} alt="" />
-                    </figure>
-                    <figcaption className="w-[calc(100%_-_41px)]">
-                      <span className="block text-[#5C5C5C]">{t("INVITE_CODE_USED")}</span>
-                      <strong>{helpers.ternaryCondition(item?.inviteByCode, item?.inviteByCode, "N/A")}</strong>
-                    </figcaption>
-                  </div>
-                </li>
-              </div> */}
               <div>
-                {/* <li className="mb-4">
-                  <div className="flex items-center">
-                    <figure className="bg-[#F2F2F2] w-[42px] h-[41px] rounded-full flex items-center justify-center mr-3">
-                      <img src={bonusIcon} alt="" />
-                    </figure>
-                    <figcaption className="w-[calc(100%_-_41px)]">
-                      <span className="block text-[#5C5C5C] dark:text-white">{t("INVITE_CODE")}</span>
-                      <strong className="dark:text-slate-400">{helpers.ternaryCondition(item?.inviteCode, item?.inviteCode, "N/A")}</strong>
-                    </figcaption>
-                  </div>
-                </li> */}
-
+              
                 <li className="mb-4">
                   <div className="flex items-center">
                     <figure className="bg-[#F2F2F2] w-[42px] h-[41px] rounded-full flex items-center justify-center mr-3">
@@ -368,54 +331,6 @@ const UserView = () => {
               </div>
             </ul>
           </div>
-
-          {/* <div className="border border-1  border-[#E1DEDE] rounded-md p-12">
-            <span className="block text-center pb-3 font-bold ">{t("KYC_DOCUMENT")}</span>
-            <div className="relative">
-              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{t('GOVERNMENT_ID_PDF')}</label>
-              <figure className="inline-block overflow-hidden border mb-3 w-full h-[200px]">
-                <OImage
-                  src={item?.document || defaultImage}
-                  className="w-full h-full object-contain inline  cursor-pointer"
-                  onClick={() => handleShowImage(item?.document)}
-                  alt=""
-                  fallbackUrl={defaultImage}
-                />
-              </figure>
-              {renderApprovalStatus()}
-            </div>
-
-            <span className="block mb-2 text-sm font-medium text-gray-900 dark:text-white text-center">or</span>
-
-            <div className="relative">
-              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{t('FRONT_PROOF_ID_IMAGE')}</label>
-              <figure className="inline-block overflow-hidden border mb-3 w-full h-[200px]">
-                <OImage
-                  src={item?.frontPicture || defaultImage}
-                  className="w-full h-full object-contain inline  cursor-pointer"
-                  onClick={() => handleShowImage(item?.frontPicture)}
-                  alt=""
-                  fallbackUrl={defaultImage}
-                />
-              </figure>
-              {renderApprovalStatus()}
-            </div>
-            <div className="relative">
-              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{t('BACK_PROOF_ID_IMAGE')}</label>
-              <figure className="inline-block overflow-hidden border mb-3 w-full h-[200px]">
-                <OImage
-                  src={item?.backPicture || defaultImage}
-                  className="w-full h-full object-contain inline cursor-pointer"
-                  alt=""
-                  onClick={() => handleShowImage(item?.backPicture)}
-                  fallbackUrl={defaultImage}
-                />
-              </figure>
-              {renderApprovalStatus()}
-            </div>
-            {kycSection}
-
-          </div> */}
 
           <div className="border border-1 border-[#E1DEDE] rounded-md p-6 ps-3">
             <span className="block text-center pb-3 font-bold ">{t("GAME_STATICS")}</span>

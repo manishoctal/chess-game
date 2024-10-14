@@ -17,6 +17,7 @@ const Commission = ({ saveSettingData }) => {
         register,
         handleSubmit,
         setValue,
+        setError,
         watch,
         trigger,
         formState: { isDirty, errors },
@@ -119,13 +120,22 @@ const Commission = ({ saveSettingData }) => {
             setValue("adminCommission3", saveSettingData?.commissions?.[1]?.adminCommission);
             setValue("moneyStake1", saveSettingData?.commissions?.[0]?.amount);
             setValue("moneyStake2", saveSettingData?.commissions?.[1]?.amount);
-
+            
             trigger();
         }
     }, [saveSettingData, setValue, trigger]);
 
 
     console.log("dirty",isDirty)
+
+
+    useEffect(()=>{
+        if(watch("moneyStake2"))
+        {
+            setError("moneyStake1", "");
+        }
+    },[])
+
 
 
     return (
@@ -203,6 +213,7 @@ const Commission = ({ saveSettingData }) => {
                                             setValue("moneyStake2", e.target.value,{
                                                 shouldDirty: true,
                                             });
+                                            setError("moneyStake2", "");
                                         },
                                     })}
                                     placeholder='Enter Money Stake'
@@ -288,6 +299,7 @@ const Commission = ({ saveSettingData }) => {
                                             setValue("moneyStake1", e.target.value,{
                                                 shouldDirty: true, 
                                             });
+                                            setError("moneyStake1", "");
                                         },
                                     })}
                                     placeholder='Enter Money Stake'

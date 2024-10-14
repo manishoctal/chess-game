@@ -138,11 +138,11 @@ const Table = ({
     <>
       {renderTableCell(
         helpers.getDateAndTime(item?.createdAt) || "N/A",
-        "py-4 px-3 border-r  dark:border-[#ffffff38] text-center border font-bold"
+        "py-4 px-3 border-r  dark:border-[#ffffff38]  border font-bold"
       )}
       {renderTableCell(
         getKycStatusText(item),
-        "py-4 px-3 border-r  dark:border-[#ffffff38] text-center border font-bold"
+        "py-4 px-3 border-r  dark:border-[#ffffff38]  border font-bold"
       )}
 
     </>
@@ -213,7 +213,7 @@ const Table = ({
   const renderStatusTableCell = (item) =>
     helpers.andOperator(
       manager?.add || user?.permission?.length === 0,
-      <td className="py-2 px-4 border-r  dark:border-[#ffffff38] text-center border">
+      <td className="py-2 px-4 border-r  dark:border-[#ffffff38]  border">
         {statusLabel(item)}
       </td>
     );
@@ -253,11 +253,11 @@ const Table = ({
 
 
           {renderTableCell(helpers.ternaryCondition(item?.email, item?.email, "N/A"), "bg-white py-2 px-4 border-r border  dark:border-[#ffffff38] font-bold text-slate-900")}
-          {renderTableCell(helpers.ternaryCondition(item?.countryCode, `+ ${item?.countryCode}`, "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold")}
-          {renderTableCell(helpers.ternaryCondition(item?.mobile, item?.mobile, "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold")}
+          {renderTableCell(helpers.ternaryCondition(item?.countryCode, `+ ${item?.countryCode}`, "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38]  font-bold")}
+          {renderTableCell(helpers.ternaryCondition(item?.mobile, item?.mobile, "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38]  font-bold")}
           {renderCommonTableCells(item)}
-          {renderTableCell(helpers.ternaryCondition(item?.ratingMonetary, item?.ratingMonetary, "0"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold")}
-          {renderTableCell(helpers.ternaryCondition(item?.ratingCasual, item?.ratingCasual, "0"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold")}
+          {renderTableCell(helpers.ternaryCondition(item?.ratingMonetary, item?.ratingMonetary, "0"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38]  font-bold")}
+          {renderTableCell(helpers.ternaryCondition(item?.ratingCasual, item?.ratingCasual, "0"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38]  font-bold")}
           {
             !userResult && renderStatusTableCell(item)
           }
@@ -298,7 +298,7 @@ const Table = ({
                     <OUserTableHead sort={sort} setSort={setSort} name='O_STATUS' fieldName='status' />)
                 }
 
-                <th scope="col" className="py-3 px-6 text-center">
+                <th scope="col" className="py-3 px-6 ">
                   {t("O_ACTION")}
                 </th>
               </tr>
@@ -308,7 +308,7 @@ const Table = ({
               {/* {renderTableRows()} */}
               {helpers.ternaryCondition(
                 isEmpty(users),
-                <tr className="bg-white text-center border-b dark:bg-gray-800 dark:border-gray-700">
+                <tr className="bg-white  border-b dark:bg-gray-800 dark:border-gray-700">
                   <td
                     className="py-2 px-4 border-r dark:border-[#ffffff38]"
                     colSpan={13}
