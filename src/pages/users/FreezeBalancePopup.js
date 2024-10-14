@@ -10,7 +10,7 @@ import FormValidation from "utils/formValidation";
 import { IoClose } from "react-icons/io5";
 import { handleCopy, handleCut, handlePaste, preventText } from "utils/reusableMethods";
 import helpers from "utils/helpers";
-const FreezeBalancePopup = ({ handleFreeModal, userId }) => {
+const FreezeBalancePopup = ({ handleFreeModal, userId ,freezeWalletAmount}) => {
     const [isLoading, setIsLoading] = useState(false);
     const formValidation = FormValidation();
     const { t } = useTranslation();
@@ -42,10 +42,6 @@ const FreezeBalancePopup = ({ handleFreeModal, userId }) => {
         setIsLoading(false);
     };
 
-    console.log("userId", userId)
-
-  
-
     return (
         <div>
             <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
@@ -56,8 +52,7 @@ const FreezeBalancePopup = ({ handleFreeModal, userId }) => {
                                 <div>
                                     <h3 className="text-xl font-semibold dark:text-white">{t("FREEZE_BALANCE")}</h3>
 
-                                    <strong className="mt-2 block">{helpers.formattedAmount(userId?.freezedAmount)}</strong>
-                                    {/* <strong className="text-black text-lg mt-2 block">{helpers?.ternaryCondition(userId?.freezedAmount, helpers?.formattedAmount(parseInt(userId?.freezedAmount),userId?.country), "0")}</strong> */}
+                                    <strong className="mt-2 block">{helpers.formattedAmount(freezeWalletAmount)}</strong>
                                 </div>
 
                                 <button className=" ml-auto flex items-center justify-center  text-black border-2 rounded-full  h-8 w-8 float-right text-3xl leading-none font-extralight outline-none focus:outline-none" onClick={() => handleFreeModal()}>
