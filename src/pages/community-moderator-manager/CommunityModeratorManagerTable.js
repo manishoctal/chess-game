@@ -29,7 +29,7 @@ const CommunityModeratorManagerTable = ({ handleUserView, allCommunity, paginati
               <ONotificationTableHead sort={sort} setSort={setSort} name="Comment Count" fieldName="commentCount" classTd={"justify-center"} />
               <ONotificationTableHead sort={sort} setSort={setSort} name="Report Count" fieldName="reportCount" classTd={"justify-center"} />
               <ONotificationTableHead sort={sort} setSort={setSort} name="Community" fieldName="community" classTd={"justify-center"} />
-              <ONotificationTableHead sort={sort} setSort={setSort} name="Status" fieldName="status" classTd={"justify-center"} />
+              {(manager?.add || manager?.edit || user?.role === "admin") && <ONotificationTableHead sort={sort} setSort={setSort} name="O_STATUS" fieldName="status" classTd={"justify-center"} />}
               <ONotificationTableHead sort={sort} setSort={setSort} name="Date And Time" fieldName="createdAt" classTd={"justify-center"} />
               <th scope="col" className="py-3 px-6 text-center">
                 {t("O_ACTION")} 

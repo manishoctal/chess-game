@@ -12,7 +12,6 @@ const WithdrawalRequestTable = ({ allCommunity, paginationObj, sort, setSort, pa
   const { t } = useTranslation();
   const notification = useToastContext();
   const [currentRate, setCurrentRate] = useState([]);
-  const [currencyCode, setCurrencyCode] = useState("INR");
   const handleReject = async (item) => {
     try {
       const payload = {
@@ -44,19 +43,7 @@ const WithdrawalRequestTable = ({ allCommunity, paginationObj, sort, setSort, pa
       console.error("error", error.message);
     }
   };
-
-  console.log("currentRate", currentRate);
-
-  // useEffect(() => {
-  //     if (allCommunity.length > 0) {
-  //         const uniqueCurrencies = allCommunity.map(item => console.log("item",item?.user?.currency));
-  //         console.log("uniqueCurrencies",uniqueCurrencies)
-  //         getAllCourrencyRate([...uniqueCurrencies]);
-  //     }
-  // }, [allCommunity]);
-
-  // console.log("currentRate",currentRate)
-
+  
   useEffect(() => {
     getAllCourrencyRate();
   }, []);

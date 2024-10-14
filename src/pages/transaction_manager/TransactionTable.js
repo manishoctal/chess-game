@@ -29,7 +29,7 @@ const TransactionTable = ({ users, page, setSort, sort, pageSize }) => {
   }, []);
 
   const getDisplayName = (dataRecord) => {
-    return startCase(dataRecord?.userDetails?.fullName) || "N/A";
+    return dataRecord?.userDetails?.fullName || "N/A";
   };
 
   const getDisplayUserId = (userRecord) => {
@@ -86,7 +86,7 @@ const TransactionTable = ({ users, page, setSort, sort, pageSize }) => {
               <OUserTableHead sort={sort} setSort={setSort} name="TRANSACTION_TYPE" fieldName="transactionType" />
               <OUserTableHead sort={sort} setSort={setSort} name="TRANSACTION_DATE" fieldName="createdAt" />
               <OUserTableHead sort={sort} setSort={setSort} name="AMOUNT" fieldName="amount" />
-              <OUserTableHead sort={sort} setSort={setSort} name="ADMIN_COMMISSION" fieldName="adminCommission" />
+              <OUserTableHead sort={sort} setSort={setSort} name="ADMIN_COMMISSION" fieldName="adminComission" />
               <OUserTableHead sort={sort} setSort={setSort} name="TRANSACTION_FEE" fieldName="transactionFee" />
             </tr>
           </thead>

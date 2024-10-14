@@ -129,7 +129,7 @@ const Table = ({ FAQs, getAllFAQ, handelEdit, paginationObj, manager, pageSize, 
                           <th scope="row" className="py-2 px-4 border-r dark:border-[#ffffff38] font-medium text-gray-900  dark:text-white text-center">
                             {i + 1 + pageSize * (paginationObj?.page - 1)}
                           </th>
-                          <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-center">{helpers.orOperator(startCase(item?.title), "N/A")}</td>
+                          <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-center">{helpers.orOperator((item?.title), "N/A")}</td>
                           <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-center">{helpers.getDateAndTime(item?.createdAt)}</td>
                           <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-center">{helpers.getDateAndTime(item?.updatedAt)}</td>
                           {(manager?.add || user?.role === "admin") && (

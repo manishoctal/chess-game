@@ -290,7 +290,9 @@ const SubAdd = () => {
                   placeholder={t("ENTER_ADDRESS")}
                   labelType={true}
                   type="textarea"
-                  register={register("address", formValidation.address)}
+                  maxLength={250}
+                  onInput={(e) => preventMaxInput(e)}
+                  register={register("address", formValidation.addressSubadmin)}
                   errors={errors}
                   disable={item?.type === "view"}
                 />

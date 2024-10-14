@@ -39,7 +39,7 @@ import GameHistoryTable from "pages/users/GameHistoryTable";
 import ViewCommunityModerator from "pages/community-moderator-manager/ViewCommunityModerator";
 import CommunityModeratorManager from "pages/community-moderator-manager/CommunityModeratorManager";
 import FeedbackManager from "pages/feedback-manager/FeedbackManager";
-import Transaction from "pages/transection_manager/Transaction";
+import Transaction from "pages/transaction_manager/Transaction";
 import WithdrawalRequestManager from "pages/withdrawal_request_manager/WithdrawalRequestManager";
 import ChallangesManager from "pages/challenges_manager/ChallangesManager";
 import CasualView from "pages/challenges_manager/challenges/CasualView";
@@ -170,11 +170,10 @@ const AdminRoutes = {
     },
 
     {
-      path: "/transection_manager",
+      path: "/transaction-manager",
       element: (
         <AuthorizationRoute>
-          {" "}
-          <Transaction />
+          <Transaction/>
         </AuthorizationRoute>
       ),
       name: <UseChange data="NAV_TRANSACTION_MANAGER" />,
@@ -440,6 +439,9 @@ const AdminRoutes = {
       name: <UseChange data="community-moderator-manager" />,
     },
 
+
+    
+    
     // {
     //   path: "/notification_manager/add",
     //   element: (

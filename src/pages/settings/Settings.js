@@ -262,22 +262,22 @@ const Settings = () => {
                   validationRules={validationFields?.platformFee}
                 />
 
-                <div className="">
+                {/* <div className="">
                   <OInputField
                     wrapperClassName="relative z-0  w-full group"
                     type="number"
-                    name="platformFee"
+                    name="maxWithdrawalExpiryHrs "
                     inputLabel={<>{t("WITHDRAWAL_REQUEST_EXPIRY_HOURS")}</>}
-                    id="platformFee"
+                    id="maxWithdrawalExpiryHrs "
                     autoComplete="off"
                     onInput={preventMaxHundred}
-                    register={register("platformFee", validationFields?.maxWithdrawalLimit)}
+                    register={register("maxWithdrawalExpiryHrs ", validationFields?.maxWithdrawalLimit)}
                     placeholder=" "
                     disable={manager?.add === false}
                     onKeyDown={handleKeyDownCashIn} 
                   />
                   <ErrorMessage message={errors?.maxWithdrawalLimit?.message} />
-                </div>
+                </div> */}
 
 
               </div>
