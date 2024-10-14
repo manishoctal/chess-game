@@ -1,12 +1,15 @@
 import React, { Fragment, useContext } from "react";
 import { Transition, Menu } from "@headlessui/react";
 import AuthContext from "../context/AuthContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import OImage from "./reusable/OImage";
 import { t } from "i18next";
 import Swal from "sweetalert2";
 import { TbLogout2,TbPasswordUser } from "react-icons/tb";
 import { LiaUserEditSolid } from "react-icons/lia";
+import { BiDownArrow, BiNotification } from "react-icons/bi";
+import { IoIosArrowDown } from "react-icons/io";
+import { IoNotifications } from "react-icons/io5";
 
 const TopNavBar = () => {
   const {
@@ -17,6 +20,9 @@ const TopNavBar = () => {
     updatePageName,
     sidebarStatus,
   } = useContext(AuthContext);
+
+  const navigate = useNavigate();
+
   const handleLogout = () => {
     Swal.fire({
       html: "<b>Are you sure you want to logout?</b>",
@@ -62,6 +68,10 @@ const TopNavBar = () => {
             {pageName}
           </h1>
         </div>
+     <div className="flex justify-end align-center ms-auto">
+     <div className="flex items-center mr-3">
+          <IoNotifications className="text-2xl cursor-pointer" onClick={()=>navigate("/notification-list")}/>
+        </div>
         <Menu
           as="div"
           className="relative inline-block text-left hover:text-gradientTo sidebar_dropdown ml-auto"
@@ -81,6 +91,7 @@ const TopNavBar = () => {
                 <small className="block text-sm text-slate-900 ml-2 md:block hidden dark:text-white">
                   {user?.firstName + " " + user?.lastName}
                 </small>
+                <IoIosArrowDown className="text-black ml-1" />
               </div>
             </Menu.Button>
           </div>
@@ -131,6 +142,8 @@ const TopNavBar = () => {
             </Menu.Items>
           </Transition>
         </Menu>
+     </div>
+
       </header>
     </div>
   );

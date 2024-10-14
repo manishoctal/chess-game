@@ -47,13 +47,13 @@ function WithdrawalRequestManager() {
   // get all notification function start
   const getAllWithdrawal = async () => {
     try {
-      const { startDate, endDate, searchkey, community, status } = filterData;
+      const { startDate, endDate, searchkey, community, category } = filterData;
 
       const payload = {
         page,
         pageSize,
         community,
-        status,
+        status:category,
         startDate: startDate ? dayjs(startDate).format("YYYY-MM-DD") : null,
         endDate: endDate ? dayjs(endDate).format("YYYY-MM-DD") : null,
         keyword: helpers.normalizeSpaces(searchkey) || null,
@@ -153,10 +153,16 @@ function WithdrawalRequestManager() {
     setPageSize(e.target.value);
   };
 
+  const statusPage = (e) => {
+    const selectedValue = e.target.value;
 
-  const adminStatusChange = (e) => {
+    setFilterData((prevData) => ({
+      ...prevData,
+      category: selectedValue,
+      isFilter: true,
+      isReset: false,
+    }));
     setPage(1);
-    setFilterData({ ...filterData, status: e.target.value, isFilter: true });
   };
   const handelStatusChange = async (item) => {
     try {
@@ -174,9 +180,6 @@ function WithdrawalRequestManager() {
     }
   };
 
-
-
-  
 
   const onCsvDownload = async () => {
 
@@ -214,9 +217,25 @@ function WithdrawalRequestManager() {
                   </div>
                   <ODateRangePicker handleDateChange={handleDateChange} isReset={filterData?.isReset} setIsReset={setFilterData} />
                   <div className="flex items-centerml-3">
-
                     <div className="flex items-center mb-3 ml-3">
-                      <select
+                    <select
+                        id="countries"
+                        type="password"
+                        name="floating_password"
+                        className="block p-2 w-full text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer"
+                        placeholder=""
+                        value={filterData?.category}
+                        onChange={statusPage}
+                      >
+                        <option value="">
+                          {t("O_ALL")}
+                        </option>
+                        <option value="accepted">{t("ACCEPTED")}</option>
+                        <option value="rejected">{t("REJECTED")}</option>
+                        <option value="pending">{t("PENDING")}</option>
+                      </select>
+
+                      {/* <select
                         id="countries"
                         type=" password"
                         name="floating_password"
@@ -231,7 +250,7 @@ function WithdrawalRequestManager() {
                         <option value="accepted">{t("ACCEPTED")}</option>
                         <option value="rejected">{t("REJECTED")}</option>
                         <option value="pending">{t("PENDING")}</option>
-                      </select>
+                      </select> */}
                     </div>
 
                   </div>

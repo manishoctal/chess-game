@@ -9,8 +9,9 @@ import helper from 'utils/helpers'
 import dayjs from 'dayjs'
 import PageSizeList from 'components/PageSizeList'
 import ONotificationTableHead from '../../components/reusable/OTableHead'
+import helpers from 'utils/helpers'
 const BellNotifications = () => {
-  const { updatePageName, logoutUser } = useContext(AuthContext)
+  const { updatePageName, logoutUser,user } = useContext(AuthContext)
   const { t } = useTranslation()
   const [users, setUsers] = useState([])
   const [page, setPage] = useState(1)
@@ -21,6 +22,7 @@ const BellNotifications = () => {
     startDate: '',
     endDate: ''
   })
+
 
   const [paginationObj, setPaginationObj] = useState({
     page: 1,
@@ -33,8 +35,11 @@ const BellNotifications = () => {
     sortType: 'desc'
   })
 
+  const notificationUserType = helper?.ternaryCondition(user?.role=="admin","admin","subAdmin")
+
   // get all notification function start
   const getNotifications = async () => {
+    
     try {
       const { startDate, endDate } = filterData
       const payload = {
@@ -44,8 +49,9 @@ const BellNotifications = () => {
         endDate: helper.ternaryCondition(endDate , dayjs(endDate).format('YYYY-MM-DD') , null),
         sortBy: sort.sortKey,
         sortType: sort.sortType
+
       }
-      const result = await apiGet(apiPath.getBellNotification, payload)
+      const result = await apiGet(`${apiPath.bellNotification}/${notificationUserType}`, payload)
       if (result?.status === 200) {
         const response = result?.data?.results
         setUsers(response?.docs)
@@ -93,13 +99,17 @@ const BellNotifications = () => {
                 <th scope='col' className='py-3 px-6'>
                 {t('S.NO')}
                 </th>
-                <ONotificationTableHead sort={sort} setSort={setSort} name='O_TITLE' fieldName='title' />
-                <ONotificationTableHead sort={sort} setSort={setSort} name='O_MESSAGE' fieldName='message' />
+                <th scope="col" className="py-3 px-6">
+                {t("O_TITLE")}
+              </th>
+              <th scope="col" className="py-3 px-6">
+                {t("O_MESSAGE")}
+              </th>
                 <ONotificationTableHead sort={sort} setSort={setSort} name='O_CREATED_AT' fieldName='createdAt' />
               </tr>
             </thead>
             <tbody>
-              {users &&
+              {users && users?.length > 0 && 
                 users?.map((item, i) => (
                   <tr
                     key={i}
@@ -111,11 +121,13 @@ const BellNotifications = () => {
                     >
                       {i + 1 + 10 * (paginationObj?.page - 1)}
                     </th>
-                    <td className='py-4 px-6 border-r'>
-                      {startCase(item?.title)}
+                    <td className='py-4 px-3 border-r'>
+                      {helpers?.ternaryCondition(item?.title, startCase(item?.title), "N/A")}
                     </td>
-                    <td className='py-4 px-6 border-r'>{item?.description}</td>
-                    <td className='py-4 px-6 border-r'>
+                    <td className='py-4 px-3 border-r'>
+                      {helpers?.ternaryCondition(item?.description, item?.description, "N/A")}
+                      </td>
+                    <td className='py-4 px-3 border-r'>
                       {helper.dateFormat(item?.createdAt)}
                     </td>
                   </tr>

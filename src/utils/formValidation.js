@@ -258,6 +258,13 @@ const FormValidation = () => {
         whiteSpace: (value) => (value.trim() ? true : t("WHITE_SPACES_NOT_ALLOWED")),
       },
     },
+
+    addressSubadmin: {
+      required: "Please enter address.",
+      validate: {
+        whiteSpace: (value) => (value.trim() ? true : t("WHITE_SPACES_NOT_ALLOWED")),
+      },
+    },
     subscriptionName: {
       required: t("PLEASE_ENTER_SUBSCRIPTION_NAME"),
       pattern: {

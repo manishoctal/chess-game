@@ -116,7 +116,7 @@
   "OFFERS_VALIDITY": "Validity",
   "OFFERS_CREATED_DATE": "Created date",
   "OFFERS_USER": "User",
-  "OFFERS_SPECIFIC_USERS": "Specific user",
+  "OFFERS_SPECIFIC_USERS": "Specific User",
   "OFFERS_ASSIGN_OFFER_TO_USERS": "Assign offer to users",
   "OFFERS_EDIT_OFFER": "Edit offer",
   "FAQS_TITLE": "Title",
@@ -915,7 +915,7 @@
   "ENTER_FREEZE_AMOUNT": "Enter freeze amount",
   "TRANSACTION_TYPE": "Transaction Type",
   "TRANSACTION_DATE": "Transaction Date & Time",
-  "ADMIN_COMMISSION": "Admin commission",
+  "ADMIN_COMMISSION": "Admin Commission",
   "SEARCH_BY_FULL_NAME_TRANSACTION_EMAIL": "Full name, Email id, Transaction ID",
   "O_WALLET_DEPOSIT": "Wallet Deposit",
   "O_WITHDRAW_MONEY": "Withdraw Money",
@@ -957,5 +957,6 @@
   "SEARCH_BY_SUB_ADMIN": "Search By Sub Admin",
   "SELECT_SUBADMIN": "Select Sub Admin",
   "SPECIFIC_SUB_USER": "Specific Sub Admin",
-  "WITHDRAWAL_REQUEST_EXPIRY_HOURS": "Withdrawal Request Expiry Hours"
+  "WITHDRAWAL_REQUEST_EXPIRY_HOURS": "Withdrawal Request Expiry Hours",
+  "SUB_ADMIN_USER": "Sub Admin User"
 }
