@@ -25,7 +25,7 @@ const NotificationTable = ({ notifications, paginationObj, sort, setSort, pageSi
               </th>
               <ONotificationTableHead sort={sort} setSort={setSort} name="NOTIFICATION_TITLE" fieldName="title" classTd={"justify-center"} />
               <ONotificationTableHead sort={sort} setSort={setSort} name="CONTENT" fieldName="description" classTd={"justify-center"} />
-              <ONotificationTableHead sort={sort} setSort={setSort} name="USERS" fieldName="userData.firstName" classTd={"justify-center"} />
+              <ONotificationTableHead sort={sort} setSort={setSort} name="USERS" fieldName="sendTo" classTd={"justify-center"} />
               <ONotificationTableHead sort={sort} setSort={setSort} name="SEND_DATE" fieldName="createdAt" classTd={"justify-center"} />
             </tr>
           </thead>

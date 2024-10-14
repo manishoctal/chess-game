@@ -1,17 +1,16 @@
 import React, { useState } from "react";
-import { apiGet, apiPut } from "../../utils/apiFetch";
+import { apiPut } from "../../utils/apiFetch";
 import apiPath from "../../utils/apiPath";
-import { isEmpty, startCase } from "lodash";
+import { isEmpty } from "lodash";
 import useToastContext from "hooks/useToastContext";
-import { AiFillEdit, AiFillEye, AiFillWallet } from "react-icons/ai";
+import { AiFillEdit, AiFillEye } from "react-icons/ai";
 import { useTranslation } from "react-i18next";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import {NavLink } from "react-router-dom";
 import UserEdit from "./UserEdit";
 import ViewWalletBalance from "./ViewWalletBalance";
 import helpers from "../../utils/helpers";
 import OUserTableHead from '../../components/reusable/OTableHead'
 import { FaFlag } from "react-icons/fa";
-import { MdFeedback } from "react-icons/md";
 import ReportUserPopup from "./ReportUserPopup";
 import ReviewRatingPopup from "./ReviewRatingPopup";
 
@@ -37,16 +36,6 @@ const Table = ({
   const [showReportPopup, setShowReportPopup] = useState(false);
   const [showReviewPopup, setShowReviewPopup] = useState(false);
   const [reportItem, setReportItem] = useState("")
-
-  const navigate = useNavigate();
-
-
-
-  // report-table//
-
-
-
-  //report-table//
 
   const handleReportToggle = (item) => {
     console.log("ITEM",item)
@@ -117,7 +106,7 @@ const Table = ({
     );
   };
   const getDisplayName = (userDetail) => {
-    return startCase(userDetail?.fullName) || 'N/A';
+    return userDetail?.fullName || 'N/A';
   };
 
   const getDisplayUserId = (userDetail) => {
@@ -227,12 +216,6 @@ const Table = ({
   const renderTableRows = () => {
     return users?.map((item, i) => {
       const rowClassName = getRowClassName(item);
-
-      // const getUserRedirection = () =>{
-      //   if(item?.userName){
-      //     navigate(`/users/view/${item?._id}`)
-      //   }
-      // }
 
 
       return (

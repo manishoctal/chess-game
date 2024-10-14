@@ -11,7 +11,7 @@ import PageSizeList from 'components/PageSizeList'
 import ONotificationTableHead from '../../components/reusable/OTableHead'
 import helpers from 'utils/helpers'
 const BellNotifications = () => {
-  const { updatePageName, logoutUser,user } = useContext(AuthContext)
+  const { updatePageName, logoutUser, user } = useContext(AuthContext)
   const { t } = useTranslation()
   const [users, setUsers] = useState([])
   const [page, setPage] = useState(1)
@@ -35,18 +35,18 @@ const BellNotifications = () => {
     sortType: 'desc'
   })
 
-  const notificationUserType = helper?.ternaryCondition(user?.role=="admin","admin","subAdmin")
+  const notificationUserType = helper?.ternaryCondition(user?.role == "admin", "admin", "subAdmin")
 
   // get all notification function start
   const getNotifications = async () => {
-    
+
     try {
       const { startDate, endDate } = filterData
       const payload = {
         page,
         pageSize,
-        startDate: helper.ternaryCondition(startDate, dayjs(startDate).format('YYYY-MM-DD') , null),
-        endDate: helper.ternaryCondition(endDate , dayjs(endDate).format('YYYY-MM-DD') , null),
+        startDate: helper.ternaryCondition(startDate, dayjs(startDate).format('YYYY-MM-DD'), null),
+        endDate: helper.ternaryCondition(endDate, dayjs(endDate).format('YYYY-MM-DD'), null),
         sortBy: sort.sortKey,
         sortType: sort.sortType
 
@@ -72,7 +72,7 @@ const BellNotifications = () => {
     }
   }
 
-    // get all notification function end
+  // get all notification function end
 
   const handlePageClick = event => {
     const newPage = event.selected + 1
@@ -97,19 +97,19 @@ const BellNotifications = () => {
             <thead className='text-xs text-gray-900 border border-[#E1E6EE] uppercase bg-[#E1E6EE] dark:bg-gray-700 dark:text-gray-400'>
               <tr>
                 <th scope='col' className='py-3 px-6'>
-                {t('S.NO')}
+                  {t('S.NO')}
                 </th>
                 <th scope="col" className="py-3 px-6">
-                {t("O_TITLE")}
-              </th>
-              <th scope="col" className="py-3 px-6">
-                {t("O_MESSAGE")}
-              </th>
+                  {t("O_TITLE")}
+                </th>
+                <th scope="col" className="py-3 px-6">
+                  {t("O_MESSAGE")}
+                </th>
                 <ONotificationTableHead sort={sort} setSort={setSort} name='O_CREATED_AT' fieldName='createdAt' />
               </tr>
             </thead>
             <tbody>
-              {users && users?.length > 0 && 
+              {users && users?.length > 0 &&
                 users?.map((item, i) => (
                   <tr
                     key={i}
@@ -126,7 +126,7 @@ const BellNotifications = () => {
                     </td>
                     <td className='py-4 px-3 border-r'>
                       {helpers?.ternaryCondition(item?.description, item?.description, "N/A")}
-                      </td>
+                    </td>
                     <td className='py-4 px-3 border-r'>
                       {helper.dateFormat(item?.createdAt)}
                     </td>
@@ -144,18 +144,16 @@ const BellNotifications = () => {
         </div>
       </div>
       <div className='flex justify-between'>
-              <PageSizeList dynamicPage={dynamicPage} pageSize={pageSize} />
-              {helper.ternaryCondition(paginationObj?.totalItems , (
-                <Pagination
-                  handlePageClick={handlePageClick}
-                  options={paginationObj}
-                  isDelete={isDelete}
-                  page={page}
-                />
-              ) , null)}
-            </div>
-
-
+        {paginationObj?.totalItems ? 
+        <><PageSizeList dynamicPage={dynamicPage} pageSize={pageSize} />
+          <Pagination
+            handlePageClick={handlePageClick}
+            options={paginationObj}
+            isDelete={isDelete}
+            page={page}
+          /></>
+          : null}
+      </div>
     </>
   )
 }

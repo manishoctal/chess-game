@@ -36,6 +36,8 @@ const UserView = () => {
   const [showBanner, setShowBanner] = useState(false);
   const [showFreeModel, setShowFreeModel] = useState(false);
   const [walletBox, setWalletBox] = useState(false);
+  const [currentRate, setCurrentRate] = useState([]);
+
 
   const handleFreeModal = () => {
     setShowFreeModel(!showFreeModel);
@@ -147,6 +149,28 @@ const UserView = () => {
     setWalletBox(false);
   };
 
+  const getAllCourrencyRate = async (currency) => {
+    try {
+      const path = `${apiPath.correncyConverter}`;
+      const result = await apiGet(path);
+      console.log("result", result?.data?.results);
+      if (result?.status === 200) {
+        setCurrentRate(result?.data?.results);
+      }
+    } catch (error) {
+      console.error("error", error.message);
+    }
+  };
+  
+  useEffect(() => {
+    getAllCourrencyRate();
+  }, []);
+
+
+  const matchedRate = currentRate.find((rate) => rate.source === item?.currency);
+  const userWalletAmount = item?.walletAmount * matchedRate?.USD;
+  const freezeWalletAmount = item?.freezedAmount * matchedRate?.USD;
+
   return (
     <div className="p-5 dark:bg-slate-900">
       {helpers.ternaryCondition(
@@ -233,7 +257,7 @@ const UserView = () => {
                 <img src={balanceIcon} alt="" />
               </figure>
               <figcaption className="text-white">
-                <span className="block">{helpers.formattedAmount(item?.walletAmount) || 0}</span>
+                <span className="block">{helpers.formattedAmount(userWalletAmount) || 0}</span>
                 <span className="text-sm">{t("AVAILABLE_BALANCE")}</span>
               </figcaption>
             </div>
@@ -393,7 +417,7 @@ const UserView = () => {
       </div>
 
       {showBanner && showImage && <ShowImage handleShowImage={handleShowImage} showImage={showImage} />}
-      {showFreeModel && <FreezeBalancePopup handleFreeModal={handleFreeModal} userId={item} />}
+      {showFreeModel && <FreezeBalancePopup handleFreeModal={handleFreeModal} userId={item}  freezeWalletAmount={freezeWalletAmount}/>}
     </div>
   );
 };
