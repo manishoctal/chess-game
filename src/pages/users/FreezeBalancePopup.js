@@ -61,7 +61,6 @@ const FreezeBalancePopup = ({ handleFreeModal, userId ,freezeWalletAmount}) => {
                                     </span>
                                 </button>
 
-
                             </div>
                             <div className="relative p-6 flex-auto dark:bg-gray-800">
                                 <div className="">
