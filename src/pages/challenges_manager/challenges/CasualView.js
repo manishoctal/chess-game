@@ -43,13 +43,10 @@ const CasualView = () => {
   }, [location])
 
   const { type } = location.state;
-  console.log("type", type)
-  console.log("item", item)
 
-  const renderTableCell = (content, classNames) => (
-    <td className={classNames}>{content}</td>
-  );
-
+  const showCreatorFlag = helpers?.countryFlag(item?.creatorDetails?.currency);
+  const showAcceptorFlag = helpers?.countryFlag(item?.acceptorDetails?.currency);
+  console.log("showCountryFlag", showAcceptorFlag)
 
   return (
     <div className="p-6">
@@ -185,36 +182,41 @@ const CasualView = () => {
                       helpers?.ternaryCondition(item?.acceptorSide === "white", <GiHorseHead className='text-black mr-3 text-2xl' />, <GiHorseHead className="mr-3 text-2xl text-gray-500" />)
                     }
 
-
                   </div>
                   <span className='block'>
-                    {helpers?.ternaryCondition(item?.creatorDetails?.userName, item?.creatorDetails?.userName, "")} {helpers?.ternaryCondition(item?.creatorDetails?.rating, `(${item?.creatorDetails?.rating})`, "N/A")}
+                    {helpers?.ternaryCondition(item?.creatorDetails?.userName, startCase(item?.creatorDetails?.userName), "")} {helpers?.ternaryCondition(item?.creatorDetails?.rating, `(${item?.creatorDetails?.rating})`, "N/A")}
 
                   </span>
 
-                  <div className='ml-3 rounded-full overflow-hidden border dynamic-flag w-[30px] h-[30px]'>
-                    <ReactCountryFlag
-                      countryCode="IN"
-                      svg
-                      title="IN"
-                      className=''
-                    />
-                  </div>
+
+                  {
+                    helpers?.ternaryCondition(showCreatorFlag, <div className='ml-3 rounded-full overflow-hidden border dynamic-flag w-[30px] h-[30px]'>
+                      <ReactCountryFlag
+                        countryCode={showCreatorFlag}
+                        svg
+                        title={showCreatorFlag}
+                        className=''
+                      />
+                    </div>, "")
+                  }
+
 
                 </div>
                 <div className='flex items-center justify-center mt-4'>
                   {
                     helpers?.ternaryCondition(item?.acceptorSide === "white", <GiHorseHead className='mr-3 text-2xl text-gray-500' />, <GiHorseHead className='text-black mr-3 text-2xl' />)
                   }
-                  <span className='block'>{helpers?.ternaryCondition(item?.acceptorDetails?.userName, item?.acceptorDetails?.userName, "")} {helpers?.ternaryCondition(item?.acceptorDetails?.rating, `(${item?.acceptorDetails?.rating})`, "N/A")}</span>
-                  <div className='ml-3 rounded-full overflow-hidden border dynamic-flag w-[30px] h-[30px]'>
-                    <ReactCountryFlag
-                      countryCode="IN"
-                      svg
-                      title="IN"
-                      className=''
-                    />
-                  </div>
+                  <span className='block'>{helpers?.ternaryCondition(item?.acceptorDetails?.userName, startCase(item?.acceptorDetails?.userName), "")} {helpers?.ternaryCondition(item?.acceptorDetails?.rating, `(${item?.acceptorDetails?.rating})`, "N/A")}</span>
+                  {
+                    helpers?.ternaryCondition(showAcceptorFlag, <div className='ml-3 rounded-full overflow-hidden border dynamic-flag w-[30px] h-[30px]'>
+                      <ReactCountryFlag
+                        countryCode={showAcceptorFlag}
+                        svg
+                        title={showAcceptorFlag}
+                        className=''
+                      />
+                    </div>, "")
+                  }
                 </div>
               </div>
 

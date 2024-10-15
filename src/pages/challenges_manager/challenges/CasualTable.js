@@ -60,7 +60,6 @@ const CasualTable = ({
   };
 
 
-
   const getRowClassName = (item) => {
     return item && item.status === "deleted"
       ? "text-red-600 font-bold"

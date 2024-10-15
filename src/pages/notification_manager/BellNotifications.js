@@ -102,7 +102,7 @@ const BellNotifications = () => {
                 <th scope="col" className="py-3 px-6">
                   {t("O_TITLE")}
                 </th>
-                <th scope="col" className="py-3 px-6">
+                <th scope="col" className="py-3 px-6 w-[60%]">
                   {t("O_MESSAGE")}
                 </th>
                 <ONotificationTableHead sort={sort} setSort={setSort} name='O_CREATED_AT' fieldName='createdAt' />

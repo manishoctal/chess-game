@@ -38,8 +38,6 @@ function ViewCommunityModerator() {
   }, [])
 
 
-  console.log("viewList",viewList)
-
   const showCountryFlag = helpers?.countryFlag(viewList?.user?.currency);
 
   return (

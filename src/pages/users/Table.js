@@ -21,6 +21,7 @@ const Table = ({
   user,
   manager,
   page,
+  handleGameHistory,
   setSort,
   sort,
   userType,
