@@ -69,19 +69,19 @@ const ReportUserPopup = ({ handleReportToggle, reportItem }) => {
     return reportList?.map((item, i) => {
       return (
         <tr key={item?._id}>
-          {renderTableCell(item?.userData?.userUniqId, "py-4 px-3 border-r border font-medium text-gray-900 dark:text-white dark:border-[#ffffff38]")}
+          {renderTableCell(item?.user?.userUniqId, "py-4 px-3 border-r border font-medium text-gray-900 dark:text-white dark:border-[#ffffff38]")}
           <td className="py-4 px-6 border-r text-center">
-            <NavLink to={`/users/view/${item?.userData?._id}`} state={{ ...item }} className="px-2 py-2 hover:text-black">
-              {helpers.ternaryCondition(item?.userData?.userName, item?.userData?.userName, "N/A")}
+            <NavLink to={`/users/view/${item?.user?._id}`} state={{ ...item }} className="px-2 py-2 hover:text-black">
+              {helpers.ternaryCondition(item?.user?.userName, item?.user?.userName, "N/A")}
             </NavLink>
           </td>
 
-          {/* {renderTableCell(item?.userData?.userName, "bg-white py-4 px-4 border-r border dark:border-[#ffffff38]")} */}
+          {/* {renderTableCell(item?.user?.userName, "bg-white py-4 px-4 border-r border dark:border-[#ffffff38]")} */}
 
           {renderTableCell(helpers.ternaryCondition(item?.createdAt, helpers.getDateAndTime(item?.createdAt), "N/A"), "bg-white py-4 px-4 border-r border dark:border-[#ffffff38] text-center")}
 
           {renderTableCell(item?.reason, "py-4 px-3 border-r border font-medium text-gray-900 dark:text-white dark:border-[#ffffff38] text-center")}
-          {renderTableCell(helpers.ternaryCondition(item?.userData?.mobile, `+ ${item?.userData?.countryCode || ""} ${item?.userData?.mobile}`, "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold")}
+          {renderTableCell(helpers.ternaryCondition(item?.user?.mobile, `+ ${item?.user?.countryCode || ""} ${item?.user?.mobile}`, "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold")}
         </tr>
       );
     });

@@ -5,7 +5,8 @@ import helpers from "../../utils/helpers";
 import OUserTableHead from "../../components/reusable/OTableHead";
 import apiPath from "utils/apiPath";
 import { apiGet } from "utils/apiFetch";
-const TransactionTable = ({ users, page, setSort, sort, pageSize }) => {
+import { NavLink } from "react-router-dom";
+const TransactionTable = ({ users, page, setSort, sort, pageSize,handleUserViewPage }) => {
   const { t } = useTranslation();
   const [currentRate, setCurrentRate] = useState([]);
 
@@ -22,18 +23,25 @@ const TransactionTable = ({ users, page, setSort, sort, pageSize }) => {
     }
   };
 
-  console.log("currentRate", currentRate);
-
   useEffect(() => {
     getAllCourrencyRate();
   }, []);
 
   const getDisplayName = (dataRecord) => {
-    return dataRecord?.userDetails?.fullName || "N/A";
+    
+    return <NavLink
+    onClick={() => handleUserViewPage(dataRecord)}
+     to={`/users/view/${dataRecord?._id}`}
+     state={{ ...dataRecord }}
+     className="px-2 py-2 hover:text-black"
+   >
+     {helpers.ternaryCondition( dataRecord?.user?.fullName,  dataRecord?.user?.fullName, "N/A")}
+   </NavLink>
+    
   };
 
   const getDisplayUserId = (userRecord) => {
-    return userRecord?.userDetails?.userUniqId ?? "N/A";
+    return userRecord?.user?.userUniqId ?? "N/A";
   };
 
   const renderTableCell = (content, classNames) => <td className={classNames}>{content}</td>;
@@ -45,7 +53,7 @@ const TransactionTable = ({ users, page, setSort, sort, pageSize }) => {
 
   const renderTableRows = () => {
     return users?.map((item, i) => {
-      const matchedRate = currentRate.find((rate) => rate.source === item?.userDetails?.currency);
+      const matchedRate = currentRate.find((rate) => rate.source === item?.user?.currency);
       const amount = item?.amount * matchedRate?.USD;
       const adminComission = item?.adminComission * matchedRate?.USD;
       const transactionFee = item?.transactionFee * matchedRate?.USD;
@@ -57,7 +65,7 @@ const TransactionTable = ({ users, page, setSort, sort, pageSize }) => {
           {renderTableCell(i + 1 + pageSize * (page - 1), "py-4 px-3 border-r border  font-medium text-gray-900  dark:text-white dark:border-[#ffffff38]")}
           {renderTableCell(getDisplayUserId(item), "bg-white py-4 px-4 border-r border  dark:border-[#ffffff38]")}
           {renderTableCell(getDisplayName(item), "bg-white py-4 px-4 border-r border  dark:border-[#ffffff38]")}
-          {renderTableCell(helpers.ternaryCondition(item?.userDetails?.email, item?.userDetails?.email, "N/A"), "bg-white py-2 px-4 border-r border  dark:border-[#ffffff38] font-bold text-slate-900")}
+          {renderTableCell(helpers.ternaryCondition(item?.user?.email, item?.user?.email, "N/A"), "bg-white py-2 px-4 border-r border  dark:border-[#ffffff38] font-bold text-slate-900")}
           {renderTableCell(helpers.ternaryCondition(item?.transactionId, item?.transactionId, "N/A"), "bg-white py-2 px-4 border-r border  dark:border-[#ffffff38] font-bold text-slate-900")}
           {renderTableCell(helpers.ternaryCondition(item?.transactionType, startCase(item?.transactionType), "N/A"), "bg-white py-2 px-4 border-r border  dark:border-[#ffffff38] font-bold text-slate-900")}
           {renderCommonTableCells(item)}
@@ -79,9 +87,9 @@ const TransactionTable = ({ users, page, setSort, sort, pageSize }) => {
                 {t("S.NO")}
               </th>
 
-              <OUserTableHead sort={sort} setSort={setSort} name="USER_ID" fieldName="userDetails.userUniqId" />
-              <OUserTableHead sort={sort} setSort={setSort} name="FULL_NAME" fieldName="userDetails.fullName" />
-              <OUserTableHead sort={sort} setSort={setSort} name="O_EMAIL_ID" fieldName="userDetails.email" />
+              <OUserTableHead sort={sort} setSort={setSort} name="USER_ID" fieldName="user.userUniqId" />
+              <OUserTableHead sort={sort} setSort={setSort} name="FULL_NAME" fieldName="user.fullName" />
+              <OUserTableHead sort={sort} setSort={setSort} name="O_EMAIL_ID" fieldName="user.email" />
               <OUserTableHead sort={sort} setSort={setSort} name="O_TRANSACTION_ID" fieldName="transactionId" />
               <OUserTableHead sort={sort} setSort={setSort} name="TRANSACTION_TYPE" fieldName="transactionType" />
               <OUserTableHead sort={sort} setSort={setSort} name="TRANSACTION_DATE" fieldName="createdAt" />

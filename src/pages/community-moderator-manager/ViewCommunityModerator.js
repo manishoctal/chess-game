@@ -38,6 +38,10 @@ function ViewCommunityModerator() {
   }, [])
 
 
+  console.log("viewList",viewList)
+
+  const showCountryFlag = helpers?.countryFlag(viewList?.user?.currency);
+
   return (
     <div>
       <div className="bg-[#F9F9F9] dark:bg-slate-900">
@@ -77,9 +81,9 @@ function ViewCommunityModerator() {
               <ul className="list-disc ml-5">
                 <div className="mb-3">
                   <ReactCountryFlag
-                    countryCode="US"
+                    countryCode={showCountryFlag}
                     svg
-                    title="IN"
+                    title={showCountryFlag}
                     style={{
                       width: '2em',
                       height: '2em',

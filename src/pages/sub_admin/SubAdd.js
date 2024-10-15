@@ -304,20 +304,20 @@ const SubAdd = () => {
               <table className="w-full text-xs text-left text-[#A5A5A5] dark:text-gray-400 ">
                 <thead className="text-xs text-gray-900 border  border-[#E1E6EE] bg-[#E1E6EE] dark:bg-gray-700 dark:text-gray-400">
                   <tr>
-                    <th scope="col" className="py-3 px-6 ">
+                    <th scope="col" className="py-3 px-6 text-left">
                       {t("SUB_ADMIN_MODULES")}
                     </th>
-                    <th scope="col" className="py-3 px-6 ">
+                    <th scope="col" className="py-3 px-6 text-center">
                       {t("O_VIEW")}
                     </th>
-                    <th scope="col" className="py-3 px-6 ">
+                    <th scope="col" className="py-3 px-6 text-center">
                       {t("SUB_ADMIN_ADD_EDIT")}
                     </th>
 
                     <th scope="col" className="py-3 px-6">
-                      <div className="flex items-center justify-between ">
+                      <div className="flex items-center justify-center">
                         {t("O_ALL")}
-                        <input type="checkbox" id="all" checked={isSelectAll} className="h-4 w-4" onChange={selectAll} disabled={item?.type === "view"} />
+                        <input type="checkbox" id="all" checked={isSelectAll} className="h-4 w-4 ml-2" onChange={selectAll} disabled={item?.type === "view"} />
                       </div>
                     </th>
                   </tr>
@@ -327,13 +327,13 @@ const SubAdd = () => {
                     
                     <tr key={i} className="bg-white border-b  dark:bg-gray-800 dark:border-gray-700">
                       <td className="py-2 px-4 border-r dark:border-[#ffffff38] ">{helpers.ternaryCondition(data.manager === "FAQ", "FAQ", capitalize(startCase(data.manager)))}</td>
-                      <td className="py-2 px-4 border-r dark:border-[#ffffff38] ">
+                      <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-center">
                         {helpers.andOperator(data?.shownView, <input type="checkbox" name={data?.manager} id="view" checked={data.view} onChange={onChange} disabled={item?.type === "view"} />)}
                       </td>
-                      <td className="py-2 px-4 border-r dark:border-[#ffffff38] ">
+                      <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-center">
                         {helpers.andOperator(data?.shownAdd && data?.manager !== "dashboard", <input type="checkbox" name={data?.manager} id="add" checked={data.add} onChange={onChange} disabled={item?.type === "view"} />)}
                       </td>
-                      <td className="py-2 px-4 border-r dark:border-[#ffffff38] ">
+                      <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-center">
                         {helpers.andOperator(
                           data?.shownAll && data?.manager !== "dashboard",
                           <input type="checkbox" id="all" name={data?.manager} onChange={checkAll} checked={helpers.orOperator(isCheckAll, helpers.andOperator(data.add, data.view))} disabled={item?.type === "view"} />

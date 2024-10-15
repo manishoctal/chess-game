@@ -3,7 +3,7 @@ import { apiPut } from "../../../utils/apiFetch";
 import apiPath from "../../../utils/apiPath";
 import { isEmpty, startCase } from "lodash";
 import useToastContext from "hooks/useToastContext";
-import {  AiFillEye, } from "react-icons/ai";
+import { AiFillEye, } from "react-icons/ai";
 import { useTranslation } from "react-i18next";
 import { NavLink } from "react-router-dom";
 import helpers from "../../../utils/helpers";
@@ -20,11 +20,12 @@ const CasualTable = ({
   sort,
   userType,
   pageSize,
+  handleUserViewPage
 }) => {
   const { t } = useTranslation();
 
   const getDisplayName = (userDetail) => {
-    return userDetail?.creatorDetails?.userUniqId || 'N/A';
+    return userDetail?.user?.userUniqId || 'N/A';
   };
 
   const getDisplayUserId = (userDetail) => {
@@ -39,8 +40,7 @@ const CasualTable = ({
 
 
   const renderActionTableCells = (item, type) => {
-    console.log("type", type);
-    
+
     return (
       <td className="py-2 px-4 border-l border">
         <div>
@@ -58,7 +58,7 @@ const CasualTable = ({
       </td>
     );
   };
-  
+
 
 
   const getRowClassName = (item) => {
@@ -94,13 +94,16 @@ const CasualTable = ({
           {renderTableCell(getDisplayName(item), "bg-white py-4 px-4 border-r border  dark:border-[#ffffff38]")}
 
           <td className="bg-white py-4 px-4 border-r border  dark:border-[#ffffff38]">
+
             <NavLink
+              onClick={() => handleUserViewPage(item)}
               to={`/users/view/${item?._id}`}
-              state={{ ...item ,type:"casual"}}
+              state={{ ...item, type: "casual" }}
               className="px-2 py-2 hover:text-black"
             >
-              {helpers.ternaryCondition(item?.creatorDetails?.userName, item?.creatorDetails?.userName, "N/A")}
+              {helpers.ternaryCondition(item?.user?.userName, item?.user?.userName, "N/A")}
             </NavLink>
+
           </td>
 
 
@@ -131,8 +134,8 @@ const CasualTable = ({
               </th>
 
               <OUserTableHead sort={sort} setSort={setSort} name='CAUSUAL_CHALLENGE_ID' fieldName='challengeId' />
-              <OUserTableHead sort={sort} setSort={setSort} name='CREATOR_ID' fieldName='creatorDetails.userUniqId' />
-              <OUserTableHead sort={sort} setSort={setSort} name='CREATOR_USER_NAME' fieldName='creatorDetails.userName' />
+              <OUserTableHead sort={sort} setSort={setSort} name='CREATOR_ID' fieldName='user.userUniqId' />
+              <OUserTableHead sort={sort} setSort={setSort} name='CREATOR_USER_NAME' fieldName='user.userName' />
               <OUserTableHead sort={sort} setSort={setSort} name='ACCEPTED_ID' fieldName='acceptorDetails.userUniqId' />
               <OUserTableHead sort={sort} setSort={setSort} name='ACCEPTOR_NAME' fieldName='acceptorDetails.userName' />
               <OUserTableHead sort={sort} setSort={setSort} name='WINNER_NAME' fieldName='winnerDetails.userName' />

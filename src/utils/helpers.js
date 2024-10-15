@@ -264,25 +264,39 @@ const helpers = {
   getFullName: (firstName, lastName) => {
     return compact([firstName, lastName]).join(" ");
   },
-  // formattedAmount: (amount) => {
-  //   return amount?.toLocaleString("th-TH", {
-  //     style: "currency",
-  //     currency: "USD",
-  //     currencyDisplay: "symbol",
-  //   });
-  // },
 
-  formattedAmount :(value) => {
+  formattedAmount: (value) => {
+    const numericValue = Number(value);
+    if (isNaN(numericValue)) {
+      return '$0.00';
+    }
     return new Intl.NumberFormat('en-US', { 
       style: 'currency', 
       currency: 'USD' 
-    }).format(value);
+    }).format(numericValue);
   },
+  
 
    getCurrencyByCountry : (countryCode) => {
     console.log("countryCode",countryCode)
   },
   
+
+   countryFlag : (countryName) => {  
+    const countryFlagObj = {
+      "INR": "IN",
+      "USD": "US",
+      "CAD": "CA",
+      "GBP": "GB",
+      "AUD": "AU"
+    };
+  
+    const countryBaseFlag = countryFlagObj[countryName] || "";
+    
+    if (countryBaseFlag) {
+      return countryBaseFlag;
+    }
+  },
 
   formattedAmountAllCountry: (amount, countryName) => {
     console.log("countryName", countryName);
