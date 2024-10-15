@@ -261,7 +261,7 @@ function ChallangesManager() {
                   <ODateRangePicker handleDateChange={handleDateChange} isReset={filterData?.isReset} setIsReset={setFilterData} />
                   {
                     <div className="flex items-center mb-3 ml-3">
-                      <select
+                      {/* <select
                         id="countries"
                         type="password"
                         name="floating_password"
@@ -276,10 +276,25 @@ function ChallangesManager() {
                         <option value="upcoming">{t("NOT_STARTED")}</option>
                         <option value="running">{t("RUNNING")}</option>
                         <option value="complete">{t("COMPLETE")}</option>
+                      </select> */}
+
+                      <select
+                        id="countries"
+                        type="password"
+                        name="floating_password"
+                        className="block p-2 w-full text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer"
+                        placeholder=""
+                        value={filterData?.category || activeInactiveStatus}
+                        onChange={statusPage}
+                      >
+                        <option value="">
+                          {t("ALL_CHALLENGE_TYPE")}
+                        </option>
+                        <option value="instant">{t("INSTANT")}</option>
+                        <option value="schedule">{t("SCHEDULE")}</option>
                       </select>
                     </div>
                   }
-
 
 
                   <button
