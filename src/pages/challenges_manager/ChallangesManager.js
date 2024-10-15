@@ -129,9 +129,17 @@ function ChallangesManager() {
     updatePageName(` ${t("VIEW") + " " + t("MONETARY_CHALLENGE")}`);
   };
 
+  const handleUserViewPage = () => {
+    updatePageName(` ${t("VIEW") + " " + t("USER_MANAGER")}`);
+  };
+
+
+
   useEffect(() => {
     updatePageName(t("CHALLENGES_MANAGER"));
   }, []);
+
+
 
   const handleReset = () => {
     setFilterData({
@@ -324,6 +332,7 @@ function ChallangesManager() {
                 userType={userType}
                 manager={manager}
                 userResult={userResult}
+                handleUserViewPage={handleUserViewPage}
               />, <MonetaryTable
                 users={users}
                 user={user}
@@ -336,6 +345,7 @@ function ChallangesManager() {
                 pageSize={pageSize}
                 userType={userType}
                 manager={manager}
+                handleUserViewPage={handleUserViewPage}
                 userResult={userResult}
               />
               )
