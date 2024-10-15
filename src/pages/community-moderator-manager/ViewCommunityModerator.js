@@ -4,20 +4,21 @@ import { FaCircleArrowLeft } from "react-icons/fa6";
 import { apiGet } from "utils/apiFetch";
 import apiPath from "utils/apiPath";
 import helpers from "utils/helpers";
-import dayjs from "dayjs"; 
+import dayjs from "dayjs";
 import ReactCountryFlag from "react-country-flag";
 import ImageModal from "./ImageModal";
+import { startCase } from "lodash";
 
 
 function ViewCommunityModerator() {
   const location = useLocation();
-  const [zoomImage,setZoomImage]=useState(false);
+  const [zoomImage, setZoomImage] = useState(false);
   const item = location?.state;
   const [viewList, setViewList] = useState({})
 
   const showZoomImage = viewList?.mediaType === "image"
 
-  const handleZoomImage = () =>{
+  const handleZoomImage = () => {
     setZoomImage(!zoomImage)
   }
   const viewCommunityList = async () => {
@@ -37,8 +38,6 @@ function ViewCommunityModerator() {
   }, [])
 
 
-
-  
   return (
     <div>
       <div className="bg-[#F9F9F9] dark:bg-slate-900">
@@ -55,7 +54,9 @@ function ViewCommunityModerator() {
 
               <div className="w-[400px] border mb-5">
                 <div className="p-5 mb-2 h-[300px]">{helpers?.ternaryCondition(viewList?.mediaType === "image",
-                  <img src={viewList?.file} alt="" className="w-full h-full object-cover cursor-pointer" onClick={()=>handleZoomImage()} />,
+                  <button onClick={() => handleZoomImage()} className="w-full h-full cursor-pointer">
+                    <img src={viewList?.file} alt="" className="w-full h-full object-cover" />
+                  </button>,
                   <iframe
                     width="355"
                     height="280"
@@ -74,19 +75,19 @@ function ViewCommunityModerator() {
 
               </div>
               <ul className="list-disc ml-5">
-              <div className="mb-3">
-              <ReactCountryFlag
-                  countryCode="IN"
-                  svg
-                  title="IN"
-                  style={{
-                    width: '2em',
-                    height: '2em',
-                }}
-                />
-              </div>
-                <li className="mb-3"><strong>User Name :</strong> <span>{helpers?.ternaryCondition(viewList?.user?.userName, viewList?.user?.userName, "N/A")}</span> </li>
-                <li className="mb-3"><strong>Post Title :</strong> <span>{helpers?.ternaryCondition(viewList?.postTitle, viewList?.postTitle, "N/A")}</span></li>
+                <div className="mb-3">
+                  <ReactCountryFlag
+                    countryCode="US"
+                    svg
+                    title="IN"
+                    style={{
+                      width: '2em',
+                      height: '2em',
+                    }}
+                  />
+                </div>
+                <li className="mb-3"><strong>User Name :</strong> <span>{helpers?.ternaryCondition(viewList?.user?.userName, startCase(viewList?.user?.userName), "N/A")}</span> </li>
+                <li className="mb-3"><strong>Post Title :</strong> <span>{helpers?.ternaryCondition(viewList?.postTitle, startCase(viewList?.postTitle), "N/A")}</span></li>
                 <li className="mb-3"><strong>Date of Post :</strong> <span>{helpers?.ternaryCondition(viewList?.createdAt, dayjs(viewList?.createdAt).format("DD-MM-YYYY"), "N/A")}</span></li>
                 <li className="mb-3"><strong>Description :</strong> <span>{helpers?.ternaryCondition(viewList?.description, viewList?.description, "N/A")}</span></li>
 
@@ -101,7 +102,7 @@ function ViewCommunityModerator() {
 
       {
 
-zoomImage && <ImageModal handleZoomImage={handleZoomImage} showZoomImage={showZoomImage} image={viewList?.file}/>
+        zoomImage && <ImageModal handleZoomImage={handleZoomImage} showZoomImage={showZoomImage} image={viewList?.file} />
 
       }
 

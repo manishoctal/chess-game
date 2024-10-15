@@ -44,7 +44,7 @@ const UserView = () => {
     getUserDetails();
   };
 
-  console.log("object", location?.state?.userData?._id);
+  console.log("object", location?.state);
 
   const getUserDetails = async () => {
     try {
