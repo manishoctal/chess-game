@@ -76,11 +76,12 @@ const CasualView = () => {
               </div>)
             }
             <div>
-              <strong>Date of creation: </strong>{dayjs(item?.createdAt).format("DD-MMMM-YYYY")}
+              <strong>Date of Creation: </strong>{dayjs(item?.createdAt).format("DD-MMMM-YYYY")}
             </div>
             <div>
               <strong>Country: </strong>{helpers?.ternaryCondition(item?.creatorDetails?.country, startCase(item?.creatorDetails?.country), "N/A")}
             </div>
+        
           </div>
         </div>
 
@@ -184,7 +185,10 @@ const CasualView = () => {
 
                   </div>
                   <span className='block'>
-                    {helpers?.ternaryCondition(item?.creatorDetails?.userName, startCase(item?.creatorDetails?.userName), "")} {helpers?.ternaryCondition(item?.creatorDetails?.rating, `(${item?.creatorDetails?.rating})`, "N/A")}
+                    {helpers?.ternaryCondition(item?.creatorDetails?.userName, startCase(item?.creatorDetails?.userName), "")}
+                    
+                    {helpers?.ternaryCondition(item?.challengeType==="casual", `(${item?.creatorDetails?.ratingCasual})`, `(${item?.creatorDetails?.ratingMonetary})`)}
+                     {/* {helpers?.ternaryCondition(item?.creatorDetails?.rating, `(${item?.creatorDetails?.rating})`, "N/A")} */}
 
                   </span>
 
@@ -206,7 +210,10 @@ const CasualView = () => {
                   {
                     helpers?.ternaryCondition(item?.acceptorSide === "white", <GiHorseHead className='mr-3 text-2xl text-gray-500' />, <GiHorseHead className='text-black mr-3 text-2xl' />)
                   }
-                  <span className='block'>{helpers?.ternaryCondition(item?.acceptorDetails?.userName, startCase(item?.acceptorDetails?.userName), "")} {helpers?.ternaryCondition(item?.acceptorDetails?.rating, `(${item?.acceptorDetails?.rating})`, "N/A")}</span>
+                  <span className='block'>{helpers?.ternaryCondition(item?.acceptorDetails?.userName, startCase(item?.acceptorDetails?.userName), "")} 
+                    {/* {helpers?.ternaryCondition(item?.acceptorDetails?.rating, `(${item?.acceptorDetails?.rating})`, "N/A")} */}
+                    {helpers?.ternaryCondition(item?.challengeType==="casual", `(${item?.creatorDetails?.ratingCasual})`, `(${item?.creatorDetails?.ratingMonetary})`)}
+                    </span>
                   {
                     helpers?.ternaryCondition(showAcceptorFlag, <div className='ml-3 rounded-full overflow-hidden border dynamic-flag w-[30px] h-[30px]'>
                       <ReactCountryFlag

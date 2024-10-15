@@ -958,5 +958,9 @@
   "SELECT_SUBADMIN": "Select Sub Admin",
   "SPECIFIC_SUB_USER": "Specific Sub Admin",
   "WITHDRAWAL_REQUEST_EXPIRY_HOURS": "Withdrawal Request Expiry Hours",
-  "SUB_ADMIN_USER": "Sub Admin User"
+  "SUB_ADMIN_USER": "Sub Admin User",
+  "SCHEDULE":"Schedule",
+  "INSTANT": "Instant",
+  "ALL_CHALLENGE_TYPE": "All Challenge Type",
+  "ALL_MATCH_STATUS": "All Match Status"
 }
