@@ -226,6 +226,7 @@ const Table = ({
 
           <td className="bg-white py-4 px-4 border-r border  dark:border-[#ffffff38]">
             <NavLink
+             onClick={() => handleUserView(item)}
               to={`/users/view/${item?._id}`}
               state={{ ...item }}
               className="px-2 py-2 hover:text-black"
@@ -269,7 +270,6 @@ const Table = ({
                 <OUserTableHead sort={sort} setSort={setSort} name='O_EMAIL_ID' fieldName='email' />
                 <OUserTableHead sort={sort} setSort={setSort} name='O_COUNTRY_CODE' fieldName='countryCode' />
                 <OUserTableHead sort={sort} setSort={setSort} name='O_MOBILE' fieldName='mobile' />
-                {/* <OUserTableHead sort={sort} setSort={setSort} name='INVITE_CODE_USED' fieldName='inviteCode' /> */}
                 <OUserTableHead sort={sort} setSort={setSort} name='JOINED_DATE' fieldName='createdAt' />
                 <OUserTableHead sort={sort} setSort={setSort} name='KYC_VERIFIED' fieldName='isKYCVerified' />
                 <OUserTableHead sort={sort} setSort={setSort} name='RATING_MONETRY' fieldName='ratingMonetary' />
@@ -291,7 +291,7 @@ const Table = ({
               {/* {renderTableRows()} */}
               {helpers.ternaryCondition(
                 isEmpty(users),
-                <tr className="bg-white  border-b dark:bg-gray-800 dark:border-gray-700">
+                <tr className="bg-white  border-b dark:bg-gray-800 dark:border-gray-700 text-center">
                   <td
                     className="py-2 px-4 border-r dark:border-[#ffffff38]"
                     colSpan={13}

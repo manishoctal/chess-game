@@ -4,11 +4,10 @@ import helpers from "utils/helpers";
 import ONotificationTableHead from "../../components/reusable/OTableHead";
 import { useContext } from "react";
 import AuthContext from "context/AuthContext";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { AiFillEye } from "react-icons/ai";
 
-const CommunityModeratorManagerTable = ({ handleUserView, allCommunity, paginationObj, sort, setSort, pageSize, manager, handelStatusChange }) => {
-  const navigate = useNavigate();
+const CommunityModeratorManagerTable = ({ handleUserView, allCommunity, paginationObj, sort, setSort, pageSize, manager, handelStatusChange,handleUserViewPage }) => {
   const { t } = useTranslation();
   const { user } = useContext(AuthContext);
 
@@ -43,9 +42,9 @@ const CommunityModeratorManagerTable = ({ handleUserView, allCommunity, paginati
                   <th scope="row" className="py-4 px-6 border-r font-medium text-gray-900  dark:text-white">
                     {i + 1 + pageSize * (paginationObj?.page - 1)}
                   </th>
-
+                  
                   <td className="py-4 px-6 border-r text-center">{item?.postId || "N/A"}</td>
-                  <td className="py-4 px-6 border-r text-center"><NavLink state={item} to={`/users/view/${item?.user?._id}`} className="hover:text-black">{helpers?.ternaryCondition(item?.user,item?.user?.userName,"N/A")}</NavLink></td>
+                  <td className="py-4 px-6 border-r text-center"><NavLink onClick={() => handleUserViewPage(item)} state={item} to={`/users/view/${item?.user?._id}`} className="hover:text-black">{helpers?.ternaryCondition(item?.user,item?.user?.userName,"N/A")}</NavLink></td>
                   <td className="py-4 px-6 border-r text-center">{helpers?.ternaryCondition(item?.postTitle, item?.postTitle, "N/A")} </td>
                   <td className="py-4 px-6 border-r text-center">{helpers?.ternaryCondition(item?.likeCount, item?.likeCount, "0")} </td>
                   <td className="py-4 px-6 border-r text-center">{helpers?.ternaryCondition(item?.commentCount, item?.commentCount, "0")}</td>

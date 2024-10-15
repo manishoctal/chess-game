@@ -13,6 +13,7 @@ import Select from "react-select";
 import ErrorMessage from "components/ErrorMessage";
 import helpers from "utils/helpers";
 import { IoClose, IoSendSharp } from "react-icons/io5";
+import { preventMaxInput } from "utils/validations";
 const NotificationAdd = ({ getAllNotifications, handleCategory }) => {
   const [loading, setLoading] = useState(false);
   const [notificationUserError, setNotificationUserError] = useState(false);
@@ -175,6 +176,7 @@ const NotificationAdd = ({ getAllNotifications, handleCategory }) => {
                         </>
                       }
                       type="text"
+                      onInput={e => preventMaxInput(e)}
                       autoFocus
                       register={register("title", formValidation.title)}
                       errors={errors}
@@ -185,6 +187,7 @@ const NotificationAdd = ({ getAllNotifications, handleCategory }) => {
                     <OTextArea
                       wrapperClassName="relative z-0 my-6 w-full group"
                       name="description"
+                      onInput={e => preventMaxInput(e)}
                       inputLabel={
                         <>
                           {t("ENTER_CONTENT")}

@@ -150,6 +150,11 @@ function CommunityModeratorManager() {
     updatePageName(` ${t("VIEW") + " " + t("COMMUNITY_MODERATOR_MANAGER")}`);
   };
 
+  const handleUserViewPage = () => {
+    updatePageName(` ${t("VIEW") + " " + t("USER_MANAGER")}`);
+  };
+
+
   useEffect(() => {
     updatePageName(t("COMMUNITY_MODERATOR_MANAGER"));
   }, []);
@@ -276,14 +281,13 @@ function CommunityModeratorManager() {
               getAllCommunity={getAllCommunity}
               page={page}
               handleUserView={handleUserView}
+              handleUserViewPage={handleUserViewPage}
               setSort={setSort}
               sort={sort}
               pageSize={pageSize}
               manager={manager}
               paginationObj={paginationObj}
               handelStatusChange={handelStatusChange}
-
-
             />
 
 

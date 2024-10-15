@@ -16,23 +16,28 @@ const MonetaryTable = ({
   sort,
   userType,
   pageSize,
-  userResult
+  userResult,
+  handleUserViewPage
 }) => {
   const { t } = useTranslation();
 
-
   const getDisplayName = (userDetail) => {
-    return startCase(userDetail?.creatorDetails?.userName) || 'N/A';
+    
+    return <NavLink
+    onClick={() => handleUserViewPage(userDetail)}
+     to={`/users/view/${userDetail?._id}`}
+     state={{ ...userDetail }}
+     className="px-2 py-2 hover:text-black"
+   >
+     {helpers.ternaryCondition( userDetail?.user?.userName,  startCase(userDetail?.user?.userName), "N/A")}
+   </NavLink>
+    
   };
 
   const getDisplayUserId = (userDetail) => {
     return userDetail?.challengeId ?? "N/A";
   };
 
-
-  const getKycStatusText = (userKyc) => {
-    return helpers.ternaryCondition(userKyc?.isKYCVerified === 0, 'No', 'Yes');
-  };
 
   const renderTableCell = (content, classNames) => (
     <td className={classNames}>
@@ -78,24 +83,21 @@ const MonetaryTable = ({
       }
 
       const itemStatus = getStatus(item?.scheduleDateTime, item?.expiryScheduleDateTime);
-{
-  console.log("item",item)
-}
       return (
         <tr key={i} >
           {renderTableCell(i + 1 + pageSize * (page - 1), "py-4 px-3 border-r border  font-medium text-gray-900  dark:text-white dark:border-[#ffffff38]")}
           {renderTableCell(getDisplayUserId(item), "bg-white py-4 px-4 border-r border  dark:border-[#ffffff38]")}
           {renderTableCell(getDisplayName(item), "bg-white py-4 px-4 border-r border  dark:border-[#ffffff38]")}
-          {renderTableCell(helpers.ternaryCondition(item?.acceptorDetails?.userName, item?.acceptorDetails?.userName, "N/A"), "bg-white py-2 px-4 border-r border  dark:border-[#ffffff38] font-bold text-slate-900")}
-          {renderTableCell(helpers.ternaryCondition(item?.winnerDetails?.userName,item?.winnerDetails?.userName, "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold")}
-          {renderTableCell(helpers.ternaryCondition(item?.challengeCategory, item?.challengeCategory, "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold")}
-          {renderTableCell(helpers.ternaryCondition(item?.time, `${item?.time} Min`, "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold")}
-          {renderTableCell(helpers.getDateAndTime(item?.createdAt, item?.createdAt, "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold")}
-          {renderTableCell(helpers.ternaryCondition(item?.type, startCase(item?.type), "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold")}
-          {renderTableCell(helpers.ternaryCondition(item?.moneyAtStake, item?.moneyAtStake, "0"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold")}
-          {renderTableCell(helpers.ternaryCondition(item?.adminComission, item?.adminComission, "0"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold")}
-          {renderTableCell(helpers.ternaryCondition(item?.platformFee, item?.platformFee, "0"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold")}
-          {renderTableCell(itemStatus, "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold")}
+          {renderTableCell(helpers.ternaryCondition(item?.user?.userName, item?.user?.userName, "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center")}
+          {renderTableCell(helpers.ternaryCondition(item?.winnerDetails?.userName,item?.winnerDetails?.userName, "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center")}
+          {renderTableCell(helpers.ternaryCondition(item?.challengeCategory, item?.challengeCategory, "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center")}
+          {renderTableCell(helpers.ternaryCondition(item?.time, `${item?.time} Min`, "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center")}
+          {renderTableCell(helpers.getDateAndTime(item?.createdAt, item?.createdAt, "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center")}
+          {renderTableCell(helpers.ternaryCondition(item?.type, startCase(item?.type), "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center")}
+          {renderTableCell(helpers.ternaryCondition(item?.moneyAtStake, item?.moneyAtStake, "0"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center")}
+          {renderTableCell(helpers.ternaryCondition(item?.adminComission, item?.adminComission, "0"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center")}
+          {renderTableCell(helpers.ternaryCondition(item?.platformFee, item?.platformFee, "0"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center")}
+          {renderTableCell(itemStatus, "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center")}
           {renderActionTableCells(item, "monetary")}
 
         </tr>
@@ -117,7 +119,7 @@ const MonetaryTable = ({
                 </th>
                 <OUserTableHead sort={sort} setSort={setSort} name='MONETRY_CHALLENGE_ID' fieldName='challengeId' />
                 <OUserTableHead sort={sort} setSort={setSort} name='CREATOR_USER_NAME' fieldName='creatorDetails.userName' />
-                <OUserTableHead sort={sort} setSort={setSort} name='ACCEPTOR_NAME' fieldName='acceptorDetails.userName' />
+                <OUserTableHead sort={sort} setSort={setSort} name='ACCEPTOR_NAME' fieldName='user.userName' />
                 <OUserTableHead sort={sort} setSort={setSort} name='WINNER_NAME' fieldName='winnerDetails.userName' />
                 <OUserTableHead sort={sort} setSort={setSort} name='CHALLENGE_CATEGORY' fieldName='challengeCategory' />
                 <OUserTableHead sort={sort} setSort={setSort} name='TIME_FORMAT' fieldName='time' />

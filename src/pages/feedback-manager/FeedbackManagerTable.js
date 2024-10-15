@@ -5,7 +5,7 @@ import ONotificationTableHead from "../../components/reusable/OTableHead";
 import { NavLink } from "react-router-dom";
 import { Rating } from "@mui/material";
 
-const FeedbackManagerTable = ({ allCommunity, paginationObj, sort, setSort, pageSize, manager, handelStatusChange }) => {
+const FeedbackManagerTable = ({ allCommunity, paginationObj, sort, setSort, pageSize, handleUserViewPage }) => {
   const { t } = useTranslation();
 
   return (
@@ -31,7 +31,7 @@ const FeedbackManagerTable = ({ allCommunity, paginationObj, sort, setSort, page
                     {i + 1 + pageSize * (paginationObj?.page - 1)}
                   </th>
              
-                  <td className="py-4 px-6 border-r text-center"><NavLink state={item} to={`/users/view/${item?.user?._id}`} className="hover:text-black">{helpers?.ternaryCondition(item?.user?.userName,item?.user?.userName,"N/A")}</NavLink></td>
+                  <td className="py-4 px-6 border-r text-center"><NavLink onClick={() => handleUserViewPage(item)} state={item} to={`/users/view/${item?.user?._id}`} className="hover:text-black">{helpers?.ternaryCondition(item?.user?.userName,item?.user?.userName,"N/A")}</NavLink></td>
                   <td className="py-4 px-6 border-r text-center">{helpers?.ternaryCondition(item?.message,item?.message,"N/A")}</td>
                   <td className="py-4 px-6 border-r text-center">
                   {helpers?.ternaryCondition(item?.rating,<Rating name="half-rating-read" value={item?.rating || 0} readOnly precision={0.5} />,"N/A" )}

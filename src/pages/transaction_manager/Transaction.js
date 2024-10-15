@@ -107,6 +107,11 @@ function Transaction() {
     updatePageName(t("NAV_TRANSACTION_MANAGER"));
   }, []);
 
+  const handleUserViewPage = () => {
+    updatePageName(` ${t("VIEW") + " " + t("USER_MANAGER")}`);
+  };
+
+
   const handleReset = () => {
     setFilterData({
       transactionType: undefined,
@@ -257,7 +262,7 @@ function Transaction() {
               </div>
             </form>
 
-            <TransactionTable users={users} paginationObj={paginationObj} user={user} getAllUser={getAllUser} page={page} setSort={setSort} sort={sort} setPage={setPage} pageSize={pageSize} userType={userType} manager={manager} />
+            <TransactionTable handleUserViewPage={handleUserViewPage} users={users} paginationObj={paginationObj} user={user} getAllUser={getAllUser} page={page} setSort={setSort} sort={sort} setPage={setPage} pageSize={pageSize} userType={userType} manager={manager} />
             <div className="flex justify-between">
               <PageSizeList dynamicPage={dynamicPage} pageSize={pageSize} />
               {paginationObj?.totalItems ? <Pagination handlePageClick={handlePageClick} options={paginationObj} isDelete={isDelete} page={page} /> : null}
