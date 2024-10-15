@@ -55,18 +55,18 @@ const GameHistoryTable = () => {
     return staticUsers?.map((item, i) => {
       return (
         <tr key={i} >
-          {renderTableCell(i + 1, "py-4 px-3 border-r border font-medium text-gray-900 dark:text-white dark:border-[#ffffff38]")}
-          {renderTableCell(item.userId, "bg-white py-4 px-4 border-r border dark:border-[#ffffff38]")}
-          {renderTableCell(item.name, "bg-white py-4 px-4 border-r border dark:border-[#ffffff38]")}
-          {renderTableCell(i + 1, "py-4 px-3 border-r border font-medium text-gray-900 dark:text-white dark:border-[#ffffff38]")}
-          {renderTableCell(item.userId, "bg-white py-4 px-4 border-r border dark:border-[#ffffff38]")}
-          {renderTableCell(item.name, "bg-white py-4 px-4 border-r border dark:border-[#ffffff38]")}
-          {renderTableCell(item.name, "bg-white py-4 px-4 border-r border dark:border-[#ffffff38]")}
+          {renderTableCell(i + 1, "py-4 px-4 border-r border font-medium text-gray-900 dark:text-white dark:border-[#ffffff38]")}
+          {renderTableCell(item.userId, "bg-white py-4 px-6 border-r border dark:border-[#ffffff38]")}
+          {renderTableCell(item.name, "bg-white py-4 px-6 border-r border dark:border-[#ffffff38]")}
+          {renderTableCell(i + 1, "py-4 px-6 border-r border font-medium text-gray-900 dark:text-white dark:border-[#ffffff38]")}
+          {renderTableCell(item.userId, "bg-white py-4 px-6 border-r border dark:border-[#ffffff38]")}
+          {renderTableCell(item.name, "bg-white py-4 px-6 border-r border dark:border-[#ffffff38]")}
+          {renderTableCell(item.name, "bg-white py-4 px-6 border-r border dark:border-[#ffffff38]")}
 
           {
-            activeTab === "Tab2" && <>
-              {renderTableCell(item.name, "bg-white py-4 px-4 border-r border dark:border-[#ffffff38]")}
-              {renderTableCell(item.name, "bg-white py-4 px-4 border-r border dark:border-[#ffffff38]")}</>
+            activeTab === "Tab2" && <>  
+              {renderTableCell(item.name, "bg-white py-4 px-6 border-r border dark:border-[#ffffff38]")}
+              {renderTableCell(item.name, "bg-white py-4 px-6 border-r border dark:border-[#ffffff38]")}</>
           }
 
         </tr>
@@ -115,32 +115,32 @@ const GameHistoryTable = () => {
                 </th>
 
 
-                <th scope="col" className="py-3 px-6 text-center">
+                <th scope="col" className="py-3 px-6 text-left">
                   {t("PLAYERS")}
                 </th>
 
-                <th scope="col" className="py-3 px-6 text-center">
+                <th scope="col" className="py-3 px-6 text-left">
                   {t("RATING_LOSE_GAIN")}
                 </th>
 
-                <th scope="col" className="py-3 px-6 text-center">
+                <th scope="col" className="py-3 px-6 text-left">
                   {t("RESULT")}
                 </th>
 
-                <th scope="col" className="py-3 px-6 text-center">
+                <th scope="col" className="py-3 px-6 text-left">
                   {t("MOVES")}
                 </th>
 
-                <th scope="col" className="py-3 px-6 text-center">
+                <th scope="col" className="py-3 px-6 text-left">
                   {t("DATE")}
                 </th>
 
                 {
-                  activeTab === "Tab2" && <> <th scope="col" className="py-3 px-6 text-center">
+                  activeTab === "Tab2" && <> <th scope="col" className="py-3 px-6 text-left">
                     {t("MONEY_AT_STACK")}
                   </th>
 
-                    <th scope="col" className="py-3 px-6 text-center">
+                    <th scope="col" className="py-3 px-6 text-left">
                       {t("ADMIN_COMMISION")}
                     </th></>
                 }
