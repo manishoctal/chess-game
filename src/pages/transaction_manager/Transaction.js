@@ -13,6 +13,8 @@ import { BiReset } from "react-icons/bi";
 import OSearch from "components/reusable/OSearch";
 import TransactionTable from "./TransactionTable";
 import { GoDownload } from "react-icons/go";
+import balanceIcon from "../../assets/icons/icon/balance.svg";
+
 function Transaction() {
   const { t } = useTranslation();
   const location = useLocation();
@@ -238,7 +240,7 @@ function Transaction() {
                       <option value="withdrawAmount">{t("O_WITHDRAW_MONEY")}</option>
                       <option value="casualChallenge">{t("O_CASUAL_CHALLENGE")}</option>
                       <option value="monetaryChallenge">{t("O_MONETARY_CHALLENGE")}</option>
-                      <option value="deposit">{t("O_DEPOSIT")}</option>
+                      {/* <option value="deposit">{t("O_DEPOSIT")}</option> */}
                       <option value="refundMonetaryChallenge">{t("O_REFUND_MONETARY_CHALLENGE")}</option>
                     </select>
                   </div>
@@ -258,10 +260,23 @@ function Transaction() {
                       {t("EXPORT_CSV_TRANSACTION")}
                     </button>
                   </div>
+
+             
+
                 </div>
               </div>
             </form>
-
+            <div className="bg-gradientTo rounded-lg p-4 m-5 max-w-[300px] ml-auto">
+            <div className="flex items-center">
+              <figure className="mr-3">
+                <img src={balanceIcon} alt="" />
+              </figure>
+              <figcaption className="text-white">
+                {/* <span className="block">{helpers.formattedAmount(userWalletAmount) || 0}</span> */}
+                <span className="text-sm">{t("TOTAL_EARNING")}</span>
+              </figcaption>
+            </div>
+          </div>
             <TransactionTable handleUserViewPage={handleUserViewPage} users={users} paginationObj={paginationObj} user={user} getAllUser={getAllUser} page={page} setSort={setSort} sort={sort} setPage={setPage} pageSize={pageSize} userType={userType} manager={manager} />
             <div className="flex justify-between">
               <PageSizeList dynamicPage={dynamicPage} pageSize={pageSize} />

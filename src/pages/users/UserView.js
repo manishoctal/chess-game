@@ -173,10 +173,6 @@ const UserView = () => {
   const userWalletAmount = item?.walletAmount * matchedRate?.USD;
   const freezeWalletAmount = item?.freezedAmount * matchedRate?.USD;
 
-  const handleGameHistory = () => {
-    updatePageName(t("GAME_HISTORY"));
-  };
-
   return (
     <div className="p-5 dark:bg-slate-900">
       {helpers.ternaryCondition(

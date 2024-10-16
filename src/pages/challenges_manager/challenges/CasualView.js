@@ -187,7 +187,7 @@ const CasualView = () => {
                   <span className='block'>
                     {helpers?.ternaryCondition(item?.creatorDetails?.userName, startCase(item?.creatorDetails?.userName), "")}
                     
-                    {helpers?.ternaryCondition(item?.challengeType==="casual", `(${item?.creatorDetails?.ratingCasual})`, `(${item?.creatorDetails?.ratingMonetary})`)}
+                    {helpers?.ternaryCondition(item?.challengeType==="casual", `(${item?.creatorDetails?.ratingCasual})`, "")}
                      {/* {helpers?.ternaryCondition(item?.creatorDetails?.rating, `(${item?.creatorDetails?.rating})`, "N/A")} */}
 
                   </span>
@@ -212,7 +212,7 @@ const CasualView = () => {
                   }
                   <span className='block'>{helpers?.ternaryCondition(item?.acceptorDetails?.userName, startCase(item?.acceptorDetails?.userName), "")} 
                     {/* {helpers?.ternaryCondition(item?.acceptorDetails?.rating, `(${item?.acceptorDetails?.rating})`, "N/A")} */}
-                    {helpers?.ternaryCondition(item?.challengeType==="casual", `(${item?.creatorDetails?.ratingCasual})`, `(${item?.creatorDetails?.ratingMonetary})`)}
+                    {helpers?.ternaryCondition(item?.challengeType==="casual", `(${item?.creatorDetails?.ratingMonetary})`, ``)}
                     </span>
                   {
                     helpers?.ternaryCondition(showAcceptorFlag, <div className='ml-3 rounded-full overflow-hidden border dynamic-flag w-[30px] h-[30px]'>
