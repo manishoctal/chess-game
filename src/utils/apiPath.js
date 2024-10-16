@@ -98,7 +98,9 @@ const apiPath = Object.freeze({
   transactionCSV:"/v1/admin/transaction/download-csv",
   correncyConverter:"/v1/admin/setting/currency-measure",
   getNotificationSubAdmin:'/v1/admin/notification/sub-admin',
-  bellNotification: "/v1/admin/notification/admin/list"
+  bellNotification: "/v1/admin/notification/admin/list",
+  transactionTotalBalance:"/v1/admin/transaction/total-earning",
+  gameHistory:"/v1/admin/user/games-history"
 });
 
 export default apiPath;

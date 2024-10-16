@@ -25,6 +25,7 @@ function ChallangesManager() {
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
   const [isInitialized, setIsInitialized] = useState(false);
+  
   const { logoutUser, user, updatePageName } = useContext(AuthContext);
   const [paginationObj, setPaginationObj] = useState({
     page: 1,
@@ -45,7 +46,7 @@ function ChallangesManager() {
   };
   const [filterData, setFilterData] = useState({
     matchStatus: undefined,
-    category: location?.state,
+    category: undefined,
     userId: "",
     searchKey: "",
     startDate: "",

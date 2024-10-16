@@ -21,6 +21,7 @@ function Transaction() {
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
   const [isInitialized, setIsInitialized] = useState(false);
+  const [totalBalance,setTotalBalance]=useState("")
   const { logoutUser, user, updatePageName } = useContext(AuthContext);
   const [paginationObj, setPaginationObj] = useState({
     page: 1,
@@ -157,6 +158,28 @@ function Transaction() {
     }
   };
 
+
+  
+  const getTotalBalance = async () => {
+    try {
+
+      const path = `${apiPath.transactionTotalBalance}`;
+      const result = await apiGet(path);
+      if (result?.data?.success) {
+        setTotalBalance(result?.data?.results)
+      }
+    } catch (error) {
+      console.error("error ", error);
+    }
+  }
+
+
+  useEffect(()=>{
+    getTotalBalance()
+  },[])
+
+ console.log("total",totalBalance)
+
   const handleDateChange = (start, end) => {
     setPage(1);
     setFilterData({
@@ -236,8 +259,8 @@ function Transaction() {
                       onChange={statusPage}
                     >
                       <option value="">{t("TRANSACTION_TYPE")}</option>
-                      <option value="addToWallet">{t("O_WALLET_DEPOSIT")}</option>
-                      <option value="withdrawAmount">{t("O_WITHDRAW_MONEY")}</option>
+                      <option value="walletDeposit">{t("O_WALLET_DEPOSIT")}</option>
+                      <option value="withdrawMoney">{t("O_WITHDRAW_MONEY")}</option>
                       <option value="casualChallenge">{t("O_CASUAL_CHALLENGE")}</option>
                       <option value="monetaryChallenge">{t("O_MONETARY_CHALLENGE")}</option>
                       {/* <option value="deposit">{t("O_DEPOSIT")}</option> */}
@@ -260,23 +283,23 @@ function Transaction() {
                       {t("EXPORT_CSV_TRANSACTION")}
                     </button>
                   </div>
-
-             
-
-                </div>
-              </div>
-            </form>
-            <div className="bg-gradientTo rounded-lg p-4 m-5 max-w-[300px] ml-auto">
+                  <div className="bg-gradientTo rounded-lg p-4 m-5 max-w-[200px] ml-auto">
             <div className="flex items-center">
               <figure className="mr-3">
                 <img src={balanceIcon} alt="" />
               </figure>
               <figcaption className="text-white">
-                {/* <span className="block">{helpers.formattedAmount(userWalletAmount) || 0}</span> */}
+                <span className="block">{helpers.formattedAmount(totalBalance?.totalEarning) || 0}</span>
                 <span className="text-sm">{t("TOTAL_EARNING")}</span>
               </figcaption>
             </div>
           </div>
+             
+
+                </div>
+              </div>
+            </form>
+            
             <TransactionTable handleUserViewPage={handleUserViewPage} users={users} paginationObj={paginationObj} user={user} getAllUser={getAllUser} page={page} setSort={setSort} sort={sort} setPage={setPage} pageSize={pageSize} userType={userType} manager={manager} />
             <div className="flex justify-between">
               <PageSizeList dynamicPage={dynamicPage} pageSize={pageSize} />
