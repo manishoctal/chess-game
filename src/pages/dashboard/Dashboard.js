@@ -126,7 +126,7 @@ function Dashboard() {
           </span>
         </NavLink>
         {/* </Link> */}
-        <div className="text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border">
+        <NavLink to="/challenges-manager" state={"casual"} className="text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border">
           <h3 className="text-center mb-0 text-slate-900 font-bold md:text-3xl sm:text-lg dark:text-white">
             <OCountUp value={dashboardDetails?.totalFreeChallenge} />
 
@@ -135,8 +135,8 @@ function Dashboard() {
           <span className="text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-30px] p-3 border z-10 bg-white">
             <FaAddressCard size={30} />
           </span>
-        </div>
-        <div className="text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border">
+        </NavLink>
+        <NavLink to="/challenges-manager" state={"monetary"} className="text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border">
           <h3 className="text-center mb-0 text-slate-900 font-bold md:text-3xl sm:text-lg dark:text-white">
             <OCountUp value={dashboardDetails?.totalPaidChallenge} />
 
@@ -145,7 +145,7 @@ function Dashboard() {
           <span className="text-4xl ml-auto sm:mr-0  mt-2 sm:mt-0 absolute right-[-10px] top-[-30px] p-3 border z-10 bg-white">
             <FaAddressCard size={30} />
           </span>
-        </div>
+        </NavLink>
         <div className="text-center relative  sm:text-left px-3 md:px-4 xl:px-6 lg:px-5 rounded-lg py-4 md:py-8 border">
           <h3 className="text-center mb-0 text-slate-900 font-bold md:text-3xl sm:text-lg dark:text-white">
             <OCountUp value={dashboardDetails?.totalPuzzleChallenge} />

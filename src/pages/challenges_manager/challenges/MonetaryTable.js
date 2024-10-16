@@ -88,16 +88,16 @@ const MonetaryTable = ({
           {renderTableCell(i + 1 + pageSize * (page - 1), "py-4 px-3 border-r border  font-medium text-gray-900  dark:text-white dark:border-[#ffffff38]")}
           {renderTableCell(getDisplayUserId(item), "bg-white py-4 px-4 border-r border  dark:border-[#ffffff38]")}
           {renderTableCell(getDisplayName(item), "bg-white py-4 px-4 border-r border  dark:border-[#ffffff38]")}
-          {renderTableCell(helpers.ternaryCondition(item?.user?.userName, item?.user?.userName, "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center")}
-          {renderTableCell(helpers.ternaryCondition(item?.winnerDetails?.userName,item?.winnerDetails?.userName, "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center")}
-          {renderTableCell(helpers.ternaryCondition(item?.challengeCategory, item?.challengeCategory, "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center")}
-          {renderTableCell(helpers.ternaryCondition(item?.time, `${item?.time} Min`, "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center")}
-          {renderTableCell(helpers.getDateAndTime(item?.createdAt, item?.createdAt, "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center")}
-          {renderTableCell(helpers.ternaryCondition(item?.type, startCase(item?.type), "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center")}
-          {renderTableCell(helpers.ternaryCondition(item?.moneyAtStake, item?.moneyAtStake, "0"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center")}
-          {renderTableCell(helpers.ternaryCondition(item?.adminComission, item?.adminComission, "0"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center")}
-          {renderTableCell(helpers.ternaryCondition(item?.platformFee, item?.platformFee, "0"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center")}
-          {renderTableCell(itemStatus, "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center")}
+          {renderTableCell(helpers.ternaryCondition(item?.user?.userName, item?.user?.userName, "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-left")}
+          {renderTableCell(helpers.ternaryCondition(item?.winnerDetails?.userName,item?.winnerDetails?.userName, "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-left")}
+          {renderTableCell(helpers.ternaryCondition(item?.challengeCategory, item?.challengeCategory, "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-left")}
+          {renderTableCell(helpers.ternaryCondition(item?.time, `${item?.time} Min`, "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-left")}
+          {renderTableCell(helpers.getDateAndTime(item?.createdAt, item?.createdAt, "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-left")}
+          {renderTableCell(helpers.ternaryCondition(item?.type, startCase(item?.type), "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-left")}
+          {renderTableCell(helpers.ternaryCondition(item?.moneyAtStake, item?.moneyAtStake, "0"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-left")}
+          {renderTableCell(helpers.ternaryCondition(item?.adminComission, item?.adminComission, "0"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-left")}
+          {renderTableCell(helpers.ternaryCondition(item?.platformFee, item?.platformFee, "0"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-left")}
+          {renderTableCell(itemStatus, "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-left")}
           {renderActionTableCells(item, "monetary")}
 
         </tr>
@@ -135,7 +135,7 @@ const MonetaryTable = ({
                     <OUserTableHead sort={sort} setSort={setSort} name='O_STATUS' fieldName='status' />)
                 }
 
-                <th scope="col" className="py-3 px-6 text-center">
+                <th scope="col" className="py-3 px-6 text-left">
                   {t("O_ACTION")}
                 </th>
               </tr>

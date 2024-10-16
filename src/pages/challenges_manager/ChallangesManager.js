@@ -25,6 +25,7 @@ function ChallangesManager() {
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
   const [isInitialized, setIsInitialized] = useState(false);
+  
   const { logoutUser, user, updatePageName } = useContext(AuthContext);
   const [paginationObj, setPaginationObj] = useState({
     page: 1,
@@ -44,8 +45,8 @@ function ChallangesManager() {
     setActiveTab(tab);
   };
   const [filterData, setFilterData] = useState({
-    kyc: undefined,
-    category: location?.state,
+    matchStatus: undefined,
+    category: undefined,
     userId: "",
     searchKey: "",
     startDate: "",
@@ -63,7 +64,7 @@ function ChallangesManager() {
 
   const getAllUser = async () => {
     try {
-      const { category, startDate, endDate, searchKey, kyc, userId } = filterData;
+      const { category, startDate, endDate, searchKey, matchStatus, userId } = filterData;
 
       const payload = {
         page,
@@ -78,10 +79,9 @@ function ChallangesManager() {
       };
 
 
-      if (kyc && kyc !== undefined) {
-        payload.kyc = kyc;
+      if (matchStatus && matchStatus !== undefined) {
+        payload.matchStatus = matchStatus;
       }
-
       const path = `${apiPath.challengeManager}/${userResult}`;
       const result = await apiGet(path, payload);
       if (result?.data?.success) {
@@ -134,18 +134,15 @@ function ChallangesManager() {
   };
 
 
-
   useEffect(() => {
     updatePageName(t("CHALLENGES_MANAGER"));
   }, []);
 
-
-
   const handleReset = () => {
     setFilterData({
       isKYCVerified: "",
-      category: undefined,
-      kyc: "",
+      category: "",
+      matchStatus: "",
       userId: "",
       startDate: "",
       endDate: "",
@@ -172,20 +169,6 @@ function ChallangesManager() {
       isReset: false,
     });
   };
-
-
-  const statusPage = (e) => {
-    const selectedValue = e.target.value;
-
-    setFilterData((prevData) => ({
-      ...prevData,
-      category: selectedValue ? selectedValue : undefined,
-      isFilter: true,
-      isReset: false,
-    }));
-    setPage(1);
-  };
-
 
 
   useEffect(() => {
@@ -237,6 +220,29 @@ function ChallangesManager() {
     }
   };
 
+  const statusPage = (e) => {
+    const selectedValue = e.target.value;
+
+    setFilterData((prevData) => ({
+      ...prevData,
+      category: selectedValue ? selectedValue : undefined,
+      isFilter: true,
+      isReset: false,
+    }));
+    setPage(1);
+  };
+
+  const handleMatchStatus = (e) => {
+    setFilterData({
+      ...filterData,
+      isFilter: true,
+      isReset: false,
+      matchStatus: e.target.value
+    });
+    setPage(1);
+  };
+
+
 
   return (
     <div>
@@ -261,17 +267,35 @@ function ChallangesManager() {
                   <ODateRangePicker handleDateChange={handleDateChange} isReset={filterData?.isReset} setIsReset={setFilterData} />
                   {
                     <div className="flex items-center mb-3 ml-3">
+
+
                       <select
                         id="countries"
                         type="password"
                         name="floating_password"
-                        className="block p-2 w-full text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer"
+                        className="block p-2 mr-3 w-full text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer"
                         placeholder=""
-                        value={filterData?.category || activeInactiveStatus}
+                        value={filterData?.category}
                         onChange={statusPage}
                       >
                         <option value="">
-                          {t("O_ALL")}
+                          {t("ALL_CHALLENGE_TYPE")}
+                        </option>
+                        <option value="instant">{t("INSTANT")}</option>
+                        <option value="schedule">{t("SCHEDULE")}</option>
+                      </select>
+
+
+                      <select
+                        id="countries"
+                        name="floating_password"
+                        className="block p-2 min-w-[150px] text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer"
+                        placeholder=" "
+                        value={filterData?.matchStatus}
+                        onChange={handleMatchStatus}
+                      >
+                        <option value="">
+                          {t("ALL_MATCH_STATUS")}
                         </option>
                         <option value="upcoming">{t("NOT_STARTED")}</option>
                         <option value="running">{t("RUNNING")}</option>
@@ -279,7 +303,6 @@ function ChallangesManager() {
                       </select>
                     </div>
                   }
-
 
 
                   <button

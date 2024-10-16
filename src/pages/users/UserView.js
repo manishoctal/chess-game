@@ -27,7 +27,7 @@ import { BiHistory } from "react-icons/bi";
 
 const UserView = () => {
   const { t } = useTranslation();
-  const { logoutUser } = useContext(AuthContext);
+  const { logoutUser ,updatePageName} = useContext(AuthContext);
   const location = useLocation();
   const [item, setItem] = useState();
   const navigate = useNavigate();
@@ -185,11 +185,12 @@ const UserView = () => {
             <FaCircleArrowLeft size={27} />
           </Link>
 
+
+       
           <div className="flex items-center">
-            <NavLink to="/users/view/game-history" title={t("O_VIEW")} className="bg-gradientTo flex gap-2 text-sm px-6 ml-3  py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2">
+            <NavLink to={`/users/view/game-history/${item?._id}`} state={{ ...item }} title={t("O_VIEW")} className="bg-gradientTo flex gap-2 text-sm px-6 ml-3  py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2">
               <BiHistory className="cursor-pointer w-5 h-5 text-white" /> {t("GAME_HISTORY")}
             </NavLink>
-
             <button onClick={() => handleFreeModal()} className="bg-gradientTo flex gap-2 text-sm px-6 ml-3  py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2">
               {t("FREEZE_BALANCE")}
             </button>

@@ -103,7 +103,7 @@ const AdminRoutes = {
     },
 
     {
-      path: "/users/view/game-history",
+      path: "/users/view/game-history/:id",
       element: <GameHistoryTable />,
       name: <UseChange data="USER_GAME_HISTORY" />,
     },

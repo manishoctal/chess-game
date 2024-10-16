@@ -60,7 +60,6 @@ const CasualTable = ({
   };
 
 
-
   const getRowClassName = (item) => {
     return item && item.status === "deleted"
       ? "text-red-600 font-bold"
@@ -108,12 +107,12 @@ const CasualTable = ({
 
 
           {renderTableCell(helpers.ternaryCondition(item?.acceptorDetails?.userUniqId, item?.acceptorDetails?.userUniqId, "N/A"), "bg-white py-2 px-4 border-r border  dark:border-[#ffffff38] font-bold text-slate-900")}
-          {renderTableCell(helpers.ternaryCondition(item?.acceptorDetails?.userName, item?.acceptorDetails?.userName, "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold")}
-          {renderTableCell(helpers.ternaryCondition(item?.winnerDetails?.userName, item?.winnerDetails?.userName, "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold")}
-          {renderTableCell(helpers.ternaryCondition(item?.time, `${item?.time} Min`, "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold")}
-          {renderTableCell(helpers.getDateAndTime(item?.createdAt, item?.createdAt, "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold")}
-          {renderTableCell(helpers.ternaryCondition(item?.type, startCase(item?.type), "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold")}
-          <td className="bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold">{itemStatus}</td>
+          {renderTableCell(helpers.ternaryCondition(item?.acceptorDetails?.userName, item?.acceptorDetails?.userName, "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-left font-bold")}
+          {renderTableCell(helpers.ternaryCondition(item?.winnerDetails?.userName, item?.winnerDetails?.userName, "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-left font-bold")}
+          {renderTableCell(helpers.ternaryCondition(item?.time, `${item?.time} Min`, "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-left font-bold")}
+          {renderTableCell(helpers.getDateAndTime(item?.createdAt, item?.createdAt, "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-left font-bold")}
+          {renderTableCell(helpers.ternaryCondition(item?.type, startCase(item?.type), "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-left font-bold")}
+          <td className="bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-left font-bold">{itemStatus}</td>
           {renderActionTableCells(item, "casual")}
         </tr>
       );
@@ -145,7 +144,7 @@ const CasualTable = ({
               <OUserTableHead sort={sort} setSort={setSort} name='MATCH_STATUS' fieldName='expiryScheduleDateTime' />
 
 
-              <th scope="col" className="py-3 px-6 text-center">
+              <th scope="col" className="py-3 px-6 text-left">
                 {t("O_ACTION")}
               </th>
             </tr>
