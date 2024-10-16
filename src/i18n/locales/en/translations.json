@@ -962,5 +962,6 @@
   "SCHEDULE":"Schedule",
   "INSTANT": "Instant",
   "ALL_CHALLENGE_TYPE": "All Challenge Type",
-  "ALL_MATCH_STATUS": "All Match Status"
+  "ALL_MATCH_STATUS": "All Match Status",
+  "TOTAL_EARNING":"Total Earning"
 }

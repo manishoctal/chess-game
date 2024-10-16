@@ -173,10 +173,6 @@ const UserView = () => {
   const userWalletAmount = item?.walletAmount * matchedRate?.USD;
   const freezeWalletAmount = item?.freezedAmount * matchedRate?.USD;
 
-  const handleGameHistory = () => {
-    updatePageName(t("GAME_HISTORY"));
-  };
-
   return (
     <div className="p-5 dark:bg-slate-900">
       {helpers.ternaryCondition(
@@ -189,8 +185,10 @@ const UserView = () => {
             <FaCircleArrowLeft size={27} />
           </Link>
 
+
+       
           <div className="flex items-center">
-            <NavLink to="/users/view/game-history" title={t("O_VIEW")} className="bg-gradientTo flex gap-2 text-sm px-6 ml-3  py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2">
+            <NavLink to={`/users/view/game-history/${item?._id}`} state={{ ...item }} title={t("O_VIEW")} className="bg-gradientTo flex gap-2 text-sm px-6 ml-3  py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2">
               <BiHistory className="cursor-pointer w-5 h-5 text-white" /> {t("GAME_HISTORY")}
             </NavLink>
             <button onClick={() => handleFreeModal()} className="bg-gradientTo flex gap-2 text-sm px-6 ml-3  py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2">

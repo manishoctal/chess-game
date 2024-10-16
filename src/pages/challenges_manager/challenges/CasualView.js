@@ -70,7 +70,7 @@ const CasualView = () => {
 
             {
               helpers?.ternaryCondition(type === "monetary", <div>
-                <strong>Monetary Rating: </strong>{helpers?.ternaryCondition(item?.creatorDetails?.userName, item?.creatorDetails?.userName, "N/A")}
+                <strong>Monetary Rating: </strong>{helpers?.ternaryCondition(item?.creatorDetails?.rating, item?.creatorDetails?.rating, "N/A")}
               </div>, <div>
                 <strong>Casual Rating: </strong>{helpers?.ternaryCondition(item?.creatorDetails?.rating, item?.creatorDetails?.rating, "N/A")}
               </div>)
@@ -178,17 +178,17 @@ const CasualView = () => {
 
               <div>
                 <div className='flex items-center justify-center'>
-                  <div className='flex items-center'>
+                 {
+                  helpers?.ternaryCondition(item?.creatorDetails?.userName,<div className='flex items-center'>
+                     <div className='flex items-center'>
                     {
                       helpers?.ternaryCondition(item?.acceptorSide === "white", <GiHorseHead className='text-black mr-3 text-2xl' />, <GiHorseHead className="mr-3 text-2xl text-gray-500" />)
                     }
-
                   </div>
                   <span className='block'>
                     {helpers?.ternaryCondition(item?.creatorDetails?.userName, startCase(item?.creatorDetails?.userName), "")}
                     
-                    {helpers?.ternaryCondition(item?.challengeType==="casual", `(${item?.creatorDetails?.ratingCasual})`, `(${item?.creatorDetails?.ratingMonetary})`)}
-                     {/* {helpers?.ternaryCondition(item?.creatorDetails?.rating, `(${item?.creatorDetails?.rating})`, "N/A")} */}
+                    {helpers?.ternaryCondition(item?.challengeType==="casual", `(${item?.creatorDetails?.ratingCasual})`, `(0)`)}
 
                   </span>
 
@@ -203,16 +203,16 @@ const CasualView = () => {
                       />
                     </div>, "")
                   }
-
-
+                  </div>,"N/A")
+                 }
                 </div>
                 <div className='flex items-center justify-center mt-4'>
-                  {
+                  {helpers?.ternaryCondition(item?.acceptorDetails?.userName,   <div>
+                 {
                     helpers?.ternaryCondition(item?.acceptorSide === "white", <GiHorseHead className='mr-3 text-2xl text-gray-500' />, <GiHorseHead className='text-black mr-3 text-2xl' />)
                   }
                   <span className='block'>{helpers?.ternaryCondition(item?.acceptorDetails?.userName, startCase(item?.acceptorDetails?.userName), "")} 
-                    {/* {helpers?.ternaryCondition(item?.acceptorDetails?.rating, `(${item?.acceptorDetails?.rating})`, "N/A")} */}
-                    {helpers?.ternaryCondition(item?.challengeType==="casual", `(${item?.creatorDetails?.ratingCasual})`, `(${item?.creatorDetails?.ratingMonetary})`)}
+                    {helpers?.ternaryCondition(item?.challengeType==="casual", `(${item?.acceptorDetails?.ratingCasual})`, `(0)`)}
                     </span>
                   {
                     helpers?.ternaryCondition(showAcceptorFlag, <div className='ml-3 rounded-full overflow-hidden border dynamic-flag w-[30px] h-[30px]'>
@@ -224,6 +224,8 @@ const CasualView = () => {
                       />
                     </div>, "")
                   }
+                 </div>, "N/A")}
+              
                 </div>
               </div>
 
