@@ -39,14 +39,6 @@ function User() {
     setActiveTab(tab);
   };
 
-  // console.log("object", location?.state?._id);
-
-
-  const renderTableCell = (content, classNames) => (
-    <td className={classNames}>{content}</td>
-  );
-
-
   const [filterData, setFilterData] = useState({
     kyc: undefined,
     category: location?.state,
@@ -57,13 +49,8 @@ function User() {
     isReset: false,
     isFilter: false,
   });
-  const [sort, setSort] = useState({
-    sortBy: "createdAt",
-    sortType: "desc",
-  });
 
   const userResult = helpers?.ternaryCondition(activeTab === "Tab1", "casual", "monetary")
-
 
   const getAllUser = async () => {
     try {
@@ -71,8 +58,6 @@ function User() {
       const payload = {
         page,
         pageSize: pageSize,
-        sortKey: sort?.sortBy,
-        sortType: sort?.sortType,
       };
       
       const path = `${apiPath.gameHistory}/${location?.state?._id}/${userResult}`;
@@ -123,7 +108,7 @@ function User() {
 
   useEffect(() => {
     getAllUser();
-  }, [page, filterData, sort, pageSize, activeTab]);
+  }, [page, filterData, pageSize, activeTab]);
 
   // get all user end
   const dynamicPage = (e) => {
@@ -159,32 +144,6 @@ function User() {
       clearTimeout(timeoutId);
     };
   }, [searchTerm]);
-
-  // const renderTableRows = () => {
-  //   return users?.map((item, i) => {
-  //     return (
-  //       <tr key={i} >
-  //         {renderTableCell(i + 1, "py-4 px-4 border-r border font-medium text-gray-900 dark:text-white dark:border-[#ffffff38]")}
-  //         {renderTableCell(helpers.ternaryCondition(item?.challengeId, `${item?.challengeId}`, "N/A"), "bg-white py-4 px-6 border-r border dark:border-[#ffffff38]")}
-
-  //         {renderTableCell(helpers.ternaryCondition(item?.time, `${item?.time} Min`, "N/A"), "bg-white py-4 px-6 border-r border dark:border-[#ffffff38]")}
-  //         {renderTableCell(item.name, "bg-white py-4 px-6 border-r border dark:border-[#ffffff38]")}
-  //         {renderTableCell(i + 1, "py-4 px-6 border-r border font-medium text-gray-900 dark:text-white dark:border-[#ffffff38]")}
-  //         {renderTableCell(item.userId, "bg-white py-4 px-6 border-r border dark:border-[#ffffff38]")}
-  //         {renderTableCell(item.name, "bg-white py-4 px-6 border-r border dark:border-[#ffffff38]")}
-  //         {renderTableCell(item.name, "bg-white py-4 px-6 border-r border dark:border-[#ffffff38]")}
-
-  //         {
-  //           activeTab === "Tab2" && <>  
-  //             {renderTableCell(item.name, "bg-white py-4 px-6 border-r border dark:border-[#ffffff38]")}
-  //             {renderTableCell(item.name, "bg-white py-4 px-6 border-r border dark:border-[#ffffff38]")}</>
-  //         }
-
-  //       </tr>
-  //     );
-
-  //   });
-  // };
 
   const showCreatorFlag = helpers?.countryFlag(item?.creatorDetails?.currency);
   const showAcceptorFlag = helpers?.countryFlag(item?.acceptorDetails?.currency);

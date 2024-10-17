@@ -1,8 +1,5 @@
 import React from "react";
-import { apiPut } from "../../../utils/apiFetch";
-import apiPath from "../../../utils/apiPath";
 import { isEmpty, startCase } from "lodash";
-import useToastContext from "hooks/useToastContext";
 import { AiFillEye, } from "react-icons/ai";
 import { useTranslation } from "react-i18next";
 import { NavLink } from "react-router-dom";

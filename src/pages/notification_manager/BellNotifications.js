@@ -5,7 +5,6 @@ import { isEmpty, startCase } from 'lodash'
 import { useTranslation } from 'react-i18next'
 import Pagination from 'pages/Pagination'
 import AuthContext from 'context/AuthContext'
-import helper from 'utils/helpers'
 import dayjs from 'dayjs'
 import PageSizeList from 'components/PageSizeList'
 import ONotificationTableHead from '../../components/reusable/OTableHead'
@@ -35,7 +34,7 @@ const BellNotifications = () => {
     sortType: 'desc'
   })
 
-  const notificationUserType = helper?.ternaryCondition(user?.role == "admin", "admin", "subAdmin")
+  const notificationUserType = helpers?.ternaryCondition(user?.role == "admin", "admin", "subAdmin")
 
   // get all notification function start
   const getNotifications = async () => {
@@ -45,8 +44,8 @@ const BellNotifications = () => {
       const payload = {
         page,
         pageSize,
-        startDate: helper.ternaryCondition(startDate, dayjs(startDate).format('YYYY-MM-DD'), null),
-        endDate: helper.ternaryCondition(endDate, dayjs(endDate).format('YYYY-MM-DD'), null),
+        startDate: helpers.ternaryCondition(startDate, dayjs(startDate).format('YYYY-MM-DD'), null),
+        endDate: helpers.ternaryCondition(endDate, dayjs(endDate).format('YYYY-MM-DD'), null),
         sortBy: sort.sortKey,
         sortType: sort.sortType
 
@@ -128,7 +127,7 @@ const BellNotifications = () => {
                       {helpers?.ternaryCondition(item?.description, item?.description, "N/A")}
                     </td>
                     <td className='py-4 px-3 border-r'>
-                      {helper.dateFormat(item?.createdAt)}
+                      {helpers.dateFormat(item?.createdAt)}
                     </td>
                   </tr>
                 ))}

@@ -7,7 +7,6 @@ import { t } from "i18next";
 import Swal from "sweetalert2";
 import { TbLogout2,TbPasswordUser } from "react-icons/tb";
 import { LiaUserEditSolid } from "react-icons/lia";
-import { BiDownArrow, BiNotification } from "react-icons/bi";
 import { IoIosArrowDown } from "react-icons/io";
 import { IoNotifications } from "react-icons/io5";
 

@@ -1,10 +1,7 @@
-import OButton from "components/reusable/OButton";
-import OInputField from "components/reusable/OInputField";
 import AuthContext from "context/AuthContext";
 import { isEmpty } from "lodash";
 import Pagination from "pages/Pagination";
 import { useContext, useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { IoClose } from "react-icons/io5";
 import { NavLink } from "react-router-dom";
@@ -18,7 +15,7 @@ const ReportUserPopup = ({ handleReportToggle, reportItem }) => {
   const { logoutUser } = useContext(AuthContext);
 
   const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
+  const [pageSize] = useState(10);
   const [reportList, setReportList] = useState([]);
   const [paginationObj, setPaginationObj] = useState({
     page: 1,
@@ -76,10 +73,7 @@ const ReportUserPopup = ({ handleReportToggle, reportItem }) => {
             </NavLink>
           </td>
 
-          {/* {renderTableCell(item?.user?.userName, "bg-white py-4 px-4 border-r border dark:border-[#ffffff38]")} */}
-
           {renderTableCell(helpers.ternaryCondition(item?.createdAt, helpers.getDateAndTime(item?.createdAt), "N/A"), "bg-white py-4 px-4 border-r border dark:border-[#ffffff38] text-center")}
-
           {renderTableCell(item?.reason, "py-4 px-3 border-r border font-medium text-gray-900 dark:text-white dark:border-[#ffffff38] text-center")}
           {renderTableCell(helpers.ternaryCondition(item?.user?.mobile, `+ ${item?.user?.countryCode || ""} ${item?.user?.mobile}`, "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold")}
         </tr>
@@ -92,7 +86,7 @@ const ReportUserPopup = ({ handleReportToggle, reportItem }) => {
       <div className="justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
         <div className={`relative w-auto my-6 mx-auto max-w-[800px]`}>
           <div className="overflow-hidden border border-white dark:border-[#ffffff38] rounded-lg shadow-lg relative flex flex-col  bg-white outline-none focus:outline-none">
-            <div className="dark:bg-gray-900 flex items-center justify-between p-5 border-b dark:border-[#ffffff38] border-solid border-slate-200 rounded-t dark:bg-slate-900">
+            <div className="flex items-center justify-between p-5 border-b dark:border-[#ffffff38] border-solid border-slate-200 rounded-t dark:bg-slate-900">
               <h3 className="text-xl font-semibold dark:text-white">{t("REPORT")}</h3>
               <button className=" ml-auto flex items-center justify-center  text-black border-2 rounded-full  h-8 w-8 float-right text-3xl leading-none font-extralight outline-none focus:outline-none" onClick={() => handleReportToggle()}>
                 <button type="button" title={t("CLOSE")} className="hover:text-blue-700 transition duration-150 ease-in-out" data-bs-toggle="tooltip">

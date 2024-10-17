@@ -15,7 +15,6 @@ import { IoMdNotificationsOutline } from "react-icons/io";
 import helpers from "utils/helpers";
 import { FaRegQuestionCircle } from "react-icons/fa";
 import { MdFeedback, MdWidthWide } from "react-icons/md";
-import { GrTransaction } from "react-icons/gr";
 
 const classNames = require("classnames");
 

@@ -1,4 +1,4 @@
-import { Rating, Typography } from "@mui/material";
+import { Rating } from "@mui/material";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";

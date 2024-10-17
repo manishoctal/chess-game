@@ -27,12 +27,12 @@ import { BiHistory } from "react-icons/bi";
 
 const UserView = () => {
   const { t } = useTranslation();
-  const { logoutUser ,updatePageName} = useContext(AuthContext);
+  const { logoutUser} = useContext(AuthContext);
   const location = useLocation();
   const [item, setItem] = useState();
   const navigate = useNavigate();
   const notification = useToastContext();
-  const [kycSection, setKycSection] = useState(null);
+  const [setKycSection] = useState(null);
   const [showBanner, setShowBanner] = useState(false);
   const [showFreeModel, setShowFreeModel] = useState(false);
   const [walletBox, setWalletBox] = useState(false);
@@ -43,10 +43,6 @@ const UserView = () => {
     setShowFreeModel(!showFreeModel);
     getUserDetails();
   };
-
-  console.log("object", location?.state);
-
-  // location?.state?.creatorDetails?._id
 
   const getUserDetails = async () => {
     try {
