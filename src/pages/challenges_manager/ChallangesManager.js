@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { apiGet } from "../../utils/apiFetch";
 import apiPath from "../../utils/apiPath";
-import Table from "./challenges/CasualTable";
 import Pagination from "../Pagination";
 import AuthContext from "context/AuthContext";
 import dayjs from "dayjs";
@@ -20,8 +19,6 @@ function ChallangesManager() {
   const { t } = useTranslation();
   const location = useLocation();
   const [activeInactiveStatus, setActiveInactiveStatus] = useState(location?.state ?? "");
-
-  console.log("activeInactiveStatus", activeInactiveStatus)
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
   const [isInitialized, setIsInitialized] = useState(false);
@@ -39,7 +36,7 @@ function ChallangesManager() {
   const [pageSize, setPageSize] = useState(10);
   const [isDelete] = useState(false);
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState('Tab1');
+  const [activeTab, setActiveTab] = useState(activeInactiveStatus ? activeInactiveStatus : "casual");
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
@@ -60,7 +57,7 @@ function ChallangesManager() {
   });
 
 
-  const userResult = helpers?.ternaryCondition(activeTab === "Tab1", "casual", "monetary")
+  const userResult = helpers?.ternaryCondition(activeTab === "casual", "casual", "monetary")
 
   const getAllUser = async () => {
     try {
@@ -327,14 +324,14 @@ function ChallangesManager() {
 
               <div className="flex items-center p-5">
                 <button
-                  className={` mr-4 text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150 ${activeTab === 'Tab1' ? 'bg-gradBlack' : 'bg-gradientTo'}`}
-                  onClick={() => handleTabClick('Tab1')}
+                  className={` mr-4 text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150 ${activeTab === 'casual' ? 'bg-gradBlack' : 'bg-gradientTo'}`}
+                  onClick={() => handleTabClick('casual')}
                 >
                   {t("CASUAL_CHALLENGE")}
                 </button>
                 <button
-                  className={` text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 ease-linear transition-all duration-150 ${activeTab === 'Tab2' ? 'bg-gradBlack' : 'bg-gradientTo'}`}
-                  onClick={() => handleTabClick('Tab2')}
+                  className={` text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 ease-linear transition-all duration-150 ${activeTab === 'monetary' ? 'bg-gradBlack' : 'bg-gradientTo'}`}
+                  onClick={() => handleTabClick('monetary')}
                 >
                   {t("MONETARY_CHALLENGE")}
                 </button>
@@ -342,7 +339,7 @@ function ChallangesManager() {
             </div>
 
             {
-              helpers?.ternaryCondition(activeTab === "Tab1", <CasualTable
+              helpers?.ternaryCondition(activeTab === "casual", <CasualTable
                 users={users}
                 user={user}
                 getAllUser={getAllUser}
