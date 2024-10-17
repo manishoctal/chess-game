@@ -15,6 +15,7 @@ const StaticContentList = ({ countryList, page, handleEdit, sort, setSort, manag
   useEffect(() => {
     updatePageName(t("NAV_STATIC_CONTENTS"));
   }, []);
+
   return (
     <div>
       <div className="p-3">
@@ -34,7 +35,7 @@ const StaticContentList = ({ countryList, page, handleEdit, sort, setSort, manag
             <tbody>
               {countryList.map((item, i) => {
                 return (
-                  <tr key={i} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                  <tr key={item?._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                     <th scope="row" className="py-2 px-4 border-r dark:border-[#ffffff38] font-medium text-gray-900  dark:text-white">
                       {i + 1 + 10 * (page - 1)}
                     </th>

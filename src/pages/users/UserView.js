@@ -15,9 +15,8 @@ import mobileIcon from "../../assets/icons/icon/mobile.svg";
 import dobIcon from "../../assets/icons/icon/dob.svg";
 import locationIcon from "../../assets/icons/icon/location.svg";
 import cityIcon from "../../assets/icons/icon/city.svg";
-import useToastContext from "hooks/useToastContext";
 import apiPath from "utils/apiPath";
-import { apiGet, apiPut } from "utils/apiFetch";
+import { apiGet } from "utils/apiFetch";
 import ShowImage from "./ShowImage";
 import bonusIcon from "../../assets/icons/icon/bonus.svg";
 import AuthContext from "context/AuthContext";
@@ -31,8 +30,6 @@ const UserView = () => {
   const location = useLocation();
   const [item, setItem] = useState();
   const navigate = useNavigate();
-  const notification = useToastContext();
-  const [setKycSection] = useState(null);
   const [showBanner, setShowBanner] = useState(false);
   const [showFreeModel, setShowFreeModel] = useState(false);
   const [walletBox, setWalletBox] = useState(false);
@@ -66,78 +63,9 @@ const UserView = () => {
       navigate("/users");
     }
   }, [location]);
-  const approveAndReject = async (data) => {
-    try {
-      const payload = {
-        status: data,
-      };
-      const path = apiPath.approveAndRejectKyc + "/" + item._id;
-      const result = await apiPut(path, payload);
-      if (result?.data?.success) {
-        notification.success(result?.data.message);
-        navigate("/users");
-      } else {
-        notification.error(result?.data?.message);
-      }
-    } catch (error) {
-      console.error("error:", error.message);
-    }
-  };
-  const kycDocSection = async () => {
-    if (item?.kycRecord?.isApproved === "pending") {
-      try {
-        const result = await new Promise((resolve) => {
-          setTimeout(() => {
-            resolve(
-              <div className="flex items-center justify-center p-6">
-                <button className="text-black bg-[#E1E1E1] font-normal px-12 py-2.5 text-sm outline-none focus:outline-none rounded mr-6 ease-linear transition-all duration-150" type="button" onClick={() => approveAndReject("approved")}>
-                  {t("APPROVE")}
-                </button>
-
-                <button
-                  className="bg-gradientTo text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
-                  type="submit"
-                  onClick={() => approveAndReject("rejected")}
-                >
-                  {t("REJECT")}
-                </button>
-              </div>
-            );
-          }, 0);
-        });
-
-        setKycSection(result);
-      } catch (error) {
-        console.error("Error in kycDocSection:", error);
-        setKycSection(null);
-      }
-    } else {
-      setKycSection(null);
-    }
-  };
-
-  const renderApprovalStatus = () => {
-    const kycRecord = item?.kycRecord;
-
-    if (!kycRecord) {
-      return null;
-    }
-    const { isApproved } = kycRecord;
-    if (isApproved === "approved") {
-      return <img src={checkIcon} alt="" className="absolute right-[-10px] top-[-10px]" />;
-    } else {
-      return null;
-    }
-  };
-
-  useEffect(() => {
-    renderApprovalStatus();
-    kycDocSection();
-  }, [item?.kycRecord?.isApproved]);
 
 
   const [showImage, setShowImage] = useState();
-
   const handleShowImage = (showData) => {
     setShowImage(showData);
     setShowBanner(!showBanner);
@@ -180,9 +108,6 @@ const UserView = () => {
           <Link aria-current="page" className="" to={-1}>
             <FaCircleArrowLeft size={27} />
           </Link>
-
-
-       
           <div className="flex items-center">
             <NavLink to={`/users/view/game-history/${item?._id}`} state={{ ...item }} title={t("O_VIEW")} className="bg-gradientTo flex gap-2 text-sm px-6 ml-3  py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2">
               <BiHistory className="cursor-pointer w-5 h-5 text-white" /> {t("GAME_HISTORY")}

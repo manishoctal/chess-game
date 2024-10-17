@@ -48,6 +48,8 @@ const UserGraph = () => {
     getGraphUserDetails();
   }, []);
 
+console.log("graphYear",graphYear)
+
   const handleYearSelect = (e) => {
     const year = e.target.value;
     setSelectedYear(year);
@@ -112,9 +114,9 @@ const UserGraph = () => {
             onChange={handleYearSelect}
           >
             <option value="">Select Year</option>
-            {graphYear?.map((year, index) => {
+            {graphYear?.map((year) => {
               return (
-                <option key={index} value={year}>
+                <option value={year}>
                   {`${year}`}
                 </option>
               );

@@ -111,7 +111,7 @@ const BellNotifications = () => {
               {users && users?.length > 0 &&
                 users?.map((item, i) => (
                   <tr
-                    key={i}
+                    key={item?._id}
                     className='even:bg-gray-50 odd:bg-white bg-white border-b dark:bg-gray-800 dark:border-gray-700'
                   >
                     <th

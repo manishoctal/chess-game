@@ -13,7 +13,6 @@ const ReportUserPopup = ({ handleReportToggle, reportItem }) => {
   const { t } = useTranslation();
   const renderTableCell = (content, classNames) => <td className={classNames}>{helpers?.ternaryCondition(content, content, "N/A")}</td>;
   const { logoutUser } = useContext(AuthContext);
-
   const [page, setPage] = useState(1);
   const [pageSize] = useState(10);
   const [reportList, setReportList] = useState([]);

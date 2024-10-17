@@ -122,7 +122,7 @@ const Table = ({ FAQs, getAllFAQ, handelEdit, paginationObj, manager, pageSize, 
                   {FAQs?.map((item, i) => (
                     <Draggable key={item?.id} draggableId={item?.id} index={i}>
                       {(provides) => (
-                        <tr key={i} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700" ref={provides?.innerRef} {...provides?.draggableProps} {...provides?.dragHandleProps}>
+                        <tr key={item?._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700" ref={provides?.innerRef} {...provides?.draggableProps} {...provides?.dragHandleProps}>
                           <td className="py-4 px-6 border-r h-4 w-4">
                             <img src={movePng} alt="" style={{ height: "20px" }} />
                           </td>

@@ -8,14 +8,10 @@ import OUserTableHead from '../../../components/reusable/OTableHead'
 
 const CasualTable = ({
   users,
-  getAllUser,
   handleUserView,
-  user,
-  manager,
   page,
   setSort,
   sort,
-  userType,
   pageSize,
   handleUserViewPage
 }) => {
@@ -88,9 +84,7 @@ const CasualTable = ({
           {renderTableCell(i + 1 + pageSize * (page - 1), "py-4 px-3 border-r border  font-medium text-gray-900  dark:text-white dark:border-[#ffffff38]")}
           {renderTableCell(getDisplayUserId(item), "bg-white py-4 px-4 border-r border  dark:border-[#ffffff38]")}
           {renderTableCell(getDisplayName(item), "bg-white py-4 px-4 border-r border  dark:border-[#ffffff38]")}
-
           <td className="bg-white py-4 px-4 border-r border  dark:border-[#ffffff38]">
-
             <NavLink
               onClick={() => handleUserViewPage(item)}
               to={`/users/view/${item?._id}`}
@@ -99,10 +93,7 @@ const CasualTable = ({
             >
               {helpers.ternaryCondition(item?.user?.userName, item?.user?.userName, "N/A")}
             </NavLink>
-
           </td>
-
-
           {renderTableCell(helpers.ternaryCondition(item?.acceptorDetails?.userUniqId, item?.acceptorDetails?.userUniqId, "N/A"), "bg-white py-2 px-4 border-r border  dark:border-[#ffffff38] font-bold text-slate-900")}
           {renderTableCell(helpers.ternaryCondition(item?.acceptorDetails?.userName, item?.acceptorDetails?.userName, "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-left font-bold")}
           {renderTableCell(helpers.ternaryCondition(item?.winnerDetails?.userName, item?.winnerDetails?.userName, "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-left font-bold")}

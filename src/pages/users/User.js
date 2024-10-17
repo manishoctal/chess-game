@@ -74,10 +74,6 @@ function User() {
         status:category
       };
 
-      // if (category && category !== undefined) {
-      //   payload.status = category;
-      // }
-
       if (kyc && kyc !== undefined) {
         payload.kyc = kyc;
       }

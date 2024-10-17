@@ -51,7 +51,7 @@ const SubTable = ({ subAdmin, page, sort, setSort, manager, handelStatusChange, 
           </thead>
           <tbody>
             {subAdmin?.map((item, i) => (
-              <tr key={i} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+              <tr key={item?._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                 <th scope="row" className="py-2 px-4 border-r dark:border-[#ffffff38] font-medium text-gray-900  dark:text-white">
                   {i + 1 + pageSize * (page - 1)}
                 </th>
