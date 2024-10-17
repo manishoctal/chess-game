@@ -57,11 +57,10 @@ const TransactionTable = ({ users, page, setSort, sort, pageSize,handleUserViewP
       const amount = item?.amount * matchedRate?.USD;
       const adminComission = item?.adminComission * matchedRate?.USD;
       const transactionFee = item?.transactionFee * matchedRate?.USD;
-
       const rowClassName = getRowClassName(item);
 
       return (
-        <tr key={i} className={rowClassName}>
+        <tr key={item?._id} className={rowClassName}>
           {renderTableCell(i + 1 + pageSize * (page - 1), "py-4 px-3 border-r border  font-medium text-gray-900  dark:text-white dark:border-[#ffffff38]")}
           {renderTableCell(getDisplayUserId(item), "bg-white py-4 px-4 border-r border  dark:border-[#ffffff38]")}
           {renderTableCell(getDisplayName(item), "bg-white py-4 px-4 border-r border  dark:border-[#ffffff38]")}

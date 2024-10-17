@@ -21,7 +21,6 @@ const Table = ({
   user,
   manager,
   page,
-  handleGameHistory,
   setSort,
   sort,
   userType,
@@ -139,7 +138,7 @@ const Table = ({
   );
 
 
-  const [viewBalance, setViewBalance] = useState()
+  const [viewBalance] = useState()
 
   const renderActionTableCells = (item, userTypeDetail) => (
     <td className="py-2 px-4 border-l border">
@@ -170,17 +169,6 @@ const Table = ({
               }
             </div>
           </div>
-
-
-          {/* <button
-            className="px-2 py-2" onClick={() => handleShorReviewToggle(item)}
-          >
-            <div className="relative">
-              <MdFeedback className="cursor-pointer w-5 h-5 text-slate-600 dark:hover:text-white hover:text-blue-700" />{" "}
-            </div>
-          </button> */}
-
-
 
           {(manager?.add || user?.role === "admin") &&
             userTypeDetail === "local" &&
@@ -217,10 +205,8 @@ const Table = ({
   const renderTableRows = () => {
     return users?.map((item, i) => {
       const rowClassName = getRowClassName(item);
-
-
       return (
-        <tr key={i} className={rowClassName}>
+        <tr key={item?._id} className={rowClassName}>
           {renderTableCell(i + 1 + pageSize * (page - 1), "py-4 px-3 border-r border  font-medium text-gray-900  dark:text-white dark:border-[#ffffff38]")}
           {renderTableCell(getDisplayUserId(item), "bg-white py-4 px-4 border-r border  dark:border-[#ffffff38]")}
           {renderTableCell(getDisplayName(item), "bg-white py-4 px-4 border-r border  dark:border-[#ffffff38]")}
@@ -289,7 +275,6 @@ const Table = ({
             </thead>
             <tbody>
               {users?.length > 0 && renderTableRows()}
-              {/* {renderTableRows()} */}
               {helpers.ternaryCondition(
                 isEmpty(users),
                 <tr className="bg-white  border-b dark:bg-gray-800 dark:border-gray-700 text-center">

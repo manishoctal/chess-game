@@ -67,7 +67,7 @@ const ReportsTable = ({ users, page, userType, pageSize }) => {
             {users?.length > 0 &&
               users?.map((item, i) => (
                 <tr
-                  key={i}
+                  key={users?._id}
                   className='bg-white border-b dark:bg-gray-800 dark:border-[#ffffff38]'
                 >
                   <th

@@ -6,7 +6,6 @@ import { FaUserTie, FaRegQuestionCircle, FaAddressCard } from "react-icons/fa";
 import { AiOutlineStock } from "react-icons/ai";
 import { GiProfit } from "react-icons/gi";
 import { apiGet } from "utils/apiFetch";
-import pathObj from "utils/apiPath";
 import earning from "assets/images/earning.jpg";
 import dayjs from "dayjs";
 import { useTranslation } from "react-i18next";
@@ -34,7 +33,7 @@ function Dashboard() {
         startDate: helpers?.ternaryCondition(filterData?.startDate, dayjs(filterData?.startDate).format("YYYY-MM-DD"), null),
         endDate: helpers?.ternaryCondition(filterData?.endDate, dayjs(filterData?.endDate).format("YYYY-MM-DD"), null),
       };
-      const path = pathObj.getDashboardDetails;
+      const path = apiPath.getDashboardDetails;
       const result = await apiGet(path, payload);
       setDashboardDetails({ ...dashboardDetails, ...result.data.results });
     } catch (error) {

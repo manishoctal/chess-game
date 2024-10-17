@@ -1,8 +1,8 @@
 import React, { useContext, useEffect } from "react";
-import { AiFillEdit, AiFillEye } from "react-icons/ai";
+import { AiFillEdit } from "react-icons/ai";
 import { useTranslation } from "react-i18next";
 import AuthContext from "context/AuthContext";
-import { isEmpty, startCase } from "lodash";
+import { isEmpty } from "lodash";
 import { useNavigate } from "react-router-dom";
 import helpers from "../../utils/helpers";
 import OSubadminTableHead from "../../components/reusable/OTableHead";
@@ -39,12 +39,10 @@ const SubTable = ({ subAdmin, page, sort, setSort, manager, handelStatusChange, 
               <OSubadminTableHead name="EMAIL_ADDRESS" sort={sort} setSort={setSort} fieldName="email" />
               <OSubadminTableHead sort={sort} setSort={setSort} name="COUNTRY_CODE" fieldName="countryCode" />
               <OSubadminTableHead sort={sort} setSort={setSort} name="O_MOBILE_NUMBER" fieldName="mobile" />
-              {/* <OSubadminTableHead sort={sort} setSort={setSort} name="ADDRESS" fieldName="address" /> */}
               <th scope="col" className="py-3 px-6 text-center">
                 {t("ROLE_ASSIGNED")}
               </th>
               <OSubadminTableHead sort={sort} setSort={setSort} name="O_CREATED_AT" fieldName="createdAt" />
-              {/* <OSubadminTableHead sort={sort} name="O_UPDATED_AT" setSort={setSort} fieldName="updatedAt" /> */}
               {(manager?.add || manager?.edit || user?.role === "admin") && <OSubadminTableHead sort={sort} setSort={setSort} name="O_STATUS" fieldName="status" classTd={" flex justify-center"} />}
               <th scope="col" className="py-3 px-6 text-center">
                 {t("O_ACTION")}
@@ -53,7 +51,7 @@ const SubTable = ({ subAdmin, page, sort, setSort, manager, handelStatusChange, 
           </thead>
           <tbody>
             {subAdmin?.map((item, i) => (
-              <tr key={i} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+              <tr key={item?._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                 <th scope="row" className="py-2 px-4 border-r dark:border-[#ffffff38] font-medium text-gray-900  dark:text-white">
                   {i + 1 + pageSize * (page - 1)}
                 </th>
@@ -90,18 +88,7 @@ const SubTable = ({ subAdmin, page, sort, setSort, manager, handelStatusChange, 
                 <td className="py-2 px-4 border-l">
                   <div className="">
                     <ul className="flex justify-center">
-                      {/* <li
-                        onClick={() =>
-                          navigate("/sub-admin-manager/add", {
-                            state: { item, type: "view" },
-                          })
-                        }
-                        className="px-2 py-2 hover:text-gradientTo"
-                      >
-                        <a title={t("O_VIEW")}>
-                          <AiFillEye className="cursor-pointer w-5 h-5 text-slate-600" />
-                        </a>
-                      </li> */}
+              
                       {(manager?.add || user?.role === "admin") && (
                         <button
                           onClick={() =>
