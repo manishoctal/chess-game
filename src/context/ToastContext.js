@@ -1,4 +1,4 @@
-import React, { useState, createContext, useEffect, useCallback } from 'react'
+import React, { useState, createContext, useEffect, useCallback, useMemo } from 'react'
 
 const ToastContext = createContext()
 
@@ -46,9 +46,12 @@ export const ToastContextProvider = ({ children }) => {
     setToasts([toast])
   }, [setToasts])
 
-  const notification = {
-    success, error, warning, info
-  }
+  const notification = useMemo(() => ({
+    success,
+    error,
+    warning,
+    info,
+  }), [success, error, warning, info]);
 
   return (
     <ToastContext.Provider value={notification}>
