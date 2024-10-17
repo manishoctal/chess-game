@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { apiPut, apiDelete, apiPost } from "../../utils/apiFetch";
 import apiPath from "../../utils/apiPath";
-import { isEmpty, startCase } from "lodash";
+import { isEmpty } from "lodash";
 import { AiFillEdit, AiFillDelete, AiFillEye } from "react-icons/ai";
 import AuthContext from "context/AuthContext";
 import { useTranslation } from "react-i18next";
@@ -122,7 +122,7 @@ const Table = ({ FAQs, getAllFAQ, handelEdit, paginationObj, manager, pageSize, 
                   {FAQs?.map((item, i) => (
                     <Draggable key={item?.id} draggableId={item?.id} index={i}>
                       {(provides) => (
-                        <tr key={i} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700" ref={provides?.innerRef} {...provides?.draggableProps} {...provides?.dragHandleProps}>
+                        <tr key={item?._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700" ref={provides?.innerRef} {...provides?.draggableProps} {...provides?.dragHandleProps}>
                           <td className="py-4 px-6 border-r h-4 w-4">
                             <img src={movePng} alt="" style={{ height: "20px" }} />
                           </td>

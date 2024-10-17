@@ -16,7 +16,7 @@ import { GoDownload } from "react-icons/go";
 function FeedbackManager() {
   const { t } = useTranslation();
   const { logoutUser, notification, user ,updatePageName} = useContext(AuthContext);
-  const manager = user?.permission?.find((e) => e.manager === "feedback_manager" || "achievement_and_badges") ?? {};
+  const manager = user?.permission?.find((e) => e.manager === "feedback_manager") ?? {};
   const [paginationObj, setPaginationObj] = useState({
     page: 1,
     pageCount: 1,
@@ -26,7 +26,6 @@ function FeedbackManager() {
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
   const [isInitialized, setIsInitialized] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const [categoryAdd, setCategoryAdd] = useState(false);
   const [allCommunity, setAllCommunity] = useState([]);
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);

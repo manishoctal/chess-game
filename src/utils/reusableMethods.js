@@ -100,27 +100,29 @@ export const handleNumericInput = (event) => {
 
 let pressedKeys=[];
 export const handleKeyDownCashIn = e => {
-  pressedKeys.push(e.key)
-  var lastKey = pressedKeys[pressedKeys.length - 2]
+  pressedKeys.push(e.key);
+  const lastKey = pressedKeys[pressedKeys.length - 2]; // Changed var to const
 
-  const isInvalidKey = ['-', '+', 'e'].includes(e.key)
-  const isDotKey = e.key === '.'
+  const isInvalidKey = ['-', '+', 'e'].includes(e.key);
+  const isDotKey = e.key === '.';
 
   if (lastKey === '.') {
     if (isInvalidKey || isDotKey) {
-      e.preventDefault()
+      e.preventDefault();
     }
   } else if (isInvalidKey) {
-    e.preventDefault()
+    e.preventDefault();
   }
 
+  // Prevent entering more than two decimal places
   if (
     !['Backspace', 'Delete', 'Tab'].includes(e.key) &&
     e.target.value?.split('.')[1]?.length >= 2
   ) {
-    e.preventDefault()
+    e.preventDefault();
   }
-}
+};
+
 
 export const preventMaxHundred = e => {
   if (e.target.value > 100) {

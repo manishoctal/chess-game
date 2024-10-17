@@ -73,10 +73,6 @@ const StaticContent = () => {
   // view content function end
 
 
-  const staticStatusPage = e => {
-    setPage(1)
-    setFilterData({ ...filterData, status: e.target.value, isFilter: true })
-  }
   // get all static content start
 
   const getStaticContent = async () => {

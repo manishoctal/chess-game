@@ -3,7 +3,6 @@ import { useTranslation } from "react-i18next";
 import AuthContext from "context/AuthContext";
 import { isEmpty, startCase } from "lodash";
 import helpers from "../../utils/helpers";
-import OGameTableHead from "../../components/reusable/OTableHead";
 const Table = ({ gameType, manager, handelStatusChange }) => {
   const { t } = useTranslation();
   const { user, updatePageName } = useContext(AuthContext);
@@ -33,13 +32,12 @@ const Table = ({ gameType, manager, handelStatusChange }) => {
                     {t("O_STATUS")}
                   </th>
                 )
-                // <OGameTableHead name="O_STATUS" fieldName="status" classTd={" flex justify-center"} />
               }
             </tr>
           </thead>
           <tbody>
             {gameType?.map((item, i) => (
-              <tr key={i} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+              <tr key={item?._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                 <th scope="row" className="py-2 px-4 border-r dark:border-[#ffffff38] font-medium text-gray-900  dark:text-white">
                   {i + 1}
                 </th>

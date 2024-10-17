@@ -83,7 +83,7 @@ function SearchableDropdown({ searchTerm, setSearchTerm, setFilteredItems,placeh
                     <ul className="border border-t-0 absolute bg-white w-full z-10 max-h-80 overflow-auto">
                         {filteredItems?.length > 0 ? (
                             filteredItems?.map((item, index) => (
-                                <li key={index} className={`p-2 cursor-pointer hover:bg-gray-200 ${highlightedIndex === index ? 'highlighted bg-gray-300' : ''}`}
+                                <li className={`p-2 cursor-pointer hover:bg-gray-200 ${highlightedIndex === index ? 'highlighted bg-gray-300' : ''}`}
                                  onClick={() => {handleItemClick(item)}} ><small> <b className='mb-0'>{startCase(item?.name)}</b> <span className='block'>({item?.email + ',' + item?.mobile})</span></small></li> ))
                         ) : (
                             <li className="p-2 text-gray-500 px-2"><small>No results found</small></li>

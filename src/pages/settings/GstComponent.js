@@ -144,9 +144,6 @@ const GstComponent = ({saveSettingData}) => {
                 ))}
 
             </div>
-
-
-
           </div>
           {(manager?.add || user?.role === 'admin') && (
             <div className="text-center mt-8">

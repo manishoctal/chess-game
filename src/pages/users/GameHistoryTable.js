@@ -13,7 +13,6 @@ import { isEmpty, startCase } from "lodash";
 import ReactCountryFlag from "react-country-flag";
 import { GiHorseHead } from "react-icons/gi";
 
-
 function User() {
   const { t } = useTranslation();
   const location = useLocation();
@@ -39,14 +38,6 @@ function User() {
     setActiveTab(tab);
   };
 
-  // console.log("object", location?.state?._id);
-
-
-  const renderTableCell = (content, classNames) => (
-    <td className={classNames}>{content}</td>
-  );
-
-
   const [filterData, setFilterData] = useState({
     kyc: undefined,
     category: location?.state,
@@ -57,13 +48,8 @@ function User() {
     isReset: false,
     isFilter: false,
   });
-  const [sort, setSort] = useState({
-    sortBy: "createdAt",
-    sortType: "desc",
-  });
 
   const userResult = helpers?.ternaryCondition(activeTab === "Tab1", "casual", "monetary")
-
 
   const getAllUser = async () => {
     try {
@@ -71,10 +57,8 @@ function User() {
       const payload = {
         page,
         pageSize: pageSize,
-        sortKey: sort?.sortBy,
-        sortType: sort?.sortType,
       };
-      
+
       const path = `${apiPath.gameHistory}/${location?.state?._id}/${userResult}`;
       const result = await apiGet(path, payload);
       if (result?.data?.success) {
@@ -123,7 +107,7 @@ function User() {
 
   useEffect(() => {
     getAllUser();
-  }, [page, filterData, sort, pageSize, activeTab]);
+  }, [page, filterData, pageSize, activeTab]);
 
   // get all user end
   const dynamicPage = (e) => {
@@ -160,32 +144,6 @@ function User() {
     };
   }, [searchTerm]);
 
-  // const renderTableRows = () => {
-  //   return users?.map((item, i) => {
-  //     return (
-  //       <tr key={i} >
-  //         {renderTableCell(i + 1, "py-4 px-4 border-r border font-medium text-gray-900 dark:text-white dark:border-[#ffffff38]")}
-  //         {renderTableCell(helpers.ternaryCondition(item?.challengeId, `${item?.challengeId}`, "N/A"), "bg-white py-4 px-6 border-r border dark:border-[#ffffff38]")}
-
-  //         {renderTableCell(helpers.ternaryCondition(item?.time, `${item?.time} Min`, "N/A"), "bg-white py-4 px-6 border-r border dark:border-[#ffffff38]")}
-  //         {renderTableCell(item.name, "bg-white py-4 px-6 border-r border dark:border-[#ffffff38]")}
-  //         {renderTableCell(i + 1, "py-4 px-6 border-r border font-medium text-gray-900 dark:text-white dark:border-[#ffffff38]")}
-  //         {renderTableCell(item.userId, "bg-white py-4 px-6 border-r border dark:border-[#ffffff38]")}
-  //         {renderTableCell(item.name, "bg-white py-4 px-6 border-r border dark:border-[#ffffff38]")}
-  //         {renderTableCell(item.name, "bg-white py-4 px-6 border-r border dark:border-[#ffffff38]")}
-
-  //         {
-  //           activeTab === "Tab2" && <>  
-  //             {renderTableCell(item.name, "bg-white py-4 px-6 border-r border dark:border-[#ffffff38]")}
-  //             {renderTableCell(item.name, "bg-white py-4 px-6 border-r border dark:border-[#ffffff38]")}</>
-  //         }
-
-  //       </tr>
-  //     );
-
-  //   });
-  // };
-
   const showCreatorFlag = helpers?.countryFlag(item?.creatorDetails?.currency);
   const showAcceptorFlag = helpers?.countryFlag(item?.acceptorDetails?.currency);
 
@@ -195,186 +153,179 @@ function User() {
         <div className="px-3 py-4">
 
           <div className="bg-white border border-[#E9EDF9] rounded-lg dark:bg-slate-800 dark:border-[#ffffff38]">
-   
-
-          <div className="tabs-header flex items-center justify-between mb-10 p-5">
-         <Link aria-current="page" className="" to={-1}>
-            <FaCircleArrowLeft size={27} />
-          </Link> 
-            
-         <div className="flex items-center">
-         <button
-            className={` mr-4 text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150 ${activeTab === 'Tab1' ? 'bg-gradBlack' : 'bg-gradientTo'}`}
-            onClick={() => handleTabClick('Tab1')}
-          >
-            {t("CASUAL_CHALLENGE")}
-          </button>
-          <button
-            className={` text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 ease-linear transition-all duration-150 ${activeTab === 'Tab2' ? 'bg-gradBlack' : 'bg-gradientTo'}`}
-            onClick={() => handleTabClick('Tab2')}
-          >
-            {t("MONETARY_CHALLENGE")}
-          </button>
-         </div>
-
-        </div>
-
-      <div className="p-5">
-      <div className="overflow-x-auto relative rounded-lg border">
-          <table className="w-full text-xs text-left text-[#A5A5A5] dark:text-gray-400 ">
-            <thead className="text-xs text-gray-900 border border-[#E1E6EE] bg-[#E1E6EE] dark:bg-gray-700 dark:text-gray-400 dark:border-[#ffffff38]">
-              <tr>
-              <th scope="col" className="py-3 px-3">
-                  {t("S.NO")}
-                </th>
-                <th scope="col" className="py-3 px-3">
-                  {t("MATCH")}
-                </th>
 
 
-                <th scope="col" className="py-3 px-6 text-left">
-                  {t("TIME_FORMAT")}
-                </th>
+            <div className="tabs-header flex items-center justify-between mb-10 p-5">
+              <Link aria-current="page" className="" to={-1}>
+                <FaCircleArrowLeft size={27} />
+              </Link>
 
-
-                <th scope="col" className="py-3 px-6 text-left">
-                  {t("PLAYERS")}
-                </th>
-
-                <th scope="col" className="py-3 px-6 text-left">
-                  {t("RATING_LOSE_GAIN")}
-                </th>
-
-                <th scope="col" className="py-3 px-6 text-left">
-                  {t("RESULT")}
-                </th>
-
-                <th scope="col" className="py-3 px-6 text-left">
-                  {t("MOVES")}
-                </th>
-
-                <th scope="col" className="py-3 px-6 text-left">
-                  {t("DATE")}
-                </th>
-
-                {
-                  activeTab === "Tab2" && <> <th scope="col" className="py-3 px-6 text-left">
-                    {t("MONEY_AT_STACK")}
-                  </th>
-
-                    <th scope="col" className="py-3 px-6 text-left">
-                      {t("ADMIN_COMMISION")}
-                    </th></>
-                }
-
-              </tr>
-            </thead>
-            <tbody className='text-black'>
-                {
-                  users?.length > 0  && users?.map((item,i)=>{
-                    return   <tr key={i}>
-                       <th scope="row" className="py-4 px-6 border-r font-medium text-gray-900  dark:text-white">
-                    {i + 1 + pageSize * (paginationObj?.page - 1)}
-                  </th>
-                    <td className="py-2 px-4 border-r dark:border-[#ffffff38] pl-5">{helpers?.ternaryCondition(item?.challengeId, item?.challengeId, "N/A")}</td>
-          
-                  
-          <td className="py-2 px-4 border-r dark:border-[#ffffff38] pl-5">{helpers?.ternaryCondition(item?.time, `${item?.time} Min`, "N/A")}</td>
-          <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-left">
-          
-            <div>
-              <div className='flex items-center justify-center'>
-               {
-                helpers?.ternaryCondition(item?.creatorDetails?.userName,<div className='flex items-center'>
-                   <div className='flex items-center'>
-                  {
-                    helpers?.ternaryCondition(item?.acceptorSide === "white", <GiHorseHead className='text-black mr-3 text-2xl' />, <GiHorseHead className="mr-3 text-2xl text-gray-500" />)
-                  }
-                </div>
-                <span className='block'>
-                  {helpers?.ternaryCondition(item?.creatorDetails?.userName, startCase(item?.creatorDetails?.userName), "")}
-                  
-                  {helpers?.ternaryCondition(item?.challengeType==="casual", `(${item?.creatorDetails?.ratingCasual})`, `(0)`)}
-          
-                </span>
-          
-          
-                {
-                  helpers?.ternaryCondition(showCreatorFlag, <div className='ml-3 rounded-full overflow-hidden border dynamic-flag w-[30px] h-[30px]'>
-                    <ReactCountryFlag
-                      countryCode={showCreatorFlag}
-                      svg
-                      title={showCreatorFlag}
-                      className=''
-                    />
-                  </div>, "")
-                }
-                </div>,"N/A")
-               }
+              <div className="flex items-center">
+                <button
+                  className={` mr-4 text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150 ${activeTab === 'Tab1' ? 'bg-gradBlack' : 'bg-gradientTo'}`}
+                  onClick={() => handleTabClick('Tab1')}
+                >
+                  {t("CASUAL_CHALLENGE")}
+                </button>
+                <button
+                  className={` text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 ease-linear transition-all duration-150 ${activeTab === 'Tab2' ? 'bg-gradBlack' : 'bg-gradientTo'}`}
+                  onClick={() => handleTabClick('Tab2')}
+                >
+                  {t("MONETARY_CHALLENGE")}
+                </button>
               </div>
-              <div className='flex items-center justify-center mt-4'>
-                {helpers?.ternaryCondition(item?.acceptorDetails?.userName,   <div>
-               {
-                  helpers?.ternaryCondition(item?.acceptorSide === "white", <GiHorseHead className='mr-3 text-2xl text-gray-500' />, <GiHorseHead className='text-black mr-3 text-2xl' />)
-                }
-                <span className='block'>{helpers?.ternaryCondition(item?.acceptorDetails?.userName, startCase(item?.acceptorDetails?.userName), "")} 
-                  {helpers?.ternaryCondition(item?.challengeType==="casual", `(${item?.acceptorDetails?.ratingCasual})`, `(0)`)}
-                  </span>
-                {
-                  helpers?.ternaryCondition(showAcceptorFlag, <div className='ml-3 rounded-full overflow-hidden border dynamic-flag w-[30px] h-[30px]'>
-                    <ReactCountryFlag
-                      countryCode={showAcceptorFlag}
-                      svg
-                      title={showAcceptorFlag}
-                      className=''
-                    />
-                  </div>, "")
-                }
-               </div>, "N/A")}
-            
-              </div>
+
             </div>
-          
-          </td>
-          <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-left">{helpers?.ternaryCondition(item?.winnerDetails?.userName, `(${item?.winnerDetails?.userName})`, "N/A")}</td>
 
-          <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-left">{helpers?.ternaryCondition(item?.winnerDetails?.userName, `(${item?.winnerDetails?.userName})`, "N/A")}</td>
+            <div className="p-5">
+              <div className="overflow-x-auto relative rounded-lg border">
+                <table className="w-full text-xs text-left text-[#A5A5A5] dark:text-gray-400 ">
+                  <thead className="text-xs text-gray-900 border border-[#E1E6EE] bg-[#E1E6EE] dark:bg-gray-700 dark:text-gray-400 dark:border-[#ffffff38]">
+                    <tr>
+                      <th scope="col" className="py-3 px-3">
+                        {t("S.NO")}
+                      </th>
+                      <th scope="col" className="py-3 px-3">
+                        {t("MATCH")}
+                      </th>
 
-          <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-left">{helpers?.ternaryCondition(item?.totalMoves, item?.totalMoves, "N/A")}</td>
-          <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-left">{dayjs(item?.createdAt).format("DD-MMMM-YYYY")}</td>
-          
-          {
-            type === "monetary" && <>
-              <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-left">{helpers?.ternaryCondition(item?.winningAmount, item?.winningAmount, "N/A")}</td>
-              <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-left">{helpers?.ternaryCondition(item?.adminComission, item?.adminComission, "N/A")}</td>
-            </>
-          }
 
-          {
-            activeTab === "Tab2" && <> <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-left">{helpers?.formattedAmount(item?.moneyAtStack)}</td>
-          <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-left">{helpers?.formattedAmount(item?.adminCommission)}</td></>
-          }
-          
-         
+                      <th scope="col" className="py-3 px-6 text-left">
+                        {t("TIME_FORMAT")}
+                      </th>
 
+
+                      <th scope="col" className="py-3 px-6 text-left">
+                        {t("PLAYERS")}
+                      </th>
+
+                      <th scope="col" className="py-3 px-6 text-left">
+                        {t("RATING_LOSE_GAIN")}
+                      </th>
+
+                      <th scope="col" className="py-3 px-6 text-left">
+                        {t("RESULT")}
+                      </th>
+
+                      <th scope="col" className="py-3 px-6 text-left">
+                        {t("MOVES")}
+                      </th>
+
+                      <th scope="col" className="py-3 px-6 text-left">
+                        {t("DATE")}
+                      </th>
+
+                      {
+                        activeTab === "Tab2" && <> <th scope="col" className="py-3 px-6 text-left">
+                          {t("MONEY_AT_STACK")}
+                        </th>
+
+                          <th scope="col" className="py-3 px-6 text-left">
+                            {t("ADMIN_COMMISION")}
+                          </th></>
+                      }
 
                     </tr>
-          
-                  })
-                }
-        
-        {isEmpty(users) && (
-              <tr className="bg-white text-center border-b dark:bg-gray-800 dark:border-gray-700">
-                <td className="py-4 px-6 border-r" colSpan={12}>
-                  {t("O_NO_RECORD_FOUND")}
-                </td>
-              </tr>
-            )}
+                  </thead>
+                  <tbody className='text-black'>
+                    {
+                      users?.length > 0 && users?.map((item, i) => {
+                        return <tr key={item?._id}>
+                          <th scope="row" className="py-4 px-6 border-r font-medium text-gray-900  dark:text-white">
+                            {i + 1 + pageSize * (paginationObj?.page - 1)}
+                          </th>
+                          <td className="py-2 px-4 border-r dark:border-[#ffffff38] pl-5">{helpers?.ternaryCondition(item?.challengeId, item?.challengeId, "N/A")}</td>
+                          <td className="py-2 px-4 border-r dark:border-[#ffffff38] pl-5">{helpers?.ternaryCondition(item?.time, `${item?.time} Min`, "N/A")}</td>
+                          <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-left">
 
-          </tbody>
-          </table>
-        </div>
-      </div>
+                            <div>
+                              <div className='flex items-center justify-center'>
+                                {
+                                  helpers?.ternaryCondition(item?.creatorDetails?.userName, <div className='flex items-center'>
+                                    <div className='flex items-center'>
+                                      {
+                                        helpers?.ternaryCondition(item?.acceptorSide === "white", <GiHorseHead className='text-black mr-3 text-2xl' />, <GiHorseHead className="mr-3 text-2xl text-gray-500" />)
+                                      }
+                                    </div>
+                                    <span className='block'>
+                                      {helpers?.ternaryCondition(item?.creatorDetails?.userName, startCase(item?.creatorDetails?.userName), "")}
+
+                                      {helpers?.ternaryCondition(item?.challengeType === "casual", `(${item?.creatorDetails?.ratingCasual})`, `(0)`)}
+
+                                    </span>
+
+
+                                    {
+                                      helpers?.ternaryCondition(showCreatorFlag, <div className='ml-3 rounded-full overflow-hidden border dynamic-flag w-[30px] h-[30px]'>
+                                        <ReactCountryFlag
+                                          countryCode={showCreatorFlag}
+                                          svg
+                                          title={showCreatorFlag}
+                                          className=''
+                                        />
+                                      </div>, "")
+                                    }
+                                  </div>, "N/A")
+                                }
+                              </div>
+                              <div className='flex items-center justify-center mt-4'>
+                                {helpers?.ternaryCondition(item?.acceptorDetails?.userName, <div>
+                                  {
+                                    helpers?.ternaryCondition(item?.acceptorSide === "white", <GiHorseHead className='mr-3 text-2xl text-gray-500' />, <GiHorseHead className='text-black mr-3 text-2xl' />)
+                                  }
+                                  <span className='block'>{helpers?.ternaryCondition(item?.acceptorDetails?.userName, startCase(item?.acceptorDetails?.userName), "")}
+                                    {helpers?.ternaryCondition(item?.challengeType === "casual", `(${item?.acceptorDetails?.ratingCasual})`, `(0)`)}
+                                  </span>
+                                  {
+                                    helpers?.ternaryCondition(showAcceptorFlag, <div className='ml-3 rounded-full overflow-hidden border dynamic-flag w-[30px] h-[30px]'>
+                                      <ReactCountryFlag
+                                        countryCode={showAcceptorFlag}
+                                        svg
+                                        title={showAcceptorFlag}
+                                        className=''
+                                      />
+                                    </div>, "")
+                                  }
+                                </div>, "N/A")}
+
+                              </div>
+                            </div>
+
+                          </td>
+                          <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-left">{helpers?.ternaryCondition(item?.winnerDetails?.userName, `(${item?.winnerDetails?.userName})`, "N/A")}</td>
+                          <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-left">{helpers?.ternaryCondition(item?.winnerDetails?.userName, `(${item?.winnerDetails?.userName})`, "N/A")}</td>
+                          <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-left">{helpers?.ternaryCondition(item?.totalMoves, item?.totalMoves, "N/A")}</td>
+                          <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-left">{dayjs(item?.createdAt).format("DD-MMMM-YYYY")}</td>
+
+                          {
+                            type === "monetary" && <>
+                              <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-left">{helpers?.ternaryCondition(item?.winningAmount, item?.winningAmount, "N/A")}</td>
+                              <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-left">{helpers?.ternaryCondition(item?.adminComission, item?.adminComission, "N/A")}</td>
+                            </>
+                          }
+
+                          {
+                            activeTab === "Tab2" && <> <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-left">{helpers?.formattedAmount(item?.moneyAtStack)}</td>
+                              <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-left">{helpers?.formattedAmount(item?.adminCommission)}</td></>
+                          }
+
+                        </tr>
+
+                      })
+                    }
+
+                    {isEmpty(users) && (
+                      <tr className="bg-white text-center border-b dark:bg-gray-800 dark:border-gray-700">
+                        <td className="py-4 px-6 border-r" colSpan={12}>
+                          {t("O_NO_RECORD_FOUND")}
+                        </td>
+                      </tr>
+                    )}
+
+                  </tbody>
+                </table>
+              </div>
+            </div>
 
             <div className="flex justify-between">
               <PageSizeList dynamicPage={dynamicPage} pageSize={pageSize} />
@@ -385,11 +336,6 @@ function User() {
           </div>
         </div>
       </div>
-
-
-
-
-
     </div>
   );
 }

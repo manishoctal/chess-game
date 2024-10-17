@@ -3,9 +3,6 @@ import SharedLayout from "utils/SharedLayout";
 import { useTranslation } from "react-i18next";
 import SubAdmin from "pages/sub_admin/SubAdmin";
 import SubAdd from "pages/sub_admin/SubAdd";
-import BannerManager from "pages/banner_manager/Banner";
-import OfferManager from "pages/offer_manager/OfferManager";
-import ViewOfferManager from "pages/offer_manager/ViewOfferManager";
 import StaticContent from "pages/static_Contents/StaticContent";
 import AddStaticContent from "pages/static_Contents/AddStaticContent";
 import EditStaticContent from "pages/static_Contents/EditStaticContent";
@@ -24,17 +21,7 @@ import User from "pages/users/User";
 import UserView from "pages/users/UserView";
 import NotificationAdd from "pages/notification_manager/NotificationAdd";
 import AuthorizationRoute from "utils/AuthorizationRoute";
-import TradingQuestionManager from "pages/trading_question_manager/TradingQuestionManager";
-import ViewTradingQuestionManager from "pages/trading_question_manager/ViewTradingQuestionManager";
-import PlayerCardManager from "pages/player_card_manager/PlayerCardManager";
-import ViewPlayerCardManager from "pages/player_card_manager/ViewPlayerCard";
-import PlayerStockManager from "pages/player_stock_manager/PlayerStockManager";
-import ViewPlayerStockManager from "pages/player_stock_manager/ViewScoreManager";
 import GameType from "pages/game_type_manager/GameType";
-import SubscribedManager from "pages/subscribed_manager/SubscribedManager";
-import ViewSubscriptionManager from "pages/subscribed_manager/ViewSubscriptionManager";
-import AchievementBadges from "pages/achievement_and_badges/AchievementBadges";
-import ViewAchievementManager from "pages/achievement_and_badges/ViewAchievementManager";
 import GameHistoryTable from "pages/users/GameHistoryTable";
 import ViewCommunityModerator from "pages/community-moderator-manager/ViewCommunityModerator";
 import CommunityModeratorManager from "pages/community-moderator-manager/CommunityModeratorManager";
@@ -136,16 +123,6 @@ const AdminRoutes = {
       ),
       name: <UseChange data="GAME_TYPE_MANAGER" />,
     },
-    {
-      path: "/subscribed-manager",
-      element: (
-        <AuthorizationRoute>
-          {" "}
-          <SubscribedManager />
-        </AuthorizationRoute>
-      ),
-      name: <UseChange data="SUBSCRIBED_MANAGER" />,
-    },
 
     {
       path: "/feedback-manager",
@@ -177,125 +154,6 @@ const AdminRoutes = {
         </AuthorizationRoute>
       ),
       name: <UseChange data="NAV_TRANSACTION_MANAGER" />,
-    },
-
-
-    {
-      path: "/subscribed-manager/view",
-      element: (
-        <AuthorizationRoute>
-          <ViewSubscriptionManager />
-        </AuthorizationRoute>
-      ),
-      name: <UseChange data="VIEW_SUBSCRIPTION_MANAGER" />,
-    },
-
-    {
-      path: "/how-to-play-manager",
-      element: (
-        <AuthorizationRoute>
-          <BannerManager />
-        </AuthorizationRoute>
-      ),
-      name: <UseChange data="HOW_TO_PLAY_MANAGER" />,
-    },
-
-    {
-      path: "/offer-manager",
-      element: (
-        <AuthorizationRoute>
-          <OfferManager />
-        </AuthorizationRoute>
-      ),
-      name: <UseChange data="OFFER_MANAGER" />,
-    },
-
-    {
-      path: "/offer-manager/view",
-      element: (
-        <AuthorizationRoute>
-          <ViewOfferManager />
-        </AuthorizationRoute>
-      ),
-      name: <UseChange data="VIEW_OFFER_MANAGER" />,
-    },
-    {
-      path: "/achievement-and-badges",
-      element: (
-        <AuthorizationRoute>
-          <AchievementBadges />
-        </AuthorizationRoute>
-      ),
-      name: <UseChange data="ACHIEVEMENT_AND_BADGES" />,
-    },
-    {
-      path: "/achievement-and-badges/view",
-      element: (
-        <AuthorizationRoute>
-          <ViewAchievementManager />
-        </AuthorizationRoute>
-      ),
-      name: <UseChange data="ACHIEVEMENT_AND_BADGES" />,
-    },
-
-    {
-      path: "/trading-question-manager",
-      element: (
-        <AuthorizationRoute>
-          <TradingQuestionManager />
-        </AuthorizationRoute>
-      ),
-      name: <UseChange data="TRADING_QUESTION_MANAGER" />,
-    },
-
-    {
-      path: "/trading-question-manager/view",
-      element: (
-        <AuthorizationRoute>
-          <ViewTradingQuestionManager />
-        </AuthorizationRoute>
-      ),
-      name: <UseChange data="VIEW_TRADING_QUESTION_MANAGER" />,
-    },
-
-    {
-      path: "/player-card-manager",
-      element: (
-        <AuthorizationRoute>
-          <PlayerCardManager />
-        </AuthorizationRoute>
-      ),
-      name: <UseChange data="PLAYER_CARD_MANAGER" />,
-    },
-
-    {
-      path: "/player-card-manager/view",
-      element: (
-        <AuthorizationRoute>
-          <ViewPlayerCardManager />
-        </AuthorizationRoute>
-      ),
-      name: <UseChange data="VIEW_PLAYER_CARD_MANAGER" />,
-    },
-
-    {
-      path: "/player-stock-manager",
-      element: (
-        <AuthorizationRoute>
-          <PlayerStockManager />
-        </AuthorizationRoute>
-      ),
-      name: <UseChange data="PLAYER_STOCK_MANAGER" />,
-    },
-
-    {
-      path: "/player-stock-manager/view",
-      element: (
-        <AuthorizationRoute>
-          <ViewPlayerStockManager />
-        </AuthorizationRoute>
-      ),
-      name: <UseChange data="VIEW_PLAYER_STOCK_MANAGER" />,
     },
 
     {

@@ -14,6 +14,7 @@ const NotificationTable = ({ notifications, paginationObj, sort, setSort, pageSi
     setShowSpecificUser(!showSpecificUser)
     setNotificationUser(item)
   }
+  console.log("notifications",notifications)
   return (
     <div className="p-3">
       <div className="overflow-x-auto relative rounded-lg border">
@@ -32,7 +33,7 @@ const NotificationTable = ({ notifications, paginationObj, sort, setSort, pageSi
           <tbody>
             {notifications && notifications?.length > 0 &&
               notifications?.map((item, i) => (
-                <tr key={i} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                <tr key={item?._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                   <th scope="row" className="py-4 px-6 border-r font-medium text-gray-900  dark:text-white">
                     {i + 1 + pageSize * (paginationObj?.page - 1)}
                   </th>

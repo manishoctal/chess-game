@@ -3,12 +3,10 @@ import dayjs from "dayjs";
 import { useTranslation } from "react-i18next";
 import AuthContext from "context/AuthContext";
 import { isEmpty } from "lodash";
-import helper from "../../utils/helpers";
 import { Link } from "react-router-dom";
 import { AiFillEdit } from "react-icons/ai";
-import OEmailTableHead from "../../components/reusable/OTableHead";
 
-const Table = ({ emailTemplate, page, manager, handelStatusChange }) => {
+const Table = ({ emailTemplate, page, manager }) => {
   const { t } = useTranslation();
   const { user } = useContext(AuthContext);
 
@@ -34,9 +32,6 @@ const Table = ({ emailTemplate, page, manager, handelStatusChange }) => {
 
               {(manager?.add || user?.role === "admin") && (
                 <>
-                  {/* <th scope="col" className="py-3 px-3 text-center">
-                    {t("O_STATUS")}
-                  </th> */}
                   <th scope="col" className="py-3 px-6 text-center">
                     {t("O_ACTION")}
                   </th>
@@ -46,7 +41,7 @@ const Table = ({ emailTemplate, page, manager, handelStatusChange }) => {
           </thead>
           <tbody>
             {emailTemplate?.map((item, i) => (
-              <tr key={i} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+              <tr key={item?._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                 <th scope="row" className="py-2 px-4 border-r dark:border-[#ffffff38] font-medium text-gray-900  dark:text-white">
                   {i + 1 + 10 * (page - 1)}
                 </th>
@@ -56,17 +51,6 @@ const Table = ({ emailTemplate, page, manager, handelStatusChange }) => {
 
                 {(manager?.add || manager?.edit || user?.role === "admin") && (
                   <>
-                    {/* <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-center">
-                      <label className="inline-flex relative items-center cursor-pointer" title={`${item?.status === "active" ? "Active" : "Inactive"}`}>
-                        <input
-                          type="checkbox"
-                          className="sr-only peer"
-                          checked={item?.status === "active"}
-                          onChange={(e) => helper.alertFunction(`${t("ARE_YOU_SURE_YOU_WANT_TO")} ${e.target.checked ? "active" : "inactive"} '${item.title}'?`, item, handelStatusChange)}
-                        />
-                        <div className="w-10 h-5 bg-gray-200 rounded-full peer peer-focus:ring-0 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-gradientTo" />
-                      </label>
-                    </td> */}
                     <td className="py-2 px-4 border-l">
                       <div className="">
                         <ul className="flex justify-center">

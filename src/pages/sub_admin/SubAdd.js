@@ -325,7 +325,7 @@ const SubAdd = () => {
                 <tbody>
                   {permissionJons?.map((data, i) => (
                     
-                    <tr key={i} className="bg-white border-b  dark:bg-gray-800 dark:border-gray-700">
+                    <tr key={data?._id} className="bg-white border-b  dark:bg-gray-800 dark:border-gray-700">
                       <td className="py-2 px-4 border-r dark:border-[#ffffff38] ">{helpers.ternaryCondition(data.manager === "FAQ", "FAQ", capitalize(startCase(data.manager)))}</td>
                       <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-center">
                         {helpers.andOperator(data?.shownView, <input type="checkbox" name={data?.manager} id="view" checked={data.view} onChange={onChange} disabled={item?.type === "view"} />)}

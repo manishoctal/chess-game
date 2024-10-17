@@ -66,8 +66,8 @@ const SpecifiUserPopup = ({ handleSpecificUser, viewUser,notificationUser }) => 
                     </thead>
                     <tbody>
                       {
-                        userList && userList?.length > 0 && userList?.map((item, i) => {
-                          return <tr className="bg-white text-center border-b dark:bg-gray-800 dark:border-gray-700" key={i}>
+                        userList && userList?.length > 0 && userList?.map((item) => {
+                          return <tr className="bg-white text-center border-b dark:bg-gray-800 dark:border-gray-700" key={item?._id}>
                             <td className="py-2 px-4 border-r dark:border-[#ffffff38]"
 
                             >

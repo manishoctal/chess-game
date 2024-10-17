@@ -6,9 +6,8 @@ import { isEmpty } from "lodash";
 import AuthContext from "context/AuthContext";
 import { Link } from "react-router-dom";
 import OStaticTableHead from "../../components/reusable/OTableHead";
-import helpers from "utils/helpers";
 
-const StaticContentList = ({ countryList, page, handleEdit, sort, setSort, handelStatusChange, manager }) => {
+const StaticContentList = ({ countryList, page, handleEdit, sort, setSort, manager }) => {
   const { t } = useTranslation();
   const { user } = useContext(AuthContext);
   const { updatePageName } = useContext(AuthContext);
@@ -16,6 +15,7 @@ const StaticContentList = ({ countryList, page, handleEdit, sort, setSort, hande
   useEffect(() => {
     updatePageName(t("NAV_STATIC_CONTENTS"));
   }, []);
+
   return (
     <div>
       <div className="p-3">
@@ -35,7 +35,7 @@ const StaticContentList = ({ countryList, page, handleEdit, sort, setSort, hande
             <tbody>
               {countryList.map((item, i) => {
                 return (
-                  <tr key={i} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                  <tr key={item?._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                     <th scope="row" className="py-2 px-4 border-r dark:border-[#ffffff38] font-medium text-gray-900  dark:text-white">
                       {i + 1 + 10 * (page - 1)}
                     </th>
@@ -47,9 +47,9 @@ const StaticContentList = ({ countryList, page, handleEdit, sort, setSort, hande
                           <ul className="flex justify-center">
                             {item?.slug !== "faq" ? (
                               <li onClick={() => handleEdit(item)} className="px-2 py-2 hover:bg-white hover:text-gradientTo">
-                                <a title="Edit" className="hover:text-blue-700 transition duration-150 ease-in-out" data-bs-toggle="tooltip">
+                                <Link title="Edit" className="hover:text-blue-700 transition duration-150 ease-in-out" data-bs-toggle="tooltip">
                                   <AiFillEdit className="cursor-pointer w-5 h-5 text-slate-600" />
-                                </a>
+                                </Link>
                               </li>
                             ) : (
                             
