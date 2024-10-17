@@ -63,7 +63,7 @@ const WithdrawalRequestTable = ({ allCommunity, paginationObj, sort, setSort, pa
               <ONotificationTableHead sort={sort} setSort={setSort} name="O_EMAIL_ID" fieldName="user.email" classTd={"justify-center"} />
               <ONotificationTableHead sort={sort} setSort={setSort} name="O_COUNTRY_CODE" fieldName="user.countryCode" classTd={"justify-center"} />
               <ONotificationTableHead sort={sort} setSort={setSort} name="O_MOBILE" fieldName="user.mobile" classTd={"justify-center"} />
-              <ONotificationTableHead sort={sort} setSort={setSort} name="TOTAL_BALANCE" fieldName="user.totalAmount" classTd={"justify-center"} />
+              <ONotificationTableHead sort={sort} setSort={setSort} name="TOTAL_BALANCE" fieldName="createdAt" classTd={"justify-center"} />
               <ONotificationTableHead sort={sort} setSort={setSort} name="REQUESTED_AMOUNT" fieldName="amount" classTd={"justify-center"} />
               <th scope="col" className="py-3 px-6 text-center">
                 {t("REMAINING_AMOUNT")}
