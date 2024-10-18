@@ -28,10 +28,9 @@ const TransactionTable = ({ users, page, setSort, sort, pageSize,handleUserViewP
   }, []);
 
   const getDisplayName = (dataRecord) => {
-    
     return <NavLink
     onClick={() => handleUserViewPage(dataRecord)}
-     to={`/users/view/${dataRecord?._id}`}
+     to={`/users/view/${dataRecord?.user?._id}`}
      state={{ ...dataRecord }}
      className="px-2 py-2 hover:text-black"
    >

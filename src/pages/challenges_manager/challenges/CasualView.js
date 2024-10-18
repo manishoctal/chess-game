@@ -114,7 +114,10 @@ const CasualView = () => {
       </div>
 
 
-      <div className="overflow-x-auto relative rounded-lg border">
+     <div className='border overflow-hidden rounded-lg'>
+     <header className="border-b  py-2 px-4 bg-gray-100 rounded-t-md dark:bg-gray-800 mb-4"><div className="font-semibold dark:text-white">Match Detail</div></header>
+
+     <div className="overflow-x-auto relative rounded-lg ">
         <table className="w-full text-sm text-left text-[#A5A5A5] dark:text-gray-400 ">
           <thead className="text-xs text-gray-900 border border-[#E1E6EE] bg-[#E1E6EE] dark:bg-gray-700 dark:text-gray-400 dark:border-[#ffffff38]">
             <tr>
@@ -245,6 +248,8 @@ const CasualView = () => {
           </tbody>
         </table>
       </div>
+     </div>
+
 
     </div>
   );
