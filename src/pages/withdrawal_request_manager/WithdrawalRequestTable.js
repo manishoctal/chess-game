@@ -87,7 +87,7 @@ const WithdrawalRequestTable = ({ allCommunity, paginationObj, sort, setSort, pa
                 const remainingAmount = item?.user?.totalAmount * matchedRate?.USD;
                 const totalAmount = reqeustedAmount + remainingAmount;
                 return (
-                  <tr key={i} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                  <tr key={allCommunity?._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                     <th scope="row" className="py-4 px-6 border-r font-medium text-gray-900  dark:text-white">
                       {i + 1 + pageSize * (paginationObj?.page - 1)}
                     </th>

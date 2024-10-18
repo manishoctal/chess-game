@@ -80,7 +80,7 @@ const CasualTable = ({
       const itemStatus = getStatus(item?.scheduleDateTime, item?.expiryScheduleDateTime);
 
       return (
-        <tr key={i} className={rowClassName}>
+        <tr key={users?._id} className={rowClassName}>
           {renderTableCell(i + 1 + pageSize * (page - 1), "py-4 px-3 border-r border  font-medium text-gray-900  dark:text-white dark:border-[#ffffff38]")}
           {renderTableCell(getDisplayUserId(item), "bg-white py-4 px-4 border-r border  dark:border-[#ffffff38]")}
           {renderTableCell(getDisplayName(item), "bg-white py-4 px-4 border-r border  dark:border-[#ffffff38]")}
