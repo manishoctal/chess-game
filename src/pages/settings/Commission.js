@@ -19,7 +19,7 @@ const Commission = ({ saveSettingData }) => {
         setValue,
         setError,
         watch,
-        trigger,
+        trigger,clearErrors,
         formState: { isDirty, errors },
     } = useForm({
         mode: 'onChange',
@@ -34,7 +34,6 @@ const Commission = ({ saveSettingData }) => {
     const manager = user?.permission?.find((e) => e.manager === 'settings') ?? {};
     const notification = useToastContext();
     const [settingChangeLoading, setSettingChangeLoading] = useState(false);
-    console.log("touchedFields", isDirty)
 
     const validationFields = {
 
@@ -47,6 +46,8 @@ const Commission = ({ saveSettingData }) => {
                 value: 0.01,
                 message: 'Minimum value must is 0.01.'
             },
+            valueAsNumber: true,
+            validate: (value) => value < watch('moneyStake1') || t("MIN_VALUE_MUST_BE_LESS_THAN_MONEY_STACK"),
 
         },
 
@@ -71,6 +72,8 @@ const Commission = ({ saveSettingData }) => {
                 value: 0.01,
                 message: 'Minimum value must is 0.01.'
             },
+            valueAsNumber: true,
+            validate: (value) => value < watch('moneyStake2') || t("MIN_VALUE_MUST_BE_LESS_THAN_MONEY_STACK"),
 
         },
 
@@ -137,7 +140,6 @@ const Commission = ({ saveSettingData }) => {
     },[])
 
 
-
     return (
         <div>
             <div>
@@ -161,6 +163,7 @@ const Commission = ({ saveSettingData }) => {
                                 placeholder=" "
                                 {...register('firstCommission', {
                                     required: 'Please select a commission type',
+                                    onChange: (e) => {setValue("adminCommisionfirst","");clearErrors("adminCommisionfirst")} 
                                 })}
                             >
                                 <option value="">Select Commission Type</option>
@@ -244,6 +247,7 @@ const Commission = ({ saveSettingData }) => {
                                 placeholder=" "
                                 {...register('secondCommision', {
                                     required: 'Please select a commission type',
+                                    onChange: (e) => {setValue("adminCommission3","");clearErrors("adminCommission3")} 
                                 })}
                             >
                                 <option value="">Select Commission Type</option>

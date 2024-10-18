@@ -14,9 +14,9 @@ export const validations = {
 }
 
 export const preventMaxInput = (e, limit) => {
-  e.target.value = e.target.value.trimStart()
-  e.target.value = e.target.value.replace(/  +/g, ' ')
+  e.target.value = e.target.value.trimStart();
+    e.target.value = e.target.value.replace(/ {2,}/g, ' ');
   if (e.target.value.length > limit) {
-    e.target.value = e.target.value.slice(0, limit)
+    e.target.value = e.target.value.slice(0, limit);
   }
-}
+};

@@ -191,6 +191,7 @@ const SubAdd = () => {
     );
   };
   let itemType = helpers.ternaryCondition(item?.type === "edit", t("O_EDIT"), t("O_ADD"));
+  
   const renderInputField = (autoFocus, name, label, maxLength, validation, disable, placeholder, greyClass) => (
     <div>
       <OInputField

@@ -92,9 +92,8 @@ const Sidebar = () => {
   };
 
   if (!user) {
-    <></>;
+    return <></>;
   }
-
   return (
     <div className={`shadow-lg sidebar lg:block z-10   ${sidebarStatus === "open" ? "block" : "sidebarHide"} bg-gradient-to-t from-gradpurple to-gradientFrom w-[220px] xl:w-[280px] fixed h-full overflow-y-auto`}>
       <div className="text-sideBarNavColor">
