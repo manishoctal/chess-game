@@ -39,17 +39,21 @@ const Commission = ({ saveSettingData }) => {
 
         adminCommisionfirst: {
             required: {
-                value: true,
-                message: "Please enter admin commission.",
+              value: true,
+              message: "Please enter admin commission.",
             },
             min: {
-                value: 0.01,
-                message: 'Minimum value must is 0.01.'
+              value: 0.01,
+              message: 'Minimum value must be 0.01.',
             },
             valueAsNumber: true,
-            validate: (value) => value < watch('moneyStake1') || t("MIN_VALUE_MUST_BE_LESS_THAN_MONEY_STACK"),
-
-        },
+            validate: (value) => {
+              if (watch("firstCommission") === 'fixed') {
+                return value < watch('moneyStake1') || t("MIN_VALUE_MUST_BE_LESS_THAN_MONEY_STACK");
+              }
+              return true;
+            },
+          },
 
         moneyStake1: {
             required: {
@@ -73,7 +77,12 @@ const Commission = ({ saveSettingData }) => {
                 message: 'Minimum value must is 0.01.'
             },
             valueAsNumber: true,
-            validate: (value) => value < watch('moneyStake2') || t("MIN_VALUE_MUST_BE_LESS_THAN_MONEY_STACK"),
+            validate: (value) => {
+                if (watch("secondCommision") === 'fixed') {
+                  return value < watch('moneyStake2') || t("MIN_VALUE_MUST_BE_LESS_THAN_MONEY_STACK");
+                }
+                return true;
+              },
 
         },
 
@@ -145,13 +154,13 @@ const Commission = ({ saveSettingData }) => {
             <div>
                 {/* Commission Type 1 */}
 
-                <h2 className='text-2xl mb-6 font-medium'>Commission</h2>
+                <h2 className='text-xl mb-6 font-medium mt-5'>Commission</h2>
 
                 <div className="mb-4">
                     <div className="flex ">
                         <div className='mr-3'>
                             <h3 className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
-                                Set commission type
+                                Set Commission Type
                             </h3>
 
                             <select
@@ -197,10 +206,10 @@ const Commission = ({ saveSettingData }) => {
                             <h3 className="mb-2 h-[20px] block text-sm font-medium text-gray-900 dark:text-white">
                             </h3>
                             <div className='flex items-center border border-gray-300 rounded-lg overflow-hidden money-stack-input'>
-                                <h3 className="block text-sm font-medium text-gray-900 dark:text-white w-[200px]">
+                                <h3 className="block text-sm font-medium text-gray-900 dark:text-white w-[214px]">
                                     <div className="bg-[#EFEFEF] border-r text-[#686868] text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     >
-                                        If money stake &lt;
+                                        If Money Stake &lt;
                                     </div>
                                 </h3>
                          
@@ -235,7 +244,7 @@ const Commission = ({ saveSettingData }) => {
                     <div className="flex">
                         <div className='mr-3'>
                             <h3 className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
-                                Set commission type
+                                Set Commission Type
                             </h3>
 
                             <select
@@ -284,7 +293,7 @@ const Commission = ({ saveSettingData }) => {
                             <h3 className="mb-2 h-[20px] block text-sm font-medium text-gray-900 dark:text-white">
                             </h3>
                             <div className='flex items-center border border-gray-300 rounded-lg overflow-hidden money-stack-input'>
-                                <h3 className="block text-sm font-medium text-gray-900 dark:text-white  w-[200px]">
+                                <h3 className="block text-sm font-medium text-gray-900 dark:text-white  w-[214px]">
                                     <div className="bg-[#EFEFEF] border-r text-[#686868] text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     >
                                         If money stake &gt;

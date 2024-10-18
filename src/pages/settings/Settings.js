@@ -197,7 +197,7 @@ const Settings = () => {
           <div className="bg-white py-6 px-4  rounded-b-md dark:bg-gray-800 dark:text-white">
             <main className="justify-center flex-wrap grid lg:grid-cols-1 md:grid-cols-3 sm:grid-cols-2 grid-cols-1  gap-4">
 
-              <div className="grid grid-cols-3 gap-x-5 border p-5 rounded-md">
+              <div className="grid grid-cols-4 gap-x-5 border p-5 rounded-md">
 
                 <div className="mb-4">
                   <OInputField

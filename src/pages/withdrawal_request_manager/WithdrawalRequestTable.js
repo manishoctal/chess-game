@@ -101,7 +101,7 @@ const WithdrawalRequestTable = ({ allCommunity, paginationObj, sort, setSort, pa
                     <td className="py-4 px-6 border-r text-center">{helpers.formattedAmount(reqeustedAmount)}</td>
                     <td className="py-4 px-6 border-r text-center">{helpers.formattedAmount(remainingAmount)}</td>
                     <td className="py-4 px-6 border-r text-center">{helpers.getDateAndTime(item?.createdAt)}</td>
-                    <td className={`py-4 px-6 border-r text-center ${!item?.status === "accepted" ? "text-green-500" : helpers?.ternaryCondition(item?.status === "rejected" , "text-red-500" , "text-gray-600")}`}>
+                    <td className={`py-4 px-6 border-r text-center ${item?.status =="accepted" ? "text-green-500" : helpers?.ternaryCondition(item?.status === "rejected" , "text-red-500" , "text-gray-600")}`}>
                       <strong>{helpers?.ternaryCondition(item?.status, startCase(item?.status), "N/A")}</strong>
                     </td>
                     <td className="py-4 px-3 border-r text-center ">{item?.status === "pending" && getTimeDifference(item?.expiryTime)}</td>

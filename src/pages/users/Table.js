@@ -226,30 +226,18 @@ const Table = ({
 
 
           {renderTableCell(helpers.ternaryCondition(item?.email, helpers?.ternaryCondition(item?.email,
-            
-          //   <div class="relative group">
-          //   <span> {item?.email}</span>
-          //   <div class="font-medium absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 w-max px-2 py-1 bg-black text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-          //     {item?.isEmailVerified == "1" ? "Verified" : "Not Verified"}
-          //   </div>
-          // </div>
-          
 
-          <div className="flex items-center" title={`${helpers?.ternaryCondition(item?.isEmailVerified == "1", "Verified", "Not Verified")}`}>
+            <div className="flex items-center" title={`${helpers?.ternaryCondition(item?.isEmailVerified == "1", "Verified", "Not Verified")}`}>
               <span className={`${item?.isEmailVerified == "1" ? "text-green-700" : "text-red-600"} text-xl mr-1`}>
-            {/* {item?.isEmailVerified == "1" ? "Verified" : "Not Verified"} */}
-            {item?.isEmailVerified == "1" ? <IoIosCheckmarkCircle/>
- : <MdCancel />
-}
-            </span>
-            <span className=""> {item?.email}</span>
-          
-              
-          </div>
+                {item?.isEmailVerified == "1" ? <IoIosCheckmarkCircle />
+                  : <MdCancel />
+                }
+              </span>
+              <span className=""> {item?.email}</span>
+            </div>
 
-          
-          , "N/A"), "N/A"), "bg-white py-2 px-4 border-r border  dark:border-[#ffffff38] font-bold text-slate-900")}
-          {renderTableCell(helpers.ternaryCondition(item?.countryCode, `+ ${item?.countryCode}`, "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38]  font-bold")}
+            , "N/A"), "N/A"), "bg-white py-2 px-4 border-r border  dark:border-[#ffffff38] font-bold text-slate-900")}
+          {renderTableCell(helpers.ternaryCondition(item?.countryCode, `+${item?.countryCode}`, "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38]  font-bold")}
           {renderTableCell(helpers.ternaryCondition(item?.mobile, item?.mobile, "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38]  font-bold")}
           {renderCommonTableCells(item)}
           {renderTableCell(helpers.ternaryCondition(item?.ratingMonetary, item?.ratingMonetary, "0"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38]  font-bold")}

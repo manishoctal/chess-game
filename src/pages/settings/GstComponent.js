@@ -107,8 +107,8 @@ const GstComponent = ({saveSettingData}) => {
                     {t("GST_TIME_OF_DEPOSIT")}
                 </h2>
 
-                {countries.map((country, index) => (
-                    <div className="flex" key={index}>
+                {countries.map((country) => (
+                    <div className="flex" key={country}>
                         <span className="mr-5 mt-3 w-[150px]">{country}</span>
                         <ReusableInputField
                             id={`${country.toLowerCase()}Country`}
@@ -130,8 +130,8 @@ const GstComponent = ({saveSettingData}) => {
                 </h2>
 
 
-            {countries.map((country, index) => (
-                    <div className="flex" key={index}>
+            {countries.map((country) => (
+                    <div className="flex" key={country}>
                         <span className="mr-5 mt-3 w-[150px]">{country}</span>
                         <ReusableInputField
                             id={`${country.toLowerCase()}CountryTds`}

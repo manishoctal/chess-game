@@ -1,10 +1,11 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useMemo, useCallback } from "react";
 import jwtDecode from "jwt-decode";
 import { pick } from "lodash";
 import { useNavigate } from "react-router-dom";
 import useToastContext from "hooks/useToastContext";
 import { apiPost } from "../utils/apiFetch";
 import apiPath from "../utils/apiPath";
+
 const AuthContext = createContext();
 
 export default AuthContext;
@@ -25,20 +26,25 @@ export const AuthProvider = ({ children }) => {
     selectThree: "",
   });
 
-  const updatePageName = (name) => {
+  // Memoizing updatePageName function
+  const updatePageName = useCallback((name) => {
     window?.localStorage.setItem("pageName", name);
     setPageName(name);
-  };
+  }, []);  // Memoized function
 
-  const cipher = (salt) => {
+  // Memoizing cipher function
+  const cipher = useCallback((salt) => {
     const textToChars = (text) => text.split("").map((c) => c.charCodeAt(0));
     const byteHex = (n) => ("0" + Number(n).toString(16)).slice(-2);
     const applySaltToChar = (code) => textToChars(salt).reduce((a, b) => a ^ b, code);
 
     return (text) => text.split("").map(textToChars).map(applySaltToChar).map(byteHex).join("");
-  };
+  }, []);
+
   const myCipher = cipher("mySecretSalt");
-  const loginUser = async (body, setLoginError) => {
+
+  // Memoizing loginUser function
+  const loginUser = useCallback(async (body, setLoginError) => {
     document.getElementById("loader").classList.remove("hidden");
     const { status, data } = await apiPost(apiPath.loginUser, pick(body, ["email", "password"]));
     if (status === 200) {
@@ -70,9 +76,10 @@ export const AuthProvider = ({ children }) => {
       }
     }
     document.getElementById("loader").classList.add("hidden");
-  };
+  }, [navigate, notification, myCipher]);
 
-  const updateProfile = async (formData) => {
+  // Memoizing updateProfile function
+  const updateProfile = useCallback(async (formData) => {
     try {
       const res = await apiPost(apiPath.editProfile, formData);
       const token = res?.data?.results?.token || null;
@@ -88,23 +95,26 @@ export const AuthProvider = ({ children }) => {
     } catch (err) {
       console.error("err:", err);
     }
-  };
+  }, [notification]);
 
-  const handleSidebar = () => {
+  // Memoizing handleSidebar function
+  const handleSidebar = useCallback(() => {
     const s1 = window?.localStorage.getItem("sidebar");
     window?.localStorage.setItem("sidebar", s1 === "open" ? "close" : "open");
     setSidebarStatus(s1 === "open" ? "close" : "open");
-  };
+  }, []);
 
-  const logoutUser = () => {
+  // Memoizing logoutUser function
+  const logoutUser = useCallback(() => {
     setUser(null);
     window?.localStorage.removeItem("token");
     window?.localStorage.removeItem("refresh_token");
     navigate("/login");
     notification.success("Logout Successfully.");
-  };
+  }, [navigate, notification]);
 
-  const filterUpdate = (data) => {
+  // Memoizing filterUpdate function
+  const filterUpdate = useCallback((data) => {
     setPageFilter({
       keyword: data?.searchKey,
       startDate: data?.startDate,
@@ -113,9 +123,10 @@ export const AuthProvider = ({ children }) => {
       selectTwo: data?.selectTwo,
       selectThree: data?.selectThree,
     });
-  };
+  }, []);
 
-  const contextData = {
+  // Memoizing contextData object with all functions
+  const contextData = useMemo(() => ({
     user,
     loginUser,
     logoutUser,
@@ -127,6 +138,7 @@ export const AuthProvider = ({ children }) => {
     loginMessage,
     pageFilter,
     filterUpdate,
-  };
+  }), [user, loginUser, logoutUser, updateProfile, sidebarStatus, handleSidebar, pageName, updatePageName, loginMessage, pageFilter, filterUpdate]);
+
   return <AuthContext.Provider value={contextData}>{children}</AuthContext.Provider>;
 };
