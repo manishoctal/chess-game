@@ -13,7 +13,6 @@ import ReactQuill from 'react-quill'
 import { useLocation, useNavigate } from 'react-router'
 import { FaEdit } from 'react-icons/fa'
 import { IoCaretBackCircleOutline } from 'react-icons/io5'
-import helpers from 'utils/helpers'
 
 // Move QuillEditor component outside the AddEditEmail component
 const QuillEditor = ({ name, controlField, defaultValue, placeholder, readOnly }) => {

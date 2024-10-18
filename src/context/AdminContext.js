@@ -1,15 +1,19 @@
-import React, { createContext } from 'react'
-const AdminContext = createContext()
+import React, { createContext, useMemo } from 'react';
+
+const AdminContext = createContext();
 
 export const AdminContextProvider = ({ children }) => {
-  const adminData = {
-  }
+  const adminData = useMemo(() => {
+    return {
+
+    };
+  }, []); 
 
   return (
     <AdminContext.Provider value={adminData}>
       {children}
     </AdminContext.Provider>
-  )
+  );
 }
 
-export default AdminContext
+export default AdminContext;
