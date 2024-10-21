@@ -128,14 +128,16 @@ function Transaction() {
 
   const onCsvDownload = async () => {
     try {
-      const { transactionType, startDate, endDate, searchkey, status } = filterData;
+      const { transactionType, startDate, endDate, searchKey, userId } = filterData;
       const payload = {
+        keyword: helpers.normalizeSpaces(searchKey) || null,
+        sortKey: sort?.sortBy,
+        sortType: sort?.sortType,
         startDate: startDate ? dayjs(startDate).format("YYYY-MM-DD") : null,
+        page,
+        pageSize: pageSize,
         endDate: endDate ? dayjs(endDate).format("YYYY-MM-DD") : null,
-        sortBy: sort.sortBy,
-        sortType: sort.sortType,
-        keyword: helpers.normalizeSpaces(searchkey) || null,
-        status,
+        userId: userId || null,
       };
 
       if (transactionType && transactionType !== undefined) {

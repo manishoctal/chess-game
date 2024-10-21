@@ -171,15 +171,18 @@ function WithdrawalRequestManager() {
   const onCsvDownload = async () => {
 
     try {
-      const { startDate, endDate, searchkey, status } = filterData;
+      const { startDate, endDate, searchkey, community, category } = filterData;
 
       const payload = {
-        status,
-        startDate: startDate ? dayjs(startDate).format("YYYY-MM-DD") : null,
-        endDate: endDate ? dayjs(endDate).format("YYYY-MM-DD") : null,
-        sortBy: sort.sortBy,
-        keyword: helpers.normalizeSpaces(searchkey) || null,
+        pageSize,
+        status:category,
         sortType: sort.sortType,
+        page,
+        community,
+        keyword: helpers.normalizeSpaces(searchkey) || null,
+        endDate: endDate ? dayjs(endDate).format("YYYY-MM-DD") : null,
+        startDate: startDate ? dayjs(startDate).format("YYYY-MM-DD") : null,
+        sortBy: sort.sortBy,
       }
       const path = apiPath.downloadExcelWithdrawal;
       const result = await apiGet(path, payload);

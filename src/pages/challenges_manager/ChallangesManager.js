@@ -195,16 +195,22 @@ function ChallangesManager() {
   const manager = user?.permission?.find((e) => e.manager === "challenges_manager");
 
   const onCsvDownload = async () => {
-    const { category, startDate, endDate, searchKey, userId } = filterData;
+    const { category, startDate, endDate, searchKey, userId,matchStatus } = filterData;
     const payload = {
+      page,
       startDate: startDate ? dayjs(startDate).format("YYYY-MM-DD") : null,
       keyword: helpers.normalizeSpaces(searchKey) || null,
+      userId: userId || null,
+      pageSize: pageSize,
       endDate: endDate ? dayjs(endDate).format("YYYY-MM-DD") : null,
-      status: category,
       sortKey: sort?.sortBy,
       sortType: sort?.sortType,
-      userId: userId || null,
+      status: category
     };
+
+    if (matchStatus && matchStatus !== undefined) {
+      payload.matchStatus = matchStatus;
+    }
     try {
       const result = await apiGet(`${apiPath.challengeCSVDownload}/${userResult}`, payload);
       if (result?.data?.success) {
