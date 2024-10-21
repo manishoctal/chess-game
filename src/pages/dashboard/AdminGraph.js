@@ -1,26 +1,25 @@
 import React, { useEffect, useState } from "react";
+import { BiReset } from "react-icons/bi";
 import Chart from "react-apexcharts";
 import { apiGet } from "utils/apiFetch";
 import pathObj from "utils/apiPath";
-import { BiReset } from "react-icons/bi";
 
 const AdminGraph = () => {
-  const [categories, setCategories] = useState(["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep"]);
+  const [selectedYear, setSelectedYear] = useState("");
   const [graphData, setGraphData] = useState([
     {
       name: "profits",
       data: [10, 0, 100, 0, 49, 0, 69, 91, 148],
     },
   ]);
-  const [graphYear, setGraphYear] = useState([]);
-  const [selectedYear, setSelectedYear] = useState("");
   const [selectedMonth, setSelectedMonth] = useState("");
+  const [categories, setCategories] = useState(["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep"]);
+  const [graphYear, setGraphYear] = useState([]);
 
   function generateYearArray(date) {
     const startDate = new Date(date);
-    const startYear = startDate.getFullYear();
     const currentYear = new Date().getFullYear();
-
+    const startYear = startDate.getFullYear();
     return Array.from({ length: currentYear - startYear + 1 }, (_, index) => startYear + index);
   }
 
@@ -48,7 +47,8 @@ const AdminGraph = () => {
     getGraphAdminDetails();
   }, []);
 
-  const handleYearSelect = (e) => {
+  
+  const handleYearSelectAdmin = (e) => {
     const year = e.target.value;
     setSelectedYear(year);
     if (year) {
@@ -57,7 +57,14 @@ const AdminGraph = () => {
     }
   };
 
-  const handleMonthSelect = (e) => {
+  const resetFiltersAdmin = () => {
+    getGraphAdminDetails();
+    setSelectedYear("");
+    setSelectedMonth("");
+  };
+
+
+  const handleMonthSelectAdmin = (e) => {
     const month = e.target.value;
     setSelectedMonth(month);
     if (selectedYear) {
@@ -65,11 +72,6 @@ const AdminGraph = () => {
     }
   };
 
-  const resetFilters = () => {
-    setSelectedYear("");
-    setSelectedMonth("");
-    getGraphAdminDetails();
-  };
 
   const options = {
     chart: {
@@ -80,15 +82,8 @@ const AdminGraph = () => {
         enabled: false,
       },
     },
-    dataLabels: {
-      enabled: false,
-    },
     stroke: {
       curve: "straight",
-    },
-    title: {
-      text: "Admin Profit Graph",
-      align: "center",
     },
     grid: {
       row: {
@@ -96,6 +91,14 @@ const AdminGraph = () => {
         opacity: 0.5,
       },
     },
+    dataLabels: {
+      enabled: false,
+    },
+    title: {
+      text: "Admin Profit Graph",
+      align: "center",
+    },
+   
     xaxis: {
       categories: categories,
     },
@@ -109,7 +112,7 @@ const AdminGraph = () => {
             name="year"
             className="flex flex-row-reverse border outline-none border-[#E9EDF9] text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             value={selectedYear}
-            onChange={handleYearSelect}
+            onChange={handleYearSelectAdmin}
           >
             <option value="">Select Year</option>
             {graphYear?.map((year) => {
@@ -126,7 +129,7 @@ const AdminGraph = () => {
             name="month"
             className="flex flex-row-reverse border outline-none border-[#E9EDF9] text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             value={selectedMonth}
-            onChange={handleMonthSelect}
+            onChange={handleMonthSelectAdmin}
           >
             <option value="0">Select Month</option>
             <option value="1">Jan</option>
@@ -144,7 +147,7 @@ const AdminGraph = () => {
           </select>
         </div>
         <div className="flex items-center ml-2 sm:mb-0">
-          <button type="button" onClick={resetFilters} className="bg-gradientTo text-sm px-6 flex gap-2 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2">
+          <button type="button" onClick={resetFiltersAdmin} className="bg-gradientTo text-sm px-6 flex gap-2 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2">
             <BiReset size={18} /> Reset
           </button>
         </div>

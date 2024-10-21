@@ -27,9 +27,9 @@ import ViewCommunityModerator from "pages/community-moderator-manager/ViewCommun
 import CommunityModeratorManager from "pages/community-moderator-manager/CommunityModeratorManager";
 import FeedbackManager from "pages/feedback-manager/FeedbackManager";
 import Transaction from "pages/transaction_manager/Transaction";
-import WithdrawalRequestManager from "pages/withdrawal_request_manager/WithdrawalRequestManager";
 import ChallangesManager from "pages/challenges_manager/ChallangesManager";
 import CasualView from "pages/challenges_manager/challenges/CasualView";
+import WithdrawalRequestManager from "pages/withdrawal_request_manager/WithdrawalRequestManager";
 const UseChange = ({ data }) => {
   const { t } = useTranslation();
   return t(data);
@@ -140,7 +140,8 @@ const AdminRoutes = {
       element: (
         <AuthorizationRoute>
           {" "}
-          <WithdrawalRequestManager />
+
+            <WithdrawalRequestManager/>
         </AuthorizationRoute>
       ),
       name: <UseChange data="WITHDRAWAL_REQEUST_MANAGER" />,

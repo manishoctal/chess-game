@@ -1,27 +1,27 @@
 import React, { useContext, useEffect, useState } from "react";
 import { apiGet } from "../../utils/apiFetch";
-import apiPath from "../../utils/apiPath";
-import Pagination from "../Pagination";
-import AuthContext from "context/AuthContext";
 import dayjs from "dayjs";
 import ODateRangePicker from "components/shared/datePicker/ODateRangePicker";
-import { useTranslation } from "react-i18next";
 import PageSizeList from "components/PageSizeList";
 import helpers from "utils/helpers";
 import { useLocation } from "react-router-dom";
+import balanceIcon from "../../assets/icons/icon/balance.svg";
+import { useTranslation } from "react-i18next";
 import { BiReset } from "react-icons/bi";
 import OSearch from "components/reusable/OSearch";
 import TransactionTable from "./TransactionTable";
 import { GoDownload } from "react-icons/go";
-import balanceIcon from "../../assets/icons/icon/balance.svg";
+import apiPath from "../../utils/apiPath";
+import Pagination from "../Pagination";
+import AuthContext from "context/AuthContext";
 
 function Transaction() {
-  const { t } = useTranslation();
-  const location = useLocation();
-  const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
   const [isInitialized, setIsInitialized] = useState(false);
+  const { t } = useTranslation();
+  const location = useLocation();
   const [totalBalance,setTotalBalance]=useState("")
+  const [searchTerm, setSearchTerm] = useState("");
   const { logoutUser, user, updatePageName } = useContext(AuthContext);
   const [paginationObj, setPaginationObj] = useState({
     page: 1,
@@ -54,13 +54,13 @@ function Transaction() {
       const { transactionType, startDate, endDate, searchKey, userId } = filterData;
 
       const payload = {
-        page,
-        pageSize: pageSize,
-        startDate: startDate ? dayjs(startDate).format("YYYY-MM-DD") : null,
-        endDate: endDate ? dayjs(endDate).format("YYYY-MM-DD") : null,
         keyword: helpers.normalizeSpaces(searchKey) || null,
         sortKey: sort?.sortBy,
         sortType: sort?.sortType,
+        startDate: startDate ? dayjs(startDate).format("YYYY-MM-DD") : null,
+        page,
+        pageSize: pageSize,
+        endDate: endDate ? dayjs(endDate).format("YYYY-MM-DD") : null,
         userId: userId || null,
       };
 
@@ -78,8 +78,8 @@ function Transaction() {
           ...paginationObj,
           page: helpers.ternaryCondition(resultStatus, response.page, null),
           perPageItem: helpers.ternaryCondition(resultStatus, response?.docs.length, null),
-          totalItems: helpers.ternaryCondition(resultStatus, response.totalDocs, null),
           pageCount: helpers.ternaryCondition(resultStatus, response.totalPages, null),
+          totalItems: helpers.ternaryCondition(resultStatus, response.totalDocs, null),
         });
       }
     } catch (error) {
@@ -106,13 +106,7 @@ function Transaction() {
     setPage(newPage);
   };
 
-  useEffect(() => {
-    updatePageName(t("NAV_TRANSACTION_MANAGER"));
-  }, []);
 
-  const handleUserViewPage = () => {
-    updatePageName(` ${t("VIEW") + " " + t("USER_MANAGER")}`);
-  };
 
 
   const handleReset = () => {
@@ -134,14 +128,16 @@ function Transaction() {
 
   const onCsvDownload = async () => {
     try {
-      const { transactionType, startDate, endDate, searchkey, status } = filterData;
+      const { transactionType, startDate, endDate, searchKey, userId } = filterData;
       const payload = {
+        keyword: helpers.normalizeSpaces(searchKey) || null,
+        sortKey: sort?.sortBy,
+        sortType: sort?.sortType,
         startDate: startDate ? dayjs(startDate).format("YYYY-MM-DD") : null,
+        page,
+        pageSize: pageSize,
         endDate: endDate ? dayjs(endDate).format("YYYY-MM-DD") : null,
-        sortBy: sort.sortBy,
-        sortType: sort.sortType,
-        keyword: helpers.normalizeSpaces(searchkey) || null,
-        status,
+        userId: userId || null,
       };
 
       if (transactionType && transactionType !== undefined) {
@@ -158,8 +154,10 @@ function Transaction() {
     }
   };
 
+  useEffect(() => {
+    updatePageName(t("NAV_TRANSACTION_MANAGER"));
+  }, []);
 
-  
   const getTotalBalance = async () => {
     try {
 
@@ -178,17 +176,8 @@ function Transaction() {
     getTotalBalance()
   },[])
 
- console.log("total",totalBalance)
-
-  const handleDateChange = (start, end) => {
-    setPage(1);
-    setFilterData({
-      ...filterData,
-      startDate: start,
-      endDate: end,
-      isFilter: true,
-      isReset: false,
-    });
+  const handleUserViewPage = () => {
+    updatePageName(` ${t("VIEW") + " " + t("USER_MANAGER")}`);
   };
 
   const statusPage = (e) => {
@@ -202,6 +191,18 @@ function Transaction() {
     }));
     setPage(1);
   };
+
+  const handleDateChange = (start, end) => {
+    setPage(1);
+    setFilterData({
+      ...filterData,
+      startDate: start,
+      endDate: end,
+      isFilter: true,
+      isReset: false,
+    });
+  };
+
 
   useEffect(() => {
     if (!isInitialized) {

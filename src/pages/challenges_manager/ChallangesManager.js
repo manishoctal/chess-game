@@ -18,8 +18,8 @@ import { GoDownload } from "react-icons/go";
 function ChallangesManager() {
   const { t } = useTranslation();
   const location = useLocation();
-  const [activeInactiveStatus, setActiveInactiveStatus] = useState(location?.state ?? "");
   const [searchTerm, setSearchTerm] = useState("");
+  const [activeInactiveStatus, setActiveInactiveStatus] = useState(location?.state ?? "");
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
   const [isInitialized, setIsInitialized] = useState(false);
   
@@ -30,30 +30,31 @@ function ChallangesManager() {
     pageRangeDisplayed: 10,
   });
 
-  const [users, setAllUser] = useState([]);
-  const [userType] = useState(location?.state?.userType ? location?.state?.userType : "tourist");
-  const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
-  const [isDelete] = useState(false);
-  const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState(activeInactiveStatus ? activeInactiveStatus : "casual");
-
   const handleTabClick = (tab) => {
     setActiveTab(tab);
   };
+
+  const [pageSize, setPageSize] = useState(10);
+  const [users, setAllUser] = useState([]);
+  const [userType] = useState(location?.state?.userType ? location?.state?.userType : "tourist");
+  const [activeTab, setActiveTab] = useState(activeInactiveStatus ? activeInactiveStatus : "casual");
+  const [page, setPage] = useState(1);
+  const [isDelete] = useState(false);
+  const navigate = useNavigate();
+
   const [filterData, setFilterData] = useState({
-    matchStatus: undefined,
     category: undefined,
     userId: "",
+    isFilter: false,
+    matchStatus: undefined,
     searchKey: "",
-    startDate: "",
     endDate: "",
     isReset: false,
-    isFilter: false,
+    startDate: "",
   });
   const [sort, setSort] = useState({
-    sortBy: "createdAt",
     sortType: "desc",
+    sortBy: "createdAt",
   });
 
 
@@ -65,13 +66,13 @@ function ChallangesManager() {
 
       const payload = {
         page,
-        pageSize: pageSize,
         startDate: startDate ? dayjs(startDate).format("YYYY-MM-DD") : null,
-        endDate: endDate ? dayjs(endDate).format("YYYY-MM-DD") : null,
         keyword: helpers.normalizeSpaces(searchKey) || null,
+        userId: userId || null,
+        pageSize: pageSize,
+        endDate: endDate ? dayjs(endDate).format("YYYY-MM-DD") : null,
         sortKey: sort?.sortBy,
         sortType: sort?.sortType,
-        userId: userId || null,
         status: category
       };
 
@@ -106,6 +107,11 @@ function ChallangesManager() {
   useEffect(() => {
     getAllUser();
   }, [page, filterData, sort, pageSize, activeTab]);
+  
+  const handlePageClick = (event) => {
+    const newPage = event.selected + 1;
+    setPage(newPage);
+  };
 
   // get all user end
   const dynamicPage = (e) => {
@@ -113,10 +119,6 @@ function ChallangesManager() {
     setPageSize(e.target.value);
   };
 
-  const handlePageClick = (event) => {
-    const newPage = event.selected + 1;
-    setPage(newPage);
-  };
 
   const handleUserView = () => {
     updatePageName(` ${t("VIEW") + " " + t("CASUAL_CHALLENGE")}`);
@@ -137,22 +139,21 @@ function ChallangesManager() {
 
   const handleReset = () => {
     setFilterData({
-      isKYCVerified: "",
       category: "",
       matchStatus: "",
-      userId: "",
-      startDate: "",
-      endDate: "",
-      isReset: true,
       isFilter: false,
-
+      startDate: "",
+      isKYCVerified: "",
+      endDate: "",
+      userId: "",
+      isReset: true,
     });
-    setActiveInactiveStatus("");
-    navigate(location.pathname, { replace: true, state: "" });
+    navigate({ path: '/users', replace: false, state: {} })
     setPage(1);
+    navigate(location.pathname, { replace: true, state: "" });
+    setActiveInactiveStatus("");
     setSearchTerm("");
     setPageSize(10);
-    navigate({ path: '/users', replace: false, state: {} })
   };
 
 
@@ -161,9 +162,9 @@ function ChallangesManager() {
     setFilterData({
       ...filterData,
       startDate: start,
-      endDate: end,
-      isFilter: true,
       isReset: false,
+      isFilter: true,
+      endDate: end,
     });
   };
 
@@ -194,19 +195,22 @@ function ChallangesManager() {
   const manager = user?.permission?.find((e) => e.manager === "challenges_manager");
 
   const onCsvDownload = async () => {
-    const { category, startDate, endDate, searchKey, userId } = filterData;
-
+    const { category, startDate, endDate, searchKey, userId,matchStatus } = filterData;
     const payload = {
+      page,
       startDate: startDate ? dayjs(startDate).format("YYYY-MM-DD") : null,
-      endDate: endDate ? dayjs(endDate).format("YYYY-MM-DD") : null,
       keyword: helpers.normalizeSpaces(searchKey) || null,
+      userId: userId || null,
+      pageSize: pageSize,
+      endDate: endDate ? dayjs(endDate).format("YYYY-MM-DD") : null,
       sortKey: sort?.sortBy,
       sortType: sort?.sortType,
-      userId: userId || null,
       status: category
     };
 
-
+    if (matchStatus && matchStatus !== undefined) {
+      payload.matchStatus = matchStatus;
+    }
     try {
       const result = await apiGet(`${apiPath.challengeCSVDownload}/${userResult}`, payload);
       if (result?.data?.success) {
@@ -219,7 +223,6 @@ function ChallangesManager() {
 
   const statusPage = (e) => {
     const selectedValue = e.target.value;
-
     setFilterData((prevData) => ({
       ...prevData,
       category: selectedValue ? selectedValue : undefined,
@@ -239,13 +242,10 @@ function ChallangesManager() {
     setPage(1);
   };
 
-
-
   return (
     <div>
       <div className="bg-[#F9F9F9] dark:bg-slate-900">
         <div className="px-3 py-4">
-
           <div className="bg-white border border-[#E9EDF9] rounded-lg dark:bg-slate-800 dark:border-[#ffffff38]">
             <form className="border-b border-b-[#E3E3E3]  px-4 py-3 pt-5 flex flex-wrap">
               <div className="flex items-center md:justify-end mb-3">
