@@ -1,26 +1,25 @@
 import React, { useEffect, useState } from "react";
+import { BiReset } from "react-icons/bi";
 import Chart from "react-apexcharts";
 import { apiGet } from "utils/apiFetch";
 import pathObj from "utils/apiPath";
-import { BiReset } from "react-icons/bi";
 
 const AdminGraph = () => {
-  const [categories, setCategories] = useState(["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep"]);
   const [graphData, setGraphData] = useState([
     {
       name: "profits",
       data: [10, 0, 100, 0, 49, 0, 69, 91, 148],
     },
   ]);
+  const [selectedMonth, setSelectedMonth] = useState("");
+  const [categories, setCategories] = useState(["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep"]);
   const [graphYear, setGraphYear] = useState([]);
   const [selectedYear, setSelectedYear] = useState("");
-  const [selectedMonth, setSelectedMonth] = useState("");
 
   function generateYearArray(date) {
     const startDate = new Date(date);
-    const startYear = startDate.getFullYear();
     const currentYear = new Date().getFullYear();
-
+    const startYear = startDate.getFullYear();
     return Array.from({ length: currentYear - startYear + 1 }, (_, index) => startYear + index);
   }
 
@@ -48,20 +47,20 @@ const AdminGraph = () => {
     getGraphAdminDetails();
   }, []);
 
+  const handleMonthSelect = (e) => {
+    const month = e.target.value;
+    setSelectedMonth(month);
+    if (selectedYear) {
+      getGraphAdminDetails(selectedYear, month);
+    }
+  };
+
   const handleYearSelect = (e) => {
     const year = e.target.value;
     setSelectedYear(year);
     if (year) {
       const month = selectedMonth ? selectedMonth : 0;
       getGraphAdminDetails(year, month);
-    }
-  };
-
-  const handleMonthSelect = (e) => {
-    const month = e.target.value;
-    setSelectedMonth(month);
-    if (selectedYear) {
-      getGraphAdminDetails(selectedYear, month);
     }
   };
 
@@ -80,11 +79,11 @@ const AdminGraph = () => {
         enabled: false,
       },
     },
-    dataLabels: {
-      enabled: false,
-    },
     stroke: {
       curve: "straight",
+    },
+    dataLabels: {
+      enabled: false,
     },
     title: {
       text: "Admin Profit Graph",
