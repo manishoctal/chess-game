@@ -5,6 +5,7 @@ import { apiGet } from "utils/apiFetch";
 import pathObj from "utils/apiPath";
 
 const AdminGraph = () => {
+  const [selectedYear, setSelectedYear] = useState("");
   const [graphData, setGraphData] = useState([
     {
       name: "profits",
@@ -14,7 +15,6 @@ const AdminGraph = () => {
   const [selectedMonth, setSelectedMonth] = useState("");
   const [categories, setCategories] = useState(["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep"]);
   const [graphYear, setGraphYear] = useState([]);
-  const [selectedYear, setSelectedYear] = useState("");
 
   function generateYearArray(date) {
     const startDate = new Date(date);
@@ -65,9 +65,9 @@ const AdminGraph = () => {
   };
 
   const resetFilters = () => {
+    getGraphAdminDetails();
     setSelectedYear("");
     setSelectedMonth("");
-    getGraphAdminDetails();
   };
 
   const options = {

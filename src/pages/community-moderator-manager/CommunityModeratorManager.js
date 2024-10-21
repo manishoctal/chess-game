@@ -1,20 +1,19 @@
 import React, { useContext, useEffect, useState } from "react";
-import { apiGet, apiPut } from "../../utils/apiFetch";
-import apiPath from "../../utils/apiPath";
 import Pagination from "../Pagination";
 import AuthContext from "context/AuthContext";
+import CommunityModeratorManagerTable from "./CommunityModeratorManagerTable";
 import dayjs from "dayjs";
+import apiPath from "../../utils/apiPath";
 import ODateRangePicker from "components/shared/datePicker/ODateRangePicker";
 import { useTranslation } from "react-i18next";
 import PageSizeList from "components/PageSizeList";
 import helpers from "utils/helpers";
+import { apiGet, apiPut } from "../../utils/apiFetch";
 import OSearch from "components/reusable/OSearch";
 import { BiReset } from "react-icons/bi";
-import CommunityModeratorManagerTable from "./CommunityModeratorManagerTable";
 import useToastContext from "hooks/useToastContext";
 
 function CommunityModeratorManager() {
-  const { t } = useTranslation();
   const { logoutUser, user ,updatePageName} = useContext(AuthContext);
   const notification = useToastContext();
   const manager = user?.permission?.find((e) => e.manager === "community_moderator" || "achievement_and_badges") ?? {};
@@ -23,13 +22,14 @@ function CommunityModeratorManager() {
     pageCount: 1,
     pageRangeDisplayed: 10,
   });
-
+  
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
   const [isInitialized, setIsInitialized] = useState(false);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [allCommunity, setAllCommunity] = useState([]);
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [allCommunity, setAllCommunity] = useState([]);
+  const { t } = useTranslation();
 
   const [filterData, setFilterData] = useState({
     category: "",
@@ -56,14 +56,14 @@ function CommunityModeratorManager() {
 
       const payload = {
         page,
-        pageSize,
-        community,
-        status:category,
         startDate: startDate ? dayjs(startDate).format("YYYY-MM-DD") : null,
         endDate: endDate ? dayjs(endDate).format("YYYY-MM-DD") : null,
         keyword: helpers.normalizeSpaces(searchkey) || null,
         sortBy: sort.sortBy,
         sortType: sort.sortType,
+        pageSize,
+        community,
+        status:category,
       };
 
       const path = apiPath.communityModeratror;
@@ -128,7 +128,10 @@ function CommunityModeratorManager() {
     };
   }, [searchTerm]);
 
-  // debounce search end
+
+  const handleUserView = () => {
+    updatePageName(` ${t("VIEW") + " " + t("COMMUNITY_MODERATOR_MANAGER")}`);
+  };
 
   const handleReset = () => {
     setFilterData({
@@ -145,16 +148,6 @@ function CommunityModeratorManager() {
     setPage(1);
   };
 
-
-  const handleUserView = () => {
-    updatePageName(` ${t("VIEW") + " " + t("COMMUNITY_MODERATOR_MANAGER")}`);
-  };
-
-  const handleUserViewPage = () => {
-    updatePageName(` ${t("VIEW") + " " + t("USER_MANAGER")}`);
-  };
-
-
   useEffect(() => {
     updatePageName(t("COMMUNITY_MODERATOR_MANAGER"));
   }, []);
@@ -167,6 +160,10 @@ function CommunityModeratorManager() {
       endDate: end,
       isFilter: true,
     });
+  };
+
+  const handleUserViewPage = () => {
+    updatePageName(` ${t("VIEW") + " " + t("USER_MANAGER")}`);
   };
 
   const dynamicPage = (e) => {

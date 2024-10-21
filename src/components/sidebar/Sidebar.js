@@ -68,11 +68,7 @@ const Sidebar = () => {
     if (perIndex < 0) {
       return false;
     }
-    if (localPermissions?.[perIndex]?.view) {
-      return true;
-    } else {
-      return false;
-    }
+    return !!localPermissions?.[perIndex]?.view;
 
   };
 

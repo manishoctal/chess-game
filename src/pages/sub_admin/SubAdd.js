@@ -237,12 +237,9 @@ const SubAdd = () => {
             <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
               <div className="px-2">{renderInputField(true, "firstName", t("O_FIRST_NAME"), 15, formValidation["subAdminName"], item?.type === "view", t("ENTER_FIRST_NAME"))}</div>
               <div className="px-2">{renderInputField(false, "lastName", t("O_LAST_NAME"), 15, formValidation["subAdminLastName"], item?.type === "view", t("ENTER_LAST_NAME"))}</div>
-
               <div className="px-2">{renderInputField(false, "email", t("EMAIL_ADDRESS"), 50, formValidation["emailAddress"], item?.type === "view" || item?.type === "edit", t("ENTER_EMAIL_ADDRESS"), item?.type === "edit" ? "greyClass " : "")}</div>
-
               <div className="px-2">
                 <DynamicLabel name={t("O_MOBILE_NUMBER")} type={true} htmlFor={countryCode} />
-
                 <DynamicLabel />
                 <Controller
                   control={control}

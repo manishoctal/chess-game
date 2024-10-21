@@ -17,10 +17,10 @@ import { GoDownload } from "react-icons/go";
 
 function ChallangesManager() {
   const { t } = useTranslation();
+  const location = useLocation();
   const [searchTerm, setSearchTerm] = useState("");
   const [activeInactiveStatus, setActiveInactiveStatus] = useState(location?.state ?? "");
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
-  const location = useLocation();
   const [isInitialized, setIsInitialized] = useState(false);
   
   const { logoutUser, user, updatePageName } = useContext(AuthContext);

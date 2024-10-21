@@ -6,13 +6,13 @@ import { BiReset } from "react-icons/bi";
 
 const UserGraph = () => {
   const [categories, setCategories] = useState(["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep"]);
+  const [graphYear, setGraphYear] = useState([]);
   const [graphData, setGraphData] = useState([
     {
       name: "users",
       data: [10, 0, 100, 0, 49, 0, 69, 91, 148],
     },
   ]);
-  const [graphYear, setGraphYear] = useState([]);
   const [selectedYear, setSelectedYear] = useState("");
   const [selectedMonth, setSelectedMonth] = useState("");
 
@@ -20,9 +20,17 @@ const UserGraph = () => {
     const startDate = new Date(date);
     const startYear = startDate.getFullYear();
     const currentYear = new Date().getFullYear();
-
     return Array.from({ length: currentYear - startYear + 1 }, (_, index) => startYear + index);
   }
+
+  const handleYearSelect = (e) => {
+    const year = e.target.value;
+    setSelectedYear(year);
+    if (year) {
+      const month = selectedMonth ? selectedMonth : 0;
+      getGraphUserDetails(year, month);
+    }
+  };
 
   const getGraphUserDetails = async (year = 0, month = 0) => {
     try {
@@ -48,14 +56,10 @@ const UserGraph = () => {
     getGraphUserDetails();
   }, []);
 
-
-  const handleYearSelect = (e) => {
-    const year = e.target.value;
-    setSelectedYear(year);
-    if (year) {
-      const month = selectedMonth ? selectedMonth : 0;
-      getGraphUserDetails(year, month);
-    }
+  const resetFilters = () => {
+    setSelectedYear("");
+    setSelectedMonth("");
+    getGraphUserDetails();
   };
 
   const handleMonthSelect = (e) => {
@@ -64,12 +68,6 @@ const UserGraph = () => {
     if (selectedYear) {
       getGraphUserDetails(selectedYear, month);
     }
-  };
-
-  const resetFilters = () => {
-    setSelectedYear("");
-    setSelectedMonth("");
-    getGraphUserDetails();
   };
 
   const options = {

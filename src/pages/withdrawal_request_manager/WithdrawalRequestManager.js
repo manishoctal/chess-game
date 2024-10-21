@@ -1,43 +1,43 @@
-import React, { useContext, useEffect, useState } from "react";
 import apiPath from "../../utils/apiPath";
 import { useTranslation } from "react-i18next";
 import AuthContext from "context/AuthContext";
-import dayjs from "dayjs";
+import React, { useContext, useEffect, useState } from "react";
 import Pagination from "../Pagination";
+import OSearch from "components/reusable/OSearch";
+import { BiReset } from "react-icons/bi";
+import { GoDownload } from "react-icons/go";
+import dayjs from "dayjs";
 import { apiGet } from "../../utils/apiFetch";
 import ODateRangePicker from "components/shared/datePicker/ODateRangePicker";
 import PageSizeList from "components/PageSizeList";
 import WithdrawalRequestTable from "./WithdrawalRequestTable";
 import helpers from "utils/helpers";
-import OSearch from "components/reusable/OSearch";
-import { BiReset } from "react-icons/bi";
-import { GoDownload } from "react-icons/go";
 
 function WithdrawalRequestManager() {
-  const { t } = useTranslation();
   const { logoutUser, notification, user } = useContext(AuthContext);
   const manager = user?.permission?.find((e) => e.manager === "widthDrawal_request_manager") ?? {};
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
   const [paginationObj, setPaginationObj] = useState({
     page: 1,
     pageCount: 1,
     pageRangeDisplayed: 10,
   });
-
-  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
+  
+  const { t } = useTranslation();
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
   const [isInitialized, setIsInitialized] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [allCommunity, setAllCommunity] = useState([]);
-  const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
 
   const [filterData, setFilterData] = useState({
     category: "",
     searchkey: "",
-    status: "",
     startDate: "",
     endDate: "",
     isReset: false,
     isFilter: false,
+    status: "",
   });
   const [sort, setSort] = useState({
     sortBy: "createdAt",
@@ -53,10 +53,10 @@ function WithdrawalRequestManager() {
         pageSize,
         status:category,
         sortType: sort.sortType,
-        endDate: endDate ? dayjs(endDate).format("YYYY-MM-DD") : null,
         page,
         community,
         keyword: helpers.normalizeSpaces(searchkey) || null,
+        endDate: endDate ? dayjs(endDate).format("YYYY-MM-DD") : null,
         startDate: startDate ? dayjs(startDate).format("YYYY-MM-DD") : null,
         sortBy: sort.sortBy,
       };
@@ -86,19 +86,26 @@ function WithdrawalRequestManager() {
     }
   };
 
+  useEffect(() => {
+    getAllWithdrawal();
+  }, [page, filterData, sort, pageSize]);
 
-  // get all notification function end
+
 
   const handlePageClick = (event) => {
     const newPage = event.selected + 1;
     setPage(newPage);
   };
 
-
-  useEffect(() => {
-    getAllWithdrawal();
-  }, [page, filterData, sort, pageSize]);
-
+  const handleDateChange = (start, end) => {
+    setPage(1);
+    setFilterData({
+      ...filterData,
+      startDate: start,
+      isFilter: true,
+      endDate: end,
+    });
+  };
   // debounce search start
   useEffect(() => {
     if (!isInitialized) {
@@ -106,9 +113,9 @@ function WithdrawalRequestManager() {
     } else if (searchTerm || !filterData?.isReset) {
       setFilterData({
         ...filterData,
-        isReset: false,
         searchkey: debouncedSearchTerm || "",
         isFilter: !!debouncedSearchTerm,
+        isReset: false,
       });
       setPage(1);
     }
@@ -128,28 +135,20 @@ function WithdrawalRequestManager() {
 
   const handleReset = () => {
     setFilterData({
-      community: "",
+      isReset: true,
       isFilter: false,
       startDate: "",
       status: "",
-      isReset: true,
+      community: "",
       category: "",
       searchkey: "",
       endDate: "",
     });
-    setPage(1);
     setSearchTerm("");
+    setPage(1);
   };
 
-  const handleDateChange = (start, end) => {
-    setPage(1);
-    setFilterData({
-      ...filterData,
-      startDate: start,
-      isFilter: true,
-      endDate: end,
-    });
-  };
+ 
 
   const dynamicPage = (e) => {
     setPage(1);
@@ -200,7 +199,7 @@ function WithdrawalRequestManager() {
               <div className="col-span-2 flex flex-wrap  items-center">
                 <div className="flex items-center lg:pt-0 pt-3 flex-wrap justify-center mb-2 2xl:mb-0">
                   <div className="relative flex items-center mb-3">
-                    <OSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm} placeholder={t("SEARCH_BY_FULL_NAME_USER_MOBILE_USER_NAME")} />
+                    <OSearch setSearchTerm={setSearchTerm} placeholder={t("SEARCH_BY_FULL_NAME_USER_MOBILE_USER_NAME")} searchTerm={searchTerm}  />
                   </div>
                   <ODateRangePicker handleDateChange={handleDateChange} isReset={filterData?.isReset} setIsReset={setFilterData} />
                   <div className="flex items-centerml-3">
