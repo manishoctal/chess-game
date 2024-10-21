@@ -114,7 +114,7 @@ const AdminGraph = () => {
             <option value="">Select Year</option>
             {graphYear?.map((year) => {
               return (
-                <option value={year}>
+                <option value={year} key={year}>
                   {`${year}`}
                 </option>
               );

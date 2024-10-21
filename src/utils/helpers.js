@@ -114,12 +114,7 @@ const helpers = {
     }
     return type;
   },
-  isInputNumber: (event) => {
-    const char = String.fromCharCode(event.which);
-    if (!/[0-9]/.test(char)) {
-      event.preventDefault();
-    }
-  },
+
 
   alertFunction: (title, item, changeFunction, deleteIcon) => {
     MySwal.fire({

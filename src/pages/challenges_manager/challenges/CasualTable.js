@@ -61,6 +61,7 @@ const CasualTable = ({
 
   const renderTableRows = () => {
     return users?.map((item, i) => {
+      console.log("item->>>>",item)
       const rowClassName = getRowClassName(item);
       function getStatus(scheduleDateTime, expiryScheduleDateTime) {
         const currentDate = new Date();
@@ -80,14 +81,14 @@ const CasualTable = ({
       const itemStatus = getStatus(item?.scheduleDateTime, item?.expiryScheduleDateTime);
 
       return (
-        <tr key={i} className={rowClassName}>
+        <tr key={users?._id} className={rowClassName}>
           {renderTableCell(i + 1 + pageSize * (page - 1), "py-4 px-3 border-r border  font-medium text-gray-900  dark:text-white dark:border-[#ffffff38]")}
           {renderTableCell(getDisplayUserId(item), "bg-white py-4 px-4 border-r border  dark:border-[#ffffff38]")}
           {renderTableCell(getDisplayName(item), "bg-white py-4 px-4 border-r border  dark:border-[#ffffff38]")}
           <td className="bg-white py-4 px-4 border-r border  dark:border-[#ffffff38]">
             <NavLink
               onClick={() => handleUserViewPage(item)}
-              to={`/users/view/${item?._id}`}
+              to={`/users/view/${item?.user?._id}`}
               state={{ ...item, type: "casual" }}
               className="px-2 py-2 hover:text-black"
             >

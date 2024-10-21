@@ -89,8 +89,7 @@ const Settings = () => {
     updatePageName(t("SETTINGS"));
   }, []);
 
-  const urlPattern = /^(http(s):\/\/.)[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)$/;
-
+  const urlPattern = /^(http(s)?:\/\/)?[a-zA-Z0-9@:%._+~#=-]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)$/;
   const validationFields = {
 
     minWithdrawalLimit: {
@@ -198,7 +197,7 @@ const Settings = () => {
           <div className="bg-white py-6 px-4  rounded-b-md dark:bg-gray-800 dark:text-white">
             <main className="justify-center flex-wrap grid lg:grid-cols-1 md:grid-cols-3 sm:grid-cols-2 grid-cols-1  gap-4">
 
-              <div className="grid grid-cols-3 gap-x-5 border p-5 rounded-md">
+              <div className="grid grid-cols-4 gap-x-5 border p-5 rounded-md">
 
                 <div className="mb-4">
                   <OInputField
@@ -261,25 +260,6 @@ const Settings = () => {
 
                   validationRules={validationFields?.platformFee}
                 />
-
-                {/* <div className="">
-                  <OInputField
-                    wrapperClassName="relative z-0  w-full group"
-                    type="number"
-                    name="maxWithdrawalExpiryHrs "
-                    inputLabel={<>{t("WITHDRAWAL_REQUEST_EXPIRY_HOURS")}</>}
-                    id="maxWithdrawalExpiryHrs "
-                    autoComplete="off"
-                    onInput={preventMaxHundred}
-                    register={register("maxWithdrawalExpiryHrs ", validationFields?.maxWithdrawalLimit)}
-                    placeholder=" "
-                    disable={manager?.add === false}
-                    onKeyDown={handleKeyDownCashIn} 
-                  />
-                  <ErrorMessage message={errors?.maxWithdrawalLimit?.message} />
-                </div> */}
-
-
               </div>
 
               <div className="border p-5 rounded-md social-media">

@@ -894,8 +894,8 @@
   "O_COMMUNITY_GLOBAL": "Global",
   "O_COMMUNITY_FRIENDS": "Friend",
   "DOWNLOAD_FEEDBACK": "Download Feedback",
-  "GST_TIME_OF_DEPOSIT": "GST at the time of deposit %",
-  "TDS_TIME_OF_DEPOSIT": "TDS at the time of withdrawal %",
+  "GST_TIME_OF_DEPOSIT": "GST At The Time Of Deposit %",
+  "TDS_TIME_OF_DEPOSIT": "TDS At The Time Of Withdrawal %",
   "INSTAGRAM": "Instagram",
   "LINKEDIN": "Linkedin",
   "TWITTER": "Twitter",
@@ -908,11 +908,11 @@
   "PLEASE_ENTER_VALID_TWITTER_URL": "Please enter a valid Twitter URL",
   "PLEASE_ENTER_LINKEDIN_URL": "Please enter a LinkedIn URL",
   "PLEASE_ENTER_VALID_LINKEDIN_URL": "Please enter a valid LinkedIn URL",
-  "SET_COMMISSION_TYPE": "Set commission type",
+  "SET_COMMISSION_TYPE": "Set Commission Type",
   "PERCENTAGE": "Percentage",
   "FIXED": "Fixed",
   "PLEASE_ENTER_FREEZE_AMOUNT": "Please enter freeze amount.",
-  "ENTER_FREEZE_AMOUNT": "Enter freeze amount",
+  "ENTER_FREEZE_AMOUNT": "Enter Freeze Amount",
   "TRANSACTION_TYPE": "Transaction Type",
   "TRANSACTION_DATE": "Transaction Date & Time",
   "ADMIN_COMMISSION": "Admin Commission",
@@ -963,5 +963,6 @@
   "INSTANT": "Instant",
   "ALL_CHALLENGE_TYPE": "All Challenge Type",
   "ALL_MATCH_STATUS": "All Match Status",
-  "TOTAL_EARNING":"Total Earning"
+  "TOTAL_EARNING":"Total Earning",
+  "MIN_VALUE_MUST_BE_LESS_THAN_MONEY_STACK" : "Min amount limit must be less than money stake"
 }

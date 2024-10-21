@@ -5,7 +5,7 @@ import { isEmpty } from "lodash";
 import useToastContext from "hooks/useToastContext";
 import { AiFillEdit, AiFillEye } from "react-icons/ai";
 import { useTranslation } from "react-i18next";
-import {NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import UserEdit from "./UserEdit";
 import ViewWalletBalance from "./ViewWalletBalance";
 import helpers from "../../utils/helpers";
@@ -13,6 +13,8 @@ import OUserTableHead from '../../components/reusable/OTableHead'
 import { FaFlag } from "react-icons/fa";
 import ReportUserPopup from "./ReportUserPopup";
 import ReviewRatingPopup from "./ReviewRatingPopup";
+import { IoIosCheckmarkCircle } from "react-icons/io";
+import { MdCancel } from "react-icons/md";
 
 const Table = ({
   users,
@@ -38,7 +40,7 @@ const Table = ({
   const [reportItem, setReportItem] = useState("")
 
   const handleReportToggle = (item) => {
-    console.log("ITEM",item)
+    console.log("ITEM", item)
     setReportItem(item?._id)
     setShowReportPopup(!showReportPopup)
   }
@@ -154,7 +156,7 @@ const Table = ({
           </NavLink>
 
           <div
-            className="px-2 py-2" 
+            className="px-2 py-2"
             onClick={() => {
               if (item?.reportsCount) {
                 handleReportToggle(item);
@@ -162,7 +164,7 @@ const Table = ({
             }}
           >
             <div className="relative">
-              <FaFlag className={` w-5 h-5 text-slate-600 dark:hover:text-white hover:text-blue-700 ${item?.reportsCount ? "cursor-pointer" : "" }`}/>{" "}
+              <FaFlag className={` w-5 h-5 text-slate-600 dark:hover:text-white hover:text-blue-700 ${item?.reportsCount ? "cursor-pointer" : ""}`} />{" "}
               {
                 helpers?.ternaryCondition(item?.reportsCount, <span className="w-5 h-5 cursor-pointer bg-black text-white rounded-full flex items-center justify-center text-[10px] absolute top-[-8px] right-[-7px]">{helpers.ternaryCondition(item?.reportsCount, item?.reportsCount, "0")}</span>
                   , "")
@@ -213,7 +215,7 @@ const Table = ({
 
           <td className="bg-white py-4 px-4 border-r border  dark:border-[#ffffff38]">
             <NavLink
-             onClick={() => handleUserView(item)}
+              onClick={() => handleUserView(item)}
               to={`/users/view/${item?._id}`}
               state={{ ...item }}
               className="px-2 py-2 hover:text-black"
@@ -223,8 +225,19 @@ const Table = ({
           </td>
 
 
-          {renderTableCell(helpers.ternaryCondition(item?.email, item?.email, "N/A"), "bg-white py-2 px-4 border-r border  dark:border-[#ffffff38] font-bold text-slate-900")}
-          {renderTableCell(helpers.ternaryCondition(item?.countryCode, `+ ${item?.countryCode}`, "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38]  font-bold")}
+          {renderTableCell(helpers.ternaryCondition(item?.email, helpers?.ternaryCondition(item?.email,
+
+            <div className="flex items-center" title={`${helpers?.ternaryCondition(item?.isEmailVerified == "1", "Verified", "Not Verified")}`}>
+              <span className={`${item?.isEmailVerified == "1" ? "text-green-700" : "text-red-600"} text-xl mr-1`}>
+                {item?.isEmailVerified == "1" ? <IoIosCheckmarkCircle />
+                  : <MdCancel />
+                }
+              </span>
+              <span className=""> {item?.email}</span>
+            </div>
+
+            , "N/A"), "N/A"), "bg-white py-2 px-4 border-r border  dark:border-[#ffffff38] font-bold text-slate-900")}
+          {renderTableCell(helpers.ternaryCondition(item?.countryCode, `+${item?.countryCode}`, "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38]  font-bold")}
           {renderTableCell(helpers.ternaryCondition(item?.mobile, item?.mobile, "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38]  font-bold")}
           {renderCommonTableCells(item)}
           {renderTableCell(helpers.ternaryCondition(item?.ratingMonetary, item?.ratingMonetary, "0"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38]  font-bold")}

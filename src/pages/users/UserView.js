@@ -2,7 +2,7 @@ import OImage from "components/reusable/OImage";
 import dayjs from "dayjs";
 import React, { useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useLocation, Link, useNavigate, NavLink } from "react-router-dom";
+import { useLocation, Link, NavLink } from "react-router-dom";
 import defaultImage from "../../assets/images/No-image-found.jpg";
 import checkIcon from "../../assets/images/check.png";
 import { startCase } from "lodash";
@@ -29,7 +29,6 @@ const UserView = () => {
   const { logoutUser} = useContext(AuthContext);
   const location = useLocation();
   const [item, setItem] = useState();
-  const navigate = useNavigate();
   const [showBanner, setShowBanner] = useState(false);
   const [showFreeModel, setShowFreeModel] = useState(false);
   const [walletBox, setWalletBox] = useState(false);
@@ -43,7 +42,7 @@ const UserView = () => {
 
   const getUserDetails = async () => {
     try {
-      const path = `${apiPath.getUserDetails}/${location?.state?.user?._id || location?.state?._id}`;
+      const path = `${apiPath.getUserDetails}/${location?.pathname.split("/users/view/")?.[1]}`;
       const result = await apiGet(path);
       if (result?.data?.success) {
         setItem(result?.data?.results);
@@ -57,11 +56,9 @@ const UserView = () => {
   };
 
   useEffect(() => {
-    if (location?.state) {
+    if (location?.pathname.split("/users/view/")?.[1]) {
       getUserDetails();
-    } else {
-      navigate("/users");
-    }
+    } 
   }, [location]);
 
 

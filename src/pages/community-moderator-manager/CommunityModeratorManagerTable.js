@@ -38,7 +38,7 @@ const CommunityModeratorManagerTable = ({ handleUserView, allCommunity, paginati
           <tbody>
             {allCommunity && allCommunity?.length > 0 &&
               allCommunity?.map((item, i) => (
-                <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700" key={item?._id}>
                   <th scope="row" className="py-4 px-6 border-r font-medium text-gray-900  dark:text-white">
                     {i + 1 + pageSize * (paginationObj?.page - 1)}
                   </th>

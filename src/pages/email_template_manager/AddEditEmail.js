@@ -13,7 +13,50 @@ import ReactQuill from 'react-quill'
 import { useLocation, useNavigate } from 'react-router'
 import { FaEdit } from 'react-icons/fa'
 import { IoCaretBackCircleOutline } from 'react-icons/io5'
-import helpers from 'utils/helpers'
+
+// Move QuillEditor component outside the AddEditEmail component
+const QuillEditor = ({ name, controlField, defaultValue, placeholder, readOnly }) => {
+  return (
+    <div className='md:py-4 sm:px-2 sm:py-3 md:px-7 px-2'>
+      <Controller
+        name={name}
+        control={controlField}
+        defaultValue={defaultValue}
+        render={({ field }) => (
+          <>
+            <label className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'>
+              {name === 'description' ? 'Content' : 'Keyword'}
+              {name === 'description' && (
+                <span className='text-red-500'>*</span>
+              )}
+            </label>
+            <ReactQuill
+              modules={{
+                toolbar: [
+                  [{ header: '1' }, { header: '2' }, { font: [] }],
+                  [{ size: [] }],
+                  ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+                  [
+                    { list: 'ordered' },
+                    { list: 'bullet' },
+                    { indent: '-1' },
+                    { indent: '+1' }
+                  ],
+                  ['link', 'image', 'video'],
+                  ['clean']
+                ]
+              }}
+              theme='snow'
+              placeholder={placeholder}
+              {...field}
+              readOnly={readOnly}
+            />
+          </>
+        )}
+      />
+    </div>
+  )
+}
 
 export default function AddEditEmail() {
   const { t } = useTranslation()
@@ -64,57 +107,8 @@ export default function AddEditEmail() {
     setIsLoading(false)
   }
 
-
   console.log("editItem", editItem?.type)
 
-  const QuillEditor = ({
-    name,
-    controlField,
-    defaultValue,
-    placeholder,
-    readOnly
-  }) => {
-    return (
-      <div className='md:py-4 sm:px-2 sm:py-3 md:px-7 px-2'>
-        <Controller
-          name={name}
-          control={controlField}
-          defaultValue={defaultValue}
-          render={({ field }) => (
-            <>
-              <label className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'>
-                {name === 'description' ? 'Content' : 'Keyword'}
-                {name === 'description' && (
-                  <span className='text-red-500'>*</span>
-                )}
-              </label>
-              <ReactQuill
-                modules={{
-                  toolbar: [
-                    [{ header: '1' }, { header: '2' }, { font: [] }],
-                    [{ size: [] }],
-                    ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-                    [
-                      { list: 'ordered' },
-                      { list: 'bullet' },
-                      { indent: '-1' },
-                      { indent: '+1' }
-                    ],
-                    ['link', 'image', 'video'],
-                    ['clean']
-                  ]
-                }}
-                theme='snow'
-                placeholder={placeholder}
-                {...field}
-                readOnly={readOnly}
-              />
-            </>
-          )}
-        />
-      </div>
-    )
-  }
   let labelName = location?.pathname === '/email-manager/edit' ? 'Edit' : 'Add'
   let submitButton = isLoading ? (
     <div className='spinner-container bg-LightBlue text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150'>
@@ -123,19 +117,16 @@ export default function AddEditEmail() {
   ) : (
     <OButton
       extraClasses={'!px-6 '}
-      label={
-        <><FaEdit size={15} className='mr-2' /> {labelName}</>
-      }
+      label={<><FaEdit size={15} className='mr-2' /> {labelName}</>}
       title={labelName}
       type='submit'
       loading={isLoading}
     />
   )
+
   return (
     <form onSubmit={handleSubmit(handleSubmitForm)} method='post'>
-
       <div className='outer-boarder'>
-
         <div className='headerForm  bg-[#2f2f31] '>
           {type === 'edit' ? 'Edit' : 'View'} {t('AN_EMAIL_TEMPLATE')}
         </div>
@@ -145,11 +136,7 @@ export default function AddEditEmail() {
               <OInputField
                 wrapperClassName='relative z-0  w-full group'
                 name='title'
-                inputLabel={
-                  <>
-                    {t('TEMPLATE_NAME')}<span className='text-red-500'>*</span>
-                  </>
-                }
+                inputLabel={<>{t('TEMPLATE_NAME')}<span className='text-red-500'>*</span></>}
                 type='text'
                 autoFocus
                 style={{ cursor: 'not-allowed' }}
@@ -164,11 +151,7 @@ export default function AddEditEmail() {
               <OInputField
                 wrapperClassName='relative z-0   w-full group'
                 name='subject'
-                inputLabel={
-                  <>
-                    {t('O_SUBJECT')}<span className='text-red-500'>*</span>
-                  </>
-                }
+                inputLabel={<>{t('O_SUBJECT')}<span className='text-red-500'>*</span></>}
                 type='text'
                 maxLength={500}
                 onInput={e => preventMaxInput(e, 500)}
@@ -187,52 +170,7 @@ export default function AddEditEmail() {
           readOnly={type === 'view'}
         />
 
-        <div className="md:py-5 sm:px-2 sm:py-3 md:px-7 px-2">
-          <div className="">
-            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"></label>
-            <b className='text-sm'>{t('O_KEYWORD')}:</b>
-            <div className="grid grid-cols-3 gap-5 mt-3">
-
-              <div className="border rounded-sm w-full grid grid-cols-12 bg-white  p-3 gap-2 items-center" >
-                <div className="col-span-11">
-                  <p className="text-black-600 font-semibold">FULL_NAME</p>
-                  <p className="text-sm text-gray-800 font-light">User Full Name</p>
-                </div>
-              </div>
-
-              {
-                editItem?.type === "welcome-email" && <>
-
-                  <div className="border rounded-sm w-full grid grid-cols-12 bg-white  p-3 gap-2 items-center" >
-                    <div className="col-span-11">
-                      <p className="text-black-600 font-semibold">EMAIL</p>
-                      <p className="text-sm text-gray-800 font-light">User Email</p>
-                    </div>
-                  </div>
-
-                  <div className="border rounded-sm w-full grid grid-cols-12 bg-white  p-3 gap-2 items-center" >
-                    <div className="col-span-11">
-                      <p className="text-black-600 font-semibold">PASSWORD</p>
-                      <p className="text-sm text-gray-800 font-light">User Password</p>
-                    </div>
-                  </div>
-
-                </>
-              }
-              {
-                (helpers?.orOperator(editItem?.type === "forget-password" || editItem?.type === "change-password")) && <div className="border rounded-sm w-full grid grid-cols-12 bg-white  p-3 gap-2 items-center" >
-                  <div className="col-span-11">
-                    <p className="text-black-600 font-semibold">LINK</p>
-                    <p className="text-sm text-gray-800 font-light">Reset Password Link</p>
-                  </div>
-                </div>
-              }
-
-
-            </div>
-          </div>
-        </div>
-
+        {/* The rest of your form */}
         <div className='flex items-center justify-center p-3 mt-3 border bg-[#cbd5e13a]  rounded-b'>
           <Link to='/email-manager'>
             <button

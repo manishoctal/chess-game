@@ -11,7 +11,6 @@ import Swal from "sweetalert2";
 import { FaUserGear } from "react-icons/fa6";
 import { AiOutlineMail } from "react-icons/ai";
 import { IoMdNotificationsOutline } from "react-icons/io";
-
 import helpers from "utils/helpers";
 import { FaRegQuestionCircle } from "react-icons/fa";
 import { MdFeedback, MdWidthWide } from "react-icons/md";
@@ -92,9 +91,8 @@ const Sidebar = () => {
   };
 
   if (!user) {
-    <></>;
+    return <></>;
   }
-
   return (
     <div className={`shadow-lg sidebar lg:block z-10   ${sidebarStatus === "open" ? "block" : "sidebarHide"} bg-gradient-to-t from-gradpurple to-gradientFrom w-[220px] xl:w-[280px] fixed h-full overflow-y-auto`}>
       <div className="text-sideBarNavColor">

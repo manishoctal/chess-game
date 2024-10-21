@@ -76,12 +76,13 @@ export const validateFile = (file, type = 'image') => {
 export const supportedImageTypes = ['image/jpeg', 'image/jpg', 'image/png']
 
 export const preventText = (e) => {
-  if (!/[0-9]/.test(e.key)) {
+  if (!/\d/.test(e.key)) {
     e.preventDefault();
   }
-}
+};
+
 export const handleNumericInput = (event) => {
-  const isAllowedKey = ["Backspace", "Delete", "Tab", "ArrowLeft", "ArrowRight"].includes(event.key) || /[0-9]/.test(event.key);
+  const isAllowedKey = ["Backspace", "Delete", "Tab", "ArrowLeft", "ArrowRight"].includes(event.key) || /\d/.test(event.key);
   
   if (!isAllowedKey) {
     event.preventDefault();
