@@ -62,8 +62,6 @@ const SubAdd = () => {
   const [permissionJons, setPermission] = useState(helpers.ternaryCondition(item?.type, getValues("permission"), Permission));
   const formValidation = FormValidation();
 
-  console.log("permissionJons", permissionJons)
-
   const [countryCode] = useState("in");
   const [isSelectAll, setIsSelectAll] = useState(false);
   const [isCheckAll, setIsCheckAll] = useState(false);
@@ -191,31 +189,6 @@ const SubAdd = () => {
     );
   };
   let itemType = helpers.ternaryCondition(item?.type === "edit", t("O_EDIT"), t("O_ADD"));
-
-  const renderInputField = (autoFocus, name, label, maxLength, validation, disable, placeholder, greyClass) => (
-    <div>
-      <OInputField
-        wrapperClassName="relative z-0 mb-6 w-full group"
-        name={name}
-        inputLabel={
-          <>
-            {label}
-            <span className="text-red-500">*</span>
-          </>
-        }
-        type="text"
-        autoFocus={autoFocus}
-        greyClass={greyClass}
-        maxLength={maxLength}
-        placeholder={placeholder || ""}
-        onInput={(e) => preventMaxInput(e, maxLength)}
-        register={register(name, validation)}
-        errors={errors}
-        disable={disable}
-      />
-    </div>
-  );
-
 
   useEffect(() => {
     if (!location.state && !location?.state?.addType) {
