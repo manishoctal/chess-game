@@ -16,23 +16,23 @@ const UserGraph = () => {
   const [selectedYear, setSelectedYear] = useState("");
   const [selectedMonth, setSelectedMonth] = useState("");
 
-  function generateYearArray(date) {
+  function generateYearArrayGraph(date) {
     const startDate = new Date(date);
     const startYear = startDate.getFullYear();
     const currentYear = new Date().getFullYear();
     return Array.from({ length: currentYear - startYear + 1 }, (_, index) => startYear + index);
   }
 
-  const handleYearSelect = (e) => {
+  const handleYearSelectGraph = (e) => {
     const year = e.target.value;
     setSelectedYear(year);
     if (year) {
       const month = selectedMonth ? selectedMonth : 0;
-      getGraphUserDetails(year, month);
+      getGraphUserDetailsPanel(year, month);
     }
   };
 
-  const getGraphUserDetails = async (year = 0, month = 0) => {
+  const getGraphUserDetailsPanel= async (year = 0, month = 0) => {
     try {
       const payload = { year, month };
       const path = pathObj.getGraphUserDetails;
@@ -45,7 +45,7 @@ const UserGraph = () => {
         const labels = data?.map((item) => item?.label);
         setCategories(labels);
         setGraphData([{ name: "users", data: count }]);
-        setGraphYear(generateYearArray(response?.year));
+        setGraphYear(generateYearArrayGraph(response?.year));
       }
     } catch (error) {
       console.log("Error in getGraphUserDetails:", error.message);
@@ -53,20 +53,20 @@ const UserGraph = () => {
   };
 
   useEffect(() => {
-    getGraphUserDetails();
+    getGraphUserDetailsPanel();
   }, []);
 
-  const resetFilters = () => {
+  const userResetFilters  = () => {
+    getGraphUserDetailsPanel();
     setSelectedYear("");
     setSelectedMonth("");
-    getGraphUserDetails();
   };
 
   const handleMonthSelect = (e) => {
     const month = e.target.value;
     setSelectedMonth(month);
     if (selectedYear) {
-      getGraphUserDetails(selectedYear, month);
+      getGraphUserDetailsPanel(selectedYear, month);
     }
   };
 
@@ -108,7 +108,7 @@ const UserGraph = () => {
             name="year"
             className="flex flex-row-reverse border outline-none border-[#E9EDF9] text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             value={selectedYear}
-            onChange={handleYearSelect}
+            onChange={handleYearSelectGraph}
           >
             <option value="">Select Year</option>
             {graphYear?.map((year) => {
@@ -143,7 +143,7 @@ const UserGraph = () => {
           </select>
         </div>
         <div className="flex items-center ml-2 sm:mb-0">
-          <button type="button" onClick={resetFilters} className="bg-gradientTo text-sm px-6 flex gap-2 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2">
+          <button type="button" onClick={userResetFilters } className="bg-gradientTo text-sm px-6 flex gap-2 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2">
             <BiReset size={18} /> Reset
           </button>
         </div>

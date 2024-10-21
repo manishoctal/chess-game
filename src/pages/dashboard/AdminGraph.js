@@ -48,7 +48,7 @@ const AdminGraph = () => {
   }, []);
 
   
-  const handleYearSelect = (e) => {
+  const handleYearSelectAdmin = (e) => {
     const year = e.target.value;
     setSelectedYear(year);
     if (year) {
@@ -57,14 +57,14 @@ const AdminGraph = () => {
     }
   };
 
-  const resetFilters = () => {
+  const resetFiltersAdmin = () => {
     getGraphAdminDetails();
     setSelectedYear("");
     setSelectedMonth("");
   };
 
 
-  const handleMonthSelect = (e) => {
+  const handleMonthSelectAdmin = (e) => {
     const month = e.target.value;
     setSelectedMonth(month);
     if (selectedYear) {
@@ -112,7 +112,7 @@ const AdminGraph = () => {
             name="year"
             className="flex flex-row-reverse border outline-none border-[#E9EDF9] text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             value={selectedYear}
-            onChange={handleYearSelect}
+            onChange={handleYearSelectAdmin}
           >
             <option value="">Select Year</option>
             {graphYear?.map((year) => {
@@ -129,7 +129,7 @@ const AdminGraph = () => {
             name="month"
             className="flex flex-row-reverse border outline-none border-[#E9EDF9] text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             value={selectedMonth}
-            onChange={handleMonthSelect}
+            onChange={handleMonthSelectAdmin}
           >
             <option value="0">Select Month</option>
             <option value="1">Jan</option>
@@ -147,7 +147,7 @@ const AdminGraph = () => {
           </select>
         </div>
         <div className="flex items-center ml-2 sm:mb-0">
-          <button type="button" onClick={resetFilters} className="bg-gradientTo text-sm px-6 flex gap-2 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2">
+          <button type="button" onClick={resetFiltersAdmin} className="bg-gradientTo text-sm px-6 flex gap-2 ml-3 mb-3 py-2 rounded-lg items-center border border-transparent text-white hover:bg-DarkBlue sm:w-auto w-1/2">
             <BiReset size={18} /> Reset
           </button>
         </div>
