@@ -47,14 +47,7 @@ const AdminGraph = () => {
     getGraphAdminDetails();
   }, []);
 
-  const handleMonthSelect = (e) => {
-    const month = e.target.value;
-    setSelectedMonth(month);
-    if (selectedYear) {
-      getGraphAdminDetails(selectedYear, month);
-    }
-  };
-
+  
   const handleYearSelect = (e) => {
     const year = e.target.value;
     setSelectedYear(year);
@@ -70,6 +63,16 @@ const AdminGraph = () => {
     setSelectedMonth("");
   };
 
+
+  const handleMonthSelect = (e) => {
+    const month = e.target.value;
+    setSelectedMonth(month);
+    if (selectedYear) {
+      getGraphAdminDetails(selectedYear, month);
+    }
+  };
+
+
   const options = {
     chart: {
       height: 350,
@@ -82,6 +85,12 @@ const AdminGraph = () => {
     stroke: {
       curve: "straight",
     },
+    grid: {
+      row: {
+        colors: ["#f3f3f3", "transparent"],
+        opacity: 0.5,
+      },
+    },
     dataLabels: {
       enabled: false,
     },
@@ -89,12 +98,7 @@ const AdminGraph = () => {
       text: "Admin Profit Graph",
       align: "center",
     },
-    grid: {
-      row: {
-        colors: ["#f3f3f3", "transparent"],
-        opacity: 0.5,
-      },
-    },
+   
     xaxis: {
       categories: categories,
     },

@@ -16,12 +16,12 @@ import Pagination from "../Pagination";
 import AuthContext from "context/AuthContext";
 
 function Transaction() {
-  const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
   const [isInitialized, setIsInitialized] = useState(false);
   const { t } = useTranslation();
   const location = useLocation();
   const [totalBalance,setTotalBalance]=useState("")
+  const [searchTerm, setSearchTerm] = useState("");
   const { logoutUser, user, updatePageName } = useContext(AuthContext);
   const [paginationObj, setPaginationObj] = useState({
     page: 1,
@@ -54,12 +54,12 @@ function Transaction() {
       const { transactionType, startDate, endDate, searchKey, userId } = filterData;
 
       const payload = {
-        page,
-        pageSize: pageSize,
         keyword: helpers.normalizeSpaces(searchKey) || null,
         sortKey: sort?.sortBy,
         sortType: sort?.sortType,
         startDate: startDate ? dayjs(startDate).format("YYYY-MM-DD") : null,
+        page,
+        pageSize: pageSize,
         endDate: endDate ? dayjs(endDate).format("YYYY-MM-DD") : null,
         userId: userId || null,
       };
@@ -78,8 +78,8 @@ function Transaction() {
           ...paginationObj,
           page: helpers.ternaryCondition(resultStatus, response.page, null),
           perPageItem: helpers.ternaryCondition(resultStatus, response?.docs.length, null),
-          totalItems: helpers.ternaryCondition(resultStatus, response.totalDocs, null),
           pageCount: helpers.ternaryCondition(resultStatus, response.totalPages, null),
+          totalItems: helpers.ternaryCondition(resultStatus, response.totalDocs, null),
         });
       }
     } catch (error) {
@@ -105,10 +105,6 @@ function Transaction() {
     const newPage = event.selected + 1;
     setPage(newPage);
   };
-
-  useEffect(() => {
-    updatePageName(t("NAV_TRANSACTION_MANAGER"));
-  }, []);
 
 
 
@@ -156,6 +152,9 @@ function Transaction() {
     }
   };
 
+  useEffect(() => {
+    updatePageName(t("NAV_TRANSACTION_MANAGER"));
+  }, []);
 
   const getTotalBalance = async () => {
     try {
@@ -178,18 +177,6 @@ function Transaction() {
   const handleUserViewPage = () => {
     updatePageName(` ${t("VIEW") + " " + t("USER_MANAGER")}`);
   };
-  
-
-  const handleDateChange = (start, end) => {
-    setPage(1);
-    setFilterData({
-      ...filterData,
-      startDate: start,
-      endDate: end,
-      isFilter: true,
-      isReset: false,
-    });
-  };
 
   const statusPage = (e) => {
     const selectedValue = e.target.value;
@@ -202,6 +189,18 @@ function Transaction() {
     }));
     setPage(1);
   };
+
+  const handleDateChange = (start, end) => {
+    setPage(1);
+    setFilterData({
+      ...filterData,
+      startDate: start,
+      endDate: end,
+      isFilter: true,
+      isReset: false,
+    });
+  };
+
 
   useEffect(() => {
     if (!isInitialized) {

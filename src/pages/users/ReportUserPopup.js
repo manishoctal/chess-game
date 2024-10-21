@@ -1,26 +1,31 @@
 import AuthContext from "context/AuthContext";
 import { isEmpty } from "lodash";
-import Pagination from "pages/Pagination";
-import { useContext, useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
-import { IoClose } from "react-icons/io5";
 import { NavLink } from "react-router-dom";
 import { apiGet } from "utils/apiFetch";
 import apiPath from "utils/apiPath";
 import helpers from "utils/helpers";
+import Pagination from "pages/Pagination";
+import { useContext, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { IoClose } from "react-icons/io5";
 
 const ReportUserPopup = ({ handleReportToggle, reportItem }) => {
   const { t } = useTranslation();
-  const renderTableCell = (content, classNames) => <td className={classNames}>{helpers?.ternaryCondition(content, content, "N/A")}</td>;
   const { logoutUser } = useContext(AuthContext);
-  const [page, setPage] = useState(1);
-  const [pageSize] = useState(10);
-  const [reportList, setReportList] = useState([]);
   const [paginationObj, setPaginationObj] = useState({
     page: 1,
     pageCount: 1,
     pageRangeDisplayed: 10,
   });
+  const [reportList, setReportList] = useState([]);
+  const [page, setPage] = useState(1);
+  const [pageSize] = useState(10);
+  const renderTableCell = (content, classNames) => <td className={classNames}>{helpers?.ternaryCondition(content, content, "N/A")}</td>;
+
+  const handlePageClick = (event) => {
+    const newPage = event.selected + 1;
+    setPage(newPage);
+  };
 
   const getAllReport = async () => {
     try {
@@ -52,10 +57,7 @@ const ReportUserPopup = ({ handleReportToggle, reportItem }) => {
     }
   };
 
-  const handlePageClick = (event) => {
-    const newPage = event.selected + 1;
-    setPage(newPage);
-  };
+
 
   useEffect(() => {
     getAllReport();

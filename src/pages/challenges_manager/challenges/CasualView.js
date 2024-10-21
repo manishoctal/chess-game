@@ -1,15 +1,15 @@
-import AuthContext from 'context/AuthContext';
 import dayjs from 'dayjs';
 import React, { useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import helpers from 'utils/helpers';
+import { startCase } from "lodash";
+import AuthContext from 'context/AuthContext';
+import { FaCircleArrowLeft } from 'react-icons/fa6';
+import ReactCountryFlag from 'react-country-flag';
 import { GiHorseHead } from 'react-icons/gi';
 import { Link, useLocation } from 'react-router-dom';
 import { apiGet } from 'utils/apiFetch';
 import apiPath from 'utils/apiPath';
-import helpers from 'utils/helpers';
-import { startCase } from "lodash";
-import { FaCircleArrowLeft } from 'react-icons/fa6';
-import ReactCountryFlag from 'react-country-flag';
 
 
 const CasualView = () => {
@@ -44,9 +44,8 @@ const CasualView = () => {
 
   const { type } = location.state;
 
-  const showCreatorFlag = helpers?.countryFlag(item?.creatorDetails?.currency);
   const showAcceptorFlag = helpers?.countryFlag(item?.acceptorDetails?.currency);
-  console.log("showCountryFlag", showAcceptorFlag)
+  const showCreatorFlag = helpers?.countryFlag(item?.creatorDetails?.currency);
 
   return (
     <div className="p-6">

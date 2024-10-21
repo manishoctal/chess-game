@@ -1,28 +1,28 @@
 import React, { useContext, useEffect, useState } from "react";
-import { apiDelete, apiGet, apiPut } from "../../utils/apiFetch";
 import apiPath from "../../utils/apiPath";
-import SubTable from "./SubTable";
 import Pagination from "../Pagination";
 import dayjs from "dayjs";
+import { apiDelete, apiGet, apiPut } from "../../utils/apiFetch";
+import PageSizeList from "components/PageSizeList";
+import OSearch from "components/reusable/OSearch";
+import { BiReset } from "react-icons/bi";
+import SubTable from "./SubTable";
+import { IoIosAdd } from "react-icons/io";
+import helpers from "utils/helpers";
 import ODateRangePicker from "components/shared/datePicker/ODateRangePicker";
 import { useTranslation } from "react-i18next";
 import AuthContext from "context/AuthContext";
 import {useNavigate } from "react-router-dom";
 import useToastContext from "hooks/useToastContext";
-import PageSizeList from "components/PageSizeList";
-import OSearch from "components/reusable/OSearch";
-import { BiReset } from "react-icons/bi";
-import { IoIosAdd } from "react-icons/io";
-import helpers from "utils/helpers";
 
 function SubAdmin() {
-  const { t } = useTranslation();
+  const { user, updatePageName } = useContext(AuthContext);
   const navigate = useNavigate();
   const notification = useToastContext();
-  const { user, updatePageName } = useContext(AuthContext);
   const manager = user?.permission?.find((e) => e.manager === "subAdmin_manager") ?? {};
   const [subAdmin, setSubAdmin] = useState();
   const [page, setPage] = useState(1);
+  const { t } = useTranslation();
   const [pageSize, setPageSize] = useState(10);
   const [isDelete] = useState(false);
   const [paginationObj, setPaginationObj] = useState({
@@ -31,8 +31,8 @@ function SubAdmin() {
     pageRangeDisplayed: 10,
   });
   const [searchTerm, setSearchTerm] = useState("");
-  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
   const [isInitialized, setIsInitialized] = useState(false);
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
   const [filterData, setFilterData] = useState({
     category: "",
     searchKey: "",
@@ -51,14 +51,14 @@ function SubAdmin() {
       const { category, startDate, endDate, searchKey } = filterData;
 
       const payload = {
+        sortBy: sort.sortBy,
+        sortType: sort.sortType,
         page,
         pageSize: pageSize,
         status: category,
         startDate: startDate ? dayjs(startDate).format("YYYY-MM-DD") : null,
         endDate: endDate ? dayjs(endDate).format("YYYY-MM-DD") : null,
         keyword: helpers.normalizeSpaces(searchKey) || null,
-        sortBy: sort.sortBy,
-        sortType: sort.sortType,
       };
 
       const path = apiPath.getSubAdmin;
@@ -91,6 +91,20 @@ function SubAdmin() {
     allSubAdmin();
   }, [filterData, page, sort, pageSize]);
 
+  
+  const handelDelete = async (item) => {
+    try {
+      const path = apiPath.editSubAdmin + "/" + item?._id;
+      const result = await apiDelete(path);
+      if (result?.status === 200) {
+        notification.success(result?.data.message);
+        allSubAdmin({ deletePage: 1 });
+      }
+    } catch (error) {
+      console.error("error in get all FAQs list==>>>>", error.message);
+    }
+  };
+  
   const handelStatusChange = async (item) => {
     try {
       const payload = {
@@ -107,20 +121,6 @@ function SubAdmin() {
       console.error("error in get all users list==>>>>", error.message);
     }
   };
-
-  const handelDelete = async (item) => {
-    try {
-      const path = apiPath.editSubAdmin + "/" + item?._id;
-      const result = await apiDelete(path);
-      if (result?.status === 200) {
-        notification.success(result?.data.message);
-        allSubAdmin({ deletePage: 1 });
-      }
-    } catch (error) {
-      console.error("error in get all FAQs list==>>>>", error.message);
-    }
-  };
-
   const handleReset = () => {
     setFilterData({
       category: "",

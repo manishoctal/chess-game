@@ -1,8 +1,7 @@
-import React, { useContext, useEffect, useState } from "react";
-import { apiGet } from "../../utils/apiFetch";
 import apiPath from "../../utils/apiPath";
 import Pagination from "../Pagination";
 import AuthContext from "context/AuthContext";
+import React, { useContext, useEffect, useState } from "react";
 import dayjs from "dayjs";
 import { useTranslation } from "react-i18next";
 import PageSizeList from "components/PageSizeList";
@@ -10,21 +9,22 @@ import helpers from "utils/helpers";
 import { Link, useLocation } from "react-router-dom";
 import { FaCircleArrowLeft } from "react-icons/fa6";
 import { isEmpty, startCase } from "lodash";
+import { apiGet } from "../../utils/apiFetch";
 import ReactCountryFlag from "react-country-flag";
 import { GiHorseHead } from "react-icons/gi";
 
 function User() {
-  const { t } = useTranslation();
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
   const { logoutUser } = useContext(AuthContext);
   const [item, setItem] = useState({})
   const [activeTab, setActiveTab] = useState('Tab1');
   const [searchTerm] = useState("");
-  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
   const location = useLocation();
   const [isDelete] = useState(false);
   const [isInitialized, setIsInitialized] = useState(false);
   const [users, setAllUser] = useState([]);
-
+  const { t } = useTranslation();
+  
   const [paginationObj, setPaginationObj] = useState({
     page: 1,
     pageCount: 1,
@@ -36,7 +36,6 @@ function User() {
   };
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
-
 
   const [filterData, setFilterData] = useState({
     endDate: "",
@@ -68,8 +67,8 @@ function User() {
         setPaginationObj({
           ...paginationObj,
           page: helpers.ternaryCondition(resultStatus, response.page, null),
-          perPageItem: helpers.ternaryCondition(resultStatus, response?.docs.length, null),
           totalItems: helpers.ternaryCondition(resultStatus, response.totalDocs, null),
+          perPageItem: helpers.ternaryCondition(resultStatus, response?.docs.length, null),
           pageCount: helpers.ternaryCondition(resultStatus, response.totalPages, null),
         });
       }
