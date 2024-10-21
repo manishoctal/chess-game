@@ -11,7 +11,7 @@ import { apiPut } from 'utils/apiFetch';
 import apiPath from 'utils/apiPath';
 import { handleKeyDownCashIn, preventMaxHundred } from 'utils/reusableMethods';
 
-const GstComponent = ({saveSettingData}) => {
+const GstComponent = ({ saveSettingData }) => {
     const { t } = useTranslation();
     const {
         register,
@@ -36,40 +36,40 @@ const GstComponent = ({saveSettingData}) => {
         tds: {
             required: { value: true, message: t("PLEASE_ENTER_TDS"), },
             min: {
-              value: 0.01,
-              message: 'Minimum value must is 0.01.'
+                value: 0.01,
+                message: 'Minimum value must is 0.01.'
             }
-          },
+        },
     };
 
     const countries = ["India", "Canada", "Australia", "USA", "UK"];
     const [settingChangeLoading, setSettingChangeLoading] = useState(false);
     const notification = useToastContext();
-    
+
     const handleSubmitForm = async (data) => {
         try {
             setSettingChangeLoading(true);
             const countryObject1 = {
-                    india: data.indiaCountry,
-                    canada: data.canadaCountry,
-                    australia:data?.australiaCountry,
-                    usa:data?.usaCountry,
-                    uk:data?.ukCountry,
-                    type:"gstDeposit"
+                india: data.indiaCountry,
+                canada: data.canadaCountry,
+                australia: data?.australiaCountry,
+                usa: data?.usaCountry,
+                uk: data?.ukCountry,
+                type: "gstDeposit"
             };
 
             const countryObject2 = {
                 india: data.indiaCountryTds,
                 canada: data.canadaCountryTds,
-                australia:data?.australiaCountryTds,
-                usa:data?.usaCountryTds,
-                uk:data?.ukCountryTds,
-                type:"tdsWithdrawal"
-        };
+                australia: data?.australiaCountryTds,
+                usa: data?.usaCountryTds,
+                uk: data?.ukCountryTds,
+                type: "tdsWithdrawal"
+            };
 
-        const payload = {
-            gstTds: [countryObject1, countryObject2]
-        };
+            const payload = {
+                gstTds: [countryObject1, countryObject2]
+            };
 
             const response = await apiPut(apiPath?.tdsDeposit, payload);
             if (response?.status === 200) {
@@ -99,68 +99,75 @@ const GstComponent = ({saveSettingData}) => {
 
     return (
         <form onSubmit={handleSubmit(handleSubmitForm)} className='mb-5'>
-          
-          <div className='grid grid-cols-2 gap-x-5'>
 
-          <div className="border rounded-md p-5">
-                <h2 className="text-center mb-5 text-2xl font-medium">
-                    {t("GST_TIME_OF_DEPOSIT")}
-                </h2>
+            <div className='grid grid-cols-2 gap-x-5'>
 
-                {countries.map((country) => (
-                    <div className="flex" key={country}>
-                        <span className="mr-5 mt-3 w-[150px]">{country}</span>
-                        <ReusableInputField
-                            id={`${country.toLowerCase()}Country`}
-                            register={register}
-                            errors={errors}
-                            disable={manager?.add === false}
-                            validationRules={validationFields?.gstTimeDeposit}
-                        />
+                <div className="border rounded-md ">
+                    <h2 className="mb-2 text-md font-medium p-3 border-b">
+                        {t("GST_TIME_OF_DEPOSIT")}
+                    </h2>
+                    <div className='p-5 px-3 pt-3'>
+                        {countries.map((country) => (
+                            <div className="flex" key={country}>
+                                {/* <span className="mr-5 mt-3 w-[150px]">{country}</span> */}
+                                <ReusableInputField
+                                    id={`${country.toLowerCase()}Country`}
+                                    register={register}
+                                    label={country}
+                                    errors={errors}
+                                    disable={manager?.add === false}
+                                    validationRules={validationFields?.gstTimeDeposit}
+                                />
+                            </div>
+                        ))}
+
                     </div>
-                ))}
 
 
-            </div>
 
-       
-            <div className="border rounded-md p-5">
-                <h2 className="text-center mb-5 text-2xl font-medium">
-                    {t("TDS_TIME_OF_DEPOSIT")}
-                </h2>
+                </div>
 
 
-            {countries.map((country) => (
-                    <div className="flex" key={country}>
-                        <span className="mr-5 mt-3 w-[150px]">{country}</span>
-                        <ReusableInputField
-                            id={`${country.toLowerCase()}CountryTds`}
-                            register={register}
-                            disable={manager?.add === false}
-                            errors={errors}
-                            validationRules={validationFields?.tds}
-                        />
+                <div className="border rounded-md ">
+                    <h2 className="mb-2 text-md font-medium p-3 border-b">
+                        {t("TDS_TIME_OF_DEPOSIT")}
+                    </h2>
+
+                    <div className='p-5 px-3 pt-3'>
+
+                        {countries.map((country) => (
+                            <div className="flex" key={country}>
+                                {/* <span className="mr-5 mt-3 w-[150px]">{country}</span> */}
+                                <ReusableInputField
+                                    id={`${country.toLowerCase()}CountryTds`}
+                                    register={register}
+                                    label={country}
+                                    disable={manager?.add === false}
+                                    errors={errors}
+                                    validationRules={validationFields?.tds}
+                                />
+                            </div>
+                        ))}
                     </div>
-                ))}
 
+                </div>
             </div>
-          </div>
-          {(manager?.add || user?.role === 'admin') && (
-            <div className="text-center mt-8">
-                <OButton
-                    disabled={!isDirty}
-                    label={
-                        <>
-                            <GrUpdate size={16} className="mr-2" />
-                            {t('O_UPDATE')}
-                        </>
-                    }
-                    loading={settingChangeLoading}
-                    type="submit"
-                    title={t('O_UPDATE')}
-                />
-            </div>
-             )}
+            {(manager?.add || user?.role === 'admin') && (
+                <div className="text-center mt-8">
+                    <OButton
+                        disabled={!isDirty}
+                        label={
+                            <>
+                                <GrUpdate size={16} className="mr-2" />
+                                {t('O_UPDATE')}
+                            </>
+                        }
+                        loading={settingChangeLoading}
+                        type="submit"
+                        title={t('O_UPDATE')}
+                    />
+                </div>
+            )}
         </form>
     );
 };
@@ -178,7 +185,7 @@ const ReusableInputField = ({
     onKeyDown = handleKeyDownCashIn,
     labelType = false,
 }) => (
-    <div className="relative z-0 mb-6 w-full group">
+    <div className="relative z-0 mb-2 w-full group">
         <OInputField
             type="number"
             wrapperClassName="relative z-0 w-full group"
@@ -190,7 +197,7 @@ const ReusableInputField = ({
             onKeyDown={onKeyDown}
             register={register(id, validationRules)}
             placeholder=" "
-            />
+        />
         <ErrorMessage message={errors?.[id]?.message} />
     </div>
 );

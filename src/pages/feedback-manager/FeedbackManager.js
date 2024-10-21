@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { apiGet, apiPut } from "../../utils/apiFetch";
+import { apiGet } from "../../utils/apiFetch";
 import apiPath from "../../utils/apiPath";
 import Pagination from "../Pagination";
 import AuthContext from "context/AuthContext";
@@ -16,19 +16,18 @@ import { GoDownload } from "react-icons/go";
 function FeedbackManager() {
   const { t } = useTranslation();
   const { logoutUser, notification, user ,updatePageName} = useContext(AuthContext);
-  const manager = user?.permission?.find((e) => e.manager === "feedback_manager") ?? {};
   const [paginationObj, setPaginationObj] = useState({
     page: 1,
     pageCount: 1,
     pageRangeDisplayed: 10,
   });
-
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
   const [isInitialized, setIsInitialized] = useState(false);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [allCommunity, setAllCommunity] = useState([]);
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
+  const manager = user?.permission?.find((e) => e.manager === "feedback_manager") ?? {};
+  const [searchTerm, setSearchTerm] = useState("");
+  const [allCommunity, setAllCommunity] = useState([]);
 
   const [filterData, setFilterData] = useState({
     category: "",
@@ -50,14 +49,14 @@ function FeedbackManager() {
 
       const payload = {
         page,
-        pageSize,
         community,
+        sortType: sort.sortType,
         status,
+        sortBy: sort.sortBy,
         startDate: startDate ? dayjs(startDate).format("YYYY-MM-DD") : null,
+        pageSize,
         endDate: endDate ? dayjs(endDate).format("YYYY-MM-DD") : null,
         keyword: helpers.normalizeSpaces(searchkey) || null,
-        sortBy: sort.sortBy,
-        sortType: sort.sortType,
       };
 
       const path = apiPath.feedbackListing;
@@ -70,10 +69,10 @@ function FeedbackManager() {
 
         setPaginationObj({
           ...paginationObj,
-          page: helpers.ternaryCondition(resultStatus, response.page, null),
           pageCount: helpers.ternaryCondition(resultStatus, response.totalPages, null),
-          perPageItem: helpers.ternaryCondition(resultStatus, response?.docs.length, null),
           totalItems: helpers.ternaryCondition(resultStatus, response.totalDocs, null),
+          perPageItem: helpers.ternaryCondition(resultStatus, response?.docs.length, null),
+          page: helpers.ternaryCondition(resultStatus, response.page, null),
         });
       }
     } catch (error) {
@@ -85,15 +84,15 @@ function FeedbackManager() {
     }
   };
 
-  useEffect(() => {
-    getAllNotifications();
-  }, [page, filterData, sort, pageSize]);
-  // get all notification function end
-
   const handlePageClick = (event) => {
     const newPage = event.selected + 1;
     setPage(newPage);
   };
+
+  useEffect(() => {
+    getAllNotifications();
+  }, [page, filterData, sort, pageSize]);
+
 
   // debounce search start
   useEffect(() => {
@@ -123,50 +122,27 @@ function FeedbackManager() {
 
   const handleReset = () => {
     setFilterData({
-      searchkey: "",
-      community: "",
       status: "",
-      category: "",
-      startDate: "",
-      endDate: "",
       isReset: true,
       isFilter: false,
+      category: "",
+      community: "",
+      startDate: "",
+      endDate: "",
+      searchkey: "",
     });
     setSearchTerm("");
     setPage(1);
   };
 
-
   const handleDateChange = (start, end) => {
     setPage(1);
     setFilterData({
       ...filterData,
-      startDate: start,
       endDate: end,
+      startDate: start,
       isFilter: true,
     });
-  };
-
-  const dynamicPage = (e) => {
-    setPage(1);
-    setPageSize(e.target.value);
-  };
-
-
-  const handelStatusChange = async (item) => {
-    try {
-      const payload = {
-        status: item?.status === "inactive" ? "active" : "inactive",
-        type: "achievement",
-      };
-      const path = `${apiPath.changeStatus}/${item?._id}`;
-      const result = await apiPut(path, payload);
-      if (result?.status === 200) {
-        notification.success(result.data.message);
-      }
-    } catch (error) {
-      console.error("error in get all badges list==>>>>", error.message);
-    }
   };
 
   const onCsvDownload = async () => {
@@ -197,6 +173,12 @@ function FeedbackManager() {
   const handleUserViewPage = () => {
     updatePageName(` ${t("VIEW") + " " + t("USER_MANAGER")}`);
   };
+
+  const dynamicPage = (e) => {
+    setPage(1);
+    setPageSize(e.target.value);
+  };
+
 
   return (
     <div>
@@ -248,9 +230,6 @@ function FeedbackManager() {
               pageSize={pageSize}
               manager={manager}
               paginationObj={paginationObj}
-              handelStatusChange={handelStatusChange}
-
-
             />
 
 

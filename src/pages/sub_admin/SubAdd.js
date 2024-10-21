@@ -62,8 +62,6 @@ const SubAdd = () => {
   const [permissionJons, setPermission] = useState(helpers.ternaryCondition(item?.type, getValues("permission"), Permission));
   const formValidation = FormValidation();
 
-  console.log("permissionJons",permissionJons)
-
   const [countryCode] = useState("in");
   const [isSelectAll, setIsSelectAll] = useState(false);
   const [isCheckAll, setIsCheckAll] = useState(false);
@@ -191,31 +189,6 @@ const SubAdd = () => {
     );
   };
   let itemType = helpers.ternaryCondition(item?.type === "edit", t("O_EDIT"), t("O_ADD"));
-  
-  const renderInputField = (autoFocus, name, label, maxLength, validation, disable, placeholder, greyClass) => (
-    <div>
-      <OInputField
-        wrapperClassName="relative z-0 mb-6 w-full group"
-        name={name}
-        inputLabel={
-          <>
-            {label}
-            <span className="text-red-500">*</span>
-          </>
-        }
-        type="text"
-        autoFocus={autoFocus}
-        greyClass={greyClass}
-        maxLength={maxLength}
-        placeholder={placeholder || ""}
-        onInput={(e) => preventMaxInput(e, maxLength)}
-        register={register(name, validation)}
-        errors={errors}
-        disable={disable}
-      />
-    </div>
-  );
-
 
   useEffect(() => {
     if (!location.state && !location?.state?.addType) {
@@ -223,7 +196,7 @@ const SubAdd = () => {
     }
   }, [location]);
 
-  
+
   return (
     <>
       <div className="relative p-6 flex-auto">
@@ -235,10 +208,68 @@ const SubAdd = () => {
         <div className="">
           <div className="">
             <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-              <div className="px-2">{renderInputField(true, "firstName", t("O_FIRST_NAME"), 15, formValidation["subAdminName"], item?.type === "view", t("ENTER_FIRST_NAME"))}</div>
-              <div className="px-2">{renderInputField(false, "lastName", t("O_LAST_NAME"), 15, formValidation["subAdminLastName"], item?.type === "view", t("ENTER_LAST_NAME"))}</div>
 
-              <div className="px-2">{renderInputField(false, "email", t("EMAIL_ADDRESS"), 50, formValidation["emailAddress"], item?.type === "view" || item?.type === "edit", t("ENTER_EMAIL_ADDRESS"), item?.type === "edit" ? "greyClass " : "")}</div>
+              <div className="px-2">
+                <OInputField
+                  wrapperClassName="relative z-0 mb-6 w-full group"
+                  name="firstName"
+                  inputLabel={
+                    <>
+                      {t("O_FIRST_NAME")}
+                      <span className="text-red-500">*</span>
+                    </>
+                  }
+                  type="text"
+                  autoFocus={true}
+                  maxLength={15}
+                  placeholder={t("ENTER_FIRST_NAME")}
+                  onInput={(e) => preventMaxInput(e, 15)}
+                  register={register("firstName", formValidation["subAdminName"])}
+                  errors={errors}
+                  disable={item?.type === "view"}
+                />
+              </div>
+
+              <div className="px-2">
+                <OInputField
+                  wrapperClassName="relative z-0 mb-6 w-full group"
+                  name="lastName"
+                  inputLabel={
+                    <>
+                      {t("O_LAST_NAME")}
+                      <span className="text-red-500">*</span>
+                    </>
+                  }
+                  type="text"
+                  maxLength={15}
+                  placeholder={t("ENTER_LAST_NAME")}
+                  onInput={(e) => preventMaxInput(e, 15)}
+                  register={register("lastName", formValidation["subAdminLastName"])}
+                  errors={errors}
+                  disable={item?.type === "view"}
+                />
+              </div>
+
+              <div className="px-2">
+                <OInputField
+                  wrapperClassName="relative z-0 mb-6 w-full group"
+                  name="email"
+                  inputLabel={
+                    <>
+                      {t("EMAIL_ADDRESS")}
+                      <span className="text-red-500">*</span>
+                    </>
+                  }
+                  type="text"
+                  maxLength={50}
+                  placeholder={t("ENTER_EMAIL_ADDRESS")}
+                  onInput={(e) => preventMaxInput(e, 50)}
+                  register={register("email", formValidation["emailAddress"])}
+                  errors={errors}
+                  disable={item?.type === "view" || item?.type === "edit"}
+                  greyClass={item?.type === "edit" ? "greyClass" : ""}
+                />
+              </div>
 
               <div className="px-2">
                 <DynamicLabel name={t("O_MOBILE_NUMBER")} type={true} htmlFor={countryCode} />
@@ -325,7 +356,7 @@ const SubAdd = () => {
                 </thead>
                 <tbody>
                   {permissionJons?.map((data, i) => (
-                    
+
                     <tr key={data?._id} className="bg-white border-b  dark:bg-gray-800 dark:border-gray-700">
                       <td className="py-2 px-4 border-r dark:border-[#ffffff38] ">{helpers.ternaryCondition(data.manager === "FAQ", "FAQ", capitalize(startCase(data.manager)))}</td>
                       <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-center">

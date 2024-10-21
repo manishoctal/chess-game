@@ -1,43 +1,44 @@
-import React, { useContext, useEffect, useState } from "react";
-import { apiGet, apiPut } from "../../utils/apiFetch";
 import apiPath from "../../utils/apiPath";
-import Pagination from "../Pagination";
-import AuthContext from "context/AuthContext";
-import dayjs from "dayjs";
-import ODateRangePicker from "components/shared/datePicker/ODateRangePicker";
 import { useTranslation } from "react-i18next";
-import PageSizeList from "components/PageSizeList";
-import helpers from "utils/helpers";
+import AuthContext from "context/AuthContext";
+import React, { useContext, useEffect, useState } from "react";
+import Pagination from "../Pagination";
 import OSearch from "components/reusable/OSearch";
 import { BiReset } from "react-icons/bi";
 import { GoDownload } from "react-icons/go";
+import dayjs from "dayjs";
+import { apiGet } from "../../utils/apiFetch";
+import ODateRangePicker from "components/shared/datePicker/ODateRangePicker";
+import PageSizeList from "components/PageSizeList";
 import WithdrawalRequestTable from "./WithdrawalRequestTable";
+import helpers from "utils/helpers";
 
 function WithdrawalRequestManager() {
-  const { t } = useTranslation();
   const { logoutUser, notification, user } = useContext(AuthContext);
-  const manager = user?.permission?.find((e) => e.manager === "widthDrawal_request_manager") ?? {};
+  const manager = user?.permission?.find((e) => e.manager === "withdrawal_request_manager") ?? {};
+  console.log("manager",manager)
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
   const [paginationObj, setPaginationObj] = useState({
     page: 1,
     pageCount: 1,
     pageRangeDisplayed: 10,
   });
-
-  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
+  
+  const { t } = useTranslation();
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
   const [isInitialized, setIsInitialized] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [allCommunity, setAllCommunity] = useState([]);
-  const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
 
   const [filterData, setFilterData] = useState({
     category: "",
     searchkey: "",
-    status: "",
     startDate: "",
     endDate: "",
     isReset: false,
     isFilter: false,
+    status: "",
   });
   const [sort, setSort] = useState({
     sortBy: "createdAt",
@@ -50,15 +51,15 @@ function WithdrawalRequestManager() {
       const { startDate, endDate, searchkey, community, category } = filterData;
 
       const payload = {
-        page,
         pageSize,
-        community,
         status:category,
-        startDate: startDate ? dayjs(startDate).format("YYYY-MM-DD") : null,
-        endDate: endDate ? dayjs(endDate).format("YYYY-MM-DD") : null,
-        keyword: helpers.normalizeSpaces(searchkey) || null,
-        sortBy: sort.sortBy,
         sortType: sort.sortType,
+        page,
+        community,
+        keyword: helpers.normalizeSpaces(searchkey) || null,
+        endDate: endDate ? dayjs(endDate).format("YYYY-MM-DD") : null,
+        startDate: startDate ? dayjs(startDate).format("YYYY-MM-DD") : null,
+        sortBy: sort.sortBy,
       };
 
       const path = apiPath.withdrawalManagerList;
@@ -89,13 +90,23 @@ function WithdrawalRequestManager() {
   useEffect(() => {
     getAllWithdrawal();
   }, [page, filterData, sort, pageSize]);
-  // get all notification function end
+
+
 
   const handlePageClick = (event) => {
     const newPage = event.selected + 1;
     setPage(newPage);
   };
 
+  const handleDateChange = (start, end) => {
+    setPage(1);
+    setFilterData({
+      ...filterData,
+      startDate: start,
+      isFilter: true,
+      endDate: end,
+    });
+  };
   // debounce search start
   useEffect(() => {
     if (!isInitialized) {
@@ -103,9 +114,9 @@ function WithdrawalRequestManager() {
     } else if (searchTerm || !filterData?.isReset) {
       setFilterData({
         ...filterData,
-        isReset: false,
         searchkey: debouncedSearchTerm || "",
         isFilter: !!debouncedSearchTerm,
+        isReset: false,
       });
       setPage(1);
     }
@@ -125,28 +136,20 @@ function WithdrawalRequestManager() {
 
   const handleReset = () => {
     setFilterData({
-      searchkey: "",
-      community: "",
-      status: "",
-      category: "",
-      startDate: "",
-      endDate: "",
       isReset: true,
       isFilter: false,
+      startDate: "",
+      status: "",
+      community: "",
+      category: "",
+      searchkey: "",
+      endDate: "",
     });
     setSearchTerm("");
     setPage(1);
   };
 
-  const handleDateChange = (start, end) => {
-    setPage(1);
-    setFilterData({
-      ...filterData,
-      startDate: start,
-      endDate: end,
-      isFilter: true,
-    });
-  };
+ 
 
   const dynamicPage = (e) => {
     setPage(1);
@@ -164,35 +167,22 @@ function WithdrawalRequestManager() {
     }));
     setPage(1);
   };
-  const handelStatusChange = async (item) => {
-    try {
-      const payload = {
-        status: item?.status === "inactive" ? "active" : "inactive",
-        type: "achievement",
-      };
-      const path = `${apiPath.changeStatus}/${item?._id}`;
-      const result = await apiPut(path, payload);
-      if (result?.status === 200) {
-        notification.success(result.data.message);
-      }
-    } catch (error) {
-      console.error("error in get all badges list==>>>>", error.message);
-    }
-  };
-
 
   const onCsvDownload = async () => {
 
     try {
-      const { startDate, endDate, searchkey, status } = filterData;
+      const { startDate, endDate, searchkey, community, category } = filterData;
 
       const payload = {
-        startDate: startDate ? dayjs(startDate).format("YYYY-MM-DD") : null,
-        endDate: endDate ? dayjs(endDate).format("YYYY-MM-DD") : null,
-        sortBy: sort.sortBy,
+        pageSize,
+        status:category,
         sortType: sort.sortType,
+        page,
+        community,
         keyword: helpers.normalizeSpaces(searchkey) || null,
-        status
+        endDate: endDate ? dayjs(endDate).format("YYYY-MM-DD") : null,
+        startDate: startDate ? dayjs(startDate).format("YYYY-MM-DD") : null,
+        sortBy: sort.sortBy,
       }
       const path = apiPath.downloadExcelWithdrawal;
       const result = await apiGet(path, payload);
@@ -213,7 +203,7 @@ function WithdrawalRequestManager() {
               <div className="col-span-2 flex flex-wrap  items-center">
                 <div className="flex items-center lg:pt-0 pt-3 flex-wrap justify-center mb-2 2xl:mb-0">
                   <div className="relative flex items-center mb-3">
-                    <OSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm} placeholder={t("SEARCH_BY_FULL_NAME_USER_MOBILE_USER_NAME")} />
+                    <OSearch setSearchTerm={setSearchTerm} placeholder={t("SEARCH_BY_FULL_NAME_USER_MOBILE_USER_NAME")} searchTerm={searchTerm}  />
                   </div>
                   <ODateRangePicker handleDateChange={handleDateChange} isReset={filterData?.isReset} setIsReset={setFilterData} />
                   <div className="flex items-centerml-3">
@@ -234,23 +224,6 @@ function WithdrawalRequestManager() {
                         <option value="rejected">{t("REJECTED")}</option>
                         <option value="pending">{t("PENDING")}</option>
                       </select>
-
-                      {/* <select
-                        id="countries"
-                        type=" password"
-                        name="floating_password"
-                        className="block p-2 w-full text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer"
-                        placeholder=" "
-                        value={filterData?.category}
-                        onChange={(e) => adminStatusChange(e)}
-                      >
-                        <option defaultValue value="">
-                          {t("O_ALL")}
-                        </option>
-                        <option value="accepted">{t("ACCEPTED")}</option>
-                        <option value="rejected">{t("REJECTED")}</option>
-                        <option value="pending">{t("PENDING")}</option>
-                      </select> */}
                     </div>
 
                   </div>
@@ -288,7 +261,6 @@ function WithdrawalRequestManager() {
               pageSize={pageSize}
               manager={manager}
               paginationObj={paginationObj}
-              handelStatusChange={handelStatusChange}
             />
 
 

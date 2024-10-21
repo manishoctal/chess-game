@@ -17,8 +17,6 @@ function User() {
   const { t } = useTranslation();
   const location = useLocation();
   const [activeInactiveStatus, setActiveInactiveStatus] = useState(location?.state ?? "");
-
-  console.log("activeInactiveStatus",activeInactiveStatus)
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
   const [isInitialized, setIsInitialized] = useState(false);
@@ -147,7 +145,7 @@ function User() {
   };
 
 
-  const handleDateChange = (start, end) => {
+  const handleDateChangeUser = (start, end) => {
     setPage(1);
     setFilterData({
       ...filterData,
@@ -159,14 +157,13 @@ function User() {
   };
 
 
-  const statusPage = (e) => {
+  const handleActiveInactive = (e) => {
     const selectedValue = e.target.value;
-
     setFilterData((prevData) => ({
       ...prevData,
       category: selectedValue ? selectedValue : undefined,
-      isFilter: true,
       isReset: false,
+      isFilter: true,
     }));
     setPage(1);
   };
@@ -196,6 +193,8 @@ function User() {
     }
   }, [debouncedSearchTerm]);
 
+  const manager = user?.permission?.find((e) => e.manager === "user_manager");
+
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       setDebouncedSearchTerm(searchTerm);
@@ -205,7 +204,6 @@ function User() {
     };
   }, [searchTerm]);
 
-  const manager = user?.permission?.find((e) => e.manager === "user_manager");
 
 
   return (
@@ -228,17 +226,17 @@ function User() {
               </div>
               <div className="flex flex-wrap items-center">
                 <div className="flex items-center lg:pt-0 pt-3 justify-center">
-                  <ODateRangePicker handleDateChange={handleDateChange} isReset={filterData?.isReset} setIsReset={setFilterData} />
+                  <ODateRangePicker handleDateChange={handleDateChangeUser} isReset={filterData?.isReset} setIsReset={setFilterData} />
                   {
                     !userResult && <div className="flex items-center mb-3 ml-3">
                       <select
-                        id="countries"
                         type="password"
                         name="floating_password"
                         className="block p-2 w-full text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer"
                         placeholder=""
+                        id="countries"
                         value={filterData?.category || activeInactiveStatus}
-                        onChange={statusPage}
+                        onChange={handleActiveInactive}
                       >
                         <option value="">
                           {t("O_ALL")}
@@ -252,12 +250,12 @@ function User() {
 
                   <div className="flex items-center mb-3 ml-3">
                     <select
-                      id="countries"
-                      name="floating_password"
-                      className="block p-2 min-w-[100px] text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer"
                       placeholder=" "
                       value={filterData?.kyc}
                       onChange={kycStatus}
+                      id="countries"
+                      name="floating_password"
+                      className="block p-2 min-w-[100px] text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer"
                     >
                       <option value="">
                         {t("MERCHANT_KYC")}
@@ -301,18 +299,18 @@ function User() {
           </div>
 
             <Table
-              users={users}
               user={user}
               getAllUser={getAllUser}
+              userType={userType}
+              manager={manager}
+              users={users}
+              userResult={userResult}
               handleUserView={handleUserView}
               page={page}
               setSort={setSort}
               sort={sort}
               setPage={setPage}
               pageSize={pageSize}
-              userType={userType}
-              manager={manager}
-              userResult={userResult}
             />
             <div className="flex justify-between">
               <PageSizeList dynamicPage={dynamicPage} pageSize={pageSize} />

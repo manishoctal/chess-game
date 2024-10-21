@@ -1,8 +1,7 @@
-import React, { useContext, useEffect, useState } from "react";
-import { apiGet } from "../../utils/apiFetch";
 import apiPath from "../../utils/apiPath";
 import Pagination from "../Pagination";
 import AuthContext from "context/AuthContext";
+import React, { useContext, useEffect, useState } from "react";
 import dayjs from "dayjs";
 import { useTranslation } from "react-i18next";
 import PageSizeList from "components/PageSizeList";
@@ -10,43 +9,43 @@ import helpers from "utils/helpers";
 import { Link, useLocation } from "react-router-dom";
 import { FaCircleArrowLeft } from "react-icons/fa6";
 import { isEmpty, startCase } from "lodash";
+import { apiGet } from "../../utils/apiFetch";
 import ReactCountryFlag from "react-country-flag";
 import { GiHorseHead } from "react-icons/gi";
 
 function User() {
-  const { t } = useTranslation();
-  const location = useLocation();
-  const [searchTerm] = useState("");
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
-  const [isInitialized, setIsInitialized] = useState(false);
   const { logoutUser } = useContext(AuthContext);
+  const [item, setItem] = useState({})
   const [activeTab, setActiveTab] = useState('Tab1');
-
+  const [searchTerm] = useState("");
+  const location = useLocation();
+  const [isDelete] = useState(false);
+  const [isInitialized, setIsInitialized] = useState(false);
+  const [users, setAllUser] = useState([]);
+  const { t } = useTranslation();
+  
   const [paginationObj, setPaginationObj] = useState({
     page: 1,
     pageCount: 1,
     pageRangeDisplayed: 10,
   });
 
-  const [users, setAllUser] = useState([]);
-  const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
-  const [isDelete] = useState(false);
-  const [item, setItem] = useState({})
-
   const handleTabClick = (tab) => {
     setActiveTab(tab);
   };
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
 
   const [filterData, setFilterData] = useState({
-    kyc: undefined,
-    category: location?.state,
+    endDate: "",
+    isFilter: false,
     userId: "",
     searchKey: "",
+    category: location?.state,
+    kyc: undefined,
     startDate: "",
-    endDate: "",
     isReset: false,
-    isFilter: false,
   });
 
   const userResult = helpers?.ternaryCondition(activeTab === "Tab1", "casual", "monetary")
@@ -68,8 +67,8 @@ function User() {
         setPaginationObj({
           ...paginationObj,
           page: helpers.ternaryCondition(resultStatus, response.page, null),
-          perPageItem: helpers.ternaryCondition(resultStatus, response?.docs.length, null),
           totalItems: helpers.ternaryCondition(resultStatus, response.totalDocs, null),
+          perPageItem: helpers.ternaryCondition(resultStatus, response?.docs.length, null),
           pageCount: helpers.ternaryCondition(resultStatus, response.totalPages, null),
         });
       }
@@ -97,6 +96,12 @@ function User() {
       }
     }
   }
+
+  useEffect(() => {
+    getAllUser();
+  }, [page, filterData, pageSize, activeTab]);
+
+
   useEffect(() => {
     if (location?.state) {
       getChallengeDetails()
@@ -105,9 +110,6 @@ function User() {
 
   const { type } = location.state;
 
-  useEffect(() => {
-    getAllUser();
-  }, [page, filterData, pageSize, activeTab]);
 
   // get all user end
   const dynamicPage = (e) => {

@@ -18,7 +18,7 @@ const Permission = [
   generateManager(6,"email_manager", { shownAdd: true, shownAll: true }),
   generateManager(7,"static_pages_management", { shownAdd: true, shownAll: true }),
   generateManager(8,"settings", { shownAdd: true, shownAll: true }),
-  generateManager(9,"widthDrawal_request_manager", { shownAdd: true, shownAll: true }),
+  generateManager(9,"withdrawal_request_manager", { shownAdd: true, shownAll: true }),
   generateManager(10,"FAQ", { shownAdd: true, shownAll: true }),
   generateManager(11,"feedback_manager", { shownAdd: true, shownAll: true }),
   generateManager(12,"transaction_manager", { shownAdd: true, shownAll: true }),

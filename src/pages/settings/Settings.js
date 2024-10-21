@@ -89,7 +89,7 @@ const Settings = () => {
     updatePageName(t("SETTINGS"));
   }, []);
 
-  const urlPattern = /^(http(s)?:\/\/)?[a-zA-Z0-9@:%._+~#=-]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)$/;
+  const urlPattern = /^(http(s)?:\/\/)?[a-zA-Z0-9@:%._+~#=-]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@%_+.~#?&/=]*)$/;
   const validationFields = {
 
     minWithdrawalLimit: {
@@ -353,11 +353,15 @@ const Settings = () => {
           </div>
         </div>
 
-        <div className="border p-5 rounded-md mb-5">
+      <div className="flex">
+
+      <div className="border p-3 rounded-md mb-5 w-[370px] mr-4">
           <GstComponent saveSettingData={saveSettingData} />
         </div>
-        <div className="border p-5 rounded-md">
+        <div className="border rounded-md w-[calc(100%-370px)]">
           <Commission saveSettingData={saveSettingData} />
+        </div>
+
         </div>
 
       </div>
