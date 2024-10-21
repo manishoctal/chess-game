@@ -15,7 +15,8 @@ import helpers from "utils/helpers";
 
 function WithdrawalRequestManager() {
   const { logoutUser, notification, user } = useContext(AuthContext);
-  const manager = user?.permission?.find((e) => e.manager === "widthDrawal_request_manager") ?? {};
+  const manager = user?.permission?.find((e) => e.manager === "withdrawal_request_manager") ?? {};
+  console.log("manager",manager)
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
   const [paginationObj, setPaginationObj] = useState({
     page: 1,

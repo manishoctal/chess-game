@@ -55,7 +55,6 @@ const Sidebar = () => {
   };
 
   const checkSidebarPermission = (arg) => {
-    debugger
     if (!user) {
       return false;
     }

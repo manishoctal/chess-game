@@ -1,7 +1,6 @@
 export const permissionsMap = Object.freeze({
   dashboard: "/dashboard",
   user_manager: "/users",
-  // subAdmin_manager: "/sub-admin-manager",
   settings: "/setting",
   email_manager: "/email-manager",
   FAQ: "/faqs",
@@ -17,7 +16,7 @@ export const permissionsMap = Object.freeze({
   community_moderator: "/community-moderator-manager",
   transaction_manager: "/transaction-manager",
   static_pages_management: "/static-content",
-  widthDrawal_request_manager: "/withdrawal-request-manager",
+  withdrawal_request_manager: "/withdrawal-request-manager",
   feedback_manager: "/feedback-manager",
   challenges_manager: "/challenges-manager",
 });
