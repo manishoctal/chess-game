@@ -15,12 +15,15 @@ import { GiHorseHead } from "react-icons/gi";
 
 function User() {
   const { t } = useTranslation();
-  const location = useLocation();
+  const { logoutUser } = useContext(AuthContext);
+  const [item, setItem] = useState({})
+  const [activeTab, setActiveTab] = useState('Tab1');
   const [searchTerm] = useState("");
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
+  const location = useLocation();
+  const [isDelete] = useState(false);
   const [isInitialized, setIsInitialized] = useState(false);
-  const { logoutUser } = useContext(AuthContext);
-  const [activeTab, setActiveTab] = useState('Tab1');
+  const [users, setAllUser] = useState([]);
 
   const [paginationObj, setPaginationObj] = useState({
     page: 1,
@@ -28,25 +31,22 @@ function User() {
     pageRangeDisplayed: 10,
   });
 
-  const [users, setAllUser] = useState([]);
-  const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
-  const [isDelete] = useState(false);
-  const [item, setItem] = useState({})
-
   const handleTabClick = (tab) => {
     setActiveTab(tab);
   };
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+
 
   const [filterData, setFilterData] = useState({
-    kyc: undefined,
-    category: location?.state,
+    endDate: "",
+    isFilter: false,
     userId: "",
     searchKey: "",
+    category: location?.state,
+    kyc: undefined,
     startDate: "",
-    endDate: "",
     isReset: false,
-    isFilter: false,
   });
 
   const userResult = helpers?.ternaryCondition(activeTab === "Tab1", "casual", "monetary")
@@ -97,6 +97,12 @@ function User() {
       }
     }
   }
+
+  useEffect(() => {
+    getAllUser();
+  }, [page, filterData, pageSize, activeTab]);
+
+
   useEffect(() => {
     if (location?.state) {
       getChallengeDetails()
@@ -105,9 +111,6 @@ function User() {
 
   const { type } = location.state;
 
-  useEffect(() => {
-    getAllUser();
-  }, [page, filterData, pageSize, activeTab]);
 
   // get all user end
   const dynamicPage = (e) => {
