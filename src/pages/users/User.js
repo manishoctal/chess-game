@@ -69,7 +69,7 @@ function User() {
         sortKey: sort?.sortBy,
         sortType: sort?.sortType,
         userId: userId || null,
-        status:category
+        status: category
       };
 
       if (kyc && kyc !== undefined) {
@@ -141,7 +141,7 @@ function User() {
     setPage(1);
     setSearchTerm("");
     setPageSize(10);
-    navigate({path:'/users',replace:false,state:{}})
+    navigate({ path: '/users', replace: false, state: {} })
   };
 
 
@@ -280,23 +280,23 @@ function User() {
 
             </form>
 
-          <div className="flex items-center justify-between">
-          <div className="flex items-center  py-5 px-4">
-              <button
-                className={` mr-4 text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150 ${activeTab === 'Tab1' ? 'bg-gradBlack' : 'bg-gradientTo'}`}
-                onClick={() => handleTabClick('Tab1')}
-              >
-                {t("USERS")}
-              </button>
-              <button
-                className={` text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 ease-linear transition-all duration-150 ${activeTab === 'Tab2' ? 'bg-gradBlack' : 'bg-gradientTo'}`}
-                onClick={() => handleTabClick('Tab2')}
-              >
-                {t("DELETED_USERS")}
-              </button>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center  py-5 px-4">
+                <button
+                  className={` mr-4 text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150 ${activeTab === 'Tab1' ? 'bg-gradBlack' : 'bg-gradientTo'}`}
+                  onClick={() => handleTabClick('Tab1')}
+                >
+                  {t("USERS")}
+                </button>
+                <button
+                  className={` text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 ease-linear transition-all duration-150 ${activeTab === 'Tab2' ? 'bg-gradBlack' : 'bg-gradientTo'}`}
+                  onClick={() => handleTabClick('Tab2')}
+                >
+                  {t("DELETED_USERS")}
+                </button>
+              </div>
+
             </div>
-          
-          </div>
 
             <Table
               user={user}
