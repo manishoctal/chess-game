@@ -258,7 +258,7 @@ const UserView = () => {
                     </figure>
                     <figcaption className="w-[calc(100%_-_41px)]">
                       <span className="block text-[#5C5C5C] dark:text-white">{t("TIME_ZONE")}</span>
-                      <strong>{helpers.ternaryCondition(item?.createdAt, dayjs(item?.createdAt).format("D MMM YYYY"), "N/A")}</strong>
+                      <strong>{helpers.ternaryCondition(item?.timeZone?.name, item?.timeZone?.name, "N/A")}</strong>
                     </figcaption>
                   </div>
                 </li>
@@ -288,7 +288,7 @@ const UserView = () => {
                     </figure>
                     <figcaption className="w-[calc(100%_-_41px)]">
                       <span className="block text-[#5C5C5C]">{t("TOTAL_NO_OF_GAME_PLAYED")}</span>
-                      <strong>{helpers.ternaryCondition(item?.gameStatic?.totalPlay, item?.gameStatic?.totalPlay, "N/A")}</strong>
+                      <strong>{helpers.ternaryCondition(item?.totalGame, item?.totalGame, 0)}</strong>
                     </figcaption>
                   </div>
                 </li>
@@ -301,7 +301,7 @@ const UserView = () => {
                     </figure>
                     <figcaption className="w-[calc(100%_-_41px)]">
                       <span className="block text-[#5C5C5C]">{t("TOTAL_NO_OF_GAME_WON")}</span>
-                      <strong>{helpers.ternaryCondition(item?.gameStatic?.totalLoss, item?.gameStatic?.totalLoss, "N/A")}</strong>
+                      <strong>{helpers.ternaryCondition(item?.totalWin, item?.totalWin, 0)}</strong>
                     </figcaption>
                   </div>
                 </li>
@@ -314,7 +314,7 @@ const UserView = () => {
                     </figure>
                     <figcaption className="w-[calc(100%_-_41px)]">
                       <span className="block text-[#5C5C5C]">{t("TOTAL_NO_OF_GAME_LOSE")}</span>
-                      <strong>{helpers.ternaryCondition(item?.gameStatic?.totalDraw, item?.gameStatic?.totalDraw, "N/A")}</strong>
+                      <strong>{helpers.ternaryCondition(item?.totalLoss, item?.totalLoss, 0)}</strong>
                     </figcaption>
                   </div>
                 </li>
@@ -327,7 +327,7 @@ const UserView = () => {
                     </figure>
                     <figcaption className="w-[calc(100%_-_41px)]">
                       <span className="block text-[#5C5C5C]">{t("TOTAL_NO_OF_GAME_DRAWN")}</span>
-                      <strong>{helpers.ternaryCondition(item?.gameStatic?.totalWon, item?.gameStatic?.totalWon, "N/A")}</strong>
+                      <strong>{helpers.ternaryCondition(item?.totalDraw, item?.totalDraw, 0)}</strong>
                     </figcaption>
                   </div>
                 </li>
