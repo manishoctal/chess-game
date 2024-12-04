@@ -29,6 +29,7 @@ import FeedbackManager from "pages/feedback-manager/FeedbackManager";
 import Transaction from "pages/transaction_manager/Transaction";
 import ChallangesManager from "pages/challenges_manager/ChallangesManager";
 import CasualView from "pages/challenges_manager/challenges/CasualView";
+import ReviewMove from "pages/challenges_manager/challenges/ReviewMove";
 import WithdrawalRequestManager from "pages/withdrawal_request_manager/WithdrawalRequestManager";
 const UseChange = ({ data }) => {
   const { t } = useTranslation();
@@ -79,6 +80,11 @@ const AdminRoutes = {
     {
       path: "/challenges-manager/view/:id",
       element: <CasualView />,
+      name: <UseChange data="CHALLENGES_MANAGER" />,
+    },
+    {
+      path: "/challenges-manager/view/review-move",
+      element: <ReviewMove />,
       name: <UseChange data="CHALLENGES_MANAGER" />,
     },
 

@@ -16,15 +16,15 @@ import { GiHorseHead } from "react-icons/gi";
 function User() {
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
   const { logoutUser } = useContext(AuthContext);
-  const [item, setItem] = useState({})
-  const [activeTab, setActiveTab] = useState('Tab1');
+  const [item, setItem] = useState({});
+  const [activeTab, setActiveTab] = useState("Tab1");
   const [searchTerm] = useState("");
   const location = useLocation();
   const [isDelete] = useState(false);
   const [isInitialized, setIsInitialized] = useState(false);
   const [users, setAllUser] = useState([]);
   const { t } = useTranslation();
-  
+
   const [paginationObj, setPaginationObj] = useState({
     page: 1,
     pageCount: 1,
@@ -48,11 +48,14 @@ function User() {
     isReset: false,
   });
 
-  const userResult = helpers?.ternaryCondition(activeTab === "Tab1", "casual", "monetary")
+  const userResult = helpers?.ternaryCondition(
+    activeTab === "Tab1",
+    "casual",
+    "monetary"
+  );
 
   const getAllUser = async () => {
     try {
-
       const payload = {
         page,
         pageSize: pageSize,
@@ -67,9 +70,21 @@ function User() {
         setPaginationObj({
           ...paginationObj,
           page: helpers.ternaryCondition(resultStatus, response.page, null),
-          totalItems: helpers.ternaryCondition(resultStatus, response.totalDocs, null),
-          perPageItem: helpers.ternaryCondition(resultStatus, response?.docs.length, null),
-          pageCount: helpers.ternaryCondition(resultStatus, response.totalPages, null),
+          totalItems: helpers.ternaryCondition(
+            resultStatus,
+            response.totalDocs,
+            null
+          ),
+          perPageItem: helpers.ternaryCondition(
+            resultStatus,
+            response?.docs.length,
+            null
+          ),
+          pageCount: helpers.ternaryCondition(
+            resultStatus,
+            response.totalPages,
+            null
+          ),
         });
       }
     } catch (error) {
@@ -83,11 +98,10 @@ function User() {
 
   const getChallengeDetails = async () => {
     try {
-
       const path = `${apiPath.challengesView}/${location?.state?._id}`;
       const result = await apiGet(path);
       if (result?.data?.success) {
-        setItem(result?.data?.results)
+        setItem(result?.data?.results);
       }
     } catch (error) {
       console.error("error ", error);
@@ -95,21 +109,17 @@ function User() {
         logoutUser();
       }
     }
-  }
+  };
 
   useEffect(() => {
     getAllUser();
   }, [page, filterData, pageSize, activeTab]);
 
-
   useEffect(() => {
     if (location?.state) {
-      getChallengeDetails()
+      getChallengeDetails();
     }
-  }, [location])
-
-  const { type } = location.state;
-
+  }, [location]);
 
   // get all user end
   const dynamicPage = (e) => {
@@ -121,7 +131,6 @@ function User() {
     const newPage = event.selected + 1;
     setPage(newPage);
   };
-
 
   useEffect(() => {
     if (!isInitialized) {
@@ -147,16 +156,15 @@ function User() {
   }, [searchTerm]);
 
   const showCreatorFlag = helpers?.countryFlag(item?.creatorDetails?.currency);
-  const showAcceptorFlag = helpers?.countryFlag(item?.acceptorDetails?.currency);
+  const showAcceptorFlag = helpers?.countryFlag(
+    item?.acceptorDetails?.currency
+  );
 
   return (
     <div className="">
       <div className="bg-[#F9F9F9] dark:bg-slate-900">
         <div className="px-3 py-4">
-
           <div className="bg-white border border-[#E9EDF9] rounded-lg dark:bg-slate-800 dark:border-[#ffffff38]">
-
-
             <div className="tabs-header flex items-center justify-between mb-10 p-5">
               <Link aria-current="page" className="" to={-1}>
                 <FaCircleArrowLeft size={27} />
@@ -164,19 +172,22 @@ function User() {
 
               <div className="flex items-center">
                 <button
-                  className={` mr-4 text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150 ${activeTab === 'Tab1' ? 'bg-gradBlack' : 'bg-gradientTo'}`}
-                  onClick={() => handleTabClick('Tab1')}
+                  className={` mr-4 text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150 ${
+                    activeTab === "Tab1" ? "bg-gradBlack" : "bg-gradientTo"
+                  }`}
+                  onClick={() => handleTabClick("Tab1")}
                 >
                   {t("CASUAL_CHALLENGE")}
                 </button>
                 <button
-                  className={` text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 ease-linear transition-all duration-150 ${activeTab === 'Tab2' ? 'bg-gradBlack' : 'bg-gradientTo'}`}
-                  onClick={() => handleTabClick('Tab2')}
+                  className={` text-white active:bg-emerald-600 font-normal text-sm px-8 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 ease-linear transition-all duration-150 ${
+                    activeTab === "Tab2" ? "bg-gradBlack" : "bg-gradientTo"
+                  }`}
+                  onClick={() => handleTabClick("Tab2")}
                 >
                   {t("MONETARY_CHALLENGE")}
                 </button>
               </div>
-
             </div>
 
             <div className="p-5">
@@ -191,11 +202,9 @@ function User() {
                         {t("MATCH")}
                       </th>
 
-
                       <th scope="col" className="py-3 px-6 text-left">
                         {t("TIME_FORMAT")}
                       </th>
-
 
                       <th scope="col" className="py-3 px-6 text-left">
                         {t("PLAYERS")}
@@ -217,104 +226,178 @@ function User() {
                         {t("DATE")}
                       </th>
 
-                      {
-                        activeTab === "Tab2" && <> <th scope="col" className="py-3 px-6 text-left">
-                          {t("MONEY_AT_STACK")}
-                        </th>
-
+                      {activeTab === "Tab2" && (
+                        <>
+                          {" "}
+                          <th scope="col" className="py-3 px-6 text-left">
+                            {t("MONEY_AT_STACK")}
+                          </th>
                           <th scope="col" className="py-3 px-6 text-left">
                             {t("ADMIN_COMMISION")}
-                          </th></>
-                      }
-
+                          </th>
+                        </>
+                      )}
                     </tr>
                   </thead>
-                  <tbody className='text-black'>
-                    {
-                      users?.length > 0 && users?.map((item, i) => {
-                        return <tr key={item?._id}>
-                          <th scope="row" className="py-4 px-6 border-r font-medium text-gray-900  dark:text-white">
-                            {i + 1 + pageSize * (paginationObj?.page - 1)}
-                          </th>
-                          <td className="py-2 px-4 border-r dark:border-[#ffffff38] pl-5">{helpers?.ternaryCondition(item?.challengeId, item?.challengeId, "N/A")}</td>
-                          <td className="py-2 px-4 border-r dark:border-[#ffffff38] pl-5">{helpers?.ternaryCondition(item?.time, `${item?.time} Min`, "N/A")}</td>
-                          <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-left">
+                  <tbody className="text-black">
+                    {users?.length > 0 &&
+                      users?.map((item, i) => {
+                        return (
+                          <tr key={item?._id}>
+                            <th
+                              scope="row"
+                              className="py-4 px-6 border-r font-medium text-gray-900  dark:text-white border"
+                            >
+                              {i + 1 + pageSize * (paginationObj?.page - 1)}
+                            </th>
+                            <td className="py-2 px-4 border-r dark:border-[#ffffff38] pl-5 border">
+                              {helpers?.ternaryCondition(
+                                item?.challengeId,
+                                item?.challengeId,
+                                "N/A"
+                              )}
+                            </td>
+                            <td className="py-2 px-4 border-r dark:border-[#ffffff38] pl-5 border">
+                              {helpers?.ternaryCondition(
+                                item?.time,
+                                `${item?.time} Min`,
+                                "N/A"
+                              )}
+                            </td>
+                            <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-left border">
+                              <div>
+                                <div className="flex items-center justify-center">
+                                  {helpers?.ternaryCondition(
+                                    item?.creatorDetails?.userName,
+                                    <div className="flex items-center">
+                                      <div className="flex items-center">
+                                        {helpers?.ternaryCondition(
+                                          item?.acceptorSide === "white",
+                                          <GiHorseHead className="text-black mr-3 text-2xl" />,
+                                          <GiHorseHead className="mr-3 text-2xl text-gray-500" />
+                                        )}
+                                      </div>
+                                      <span className="block">
+                                        {helpers?.ternaryCondition(
+                                          item?.creatorDetails?.userName,
+                                          item?.creatorDetails?.userName,
+                                          ""
+                                        )}
 
-                            <div>
-                              <div className='flex items-center justify-center'>
-                                {
-                                  helpers?.ternaryCondition(item?.creatorDetails?.userName, <div className='flex items-center'>
-                                    <div className='flex items-center'>
-                                      {
-                                        helpers?.ternaryCondition(item?.acceptorSide === "white", <GiHorseHead className='text-black mr-3 text-2xl' />, <GiHorseHead className="mr-3 text-2xl text-gray-500" />)
-                                      }
+                                        {helpers?.ternaryCondition(
+                                          item?.challengeType === "casual",
+                                          `(${item?.creatorDetails?.ratingCasual})`,
+                                          `(0)`
+                                        )}
+                                      </span>
+
+                                      {helpers?.ternaryCondition(
+                                        showCreatorFlag,
+                                        <div className="ml-3 rounded-full overflow-hidden border dynamic-flag w-[30px] h-[30px]">
+                                          <ReactCountryFlag
+                                            countryCode={showCreatorFlag}
+                                            svg
+                                            title={showCreatorFlag}
+                                            className=""
+                                          />
+                                        </div>,
+                                        ""
+                                      )}
+                                    </div>,
+                                    "N/A"
+                                  )}
+                                </div>
+                                <div className=" mt-4">
+                                  {helpers?.ternaryCondition(
+                                    item?.acceptorDetails?.userName,
+                                    <div className="flex items-center justify-center">
+                                      {helpers?.ternaryCondition(
+                                        item?.acceptorSide === "white",
+                                        <GiHorseHead className="mr-3 text-2xl text-gray-500" />,
+                                        <GiHorseHead className="text-black mr-3 text-2xl" />
+                                      )}
+                                      <span className="block">
+                                        {helpers?.ternaryCondition(
+                                          item?.acceptorDetails?.userName,
+                                          item?.acceptorDetails?.userName,
+                                          ""
+                                        )}
+                                        {helpers?.ternaryCondition(
+                                          item?.challengeType === "casual",
+                                          `(${item?.acceptorDetails?.ratingCasual})`,
+                                          `(0)`
+                                        )}
+                                      </span>
+                                      {helpers?.ternaryCondition(
+                                        showAcceptorFlag,
+                                        <div className="ml-3 rounded-full overflow-hidden border dynamic-flag w-[30px] h-[30px]">
+                                          <ReactCountryFlag
+                                            countryCode={showAcceptorFlag}
+                                            svg
+                                            title={showAcceptorFlag}
+                                            className=""
+                                          />
+                                        </div>,
+                                        ""
+                                      )}
+                                    </div>,
+                                    "N/A"
+                                  )}
+                                </div>
+                              </div>
+                            </td>
+                            <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-left border">
+                              {(location?.state?._id?.toString() ==
+                              item?.userId?.toString()
+                                ? item?.userPoint
+                                : item?.otherUserPoint) || "N/A"}
+                            </td>
+                            <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-left border">
+                              {helpers?.ternaryCondition(
+                                item?.isDraw,
+                                "Draw",
+                                helpers?.ternaryCondition(
+                                  !item?.resultAnnounced,
+                                  "N/A",
+                                  <div
+                                    style={{
+                                      textAlign: "center",
+                                      lineHeight: "1.5em",
+                                    }}
+                                  >
+                                    <div style={{ fontWeight: "bold" }}>
+                                      {item?.winnerDetails?.userName} (Winner)
                                     </div>
-                                    <span className='block'>
-                                      {helpers?.ternaryCondition(item?.creatorDetails?.userName, startCase(item?.creatorDetails?.userName), "")}
+                                    <div>
+                                      {item?.loserDetails?.userName} (Loser)
+                                    </div>
+                                  </div>
+                                )
+                              )}
+                            </td>
+                            <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-left border">
+                              {item?.moves}
+                            </td>
+                            <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-left border">
+                              {dayjs(item?.createdAt).format("DD-MMMM-YYYY")}
+                            </td>
 
-                                      {helpers?.ternaryCondition(item?.challengeType === "casual", `(${item?.creatorDetails?.ratingCasual})`, `(0)`)}
-
-                                    </span>
-
-
-                                    {
-                                      helpers?.ternaryCondition(showCreatorFlag, <div className='ml-3 rounded-full overflow-hidden border dynamic-flag w-[30px] h-[30px]'>
-                                        <ReactCountryFlag
-                                          countryCode={showCreatorFlag}
-                                          svg
-                                          title={showCreatorFlag}
-                                          className=''
-                                        />
-                                      </div>, "")
-                                    }
-                                  </div>, "N/A")
-                                }
-                              </div>
-                              <div className='flex items-center justify-center mt-4'>
-                                {helpers?.ternaryCondition(item?.acceptorDetails?.userName, <div>
-                                  {
-                                    helpers?.ternaryCondition(item?.acceptorSide === "white", <GiHorseHead className='mr-3 text-2xl text-gray-500' />, <GiHorseHead className='text-black mr-3 text-2xl' />)
-                                  }
-                                  <span className='block'>{helpers?.ternaryCondition(item?.acceptorDetails?.userName, startCase(item?.acceptorDetails?.userName), "")}
-                                    {helpers?.ternaryCondition(item?.challengeType === "casual", `(${item?.acceptorDetails?.ratingCasual})`, `(0)`)}
-                                  </span>
-                                  {
-                                    helpers?.ternaryCondition(showAcceptorFlag, <div className='ml-3 rounded-full overflow-hidden border dynamic-flag w-[30px] h-[30px]'>
-                                      <ReactCountryFlag
-                                        countryCode={showAcceptorFlag}
-                                        svg
-                                        title={showAcceptorFlag}
-                                        className=''
-                                      />
-                                    </div>, "")
-                                  }
-                                </div>, "N/A")}
-
-                              </div>
-                            </div>
-
-                          </td>
-                          <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-left">{helpers?.ternaryCondition(item?.winnerDetails?.userName, `(${item?.winnerDetails?.userName})`, "N/A")}</td>
-                          <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-left">{helpers?.ternaryCondition(item?.winnerDetails?.userName, `(${item?.winnerDetails?.userName})`, "N/A")}</td>
-                          <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-left">{helpers?.ternaryCondition(item?.totalMoves, item?.totalMoves, "N/A")}</td>
-                          <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-left">{dayjs(item?.createdAt).format("DD-MMMM-YYYY")}</td>
-
-                          {
-                            type === "monetary" && <>
-                              <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-left">{helpers?.ternaryCondition(item?.winningAmount, item?.winningAmount, "N/A")}</td>
-                              <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-left">{helpers?.ternaryCondition(item?.adminComission, item?.adminComission, "N/A")}</td>
-                            </>
-                          }
-
-                          {
-                            activeTab === "Tab2" && <> <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-left">{helpers?.formattedAmount(item?.moneyAtStack)}</td>
-                              <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-left">{helpers?.formattedAmount(item?.adminCommission)}</td></>
-                          }
-
-                        </tr>
-
-                      })
-                    }
+                            {activeTab === "Tab2" && (
+                              <>
+                                {" "}
+                                <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-left">
+                                  {helpers?.formattedAmount(item?.adminMoneyAtSake)}
+                                </td>
+                                <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-left">
+                                  {helpers?.formattedAmount(
+                                    item?.adminMoneyCommission
+                                  )}
+                                </td>
+                              </>
+                            )}
+                          </tr>
+                        );
+                      })}
 
                     {isEmpty(users) && (
                       <tr className="bg-white text-center border-b dark:bg-gray-800 dark:border-gray-700">
@@ -323,7 +406,6 @@ function User() {
                         </td>
                       </tr>
                     )}
-
                   </tbody>
                 </table>
               </div>
@@ -332,7 +414,12 @@ function User() {
             <div className="flex justify-between">
               <PageSizeList dynamicPage={dynamicPage} pageSize={pageSize} />
               {paginationObj?.totalItems ? (
-                <Pagination handlePageClick={handlePageClick} options={paginationObj} isDelete={isDelete} page={page} />
+                <Pagination
+                  handlePageClick={handlePageClick}
+                  options={paginationObj}
+                  isDelete={isDelete}
+                  page={page}
+                />
               ) : null}
             </div>
           </div>
