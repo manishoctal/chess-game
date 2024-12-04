@@ -49,62 +49,69 @@ const ReviewMove = () => {
   }, [location?.state]);
 
   return (
-    <div className="p-6">
-      <div className="flex active mb-5 ml-4 ">
-        <Link aria-current="page" className="" to={-1}>
-          <FaCircleArrowLeft size={27} />
-        </Link>
-      </div>
+    move&&fen&&
+    <>
+      <div className="p-6">
+        <div className="flex active mb-5 ml-4 ">
+          <Link aria-current="page" className="" to={-1}>
+            <FaCircleArrowLeft size={27} />
+          </Link>
+        </div>
 
-      <div className="grid grid-cols-2">
-        {fen && <Chessboard position={fen} boardWidth={600} />}
+        <div className="grid grid-cols-2">
+          {fen && <Chessboard position={fen} boardWidth={600} />}
 
-        <div className="px-4 max-h-[600px] overflow-y-auto">
-          <table className="border w-full text-start">
-            <thead>
-              <tr>
-                <th className="text-start bg-[#f1f1f1] px-2 py-3 border border-[#ddd] text-sm">
-                  {t("S.NO")}
-                </th>
-                <th className="text-start bg-[#f1f1f1] px-2 py-3 border border-[#ddd] text-sm">
-                  {t("O_FROM_MOVE")}
-                </th>
-                <th className="text-start bg-[#f1f1f1] px-2 py-3 border border-[#ddd] text-sm">
-                  {t("O_TO_MOVE")}
-                </th>
-                <th className="text-start bg-[#f1f1f1] px-2 py-3 border border-[#ddd] text-sm">
-                  {t("TRANSACTION_USER_NAME")}
-                </th>
-                <th className="text-start bg-[#f1f1f1] px-2 py-3 border border-[#ddd] text-sm">
-                  {t("O_ACTION")}
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {move?.map((item, i) => (
-                <tr key={i}>
-                  <td className="text-start bg-[#fff] px-2 py-3 text-sm border">
-                    {i + 1}
-                  </td>
-                  <td className="text-start bg-[#fff] px-2 py-3 text-sm border">
-                    {item?.move?.from}
-                  </td>
-                  <td className="text-start bg-[#fff] px-2 py-3 text-sm border">
-                    {item?.move?.to}
-                  </td>
-                  <td className="text-start bg-[#fff] px-2 py-3 text-sm border">
-                    {item?.user?.fullName}
-                  </td>
-                  <td className="text-start bg-[#fff] px-2 py-3 text-sm border">
-                    <AiFillEye className="cursor-pointer w-5 h-5 text-slate-600 dark:hover:text-white hover:text-blue-700" onClick={()=>setFen(item?.move?.fen)}/>
-                  </td>
+          <div className="px-4 max-h-[600px] overflow-y-auto">
+            <table className="border w-full text-start">
+              <thead>
+                <tr>
+                  <th className="text-start bg-[#f1f1f1] px-2 py-3 border border-[#ddd] text-sm">
+                    {t("S.NO")}
+                  </th>
+                  <th className="text-start bg-[#f1f1f1] px-2 py-3 border border-[#ddd] text-sm">
+                    {t("O_FROM_MOVE")}
+                  </th>
+                  <th className="text-start bg-[#f1f1f1] px-2 py-3 border border-[#ddd] text-sm">
+                    {t("O_TO_MOVE")}
+                  </th>
+                  <th className="text-start bg-[#f1f1f1] px-2 py-3 border border-[#ddd] text-sm">
+                    {t("TRANSACTION_USER_NAME")}
+                  </th>
+                  <th className="text-start bg-[#f1f1f1] px-2 py-3 border border-[#ddd] text-sm">
+                    {t("O_ACTION")}
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {move?.map((item, i) => (
+                  <tr key={i}>
+                    <td className="text-start bg-[#fff] px-2 py-3 text-sm border">
+                      {i + 1}
+                    </td>
+                    <td className="text-start bg-[#fff] px-2 py-3 text-sm border">
+                      {item?.move?.from}
+                    </td>
+                    <td className="text-start bg-[#fff] px-2 py-3 text-sm border">
+                      {item?.move?.to}
+                    </td>
+                    <td className="text-start bg-[#fff] px-2 py-3 text-sm border">
+                      {item?.user?.fullName}
+                    </td>
+                    <td className="text-start bg-[#fff] px-2 py-3 text-sm border">
+                      <AiFillEye
+                        className="cursor-pointer w-5 h-5 text-slate-600 dark:hover:text-white hover:text-blue-700"
+                        onClick={() => setFen(item?.move?.fen)}
+                      />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
-    </div>
+    </>
+    
   );
 };
 
