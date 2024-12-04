@@ -80,7 +80,7 @@ function ChallangesManager() {
       if (matchStatus && matchStatus !== undefined) {
         payload.matchStatus = matchStatus;
       }
-      const path = `${apiPath.challengeManager}/${userResult}`;
+      const path = `${apiPath.challengeManager}/list/${userResult}`;
       const result = await apiGet(path, payload);
       if (result?.data?.success) {
         const response = result?.data?.results;
