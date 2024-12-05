@@ -266,6 +266,7 @@ function Transaction() {
                       <option value="monetaryChallenge">{t("O_MONETARY_CHALLENGE")}</option>
                       {/* <option value="deposit">{t("O_DEPOSIT")}</option> */}
                       <option value="refundMonetaryChallenge">{t("O_REFUND_MONETARY_CHALLENGE")}</option>
+                      <option value="winningMonetaryChallenge">{t("O_WINNING_MONETARY_CHALLENGE")}</option>
                     </select>
                   </div>
 
