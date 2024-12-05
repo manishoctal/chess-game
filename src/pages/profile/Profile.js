@@ -103,7 +103,6 @@ const Profile = () => {
 
       setImageFile(result?.data?.results);
     }
-    // setOpen(false);
   };
 
   const handleFileChange = (e) => {
