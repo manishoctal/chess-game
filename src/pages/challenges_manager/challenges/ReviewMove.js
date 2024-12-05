@@ -75,7 +75,7 @@ const ReviewMove = () => {
               </thead>
               <tbody>
                 {move?.map((item, i) => (
-                  <tr>
+                  <tr key={item?._id}>
                     <td className="text-start bg-[#fff] px-2 py-3 text-sm border">
                       {i + 1}
                     </td>
