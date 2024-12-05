@@ -72,13 +72,6 @@ const MonetaryTable = ({
         const scheduleDate = new Date(scheduleDateTime);
         const expiryDate = new Date(expiryScheduleDateTime);
         let status = "";
-        // if (currentDate > expiryDate || item?.resultAnnounced) {
-        //   status = "Complete";
-        // } else if (currentDate > scheduleDate) {
-        //   status = "Running";
-        // } else {
-        //   status = "Upcoming";
-        // }
         if ((item?.resultAnnounced) || (!item?.resultAnnounced && currentDate > expiryDate)) {
           status = "Complete";
         } else if (currentDate > scheduleDate) {

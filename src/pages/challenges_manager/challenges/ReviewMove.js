@@ -1,30 +1,21 @@
-import dayjs from "dayjs";
 import React, { useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import helpers from "utils/helpers";
-import { startCase } from "lodash";
 import AuthContext from "context/AuthContext";
 import { FaCircleArrowLeft } from "react-icons/fa6";
-import ReactCountryFlag from "react-country-flag";
-import { GiHorseHead } from "react-icons/gi";
 import { Link, useLocation } from "react-router-dom";
 import { apiGet } from "utils/apiFetch";
 import apiPath from "utils/apiPath";
-import { useNavigate } from "react-router-dom";
 import { Chessboard } from "react-chessboard";
-import { Chess } from "chess.js";
 import { AiFillEye } from "react-icons/ai";
 
 const ReviewMove = () => {
   const [fen, setFen] = useState("");
   const location = useLocation();
   const { t } = useTranslation();
-  const item = location.state;
   const [move, setMove] = useState([]);
   const { logoutUser } = useContext(AuthContext);
 
   const getMoves = async () => {
-    console.log("iiii");
 
     try {
       const path = `${apiPath.challengeManager}/review?challengeId=${location?.state?.id}`;
@@ -84,7 +75,7 @@ const ReviewMove = () => {
               </thead>
               <tbody>
                 {move?.map((item, i) => (
-                  <tr key={i}>
+                  <tr>
                     <td className="text-start bg-[#fff] px-2 py-3 text-sm border">
                       {i + 1}
                     </td>
