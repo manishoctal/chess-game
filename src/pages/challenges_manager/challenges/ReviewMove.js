@@ -50,7 +50,7 @@ const ReviewMove = () => {
         </div>
 
         <div className="grid grid-cols-2">
-          {fen && <Chessboard position={fen} boardWidth={600} />}
+          {fen && <Chessboard position={fen} boardWidth={600} arePiecesDraggable={false}/>}
 
           <div className="px-4 max-h-[600px] overflow-y-auto">
             <table className="border w-full text-start">

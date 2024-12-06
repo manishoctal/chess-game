@@ -262,10 +262,10 @@ function Transaction() {
                       <option value="">{t("TRANSACTION_TYPE")}</option>
                       <option value="walletDeposit">{t("O_WALLET_DEPOSIT")}</option>
                       <option value="withdrawMoney">{t("O_WITHDRAW_MONEY")}</option>
-                      <option value="casualChallenge">{t("O_CASUAL_CHALLENGE")}</option>
                       <option value="monetaryChallenge">{t("O_MONETARY_CHALLENGE")}</option>
                       {/* <option value="deposit">{t("O_DEPOSIT")}</option> */}
                       <option value="refundMonetaryChallenge">{t("O_REFUND_MONETARY_CHALLENGE")}</option>
+                      <option value="winningMonetaryChallenge">{t("O_WINNING_MONETARY_CHALLENGE")}</option>
                     </select>
                   </div>
 

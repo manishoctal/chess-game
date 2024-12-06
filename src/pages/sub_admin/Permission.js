@@ -11,7 +11,7 @@ const generateManager = (id,manager, options = {}) => ({
 
 const Permission = [
   generateManager(1,"user_manager", { shownAdd: true, shownAll: true }),
-  generateManager(2,"game_type_manager", { shownAdd: true, shownAll: true }),
+  // generateManager(2,"game_type_manager", { shownAdd: true, shownAll: true }),
   generateManager(3,"challenges_manager", { shownAdd: true, shownAll: true }),
   generateManager(4,"community_moderator", { shownAdd: true, shownAll: true }),
   generateManager(5,"notification_manager", { shownAdd: true, shownAll: true }),
@@ -22,7 +22,7 @@ const Permission = [
   generateManager(10,"FAQ", { shownAdd: true, shownAll: true }),
   generateManager(11,"feedback_manager", { shownAdd: true, shownAll: true }),
   generateManager(12,"transaction_manager", { shownAdd: true, shownAll: true }),
-  generateManager(13,"challenges_manager", { shownAdd: true, shownAll: true }),
+  // generateManager(13,"challenges_manager", { shownAdd: true, shownAll: true }),
 ];
 
 export default Permission;
