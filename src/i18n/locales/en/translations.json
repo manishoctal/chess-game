@@ -966,5 +966,6 @@
   "TOTAL_EARNING":"Total Earning",
   "MIN_VALUE_MUST_BE_LESS_THAN_MONEY_STACK" : "Min amount limit must be less than money stake",
   "O_FROM_MOVE" : "From",
-  "O_TO_MOVE" : "To"
+  "O_TO_MOVE" : "To",
+  "O_WINNING_MONETARY_CHALLENGE" : "Winning monetary challenge"
 }

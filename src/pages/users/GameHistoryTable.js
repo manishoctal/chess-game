@@ -166,9 +166,12 @@ function User() {
         <div className="px-3 py-4">
           <div className="bg-white border border-[#E9EDF9] rounded-lg dark:bg-slate-800 dark:border-[#ffffff38]">
             <div className="tabs-header flex items-center justify-between mb-10 p-5">
-              <Link aria-current="page" className="" to={-1}>
-                <FaCircleArrowLeft size={27} />
-              </Link>
+              <span className="flex items-center">
+                <Link aria-current="page" className="" to={-1}>
+                  <FaCircleArrowLeft size={27} />
+                </Link>
+                <h1 className="pl-3 font-semibold">{t("GAME_HISTORY")}</h1>
+              </span>
 
               <div className="flex items-center">
                 <button

@@ -69,6 +69,7 @@ const Profile = () => {
   };
 
   const handleSave = async (e) => {
+    setOpen(false);
     if (setEditorRef) {
       const canvasScaled = editor.getImageScaledToCanvas();
       const croppedImg = canvasScaled.toDataURL();
@@ -102,7 +103,6 @@ const Profile = () => {
 
       setImageFile(result?.data?.results);
     }
-    setOpen(false);
   };
 
   const handleFileChange = (e) => {
@@ -248,9 +248,9 @@ const Profile = () => {
       </div>
 
       <Dialog open={open} onClose={() => setOpen(false)} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description">
-        <DialogContent>
+      {picture.cropperOpen && ( <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            {picture.cropperOpen && (
+           
               <div className="pb-0 bg-white shadow-lg mt-[30px]">
                 <AvatarEditor ref={setEditorRef} image={picture.img} width={200} height={200} border={50} color={[255, 255, 255, 0.6]} rotate={0} scale={picture.zoom} sc className="m-auto mb-4" />
                 <Slider aria-label="raceSlider" value={picture.zoom} min={1} max={10} step={0.1} onChange={handleSlider} />
@@ -267,9 +267,9 @@ const Profile = () => {
                   </button>
                 </div>
               </div>
-            )}
+           
           </DialogContentText>
-        </DialogContent>
+        </DialogContent> )}
       </Dialog>
     </div>
   );
