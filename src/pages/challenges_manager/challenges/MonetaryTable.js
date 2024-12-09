@@ -72,9 +72,7 @@ const MonetaryTable = ({
         const scheduleDate = new Date(scheduleDateTime);
         const expiryDate = new Date(expiryScheduleDateTime);
         let status = "";
-        if (item?.isCancelled) {
-          status = "Cancelled"
-        } else if ((item?.resultAnnounced) || (!item?.resultAnnounced && currentDate > expiryDate)) {
+        if ((item?.resultAnnounced) || (!item?.resultAnnounced && currentDate > expiryDate)) {
           status = "Complete";
         } else if (currentDate > scheduleDate) {
           status = "Running";

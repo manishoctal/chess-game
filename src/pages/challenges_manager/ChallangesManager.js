@@ -297,7 +297,6 @@ function ChallangesManager() {
                         <option value="upcoming">{t("NOT_STARTED")}</option>
                         <option value="running">{t("RUNNING")}</option>
                         <option value="complete">{t("COMPLETE")}</option>
-                        <option value="cancelled">{t("CANCELLED")}</option>
                       </select>
                     </div>
                   }
