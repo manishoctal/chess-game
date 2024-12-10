@@ -57,7 +57,6 @@ const NotificationAdd = ({ getAllNotifications, handleCategory }) => {
       setNotificationUserError(true);
     } else {
       try {
-        setSelectedUsers([selectedUsers])
         setLoading(true);
         const obj = {
           ...data,
