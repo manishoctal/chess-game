@@ -269,7 +269,7 @@ function User() {
                             </td>
                             <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-left border">
                               <div>
-                                <div className="flex items-center justify-center">
+                                <div className="flex">
                                   {helpers?.ternaryCondition(
                                     item?.creatorDetails?.userName,
                                     <div className="flex items-center">
@@ -313,7 +313,7 @@ function User() {
                                 <div className=" mt-4">
                                   {helpers?.ternaryCondition(
                                     item?.acceptorDetails?.userName,
-                                    <div className="flex items-center justify-center">
+                                    <div className="flex">
                                       {helpers?.ternaryCondition(
                                         item?.acceptorSide === "white",
                                         <GiHorseHead className="mr-3 text-2xl text-gray-500" />,
@@ -364,7 +364,6 @@ function User() {
                                   "N/A",
                                   <div
                                     style={{
-                                      textAlign: "center",
                                       lineHeight: "1.5em",
                                     }}
                                   >
