@@ -39,7 +39,7 @@ const NotificationTable = ({ notifications, paginationObj, sort, setSort, pageSi
                   </th>
                   <td className="py-4 px-6 border-r text-center">{item?.title || "N/A"}</td>
 
-                  <td className="py-4 px-6 border-r text-center">{startCase(item?.description) || "N/A"}</td>
+                  <td className="py-4 px-6 border-r text-center">{item?.description || "N/A"}</td>
                   <td className="py-4 px-6 border-r w-60 text-center">
                     {helpers.ternaryCondition(item?.sendTo == "all", "All Users", startCase(item?.sendTo)) || "N/A"}{" "}
                     {item?.sendTo !== "all"  && <button className="font-bold text-slate-600" onClick={()=>handleSpecificUser(item)}>({t("VIEW")})</button>}
