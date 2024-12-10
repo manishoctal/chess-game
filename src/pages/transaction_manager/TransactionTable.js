@@ -44,7 +44,7 @@ const TransactionTable = ({ users, page, setSort, sort, pageSize,handleUserViewP
   };
 
   const renderTableCell = (content, classNames) => <td className={classNames}>{content}</td>;
-  const renderCommonTableCells = (item) => <>{renderTableCell(helpers.getDateAndTime(item?.createdAt) || "N/A", "py-4 px-3 border-r  dark:border-[#ffffff38] text-left border font-bold")}</>;
+  const renderCommonTableCells = (item) => <>{renderTableCell(helpers.getDateAndTime(item?.createdAt) || "N/A", "py-4 px-3 border-r text-center dark:border-[#ffffff38] text-left border font-bold")}</>;
 
   const getRowClassName = (item) => {
     return item && item.status === "deleted" ? "text-red-600 font-bold" : "bg-white";
@@ -60,16 +60,16 @@ const TransactionTable = ({ users, page, setSort, sort, pageSize,handleUserViewP
 
       return (
         <tr key={item?._id} className={rowClassName}>
-          {renderTableCell(i + 1 + pageSize * (page - 1), "py-4 px-3 border-r border  font-medium text-gray-900  dark:text-white dark:border-[#ffffff38]")}
-          {renderTableCell(getDisplayUserId(item), "bg-white py-4 px-4 border-r border  dark:border-[#ffffff38]")}
-          {renderTableCell(getDisplayName(item), "bg-white py-4 px-4 border-r border  dark:border-[#ffffff38]")}
-          {renderTableCell(helpers.ternaryCondition(item?.user?.email, item?.user?.email, "N/A"), "bg-white py-2 px-4 border-r border  dark:border-[#ffffff38] font-bold text-slate-900")}
-          {renderTableCell(helpers.ternaryCondition(item?.transactionId, item?.transactionId, "N/A"), "bg-white py-2 px-4 border-r border  dark:border-[#ffffff38] font-bold text-slate-900")}
-          {renderTableCell(helpers.ternaryCondition(item?.transactionType, startCase(item?.transactionType), "N/A"), "bg-white py-2 px-4 border-r border  dark:border-[#ffffff38] font-bold text-slate-900")}
+          {renderTableCell(i + 1 + pageSize * (page - 1), "py-4 px-3 border-r border  font-medium text-gray-900 text-center dark:text-white dark:border-[#ffffff38]")}
+          {renderTableCell(getDisplayUserId(item), "bg-white py-4 px-4 border-r border text-left dark:border-[#ffffff38]")}
+          {renderTableCell(getDisplayName(item), "bg-white py-4 px-4 border-r border text-left dark:border-[#ffffff38]")}
+          {renderTableCell(helpers.ternaryCondition(item?.user?.email, item?.user?.email, "N/A"), "bg-white py-2 px-4 border-r border text-left dark:border-[#ffffff38] font-bold text-slate-900")}
+          {renderTableCell(helpers.ternaryCondition(item?.transactionId, item?.transactionId, "N/A"), "bg-white py-2 px-4 border-r border text-left dark:border-[#ffffff38] font-bold text-slate-900")}
+          {renderTableCell(helpers.ternaryCondition(item?.transactionType, startCase(item?.transactionType), "N/A"), "bg-white py-2 px-4 border-r border text-center dark:border-[#ffffff38] font-bold text-slate-900")}
           {renderCommonTableCells(item)}
-          <td className="bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-left font-bold">{helpers.formattedAmount(amount)}</td>
-          <td className="bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-left font-bold">{helpers.formattedAmount(adminComission)}</td>
-          <td className="bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-left font-bold">{helpers.formattedAmount(transactionFee)}</td>
+          <td className="bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold">{helpers.formattedAmount(amount)}</td>
+          <td className="bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold">{helpers.formattedAmount(adminComission)}</td>
+          <td className="bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center font-bold">{helpers.formattedAmount(transactionFee)}</td>
         </tr>
       );
     });

@@ -27,12 +27,12 @@ const FeedbackManagerTable = ({ allCommunity, paginationObj, sort, setSort, page
             {allCommunity && allCommunity?.length > 0  &&
               allCommunity?.map((item, i) => (
                 <tr key={item?._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                  <th scope="row" className="py-4 px-6 border-r font-medium text-gray-900  dark:text-white">
+                  <th scope="row" className="py-4 px-6 border-r font-medium text-gray-900 text-center dark:text-white">
                     {i + 1 + pageSize * (paginationObj?.page - 1)}
                   </th>
              
-                  <td className="py-4 px-6 border-r text-center"><NavLink onClick={() => handleUserViewPage(item)} state={item} to={`/users/view/${item?.user?._id}`} className="hover:text-black">{helpers?.ternaryCondition(item?.user?.userName,item?.user?.userName,"N/A")}</NavLink></td>
-                  <td className="py-4 px-6 border-r text-center">{helpers?.ternaryCondition(item?.message,item?.message,"N/A")}</td>
+                  <td className="py-4 px-6 border-r text-left"><NavLink onClick={() => handleUserViewPage(item)} state={item} to={`/users/view/${item?.user?._id}`} className="hover:text-black">{helpers?.ternaryCondition(item?.user?.userName,item?.user?.userName,"N/A")}</NavLink></td>
+                  <td className="py-4 px-6 border-r text-left">{helpers?.ternaryCondition(item?.message,item?.message,"N/A")}</td>
                   <td className="py-4 px-6 border-r text-center">
                   {helpers?.ternaryCondition(item?.rating,<Rating name="half-rating-read" value={item?.rating || 0} readOnly precision={0.5} />,"N/A" )}
                   </td>

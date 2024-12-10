@@ -40,13 +40,13 @@ const CommunityModeratorManagerTable = ({ handleUserView, allCommunity, paginati
             {allCommunity && allCommunity?.length > 0 &&
               allCommunity?.map((item, i) => (
                 <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700" key={item?._id}>
-                  <th scope="row" className="py-4 px-6 border-r font-medium text-gray-900  dark:text-white">
+                  <th scope="row" className="py-4 px-6 border-r font-medium text-gray-900 text-center dark:text-white">
                     {i + 1 + pageSize * (paginationObj?.page - 1)}
                   </th>
                   
                   <td className="py-4 px-6 border-r text-center">{item?.postId || "N/A"}</td>
-                  <td className="py-4 px-6 border-r text-center"><NavLink onClick={() => handleUserViewPage(item)} state={item} to={`/users/view/${item?.user?._id}`} className="hover:text-black">{helpers?.ternaryCondition(item?.user,item?.user?.userName,"N/A")}</NavLink></td>
-                  <td className="py-4 px-6 border-r text-center">{helpers?.ternaryCondition(item?.postTitle, item?.postTitle, "N/A")} </td>
+                  <td className="py-4 px-6 border-r text-left"><NavLink onClick={() => handleUserViewPage(item)} state={item} to={`/users/view/${item?.user?._id}`} className="hover:text-black">{helpers?.ternaryCondition(item?.user,item?.user?.userName,"N/A")}</NavLink></td>
+                  <td className="py-4 px-6 border-r text-left">{helpers?.ternaryCondition(item?.postTitle, item?.postTitle, "N/A")} </td>
                   <td className="py-4 px-6 border-r text-center"><div className="flex item-center"><AiFillLike className="mr-1 text-lg"/><span  className="flex items-center block">({helpers?.ternaryCondition(item?.likeCount, item?.likeCount, "0")})</span></div> </td>
                   <td className="py-4 px-6 border-r text-center"><div className="flex item-center"><MdOutlineInsertComment className="mr-1 text-lg"/><span  className="flex items-center block">({helpers?.ternaryCondition(item?.commentCount, item?.commentCount, "0")})</span></div> </td>
                   <td className="py-4 px-6 border-r text-center">{helpers?.ternaryCondition(item?.reportCount, item?.reportCount, "0")}</td>
