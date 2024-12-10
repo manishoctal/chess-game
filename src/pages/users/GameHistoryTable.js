@@ -249,11 +249,11 @@ function User() {
                           <tr key={item?._id}>
                             <th
                               scope="row"
-                              className="py-4 px-6 border-r font-medium text-gray-900  dark:text-white border"
+                              className="py-4 px-6 border-r font-medium text-gray-900 text-center dark:text-white border"
                             >
                               {i + 1 + pageSize * (paginationObj?.page - 1)}
                             </th>
-                            <td className="py-2 px-4 border-r dark:border-[#ffffff38] pl-5 border">
+                            <td className="py-2 px-4 border-r dark:border-[#ffffff38] pl-5 border text-center">
                               {helpers?.ternaryCondition(
                                 item?.challengeId,
                                 item?.challengeId,
@@ -349,7 +349,7 @@ function User() {
                                 </div>
                               </div>
                             </td>
-                            <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-left border">
+                            <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-center border">
                               {(location?.state?._id?.toString() ==
                               item?.userId?.toString()
                                 ? item?.userPoint
@@ -378,20 +378,20 @@ function User() {
                                 )
                               )}
                             </td>
-                            <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-left border">
+                            <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-center border">
                               {item?.moves}
                             </td>
-                            <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-left border">
+                            <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-center border">
                               {dayjs(item?.createdAt).format("DD-MMMM-YYYY")}
                             </td>
 
                             {activeTab === "Tab2" && (
                               <>
                                 {" "}
-                                <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-left">
+                                <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-center">
                                   {helpers?.formattedAmount(item?.adminMoneyAtSake)}
                                 </td>
-                                <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-left">
+                                <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-center">
                                   {helpers?.formattedAmount(
                                     item?.adminMoneyCommission
                                   )}
