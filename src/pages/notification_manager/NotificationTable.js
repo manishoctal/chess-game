@@ -34,12 +34,12 @@ const NotificationTable = ({ notifications, paginationObj, sort, setSort, pageSi
             {notifications && notifications?.length > 0 &&
               notifications?.map((item, i) => (
                 <tr key={item?._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                  <th scope="row" className="py-4 px-6 border-r font-medium text-gray-900  dark:text-white">
+                  <th scope="row" className="py-4 px-6 border-r font-medium text-gray-900 text-center dark:text-white">
                     {i + 1 + pageSize * (paginationObj?.page - 1)}
                   </th>
-                  <td className="py-4 px-6 border-r text-center">{item?.title || "N/A"}</td>
+                  <td className="py-4 px-6 border-r text-left">{item?.title || "N/A"}</td>
 
-                  <td className="py-4 px-6 border-r text-center">{item?.description || "N/A"}</td>
+                  <td className="py-4 px-6 border-r text-left">{item?.description || "N/A"}</td>
                   <td className="py-4 px-6 border-r w-60 text-center">
                     {helpers.ternaryCondition(item?.sendTo == "all", "All Users", startCase(item?.sendTo)) || "N/A"}{" "}
                     {item?.sendTo !== "all"  && <button className="font-bold text-slate-600" onClick={()=>handleSpecificUser(item)}>({t("VIEW")})</button>}

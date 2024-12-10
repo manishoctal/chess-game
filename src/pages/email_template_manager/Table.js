@@ -42,12 +42,12 @@ const Table = ({ emailTemplate, page, manager }) => {
           <tbody>
             {emailTemplate?.map((item, i) => (
               <tr key={item?._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                <th scope="row" className="py-2 px-4 border-r dark:border-[#ffffff38] font-medium text-gray-900  dark:text-white">
+                <th scope="row" className="py-2 px-4 border-r dark:border-[#ffffff38] font-medium text-gray-900 text-center dark:text-white">
                   {i + 1 + 10 * (page - 1)}
                 </th>
                 <td className="py-2 px-4 border-r dark:border-[#ffffff38]">{item?.title}</td>
                 <td className="py-2 px-4 border-r dark:border-[#ffffff38]">{item?.subject}</td>
-                <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-left">{dayjs(item?.updatedAt).format("DD-MM-YYYY h:mm A")} </td>
+                <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-center">{dayjs(item?.updatedAt).format("DD-MM-YYYY h:mm A")} </td>
 
                 {(manager?.add || manager?.edit || user?.role === "admin") && (
                   <>
