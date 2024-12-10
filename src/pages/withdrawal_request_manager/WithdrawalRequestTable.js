@@ -88,13 +88,13 @@ const WithdrawalRequestTable = ({ allCommunity, paginationObj, sort, setSort, pa
                 const totalAmount = reqeustedAmount + remainingAmount;
                 return (
                   <tr key={allCommunity?._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                    <th scope="row" className="py-4 px-6 border-r font-medium text-gray-900  dark:text-white">
+                    <th scope="row" className="py-4 px-6 border-r font-medium text-gray-900 text-center dark:text-white">
                       {i + 1 + pageSize * (paginationObj?.page - 1)}
                     </th>
-                    <td className="py-4 px-6 border-r text-center">{helpers?.ternaryCondition(item?.user?.userUniqId, item?.user?.userUniqId, "N/A")}</td>
-                    <td className="py-4 px-6 border-r text-center">{helpers?.ternaryCondition(item?.user?.fullName, item?.user?.fullName, "N/A")}</td>
-                    <td className="py-4 px-6 border-r text-center">{helpers?.ternaryCondition(item?.user?.userName, item?.user?.userName, "N/A")}</td>
-                    <td className="py-4 px-6 border-r text-center">{helpers?.ternaryCondition(item?.user?.email, item?.user?.email, "N/A")}</td>
+                    <td className="py-4 px-6 border-r text-left">{helpers?.ternaryCondition(item?.user?.userUniqId, item?.user?.userUniqId, "N/A")}</td>
+                    <td className="py-4 px-6 border-r text-left">{helpers?.ternaryCondition(item?.user?.fullName, item?.user?.fullName, "N/A")}</td>
+                    <td className="py-4 px-6 border-r text-left">{helpers?.ternaryCondition(item?.user?.userName, item?.user?.userName, "N/A")}</td>
+                    <td className="py-4 px-6 border-r text-left">{helpers?.ternaryCondition(item?.user?.email, item?.user?.email, "N/A")}</td>
                     <td className="py-4 px-6 border-r text-center">{helpers?.ternaryCondition(item?.user?.countryCode, `+ ${item?.user?.countryCode}`, "N/A")}</td>
                     <td className="py-4 px-6 border-r text-center">{helpers?.ternaryCondition(item?.user?.mobile, item?.user?.mobile, "N/A")}</td>
                     <td className="py-4 px-6 border-r text-center">{helpers.formattedAmount(totalAmount)}</td>

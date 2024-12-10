@@ -16,7 +16,7 @@ const SubTable = ({ subAdmin, page, sort, setSort, manager, handelStatusChange, 
   }, []);
 
   const getDateTable = (dateData) => {
-    return <td className="py-2 px-4 border-r dark:border-[#ffffff38]">{dateData || "N/A"}</td>;
+    return <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-center">{dateData || "N/A"}</td>;
   };
 
   const getRoleAssigned = (e) => {
@@ -52,22 +52,22 @@ const SubTable = ({ subAdmin, page, sort, setSort, manager, handelStatusChange, 
           <tbody>
             {subAdmin?.map((item, i) => (
               <tr key={item?._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                <th scope="row" className="py-2 px-4 border-r dark:border-[#ffffff38] font-medium text-gray-900  dark:text-white">
+                <th scope="row" className="py-2 px-4 border-r dark:border-[#ffffff38] font-medium text-gray-900  dark:text-white text-center">
                   {i + 1 + pageSize * (page - 1)}
                 </th>
 
-                <td className="py-2 px-4 border-r dark:border-[#ffffff38]">{helpers?.ternaryCondition(item?.adminId,item?.adminId,"N/A")}</td>
+                <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-center">{helpers?.ternaryCondition(item?.adminId,item?.adminId,"N/A")}</td>
 
                 <td className="py-2 px-4 border-r dark:border-[#ffffff38]">{helpers?.ternaryCondition(item?.firstName,item?.firstName,"N/A")}</td>
                 <td className="py-2 px-4 border-r dark:border-[#ffffff38]">{helpers?.ternaryCondition(item?.lastName,item?.lastName,"N/A")}</td>
 
                 <td className="py-2 px-4 border-r dark:border-[#ffffff38] text-slate-900 font-bold">{helpers?.ternaryCondition(item?.email,item?.email,"N/A")}</td>
-                <td className="py-2 px-4 border-r dark:border-[#ffffff38] font-bold">
+                <td className="py-2 px-4 border-r dark:border-[#ffffff38] font-bold text-center">
                   {
                     helpers?.ternaryCondition(item?.countryCode,`+ ${item?.countryCode}`, "N/A")
                   }
                 </td>
-                <td className="py-2 px-4 border-r dark:border-[#ffffff38] font-bold">{item?.mobile || "N/A"}</td>
+                <td className="py-2 px-4 border-r dark:border-[#ffffff38] font-bold text-center">{item?.mobile || "N/A"}</td>
 
                 <td className="py-2 px-4 border-r dark:border-[#ffffff38]  font-bold text-slate-600 text-center">{getRoleAssigned(item)}</td>
 

@@ -85,19 +85,19 @@ const MonetaryTable = ({
       const itemStatus = getStatus(item?.scheduleDateTime, item?.expiryScheduleDateTime);
       return (
         <tr key={item?._id}>
-          {renderTableCell(i + 1 + pageSize * (page - 1), "py-4 px-3 border-r border  font-medium text-gray-900  dark:text-white dark:border-[#ffffff38]")}
-          {renderTableCell(getDisplayUserId(item), "bg-white py-4 px-4 border-r border  dark:border-[#ffffff38]")}
+          {renderTableCell(i + 1 + pageSize * (page - 1), "py-4 px-3 border-r border  font-medium text-gray-900 text-center dark:text-white dark:border-[#ffffff38]")}
+          {renderTableCell(getDisplayUserId(item), "bg-white py-4 px-4 border-r border text-center dark:border-[#ffffff38]")}
           {renderTableCell(getDisplayName(item), "bg-white py-4 px-4 border-r border  dark:border-[#ffffff38]")}
           {renderTableCell(helpers.ternaryCondition(item?.acceptorDetails?.userName, item?.acceptorDetails?.userName, "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-left")}
           {renderTableCell(helpers.ternaryCondition(item?.winnerDetails?.userName,item?.winnerDetails?.userName, "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-left")}
-          {renderTableCell(helpers.ternaryCondition(item?.challengeCategory, item?.challengeCategory, "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-left")}
+          {renderTableCell(helpers.ternaryCondition(item?.challengeCategory, item?.challengeCategory, "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center")}
           {renderTableCell(helpers.ternaryCondition(item?.time, `${item?.time} Min`, "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-left")}
-          {renderTableCell(helpers.getDateAndTime(item?.createdAt, item?.createdAt, "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-left")}
-          {renderTableCell(helpers.ternaryCondition(item?.type, startCase(item?.type), "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-left")}
-          {renderTableCell(helpers.ternaryCondition(item?.adminMoneyAtSake, helpers?.formattedAmount(item?.adminMoneyAtSake), helpers?.formattedAmount(0)), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-left")}
-          {renderTableCell(helpers.ternaryCondition(item?.adminMoneyCommission, helpers?.formattedAmount(item?.adminMoneyCommission), helpers?.formattedAmount(0)), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-left")}
-          {renderTableCell(helpers.ternaryCondition(item?.adminMoneyPlatformFee, helpers?.formattedAmount(item?.adminMoneyPlatformFee), helpers?.formattedAmount(0)), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-left")}
-          {renderTableCell(itemStatus, "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-left")}
+          {renderTableCell(helpers.getDateAndTime(item?.createdAt, item?.createdAt, "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center")}
+          {renderTableCell(helpers.ternaryCondition(item?.type, startCase(item?.type), "N/A"), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center")}
+          {renderTableCell(helpers.ternaryCondition(item?.adminMoneyAtSake, helpers?.formattedAmount(item?.adminMoneyAtSake), helpers?.formattedAmount(0)), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center")}
+          {renderTableCell(helpers.ternaryCondition(item?.adminMoneyCommission, helpers?.formattedAmount(item?.adminMoneyCommission), helpers?.formattedAmount(0)), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center")}
+          {renderTableCell(helpers.ternaryCondition(item?.adminMoneyPlatformFee, helpers?.formattedAmount(item?.adminMoneyPlatformFee), helpers?.formattedAmount(0)), "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center")}
+          {renderTableCell(itemStatus, "bg-white py-2 px-4 border-r border dark:border-[#ffffff38] text-center")}
           {renderActionTableCells(item, "monetary")}
         </tr>
       );
