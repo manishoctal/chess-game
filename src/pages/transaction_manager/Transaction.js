@@ -14,13 +14,14 @@ import { GoDownload } from "react-icons/go";
 import apiPath from "../../utils/apiPath";
 import Pagination from "../Pagination";
 import AuthContext from "context/AuthContext";
+import SearchableDropdown from "components/reusable/SearchableDropdown";
 
 function Transaction() {
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
   const [isInitialized, setIsInitialized] = useState(false);
   const { t } = useTranslation();
   const location = useLocation();
-  const [totalBalance,setTotalBalance]=useState("")
+  const [totalBalance, setTotalBalance] = useState("")
   const [searchTerm, setSearchTerm] = useState("");
   const { logoutUser, user, updatePageName } = useContext(AuthContext);
   const [paginationObj, setPaginationObj] = useState({
@@ -43,15 +44,39 @@ function Transaction() {
     isReset: false,
     isFilter: false,
     transactionType: "",
+    selectedUserId: ""
   });
+
   const [sort, setSort] = useState({
     sortBy: "createdAt",
     sortType: "desc",
   });
 
+  const [allUsers, setAllUsers] = useState([]);
+
+  useEffect(() => {
+    getUsers()
+  }, [])
+
+  const getUsers = async () => {
+    try {
+      const path = `${apiPath.getAllUsers}`;
+      const result = await apiGet(path, {});
+
+      if (result?.data?.success) {
+        const response = result?.data;
+        setAllUsers(response?.results);
+      }
+
+    } catch (error) {
+      console.log(' error >>> ', error)
+    }
+  }
+
+
   const getAllUser = async () => {
     try {
-      const { transactionType, startDate, endDate, searchKey, userId } = filterData;
+      const { transactionType, startDate, endDate, searchKey, userId, selectedUserId } = filterData;
 
       const payload = {
         keyword: helpers.normalizeSpaces(searchKey) || null,
@@ -62,6 +87,7 @@ function Transaction() {
         pageSize: pageSize,
         endDate: endDate ? dayjs(endDate).format("YYYY-MM-DD") : null,
         userId: userId || null,
+        selectedUserId: selectedUserId
       };
 
       if (transactionType && transactionType !== undefined) {
@@ -108,6 +134,7 @@ function Transaction() {
 
 
 
+  const[selectedUser,setSelectedUser]=useState()
 
   const handleReset = () => {
     setFilterData({
@@ -118,9 +145,10 @@ function Transaction() {
       endDate: "",
       isReset: true,
       isFilter: false,
-      category:""
+      category: "",
+      selectedUserId: ""
     });
-    
+    setSelectedUser('')
     setPage(1);
     setSearchTerm("");
     setPageSize(10);
@@ -172,9 +200,9 @@ function Transaction() {
   }
 
 
-  useEffect(()=>{
+  useEffect(() => {
     getTotalBalance()
-  },[])
+  }, [])
 
   const handleUserViewPage = () => {
     updatePageName(` ${t("VIEW") + " " + t("USER_MANAGER")}`);
@@ -227,6 +255,17 @@ function Transaction() {
     };
   }, [searchTerm]);
 
+  const handleSelect = (selectedValue) => {
+    console.log("Selected Value in Parent:", selectedValue); 
+    setSelectedUser(selectedValue)                             
+    setFilterData(prevState => ({
+      ...prevState,
+      selectedUserId: selectedValue?._id
+    }));
+
+  };
+  console.log("<><><><><><> ", filterData);
+
   const manager = user?.permission?.find((e) => e.manager === "transaction_manager");
 
   return (
@@ -245,6 +284,23 @@ function Transaction() {
                   </div>
                 </div>
               </div>
+
+
+
+
+              <div className="flex items-center mb-3 ml-3">
+                <SearchableDropdown
+                selectedUser={selectedUser}
+                  options={allUsers}
+                  onSelect={handleSelect}
+                  placeholder="Search department"
+                />
+              </div>
+
+
+
+
+
               <div className="flex flex-wrap items-center">
                 <div className="flex items-center lg:pt-0 pt-3 justify-center">
                   <ODateRangePicker handleDateChange={handleDateChange} isReset={filterData?.isReset} setIsReset={setFilterData} />
@@ -285,22 +341,22 @@ function Transaction() {
                     </button>
                   </div>
                   <div className="bg-gradientTo rounded-lg p-4 m-5 max-w-[200px] ml-auto">
-            <div className="flex items-center">
-              <figure className="mr-3">
-                <img src={balanceIcon} alt="" />
-              </figure>
-              <figcaption className="text-white">
-                <span className="block">{helpers.formattedAmount(totalBalance?.totalEarning) || 0}</span>
-                <span className="text-sm">{t("TOTAL_EARNING")}</span>
-              </figcaption>
-            </div>
-          </div>
-             
+                    <div className="flex items-center">
+                      <figure className="mr-3">
+                        <img src={balanceIcon} alt="" />
+                      </figure>
+                      <figcaption className="text-white">
+                        <span className="block">{helpers.formattedAmount(totalBalance?.totalEarning) || 0}</span>
+                        <span className="text-sm">{t("TOTAL_EARNING")}</span>
+                      </figcaption>
+                    </div>
+                  </div>
+
 
                 </div>
               </div>
             </form>
-            
+
             <TransactionTable handleUserViewPage={handleUserViewPage} users={users} paginationObj={paginationObj} user={user} getAllUser={getAllUser} page={page} setSort={setSort} sort={sort} setPage={setPage} pageSize={pageSize} userType={userType} manager={manager} />
             <div className="flex justify-between">
               <PageSizeList dynamicPage={dynamicPage} pageSize={pageSize} />
