@@ -138,6 +138,23 @@ const CasualView = () => {
                 "N/A"
               )}
             </div>
+            <div>
+              <strong>Acceptor Rating Min Range: </strong>
+              {helpers?.ternaryCondition(
+                item?.minRating,
+                item?.minRating,
+                "N/A"
+              )}
+            </div>
+            <div>
+              <strong>Acceptor Rating Max Range: </strong>
+              {helpers?.ternaryCondition(
+                item?.maxRating,
+                item?.maxRating,
+                "N/A"
+              )}
+            </div>
+
             <div className="flex items-center">
               <strong>Acceptor Side: </strong>
               {helpers?.ternaryCondition(
