@@ -256,7 +256,6 @@ function Transaction() {
   }, [searchTerm]);
 
   const handleSelect = (selectedValue) => {
-    console.log("Selected Value in Parent:", selectedValue); 
     setSelectedUser(selectedValue)                             
     setFilterData(prevState => ({
       ...prevState,
@@ -264,7 +263,6 @@ function Transaction() {
     }));
 
   };
-  console.log("<><><><><><> ", filterData);
 
   const manager = user?.permission?.find((e) => e.manager === "transaction_manager");
 
@@ -280,7 +278,7 @@ function Transaction() {
                 </label>
                 <div className="flex">
                   <div className="relative">
-                    <OSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm} placeholder={t("SEARCH_BY_FULL_NAME_TRANSACTION_EMAIL")} />
+                    <OSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm} placeholder={t("SEARCH_BY_TRANSACTION_ID")} />
                   </div>
                 </div>
               </div>
@@ -288,12 +286,12 @@ function Transaction() {
 
 
 
-              <div className="flex items-center mb-3 ml-3">
+              <div className="flex items-center mb-3 ml-3 selectUIFix">
                 <SearchableDropdown
-                selectedUser={selectedUser}
+                  selectedUser={selectedUser}
                   options={allUsers}
                   onSelect={handleSelect}
-                  placeholder="Search department"
+                  placeholder={t("SEARCH_BY_FULL_NAME")}
                 />
               </div>
 

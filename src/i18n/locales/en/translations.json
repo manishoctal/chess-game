@@ -916,7 +916,7 @@
   "TRANSACTION_TYPE": "Transaction Type",
   "TRANSACTION_DATE": "Transaction Date & Time",
   "ADMIN_COMMISSION": "Admin Commission",
-  "SEARCH_BY_FULL_NAME_TRANSACTION_EMAIL": "Full name, Email id, Transaction ID",
+  "SEARCH_BY_FULL_NAME_TRANSACTION_EMAIL": "Search By Transaction ID",
   "O_WALLET_DEPOSIT": "Wallet Deposit",
   "O_WITHDRAW_MONEY": "Withdraw Money",
   "O_CASUAL_CHALLENGE": "Casual Challenge",
@@ -967,5 +967,7 @@
   "MIN_VALUE_MUST_BE_LESS_THAN_MONEY_STACK" : "Min amount limit must be less than money stake",
   "O_FROM_MOVE" : "From",
   "O_TO_MOVE" : "To",
-  "O_WINNING_MONETARY_CHALLENGE" : "Winning monetary challenge"
+  "O_WINNING_MONETARY_CHALLENGE" : "Winning monetary challenge",
+  "SEARCH_BY_FULL_NAME":"Search By Full Name",
+  "SEARCH_BY_TRANSACTION_ID":"Search By Transaction ID"
 }

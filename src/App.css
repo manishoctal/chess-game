@@ -26,5 +26,16 @@ span.flatpickr-weekday {background-color: #42a5f5 !important;color:#ffffff!impor
   /* Adjust the height value as per your requirement */
 }
 
+.selectUIFix .css-b62m3t-container {
+  width: 216px!important; 
+}
+.selectUIFix .css-b62m3t-container .css-13cymwt-control {
+  border-color: #e5e7eb;
+  border-radius: 8px;
+}
 
-
+.selectUIFix .css-b62m3t-container .css-hlgwow * {
+  color: #9ca3af;
+  font-weight: normal;
+  font-size: 15px;
+}
