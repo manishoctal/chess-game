@@ -42,6 +42,7 @@ function User() {
     kyc: undefined,
     category: location?.state,
     userId: "",
+    countryCode: "",
     searchKey: "",
     startDate: "",
     endDate: "",
@@ -58,7 +59,7 @@ function User() {
 
   const getAllUser = async () => {
     try {
-      const { category, startDate, endDate, searchKey, kyc, userId } = filterData;
+      const { category, startDate, endDate, searchKey, kyc, userId, countryCode } = filterData;
 
       const payload = {
         page,
@@ -69,7 +70,8 @@ function User() {
         sortKey: sort?.sortBy,
         sortType: sort?.sortType,
         userId: userId || null,
-        status: category
+        status: category,
+        countryCode: countryCode,
       };
 
       if (kyc && kyc !== undefined) {
@@ -129,6 +131,7 @@ function User() {
       isKYCVerified: "",
       category: undefined,
       kyc: "",
+      countryCode: "",
       userId: "",
       startDate: "",
       endDate: "",
@@ -174,6 +177,16 @@ function User() {
       isFilter: true,
       isReset: false,
       kyc: e.target.value
+    });
+    setPage(1);
+  };
+
+  const handleCountryCode = (e) => {
+    setFilterData({
+      ...filterData,
+      isFilter: true,
+      isReset: false,
+      countryCode: e.target.value
     });
     setPage(1);
   };
@@ -262,6 +275,25 @@ function User() {
                       </option>
                       <option value="1">{t("O_YES")}</option>
                       <option value="0">{t("O_NO")}</option>
+                    </select>
+                  </div>
+
+                  <div className="flex items-center mb-3 ml-3">
+                  <select
+                      placeholder=" "
+                      value={filterData?.countryCode}
+                      onChange={handleCountryCode}
+                      id="countries"
+                      name="floating_password"
+                      className="block p-2 min-w-[100px] text-sm text-[#A5A5A5] bg-transparent border-2 rounded-lg border-[#DFDFDF]  dark:text-[#A5A5A5] focus:outline-none focus:ring-0  peer"
+                    >
+                      <option value="">
+                        {t("COUNTRY_CODE")}
+                      </option>
+                      <option value="91">{t("INDIA_CC")}</option>
+                      <option value="1">{t("USA_CANADA_CC")}</option>
+                      <option value="44">{t("UK_CC")}</option>
+                      <option value="61">{t("AUSTRALIA_CC")}</option>
                     </select>
                   </div>
 
