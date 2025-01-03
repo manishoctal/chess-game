@@ -85,15 +85,15 @@ const TransactionTable = ({ users, page, setSort, sort, pageSize,handleUserViewP
                 {t("S.NO")}
               </th>
 
-              <OUserTableHead sort={sort} setSort={setSort} name="USER_ID" fieldName="user.userUniqId" />
-              <OUserTableHead sort={sort} setSort={setSort} name="FULL_NAME" fieldName="user.fullName" />
-              <OUserTableHead sort={sort} setSort={setSort} name="O_EMAIL_ID" fieldName="user.email" />
-              <OUserTableHead sort={sort} setSort={setSort} name="O_TRANSACTION_ID" fieldName="transactionId" />
-              <OUserTableHead sort={sort} setSort={setSort} name="TRANSACTION_TYPE" fieldName="transactionType" />
-              <OUserTableHead sort={sort} setSort={setSort} name="TRANSACTION_DATE" fieldName="createdAt" />
-              <OUserTableHead sort={sort} setSort={setSort} name="AMOUNT" fieldName="amount" />
-              <OUserTableHead sort={sort} setSort={setSort} name="ADMIN_COMMISSION" fieldName="adminComission" />
-              <OUserTableHead sort={sort} setSort={setSort} name="TRANSACTION_FEE" fieldName="transactionFee" />
+              <OUserTableHead sort={sort} setSort={setSort} name="USER_ID" fieldName="user.userUniqId" isActive={false} />
+              <OUserTableHead sort={sort} setSort={setSort} name="FULL_NAME" fieldName="user.fullName" isActive={false} />
+              <OUserTableHead sort={sort} setSort={setSort} name="O_EMAIL_ID" fieldName="user.email" isActive={false} />
+              <OUserTableHead sort={sort} setSort={setSort} name="O_TRANSACTION_ID" fieldName="transactionId" isActive={true}/>
+              <OUserTableHead sort={sort} setSort={setSort} name="TRANSACTION_TYPE" fieldName="transactionType" isActive={true}/>
+              <OUserTableHead sort={sort} setSort={setSort} name="TRANSACTION_DATE" fieldName="createdAt" isActive={true}/>
+              <OUserTableHead sort={sort} setSort={setSort} name="AMOUNT" fieldName="amount" isActive={true}/>
+              <OUserTableHead sort={sort} setSort={setSort} name="ADMIN_COMMISSION" fieldName="adminComission" isActive={true}/>
+              <OUserTableHead sort={sort} setSort={setSort} name="TRANSACTION_FEE" fieldName="transactionFee" isActive={true}/>
             </tr>
           </thead>
           <tbody>
